@@ -1,0 +1,145 @@
+@import url('./fonts/circular-medium/stylesheet.css');
+@import url('./fonts/circular-normal/stylesheet.css');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+  overscroll-behavior: none;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: Circular, sans-serif;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  font-display: swap;
+  /* overflow: hidden; */
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.l3-dropdown_scrollable-wrapper {
+  /* background-color: transparent; */
+  backdrop-filter: blur(5px) !important;
+}
+
+/* .tab--wrapper .tab-inner {
+  padding: 0px !important;
+} */
+
+.dropdown-menu-wrapper {
+  /* background: #5d6a7d !important; */
+  backdrop-filter: blur(5px) !important;
+}
+
+/* .dropdown-wrapper__option--reset {
+  background: #5d6a7d !important;
+  color: #fff !important;
+} */
+
+/* .dropdown-wrapper__option--reset-selected {
+  background-color: red !important;
+} */
+
+/* .dropdown-wrapper__option--reset:focus,
+.dropdown-wrapper__option--reset:hover {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+} */
+
+.navbar_menu_item.l3-style-menu-item--active {
+  background-color: #0094e3 !important;
+}
+
+.header_is_visible {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 88.84%);
+  mix-blend-mode: normal;
+  backdrop-filter: blur(20px);
+}
+
+.header_wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 100px;
+}
+::-webkit-scrollbar-track-piece {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb,
+*::-moz-scrollbar-thumb {
+  background: #fff;
+  border-radius: 100px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+input::-moz-inner-spin-button,
+input::-moz-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* mozilla */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fff rgba(255, 255, 255, 0.1);
+}
+
+.l3-style-toast-animation-enter-active {
+  animation-name: unset !important;
+}
+
+.l3-style-dialog-content-wrapper {
+  z-index: 102030;
+}
