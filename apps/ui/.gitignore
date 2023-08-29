@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+
+./build
+build
+.
+
+./dist
+dist
+
+
+terraform/.terraform
+terraform/.terraform.lock.hcl
