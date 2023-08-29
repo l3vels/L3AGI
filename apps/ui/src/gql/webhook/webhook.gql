@@ -1,0 +1,17 @@
+query webhooks($filter: WebhookFilterQuery) @api(name: game) {
+  webhooks(filter: $filter) {
+    items {
+      id
+      url
+      description
+      api_version
+      events
+      status
+      asset_id
+      contract_id
+      transaction_id
+      collection_id
+      game_id
+    }
+  }
+}

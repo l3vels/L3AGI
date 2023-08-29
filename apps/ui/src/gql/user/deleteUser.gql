@@ -1,0 +1,6 @@
+mutation deleteUser($id: ID!) @api(name: account) {
+  deleteUser(id: $id) {
+    success
+    message
+  }
+}

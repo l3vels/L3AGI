@@ -1,0 +1,10 @@
+query userAccounts @api(name: account) {
+  userAccounts {
+    id
+    creator_user
+    creator_user_email
+    creator_user_id
+    assigned_account_name
+    assigned_account_id
+  }
+}

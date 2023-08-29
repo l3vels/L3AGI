@@ -1,0 +1,37 @@
+query logs($filter: ListFilterQuery) @api(name: game) {
+  logs(filter: $filter) {
+    items {
+      id
+      method
+      endpoint
+      body
+      params
+      request_date
+      status
+      response
+      env
+      changes
+      is_gql
+      gql_type
+      gql_variables
+      gql_source
+      gql_name
+      source_type
+      ip
+      error_type
+      error_code
+      error_message
+      request_type
+      query_params
+      created_on
+      player_id
+      game_id
+      collection_id
+      contract_id
+      asset_id
+    }
+    total
+    page
+    limit
+  }
+}

@@ -1,0 +1,16 @@
+mutation login($body: JSON!)  @api(name: account) {
+  login: publish(body: $body)
+    @rest(type: "Post", path: "/auth/login", method: "POST", bodyKey: "body", endpoint: "account") {
+    message
+    success
+    # twoFactorId
+    # methodId
+    verified
+    twoFactorToken
+    challengeName
+    challengeSession
+    challengeParameters
+    access_token
+    refresh_token
+  }
+}

@@ -1,0 +1,15 @@
+query usersByAdmin($filter: FilterUsers) @api(name: account) {
+  usersByAdmin(filter: $filter) {
+    items {
+      id
+      email
+      first_name
+      last_name
+      contact_number
+      role
+      created_on
+      last_login
+    }
+    total_count
+  }
+}

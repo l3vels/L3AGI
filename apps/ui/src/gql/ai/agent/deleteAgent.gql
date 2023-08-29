@@ -1,0 +1,12 @@
+mutation deleteAgent($id: id!) @api(name: ai) {
+  deleteAgent(id: $id)
+    @rest(
+      type: "Agent"
+      path: "/agent/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    agent
+  }
+}

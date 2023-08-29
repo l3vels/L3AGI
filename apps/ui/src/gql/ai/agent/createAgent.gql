@@ -1,0 +1,7 @@
+mutation createAgent($input: input!) @api(name: ai) {
+  createAgent(input: $input)
+    @rest(type: "Agent", path: "/agent", method: "POST", bodyKey: "input", endpoint: "ai") {
+    agent
+    configs
+  }
+}

@@ -1,0 +1,12 @@
+mutation deleteApiKey($id: ID!) @api(name: game) {
+  deleteApiKey(id: $id) {
+    id
+    name
+    token
+    note
+    expiration
+    games
+    created_on
+    last_used
+  }
+}

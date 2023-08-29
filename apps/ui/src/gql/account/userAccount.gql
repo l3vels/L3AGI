@@ -1,0 +1,7 @@
+query userAccount @api(name: account) {
+  userAccount {
+    id
+    company_name
+    location
+  }
+}

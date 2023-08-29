@@ -1,0 +1,10 @@
+mutation createWebhook($input: CreateWebhookInput!) @api(name: game) {
+  createWebhook(input: $input) {
+    success
+    webhook {
+      url
+      description
+      status
+    }
+  }
+}

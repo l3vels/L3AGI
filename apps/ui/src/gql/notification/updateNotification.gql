@@ -1,0 +1,5 @@
+mutation updateNotification($id: ID!, $input: NotificationInput!) @api(name: game) {
+  updateNotification(id: $id, input: $input) {
+    read
+  }
+}

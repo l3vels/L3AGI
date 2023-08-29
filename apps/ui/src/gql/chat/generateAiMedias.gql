@@ -1,0 +1,6 @@
+mutation generateAiMedias($prompt: String!) @api(name: game) {
+  generateAiMedias(prompt: $prompt) {
+    id
+    media
+  }
+}

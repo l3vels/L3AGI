@@ -1,0 +1,5 @@
+query generateDownloadUrl($key: String!) @api(name: game) {
+  generateDownloadUrl(key: $key) {
+    url
+  }
+}

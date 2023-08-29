@@ -1,0 +1,5 @@
+mutation updateAccountForAdmin($id: ID!, $input: UpdateAccountInput) @api(name: account) {
+  updateAccountForAdmin(account_id: $id, input: $input) {
+    success
+  }
+}

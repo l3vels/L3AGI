@@ -1,0 +1,14 @@
+query getDatasources @api(name: "ai") {
+  getDatasources @rest(type: "Datasource", path: "/datasource", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+    source_type
+    project_id
+    is_deleted
+    is_system
+    account_id
+    created_by
+    modified_by
+  }
+}

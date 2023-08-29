@@ -1,0 +1,7 @@
+mutation updateAgent($id: id!, $input: input!) @api(name: "ai") {
+  updateAgent(id: $id, input: $input)
+    @rest(type: "Agent", path: "/agent/{args.id}", method: "PUT", endpoint: "ai") {
+    agent
+    configs
+  }
+}

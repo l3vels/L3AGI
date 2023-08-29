@@ -1,0 +1,6 @@
+mutation upscaleAiMedia($id: ID!, $button: String!) @api(name: game) {
+  upscaleAiMedia(id: $id, button: $button) {
+    id
+    media
+  }
+}

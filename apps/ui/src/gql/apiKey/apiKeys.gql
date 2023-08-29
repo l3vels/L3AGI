@@ -1,0 +1,15 @@
+query apiKeys($filter: ListFilterQuery) @api(name: game) {
+  apiKeys(filter: $filter) {
+    items {
+      id
+      name
+      token
+      note
+      expiration
+      games
+      created_on
+      last_used
+    }
+    total_count
+  }
+}

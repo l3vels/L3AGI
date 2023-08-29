@@ -1,0 +1,12 @@
+mutation updateUser($id: ID!, $user: UpdateUserInput!) @api(name: account) {
+  updateUser(user_id: $id, updateUserInput: $user) {
+    success
+    user {
+      id
+      email
+      first_name
+      last_name
+      contact_number
+    }
+  }
+}

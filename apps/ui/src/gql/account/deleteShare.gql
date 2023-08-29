@@ -1,0 +1,5 @@
+mutation deleteAccountAccess($share_id: ID!) @api(name: account) {
+  deleteAccountAccess(share_id: $share_id) {
+    success
+  }
+}

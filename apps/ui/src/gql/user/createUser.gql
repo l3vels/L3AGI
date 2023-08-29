@@ -1,0 +1,8 @@
+mutation createUser($user: CreateUserInput!) @api(name: account) {
+  createUser(createUserInput: $user) {
+    success
+    user {
+      id
+    }
+  }
+}

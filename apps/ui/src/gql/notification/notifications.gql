@@ -1,0 +1,20 @@
+query notifications($filter: NotificationFilterInput) @api(name: game) {
+  notifications(filter: $filter) {
+    id
+    type
+    read
+    game_id
+    collection_id
+    created_on
+    game {
+      id
+      name
+      main_media
+    }
+    collection {
+      id
+      name
+      main_media
+    }
+  }
+}

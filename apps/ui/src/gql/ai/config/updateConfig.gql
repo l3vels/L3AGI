@@ -1,0 +1,19 @@
+mutation updateConfig($id: id!, $input: input!) @api(name: "ai") {
+  updateConfig(id: $id, input: $input)
+    @rest(type: "Config", path: "/config/{args.id}", method: "PUT", endpoint: "ai") {
+    id
+    key
+    value
+    key_type
+    is_secret
+    is_required
+    agent_id
+    tool_id
+    datasource_id
+    account_id
+    project_id
+    is_deleted
+    created_by
+    modified_by
+  }
+}

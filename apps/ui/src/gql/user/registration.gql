@@ -1,0 +1,12 @@
+mutation registration($body: JSON!)  @api(name: account) {
+  registration: publish(body: $body)
+    @rest(
+      type: "Post"
+      path: "/auth/register"
+      method: "POST"
+      bodyKey: "body"
+      endpoint: "account"
+    ) {
+    message
+  }
+}

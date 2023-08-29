@@ -1,0 +1,12 @@
+mutation createGameFromChat($input: JSON!) @api(name: game) {
+  createGameFromChat(input: $input) {
+    game {
+      id
+      name
+    }
+    collections {
+      id
+      name
+    }
+  }
+}

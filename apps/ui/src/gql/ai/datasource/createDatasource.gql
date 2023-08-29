@@ -1,0 +1,21 @@
+mutation createDatasource($input: input!) @api(name: ai) {
+  createDatasource(input: $input)
+    @rest(
+      type: "Datasource"
+      path: "/datasource"
+      method: "POST"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    id
+    name
+    description
+    source_type
+    project_id
+    is_deleted
+    is_system
+    account_id
+    created_by
+    modified_by
+  }
+}

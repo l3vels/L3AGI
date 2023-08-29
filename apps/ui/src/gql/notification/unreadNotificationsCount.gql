@@ -1,0 +1,3 @@
+query unreadNotificationsCount($filter: NotificationFilterInput) @api(name: game) {
+  unreadNotificationsCount(filter: $filter)
+}

@@ -1,0 +1,14 @@
+query getDataLoaders @api(name: "ai") {
+  getDataLoaders
+    @rest(type: "Datasource", path: "/datasource/data-loaders", method: "GET", endpoint: "ai") {
+    isActive
+    Category
+    source_type
+    fields {
+      Label
+      key
+      type
+      is_required
+    }
+  }
+}

@@ -1,0 +1,6 @@
+mutation generateUploadUrl($input: GenerateUploadUrlInput!) @api(name: game) {
+  generateUploadUrl(input: $input) {
+    upload_url
+    file_location
+  }
+}

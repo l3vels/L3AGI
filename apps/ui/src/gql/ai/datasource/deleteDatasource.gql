@@ -1,0 +1,12 @@
+mutation deleteDatasource($id: id!) @api(name: ai) {
+  deleteDatasource(id: $id)
+    @rest(
+      type: "Datasource"
+      path: "/datasource/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    agent
+  }
+}

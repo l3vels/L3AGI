@@ -1,0 +1,6 @@
+mutation activeTwoFactorByAdmin($id: ID!, $enable_2fa: Boolean!) @api(name: account) {
+  activeTwoFactorByAdmin(user_id: $id, enable_2fa: $enable_2fa){
+    success
+    message
+  }
+}

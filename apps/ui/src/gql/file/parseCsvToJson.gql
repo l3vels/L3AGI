@@ -1,0 +1,5 @@
+mutation parseCsvToJson($file: Upload!, $headers: JSON) {
+    parseCsvToJson(file: $file, headers: $headers) {
+        data
+    }
+}

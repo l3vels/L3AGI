@@ -1,0 +1,9 @@
+query apiKeyById($id: ID!) @api(name: game) {
+  apiKeyById(id: $id) {
+    name
+    token
+    note
+    expiration
+    games
+  }
+}

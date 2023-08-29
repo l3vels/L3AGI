@@ -1,0 +1,12 @@
+mutation createApiKey($input: ApiKeyInput!) @api(name: game) {
+  createApiKey(input: $input) {
+    success
+    apiKey {
+      name
+      token
+      note
+      expiration
+      games
+    }
+  }
+}

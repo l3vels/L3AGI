@@ -1,0 +1,7 @@
+query getProviders @api(name: "ai") {
+  getProviders @rest(type: "llm", path: "/llm/providers", method: "GET", endpoint: "ai") {
+    isActive
+    provider
+    models
+  }
+}

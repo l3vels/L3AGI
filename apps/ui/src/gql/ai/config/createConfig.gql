@@ -1,0 +1,19 @@
+mutation createConfig($input: input!) @api(name: ai) {
+  createConfig(input: $input)
+    @rest(type: "Config", path: "/config", method: "POST", bodyKey: "input", endpoint: "ai") {
+    id
+    key
+    value
+    key_type
+    is_secret
+    is_required
+    agent_id
+    tool_id
+    datasource_id
+    account_id
+    project_id
+    is_deleted
+    created_by
+    modified_by
+  }
+}

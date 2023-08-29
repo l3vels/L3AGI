@@ -1,0 +1,12 @@
+mutation loginCompleted($body: JSON!)  @api(name: account) {
+  loginCompleted: publish(body: $body) @rest(
+      type: "Post"
+      path: "/auth/login-complete"
+      method: "POST"
+      bodyKey: "body",
+      endpoint: "account"
+    ) {
+      message
+      success
+  }
+}

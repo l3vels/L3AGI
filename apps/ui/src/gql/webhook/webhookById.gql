@@ -1,0 +1,7 @@
+query webhookById($id: ID!) @api(name: game) {
+  webhookById(id: $id) {
+    url
+    description
+    status
+  }
+}

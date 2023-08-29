@@ -1,0 +1,11 @@
+mutation logout($body: JSON!) @api(name: account)  {
+  logout: publish(body: $body) @rest(
+      type: "Post"
+      path: "/auth/logout"
+      method: "POST"
+      bodyKey: "body",
+      endpoint: "account"
+    ) {
+      success
+  }
+}
