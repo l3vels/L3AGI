@@ -1,0 +1,10 @@
+__pycache__
+
+.env
+
+process_pids
+
+terraform/.terraform
+terraform/.terraform.lock.hcl
+
+app.log

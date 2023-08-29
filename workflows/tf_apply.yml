@@ -1,0 +1,166 @@
+### Reusable workflow to download terraform artifact built by `az_tf_plan` and apply the artifact/plan ###
+name: "Apply_TF_Plan"
+on:
+  workflow_call:
+    inputs:
+      path:
+        description: 'Specifies the path of the root terraform module.'
+        required: true
+        type: string
+      tf_version:
+        description: 'Specifies version of Terraform to use. e.g: 1.1.0 Default=latest.'
+        required: false
+        type: string
+        default: latest
+      gh_environment:
+        description: 'Specifies the GitHub deployment environment.'
+        required: false
+        type: string
+        default: null
+      tf_vars_file:
+        description: 'Specifies the Terraform TFVARS file.'
+        required: true
+        type: string
+      task_container_version:
+        description: 'Specifies the version of the container to deploy.'
+        required: true
+        type: string
+      task_container_registry:
+          description: 'Task Container Registry'
+          required: true
+          type: string
+      task_container_name:
+          description: 'Task Container Name'
+          required: true
+          type: string
+    secrets:
+      cli_config_credentials_token:
+        description: 'CLI configuration credentials token'
+        required: true
+      azure_acr_username:
+        description: 'Azure ACR (Azure Container Registry) username'
+        required: true
+      azure_acr_password:
+        description: 'Azure ACR (Azure Container Registry) password'
+        required: true
+      azure_tenant_id:
+        description: 'Azure Tenant ID for the subscription'
+        required: true
+      azure_subscription_id:
+        description: 'Azure subscription ID'
+        required: true
+      azure_client_id:
+        description: 'Azure Client ID'
+        required: true
+      azure_client_secret:
+        description: 'Azure Client Secret'
+        required: true
+      github_personal_access_token:
+        description: 'GitHub Personal Access Token'
+        required: true
+
+  
+jobs:
+  build-plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: ${{ inputs.gh_environment }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.path }}
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+        
+      - name: Change file name
+        run: | 
+          mv ${{ github.workspace }}/${{ inputs.path }}/varfiles/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
+
+      - name: Update task_container_version
+        run: |
+          TFVARS="${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars"
+          echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
+          echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
+          echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
+          echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
+          echo -e "task_container_registry = \"${{ inputs.task_container_registry }}\"\n" >> $TFVARS
+          echo -e "task_container_name = \"${{ inputs.task_container_name }}\"\n" >> $TFVARS
+          echo -e "task_container_version = \"${{ inputs.task_container_version }}\"\n" >> $TFVARS
+          echo -e "azure_acr_username = \"${{ secrets.azure_acr_username }}\"\n" >> $TFVARS
+          echo -e "azure_acr_password = \"${{ secrets.azure_acr_password }}\"\n" >> $TFVARS
+          echo -e "github_personal_access_token = \"${{ secrets.github_personal_access_token }}\"\n" >> $TFVARS
+          echo -e "environment = \"${{ inputs.gh_environment }}\"\n" >> $TFVARS
+        
+        
+      - name: Display .auto.tfvars file content
+        run: |
+          cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+          
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.2
+        with:
+          terraform_version: ${{ inputs.tf_version }}
+          cli_config_credentials_token: ${{ secrets.cli_config_credentials_token }}
+      
+      - name: Terraform Init
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
+          TF_WORKSPACE: ${{ inputs.gh_environment }}
+        run: |
+          git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+          terraform init
+        
+      
+      # - name: Terraform Workspace Creation
+      #   run: terraform workspace new ${{ inputs.task_container_name }}-${{ inputs.gh_environment }} || true
+      
+      # - name: Terraform Workspace Selection
+      #   run: terraform workspace select ${{ inputs.task_container_name }}-${{ inputs.gh_environment }}
+        
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        env:
+          TF_VAR_region: 'us-west-1' #replace with your variable and value
+          TF_VAR_azure_client_id: ${{ secrets.azure_client_id }}
+          TF_VAR_azure_client_secret: ${{ secrets.azure_client_secret }}
+          TF_VAR_subscription_id: ${{ secrets.azure_subscription_id }}
+          TF_VAR_tenant_id: ${{ secrets.azure_tenant_id }}
+          TF_VAR_task_container_registry: ${{ inputs.task_container_registry }}
+          TF_VAR_task_container_name: ${{ inputs.task_container_name }}
+          TF_VAR_task_container_version: ${{ inputs.task_container_version }}
+          TF_VAR_azure_acr_username: ${{ secrets.azure_acr_username }}
+          TF_VAR_azure_acr_password: ${{ secrets.azure_acr_password }}
+          TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
+          TF_VAR_environment: ${{ inputs.gh_environment }}
+          TF_WORKSPACE: ${{ inputs.gh_environment }}
+          TF_environment: ${{ inputs.gh_environment }}
+        run: terraform plan
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_region: 'us-west-1' #replace with your variable and value
+          TF_VAR_azure_client_id: ${{ secrets.azure_client_id }}
+          TF_VAR_azure_client_secret: ${{ secrets.azure_client_secret }}
+          TF_VAR_subscription_id: ${{ secrets.azure_subscription_id }}
+          TF_VAR_tenant_id: ${{ secrets.azure_tenant_id }}
+          TF_VAR_task_container_registry: ${{ inputs.task_container_registry }}
+          TF_VAR_task_container_name: ${{ inputs.task_container_name }}
+          TF_VAR_task_container_version: ${{ inputs.task_container_version }}
+          TF_VAR_azure_acr_username: ${{ secrets.azure_acr_username }}
+          TF_VAR_azure_acr_password: ${{ secrets.azure_acr_password }}
+          TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
+          TF_VAR_environment: ${{ inputs.gh_environment }}
+          TF_WORKSPACE: ${{ inputs.gh_environment }}
+          TF_environment: ${{ inputs.gh_environment }}
