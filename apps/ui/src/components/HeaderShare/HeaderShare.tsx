@@ -7,7 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Share from '@l3-lib/ui-core/dist/icons/Share'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
-import { avatarsArray } from 'assets/avatars'
+// import { avatarsArray } from 'assets/avatars'
 
 type HeaderShareProps = {
   activeUsers?: any
@@ -35,7 +35,7 @@ const HeaderShare = ({ activeUsers = [] }: HeaderShareProps) => {
               position={Tooltip.positions.TOP}
             >
               <StyledAvatar active={activeUsers.includes(assigned_user_id)}>
-                <RandomAvatar imageArray={avatarsArray} />
+                {/* <RandomAvatar imageArray={avatarsArray} /> */}
                 {activeUsers.includes(assigned_user_id) && <StyledGreenDot />}
               </StyledAvatar>
             </Tooltip>

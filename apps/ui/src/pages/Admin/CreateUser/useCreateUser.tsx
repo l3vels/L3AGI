@@ -5,7 +5,6 @@ import { useCreateUserService } from 'services'
 import { useNavigate } from 'react-router-dom'
 import useSnackbarAlert from 'hooks/useSnackbar'
 
-import countries from 'utils/countries'
 import { createUserValidation, createAdminValidation } from 'utils/validationsSchema'
 
 import { useTranslation } from 'react-i18next'
@@ -91,7 +90,7 @@ const useCreateUser = () => {
   return {
     formik,
     alertMessage,
-    countries: countryList,
+    countries: [],
     loading,
     handleCloseAlert,
   }

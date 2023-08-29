@@ -9,7 +9,6 @@ import {
   COMPANY_SIZE_OPTIONS,
   COMPANY_ROLE_OPTIONS,
 } from 'utils/constants'
-import countries from 'utils/countries'
 
 // const companyOptionsValues = ORGANISATION_OPTIONS.map(item => item.value)
 const companySizes = COMPANY_SIZE_OPTIONS.map(item => item.value)
@@ -105,12 +104,11 @@ const useRegister = () => {
     }
   }, [formik])
 
-  const countryList = countries().map(({ name }) => ({ label: name, value: name }))
+ 
 
   return {
     formik,
     alertMessage,
-    countries: countryList,
   }
 }
 

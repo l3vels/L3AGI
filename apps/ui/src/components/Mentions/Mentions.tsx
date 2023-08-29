@@ -10,7 +10,6 @@ import { useAssignedUserListService } from 'services'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import RandomAvatarIcon from './components/RandomAvatarIcon'
 import l3Icon from '../../modals/AIChatModal/assets/l3.png'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
@@ -60,7 +59,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsPr
       display: user.assigned_user_first_name,
       id: `user__${user.assigned_user_id}`,
       type: 'Team Member',
-      icon: <RandomAvatarIcon />,
+      // icon: <RandomAvatarIcon />,
     }
   })
 

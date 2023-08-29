@@ -1,8 +1,6 @@
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
 import { ReportsOverview } from './ReportsOverview/ReportsOverview'
 
-import TopCharts from './TopCharts/TopCharts'
-import Documentation from './Documentation/Documentation'
 
 import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
 import { SectionDivider } from 'styles/globalStyle.css'

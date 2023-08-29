@@ -9,7 +9,6 @@ import {
   useAccountByIdService,
   useUpdateAccountService,
 } from 'services'
-import countries from 'utils/countries'
 import { createUserValidation, createAdminValidation } from 'utils/validationsSchema'
 import { useEffect, useState } from 'react'
 
@@ -86,7 +85,7 @@ const useEditUser = () => {
   return {
     formik,
     loading,
-    countries: countryList,
+    countries: [],
     isUser,
   }
 }
