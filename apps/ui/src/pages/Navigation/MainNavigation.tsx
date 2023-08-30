@@ -1,14 +1,13 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
-
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { includes } from 'lodash'
 import InventoryIconSvg from 'assets/svgComponents/InventoryIconSvg'
 import ResourcesIconSvg from 'assets/svgComponents/ResourcesIconSvg'
 import PlayersIconSvg from 'assets/svgComponents/PlayersIconSvg'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { includes } from 'lodash'
 
-const GameNavigation = () => {
+const MainNavigation = () => {
   const navigate = useNavigate()
 
   const { pathname } = useLocation()
@@ -28,40 +27,30 @@ const GameNavigation = () => {
 
   return (
     <StyledUl>
-      <StyledLi
-        isActive={active.length === 3 && includes(active, '')}
-        onClick={() => onHandleClick('')}
-      >
+      <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('')}>
         <HomeIconSvg />
         <span>Home</span>
       </StyledLi>
-      <StyledLi
-        isActive={includes(active, 'collections')}
-        onClick={() => onHandleClick('collections')}
-      >
+      <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('agents')}>
         <InventoryIconSvg />
-        <span>Inventory</span>
-      </StyledLi>
-      <StyledLi isActive={includes(active, 'resources')} onClick={() => onHandleClick('resources')}>
-        <ResourcesIconSvg />
-        <span>Resources</span>
-      </StyledLi>
-      <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
-        <PlayersIconSvg />
-        <span>Players</span>
+        <span>Agents</span>
       </StyledLi>
       <StyledLi
-        isActive={includes(active, 'transactions')}
-        onClick={() => onHandleClick('transactions')}
+        isActive={includes(active, 'datasources')}
+        onClick={() => onHandleClick('datasources')}
       >
+        <ResourcesIconSvg />
+        <span>Datasources</span>
+      </StyledLi>
+      <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('tools')}>
         <PlayersIconSvg />
-        <span>Transactions</span>
+        <span>Tools</span>
       </StyledLi>
     </StyledUl>
   )
 }
 
-export default GameNavigation
+export default MainNavigation
 
 const StyledUl = styled.ul`
   list-style: none;
@@ -70,7 +59,6 @@ const StyledUl = styled.ul`
   display: flex;
   gap: 16px;
 `
-
 const StyledLi = styled.li<{ isActive?: boolean }>`
   width: 90px;
   height: 64px;

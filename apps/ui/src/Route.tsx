@@ -45,6 +45,8 @@ import CreateAgentModal from 'modals/CreateAgentModal'
 import EditAgentModal from 'modals/EditAgentModal'
 import CreateDatasourceModal from 'modals/CreateDatasourceModal'
 import EditDatasourceModal from 'modals/EditDatasourceModal'
+import Agents from 'pages/Agents'
+import Datasource from 'pages/Datasource'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -67,6 +69,9 @@ const Route = () => {
             <Router element={<MainRouteLayout />}>
               <Router path='/' element={<Home />} key={document.location.href} />
 
+              <Router path='agents' element={<Agents />} key={document.location.href} />
+              <Router path='datasources' element={<Datasource />} key={document.location.href} />
+              <Router path='tools' element={<div>Coming Soon</div>} key={document.location.href} />
               <Router path='teams' element={<Teams />} key={document.location.href} />
               <Router path='channels' element={<Channels />} key={document.location.href} />
               {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
