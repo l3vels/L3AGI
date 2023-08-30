@@ -44,11 +44,11 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const { upsertChatMessageInCache } = useUpdateChatCache()
 
   const getClientAccessUrl = useCallback(async () => {
-    const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/negotiate?id=${user.id}`
+    const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${user.id}`
 
     const response = await fetch(url)
     const data = await response.json()
-    return data[0].url
+    return data.url
   }, [user.id])
 
   useEffect(() => {
