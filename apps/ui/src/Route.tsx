@@ -17,13 +17,8 @@ import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
 import { useContext, useState } from 'react'
-import ManageUsers from 'pages/Admin/ManageUsers'
-import CreateUser from 'pages/Admin/CreateUser'
-import EditUser from 'pages/Admin/EditUser'
-import ViewUser from 'pages/Admin/ViewUser'
-import UpdateRole from 'pages/Admin/UpdateRole'
 
-import { PublicRoute, AdminRoute } from 'routes'
+import { PublicRoute } from 'routes'
 
 import UpdatePassword from 'pages/UpdatePassword'
 
@@ -68,60 +63,49 @@ const Route = () => {
     <ThemeProvider theme={theme}>
       <Routes>
         <>
-          {user?.role === 'admin' ? (
-            <Router element={<AdminRoute />}>
-              <Router path='/' element={<ManageUsers />} />
-              <Router path='/admin/users/create' element={<CreateUser />} />
-              <Router path='/admin/user/edit/:id' element={<EditUser />} />
-              <Router path='/admin/user/:id' element={<ViewUser />} />
-              <Router path='/admin/user/edit/update-role/:id' element={<UpdateRole />} />
+          <Router element={<RootLayout />}>
+            <Router element={<MainRouteLayout />}>
+              <Router path='/' element={<Home />} key={document.location.href} />
+
+              <Router path='teams' element={<Teams />} key={document.location.href} />
+              <Router path='channels' element={<Channels />} key={document.location.href} />
+              {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
+
+              {/* // disabled routes  */}
+              <Router path='saved' element={<Saved />} key={document.location.href} />
+              <Router path='create' element={<Create />} key={document.location.href} />
+              <Router
+                path='change-password'
+                element={<ChangePassword />}
+                key={document.location.href}
+              />
+              <Router path='account' element={<Account />} key={document.location.href} />
+              <Router path='api-keys' element={<ApiKeys />} key={document.location.href} />
+              <Router path='settings' element={<Settings />} key={document.location.href} />
+              <Router path='about' element={<About />} key={document.location.href} />
+              <Router path='logs' element={<Log />} key={document.location.href} />
+              <Router path='log/:id' element={<Log />} key={document.location.href} />
+              <Router path='successful/:id' element={<Log />} key={document.location.href} />
+              <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
+              <Router path='webhook' element={<Webhook />} key={document.location.href} />
             </Router>
-          ) : (
-            // <Router>
-            <Router element={<RootLayout />}>
-              <Router element={<MainRouteLayout />}>
-                <Router path='/' element={<Home />} key={document.location.href} />
 
-                <Router path='teams' element={<Teams />} key={document.location.href} />
-                <Router path='channels' element={<Channels />} key={document.location.href} />
-                {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
-
-                {/* // disabled routes  */}
-                <Router path='saved' element={<Saved />} key={document.location.href} />
-                <Router path='create' element={<Create />} key={document.location.href} />
-                <Router
-                  path='change-password'
-                  element={<ChangePassword />}
-                  key={document.location.href}
-                />
-                <Router path='account' element={<Account />} key={document.location.href} />
-                <Router path='api-keys' element={<ApiKeys />} key={document.location.href} />
-                <Router path='settings' element={<Settings />} key={document.location.href} />
-                <Router path='about' element={<About />} key={document.location.href} />
-                <Router path='logs' element={<Log />} key={document.location.href} />
-                <Router path='log/:id' element={<Log />} key={document.location.href} />
-                <Router path='successful/:id' element={<Log />} key={document.location.href} />
-                <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
-                <Router path='webhook' element={<Webhook />} key={document.location.href} />
-              </Router>
-
-              <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href}>
-                <Router index element={<AIChat />} key={document.location.href} />
-              </Router>
-
-              <Router path={'developers'} element={<DevelopersRouteLayout />}>
-                <Router index element={<ApiKeys />} key={document.location.href} />
-                <Router path={'webhook'} element={<Webhook />} key={document.location.href} />
-                <Router path={'logs'} element={<Log />} key={document.location.href} />
-                <Router path={'log/:id'} element={<Log />} key={document.location.href} />
-                <Router path={'successful/:id'} element={<Log />} key={document.location.href} />
-                <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
-                {/* <Router path={'docs'} element={<Doc />} /> */}
-              </Router>
-
-              <Router path='*' element={<MainComponent value={'page not found'} />} />
+            <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href}>
+              <Router index element={<AIChat />} key={document.location.href} />
             </Router>
-          )}
+
+            <Router path={'developers'} element={<DevelopersRouteLayout />}>
+              <Router index element={<ApiKeys />} key={document.location.href} />
+              <Router path={'webhook'} element={<Webhook />} key={document.location.href} />
+              <Router path={'logs'} element={<Log />} key={document.location.href} />
+              <Router path={'log/:id'} element={<Log />} key={document.location.href} />
+              <Router path={'successful/:id'} element={<Log />} key={document.location.href} />
+              <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
+              {/* <Router path={'docs'} element={<Doc />} /> */}
+            </Router>
+
+            <Router path='*' element={<MainComponent value={'page not found'} />} />
+          </Router>
         </>
         <Router element={<PublicRoute />}>
           <Router path='/login' element={<Login />} />
