@@ -1,0 +1,11 @@
+#!/bin/bash
+
+commit_message=$(cat "$1")
+regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\([a-zA-Z0-9_-]+\))?: .+'
+
+if [[ ! $commit_message =~ $regex ]]; then
+  echo "Commit message failed semantic commit message style."
+  echo "Please follow the pattern: <type>(<scope>): <message>"
+  echo "See conventional commits for more info: https://www.conventionalcommits.org/en/v1.0.0/"
+  exit 1
+fi

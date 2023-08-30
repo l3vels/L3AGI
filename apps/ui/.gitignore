@@ -11,3 +11,5 @@ dist
 
 terraform/.terraform
 terraform/.terraform.lock.hcl
+
+yarn-error.log
