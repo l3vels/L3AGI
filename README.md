@@ -29,7 +29,16 @@
    cd L3AGI
    ```
 
-3. **Run Docker Compose:**
+3. ** Setup Git Hooks **
+
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+
+   This will build and start both the React UI and FastAPI services.
+
+4. **Run Docker Compose:**
 
    ```bash
    docker-compose up --build
