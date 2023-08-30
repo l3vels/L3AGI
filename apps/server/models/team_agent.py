@@ -5,8 +5,8 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from l3_types.team_types import teamInput
-from exceptions import teamNotFoundException
+from l3_types.team_agent_types import TeamAgentInput
+from exceptions import TeamAgentNotFoundException
 
 class TeamAgentModel(BaseModel):
     """

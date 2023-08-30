@@ -4,6 +4,7 @@ from models.base_model import BaseModel
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import AccountException, AccountNotFoundException
+from l3_types.account_types import AccountInput
 
 class AccountModel(BaseModel):
     """
@@ -57,10 +58,10 @@ class AccountModel(BaseModel):
         return db_account
      
     @classmethod
-    def update_model_from_input(cls, account_model: AccountModel, account_input: AccountInput):
+    def update_model_from_input(cls, account_model: 'AccountModel', account_input: AccountInput):
         for field in AccountInput.__annotations__.keys():
             setattr(account_model, field, getattr(account_input, field))
-        return account_model  
+        return account_model
 
     @classmethod
     def get_accounts(cls, db):
