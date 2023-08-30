@@ -1,9 +1,9 @@
 import PluginItem from '../components/PluginItem'
 import PluginList from '../components/PluginList'
 
-import contractsImg from '../../assets/contracts.png'
-import walletsImg from '../../assets/wallets.png'
-import marketsImg from '../../assets/markets.png'
+import contractsImg from 'assets/images/contracts.png'
+import walletsImg from 'assets/images/wallets.png'
+import marketsImg from 'assets/images/markets.png'
 import { useState } from 'react'
 import { usePlugins } from './usePlugins'
 

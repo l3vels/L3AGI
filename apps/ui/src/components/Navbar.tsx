@@ -13,7 +13,7 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
-import Label from 'atoms/Label'
+
 import AvatarDropDown from 'components/AvatarDropDown'
 import { AuthContext } from 'contexts'
 
@@ -164,7 +164,7 @@ const Navbar = ({
 
           <StyledAvatarColumn showMenu={showMenu}>
             <AvatarDropDown />
-            {!showMenu && <Label color={'white'}>{fullName}</Label>}
+            {!showMenu && <span>{fullName}</span>}
           </StyledAvatarColumn>
           {uploadLogoHandler && (
             <input

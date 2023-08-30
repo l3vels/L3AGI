@@ -21,13 +21,13 @@ import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
 
-import ArrowRightSvg from 'pages/Navigation/assets/ArrowRightSvg'
 import { useContext } from 'react'
 import { AuthContext } from 'contexts'
 
 import profileIcon from 'assets/icons/profile_icon.svg'
 import teamIcon from 'assets/icons/team_icon.svg'
 import signOutIcon from 'assets/icons/signout_icon.svg'
+import ArrowRightSvg from 'assets/svgComponents/ArrowRightSvg'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()

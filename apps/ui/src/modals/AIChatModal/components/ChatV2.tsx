@@ -14,7 +14,7 @@ import {
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
-import SendIconSvg from '../assets/send_icon.svg'
+import SendIconSvg from 'assets/icons/send_icon.svg'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 
