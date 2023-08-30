@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 
 import moment from 'moment'
 
-import l3 from '../../assets/l3.png'
+import l3 from 'assets/avatars/l3.png'
 import { Avatar_3 } from 'assets/avatars'
 
 import HumanMessage from './components/HumanMessage'

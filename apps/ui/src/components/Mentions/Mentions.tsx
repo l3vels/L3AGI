@@ -10,7 +10,7 @@ import { useAssignedUserListService } from 'services'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
-import l3Icon from '../../modals/AIChatModal/assets/l3.png'
+import l3Icon from 'assets/avatars/l3.png'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 

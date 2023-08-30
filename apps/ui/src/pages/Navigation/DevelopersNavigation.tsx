@@ -1,8 +1,5 @@
 import styled from 'styled-components'
-import HomeIconSvg from './assets/HomeIconSvg'
-import InventoryIconSvg from './assets/InventoryIconSvg'
-import ResourcesIconSvg from './assets/ResourcesIconSvg'
-import PlayersIconSvg from './assets/PlayersIconSvg'
+
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
@@ -10,7 +7,6 @@ import { includes } from 'lodash'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Logs from '@l3-lib/ui-core/dist/icons/Logs'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
-import Doc from '@l3-lib/ui-core/dist/icons/Doc'
 
 const DevelopersNavigation = () => {
   const navigate = useNavigate()

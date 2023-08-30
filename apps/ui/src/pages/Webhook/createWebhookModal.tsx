@@ -13,7 +13,7 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Code from '@l3-lib/ui-core/dist/icons/Code'
 // import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 
-import Copy from './svg/copy.svg'
+import Copy from 'assets/icons/copy.svg'
 
 import { useState } from 'react'
 

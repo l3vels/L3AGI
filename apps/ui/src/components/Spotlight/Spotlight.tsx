@@ -10,8 +10,8 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
 
-import pluginsIcon from './assets/plugins.png'
-import SendIconSvg from '../../modals/AIChatModal/assets/send_icon.svg'
+import pluginsIcon from 'assets/icons/plugins.png'
+import SendIconSvg from 'assets/icons/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
 import {

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import loadingVideo from './assets/chatLoading.mp4'
+import loadingVideo from 'assets/videos/chatLoading.mp4'
 
 const ChatLoader = () => {
   return (

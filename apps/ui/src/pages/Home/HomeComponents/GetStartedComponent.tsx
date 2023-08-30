@@ -1,10 +1,10 @@
 import GetStartedCard from '../GetStarted/GetStartedCard'
 import GetStartedContainer from '../GetStarted/GetStartedContainer'
 
-import cardBg1 from '../GetStarted/assets/basicsBg.png'
-import cardBg2 from '../GetStarted/assets/gameBg.png'
-import cardBg3 from '../GetStarted/assets/developerBg.png'
-import cardBg4 from '../GetStarted/assets/whiteBg.png'
+import cardBg1 from 'assets/images/basicsBg.png'
+import cardBg2 from 'assets/images/gameBg.png'
+import cardBg3 from 'assets/images/developerBg.png'
+import cardBg4 from 'assets/images/whiteBg.png'
 
 const GetStartedComponent = () => {
   return (
