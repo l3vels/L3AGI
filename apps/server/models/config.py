@@ -39,6 +39,8 @@ class ConfigModel(BaseModel):
     account_id = Column(UUID, ForeignKey('account.id'), nullable=False)
     project_id = Column(UUID, ForeignKey('project.id'), nullable=True)
     datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
+    team_id = Column(UUID, ForeignKey('team.id'), nullable=True)
+    team_agent_id = Column(UUID, ForeignKey('team_agent.id'), nullable=True)
     value = Column(String)
     key_type = Column(String)
     is_secret = Column(Boolean)
@@ -50,6 +52,8 @@ class ConfigModel(BaseModel):
     tool = relationship("ToolModel", back_populates="tool", cascade="all, delete")
     datasource = relationship("DatasourceModel", back_populates="datasource", cascade="all, delete")
     agent = relationship("AgentModel", back_populates="agent", cascade="all, delete")
+    team = relationship("TeamModel", back_populates="team", cascade="all, delete")
+    team_agent = relationship("TeamAgentModel", back_populates="team_agent", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (

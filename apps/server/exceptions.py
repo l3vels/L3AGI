@@ -69,3 +69,15 @@ class ProjectException(AppBaseException):
 
 class ProjectNotFoundException(DatasourceException):
     pass
+
+class TeamException(AppBaseException):
+    pass
+
+class TeamNotFoundException(DatasourceException):
+    pass
+
+class TeamAgentException(AppBaseException):
+    pass
+
+class TeamAgentNotFoundException(DatasourceException):
+    pass
