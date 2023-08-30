@@ -33,7 +33,7 @@ class ToolModel(BaseModel):
     is_deleted = Column(Boolean, default=False)
     is_system = Column(Boolean, default=False)
     #todo need to add tags array
-    account_id = Column(UUID, ForeignKey('datasource.id'), nullable=False)
+    account_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
     
     account = relationship("AccountModel", back_populates="account", cascade="all, delete")
     

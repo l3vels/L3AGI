@@ -36,7 +36,7 @@ class ConfigModel(BaseModel):
     key = Column(String)
     agent_id = Column(UUID,ForeignKey('agent.id'), nullable=True)
     tool_id = Column(UUID, ForeignKey('tool.id'), nullable=True)
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=False)
+    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
     project_id = Column(UUID, ForeignKey('project.id'), nullable=True)
     datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
     team_id = Column(UUID, ForeignKey('team.id'), nullable=True)
