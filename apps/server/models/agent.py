@@ -36,7 +36,7 @@ class AgentModel(BaseModel):
     is_deleted = Column(Boolean, default=False)
     is_template = Column(Boolean, default=False)
     is_memory = Column(Boolean, default=True)
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
+    account_id = Column(UUID, nullable=True)
     
     is_system = Column(Boolean, default=False)
     

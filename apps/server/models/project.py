@@ -29,7 +29,7 @@ class ProjectModel(BaseModel):
     description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
     is_system = Column(Boolean, default=False)
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
+    account_id = Column(UUID, nullable=True)
     
     # account = relationship("AccountModel", back_populates="projects", cascade="all, delete")
     

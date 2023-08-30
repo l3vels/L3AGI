@@ -27,7 +27,7 @@ class TeamModel(BaseModel):
     is_system = Column(Boolean, default=False)
     is_template = Column(Boolean, default=False)
     project_id = Column(UUID, ForeignKey('project.id'), nullable=True) #gonna use if need store teams based on game, project or any
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
+    account_id = Column(UUID, nullable=True)
     
     # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
     # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
