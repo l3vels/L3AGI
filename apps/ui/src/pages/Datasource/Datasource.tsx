@@ -20,15 +20,15 @@ const Datasource = () => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <StyledSectionTitle>Datasource</StyledSectionTitle>
-
-        <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
-      </StyledHeaderGroup>
-      <ComponentsWrapper>
+        <div>
+          <StyledSectionTitle>Datasource</StyledSectionTitle>
+          <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
+        </div>
         <StyledButtonWrapper>
           <Button onClick={openDatasourceModal}>Create Datasource</Button>
         </StyledButtonWrapper>
-
+      </StyledHeaderGroup>
+      <ComponentsWrapper>
         <StyledDatasourceCardsWrapper>
           {datasources?.map((datasource: any, index: number) => {
             return (
