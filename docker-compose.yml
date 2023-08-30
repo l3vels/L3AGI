@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  ui:
+    build:
+      context: ./apps/ui
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./apps/ui:/app
+      - /app/node_modules
+
+  server:
+    build:
+      context: ./apps/server
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./apps/server:/code
+    ports:
+      - "4002:4002"
