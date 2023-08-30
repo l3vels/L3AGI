@@ -18,7 +18,7 @@ const GetStartedComponent = () => {
       />
       <GetStartedCard
         subTitle={'Create your'}
-        title={'First Game'}
+        title={'First Agent'}
         image={cardBg2}
         bgColor={'orange'}
         link={'https://docs.l3vels.xyz/docs/build-manage-your-game'}
@@ -32,7 +32,7 @@ const GetStartedComponent = () => {
       />
       <GetStartedCard
         subTitle={'Learn about'}
-        title={'Assets panel'}
+        title={'Datasources'}
         image={cardBg4}
         bgColor={'red'}
         link={'https://docs.l3vels.xyz/docs/create-organize-assets'}
