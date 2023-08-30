@@ -9,7 +9,7 @@
       "args": ["main:app", "--host", "0.0.0.0", "--port", "4002", "--reload"],
       "console": "integratedTerminal",
       "justMyCode": false,
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}/apps/server"
     },
     {
       "name": "Python: Test",
@@ -18,7 +18,7 @@
       "program": "${workspaceFolder}/test.py",
       "console": "integratedTerminal",
       "justMyCode": false,
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}/apps/server"
     }
   ]
 }
