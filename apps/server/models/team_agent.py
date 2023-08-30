@@ -23,5 +23,5 @@ class TeamAgentModel(BaseModel):
     team_id = Column(UUID, ForeignKey('team.id'), nullable=True) #gonna use if need store teams based on game, project or any
     agent_id = Column(UUID, ForeignKey('agent.id'), nullable=False)
     
-    agent = relationship("AgentModel", back_populates="agent", cascade="all, delete")
-    team = relationship("TeamModel", back_populates="team", cascade="all, delete")
+    # agent = relationship("AgentModel", back_populates="agent", cascade="all, delete")
+    # team = relationship("TeamModel", back_populates="team", cascade="all, delete")

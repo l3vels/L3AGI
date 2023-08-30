@@ -35,7 +35,7 @@ class ToolModel(BaseModel):
     #todo need to add tags array
     account_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
     
-    account = relationship("AccountModel", back_populates="account", cascade="all, delete")
+    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (

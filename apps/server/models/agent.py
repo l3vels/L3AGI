@@ -41,8 +41,8 @@ class AgentModel(BaseModel):
     is_system = Column(Boolean, default=False)
     
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
-    account = relationship("AccountModel", back_populates="account", cascade="all, delete")
-    project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
+    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
+    # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
 
     
     def __repr__(self) -> str:

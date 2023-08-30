@@ -17,13 +17,13 @@ class UserAccountModel(BaseModel):
     __tablename__ = 'user_account'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    user_id = Column(UUID, ForeignKey('account.id'), nullable=False) 
+    user_id = Column(UUID, ForeignKey('user.id'), nullable=False) 
     account_id = Column(UUID, ForeignKey('account.id'), nullable=False) 
-    role_id = Column(UUID, ForeignKey('account.id'), nullable=False) 
+    role_id = Column(UUID, ForeignKey('role.id'), nullable=False) 
     
-    account = relationship("AccountModel", back_populates="account", cascade="all, delete")
-    user = relationship("UserModel", back_populates="user", cascade="all, delete")
-    role = relationship("RoleModel", back_populates="role", cascade="all, delete")
+    # account = relationship("AccountModel", back_populates="user_accounts", cascade="all, delete")
+    # user = relationship("UserModel", back_populates="user", cascade="all, delete")
+    # role = relationship("RoleModel", back_populates="role", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (

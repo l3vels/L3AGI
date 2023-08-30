@@ -31,5 +31,5 @@ class ProjectModel(BaseModel):
     is_system = Column(Boolean, default=False)
     account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
     
-    account = relationship("AccountModel", back_populates="account", cascade="all, delete")
+    # account = relationship("AccountModel", back_populates="projects", cascade="all, delete")
     

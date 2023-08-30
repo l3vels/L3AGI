@@ -25,6 +25,9 @@ class AccountModel(BaseModel):
     location = Column(String(100), default=None)
     deleted = Column(Boolean, default=False)
     
+    # user_accounts = relationship("UserAccountModel", back_populates="account")
+    # projects = relationship("ProjectModel", back_populates="account")
+    
     def __repr__(self) -> str:
         return (
             f"Account(id={self.id}, "

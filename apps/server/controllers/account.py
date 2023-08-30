@@ -4,6 +4,8 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
 from pydantic import BaseModel
 
+from models.role import RoleModel
+from models.user_account import UserAccountModel
 from models.account import AccountModel
 from l3_types.account_types import AccountResponse, AccountInput
 from utils.auth import authenticate

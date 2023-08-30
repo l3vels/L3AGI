@@ -47,13 +47,13 @@ class ConfigModel(BaseModel):
     is_required = Column(Boolean)    
     is_deleted = Column(Boolean, default=False)
 
-    account = relationship("AccountModel", back_populates="account", cascade="all, delete")
-    project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
-    tool = relationship("ToolModel", back_populates="tool", cascade="all, delete")
-    datasource = relationship("DatasourceModel", back_populates="datasource", cascade="all, delete")
-    agent = relationship("AgentModel", back_populates="agent", cascade="all, delete")
-    team = relationship("TeamModel", back_populates="team", cascade="all, delete")
-    team_agent = relationship("TeamAgentModel", back_populates="team_agent", cascade="all, delete")
+    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
+    # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
+    # tool = relationship("ToolModel", back_populates="tool", cascade="all, delete")
+    # datasource = relationship("DatasourceModel", back_populates="datasource", cascade="all, delete")
+    # agent = relationship("AgentModel", back_populates="agent", cascade="all, delete")
+    # team = relationship("TeamModel", back_populates="team", cascade="all, delete")
+    # team_agent = relationship("TeamAgentModel", back_populates="team_agent", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (
