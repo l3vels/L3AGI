@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import commandIcon from './assets/command.png'
+import commandIcon from 'assets/icons/command.png'
 
 const CommandIcon = () => {
   return (

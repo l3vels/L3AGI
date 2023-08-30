@@ -1,6 +1,4 @@
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
-import { ReportsOverview } from './ReportsOverview/ReportsOverview'
-
 
 import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
 import { SectionDivider } from 'styles/globalStyle.css'
@@ -27,7 +25,6 @@ const Home = () => {
             <Datasource />
           </>
         )}
-        <ReportsOverview />
 
         {/* 
         <TopCharts />

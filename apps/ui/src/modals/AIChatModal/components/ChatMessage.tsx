@@ -5,12 +5,12 @@ import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
-import user from '../assets/user.png'
-import l3 from '../assets/l3.png'
+import user from 'assets/avatars/user.png'
+import l3 from 'assets/avatars/l3.png'
 import { IChatMessage, MessageTypeEnum } from '../types'
 import styled from 'styled-components'
 
-import loadingVideo from '../assets/sidebyside-s.mp4'
+import loadingVideo from 'assets/videos/sidebyside-s.mp4'
 
 type ChatMessageProps = {
   message: IChatMessage

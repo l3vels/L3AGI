@@ -1,12 +1,12 @@
 import PluginItem from '../components/PluginItem'
 import PluginList from '../components/PluginList'
 
-import reportsImg from '../../assets/reports.png'
-import levelsImg from '../../assets/levels.png'
-import assetsImg from '../../assets/assets.png'
-import rewardsImg from '../../assets/rewards.png'
-import achievementsImg from '../../assets/achievements.png'
-import attributesImg from '../../assets/attributes.png'
+import reportsImg from 'assets/images/reports.png'
+import levelsImg from 'assets/images/levels.png'
+import assetsImg from 'assets/images/assets.png'
+import rewardsImg from 'assets/images/rewards.png'
+import achievementsImg from 'assets/images/achievements.png'
+import attributesImg from 'assets/images/attributes.png'
 import { usePlugins } from './usePlugins'
 
 const MediaPlugins = () => {

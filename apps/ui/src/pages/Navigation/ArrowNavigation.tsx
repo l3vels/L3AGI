@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components'
-import ArrowLeftSvg from './assets/ArrowLeftSvg'
-import ArrowRightSvg from './assets/ArrowRightSvg'
+
 import { useNavigate } from 'react-router-dom'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'

@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import HomeIconSvg from './assets/HomeIconSvg'
-import InventoryIconSvg from './assets/InventoryIconSvg'
-import ResourcesIconSvg from './assets/ResourcesIconSvg'
-import PlayersIconSvg from './assets/PlayersIconSvg'
+import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
+
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
+import InventoryIconSvg from 'assets/svgComponents/InventoryIconSvg'
+import ResourcesIconSvg from 'assets/svgComponents/ResourcesIconSvg'
+import PlayersIconSvg from 'assets/svgComponents/PlayersIconSvg'
 
 const GameNavigation = () => {
   const navigate = useNavigate()
