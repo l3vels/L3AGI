@@ -8,6 +8,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_sqlalchemy import DBSessionMiddleware
 
+from controllers.user import router as user_router
+from controllers.account import router as account_router
+from controllers.project import router as project_router
+
 from config import Config
 from models.db import Base, engine
 
@@ -53,6 +57,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(user_router, prefix="/account")
+app.include_router(account_router, prefix="/account")
+app.include_router(project_router, prefix="/project")
 app.include_router(agent_router, prefix="/agent")
 app.include_router(config_router, prefix="/config")
 app.include_router(datasource_router, prefix="/datasource")

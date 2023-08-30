@@ -35,12 +35,13 @@ class AgentModel(BaseModel):
     description = Column(String)
     is_deleted = Column(Boolean, default=False)
     is_template = Column(Boolean, default=False)
-    # account_id = Column(UUID, ForeignKey('account.id'))
+    is_memory = Column(Boolean, default=True)
+    account_id = Column(UUID, ForeignKey('account.id'))
     
     is_system = Column(Boolean, default=False)
     
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
-    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
+    account = relationship("AccountModel", back_populates="account", cascade="all, delete")
     project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
 
     
