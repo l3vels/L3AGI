@@ -20,7 +20,6 @@ class AccountModel(BaseModel):
     __tablename__ = 'account'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    user_id = Column(UUID, index=True)
     name = Column(String(100), default=None) 
     deleted = Column(Boolean, default=False)
     
@@ -30,7 +29,7 @@ class AccountModel(BaseModel):
     def __repr__(self) -> str:
         return (
             f"Account(id={self.id}, "
-            f"name='{self.name}', location='{self.location}', "
+            f"name='{self.name}', "
             f"deleted={self.deleted})"
         )
 

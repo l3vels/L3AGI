@@ -11,7 +11,7 @@ from fastapi_sqlalchemy import DBSessionMiddleware
 from config import Config
 from models.db import Base, engine
 
-from controllers.user import router as user_router
+from controllers.auth import router as user_router
 from controllers.account import router as account_router
 from controllers.project import router as project_router
 from controllers.team import router as team_router
@@ -22,7 +22,7 @@ from controllers.config import router as config_router
 from controllers.datasource import router as datasource_router
 from controllers.tool import router as tool_router
 from controllers.llm import router as llm_router
-from controllers.chat import router as chat_router
+# from controllers.chat import router as chat_router
 
 
 VERSION = "0.3.1"
@@ -59,7 +59,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user_router, prefix="/user")
+app.include_router(user_router, prefix="/auth")
 app.include_router(account_router, prefix="/account")
 app.include_router(project_router, prefix="/project")
 app.include_router(team_router, prefix="/team")
@@ -69,7 +69,7 @@ app.include_router(config_router, prefix="/config")
 app.include_router(datasource_router, prefix="/datasource")
 app.include_router(tool_router, prefix="/tool")
 app.include_router(llm_router, prefix="/llm")
-app.include_router(chat_router, prefix="/chat")
+# app.include_router(chat_router, prefix="/chat")
 
 
 
