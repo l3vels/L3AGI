@@ -21,8 +21,7 @@ class AccountModel(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     user_id = Column(UUID, index=True)
-    name = Column(String(100), default=None)
-    location = Column(String(100), default=None)
+    name = Column(String(100), default=None) 
     deleted = Column(Boolean, default=False)
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")
