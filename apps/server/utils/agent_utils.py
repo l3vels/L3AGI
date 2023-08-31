@@ -1,9 +1,9 @@
 from models.agent import AgentModel
 from typing import List, Optional
-from l3_types.agent_types import AgentResponse, ConfigsResponse, AgentInput, AgentWithConfigsResponse
+from typings.agent_types import AgentResponse, ConfigsOutput, AgentInput, AgentWithConfigsOutput
 from utils.type_utils import convert_value_to_type
 
-def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsResponse:
+def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput:
     agent_data = {}
     
     # Extract attributes from AgentModel using annotations of Agent
@@ -18,17 +18,17 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsRespon
         key = getattr(config_model, "key")
         value = getattr(config_model, "value")
         
-        # Convert value to the type specified in ConfigsResponse
-        target_type = ConfigsResponse.__annotations__.get(key)
+        # Convert value to the type specified in ConfigsOutput
+        target_type = ConfigsOutput.__annotations__.get(key)
 
         if target_type:
             value = convert_value_to_type(value, target_type)
         
         configs[key] = value
     
-    return AgentWithConfigsResponse(agent=AgentResponse(**agent_data), 
-                                    configs= ConfigsResponse(**configs, is_deleted=False) )
+    return AgentWithConfigsOutput(agent=AgentResponse(**agent_data), 
+                                    configs= ConfigsOutput(**configs, is_deleted=False) )
 
 
-def convert_agents_to_agent_list(agents: List[AgentModel]) -> List[AgentWithConfigsResponse]:
+def convert_agents_to_agent_list(agents: List[AgentModel]) -> List[AgentWithConfigsOutput]:
     return [convert_model_to_response(agent_model) for agent_model in agents]

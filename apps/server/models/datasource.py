@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from l3_types.datasource_types import DatasourceInput
+from typings.datasource_types import DatasourceInput
 from exceptions import DatasourceNotFoundException
 
 class DatasourceModel(BaseModel):

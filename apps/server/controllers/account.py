@@ -6,16 +6,16 @@ from pydantic import BaseModel
 
 from models.user_account import UserAccountModel
 from models.account import AccountModel
-from l3_types.account_types import AccountResponse, AccountInput
+from typings.account_types import AccountOutput, AccountInput
 from utils.auth import authenticate
-from l3_types.auth_types import UserAccount
+from typings.auth_types import UserAccount
 from utils.account_utils import convert_accounts_to_account_list, convert_model_to_response
 from exceptions import AccountNotFoundException
 
 router = APIRouter()
 
-@router.put("/{id}", status_code=200, response_model=AccountResponse)  # Changed status code to 200
-def update_account(id: str, input: AccountInput, auth: UserAccount = Depends(authenticate)) -> AccountResponse:
+@router.put("/{id}", status_code=200, response_model=AccountOutput)  # Changed status code to 200
+def update_account(id: str, input: AccountInput, auth: UserAccount = Depends(authenticate)) -> AccountOutput:
     """
     Update an existing account with configurations.
 
@@ -25,7 +25,7 @@ def update_account(id: str, input: AccountInput, auth: UserAccount = Depends(aut
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        AccountResponse: Updated account object.
+        AccountOutput: Updated account object.
     """
     try:
         db_account = AccountModel.update_account(db, 
@@ -37,8 +37,8 @@ def update_account(id: str, input: AccountInput, auth: UserAccount = Depends(aut
     except AccountNotFoundException:
         raise HTTPException(status_code=404, detail="Account not found")
 
-@router.get("/", response_model=List[AccountResponse])
-def get_user_accounts(auth: UserAccount = Depends(authenticate)) -> List[AccountResponse]:
+@router.get("/", response_model=List[AccountOutput])
+def get_user_accounts(auth: UserAccount = Depends(authenticate)) -> List[AccountOutput]:
     """
     Get all accounts by account ID.
 
@@ -46,13 +46,13 @@ def get_user_accounts(auth: UserAccount = Depends(authenticate)) -> List[Account
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[AccountResponse]: List of accounts associated with the account.
+        List[AccountOutput]: List of accounts associated with the account.
     """
     db_accounts = AccountModel.get_accounts(db=db, account=auth.account)
     return convert_accounts_to_account_list(db_accounts)
 
-@router.get("/{id}", response_model=AccountResponse)
-def get_account_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AccountResponse:
+@router.get("/{id}", response_model=AccountOutput)
+def get_account_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AccountOutput:
     """
     Get a account by its ID.
 
@@ -61,7 +61,7 @@ def get_account_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> Acc
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        AccountResponse: Account associated with the given ID.
+        AccountOutput: Account associated with the given ID.
     """
     db_account = AccountModel.get_account_by_id(db, account_id=id, account=auth.account)
     

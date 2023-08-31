@@ -9,7 +9,7 @@ class ProjectInput(BaseModel):
     is_system: Optional[bool]
 
 
-class ProjectResponse(BaseModel):
+class ProjectOutput(BaseModel):
     id: str
     name: str
     description: Optional[str]

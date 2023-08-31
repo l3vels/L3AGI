@@ -7,12 +7,12 @@ from pydantic import BaseModel
 from models.user import UserModel
 from models.account import AccountModel
 from models.user_account import UserAccountModel
-from l3_types.user_types import UserResponse, UserInput
-from l3_types.user_account_types import UserAccountInput
+from typings.user_types import UserOutput, UserInput
+from typings.user_account_types import UserAccountInput
 from utils.auth import authenticate
-from l3_types.user_types import UserInput
-from l3_types.auth_types import LoginInput, RegisterInput, GoogleInput, GithubInput
-from l3_types.account_types import AccountInput
+from typings.user_types import UserInput
+from typings.auth_types import LoginInput, RegisterInput, GoogleInput, GithubInput
+from typings.account_types import AccountInput
 from utils.user_utils import convert_users_to_user_list, convert_model_to_response
 from exceptions import UserNotFoundException
 import services.auth_service as auth_service

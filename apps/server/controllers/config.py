@@ -4,16 +4,16 @@ from fastapi_sqlalchemy import db
 from pydantic import BaseModel
 
 from models.config import ConfigModel
-from l3_types.config_types import ConfigResponse, ConfigInput, ConfigQueryParams
+from typings.config_types import ConfigOutput, ConfigInput, ConfigQueryParams
 from utils.auth import authenticate
-from l3_types.auth_types import UserAccount
+from typings.auth_types import UserAccount
 from utils.config_utils import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=ConfigResponse)
-def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigResponse:
+@router.post("/", status_code=201, response_model=ConfigOutput)
+def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
     """
     Create a new config with configurations.
 
@@ -22,14 +22,14 @@ def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        ConfigResponse: Created config object.
+        ConfigOutput: Created config object.
     """
     # Consider adding try-except for error handling during creation if needed
     db_config = ConfigModel.create_config(db, config=config, user=auth.user, account=auth.account)
     return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
 
-@router.put("/{id}", status_code=200, response_model=ConfigResponse)  # Changed status code to 200
-def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigResponse:
+@router.put("/{id}", status_code=200, response_model=ConfigOutput)  # Changed status code to 200
+def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
     """
     Update an existing config with configurations.
 
@@ -39,7 +39,7 @@ def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(auth
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        ConfigResponse: Updated config object.
+        ConfigOutput: Updated config object.
     """
     try:
         db_config = ConfigModel.update_config(db, 
@@ -52,10 +52,10 @@ def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(auth
     except ConfigNotFoundException:
         raise HTTPException(status_code=404, detail="Config not found")
 
-@router.get("/", response_model=List[ConfigResponse])
+@router.get("/", response_model=List[ConfigOutput])
 def get_configs(auth: UserAccount = Depends(authenticate),
                 params: ConfigQueryParams = Depends()
-                ) -> List[ConfigResponse]:
+                ) -> List[ConfigOutput]:
     """
     Get all configs by account ID.
 
@@ -63,16 +63,16 @@ def get_configs(auth: UserAccount = Depends(authenticate),
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[ConfigResponse]: List of configs associated with the account.
+        List[ConfigOutput]: List of configs associated with the account.
     """
     # print(params)
     db_configs = ConfigModel.get_configs(db=db, query=params, account=auth.account)
     return convert_configs_to_config_list(db_configs)
 
-@router.get("/{id}", response_model=ConfigResponse)
+@router.get("/{id}", response_model=ConfigOutput)
 def get_config_by_id(id: str, 
                      auth: UserAccount = Depends(authenticate)
-                     ) -> ConfigResponse:
+                     ) -> ConfigOutput:
     """
     Get a config by its ID.
 
@@ -81,7 +81,7 @@ def get_config_by_id(id: str,
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        ConfigResponse: Config associated with the given ID.
+        ConfigOutput: Config associated with the given ID.
     """
     db_config = ConfigModel.get_config_by_id(db, config_id=id, account=auth.account)
     

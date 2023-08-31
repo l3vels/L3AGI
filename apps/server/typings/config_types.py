@@ -13,7 +13,7 @@ class ConfigInput(BaseModel):
     project_id: Optional[UUID4]
 
 
-class ConfigResponse(BaseModel):
+class ConfigOutput(BaseModel):
     id: str
     key: str
     value: str

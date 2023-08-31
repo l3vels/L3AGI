@@ -5,16 +5,16 @@ from fastapi_sqlalchemy import db
 from pydantic import BaseModel
 
 from models.datasource import DatasourceModel
-from l3_types.datasource_types import DatasourceResponse, DatasourceInput
+from typings.datasource_types import DatasourceOutput, DatasourceInput
 from utils.auth import authenticate
-from l3_types.auth_types import UserAccount
+from typings.auth_types import UserAccount
 from utils.datasource_utils import convert_datasources_to_datasource_list, convert_model_to_response
 from exceptions import DatasourceNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=DatasourceResponse)
-def create_datasource(datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceResponse:
+@router.post("/", status_code=201, response_model=DatasourceOutput)
+def create_datasource(datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
     """
     Create a new datasource with configurations.
 
@@ -23,14 +23,14 @@ def create_datasource(datasource: DatasourceInput, auth: UserAccount = Depends(a
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        DatasourceResponse: Created datasource object.
+        DatasourceOutput: Created datasource object.
     """
     # Consider adding try-except for error handling during creation if needed
     db_datasource = DatasourceModel.create_datasource(db, datasource=datasource, user=auth.user, account=auth.account)
     return convert_model_to_response(DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account))
 
-@router.put("/{id}", status_code=200, response_model=DatasourceResponse)  # Changed status code to 200
-def update_datasource(id: str, datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceResponse:
+@router.put("/{id}", status_code=200, response_model=DatasourceOutput)  # Changed status code to 200
+def update_datasource(id: str, datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
     """
     Update an existing datasource with configurations.
 
@@ -40,7 +40,7 @@ def update_datasource(id: str, datasource: DatasourceInput, auth: UserAccount = 
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        DatasourceResponse: Updated datasource object.
+        DatasourceOutput: Updated datasource object.
     """
     try:
         db_datasource = DatasourceModel.update_datasource(db, 
@@ -167,8 +167,8 @@ def get_data_loaders(auth: UserAccount = Depends(authenticate)) -> List[object]:
     },    
     ]
     
-@router.get("/", response_model=List[DatasourceResponse])
-def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[DatasourceResponse]:
+@router.get("/", response_model=List[DatasourceOutput])
+def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[DatasourceOutput]:
     """
     Get all datasources by account ID.
 
@@ -176,13 +176,13 @@ def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[Datasourc
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[DatasourceResponse]: List of datasources associated with the account.
+        List[DatasourceOutput]: List of datasources associated with the account.
     """
     db_datasources = DatasourceModel.get_datasources(db=db, account=auth.account)
     return convert_datasources_to_datasource_list(db_datasources)
 
-@router.get("/{id}", response_model=DatasourceResponse)
-def get_datasource_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> DatasourceResponse:
+@router.get("/{id}", response_model=DatasourceOutput)
+def get_datasource_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
     """
     Get a datasource by its ID.
 
@@ -191,7 +191,7 @@ def get_datasource_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> 
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        DatasourceResponse: Datasource associated with the given ID.
+        DatasourceOutput: Datasource associated with the given ID.
     """
     db_datasource = DatasourceModel.get_datasource_by_id(db, datasource_id=id, account=auth.account)
     

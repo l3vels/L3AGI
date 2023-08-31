@@ -6,7 +6,7 @@ class AccountInput(BaseModel):
     name: Optional[str]
     deleted: Optional[bool]
 
-class AccountResponse(BaseModel):
+class AccountOutput(BaseModel):
     id: UUID4
     user_id: UUID4
     name: Optional[str]

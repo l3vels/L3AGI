@@ -1,19 +1,19 @@
 from models.user import UserModel
 from typing import List, Optional
-from l3_types.user_types import UserResponse, UserInput
+from typings.user_types import UserOutput, UserInput
 from utils.type_utils import convert_value_to_type
 
-def convert_model_to_response(user_model: UserModel) -> UserResponse:
+def convert_model_to_response(user_model: UserModel) -> UserOutput:
     user_data = {}
     
     # Extract attributes from UserModel using annotations of User
-    for key in UserResponse.__annotations__.keys():
+    for key in UserOutput.__annotations__.keys():
         if hasattr(user_model, key):
-            target_type = UserResponse.__annotations__.get(key)
+            target_type = UserOutput.__annotations__.get(key)
             user_data[key] = convert_value_to_type(value=getattr(user_model, key), target_type=target_type)
 
-    return UserResponse(**user_data)
+    return UserOutput(**user_data)
 
 
-def convert_users_to_user_list(users: List[UserModel]) -> List[UserResponse]:
+def convert_users_to_user_list(users: List[UserModel]) -> List[UserOutput]:
     return [convert_model_to_response(user_model) for user_model in users]

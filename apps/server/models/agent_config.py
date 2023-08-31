@@ -6,7 +6,7 @@ from config import get_config
 from utils.encyption_utils import decrypt_data
 from models.base_model import BaseModel
 import uuid
-from l3_types.agent_types import ConfigInput
+from typings.agent_types import ConfigInput
 
     
 class AgentConfigModel(BaseModel):

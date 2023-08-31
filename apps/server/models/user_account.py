@@ -6,7 +6,7 @@ import uuid
 from exceptions import UserAccountException, UserAccountNotFoundException
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
-from l3_types.user_account_types import UserAccountInput, UserAccountResponse, QueryParams
+from typings.user_account_types import UserAccountInput, UserAccountOutput, QueryParams
 
 class UserAccountModel(BaseModel):
     """

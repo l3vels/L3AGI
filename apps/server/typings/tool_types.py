@@ -7,7 +7,7 @@ class ToolInput(BaseModel):
     group_name: Optional[str]
     class_name: Optional[str]
 
-class ToolFieldResponse(BaseModel):
+class ToolFieldOutput(BaseModel):
     label: str
     key: str
     type: str
@@ -25,6 +25,6 @@ class ToolResponse(BaseModel):
     is_system: bool
     name: str
     description: str
-    fields: List[ToolFieldResponse]
+    fields: List[ToolFieldOutput]
     tools: List[SingleToolResponse]
 

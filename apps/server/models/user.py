@@ -4,7 +4,7 @@ from models.base_model import BaseModel, RootBaseModel
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import UserException, UserNotFoundException
-from l3_types.user_types import UserInput
+from typings.user_types import UserInput
 
 class UserModel(RootBaseModel):
     """

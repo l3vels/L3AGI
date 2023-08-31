@@ -6,15 +6,15 @@ from fastapi_sqlalchemy import db
 from models.team_agent import TeamAgentModel
 from utils.auth import authenticate
 from utils.team_agent_utils import convert_team_agents_to_team_agent_list, convert_model_to_response
-from l3_types.team_agent_types import TeamAgentResponse, TeamAgentInput, QueryParams
+from typings.team_agent_types import TeamAgentOutput, TeamAgentInput, QueryParams
 from utils.auth import authenticate
-from l3_types.auth_types import UserAccount
+from typings.auth_types import UserAccount
 from exceptions import TeamAgentNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=TeamAgentResponse)
-def create_team_agent(team_agent: TeamAgentInput, auth: UserAccount = Depends(authenticate)) -> TeamAgentResponse:
+@router.post("/", status_code=201, response_model=TeamAgentOutput)
+def create_team_agent(team_agent: TeamAgentInput, auth: UserAccount = Depends(authenticate)) -> TeamAgentOutput:
     """
     Create a new team_agent with configurations.
 
@@ -23,14 +23,14 @@ def create_team_agent(team_agent: TeamAgentInput, auth: UserAccount = Depends(au
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamAgentResponse: Created team_agent object.
+        TeamAgentOutput: Created team_agent object.
     """
     # Consider adding try-except for error handling during creation if needed
     db_team_agent = TeamAgentModel.create_team_agent(db, team_agent=team_agent, user=auth.user, account=auth.account)
     return convert_model_to_response(TeamAgentModel.get_team_agent_by_id(db, db_team_agent.id, auth.account))
 
-@router.put("/{id}", status_code=200, response_model=TeamAgentResponse)  # Changed status code to 200
-def update_team_agent(id: str, team_agent: TeamAgentInput, auth: UserAccount = Depends(authenticate)) -> TeamAgentResponse:
+@router.put("/{id}", status_code=200, response_model=TeamAgentOutput)  # Changed status code to 200
+def update_team_agent(id: str, team_agent: TeamAgentInput, auth: UserAccount = Depends(authenticate)) -> TeamAgentOutput:
     """
     Update an existing team_agent with configurations.
 
@@ -40,7 +40,7 @@ def update_team_agent(id: str, team_agent: TeamAgentInput, auth: UserAccount = D
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamAgentResponse: Updated team_agent object.
+        TeamAgentOutput: Updated team_agent object.
     """
     try:
         db_team_agent = TeamAgentModel.update_team_agent(db, 
@@ -53,9 +53,9 @@ def update_team_agent(id: str, team_agent: TeamAgentInput, auth: UserAccount = D
     except TeamAgentNotFoundException:
         raise HTTPException(status_code=404, detail="TeamAgent not found")
 
-@router.get("/", response_model=List[TeamAgentResponse])
+@router.get("/", response_model=List[TeamAgentOutput])
 def get_team_agents(auth: UserAccount = Depends(authenticate),
-                    params: QueryParams = Depends()) -> List[TeamAgentResponse]:
+                    params: QueryParams = Depends()) -> List[TeamAgentOutput]:
     """
     Get all team_agents by account ID.
 
@@ -63,13 +63,13 @@ def get_team_agents(auth: UserAccount = Depends(authenticate),
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[TeamAgentResponse]: List of team_agents associated with the account.
+        List[TeamAgentOutput]: List of team_agents associated with the account.
     """
     db_team_agents = TeamAgentModel.get_team_agents(db=db, query=params, account=auth.account)
     return convert_team_agents_to_team_agent_list(db_team_agents)
 
-@router.get("/{id}", response_model=TeamAgentResponse)
-def get_team_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamAgentResponse:
+@router.get("/{id}", response_model=TeamAgentOutput)
+def get_team_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamAgentOutput:
     """
     Get a team_agent by its ID.
 
@@ -78,7 +78,7 @@ def get_team_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> 
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamAgentResponse: TeamAgent associated with the given ID.
+        TeamAgentOutput: TeamAgent associated with the given ID.
     """
     db_team_agent = TeamAgentModel.get_team_agent_by_id(db, team_agent_id=id, account=auth.account)
     

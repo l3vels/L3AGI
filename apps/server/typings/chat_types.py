@@ -12,5 +12,5 @@ class ChatMessageInput(BaseModel):
     parent_id: Optional[str] = None
 
 
-class NegotiateResponse(BaseModel):
+class NegotiateOutput(BaseModel):
     url: str

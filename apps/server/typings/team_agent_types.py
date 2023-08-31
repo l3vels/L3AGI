@@ -5,7 +5,7 @@ class TeamAgentInput(BaseModel):
     team_id: Optional[UUID4]
     agent_id: UUID4
 
-class TeamAgentResponse(BaseModel):
+class TeamAgentOutput(BaseModel):
     id: UUID4
     team_id: Optional[UUID4]
     agent_id: UUID4

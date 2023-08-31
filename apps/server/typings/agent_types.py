@@ -26,7 +26,7 @@ class AgentConfigInput(BaseModel):
     configs: ConfigInput
 
 
-class ConfigsResponse(BaseModel):
+class ConfigsOutput(BaseModel):
     goals: List[str]
     constraints: List[str]
     tools: List[str]
@@ -53,9 +53,9 @@ class AgentResponse(BaseModel):
     is_memory: Optional[bool]
     avatar: Optional[str]
     
-class AgentWithConfigsResponse(BaseModel):
+class AgentWithConfigsOutput(BaseModel):
     agent: AgentResponse
-    configs: ConfigsResponse
+    configs: ConfigsOutput
  
     
     

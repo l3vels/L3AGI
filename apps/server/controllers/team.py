@@ -6,15 +6,15 @@ from fastapi_sqlalchemy import db
 from models.team import TeamModel
 from utils.auth import authenticate
 from utils.team_utils import convert_teams_to_team_list, convert_model_to_response
-from l3_types.team_types import TeamResponse, TeamInput
+from typings.team_types import TeamOutput, TeamInput
 from utils.auth import authenticate
-from l3_types.auth_types import UserAccount
+from typings.auth_types import UserAccount
 from exceptions import TeamNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=TeamResponse)
-def create_team(team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamResponse:
+@router.post("/", status_code=201, response_model=TeamOutput)
+def create_team(team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Create a new team with configurations.
 
@@ -23,14 +23,14 @@ def create_team(team: TeamInput, auth: UserAccount = Depends(authenticate)) -> T
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamResponse: Created team object.
+        TeamOutput: Created team object.
     """
     # Consider adding try-except for error handling during creation if needed
     db_team = TeamModel.create_team(db, team=team, user=auth.user, account=auth.account)
     return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
 
-@router.put("/{id}", status_code=200, response_model=TeamResponse)  # Changed status code to 200
-def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamResponse:
+@router.put("/{id}", status_code=200, response_model=TeamOutput)  # Changed status code to 200
+def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Update an existing team with configurations.
 
@@ -40,7 +40,7 @@ def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authentica
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamResponse: Updated team object.
+        TeamOutput: Updated team object.
     """
     try:
         db_team = TeamModel.update_team(db, 
@@ -53,8 +53,8 @@ def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authentica
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
 
-@router.get("/", response_model=List[TeamResponse])
-def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamResponse]:
+@router.get("/", response_model=List[TeamOutput])
+def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
     """
     Get all teams by account ID.
 
@@ -62,13 +62,13 @@ def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamResponse]:
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[TeamResponse]: List of teams associated with the account.
+        List[TeamOutput]: List of teams associated with the account.
     """
     db_teams = TeamModel.get_teams(db=db, account=auth.account)
     return convert_teams_to_team_list(db_teams)
 
-@router.get("/{id}", response_model=TeamResponse)
-def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamResponse:
+@router.get("/{id}", response_model=TeamOutput)
+def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Get a team by its ID.
 
@@ -77,7 +77,7 @@ def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamRe
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamResponse: Team associated with the given ID.
+        TeamOutput: Team associated with the given ID.
     """
     db_team = TeamModel.get_team_by_id(db, team_id=id, account=auth.account)
     

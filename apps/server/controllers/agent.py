@@ -9,16 +9,16 @@ from pydantic import BaseModel
 
 # Local application imports
 from models.agent import AgentModel
-from l3_types.agent_types import AgentConfigInput, AgentWithConfigsResponse, AgentResponse
+from typings.agent_types import AgentConfigInput, AgentWithConfigsOutput, AgentResponse
 from utils.auth import authenticate
-from l3_types.auth_types import UserAccount
+from typings.auth_types import UserAccount
 from utils.agent_utils import convert_agents_to_agent_list, convert_model_to_response
 from exceptions import AgentNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=AgentWithConfigsResponse)
-def create_agent(agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsResponse:
+@router.post("/", status_code=201, response_model=AgentWithConfigsOutput)
+def create_agent(agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
     """
     Create a new agent with configurations.
 
@@ -27,14 +27,14 @@ def create_agent(agent_with_configs: AgentConfigInput, auth: UserAccount = Depen
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        AgentWithConfigsResponse: Created agent object.
+        AgentWithConfigsOutput: Created agent object.
     """
     # Consider adding try-except for error handling during creation if needed
     db_agent = AgentModel.create_agent(db, agent=agent_with_configs.agent, configs=agent_with_configs.configs, user=auth.user, account=auth.account)
     return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id, auth.account))
 
-@router.put("/{id}", status_code=200, response_model=AgentWithConfigsResponse)  # Changed status code to 200
-def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsResponse:
+@router.put("/{id}", status_code=200, response_model=AgentWithConfigsOutput)  # Changed status code to 200
+def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
     """
     Update an existing agent with configurations.
 
@@ -44,7 +44,7 @@ def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccoun
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        AgentWithConfigsResponse: Updated agent object.
+        AgentWithConfigsOutput: Updated agent object.
     """
     try:
         db_agent = AgentModel.update_agent(db, 
@@ -58,8 +58,8 @@ def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccoun
     except AgentNotFoundException:
         raise HTTPException(status_code=404, detail="Agent not found")
 
-@router.get("/", response_model=List[AgentWithConfigsResponse])
-def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfigsResponse]:
+@router.get("/", response_model=List[AgentWithConfigsOutput])
+def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfigsOutput]:
     """
     Get all agents by account ID.
 
@@ -67,14 +67,14 @@ def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfi
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[AgentWithConfigsResponse]: List of agents associated with the account.
+        List[AgentWithConfigsOutput]: List of agents associated with the account.
     """
     db_agents = AgentModel.get_agents(db=db, account=auth.account)
     return convert_agents_to_agent_list(db_agents)
 
 
-@router.get("/{id}", response_model=AgentWithConfigsResponse)
-def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsResponse:
+@router.get("/{id}", response_model=AgentWithConfigsOutput)
+def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
     """
     Get an agent by its ID.
 
@@ -83,7 +83,7 @@ def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> Agent
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        AgentWithConfigsResponse: Agent associated with the given ID.
+        AgentWithConfigsOutput: Agent associated with the given ID.
     """
     db_agent = AgentModel.get_agent_by_id(db, agent_id=id, account=auth.account)
     
