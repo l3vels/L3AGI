@@ -32,12 +32,12 @@ def login(body: LoginInput):
     """  
     return auth_service.login(body)
       
-@router.post("/login-google", status_code=201)
-def login_with_google(body: GoogleInput):
-    """
-    Login with Google
-    """
-    return auth_service.login_with_google(token=body.token)
+# @router.post("/login-google", status_code=201)
+# def login_with_google(body: GoogleInput):
+#     """
+#     Login with Google
+#     """
+#     return auth_service.login_with_google(token=body.token)
     
     
 @router.post("/login-github", status_code=201)
@@ -46,10 +46,10 @@ def login_with_google(body: GithubInput):
     Login with Github
     """
 
-    github_client_id = ""
+    github_client_id = Config.GITHUB_CLIENT_ID
     return RedirectResponse(f'https://github.com/login/oauth/authorize?scope=user:email&client_id={github_client_id}')
 
-@router.get('/github')
+@router.get('/github-handler')
 def github_auth_handler(code: str = Query(...), Authorize: AuthJWT = Depends()):
     """GitHub login callback"""
 
