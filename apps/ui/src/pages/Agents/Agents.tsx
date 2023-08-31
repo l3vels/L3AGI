@@ -18,14 +18,16 @@ const Agents = () => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <StyledSectionTitle>Agents</StyledSectionTitle>
+        <div>
+          <StyledSectionTitle>Agents</StyledSectionTitle>
+          <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
+        </div>
 
-        <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
-      </StyledHeaderGroup>
-      <ComponentsWrapper>
         <StyledButtonWrapper>
           <Button onClick={openCreateAgentModal}>Create Agent</Button>
         </StyledButtonWrapper>
+      </StyledHeaderGroup>
+      <ComponentsWrapper>
         <StyledAgentCardsWrapper>
           {agentsData?.map((agentObj: any, index: number) => {
             const { agent, configs } = agentObj
@@ -52,8 +54,8 @@ const Agents = () => {
 export default Agents
 
 export const StyledButtonWrapper = styled.div`
-  margin-left: auto;
-  margin-bottom: 20px;
+  /* margin-left: auto;
+  margin-bottom: 20px; */
 `
 const StyledAgentCardsWrapper = styled.div`
   display: flex;

@@ -6,6 +6,8 @@ import { StyledHeader, StyledLogoWrapper, StyledNavigationColumn } from './Layou
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import HeaderShare from 'components/HeaderShare/HeaderShare'
+import HeaderButtons from 'components/HeaderButtons'
+import styled from 'styled-components'
 
 interface HeaderTypes {
   expandMode?: boolean
@@ -27,11 +29,14 @@ const Header = ({ expandMode = false, hideUsers = false, activeUsers = [] }: Hea
       )}
       {!expandMode && (
         <>
-          {!hideUsers && (
+          {/* {!hideUsers && (
             <div style={{ justifySelf: 'end' }}>
               <HeaderShare activeUsers={activeUsers} />
             </div>
-          )}
+          )} */}
+          <StyledHeaderButtonWrapper>
+            <HeaderButtons />
+          </StyledHeaderButtonWrapper>
         </>
       )}
     </StyledHeader>
@@ -39,3 +44,7 @@ const Header = ({ expandMode = false, hideUsers = false, activeUsers = [] }: Hea
 }
 
 export default Header
+
+const StyledHeaderButtonWrapper = styled.div`
+  margin-left: auto;
+`

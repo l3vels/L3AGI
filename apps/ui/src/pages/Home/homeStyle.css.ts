@@ -65,9 +65,11 @@ const StyledSectionWrapper = styled.div`
 
 const StyledHeaderGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: flex-end;
   gap: 20px;
-  margin-bottom: 24px;
+  /* margin-bottom: 10px; */
 `
 const StyledTabList = styled(TabList)`
   position: absolute;

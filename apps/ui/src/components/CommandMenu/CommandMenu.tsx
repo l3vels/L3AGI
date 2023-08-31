@@ -94,6 +94,13 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
       setPages((prevPage: any) => [...prevPage, 'collections'])
       return
     }
+    if (item.option === 'show-agents') {
+      setSearch('')
+
+      set_modal_options({ modal_name: item.modal_name, modal_title: item.modal_title })
+      setPages((prevPage: any) => [...prevPage, 'collections'])
+      return
+    }
     if (item.option === 'separate-link') {
       window.open(item.url)
       return
@@ -261,7 +268,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems.create, 1, 6)?.map((item, index) => (
+                      {slice(groupedItems.create, 0, 6)?.map((item, index) => (
                         <>
                           <CommandItem
                             index={index}
@@ -357,6 +364,16 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
             </>
           )}
 
+          {page === 'agents' && (
+            <Command.Group>
+              <StyledCommandItemHeader marginTop={32}>
+                <StyledSvgContainer type='games'>
+                  <Games />
+                </StyledSvgContainer>
+                <h2>Games</h2>
+              </StyledCommandItemHeader>
+            </Command.Group>
+          )}
           {page === 'games' && (
             <Command.Group>
               <StyledCommandItemHeader marginTop={32}>
