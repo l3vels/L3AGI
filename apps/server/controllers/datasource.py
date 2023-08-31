@@ -5,9 +5,9 @@ from fastapi_sqlalchemy import db
 from pydantic import BaseModel
 
 from models.datasource import DatasourceModel
-from typings.datasource_types import DatasourceOutput, DatasourceInput
+from typings.datasource import DatasourceOutput, DatasourceInput
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 from utils.datasource_utils import convert_datasources_to_datasource_list, convert_model_to_response
 from exceptions import DatasourceNotFoundException
 

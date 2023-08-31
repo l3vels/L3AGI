@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from typings.config_types import ConfigInput, ConfigQueryParams
+from typings.config import ConfigInput, ConfigQueryParams
 from exceptions import ConfigNotFoundException
 from utils.encyption_utils import encrypt_data, decrypt_data, is_encrypted
 

@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
-from typings.agent_types import ConfigInput, AgentInput
+from typings.agent import ConfigInput, AgentInput
 from models.agent_config import AgentConfigModel
 from exceptions import AgentNotFoundException
 

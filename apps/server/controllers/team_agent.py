@@ -6,9 +6,9 @@ from fastapi_sqlalchemy import db
 from models.team_agent import TeamAgentModel
 from utils.auth import authenticate
 from utils.team_agent_utils import convert_team_agents_to_team_agent_list, convert_model_to_response
-from typings.team_agent_types import TeamAgentOutput, TeamAgentInput, QueryParams
+from typings.team_agent import TeamAgentOutput, TeamAgentInput, QueryParams
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 from exceptions import TeamAgentNotFoundException
 
 router = APIRouter()

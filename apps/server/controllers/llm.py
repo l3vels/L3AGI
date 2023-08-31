@@ -2,7 +2,7 @@
 from typing import List
 from fastapi import APIRouter, Depends
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 
 router = APIRouter()
 

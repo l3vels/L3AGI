@@ -6,9 +6,9 @@ from pydantic import BaseModel
 
 from models.user_account import UserAccountModel
 from models.account import AccountModel
-from typings.account_types import AccountOutput, AccountInput
+from typings.account import AccountOutput, AccountInput
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 from utils.account_utils import convert_accounts_to_account_list, convert_model_to_response
 from exceptions import AccountNotFoundException
 

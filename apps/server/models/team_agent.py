@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from typings.team_agent_types import TeamAgentInput, QueryParams
+from typings.team_agent import TeamAgentInput, QueryParams
 from exceptions import TeamAgentNotFoundException
 
 class TeamAgentModel(BaseModel):

@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import AccountException, AccountNotFoundException
-from typings.account_types import AccountInput
+from typings.account import AccountInput
 
 class AccountModel(BaseModel):
     """

@@ -4,7 +4,7 @@ from models.base_model import BaseModel, RootBaseModel
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import UserException, UserNotFoundException
-from typings.user_types import UserInput
+from typings.user import UserInput
 
 class UserModel(RootBaseModel):
     """
@@ -71,7 +71,7 @@ class UserModel(RootBaseModel):
         return user_model
 
     @classmethod
-    def get_user_by_id(cls, db, user_id, account):
+    def get_user_by_id(cls, db, user_id):
         """
             Get User from user_id
 
@@ -86,6 +86,26 @@ class UserModel(RootBaseModel):
         users = (
             db.session.query(UserModel)
             .filter(UserModel.id == user_id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None))
+            .first()
+        )
+        return users
+    
+    @classmethod
+    def get_user_by_email(cls, db, email):
+        """
+            Get User from user_id
+
+            Args:
+                session: The database session.
+                user_id(int) : Unique identifier of an User.
+
+            Returns:
+                User: User object is returned.
+        """
+        # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
+        users = (
+            db.session.query(UserModel)
+            .filter(UserModel.email == email, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None))
             .first()
         )
         return users

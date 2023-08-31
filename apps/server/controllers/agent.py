@@ -9,9 +9,9 @@ from pydantic import BaseModel
 
 # Local application imports
 from models.agent import AgentModel
-from typings.agent_types import AgentConfigInput, AgentWithConfigsOutput, AgentResponse
+from typings.agent import AgentConfigInput, AgentWithConfigsOutput, AgentResponse
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 from utils.agent_utils import convert_agents_to_agent_list, convert_model_to_response
 from exceptions import AgentNotFoundException
 

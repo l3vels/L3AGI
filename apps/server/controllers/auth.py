@@ -1,23 +1,25 @@
 
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel
+
 
 from models.user import UserModel
 from models.account import AccountModel
 from models.user_account import UserAccountModel
-from typings.user_types import UserOutput, UserInput
-from typings.user_account_types import UserAccountInput
+from typings.user import UserOutput, UserInput
+from typings.user_account import UserAccountInput
 from utils.auth import authenticate
-from typings.user_types import UserInput
-from typings.auth_types import LoginInput, RegisterInput, GoogleInput, GithubInput
-from typings.account_types import AccountInput
+from typings.user import UserInput
+from typings.auth import LoginInput, RegisterInput, GoogleInput, GithubInput, AuthJWTSettings
+from typings.account import AccountInput
 from utils.user_utils import convert_users_to_user_list, convert_model_to_response
 from exceptions import UserNotFoundException
 import services.auth_service as auth_service
 
+
 router = APIRouter()
+
 
 
 @router.post("/login", status_code=201)
@@ -25,7 +27,7 @@ def login(body: LoginInput):
     """
     Login
     """  
-    #todo create acco
+    return auth_service.login(body)
       
 @router.post("/login-google", status_code=201)
 def login_with_google(body: GoogleInput):

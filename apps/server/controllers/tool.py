@@ -4,9 +4,9 @@ from fastapi_sqlalchemy import db
 from pydantic import BaseModel
 
 from models.tool import ToolModel
-from typings.tool_types import ToolResponse, ToolInput
+from typings.tool import ToolResponse, ToolInput
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 from utils.tool_utils import convert_tools_to_tool_list, convert_model_to_response
 from exceptions import ToolNotFoundException
 from tools.get_tools import get_all_tools

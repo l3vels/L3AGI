@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from typings.project_types import ProjectInput
+from typings.project import ProjectInput
 from exceptions import ProjectNotFoundException
 
 class ProjectModel(BaseModel):
