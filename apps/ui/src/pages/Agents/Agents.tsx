@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
@@ -14,6 +15,8 @@ import { useAgents } from './useAgents'
 
 const Agents = () => {
   const { agentsData, openCreateAgentModal, deleteAgentHandler, openEditAgentModal } = useAgents()
+
+  const navigate = useNavigate()
 
   return (
     <StyledSectionWrapper>
@@ -39,7 +42,7 @@ const Agents = () => {
                 subTitle={agent.description}
                 onEditClick={() => openEditAgentModal(agentObj)}
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
-                onViewClick={() => {}}
+                onViewClick={() => navigate(`/agents/${agent.id}`)}
                 modelVersion={configs.model_version}
                 provider={configs.mode_provider}
               />

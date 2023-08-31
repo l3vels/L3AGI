@@ -9,11 +9,14 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useMarketplace } from './useMarketplace'
 
 const Marketplace = () => {
+  const navigate = useNavigate()
+
   const { systemAgents, templateAgents } = useMarketplace()
 
   return (
@@ -37,7 +40,7 @@ const Marketplace = () => {
                   key={index}
                   title={agent.name}
                   subTitle={agent.description}
-                  onViewClick={() => {}}
+                  onViewClick={() => navigate(`/agents/${agent.id}`)}
                   modelVersion={configs.model_version}
                   provider={configs.mode_provider}
                 />
@@ -66,7 +69,7 @@ const Marketplace = () => {
                   key={index}
                   title={agent.name}
                   subTitle={agent.description}
-                  onViewClick={() => {}}
+                  onViewClick={() => navigate(`/agents/${agent.id}`)}
                   modelVersion={configs.model_version}
                   provider={configs.mode_provider}
                 />
