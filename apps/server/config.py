@@ -30,6 +30,8 @@ class Config:
 
     TEST_USER_EMAIL = os.environ.get("TEST_USER_EMAIL")
     TEST_USER_PASSWORD = os.environ.get("TEST_USER_PASSWORD")
+    JWT_EXPIRY = os.environ.get("JWT_EXPIRY")
+    JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
 
 
 def get_config(key: str, default: str = None) -> str:

@@ -1,6 +1,6 @@
 from models.tool import ToolModel
 from typing import List, Optional
-from typings.tool_types import ToolResponse, ToolInput
+from typings.tool import ToolResponse, ToolInput
 from utils.type_utils import convert_value_to_type
 
 def convert_model_to_response(tool_model: ToolModel) -> ToolResponse:

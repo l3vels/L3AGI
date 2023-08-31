@@ -39,6 +39,7 @@ ipython = "*"
 tiktoken = "*"
 requests-toolbelt = "*"
 oauth2client = "*"
+fastapi-jwt-auth = "*"
 
 [dev-packages]
 

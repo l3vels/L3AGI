@@ -4,10 +4,13 @@ load_dotenv(override=False)
 
 import uvicorn
 import sentry_sdk
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_sqlalchemy import DBSessionMiddleware
-
+from fastapi_jwt_auth import AuthJWT
+from fastapi_jwt_auth.exceptions import AuthJWTException
+from fastapi.responses import JSONResponse
+from typings.auth import AuthJWTSettings
 from config import Config
 from models.db import Base, engine
 
@@ -58,6 +61,21 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@AuthJWT.load_config
+def get_config():
+    return AuthJWTSettings()
+
+
+# exception handler for authjwt
+# in production, you can tweak performance using orjson response
+@app.exception_handler(AuthJWTException)
+def jwt_exception_handler(request: Request, exc: AuthJWTException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message}
+    )
+    
 
 app.include_router(user_router, prefix="/auth")
 app.include_router(account_router, prefix="/account")

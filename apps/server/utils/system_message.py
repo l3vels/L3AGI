@@ -1,5 +1,5 @@
 from typing import List, Optional
-from typings.agent_types import AgentWithConfigsOutput
+from typings.agent import AgentWithConfigsOutput
 
 class SystemMessageBuilder:
     def __init__(self, agent_with_configs: AgentWithConfigsOutput):

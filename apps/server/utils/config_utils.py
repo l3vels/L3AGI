@@ -1,6 +1,6 @@
 from models.config import ConfigModel
 from typing import List, Optional
-from typings.config_types import ConfigOutput, ConfigInput
+from typings.config import ConfigOutput, ConfigInput
 from utils.type_utils import convert_value_to_type
 
 def convert_model_to_response(config_model: ConfigModel) -> ConfigOutput:

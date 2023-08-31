@@ -14,7 +14,6 @@ class ConfigException(AppBaseException):
 class InvalidConfigException(ConfigException):
     pass
 
-
 class DatasourceException(AppBaseException):
     pass
 

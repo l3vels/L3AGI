@@ -1,6 +1,6 @@
 from models.datasource import DatasourceModel
 from typing import List, Optional
-from typings.datasource_types import DatasourceOutput, DatasourceInput
+from typings.datasource import DatasourceOutput, DatasourceInput
 from utils.type_utils import convert_value_to_type
 
 def convert_model_to_response(datasource_model: DatasourceModel) -> DatasourceOutput:

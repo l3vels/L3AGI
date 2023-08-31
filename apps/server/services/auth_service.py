@@ -7,16 +7,16 @@ from pydantic import BaseModel
 from models.user import UserModel
 from models.account import AccountModel
 from models.user_account import UserAccountModel
-from typings.user_types import UserOutput, UserInput
-from typings.user_account_types import UserAccountInput
-from utils.auth import authenticate
-from typings.user_types import UserInput
-from typings.auth_types import LoginInput, RegisterInput
-from typings.account_types import AccountInput
+from typings.user import UserOutput, UserInput
+from typings.user_account import UserAccountInput
+from utils.auth import authenticate, generate_token
+from typings.user import UserInput
+from typings.auth import LoginInput, RegisterInput
+from typings.account import AccountInput
 from utils.user_utils import convert_users_to_user_list, convert_model_to_response
 from exceptions import UserNotFoundException
 import requests
-from exceptions import AuthenticationException
+from exceptions import AuthenticationException, UserException
 
 router = APIRouter()
 
@@ -25,6 +25,9 @@ def register(input: RegisterInput):
     """
     Register
     """
+    if UserModel.get_user_by_email(input.email):
+         raise UserException("User already exists!")
+     
     # Create a new user
     user_input = UserInput(name=input.name, email=input.email)
     user = UserModel.create_user(db=db, user=user_input)
@@ -40,6 +43,16 @@ def register(input: RegisterInput):
 
     return {"account": account, "user": user, "user_account": user_account}
 
+def login(input:LoginInput):
+    """
+    Login
+    """
+    user = UserModel.get_user_by_email(input.email)
+    if not user:
+        raise UserNotFoundException("Incorrect username or password")
+    token = generate_token(user.email)
+    return token
+    
 
 def login_with_google(token: str):
     """

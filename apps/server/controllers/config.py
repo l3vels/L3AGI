@@ -4,9 +4,9 @@ from fastapi_sqlalchemy import db
 from pydantic import BaseModel
 
 from models.config import ConfigModel
-from typings.config_types import ConfigOutput, ConfigInput, ConfigQueryParams
+from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
 from utils.auth import authenticate
-from typings.auth_types import UserAccount
+from typings.auth import UserAccount
 from utils.config_utils import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
 

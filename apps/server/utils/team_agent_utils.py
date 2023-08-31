@@ -1,6 +1,6 @@
 from models.team_agent import TeamAgentModel
 from typing import List, Optional
-from typings.team_agent_types import TeamAgentOutput, TeamAgentInput
+from typings.team_agent import TeamAgentOutput, TeamAgentInput
 from utils.type_utils import convert_value_to_type
 
 def convert_model_to_response(team_agent_model: TeamAgentModel) -> TeamAgentOutput:
