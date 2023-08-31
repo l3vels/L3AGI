@@ -72,6 +72,7 @@ def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfi
     db_agents = AgentModel.get_agents(db=db, account=auth.account)
     return convert_agents_to_agent_list(db_agents)
 
+
 @router.get("/{id}", response_model=AgentWithConfigsResponse)
 def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsResponse:
     """
