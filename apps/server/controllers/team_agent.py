@@ -8,7 +8,7 @@ from utils.auth import authenticate
 from utils.team_agent_utils import convert_team_agents_to_team_agent_list, convert_model_to_response
 from l3_types.team_agent_types import TeamAgentResponse, TeamAgentInput, QueryParams
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from exceptions import TeamAgentNotFoundException
 
 router = APIRouter()

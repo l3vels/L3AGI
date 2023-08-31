@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from models.config import ConfigModel
 from l3_types.config_types import ConfigResponse, ConfigInput, ConfigQueryParams
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from utils.config_utils import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
 

@@ -8,7 +8,7 @@ from utils.auth import authenticate
 from utils.team_utils import convert_teams_to_team_list, convert_model_to_response
 from l3_types.team_types import TeamResponse, TeamInput
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from exceptions import TeamNotFoundException
 
 router = APIRouter()

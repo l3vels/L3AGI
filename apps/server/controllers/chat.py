@@ -5,7 +5,7 @@ from fastapi_sqlalchemy import db
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from enums import ChatMessageVersion
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from api.client import L3Api
 from pubsub_service import PubSubService
 from agents.conversational.l3_conversational import L3Conversational

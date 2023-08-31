@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from models.tool import ToolModel
 from l3_types.tool_types import ToolResponse, ToolInput
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from utils.tool_utils import convert_tools_to_tool_list, convert_model_to_response
 from exceptions import ToolNotFoundException
 
