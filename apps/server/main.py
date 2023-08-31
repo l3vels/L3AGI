@@ -8,13 +8,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_sqlalchemy import DBSessionMiddleware
 
+from config import Config
+from models.db import Base, engine
+
 from controllers.user import router as user_router
 from controllers.account import router as account_router
 from controllers.project import router as project_router
 from controllers.team import router as team_router
-
-from config import Config
-from models.db import Base, engine
+from controllers.team_agent import router as team_agent_router
 
 from controllers.agent import router as agent_router
 from controllers.config import router as config_router
@@ -58,10 +59,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user_router, prefix="/account")
+app.include_router(user_router, prefix="/user")
 app.include_router(account_router, prefix="/account")
 app.include_router(project_router, prefix="/project")
-app.include_router(team_router, prefix="/team-agent")
+app.include_router(team_router, prefix="/team")
+app.include_router(team_agent_router, prefix="/team-agent")
 app.include_router(agent_router, prefix="/agent")
 app.include_router(config_router, prefix="/config")
 app.include_router(datasource_router, prefix="/datasource")
@@ -70,10 +72,12 @@ app.include_router(llm_router, prefix="/llm")
 app.include_router(chat_router, prefix="/chat")
 
 
+
 @app.get("/")
 def root():
     return f"Version {VERSION} is up!"
 
 
+print("Project run on 4002 port")
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=4002)
