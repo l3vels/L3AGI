@@ -1,8 +1,9 @@
 from tools.serp_google_search.serp_google_search_toolkit import SerpGoogleSearchToolkit
 from tools.webscraper.webscraper_toolkit import WebScraperToolkit
-from tools.duck_duck_go.duck_duck_go_toolkit import DuckDuckGoSearchToolkit
+from tools.duck_duck_go.duck_duck_go_search_toolkit import DuckDuckGoSearchToolkit
+from tools.bing.bing_search_toolkit import BingSearchToolkit
 
-TOOLKITS = [SerpGoogleSearchToolkit(), WebScraperToolkit(), DuckDuckGoSearchToolkit()]
+TOOLKITS = [SerpGoogleSearchToolkit(), WebScraperToolkit(), DuckDuckGoSearchToolkit(), BingSearchToolkit()]
 
 def get_all_tools():
     """Return a list of all tools."""

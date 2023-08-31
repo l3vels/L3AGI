@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
-from tools.duck_duck_go.duck_duck_go import DuckDuckGoSearchTool
+from tools.duck_duck_go.duck_duck_go_search import DuckDuckGoSearchTool
 
 class DuckDuckGoSearchToolkit(BaseToolkit, ABC):
     name: str = "DuckDuckGo Search Toolkit"
