@@ -38,6 +38,7 @@ nltk = "*"
 ipython = "*"
 tiktoken = "*"
 requests-toolbelt = "*"
+oauth2client = "*"
 
 [dev-packages]
 
