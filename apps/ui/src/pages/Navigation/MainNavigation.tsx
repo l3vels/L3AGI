@@ -5,6 +5,7 @@ import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
+import Dashboard from '@l3-lib/ui-core/dist/icons/Dashboard'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
@@ -47,6 +48,15 @@ const MainNavigation = () => {
       <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('tools')}>
         <Games />
         <span>Tools</span>
+      </StyledLi>
+      <StyledLi
+        isActive={includes(active, 'marketplace')}
+        onClick={() => onHandleClick('marketplace')}
+      >
+        <StyledIconWrapper>
+          <Dashboard size={30} />
+        </StyledIconWrapper>
+        <span>Marketplace</span>
       </StyledLi>
     </StyledUl>
   )
@@ -92,4 +102,8 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
       }
     }
 `}
+`
+const StyledIconWrapper = styled.div`
+  color: #fff;
+  margin-bottom: 8px;
 `

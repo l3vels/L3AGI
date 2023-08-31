@@ -57,7 +57,7 @@ export const StyledButtonWrapper = styled.div`
   /* margin-left: auto;
   margin-bottom: 20px; */
 `
-const StyledAgentCardsWrapper = styled.div`
+export const StyledAgentCardsWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
