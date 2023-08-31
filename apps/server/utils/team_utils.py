@@ -1,19 +1,19 @@
-from models.user import UserModel
+from models.team import TeamModel
 from typing import List, Optional
-from l3_types.user_types import UserResponse, UserInput
+from l3_types.team_types import TeamResponse, TeamInput
 from utils.type_utils import convert_value_to_type
 
-def convert_model_to_response(user_model: UserModel) -> UserResponse:
-    user_data = {}
+def convert_model_to_response(team_model: TeamModel) -> TeamResponse:
+    team_data = {}
     
-    # Extract attributes from UserModel using annotations of User
-    for key in UserResponse.__annotations__.keys():
-        if hasattr(user_model, key):
-            target_type = UserResponse.__annotations__.get(key)
-            user_data[key] = convert_value_to_type(value=getattr(user_model, key), target_type=target_type)
+    # Extract attributes from TeamModel using annotations of Team
+    for key in TeamResponse.__annotations__.keys():
+        if hasattr(team_model, key):
+            target_type = TeamResponse.__annotations__.get(key)
+            team_data[key] = convert_value_to_type(value=getattr(team_model, key), target_type=target_type)
 
-    return UserResponse(**user_data)
+    return TeamResponse(**team_data)
 
 
-def convert_users_to_user_list(users: List[UserModel]) -> List[UserResponse]:
-    return [convert_model_to_response(user_model) for user_model in users]
+def convert_teams_to_team_list(teams: List[TeamModel]) -> List[TeamResponse]:
+    return [convert_model_to_response(team_model) for team_model in teams]
