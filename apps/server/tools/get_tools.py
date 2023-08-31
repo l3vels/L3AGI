@@ -3,8 +3,9 @@ from tools.webscraper.webscraper_toolkit import WebScraperToolkit
 from tools.duck_duck_go.duck_duck_go_search_toolkit import DuckDuckGoSearchToolkit
 from tools.bing.bing_search_toolkit import BingSearchToolkit
 from tools.wikipedia.wikipedia_search_toolkit import WikipediaSearchToolkit
+from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 
-TOOLKITS = [SerpGoogleSearchToolkit(), WebScraperToolkit(), DuckDuckGoSearchToolkit(), BingSearchToolkit(), WikipediaSearchToolkit()]
+TOOLKITS = [SerpGoogleSearchToolkit(), WebScraperToolkit(), DuckDuckGoSearchToolkit(), BingSearchToolkit(), WikipediaSearchToolkit(), ArxivSearchToolkit()]
 
 def get_all_tools():
     """Return a list of all tools."""
