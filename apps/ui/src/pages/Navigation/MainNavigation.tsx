@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
+import About from '@l3-lib/ui-core/dist/icons/About'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
@@ -31,7 +31,8 @@ const MainNavigation = () => {
   return (
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('')}>
-        <HomeIconSvg />
+        <About />
+
         <span>Home</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('agents')}>
@@ -105,5 +106,5 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
 `
 const StyledIconWrapper = styled.div`
   color: #fff;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 `
