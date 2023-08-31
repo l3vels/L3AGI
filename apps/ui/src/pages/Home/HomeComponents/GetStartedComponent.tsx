@@ -25,14 +25,14 @@ const GetStartedComponent = () => {
       />
       <GetStartedCard
         subTitle={'Learn about'}
-        title={'Developers panel'}
+        title={'Datasources'}
         image={cardBg3}
         bgColor={'blue'}
         link={'https://docs.l3vels.xyz/docs/sdks'}
       />
       <GetStartedCard
         subTitle={'Learn about'}
-        title={'Datasources'}
+        title={'Tools'}
         image={cardBg4}
         bgColor={'red'}
         link={'https://docs.l3vels.xyz/docs/create-organize-assets'}

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
-import InventoryIconSvg from 'assets/svgComponents/InventoryIconSvg'
-import ResourcesIconSvg from 'assets/svgComponents/ResourcesIconSvg'
-import PlayersIconSvg from 'assets/svgComponents/PlayersIconSvg'
+import Games from '@l3-lib/ui-core/dist/icons/Games'
+import Players from '@l3-lib/ui-core/dist/icons/Players'
+import Collection from '@l3-lib/ui-core/dist/icons/Collection'
+
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
 
@@ -32,18 +34,18 @@ const MainNavigation = () => {
         <span>Home</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('agents')}>
-        <InventoryIconSvg />
+        <Players />
         <span>Agents</span>
       </StyledLi>
       <StyledLi
         isActive={includes(active, 'datasources')}
         onClick={() => onHandleClick('datasources')}
       >
-        <ResourcesIconSvg />
+        <Collection />
         <span>Datasources</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('tools')}>
-        <PlayersIconSvg />
+        <Games />
         <span>Tools</span>
       </StyledLi>
     </StyledUl>
@@ -74,9 +76,11 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     line-height: 16px;
     color: var(--content-content-tertiary, rgba(255, 255, 255, 0.6));
   }
+  opacity: 0.8;
   ${({ isActive }) =>
     isActive &&
     `
+    opacity: 1;
     border-radius: 6px;
     background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.10));
     span{
