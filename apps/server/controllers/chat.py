@@ -13,9 +13,9 @@ from agents.plan_and_execute.l3_plan_and_execute import L3PlanAndExecute
 from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3AuthoritarianSpeaker
 from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
 from postgres import PostgresChatMessageHistory
-from tools import get_tools
 from l3_types.chat_types import ChatMessageInput, NegotiateResponse
 from utils.chat_utils import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
+from tool.get_tools import get_tools
 
 azureService = PubSubService()
 
@@ -47,6 +47,9 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
 
     version = get_version_from_prompt(body.prompt)
 
+
+    tools = get_tools(['SerpGoogleSearch'])
+
     history = PostgresChatMessageHistory(
         session_id=session_id,
         game_id=body.game_id,
@@ -72,7 +75,7 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
     if has_team_member_mention(body.prompt) and not has_agent_mention(body.prompt):
         return ""
 
-    tools = get_tools(None, api, auth.user, auth.account, game)
+
 
     prompt = body.prompt
     
@@ -135,8 +138,9 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
             pattern = r'json```[\s\S]*?\]```'
             topic = re.sub(pattern, '', topic)
 
-        for agent in agents:
-            agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
+        # TODO: tools
+        # for agent in agents:
+            # agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
 
 
         print("AUTHORITARIAN_SPEAKER ------------------------------ start", body.version)
@@ -196,8 +200,9 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
             pattern = r'json```[\s\S]*?\]```'
             topic = re.sub(pattern, '', topic)
 
-        for agent in agents:
-            agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
+        # TODO: tools
+        # for agent in agents:
+        #     agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
 
         l3_agent_debates = L3AgentDebates(
             user=auth.user,

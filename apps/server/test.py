@@ -8,8 +8,8 @@ from langchain.agents import initialize_agent, AgentType
 from config import Config
 from system_message import SYSTEM_MESSAGE, format_system_message
 from agents.conversational.output_parser import ConvoOutputParser
-from tools import get_tools
 from api.client import L3Api
+from tool.get_tools import get_tools
 
 res = requests.post(
     f"{Config.L3_AUTH_API_URL}/auth/login",
@@ -34,7 +34,7 @@ def agent_factory():
 
     system_message = format_system_message(SYSTEM_MESSAGE, user, account, None, None)
 
-    tools = get_tools(None, api, user, account, None)
+    tools = get_tools(['SerpGoogleSearch'])
 
     return initialize_agent(
         tools,
