@@ -2,6 +2,7 @@ from typing import Tuple
 import gql.transport.exceptions
 from fastapi import HTTPException, Request
 from api.client import L3Api
+from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 from api.user import User
 from api.account import Account
@@ -35,3 +36,18 @@ def generate_token(user_email, jwt_authorizer: AuthJWT = Depends()):
     token_expiry_time = timedelta(hours=token_config)
     token = jwt_authorizer.create_access_token(subject=user_email, expires_time=token_expiry_time)
     return token
+
+def redirect_to_frontend(frontend_url):
+    """Redirect to frontend URL"""
+    return RedirectResponse(url=frontend_url)
+
+
+def get_user_data_from_github(access_token):
+    """Get user data from GitHub API"""
+    github_api_url = 'https://api.github.com/user'
+    headers = {'Authorization': f'Bearer {access_token}'}
+    response = requests.get(github_api_url, headers=headers)
+
+    if response.ok:
+        return response.json()
+    return None
