@@ -12,6 +12,5 @@ class TeamAgentResponse(BaseModel):
 
 class QueryParams(BaseModel):
     id: Optional[str]
-    key: Optional[str]
     agent_id: Optional[UUID4]
     team_id: Optional[UUID4]
