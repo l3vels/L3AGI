@@ -67,6 +67,9 @@ class AccountNotFoundException(DatasourceException):
 class ProjectException(AppBaseException):
     pass
 
+class AuthenticationException(AppBaseException):
+    pass
+
 class ProjectNotFoundException(DatasourceException):
     pass
 

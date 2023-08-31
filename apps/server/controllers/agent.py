@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from models.agent import AgentModel
 from l3_types.agent_types import AgentConfigInput, AgentWithConfigsResponse, AgentResponse
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from utils.agent_utils import convert_agents_to_agent_list, convert_model_to_response
 from exceptions import AgentNotFoundException
 
@@ -71,6 +71,7 @@ def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfi
     """
     db_agents = AgentModel.get_agents(db=db, account=auth.account)
     return convert_agents_to_agent_list(db_agents)
+
 
 @router.get("/{id}", response_model=AgentWithConfigsResponse)
 def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsResponse:

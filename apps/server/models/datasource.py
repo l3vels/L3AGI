@@ -106,7 +106,6 @@ class DatasourceModel(BaseModel):
             .all()
         )
         return datasources
-    
 
     @classmethod
     def get_datasource_by_id(cls, db, datasource_id, account):

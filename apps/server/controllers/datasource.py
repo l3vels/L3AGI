@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from models.datasource import DatasourceModel
 from l3_types.datasource_types import DatasourceResponse, DatasourceInput
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from utils.datasource_utils import convert_datasources_to_datasource_list, convert_model_to_response
 from exceptions import DatasourceNotFoundException
 
