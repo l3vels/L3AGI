@@ -1,11 +1,7 @@
-import Button from '@l3-lib/ui-core/dist/Button'
-
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import AgentCard from 'pages/Agents/AgentCard'
 
-import { useAgents } from 'pages/Agents/useAgents'
-
-import { StyledAgentCardsWrapper, StyledButtonWrapper } from 'pages/Agents/Agents'
+import { StyledAgentCardsWrapper } from 'pages/Agents/Agents'
 
 import {
   StyledHeaderGroup,
@@ -15,8 +11,10 @@ import {
 } from 'pages/Home/homeStyle.css'
 import styled from 'styled-components'
 
+import { useMarketplace } from './useMarketplace'
+
 const Marketplace = () => {
-  const { agentsData, deleteAgentHandler, openEditAgentModal } = useAgents()
+  const { systemAgents, templateAgents } = useMarketplace()
 
   return (
     <StyledRoot>
@@ -31,7 +29,7 @@ const Marketplace = () => {
         </StyledHeaderGroup>
         <ComponentsWrapper>
           <StyledAgentCardsWrapper>
-            {agentsData?.map((agentObj: any, index: number) => {
+            {systemAgents?.map((agentObj: any, index: number) => {
               const { agent, configs } = agentObj
 
               return (
@@ -39,8 +37,6 @@ const Marketplace = () => {
                   key={index}
                   title={agent.name}
                   subTitle={agent.description}
-                  onEditClick={() => openEditAgentModal(agentObj)}
-                  onDeleteClick={() => deleteAgentHandler(agent.id)}
                   onViewClick={() => {}}
                   modelVersion={configs.model_version}
                   provider={configs.mode_provider}
@@ -62,7 +58,7 @@ const Marketplace = () => {
         </StyledHeaderGroup>
         <ComponentsWrapper>
           <StyledAgentCardsWrapper>
-            {agentsData?.map((agentObj: any, index: number) => {
+            {templateAgents?.map((agentObj: any, index: number) => {
               const { agent, configs } = agentObj
 
               return (
@@ -70,8 +66,6 @@ const Marketplace = () => {
                   key={index}
                   title={agent.name}
                   subTitle={agent.description}
-                  onEditClick={() => openEditAgentModal(agentObj)}
-                  onDeleteClick={() => deleteAgentHandler(agent.id)}
                   onViewClick={() => {}}
                   modelVersion={configs.model_version}
                   provider={configs.mode_provider}

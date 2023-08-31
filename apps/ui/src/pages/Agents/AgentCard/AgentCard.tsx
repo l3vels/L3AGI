@@ -14,8 +14,8 @@ type AgentCardProps = {
   subTitle: string
   modelVersion?: string
   provider?: string
-  onEditClick: () => void
-  onDeleteClick: () => void
+  onEditClick?: () => void
+  onDeleteClick?: () => void
   onViewClick: () => void
 }
 
@@ -61,18 +61,22 @@ const AgentCard = ({
           View
         </Button> */}
         <StyledButtonsWrapper>
-          <IconButton
-            onClick={onEditClick}
-            icon={() => <Edit />}
-            size={Button.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
-          />
-          <IconButton
-            onClick={onDeleteClick}
-            icon={() => <Delete />}
-            size={Button.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
-          />
+          {onEditClick && (
+            <IconButton
+              onClick={onEditClick}
+              icon={() => <Edit />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
+          )}
+          {onDeleteClick && (
+            <IconButton
+              onClick={onDeleteClick}
+              icon={() => <Delete />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
+          )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
     </StyledAgentCard>

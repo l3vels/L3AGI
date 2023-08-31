@@ -121,6 +121,30 @@ class AgentModel(BaseModel):
             .all()
         )
         return agents
+
+    @classmethod
+    def get_template_agents(cls, db):
+        agents = (
+            db.session.query(AgentModel)
+            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
+                    AgentModel.is_template == True)
+            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .all()
+        )
+        return agents  
+
+    @classmethod
+    def get_system_agents(cls, db):
+        agents = (
+            db.session.query(AgentModel)
+            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
+                    AgentModel.is_system == True)
+            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .all()
+        )
+        return agents    
     
 
     @classmethod

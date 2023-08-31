@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 # Standard library imports
 
@@ -71,6 +71,21 @@ def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfi
     """
     db_agents = AgentModel.get_agents(db=db, account=auth.account)
     return convert_agents_to_agent_list(db_agents)
+
+@router.get("/marketplace", response_model=Dict[str, List[AgentWithConfigsResponse]])
+def get_template_and_system_agents() -> Dict[str, List[AgentWithConfigsResponse]]:
+    template_agents = AgentModel.get_template_agents(db=db)
+    system_agents = AgentModel.get_system_agents(db=db)
+    
+    template_agents_list = convert_agents_to_agent_list(template_agents)
+    system_agents_list = convert_agents_to_agent_list(system_agents)
+    
+    result = {
+        "templateAgents": template_agents_list,
+        "systemAgents": system_agents_list
+    }
+    
+    return result
 
 @router.get("/{id}", response_model=AgentWithConfigsResponse)
 def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsResponse:
