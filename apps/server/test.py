@@ -9,7 +9,7 @@ from config import Config
 from system_message import SYSTEM_MESSAGE, format_system_message
 from agents.conversational.output_parser import ConvoOutputParser
 from api.client import L3Api
-from tool.get_tools import get_tools
+from tools.get_tools import get_tools
 
 res = requests.post(
     f"{Config.L3_AUTH_API_URL}/auth/login",

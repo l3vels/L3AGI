@@ -15,7 +15,7 @@ from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
 from postgres import PostgresChatMessageHistory
 from l3_types.chat_types import ChatMessageInput, NegotiateResponse
 from utils.chat_utils import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
-from tool.get_tools import get_tools
+from tools.get_tools import get_tools
 
 azureService = PubSubService()
 

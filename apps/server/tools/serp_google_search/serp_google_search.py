@@ -1,12 +1,11 @@
 from typing import Optional, Type
 from pydantic import BaseModel, Field
-from langchain.tools import BaseTool
 from langchain import SerpAPIWrapper
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
-from langchain.agents.agent_toolkits import Toolkit, GmailToolkit, JsonToolkit
-# from langchain.agents.agent_toolkits.base import BaseToolkit
+# from langchain.agents.agent_toolkits import Toolkit, GmailToolkit, JsonToolkit
+from tools.base import BaseTool
 
 
 class SerpGoogleSearchSchema(BaseModel):
@@ -16,7 +15,7 @@ class SerpGoogleSearchSchema(BaseModel):
     )
 
 class SerpGoogleSearchTool(BaseTool):
-    name = "SerpGoogleSearch"
+    name = "Serp Google Search"
     
     description = (
         "A tool for performing a Google search and extracting snippets and webpages."
@@ -25,15 +24,13 @@ class SerpGoogleSearchTool(BaseTool):
 
     args_schema: Type[SerpGoogleSearchSchema] = SerpGoogleSearchSchema
 
-
-    # Tool should have id
-
-    # TODO: tool should return some schema of key value pairs
+    tool_id = "a66b3b20-d0a2-4b53-a775-197bc492e816"
 
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Search Google and return the results."""
         search = SerpAPIWrapper()
+        search.serpapi_api_key = self.get_env_key("SERP_API_KEY")
         return search.run(query)
 
