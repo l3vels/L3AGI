@@ -21,7 +21,7 @@ from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
 
 from controllers.agent import router as agent_router
-from controllers.config import router as config_router
+from controllers.configuration import router as config_router
 from controllers.datasource import router as datasource_router
 from controllers.tool import router as tool_router
 from controllers.llm import router as llm_router

@@ -32,6 +32,12 @@ class Config:
     TEST_USER_PASSWORD = os.environ.get("TEST_USER_PASSWORD")
     JWT_EXPIRY = os.environ.get("JWT_EXPIRY")
     JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+    
+    GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID")
+    GITHUB_CLIENT_SECRET = os.environ.get("GITHUB_CLIENT_SECRET")
+    FRONTEND_URL = os.environ.get("FRONTEND_URL")
+    
+    GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 
 def get_config(key: str, default: str = None) -> str:
