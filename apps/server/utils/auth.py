@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from api.user import User
 from api.account import Account
 
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 

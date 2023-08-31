@@ -18,8 +18,6 @@ class UserModel(RootBaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None)
     email = Column(String(100), default=None)
-    first_name = Column(String(100), default=None)
-    last_name = Column(String(100), default=None)
     deleted = Column(Boolean, default=False)
    
     @classmethod

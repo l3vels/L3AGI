@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from models.agent import AgentModel
 from l3_types.agent_types import AgentConfigInput, AgentWithConfigsResponse, AgentResponse
 from utils.auth import authenticate
-from l3_types.user_account_types import UserAccount
+from l3_types.auth_types import UserAccount
 from utils.agent_utils import convert_agents_to_agent_list, convert_model_to_response
 from exceptions import AgentNotFoundException
 
