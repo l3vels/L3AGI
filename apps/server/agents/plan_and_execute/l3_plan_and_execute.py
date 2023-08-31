@@ -17,7 +17,7 @@ from openai.error import RateLimitError
 import sentry_sdk
 from memory.zep import ZepMemory
 from config import Config
-from utils.agent_utils import convert_model_to_response
+from utils.agent import convert_model_to_response
 from models.agent import AgentModel
 from utils.system_message import SystemMessageBuilder
 

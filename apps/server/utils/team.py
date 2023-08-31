@@ -1,7 +1,7 @@
 from models.team import TeamModel
 from typing import List, Optional
 from typings.team import TeamOutput, TeamInput
-from utils.type_utils import convert_value_to_type
+from utils.type import convert_value_to_type
 
 def convert_model_to_response(team_model: TeamModel) -> TeamOutput:
     team_data = {}

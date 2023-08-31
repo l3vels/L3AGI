@@ -5,7 +5,7 @@ from fastapi_sqlalchemy import db
 
 from models.team import TeamModel
 from utils.auth import authenticate
-from utils.team_utils import convert_teams_to_team_list, convert_model_to_response
+from utils.team import convert_teams_to_team_list, convert_model_to_response
 from typings.team import TeamOutput, TeamInput
 from utils.auth import authenticate
 from typings.auth import UserAccount

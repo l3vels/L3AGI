@@ -1,7 +1,7 @@
 from models.account import AccountModel
 from typing import List, Optional
 from typings.account import AccountOutput, AccountInput
-from utils.type_utils import convert_value_to_type
+from utils.type import convert_value_to_type
 
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
     account_data = {}

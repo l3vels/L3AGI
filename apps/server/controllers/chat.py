@@ -14,7 +14,7 @@ from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3Au
 from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
-from utils.chat_utils import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
+from utils.chat import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
 from tools.get_tools import get_tools
 
 azureService = PubSubService()

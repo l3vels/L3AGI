@@ -1,7 +1,7 @@
 from models.agent import AgentModel
 from typing import List, Optional
 from typings.agent import AgentResponse, ConfigsOutput, AgentInput, AgentWithConfigsOutput
-from utils.type_utils import convert_value_to_type
+from utils.type import convert_value_to_type
 
 def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput:
     agent_data = {}

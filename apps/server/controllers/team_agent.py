@@ -5,7 +5,7 @@ from fastapi_sqlalchemy import db
 
 from models.team_agent import TeamAgentModel
 from utils.auth import authenticate
-from utils.team_agent_utils import convert_team_agents_to_team_agent_list, convert_model_to_response
+from utils.team_agent import convert_team_agents_to_team_agent_list, convert_model_to_response
 from typings.team_agent import TeamAgentOutput, TeamAgentInput, QueryParams
 from utils.auth import authenticate
 from typings.auth import UserAccount

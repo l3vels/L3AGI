@@ -1,7 +1,7 @@
 from models.user import UserModel
 from typing import List, Optional
 from typings.user import UserOutput, UserInput
-from utils.type_utils import convert_value_to_type
+from utils.type import convert_value_to_type
 
 def convert_model_to_response(user_model: UserModel) -> UserOutput:
     user_data = {}

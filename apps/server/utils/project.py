@@ -1,7 +1,7 @@
 from models.project import ProjectModel
 from typing import List, Optional
 from typings.project import ProjectOutput, ProjectInput
-from utils.type_utils import convert_value_to_type
+from utils.type import convert_value_to_type
 
 def convert_model_to_response(project_model: ProjectModel) -> ProjectOutput:
     project_data = {}

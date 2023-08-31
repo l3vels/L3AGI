@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from typings.config import ConfigInput, ConfigQueryParams
 from exceptions import ConfigNotFoundException
-from utils.encyption_utils import encrypt_data, decrypt_data, is_encrypted
+from utils.encyption import encrypt_data, decrypt_data, is_encrypted
 
 import uuid
 

@@ -14,7 +14,7 @@ from utils.auth import authenticate
 from typings.user import UserInput
 from typings.auth import LoginInput, RegisterInput, GoogleInput, GithubInput, AuthJWTSettings
 from typings.account import AccountInput
-from utils.user_utils import convert_users_to_user_list, convert_model_to_response
+from utils.user import convert_users_to_user_list, convert_model_to_response
 from utils.auth import authenticate, generate_token, redirect_to_frontend, get_user_data_from_github
 from exceptions import UserNotFoundException
 from config import Config

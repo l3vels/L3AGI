@@ -12,7 +12,7 @@ from openai.error import RateLimitError
 import sentry_sdk
 from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
-from utils.agent_utils import convert_model_to_response
+from utils.agent import convert_model_to_response
 from models.agent import AgentModel
 from utils.system_message import SystemMessageBuilder
 

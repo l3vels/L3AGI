@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from typing import Union
 
 from config import get_config
-from utils.encyption_utils import decrypt_data
+from utils.encyption import decrypt_data
 from models.base_model import BaseModel
 import uuid
 from typings.agent import ConfigInput

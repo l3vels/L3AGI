@@ -7,7 +7,7 @@ from models.config import ConfigModel
 from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
 from utils.auth import authenticate
 from typings.auth import UserAccount
-from utils.config_utils import convert_configs_to_config_list, convert_model_to_response
+from utils.config import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
 
 router = APIRouter()

@@ -13,7 +13,7 @@ from utils.auth import authenticate, generate_token
 from typings.user import UserInput
 from typings.auth import LoginInput, RegisterInput
 from typings.account import AccountInput
-from utils.user_utils import convert_users_to_user_list, convert_model_to_response
+from utils.user import convert_users_to_user_list, convert_model_to_response
 from exceptions import UserNotFoundException
 import requests
 from exceptions import AuthenticationException, UserException
