@@ -1,5 +1,7 @@
 __pycache__
 
+.idea
+
 .env
 
 process_pids

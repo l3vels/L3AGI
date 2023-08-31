@@ -9,6 +9,7 @@ from utils.auth import authenticate
 from l3_types.user_account_types import UserAccount
 from utils.tool_utils import convert_tools_to_tool_list, convert_model_to_response
 from exceptions import ToolNotFoundException
+from tools.get_tools import get_all_tools
 
 router = APIRouter()
 
@@ -63,8 +64,12 @@ def get_tools(auth: UserAccount = Depends(authenticate)) -> List[ToolResponse]:
     Returns:
         List[ToolResponse]: List of tools associated with the account.
     """
-    db_tools = ToolModel.get_tools(db=db, account=auth.account)
-    return convert_tools_to_tool_list(db_tools)
+
+
+    # db_tools = ToolModel.get_tools(db=db, account=auth.account)
+
+    return get_all_tools()
+    # return convert_tools_to_tool_list(db_tools)
 
 @router.get("/{id}", response_model=ToolResponse)
 def get_tool_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> ToolResponse:
