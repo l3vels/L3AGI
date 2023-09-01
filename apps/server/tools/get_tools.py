@@ -11,6 +11,7 @@ from tools.twitter.twitter_toolkit import TwitterToolkit
 from tools.instagram.instagram_toolkit import InstagramToolkit
 from tools.slack.slack_toolkit import SlackToolkit
 from tools.gmail.gmail_toolkit import GmailToolkit
+from tools.google_calendar.google_calendar_toolkit import GoogleCalendarToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -26,6 +27,7 @@ TOOLKITS = [
     InstagramToolkit(),
     SlackToolkit(),
     GmailToolkit(),
+    GoogleCalendarToolkit(),
 ]
 
 
