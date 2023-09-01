@@ -1,7 +1,7 @@
 #!/bin/bash
 
 commit_message=$(cat "$1")
-regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\([a-zA-Z0-9_-]+\))?: .+'
+regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|merge)(\([a-zA-Z0-9_-]+\))?: .+'
 
 if [[ ! $commit_message =~ $regex ]]; then
   echo "Commit message failed semantic commit message style."
