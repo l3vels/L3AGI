@@ -9,6 +9,7 @@ from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
 from tools.twilio.twilio_toolkit import TwilioSearchToolkit
 from tools.twitter.twitter_toolkit import TwitterToolkit
 from tools.instagram.instagram_toolkit import InstagramToolkit
+from tools.slack.slack_toolkit import SlackToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -22,6 +23,7 @@ TOOLKITS = [
     TwilioSearchToolkit(),
     TwitterToolkit(),
     InstagramToolkit(),
+    SlackToolkit(),
 ]
 
 
