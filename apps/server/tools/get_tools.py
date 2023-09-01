@@ -7,6 +7,7 @@ from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.open_weather_map.open_weather_map_toolkit import OpenWeatherMapToolkit
 from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
 from tools.twilio.twilio_toolkit import TwilioSearchToolkit
+from tools.twitter.twitter_toolkit import TwitterToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -18,6 +19,7 @@ TOOLKITS = [
     OpenWeatherMapToolkit(),
     YoutubeSearchToolkit(),
     TwilioSearchToolkit(),
+    TwitterToolkit(),
 ]
 
 
