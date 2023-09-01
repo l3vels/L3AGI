@@ -19,7 +19,7 @@ type AgentFormProps = {
   isEdit?: boolean
 }
 
-const AgentForm = ({ formik, isLoading, isEdit, handleSubmit }: AgentFormProps) => {
+const AgentForm = ({ formik }: AgentFormProps) => {
   const { setFieldValue, values } = formik
   const { agent_datasources, agent_mode_provider, agent_model_version, agent_description } = values
 
@@ -100,16 +100,6 @@ const AgentForm = ({ formik, isLoading, isEdit, handleSubmit }: AgentFormProps) 
           />
         </StyledInputWrapper>
       </StyledForm>
-      <StyledFooter>
-        <Button
-          size={Button.sizes.LARGE}
-          disabled={isLoading}
-          onClick={() => handleSubmit(formik?.values)}
-        >
-          {isLoading && <Loader size={32} />}
-          {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
-        </Button>
-      </StyledFooter>
     </StyledRoot>
   )
 }
@@ -130,7 +120,7 @@ const StyledForm = styled.div`
 
   margin-top: 40px;
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 `
 
 const StyledInputWrapper = styled.div`

@@ -30,14 +30,12 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
             <StyledCustomFieldWrapper key={index}>
               <FormikTextField name={`${formikField}.${index}`} />
 
-              {index !== 0 && (
-                <IconButton
-                  onClick={() => remove(index)}
-                  icon={() => <Delete />}
-                  size={Button.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
-                />
-              )}
+              <IconButton
+                onClick={() => remove(index)}
+                icon={() => <Delete />}
+                size={Button.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+              />
             </StyledCustomFieldWrapper>
           ))}
 
