@@ -1,10 +1,20 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 
 import styled from 'styled-components'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
+import { useAgentByIdService } from 'services/agent/useAgentByIdService'
+
+const GetAgentName = () => {
+  const params = useParams()
+  const { agentId } = params
+
+  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+
+  return <span>{agentById?.agent?.name}</span>
+}
 
 const routes: any = [
   { path: '/developers', breadcrumb: 'Developers' },
@@ -14,7 +24,7 @@ const routes: any = [
   // account
   { path: '/account', breadcrumb: 'Profile' },
 
-  { path: '/agents/:agentId', breadcrumb: null },
+  { path: '/agents/:agentId', breadcrumb: GetAgentName },
   { path: '/agents/create-agent', breadcrumb: 'Create Agent' },
 
   //chat
