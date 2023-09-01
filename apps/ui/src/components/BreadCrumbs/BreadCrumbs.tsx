@@ -6,6 +6,7 @@ import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
+import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 
 const GetAgentName = () => {
   const params = useParams()
@@ -14,6 +15,15 @@ const GetAgentName = () => {
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
   return <span>{agentById?.agent?.name}</span>
+}
+
+const GetDatasourceName = () => {
+  const params = useParams()
+  const { datasourceId } = params
+
+  const { data: datasourceById } = useDatasourceByIdService({ id: datasourceId || '' })
+  console.log('datasourceById', datasourceById)
+  return <span>{datasourceById?.name}</span>
 }
 
 const routes: any = [
@@ -26,6 +36,9 @@ const routes: any = [
 
   { path: '/agents/:agentId', breadcrumb: GetAgentName },
   { path: '/agents/create-agent', breadcrumb: 'Create Agent' },
+
+  { path: '/datasources/:datasourceId', breadcrumb: GetDatasourceName },
+  { path: '/datasources/create-datasource', breadcrumb: 'Create Datasource' },
 
   //chat
   { path: '/copilot', breadcrumb: null },
