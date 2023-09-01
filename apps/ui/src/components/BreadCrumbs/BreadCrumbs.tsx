@@ -6,19 +6,6 @@ import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 
-interface UserNamesById {
-  [userId: string]: string
-}
-
-interface DynamicUserBreadcrumbProps {
-  match: {
-    params: {
-      userId: string
-    }
-    pathname: string
-  }
-}
-
 const routes: any = [
   { path: '/developers', breadcrumb: 'Developers' },
   { path: '/developers/logs', breadcrumb: 'Logs' },
@@ -32,6 +19,13 @@ const routes: any = [
   //   breadcrumb: CustomPropsBreadcrumb,
   //   props: { someProp: 'Hi' },
   // },
+
+  { path: '/agents', breadcrumb: null },
+  { path: '/tools', breadcrumb: null },
+  { path: '/datasources', breadcrumb: null },
+  { path: '/marketplace', breadcrumb: null },
+
+  { path: '/agents/:agentId', breadcrumb: null },
 
   //chat
   { path: '/copilot', breadcrumb: null },

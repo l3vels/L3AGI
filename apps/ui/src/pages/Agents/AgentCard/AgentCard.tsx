@@ -14,8 +14,8 @@ type AgentCardProps = {
   subTitle: string
   modelVersion?: string
   provider?: string
-  onEditClick: () => void
-  onDeleteClick: () => void
+  onEditClick?: () => void
+  onDeleteClick?: () => void
   onViewClick: () => void
 }
 
@@ -57,22 +57,28 @@ const AgentCard = ({
         />
       </StyledCardBody>
       <StyledCardFooter>
-        {/* <Button onClick={onViewClick} size={Button.sizes.MEDIUM}>
-          View
-        </Button> */}
+        {onViewClick && (
+          <Button onClick={onViewClick} size={Button.sizes.MEDIUM}>
+            View
+          </Button>
+        )}
         <StyledButtonsWrapper>
-          <IconButton
-            onClick={onEditClick}
-            icon={() => <Edit />}
-            size={Button.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
-          />
-          <IconButton
-            onClick={onDeleteClick}
-            icon={() => <Delete />}
-            size={Button.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
-          />
+          {onEditClick && (
+            <IconButton
+              onClick={onEditClick}
+              icon={() => <Edit />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
+          )}
+          {onDeleteClick && (
+            <IconButton
+              onClick={onDeleteClick}
+              icon={() => <Delete />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
+          )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
     </StyledAgentCard>
@@ -106,15 +112,22 @@ const StyledCardHeader = styled.div`
 
   margin-bottom: auto;
   padding-bottom: 5px;
+
+  height: 20px;
+  margin-bottom: 10px;
 `
 
 const StyledCardBody = styled.div`
   width: 100%;
   height: 100%;
 
+  margin-top: auto;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+
+  overflow: hidden;
 `
 
 const StyledCardFooter = styled.div`
