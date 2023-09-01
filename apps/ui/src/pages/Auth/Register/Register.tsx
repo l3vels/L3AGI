@@ -2,7 +2,6 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 
 import useRegister from 'pages/Auth/Register/useRegister'
-import { COMPANY_SIZE_OPTIONS, COMPANY_ROLE_OPTIONS } from 'utils/constants'
 
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
@@ -13,46 +12,22 @@ import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 
 const Register = () => {
-  const { formik, alertMessage, countries } = useRegister()
+  const { formik, alertMessage } = useRegister()
 
   return (
     <StyledCenterFormContainer>
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextField name='first_name' placeholder='First name' label='First name' />
-          <TextField name='last_name' placeholder='Last name' label='Last name' />
-          <TextField name='company_name' placeholder='Company name' label='Company name' />
-          <Dropdown
-            name='company_role'
-            placeholder='Please select'
-            label='Role'
-            options={COMPANY_ROLE_OPTIONS}
-          />
-          <Dropdown
-            name='company_size'
-            placeholder='Please select'
-            label='Company size'
-            options={COMPANY_SIZE_OPTIONS}
-          />
-          <Dropdown
-            name='location'
-            placeholder='Please select'
-            label='Location'
-            options={countries}
-          />
-          <TextField name='contact' placeholder='Contact number' label='Contact number' />
+          <TextField name='name' placeholder='Full name' label='First name' />
+          <TextField name='account_name' placeholder='Company name' label='Company name' />
           <TextField name='email' placeholder='Email' label='Email' />
           <TextField name='password' placeholder='Password' label='Password' password />
-          <TextField
-            name='confirm_password'
-            placeholder='Confirm password'
-            label='Confirm password'
-            password
-          />
         </FormikProvider>
         {/* <ButtonContainer> */}
         <Button onClick={formik.handleSubmit}>Register</Button>
+
+        <Button onClick={formik.handleSubmit}>Register with Github</Button>
         {/* </ButtonContainer> */}
       </StyledFormContainer>
 
