@@ -21,6 +21,7 @@ class RegisterInput(BaseModel):
     name: str
     email: str
     account_name: str
+    password: str
 
 class UserAccount(BaseModel):
     user: User
