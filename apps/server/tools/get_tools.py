@@ -6,6 +6,7 @@ from tools.wikipedia.wikipedia_search_toolkit import WikipediaSearchToolkit
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.open_weather_map.open_weather_map_toolkit import OpenWeatherMapToolkit
 from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
+from tools.twilio.twilio_toolkit import TwilioSearchToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -16,6 +17,7 @@ TOOLKITS = [
     ArxivSearchToolkit(),
     OpenWeatherMapToolkit(),
     YoutubeSearchToolkit(),
+    TwilioSearchToolkit(),
 ]
 
 
@@ -28,7 +30,7 @@ def get_all_tools():
             {
                 "toolkit_id": toolkit.toolkit_id,
                 "is_system": True,
-                "is_active": True,
+                "is_active": toolkit.is_active,
                 "name": toolkit.name,
                 "description": toolkit.description,
                 "fields": [
