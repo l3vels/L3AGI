@@ -14,16 +14,6 @@ export const useAgents = () => {
 
   const { openModal, closeModal } = useModal()
 
-  const openEditAgentModal = (agentObj: any) => {
-    openModal({
-      name: 'edit-agent-modal',
-      data: {
-        agentObj: agentObj,
-        closeModal: () => closeModal('edit-agent-modal'),
-      },
-    })
-  }
-
   const { data: agentsData, refetch: refetchAgents } = useAgentsService()
 
   const [createAgentService] = useCreateAgentService()
@@ -128,7 +118,6 @@ export const useAgents = () => {
     formik,
     handleSubmit,
     deleteAgentHandler,
-    openEditAgentModal,
     refetchAgents,
     isLoading,
   }

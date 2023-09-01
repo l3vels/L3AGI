@@ -16,7 +16,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
 const CreateDatasourceForm = () => {
-  const { closeDatasourceModal, formik, handleSubmit, isLoading } = useDatasource()
+  const { formik, handleSubmit, isLoading } = useDatasource()
 
   return (
     <>
