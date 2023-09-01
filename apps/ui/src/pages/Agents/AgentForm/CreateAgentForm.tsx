@@ -30,7 +30,7 @@ const CreateAgentForm = () => {
           </div>
 
           <div>
-            <Button onClick={() => handleSubmit(formik?.values)}>
+            <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
               {isLoading ? <Loader size={32} /> : 'Save'}
             </Button>
           </div>
