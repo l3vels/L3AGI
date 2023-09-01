@@ -38,7 +38,7 @@ const CreateAgentForm = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <AgentForm formik={formik} isLoading={isLoading} handleSubmit={handleSubmit} />
+            <AgentForm formik={formik} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>

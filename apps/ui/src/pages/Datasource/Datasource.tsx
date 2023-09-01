@@ -9,13 +9,15 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 
 const Datasource = () => {
-  const { datasources, openDatasourceModal, deleteDatasourceHandler, openEditDatasourceModal } =
-    useDatasource()
+  const { datasources, deleteDatasourceHandler, openEditDatasourceModal } = useDatasource()
+
+  const navigate = useNavigate()
 
   return (
     <StyledSectionWrapper>
@@ -25,7 +27,9 @@ const Datasource = () => {
           <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
         </div>
         <StyledButtonWrapper>
-          <Button onClick={openDatasourceModal}>Create Datasource</Button>
+          <Button onClick={() => navigate('/datasources/create-datasource')}>
+            Create Datasource
+          </Button>
         </StyledButtonWrapper>
       </StyledHeaderGroup>
       <ComponentsWrapper>

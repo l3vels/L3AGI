@@ -52,6 +52,7 @@ import AgentView from 'pages/Agents/AgentView'
 import AgentRouteLayout from 'routes/AgentRouteLayout'
 import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
+import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -75,7 +76,7 @@ const Route = () => {
               <Router path='/' element={<Home />} key={document.location.href} />
 
               {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
-              <Router path='datasources' element={<Datasource />} key={document.location.href} />
+              {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
               <Router path='tools' element={<div>Coming Soon</div>} key={document.location.href} />
               <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
               <Router path='teams' element={<Teams />} key={document.location.href} />
@@ -115,6 +116,25 @@ const Route = () => {
               />
               <Router
                 path={':agentId/edit-agent'}
+                element={<EditAgentForm />}
+                key={document.location.href}
+              />
+            </Router>
+
+            <Router
+              path={'datasources'}
+              element={<AgentRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<Datasource />} key={document.location.href} />
+              <Router path={':datasourceId'} element={<AgentView />} key={document.location.href} />
+              <Router
+                path={'create-datasource'}
+                element={<CreateDatasourceForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':datasourceId/edit-datasource'}
                 element={<EditAgentForm />}
                 key={document.location.href}
               />

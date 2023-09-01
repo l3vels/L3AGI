@@ -2,12 +2,14 @@ import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useCreateDatasourceService } from 'services/datasource/useCreateDatasourceService'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { useDeleteDatasourcetByIdService } from 'services/datasource/useDeleteDatasourceById'
 
 export const useDatasource = () => {
+  const navigate = useNavigate()
   const { setToast } = useContext(ToastContext)
 
   const [createDatasource] = useCreateDatasourceService()
@@ -19,14 +21,6 @@ export const useDatasource = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const { openModal, closeModal } = useModal()
-
-  const openDatasourceModal = () => {
-    openModal({ name: 'create-datasource-modal' })
-  }
-
-  const closeDatasourceModal = () => {
-    closeModal('create-datasource-modal')
-  }
 
   const openEditDatasourceModal = (datasource: any) => {
     openModal({
@@ -72,10 +66,9 @@ export const useDatasource = () => {
         type: 'positive',
         open: true,
       })
-      closeDatasourceModal()
+      navigate('/datasources')
     } catch (e) {
       console.log('rrorr', e)
-      closeDatasourceModal()
 
       setToast({
         message: 'Failed to create Datasource!',
@@ -127,13 +120,10 @@ export const useDatasource = () => {
 
   return {
     datasources,
-    openDatasourceModal,
-    closeDatasourceModal,
     handleSubmit,
     formik,
     isLoading,
     deleteDatasourceHandler,
-
     openEditDatasourceModal,
     refetchDatasources,
   }

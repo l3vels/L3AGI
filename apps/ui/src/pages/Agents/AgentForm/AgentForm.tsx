@@ -14,9 +14,6 @@ import AgentDropdown from './components/AgentDropdown'
 
 type AgentFormProps = {
   formik: any
-  isLoading: boolean
-  handleSubmit: (values: string) => void
-  isEdit?: boolean
 }
 
 const AgentForm = ({ formik }: AgentFormProps) => {

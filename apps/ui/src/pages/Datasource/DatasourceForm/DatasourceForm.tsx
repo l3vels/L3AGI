@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components'
-import ScrollContainer from 'react-indiana-drag-scroll'
+
 import MultiStepIndicator from '@l3-lib/ui-core/dist/MultiStepIndicator'
 
-import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
@@ -25,7 +24,7 @@ type DatasourceFormProps = {
   isEdit?: boolean
 }
 
-const DatasourceForm = ({ formik, isLoading, handleSubmit, isEdit }: DatasourceFormProps) => {
+const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
   const { dataLoaderOptions, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
 
@@ -197,26 +196,6 @@ const DatasourceForm = ({ formik, isLoading, handleSubmit, isEdit }: DatasourceF
           </StyledWizardWrapper>
         </StyledStepperContainer>
       </StyledInputWrapper>
-      <StyledFooter>
-        <div>
-          <Button
-            size={Button.sizes.LARGE}
-            disabled={isLoading}
-            onClick={() => {
-              if (stepStatus.source_type === 'active') {
-                setStepStatus({ ...stepStatus, source_type: 'fulfilled', description: 'active' })
-              } else if (stepStatus.description === 'active') {
-                setStepStatus({ ...stepStatus, description: 'fulfilled', create: 'active' })
-              } else if (stepStatus.create === 'active') {
-                handleSubmit(formik?.values)
-              }
-            }}
-          >
-            {stepStatus.create === 'active' ? (isEdit ? 'Update' : 'Create') : 'Next'}
-            {isLoading && <Loader size={32} />}
-          </Button>
-        </div>
-      </StyledFooter>
     </StyledFormContainer>
   )
 }
@@ -248,35 +227,21 @@ const StyledFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
-  /* align-items: center; */
-  overflow: scroll;
+  align-items: center;
+  overflow-y: auto;
   height: 100%;
   width: 100%;
-  /* max-width: 600px; */
+
   padding-top: 50px;
-  /* min-width: 400px; */
   padding: 20px;
 `
-const StyledFooter = styled.div`
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* gap: 35px; */
-  width: 100%;
-  max-width: 600px;
-  /* margin: auto; */
-  height: 100%;
-  /* max-height: 800px; */
-  height: 100px;
-`
+
 const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   /* gap: 35px; */
-  overflow: scroll;
+
   width: 100%;
   max-width: 800px;
   /* max-width: 600px; */
@@ -293,94 +258,7 @@ const StyledSourceTypeWrapper = styled.div`
 const StyledEditableHeadingWrapper = styled.div`
   margin-bottom: 50px;
 `
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
 
-  height: 100%;
-  width: 100vw;
-  backdrop-filter: blur(100px);
-
-  overflow: hidden;
-  background: radial-gradient(107.39% 52.7% at 50% 50%, #3e4ea9 0%, #111b52 100%);
-`
-const StyledForm = styled.form`
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  min-width: 50vw;
-  height: 100%;
-`
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  gap: 30px;
-
-  padding: 64px;
-
-  height: 100%;
-  width: 100%;
-  max-width: 50%;
-  max-height: 100vh;
-`
-const StyledButtonWrapper = styled.div<{ finish?: boolean }>`
-  margin-top: auto;
-
-  opacity: 1;
-  transition: opacity 300ms;
-  ${props =>
-    props.finish &&
-    css`
-      pointer-events: none;
-      opacity: 0;
-    `}
-`
-
-const StyledIconButtonWrapper = styled.div`
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 20px;
-
-  z-index: 1;
-
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`
-
-const StyledFormWrapper = styled.div<{ finish?: boolean }>`
-  /* margin-top: auto; */
-
-  opacity: 1;
-  transition: opacity 300ms;
-  ${props =>
-    props.finish &&
-    css`
-      pointer-events: none;
-      opacity: 0;
-    `}
-
-  /* max-height: 100vh; */
-
-  overflow: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
-
-const StyledFormSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 500px;
-  gap: 55px;
-`
 const StyledEditableHeading = styled(EditableHeading)`
   width: 60%;
   color: rgba(255, 255, 255, 0.6);
@@ -392,13 +270,6 @@ const StyledMultiStepIndicator = styled(MultiStepIndicator)`
   padding-left: 0px;
 `
 
-const StyledScrollDiv = styled(ScrollContainer)`
-  display: flex;
-  gap: 16px;
-
-  min-width: 500px;
-  max-width: calc(50vw - 125px);
-`
 const StyledWizardWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -434,25 +305,4 @@ const StyledLine = styled.div`
 const StyledMultiStepIndicatorWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const StyledCodeButton = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 5px;
-`
-const StyledIconWrapper = styled.div`
-  width: 20px;
-`
-
-const StyledLoader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  width: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `
