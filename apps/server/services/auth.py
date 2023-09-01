@@ -17,7 +17,7 @@ from utils.user import convert_users_to_user_list, convert_model_to_response
 from exceptions import UserNotFoundException
 import requests
 from exceptions import AuthenticationException, UserException
-from utils.auth import authenticate, check_auth
+from utils.auth import authenticate
 
 router = APIRouter()
 
@@ -95,7 +95,7 @@ def login_with_github(name:str, email: str, account_name:str):
    
     return user
     
-def authorize(Authorize: AuthJWT = Depends(check_auth)):
+def authorize(Authorize: AuthJWT = Depends()):
     email = Authorize.get_jwt_subject()
     db_user = UserModel.get_user_by_email(db, email)
     return db_user

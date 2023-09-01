@@ -1,9 +1,9 @@
 from pydantic import BaseModel, UUID4
 from typing import List, Optional
-from api.user import User
-from api.account import Account
 from typing import List, Optional
 from config import Config
+from typings.user import UserOutput
+from typings.account import AccountOutput
 
 class LoginInput(BaseModel):
     email: str
@@ -24,8 +24,8 @@ class RegisterInput(BaseModel):
     password: str
 
 class UserAccount(BaseModel):
-    user: User
-    account: Account
+    user: UserOutput
+    account: AccountOutput
     
     
 class AuthJWTSettings(BaseModel):

@@ -35,7 +35,7 @@ class ConfigModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     key = Column(String)
     agent_id = Column(UUID,ForeignKey('agent.id'), nullable=True)
-    tool_id = Column(UUID, ForeignKey('tool.id'), nullable=True)
+    tool_id = Column(UUID, nullable=True)
     account_id = Column(UUID, nullable=True)
     project_id = Column(UUID, ForeignKey('project.id'), nullable=True)
     datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)

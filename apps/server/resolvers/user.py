@@ -19,7 +19,7 @@ import strawberry
 class UserQuery:
     @strawberry.field
     def user(self, info: Info) -> User:
-        user = info.context.user()
+        user = info.context.user
         print(user)
         return info.context.user
 
