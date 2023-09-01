@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from models.user_account import UserAccountModel
 from models.account import AccountModel
 from typings.account import AccountOutput, AccountInput
-from utils.auth import authenticate, check_auth
+from utils.auth import authenticate
 from typings.account import Account
 from utils.account import convert_accounts_to_account_list, convert_model_to_response
 from exceptions import AccountNotFoundException
@@ -22,7 +22,8 @@ class AccountQuery:
     @strawberry.field
     def account(self, info: Info) -> Account:
         print(info)
-        return info.context.account
+        account = info.context.account
+        return account
 
 
 @strawberry.type

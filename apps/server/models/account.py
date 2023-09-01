@@ -5,6 +5,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import AccountException, AccountNotFoundException
 from typings.account import AccountInput
+from models.user_account import UserAccountModel
 
 class AccountModel(BaseModel):
     """
@@ -78,6 +79,27 @@ class AccountModel(BaseModel):
         accounts = (
             db.session.query(AccountModel)
             .filter(AccountModel.id == account_id, or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            .first()
+        )
+        return accounts
+    
+    @classmethod
+    def get_account_created_by(cls, db, user_id):
+        accounts = (
+            db.session.query(AccountModel)
+            .filter(AccountModel.created_by == user_id, or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            .first()
+        )
+        return accounts
+    
+    @classmethod
+    def get_account_by_access(cls, db, user_id, account_id):
+       
+        accounts = (
+             db.session.query(AccountModel)
+            .join(UserAccountModel, AccountModel.id == UserAccountModel.account_id)
+            .filter(UserAccountModel.account_id == account_id, or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .first()
         )
         return accounts
