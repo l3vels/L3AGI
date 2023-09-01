@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import AccountException, AccountNotFoundException
-from l3_types.account_types import AccountInput
+from typings.account import AccountInput
 
 class AccountModel(BaseModel):
     """
@@ -20,9 +20,7 @@ class AccountModel(BaseModel):
     __tablename__ = 'account'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    user_id = Column(UUID, index=True)
-    name = Column(String(100), default=None)
-    location = Column(String(100), default=None)
+    name = Column(String(100), default=None) 
     deleted = Column(Boolean, default=False)
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")
@@ -31,7 +29,7 @@ class AccountModel(BaseModel):
     def __repr__(self) -> str:
         return (
             f"Account(id={self.id}, "
-            f"name='{self.name}', location='{self.location}', "
+            f"name='{self.name}', "
             f"deleted={self.deleted})"
         )
 

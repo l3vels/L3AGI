@@ -14,7 +14,6 @@ class ConfigException(AppBaseException):
 class InvalidConfigException(ConfigException):
     pass
 
-
 class DatasourceException(AppBaseException):
     pass
 
@@ -65,6 +64,9 @@ class AccountNotFoundException(DatasourceException):
     pass
 
 class ProjectException(AppBaseException):
+    pass
+
+class AuthenticationException(AppBaseException):
     pass
 
 class ProjectNotFoundException(DatasourceException):

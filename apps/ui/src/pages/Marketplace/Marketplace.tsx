@@ -50,7 +50,7 @@ const Marketplace = () => {
         </ComponentsWrapper>
       </StyledSectionWrapper>
 
-      {templateAgents.length > 0 && (
+      {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <StyledTextWrapper>

@@ -1,8 +1,8 @@
 from typing import List, Optional
-from l3_types.agent_types import AgentWithConfigsResponse
+from typings.agent import AgentWithConfigsOutput
 
 class SystemMessageBuilder:
-    def __init__(self, agent_with_configs: AgentWithConfigsResponse):
+    def __init__(self, agent_with_configs: AgentWithConfigsOutput):
         self.agent = agent_with_configs.agent
         self.configs = agent_with_configs.configs
 

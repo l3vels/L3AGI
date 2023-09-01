@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
-from l3_types.agent_types import ConfigInput, AgentInput
+from typings.agent import ConfigInput, AgentInput
 from models.agent_config import AgentConfigModel
 from exceptions import AgentNotFoundException
 
@@ -36,6 +36,7 @@ class AgentModel(BaseModel):
     is_deleted = Column(Boolean, default=False)
     is_template = Column(Boolean, default=False)
     is_memory = Column(Boolean, default=True)
+    avatar = Column(String)
     account_id = Column(UUID, nullable=True)
     
     is_system = Column(Boolean, default=False)

@@ -1,4 +1,3 @@
-import { useAgentsService } from 'services/agent/useAgentsService'
 import { useMarketplaceAgentsService } from 'services/marketplace/useMarketplaceAgentsService'
 
 export const useMarketplace = () => {
