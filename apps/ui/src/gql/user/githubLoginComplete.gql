@@ -1,0 +1,13 @@
+mutation githubLoginCompleted($body: JSON!)  @api(name: account) {
+  githubLoginCompleted: publish(body: $body) @rest(
+      type: "Post"
+      path: "/auth/github-login-complete"
+      method: "POST"
+      bodyKey: "body",
+      endpoint: "account"
+    ) {
+    success
+    verified
+    access_token
+  }
+}

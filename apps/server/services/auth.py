@@ -87,7 +87,7 @@ def login_with_github(name:str, email: str, account_name:str):
     """
     Authenticate with Google
     """
-    user = UserModel.get_user_by_email(email)
+    user = UserModel.get_user_by_email(db, email)
     if not user:
         register_input = RegisterInput(name=name, email=email, account_name=account_name)
         registered = register(register_input)

@@ -1,6 +1,6 @@
 
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends, Request, Query, Response
+from fastapi import APIRouter, HTTPException, Depends, Request, Body, Response
 from fastapi_sqlalchemy import db
 from fastapi.responses import RedirectResponse
 from fastapi_jwt_auth import AuthJWT
@@ -12,7 +12,7 @@ from typings.user import UserOutput, UserInput
 from typings.user_account import UserAccountInput
 from utils.auth import authenticate
 from typings.user import UserInput
-from typings.auth import LoginInput, RegisterInput, GoogleInput, GithubInput, AuthJWTSettings
+from typings.auth import LoginInput, RegisterInput, AuthJWTSettings, AuthHandlerInput
 from typings.account import AccountInput
 from utils.user import convert_users_to_user_list, convert_model_to_response
 from utils.auth import authenticate, generate_token, redirect_to_frontend, get_user_data_from_github
@@ -21,9 +21,7 @@ from config import Config
 
 import services.auth as auth_service
 
-
 router = APIRouter()
-
 
 @router.post("/login", status_code=200)
 def login(body: LoginInput, req:Request, res: Response):
@@ -53,51 +51,57 @@ def login(body: LoginInput, req:Request, res: Response):
 #     return auth_service.login_with_google(token=body.token)
     
     
-@router.post("/login-github", status_code=200)
-def login_with_google(body: GithubInput):
+@router.post("/github-login", status_code=200)
+def login_with_github():
     """
     Login with Github
     """
 
     client_id = Config.GITHUB_CLIENT_ID
-    return RedirectResponse(f'https://github.com/login/oauth/authorize?scope=user:email&client_id={client_id}')
+    return {
+        'auth_url':(f'https://github.com/login/oauth/authorize?scope=user:email&client_id={client_id}')
+    }
 
-@router.get('/github-handler')
-def auth_handler(code: str = Query(...), Authorize: AuthJWT = Depends()):
-    """GitHub login callback"""
 
+@router.post('/github-login-complete', status_code=200)
+def auth_handler(body: AuthHandlerInput):
+    """GitHub login callback"""   
+    
     token_url = 'https://github.com/login/oauth/access_token'
     client_id = Config.GITHUB_CLIENT_ID
     client_secret = Config.GITHUB_CLIENT_SECRET
     frontend_url = Config.FRONTEND_URL
-
+    Authorize = AuthJWT()
     params = {
         'client_id': client_id,
         'client_secret': client_secret,
-        'code': code
+        'code': body.code
     }
 
     headers = {'Accept': 'application/json'}
     response = requests.post(token_url, params=params, headers=headers)
 
     if not response.ok:
-        return redirect_to_frontend(frontend_url)
-
+        raise HTTPException(status_code=400, detail="Something is wrong!")
+     
     data = response.json()
     access_token = data.get('access_token')
     user_data = get_user_data_from_github(access_token)
 
     if user_data is None:
-        return redirect_to_frontend(frontend_url)
+        raise HTTPException(status_code=400, detail="Github user data does not exist!")
 
     user_email = user_data.get("email") or f'{user_data["login"]}@github.com'
-    user = auth_service.login_with_github(email=user_email, name=user_data["name"], account=user_data["name"])
+    account_name = user_data["company"] if user_data["company"] else user_data["name"]
+    user = auth_service.login_with_github(name=user_data["name"], email=user_email, account_name=account_name)
 
 
-    jwt_token = generate_token(user_email, Authorize)
-    redirect_url_success = f"{frontend_url}?access_token={jwt_token}"
-
-    return RedirectResponse(url=redirect_url_success)
+    token = generate_token(user.email, Authorize)
+    return {
+            "success": True,
+            "access_token": token,
+            "verified": user.is_active
+        }
     
 @router.post("/register", status_code=201)
 def register(body: RegisterInput):

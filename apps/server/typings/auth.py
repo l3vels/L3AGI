@@ -9,19 +9,12 @@ class LoginInput(BaseModel):
     email: str
     password: str
     
-class GoogleInput(BaseModel):
-    email: str
-    password: str
-    
-class GithubInput(BaseModel):
-    email: str
-    password: str
     
 class RegisterInput(BaseModel):
     name: str
     email: str
     account_name: str
-    password: str
+    password:Optional[str]
 
 class UserAccount(BaseModel):
     user: UserOutput
@@ -32,3 +25,6 @@ class AuthJWTSettings(BaseModel):
     # jwt_secret = get_config("JWT_SECRET_KEY")
     authjwt_secret_key: str = Config.JWT_SECRET_KEY
     
+    
+class AuthHandlerInput(BaseModel):
+    code: str
