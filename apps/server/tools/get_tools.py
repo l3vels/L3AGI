@@ -8,6 +8,7 @@ from tools.open_weather_map.open_weather_map_toolkit import OpenWeatherMapToolki
 from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
 from tools.twilio.twilio_toolkit import TwilioSearchToolkit
 from tools.twitter.twitter_toolkit import TwitterToolkit
+from tools.instagram.instagram_toolkit import InstagramToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -20,6 +21,7 @@ TOOLKITS = [
     YoutubeSearchToolkit(),
     TwilioSearchToolkit(),
     TwitterToolkit(),
+    InstagramToolkit(),
 ]
 
 
