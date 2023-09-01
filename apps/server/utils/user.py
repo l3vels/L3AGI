@@ -3,6 +3,7 @@ from typing import List, Optional
 from typings.user import UserOutput, UserInput
 from utils.type import convert_value_to_type
 
+
 def convert_model_to_response(user_model: UserModel) -> UserOutput:
     user_data = {}
     
@@ -17,3 +18,5 @@ def convert_model_to_response(user_model: UserModel) -> UserOutput:
 
 def convert_users_to_user_list(users: List[UserModel]) -> List[UserOutput]:
     return [convert_model_to_response(user_model) for user_model in users]
+
+

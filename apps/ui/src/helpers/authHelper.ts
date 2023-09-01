@@ -14,12 +14,12 @@ export const setAccountId = (accountId: string, location?: string) => {
 
 export const setTokens = (data: any) => {
   cookies.set('authorization', data.access_token)
-  cookies.set('x-refresh-token', data.refresh_token)
+  // cookies.set('x-refresh-token', data.refresh_token)
 }
 
 export const cleanCookie = () => {
   cookies.remove('authorization')
-  cookies.remove('x-refresh-token')
+  // cookies.remove('x-refresh-token')
   cookies.remove('accountid')
 }
 

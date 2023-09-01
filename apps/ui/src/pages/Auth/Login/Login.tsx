@@ -8,7 +8,6 @@ import useLogin from 'pages/Auth/Login/useLogin'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -60,8 +59,22 @@ const Login = () => {
           />
         </StyledColumnContainer> */}
 
-        <Typography
+        {/* <Typography
           value='Forget password?'
+          type={Typography.types.label}
+          size={Typography.sizes.lg}
+          as={'a'}
+          customColor='#FFFFFF'
+          style={{
+            textDecorationLine: 'underline',
+            cursor: 'pointer',
+            textAlign: 'center',
+            textUnderlineOffset: 5,
+            marginTop: 18,
+          }}
+        /> */}
+        <Typography
+          value='Register?'
           type={Typography.types.label}
           size={Typography.sizes.lg}
           as={'a'}

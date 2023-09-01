@@ -1,16 +1,17 @@
 mutation login($body: JSON!)  @api(name: account) {
   login: publish(body: $body)
     @rest(type: "Post", path: "/auth/login", method: "POST", bodyKey: "body", endpoint: "account") {
-    message
-    success
+    # message
+    # success
     # twoFactorId
     # methodId
+    success
     verified
-    twoFactorToken
-    challengeName
-    challengeSession
-    challengeParameters
+    # twoFactorToken
+    # challengeName
+    # challengeSession
+    # challengeParameters
     access_token
-    refresh_token
+    # refresh_token
   }
 }

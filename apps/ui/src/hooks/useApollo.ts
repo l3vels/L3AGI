@@ -28,14 +28,13 @@ const useApollo = () => {
       accountId,
     },
   }
-  if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
-    authConfig = {
-      headers: {
-        'x-refresh-token': refreshToken,
-        authorization,
-        accountId,
-      },
-    }
+
+  authConfig = {
+    headers: {
+      // 'x-refresh-token': refreshToken,
+      authorization,
+      accountId,
+    },
   }
 
   const apollo = React.useMemo(
@@ -47,9 +46,10 @@ const useApollo = () => {
           withCredentials: true,
         }
 
-        if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
-          request.headers = authConfig.headers
-        }
+        // if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+         
+        // }
+        request.headers = authConfig.headers
 
         await axios(request)
         cleanCookie()
