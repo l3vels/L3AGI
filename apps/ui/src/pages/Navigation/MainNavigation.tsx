@@ -30,29 +30,28 @@ const MainNavigation = () => {
 
   return (
     <StyledUl>
-      <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('')}>
+      <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
         <About />
-
         <span>Home</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('agents')}>
+      <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
         <Players />
         <span>Agents</span>
       </StyledLi>
       <StyledLi
         isActive={includes(active, 'datasources')}
-        onClick={() => onHandleClick('datasources')}
+        onClick={() => onHandleClick('/datasources')}
       >
         <Collection />
         <span>Datasources</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('tools')}>
+      <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('/tools')}>
         <Games />
         <span>Tools</span>
       </StyledLi>
       <StyledLi
         isActive={includes(active, 'marketplace')}
-        onClick={() => onHandleClick('marketplace')}
+        onClick={() => onHandleClick('/marketplace')}
       >
         <StyledIconWrapper>
           <Dashboard size={30} />
