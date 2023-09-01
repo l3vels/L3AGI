@@ -51,6 +51,7 @@ import Marketplace from 'pages/Marketplace'
 import AgentView from 'pages/Agents/AgentView'
 import AgentRouteLayout from 'routes/AgentRouteLayout'
 import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
+import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -110,6 +111,11 @@ const Route = () => {
               <Router
                 path={'create-agent'}
                 element={<CreateAgentForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':agentId/edit-agent'}
+                element={<EditAgentForm />}
                 key={document.location.href}
               />
             </Router>

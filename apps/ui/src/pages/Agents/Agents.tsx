@@ -14,7 +14,7 @@ import AgentCard from './AgentCard'
 import { useAgents } from './useAgents'
 
 const Agents = () => {
-  const { agentsData, openCreateAgentModal, deleteAgentHandler, openEditAgentModal } = useAgents()
+  const { agentsData, deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
 
@@ -40,7 +40,7 @@ const Agents = () => {
                 key={index}
                 title={agent.name}
                 subTitle={agent.description}
-                onEditClick={() => openEditAgentModal(agentObj)}
+                onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
                 onViewClick={() => navigate(`/agents/${agent.id}`)}
                 modelVersion={configs.model_version}

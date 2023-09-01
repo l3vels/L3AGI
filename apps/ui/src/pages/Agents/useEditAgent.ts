@@ -1,48 +1,40 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
-import { useModal } from 'hooks'
+
 import { useContext, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useUpdateAgentService } from 'services/agent/useUpdateAgentService'
 import { useAgents } from './useAgents'
 
-export const useEditAgent = (agentObj: any) => {
+export const useEditAgent = () => {
+  const navigate = useNavigate()
+  const params = useParams()
   const { refetchAgents } = useAgents()
-  const { closeModal } = useModal()
+
   const { setToast } = useContext(ToastContext)
+
+  const { agentId } = params
+
+  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
   const [isLoading, setIsLoading] = useState(false)
 
   const [updateAgent] = useUpdateAgentService()
 
-  const { agent, configs } = agentObj
-
-  const { id, name, role, description, is_template } = agent
-
-  const {
-    temperature,
-    goals,
-    constraints,
-    tools,
-    datasources,
-    instructions,
-    model_version,
-    mode_provider,
-  } = configs
-
   const defaultValues = {
-    agent_name: name,
-    agent_role: role,
-    agent_description: description,
-    agent_is_template: is_template,
-    agent_temperature: temperature,
-    agent_goals: goals,
-    agent_constraints: constraints,
-    agent_tools: tools,
-    agent_instructions: instructions,
-    agent_datasources: datasources,
-    agent_model_version: model_version,
-    agent_mode_provider: mode_provider,
+    agent_name: agentById?.agent?.name,
+    agent_role: agentById?.agent?.role,
+    agent_description: agentById?.agent?.description,
+    agent_is_template: agentById?.agent?.is_template,
+    agent_temperature: agentById?.configs?.temperature,
+    agent_goals: agentById?.configs?.goals,
+    agent_constraints: agentById?.configs?.constraints,
+    agent_tools: agentById?.configs?.tools,
+    agent_instructions: agentById?.configs?.instructions,
+    agent_datasources: agentById?.configs?.datasources,
+    agent_model_version: agentById?.configs?.model_version,
+    agent_mode_provider: agentById?.configs?.mode_provider,
   }
 
   const handleSubmit = async (values: any) => {
@@ -63,12 +55,12 @@ export const useEditAgent = (agentObj: any) => {
       mode_provider: values.agent_mode_provider,
     }
 
-    await updateAgent(id, {
+    await updateAgent(agentId || '', {
       ...updatedValues,
     })
     await refetchAgents()
 
-    closeModal('edit-agent-modal')
+    navigate(`/agents`)
 
     setToast({
       message: 'Agent was updated!',
@@ -79,24 +71,15 @@ export const useEditAgent = (agentObj: any) => {
     setIsLoading(false)
   }
 
-  const closeEditAgentModal = () => {
-    closeModal('edit-agent-modal')
-  }
-
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
     onSubmit: async values => handleSubmit(values),
   })
 
-  //   useEffect(() => {
-  //     agentRefetch()
-  //   }, [])
-
   return {
     formik,
     handleSubmit,
-    closeEditAgentModal,
     isLoading,
   }
 }

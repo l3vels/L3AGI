@@ -1,29 +1,27 @@
 import { FormikProvider } from 'formik'
-
-import { useAgents } from '../useAgents'
-import AgentForm from './AgentForm'
-
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
-
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import styled from 'styled-components'
+import { useEditAgent } from '../useEditAgent'
 
-const CreateAgentForm = () => {
-  const { formik, handleSubmit, isLoading } = useAgents()
+import Button from '@l3-lib/ui-core/dist/Button'
+import Loader from '@l3-lib/ui-core/dist/Loader'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { StyledFormWrapper } from './CreateAgentForm'
+import AgentForm from './AgentForm'
+
+const EditAgentForm = () => {
+  const { formik, handleSubmit, isLoading } = useEditAgent()
 
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle secondary>Create Agent</StyledSectionTitle>
+            <StyledSectionTitle secondary>Edit Agent</StyledSectionTitle>
             <StyledSectionDescription secondary>
               Here are all of your games, etc
             </StyledSectionDescription>
@@ -46,10 +44,4 @@ const CreateAgentForm = () => {
   )
 }
 
-export default CreateAgentForm
-
-export const StyledFormWrapper = styled.div`
-  width: 100%;
-
-  height: calc(100vh - 380px);
-`
+export default EditAgentForm
