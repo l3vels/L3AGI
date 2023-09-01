@@ -15,9 +15,8 @@ const AgentView = () => {
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
-  console.log('agentById', agentById)
 
-  if (!agentById) return
+  if (!agentById) return <div />
 
   const { agent, configs } = agentById
 

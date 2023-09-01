@@ -50,6 +50,7 @@ import Datasource from 'pages/Datasource'
 import Marketplace from 'pages/Marketplace'
 import AgentView from 'pages/Agents/AgentView'
 import AgentRouteLayout from 'routes/AgentRouteLayout'
+import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -72,7 +73,7 @@ const Route = () => {
             <Router element={<MainRouteLayout />}>
               <Router path='/' element={<Home />} key={document.location.href} />
 
-              <Router path='agents' element={<Agents />} key={document.location.href} />
+              {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
               <Router path='datasources' element={<Datasource />} key={document.location.href} />
               <Router path='tools' element={<div>Coming Soon</div>} key={document.location.href} />
               <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
@@ -103,12 +104,14 @@ const Route = () => {
               <Router index element={<AIChat />} key={document.location.href} />
             </Router>
 
-            <Router
-              path={'agents/:agentId'}
-              element={<AgentRouteLayout />}
-              key={document.location.href}
-            >
-              <Router index element={<AgentView />} key={document.location.href} />
+            <Router path={'agents'} element={<AgentRouteLayout />} key={document.location.href}>
+              <Router index element={<Agents />} key={document.location.href} />
+              <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
+              <Router
+                path={'create-agent'}
+                element={<CreateAgentForm />}
+                key={document.location.href}
+              />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>

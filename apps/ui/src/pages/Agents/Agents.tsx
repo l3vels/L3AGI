@@ -27,7 +27,7 @@ const Agents = () => {
         </div>
 
         <StyledButtonWrapper>
-          <Button onClick={openCreateAgentModal}>Create Agent</Button>
+          <Button onClick={() => navigate('/agents/create-agent')}>Create Agent</Button>
         </StyledButtonWrapper>
       </StyledHeaderGroup>
       <ComponentsWrapper>
