@@ -30,39 +30,40 @@ type EditAgentModalProps = {
 }
 
 const EditAgentModal = ({ data }: EditAgentModalProps) => {
-  const { formik, handleSubmit, closeEditAgentModal, isLoading } = useEditAgent(data.agentObj)
+  // const { formik, handleSubmit, closeEditAgentModal, isLoading } = useEditAgent(data.agentObj)
 
   return (
-    <Modal show isClean fullscreen onClose={closeEditAgentModal}>
-      <FormikProvider value={formik}>
-        <StyledFormContainer>
-          <StyledHeader>
-            <StyledHeaderText>Edit Agent</StyledHeaderText>
-            <StyledCloseButton onClick={closeEditAgentModal}>
-              <Typography
-                value='Close'
-                type={Typography.types.HEADING}
-                size={Typography.sizes.xss}
-                customColor={'color: rgba(255, 255, 255, 0.6)'}
-              />
-            </StyledCloseButton>
-          </StyledHeader>
+    // <Modal show isClean fullscreen onClose={closeEditAgentModal}>
+    //   <FormikProvider value={formik}>
+    //     <StyledFormContainer>
+    //       <StyledHeader>
+    //         <StyledHeaderText>Edit Agent</StyledHeaderText>
+    //         <StyledCloseButton onClick={closeEditAgentModal}>
+    //           <Typography
+    //             value='Close'
+    //             type={Typography.types.HEADING}
+    //             size={Typography.sizes.xss}
+    //             customColor={'color: rgba(255, 255, 255, 0.6)'}
+    //           />
+    //         </StyledCloseButton>
+    //       </StyledHeader>
 
-          <StyledBody>
-            <AgentForm formik={formik} isLoading={isLoading} handleSubmit={handleSubmit} isEdit />
+    //       <StyledBody>
+    //         <AgentForm formik={formik} isLoading={isLoading} handleSubmit={handleSubmit} isEdit />
 
-            <StyledSecondColumn />
-          </StyledBody>
-          <StyledFooter id='main_footer'>
-            <Footer />
-            <div>
-              <Spotlight />
-            </div>
-            <div></div>
-          </StyledFooter>
-        </StyledFormContainer>
-      </FormikProvider>
-    </Modal>
+    //         <StyledSecondColumn />
+    //       </StyledBody>
+    //       <StyledFooter id='main_footer'>
+    //         <Footer />
+    //         <div>
+    //           <Spotlight />
+    //         </div>
+    //         <div></div>
+    //       </StyledFooter>
+    //     </StyledFormContainer>
+    //   </FormikProvider>
+    // </Modal>
+    <div />
   )
 }
 

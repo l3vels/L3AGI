@@ -28,45 +28,46 @@ type EditDatasourceModalProps = {
 }
 
 const EditDatasourceModal = ({ data }: EditDatasourceModalProps) => {
-  const { formik, closeEditDatasourceModal, handleSubmit, isLoading } = useEditDatasource(
-    data.datasource,
-  )
+  // const { formik, closeEditDatasourceModal, handleSubmit, isLoading } = useEditDatasource(
+  //   data.datasource,
+  // )
 
   return (
-    <Modal isClean fullscreen show onClose={closeEditDatasourceModal}>
-      <FormikProvider value={formik}>
-        <StyledFormContainer>
-          <StyledHeader>
-            <StyledHeaderText>Edit Datasource</StyledHeaderText>
-            <StyledCloseButton onClick={closeEditDatasourceModal}>
-              <Typography
-                value='Close'
-                type={Typography.types.HEADING}
-                size={Typography.sizes.xss}
-                customColor={'color: rgba(255, 255, 255, 0.6)'}
-              />
-            </StyledCloseButton>
-          </StyledHeader>
+    // <Modal isClean fullscreen show onClose={closeEditDatasourceModal}>
+    //   <FormikProvider value={formik}>
+    //     <StyledFormContainer>
+    //       <StyledHeader>
+    //         <StyledHeaderText>Edit Datasource</StyledHeaderText>
+    //         <StyledCloseButton onClick={closeEditDatasourceModal}>
+    //           <Typography
+    //             value='Close'
+    //             type={Typography.types.HEADING}
+    //             size={Typography.sizes.xss}
+    //             customColor={'color: rgba(255, 255, 255, 0.6)'}
+    //           />
+    //         </StyledCloseButton>
+    //       </StyledHeader>
 
-          <StyledBody>
-            <DatasourceForm
-              isEdit
-              formik={formik}
-              isLoading={isLoading}
-              handleSubmit={handleSubmit}
-            />
-            <StyledSecondColumn />
-          </StyledBody>
-          <StyledFooter id='main_footer'>
-            <Footer />
-            <div>
-              <Spotlight />
-            </div>
-            <div></div>
-          </StyledFooter>
-        </StyledFormContainer>
-      </FormikProvider>
-    </Modal>
+    //       <StyledBody>
+    //         <DatasourceForm
+    //           isEdit
+    //           formik={formik}
+    //           isLoading={isLoading}
+    //           handleSubmit={handleSubmit}
+    //         />
+    //         <StyledSecondColumn />
+    //       </StyledBody>
+    //       <StyledFooter id='main_footer'>
+    //         <Footer />
+    //         <div>
+    //           <Spotlight />
+    //         </div>
+    //         <div></div>
+    //       </StyledFooter>
+    //     </StyledFormContainer>
+    //   </FormikProvider>
+    // </Modal>
+    <div />
   )
 }
 

@@ -21,9 +21,8 @@ const MainRouteLayout = () => {
       <Header hideUsers />
 
       <StyledMainContainer>
-        <StyledNavigatioNWrapper>
-          <MainNavigation />
-        </StyledNavigatioNWrapper>
+        <MainNavigation />
+
         {outlet}
       </StyledMainContainer>
       <Footer />
@@ -32,10 +31,3 @@ const MainRouteLayout = () => {
 }
 
 export default MainRouteLayout
-
-const StyledNavigatioNWrapper = styled.div`
-  margin-bottom: 50px;
-  /* position: sticky;
-  top: 0;
-  z-index: 1000000; */
-`

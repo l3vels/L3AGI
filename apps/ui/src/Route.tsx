@@ -50,6 +50,10 @@ import Datasource from 'pages/Datasource'
 import Marketplace from 'pages/Marketplace'
 import AgentView from 'pages/Agents/AgentView'
 import AgentRouteLayout from 'routes/AgentRouteLayout'
+import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
+import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
+import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import EditDatasourceForm from 'pages/Datasource/DatasourceForm/EditDatasourceForm'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -72,8 +76,8 @@ const Route = () => {
             <Router element={<MainRouteLayout />}>
               <Router path='/' element={<Home />} key={document.location.href} />
 
-              <Router path='agents' element={<Agents />} key={document.location.href} />
-              <Router path='datasources' element={<Datasource />} key={document.location.href} />
+              {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
+              {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
               <Router path='tools' element={<div>Coming Soon</div>} key={document.location.href} />
               <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
               <Router path='teams' element={<Teams />} key={document.location.href} />
@@ -103,12 +107,38 @@ const Route = () => {
               <Router index element={<AIChat />} key={document.location.href} />
             </Router>
 
+            <Router path={'agents'} element={<AgentRouteLayout />} key={document.location.href}>
+              <Router index element={<Agents />} key={document.location.href} />
+              <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
+              <Router
+                path={'create-agent'}
+                element={<CreateAgentForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':agentId/edit-agent'}
+                element={<EditAgentForm />}
+                key={document.location.href}
+              />
+            </Router>
+
             <Router
-              path={'agents/:agentId'}
+              path={'datasources'}
               element={<AgentRouteLayout />}
               key={document.location.href}
             >
-              <Router index element={<AgentView />} key={document.location.href} />
+              <Router index element={<Datasource />} key={document.location.href} />
+              <Router path={':datasourceId'} element={<AgentView />} key={document.location.href} />
+              <Router
+                path={'create-datasource'}
+                element={<CreateDatasourceForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':datasourceId/edit-datasource'}
+                element={<EditDatasourceForm />}
+                key={document.location.href}
+              />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
