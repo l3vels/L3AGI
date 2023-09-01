@@ -60,7 +60,7 @@ const StyledMainWrapper = styled.div`
 const StyledSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
 `
 
 const StyledHeaderGroup = styled.div`
@@ -68,7 +68,7 @@ const StyledHeaderGroup = styled.div`
   /* flex-direction: column; */
   justify-content: space-between;
   align-items: flex-end;
-  gap: 20px;
+  gap: 15px;
   /* margin-bottom: 10px; */
 `
 const StyledTabList = styled(TabList)`
