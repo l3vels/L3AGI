@@ -106,11 +106,3 @@ const StyledNavLink = styled.a`
   color: #19b3ff;
   cursor: pointer;
 `
-
-const StyledColumnContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-top: 9px;
-  padding-left: 9px;
-`

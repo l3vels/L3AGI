@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
 from pydantic import BaseModel
-
+from fastapi_jwt_auth import AuthJWT
 from models.user import UserModel
 from models.account import AccountModel
 from models.user_account import UserAccountModel
@@ -17,7 +17,7 @@ from utils.user import convert_users_to_user_list, convert_model_to_response
 from exceptions import UserNotFoundException
 import requests
 from exceptions import AuthenticationException, UserException
-
+from utils.auth import authenticate, check_auth
 
 router = APIRouter()
 
@@ -95,3 +95,7 @@ def login_with_github(name:str, email: str, account_name:str):
    
     return user
     
+def authorize(Authorize: AuthJWT = Depends(check_auth)):
+    email = Authorize.get_jwt_subject()
+    db_user = UserModel.get_user_by_email(db, email)
+    return db_user

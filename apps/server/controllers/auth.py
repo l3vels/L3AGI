@@ -26,7 +26,7 @@ router = APIRouter()
 
 
 @router.post("/login", status_code=200)
-def login(body: LoginInput):
+def login(body: LoginInput, req:Request, res: Response):
     """
     Login
     """  
@@ -34,6 +34,7 @@ def login(body: LoginInput):
         user = auth_service.login(body)
         Authorize = AuthJWT()
         token = generate_token(user.email, Authorize)
+        
         return {
             "success": True,
             "access_token": token,

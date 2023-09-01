@@ -26,21 +26,26 @@ def authenticate(request: Request) -> Tuple[User, Account]:
     except gql.transport.exceptions.TransportQueryError:
         raise HTTPException(status_code=401, detail="Unauthorized")
     
+def check_auth(Authorize: AuthJWT = Depends()):
+    """
+    Check Auth
+    """
+    Authorize.jwt_required()
+    return Authorize
 
-def generate_token(user_email, jwt_authorizer: AuthJWT = Depends()):
+def generate_token(subject, jwt_authorizer: AuthJWT = Depends()):
     token_config = Config.JWT_EXPIRY
     if type(token_config) == str:
         token_config = int(token_config)
     if token_config is None:
         token_config = 300
     token_expiry_time = timedelta(hours=token_config)
-    token = jwt_authorizer.create_access_token(subject=user_email, expires_time=token_expiry_time)
+    token = jwt_authorizer.create_access_token(subject=subject, expires_time=token_expiry_time)
     return token
 
 def redirect_to_frontend(frontend_url):
     """Redirect to frontend URL"""
     return RedirectResponse(url=frontend_url)
-
 
 def get_user_data_from_github(access_token):
     """Get user data from GitHub API"""

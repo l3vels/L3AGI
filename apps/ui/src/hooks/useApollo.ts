@@ -22,7 +22,7 @@ const useApollo = () => {
   const { accountId, authorization, 'x-refresh-token': refreshToken } = cookies
 
   let authConfig: any = {
-    credentials: 'include',
+    // credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       accountId,
@@ -32,7 +32,7 @@ const useApollo = () => {
   authConfig = {
     headers: {
       // 'x-refresh-token': refreshToken,
-      authorization,
+      authorization : `Bearer ${authorization}`,
       accountId,
     },
   }

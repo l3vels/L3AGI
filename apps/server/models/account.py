@@ -14,7 +14,6 @@ class AccountModel(BaseModel):
         id (UUID): Unique identifier of the account.
         user_id (UUID): ID of the user associated with the account.
         name (str): Name of the account.
-        location (str): Location of the account.
         deleted (bool): Flag indicating if the account has been soft-deleted.
     """
     __tablename__ = 'account'

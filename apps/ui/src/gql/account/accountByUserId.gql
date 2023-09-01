@@ -1,8 +1,6 @@
 query accountByUserId($id: ID!) @api(name: account) {
   accountByUserId(user_id: $id) {
     id
-    company_name
-    company_role
-    location
+    name
   }
 }

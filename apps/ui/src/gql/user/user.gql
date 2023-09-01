@@ -2,8 +2,6 @@ query user @api(name: account) {
     user {
         id
         email
-        role
-        first_name
-        last_name
+        name
     }
 }

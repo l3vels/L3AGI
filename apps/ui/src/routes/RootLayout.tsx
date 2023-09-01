@@ -15,17 +15,6 @@ const RootLayout = () => {
 
   const outlet = useOutlet()
 
-  const params = useParams()
-  const urlParams = new URLSearchParams(window.location.search)
-
-  let gameId: string | undefined | null
-
-  if (isCheckedRoute) {
-    gameId = urlParams.get('game')
-  } else {
-    gameId = params.gameId
-  }
-
   if (!user) return <Navigate to='/login' />
 
   return (
