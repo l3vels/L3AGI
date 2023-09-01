@@ -2,10 +2,10 @@ from abc import ABC
 from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 
-class SlackToolkit(BaseToolkit, ABC):
-    name: str = "Slack Toolkit"
-    description: str = "Toolkit containing tools for Slack"
-    toolkit_id = "10ce6a71-207b-4636-8eaf-39b27e17a211"
+class GmailToolkit(BaseToolkit, ABC):
+    name: str = "Gmail Toolkit"
+    description: str = "Toolkit containing tools for Gmail"
+    toolkit_id = "83dcc628-7f8f-4abd-b5bc-8636c497c8a7"
 
     is_active = False
 

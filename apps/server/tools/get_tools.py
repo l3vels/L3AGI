@@ -10,6 +10,7 @@ from tools.twilio.twilio_toolkit import TwilioSearchToolkit
 from tools.twitter.twitter_toolkit import TwitterToolkit
 from tools.instagram.instagram_toolkit import InstagramToolkit
 from tools.slack.slack_toolkit import SlackToolkit
+from tools.gmail.gmail_toolkit import GmailToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -24,6 +25,7 @@ TOOLKITS = [
     TwitterToolkit(),
     InstagramToolkit(),
     SlackToolkit(),
+    GmailToolkit(),
 ]
 
 
