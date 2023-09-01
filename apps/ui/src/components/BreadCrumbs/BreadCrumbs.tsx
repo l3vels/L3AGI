@@ -14,18 +14,8 @@ const routes: any = [
   // account
   { path: '/account', breadcrumb: 'Profile' },
 
-  // {
-  //   path: '/custom-props',
-  //   breadcrumb: CustomPropsBreadcrumb,
-  //   props: { someProp: 'Hi' },
-  // },
-
-  { path: '/agents', breadcrumb: null },
-  { path: '/tools', breadcrumb: null },
-  { path: '/datasources', breadcrumb: null },
-  { path: '/marketplace', breadcrumb: null },
-
   { path: '/agents/:agentId', breadcrumb: null },
+  { path: '/agents/create-agent', breadcrumb: 'Create Agent' },
 
   //chat
   { path: '/copilot', breadcrumb: null },
