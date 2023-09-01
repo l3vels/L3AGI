@@ -47,6 +47,7 @@ class BaseToolkit(BaseModel):
     toolkit_id: str
     name: str
     description: str
+    is_active: bool = Field(default=True)
 
     @abstractmethod
     def get_tools(self) -> List[BaseTool]:
