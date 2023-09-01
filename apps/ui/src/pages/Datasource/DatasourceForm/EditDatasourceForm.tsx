@@ -1,6 +1,7 @@
 import { FormikProvider } from 'formik'
-import { useDatasource } from '../useDatasource'
+
 import DatasourceForm from './DatasourceForm'
+import { useEditDatasource } from '../useEditDatasource'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
@@ -15,8 +16,8 @@ import {
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
-const CreateDatasourceForm = () => {
-  const { formik, handleSubmit, isLoading } = useDatasource()
+const EditDatasourceForm = () => {
+  const { formik, handleSubmit, isLoading } = useEditDatasource()
 
   return (
     <>
@@ -24,7 +25,7 @@ const CreateDatasourceForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle secondary>Create Datasource</StyledSectionTitle>
+              <StyledSectionTitle secondary>Edit Datasource</StyledSectionTitle>
               <StyledSectionDescription secondary>
                 Here are all of your games, etc
               </StyledSectionDescription>
@@ -48,4 +49,4 @@ const CreateDatasourceForm = () => {
   )
 }
 
-export default CreateDatasourceForm
+export default EditDatasourceForm

@@ -53,6 +53,7 @@ import AgentRouteLayout from 'routes/AgentRouteLayout'
 import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import EditDatasourceForm from 'pages/Datasource/DatasourceForm/EditDatasourceForm'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -135,7 +136,7 @@ const Route = () => {
               />
               <Router
                 path={':datasourceId/edit-datasource'}
-                element={<EditAgentForm />}
+                element={<EditDatasourceForm />}
                 key={document.location.href}
               />
             </Router>

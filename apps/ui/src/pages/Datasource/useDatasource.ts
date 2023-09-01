@@ -22,16 +22,6 @@ export const useDatasource = () => {
 
   const { openModal, closeModal } = useModal()
 
-  const openEditDatasourceModal = (datasource: any) => {
-    openModal({
-      name: 'edit-datasource-modal',
-      data: {
-        datasource: datasource,
-        closeModal: () => closeModal('edit-datasource-modal'),
-      },
-    })
-  }
-
   const initialValues = {
     datasource_name: '',
     datasource_description: '',
@@ -124,7 +114,6 @@ export const useDatasource = () => {
     formik,
     isLoading,
     deleteDatasourceHandler,
-    openEditDatasourceModal,
     refetchDatasources,
   }
 }

@@ -1,0 +1,15 @@
+query datasourceById($id: id!) @api(name: "ai") {
+  datasourceById(id: $id)
+    @rest(type: "Datasource", path: "/datasource/{args.id}", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+    source_type
+    project_id
+    is_deleted
+    is_system
+    account_id
+    created_by
+    modified_by
+  }
+}

@@ -15,7 +15,7 @@ import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 
 const Datasource = () => {
-  const { datasources, deleteDatasourceHandler, openEditDatasourceModal } = useDatasource()
+  const { datasources, deleteDatasourceHandler } = useDatasource()
 
   const navigate = useNavigate()
 
@@ -40,7 +40,7 @@ const Datasource = () => {
                 key={index}
                 title={datasource.name}
                 subTitle={datasource.source_type}
-                onEditClick={() => openEditDatasourceModal(datasource)}
+                onEditClick={() => navigate(`/datasources/${datasource.id}/edit-datasource`)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
               />
             )

@@ -16,12 +16,11 @@ import UploadButton from './components/UploadButton'
 import { useEffect, useState } from 'react'
 
 import DataLoaderCard from './components/DataLoaderCard'
+import FormikTextField from 'components/TextFieldFormik'
 
 type DatasourceFormProps = {
   formik: any
   isLoading?: boolean
-  handleSubmit: (values: any) => void
-  isEdit?: boolean
 }
 
 const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
@@ -38,7 +37,7 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
   }
 
   useEffect(() => {
-    if (datasource_source_type.length > 0 && !isLoading && fields) {
+    if (datasource_source_type?.length > 0 && !isLoading && fields) {
       setFieldValue('config_key', pickedLoaderFields?.fields[0]?.key)
       setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
     }
@@ -68,6 +67,9 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
             }}
           />
         </StyledEditableHeadingWrapper>
+
+        {/* <FormikTextField name='datasource_name' placeholder='Name' label='Name' /> */}
+
         <StyledStepperContainer>
           <StyledWizardWrapper>
             <StyledMultiStepIndicatorWrapper>
