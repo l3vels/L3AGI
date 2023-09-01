@@ -18,6 +18,7 @@ from exceptions import UserNotFoundException
 import requests
 from exceptions import AuthenticationException, UserException
 
+
 router = APIRouter()
 
 
@@ -25,11 +26,12 @@ def register(input: RegisterInput):
     """
     Register
     """
-    if UserModel.get_user_by_email(input.email):
-         raise UserException("User already exists!")
-     
+   
+    if UserModel.get_user_by_email(db=db, email=input.email):
+        raise UserException("User already exists!")
+    
     # Create a new user
-    user_input = UserInput(name=input.name, email=input.email)
+    user_input = UserInput(name=input.name, email=input.email, password=input.password)
     user = UserModel.create_user(db=db, user=user_input)
     
     # Create a new account
@@ -39,18 +41,20 @@ def register(input: RegisterInput):
 
     # Create a new user-account
     user_account_input = UserAccountInput(user_id=user.id, account_id=account.id)
-    user_account = UserAccountModel.create_user_account(db=db, user_account=user_account_input, user=body.user_id)
+    user_account = UserAccountModel.create_user_account(db=db, user_account=user_account_input)
 
     return {"account": account, "user": user, "user_account": user_account}
 
+    
 def login(input:LoginInput):
     """
     Login
     """
-    user = UserModel.get_user_by_email(input.email)
-    if not user:
+    db_user = UserModel.get_user_by_email(db, input.email)
+    if not db_user or not UserModel.verify_password(db_user.password, input.password):
         raise UserNotFoundException("Incorrect username or password")
-    return user
+    
+    return db_user
 
     
 
