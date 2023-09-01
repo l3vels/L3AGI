@@ -29,6 +29,7 @@ class AccountQuery:
 class AccountMutation:
     @strawberry.mutation
     def update_account(self, info: Info) -> Account:
+        #todo need get account
         # info.context["background_tasks"].add_task(notify_new_flavour, name)
         print(info)
         return Account(id="wwww", name="Example")
