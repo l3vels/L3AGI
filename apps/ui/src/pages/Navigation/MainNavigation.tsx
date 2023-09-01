@@ -70,6 +70,7 @@ const StyledUl = styled.ul`
   padding: 0;
   display: flex;
   gap: 16px;
+  margin-bottom: 25px;
 `
 const StyledLi = styled.li<{ isActive?: boolean }>`
   width: 90px;

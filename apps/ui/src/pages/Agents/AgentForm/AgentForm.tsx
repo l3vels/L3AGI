@@ -14,12 +14,9 @@ import AgentDropdown from './components/AgentDropdown'
 
 type AgentFormProps = {
   formik: any
-  isLoading: boolean
-  handleSubmit: (values: string) => void
-  isEdit?: boolean
 }
 
-const AgentForm = ({ formik, isLoading, isEdit, handleSubmit }: AgentFormProps) => {
+const AgentForm = ({ formik }: AgentFormProps) => {
   const { setFieldValue, values } = formik
   const { agent_datasources, agent_mode_provider, agent_model_version, agent_description } = values
 
@@ -100,16 +97,6 @@ const AgentForm = ({ formik, isLoading, isEdit, handleSubmit }: AgentFormProps) 
           />
         </StyledInputWrapper>
       </StyledForm>
-      <StyledFooter>
-        <Button
-          size={Button.sizes.LARGE}
-          disabled={isLoading}
-          onClick={() => handleSubmit(formik?.values)}
-        >
-          {isLoading && <Loader size={32} />}
-          {!isLoading && (isEdit ? 'Update' : 'Create Agent')}
-        </Button>
-      </StyledFooter>
     </StyledRoot>
   )
 }
@@ -119,27 +106,28 @@ export default AgentForm
 const StyledRoot = styled.div`
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 `
 
 const StyledForm = styled.div`
   width: 100%;
   /* max-width: 600px; */
   height: 100%;
-  max-height: calc(100% - 150px);
-  overflow: scroll;
+  max-height: 100%;
+  /* overflow: scroll; */
 
-  margin-top: 40px;
+  /* margin-top: 40px; */
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 `
 
 const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 20px;
+  /* padding: 20px; */
 
-  gap: 35px;
+  gap: 20px;
   width: 100%;
   max-width: 800px;
   /* margin: auto; */
@@ -159,12 +147,4 @@ export const StyledTextareaWrapper = styled.div`
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
   }
-`
-const StyledFooter = styled.div`
-  height: 150px;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  padding: 20px;
 `

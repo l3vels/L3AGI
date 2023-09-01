@@ -106,34 +106,31 @@ button {
   background-color: transparent;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-
-  border-radius: 100px;
-}
-::-webkit-scrollbar-track-piece {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 100px;
-}
-::-webkit-scrollbar-thumb,
-*::-moz-scrollbar-thumb {
-  background: #fff;
-  border-radius: 100px;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button,
-input::-moz-inner-spin-button,
-input::-moz-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 /* mozilla */
 * {
   scrollbar-width: thin;
   scrollbar-color: #fff rgba(255, 255, 255, 0.1);
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 4px; /* You can adjust the width as needed */
+}
+
+/* Track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 4px; /* You can adjust the border-radius for rounded corners */
+}
+
+/* When the user hovers over the scrollbar */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #999; /* Change color on hover if desired */
 }
 
 .l3-style-toast-animation-enter-active {

@@ -2,6 +2,7 @@ import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
@@ -9,23 +10,9 @@ import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdServ
 export const useAgents = () => {
   const { setToast } = useContext(ToastContext)
 
-  const { openModal, closeModal } = useModal()
+  const navigate = useNavigate()
 
-  const openCreateAgentModal = () => {
-    openModal({ name: 'create-agent-modal' })
-  }
-  const closeCreateAgentModal = () => {
-    closeModal('create-agent-modal')
-  }
-  const openEditAgentModal = (agentObj: any) => {
-    openModal({
-      name: 'edit-agent-modal',
-      data: {
-        agentObj: agentObj,
-        closeModal: () => closeModal('edit-agent-modal'),
-      },
-    })
-  }
+  const { openModal, closeModal } = useModal()
 
   const { data: agentsData, refetch: refetchAgents } = useAgentsService()
 
@@ -73,10 +60,11 @@ export const useAgents = () => {
         type: 'positive',
         open: true,
       })
-      closeCreateAgentModal()
+      navigate('/agents')
     } catch (e) {
       console.log('rrorr', e)
-      closeCreateAgentModal()
+      navigate('/agents')
+
       setToast({
         message: 'Failed to create Agent!',
         type: 'negative',
@@ -127,12 +115,9 @@ export const useAgents = () => {
 
   return {
     agentsData,
-    openCreateAgentModal,
     formik,
-    closeCreateAgentModal,
     handleSubmit,
     deleteAgentHandler,
-    openEditAgentModal,
     refetchAgents,
     isLoading,
   }

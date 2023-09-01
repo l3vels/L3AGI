@@ -1,21 +1,33 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { StyledInnerWrapper } from 'styles/globalStyle.css'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
-const StyledSectionTitle = styled.h2`
+const StyledSectionTitle = styled.h2<{ secondary?: boolean }>`
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
   color: #ffffff;
+
+  ${p =>
+    p.secondary &&
+    css`
+      font-size: 18px;
+    `};
 `
 
-const StyledSectionDescription = styled.h2`
+const StyledSectionDescription = styled.h2<{ secondary?: boolean }>`
   font-style: normal;
   font-weight: 450;
   font-size: 16px;
   line-height: 24px;
   color: rgba(255, 255, 255, 0.8);
+
+  ${p =>
+    p.secondary &&
+    css`
+      font-size: 12px;
+    `};
 `
 
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
@@ -60,7 +72,7 @@ const StyledMainWrapper = styled.div`
 const StyledSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
 `
 
 const StyledHeaderGroup = styled.div`
@@ -68,7 +80,7 @@ const StyledHeaderGroup = styled.div`
   /* flex-direction: column; */
   justify-content: space-between;
   align-items: flex-end;
-  gap: 20px;
+  gap: 15px;
   /* margin-bottom: 10px; */
 `
 const StyledTabList = styled(TabList)`

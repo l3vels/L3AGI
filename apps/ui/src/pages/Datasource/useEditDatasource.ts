@@ -2,15 +2,20 @@ import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import { useContext, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useConfigsService } from 'services/config/useConfigsService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
+import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useUpdateDatasourceService } from 'services/datasource/useUpdateDatasourceService'
 import { useDatasource } from './useDatasource'
 
-export const useEditDatasource = (datasource: any) => {
+export const useEditDatasource = () => {
+  const navigate = useNavigate()
+  const params = useParams()
+  const { datasourceId } = params
+
   const { refetchDatasources } = useDatasource()
 
-  const { closeModal } = useModal()
   const { setToast } = useContext(ToastContext)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -18,15 +23,15 @@ export const useEditDatasource = (datasource: any) => {
   const [updateDatasource] = useUpdateDatasourceService()
   const [updateConfig] = useUpdateConfigService()
 
+  const { data: datasourceById } = useDatasourceByIdService({ id: datasourceId || '' })
   const { data: configsData } = useConfigsService()
 
-  const { id, name, description, source_type } = datasource
-  const filteredConfig = configsData?.filter((config: any) => config.datasource_id === id)
+  const filteredConfig = configsData?.filter((config: any) => config.datasource_id === datasourceId)
 
   const defaultValues = {
-    datasource_name: name,
-    datasource_description: description,
-    datasource_source_type: source_type,
+    datasource_name: datasourceById?.name,
+    datasource_description: datasourceById?.description,
+    datasource_source_type: datasourceById?.source_type,
     config_key: filteredConfig[0]?.key,
     config_value: filteredConfig[0]?.value,
     config_key_type: filteredConfig[0]?.key_type,
@@ -44,9 +49,9 @@ export const useEditDatasource = (datasource: any) => {
       key: values.config_key,
       value: values.config_value,
       key_type: values.config_key_type,
-      datasource_id: id,
+      datasource_id: datasourceById,
     }
-    await updateDatasource(id, {
+    await updateDatasource(datasourceId || '', {
       ...updatedDatasourceValues,
     })
     await updateConfig(filteredConfig[0]?.id, {
@@ -54,7 +59,7 @@ export const useEditDatasource = (datasource: any) => {
     })
     await refetchDatasources()
 
-    closeModal('edit-datasource-modal')
+    navigate('/datasources')
 
     setToast({
       message: 'Datasource was updated!',
@@ -65,10 +70,6 @@ export const useEditDatasource = (datasource: any) => {
     setIsLoading(false)
   }
 
-  const closeEditDatasourceModal = () => {
-    closeModal('edit-datasource-modal')
-  }
-
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
@@ -77,9 +78,7 @@ export const useEditDatasource = (datasource: any) => {
 
   return {
     formik,
-    closeEditDatasourceModal,
     handleSubmit,
-
     isLoading,
   }
 }
