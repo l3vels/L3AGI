@@ -5,6 +5,7 @@ from tools.bing.bing_search_toolkit import BingSearchToolkit
 from tools.wikipedia.wikipedia_search_toolkit import WikipediaSearchToolkit
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.open_weather_map.open_weather_map_toolkit import OpenWeatherMapToolkit
+from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
 
 TOOLKITS = [
     SerpGoogleSearchToolkit(),
@@ -14,6 +15,7 @@ TOOLKITS = [
     WikipediaSearchToolkit(),
     ArxivSearchToolkit(),
     OpenWeatherMapToolkit(),
+    YoutubeSearchToolkit(),
 ]
 
 
