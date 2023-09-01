@@ -24,6 +24,6 @@ const StyledMainWrapper = styled.div<{ noPadding?: boolean }>`
   ${p =>
     p.noPadding &&
     css`
-      padding: 55px 0;
+      padding: 30px 0;
     `};
 `
