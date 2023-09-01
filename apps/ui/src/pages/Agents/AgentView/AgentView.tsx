@@ -4,11 +4,12 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
+import TagsRow from './components/TagsRow'
+import AdditionalInfoBox from './components/AdditionalInfoBox'
 
 const AgentView = () => {
   const params = useParams()
@@ -65,96 +66,28 @@ const AgentView = () => {
           <StyledDivider />
 
           <StyledWrapper>
-            {tools.length > 0 && (
-              <StyledRow>
-                <Typography
-                  value={'Tools'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255,255,255,0.6)'}
-                />
-                <StyledToolsContainer>
-                  {tools.map((tool: string, index: number) => {
-                    return <Tags key={index} label={tool} readOnly size='small' outlined />
-                  })}
-                </StyledToolsContainer>
-              </StyledRow>
-            )}
+            {tools.length > 0 && <TagsRow title='Tools' items={tools} />}
 
-            {role && (
-              <StyledRow>
-                <Typography
-                  value={'Role'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255,255,255,0.6)'}
-                />
-                <Tags label={role} readOnly size='small' outlined />
-              </StyledRow>
-            )}
+            {role && <TagsRow title='Role' items={[role]} />}
 
-            {model_version && (
-              <StyledRow>
-                <Typography
-                  value={'Model'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255,255,255,0.6)'}
-                />
-                <Tags label={model_version} readOnly size='small' outlined />
-              </StyledRow>
-            )}
+            {model_version && <TagsRow title='Model' items={[model_version]} />}
           </StyledWrapper>
         </StyledDetailsBox>
       </StyledLeftColumn>
 
       <StyledRightColumn>
         {goals.length > 0 && (
-          <StyledAdditionalInfo>
-            <Typography
-              value={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-              customColor={'#FFF'}
-            />
-
-            {goals.map((goal: string, index: number) => {
-              return (
-                <Typography
-                  key={index}
-                  value={goals.length === 1 ? goal : `${index + 1}. ${goal}`}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'#FFF'}
-                />
-              )
-            })}
-          </StyledAdditionalInfo>
+          <AdditionalInfoBox
+            items={goals}
+            title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
+          />
         )}
 
         {constraints.length > 0 && (
-          <StyledAdditionalInfo>
-            <Typography
-              value={
-                constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
-              }
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-              customColor={'#FFF'}
-            />
-
-            {constraints.map((constraint: string, index: number) => {
-              return (
-                <Typography
-                  key={index}
-                  value={constraints.length === 1 ? constraint : `${index + 1}. ${constraint}`}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'#FFF'}
-                />
-              )
-            })}
-          </StyledAdditionalInfo>
+          <AdditionalInfoBox
+            items={constraints}
+            title={constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`}
+          />
         )}
       </StyledRightColumn>
     </StyledRoot>
@@ -207,27 +140,3 @@ const StyledDivider = styled.div`
   height: 1px;
   background: rgba(255, 255, 255, 0.4);
 `
-const StyledRow = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`
-const StyledToolsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-`
-const StyledAdditionalInfo = styled.div`
-  background: rgba(0, 0, 0, 0.4);
-  width: 100%;
-  max-width: 1440px;
-  /* min-height: 400px; */
-
-  border-radius: 10px;
-  padding: 30px 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
-const StyledHeader = styled.div``
