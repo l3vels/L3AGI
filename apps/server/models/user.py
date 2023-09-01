@@ -5,6 +5,9 @@ from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from exceptions import UserException, UserNotFoundException
 from typings.user import UserInput
+import hashlib
+import binascii
+import os
 
 class UserModel(RootBaseModel):
     """
@@ -18,8 +21,33 @@ class UserModel(RootBaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None)
     email = Column(String(100), default=None)
+    password = Column(String, default=None)
+    is_active = Column(Boolean, default=True)
+    is_deleted = Column(Boolean, default=False)
     deleted = Column(Boolean, default=False)
-   
+    
+    @classmethod
+    def hash_password(cls, password):
+        """Hash a password for storing."""
+        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
+                                    salt, 100000)
+        pwdhash = binascii.hexlify(pwdhash)
+        return (salt + pwdhash).decode('ascii')
+    
+    @classmethod
+    def verify_password(cls, stored_password, provided_password):
+        """Verify a stored password against one provided by user"""
+        salt = stored_password[:64]
+        stored_password = stored_password[64:]
+        pwdhash = hashlib.pbkdf2_hmac('sha512', 
+                                    provided_password.encode('utf-8'), 
+                                    salt.encode('ascii'), 
+                                    100000)
+        pwdhash = binascii.hexlify(pwdhash).decode('ascii')
+        
+        return pwdhash == stored_password
+    
     @classmethod
     def create_user(cls, db, user):
         """
@@ -34,6 +62,7 @@ class UserModel(RootBaseModel):
 
         """
         db_user = UserModel()
+        user.password = cls.hash_password(user.password)  # Hash the password
         cls.update_model_from_input(db_user, user)
         db.session.add(db_user)
         db.session.flush()  # Flush pending changes to generate the user's ID
@@ -57,6 +86,8 @@ class UserModel(RootBaseModel):
         old_user = cls.get_user_by_id(db=db, user_id=id)
         if not old_user:
             raise UserNotFoundException("User not found")
+        if user.password:
+            user.password = cls.hash_password(user.password)  # Hash the password
         db_user = cls.update_model_from_input(user_model=old_user, user_input=user)
         
         db.session.add(db_user)

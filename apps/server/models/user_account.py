@@ -41,7 +41,7 @@ class UserAccountModel(BaseModel):
             UserAccount: The created user_account.
 
         """
-        db_user_account = UserAccountModel( )
+        db_user_account = UserAccountModel()
         cls.update_model_from_input(db_user_account, user_account)
         db.session.add(db_user_account)
         db.session.flush()  # Flush pending changes to generate the user_account's ID
