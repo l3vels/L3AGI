@@ -9,7 +9,7 @@ import Saved from './pages/Saved'
 import Settings from './pages/Settings'
 import Teams from './pages/Teams'
 
-import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication } from 'pages/Auth'
+import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication, GithubLogin } from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
 
 import MainComponent from 'pages/MainComponent'
@@ -126,6 +126,7 @@ const Route = () => {
         </>
         <Router element={<PublicRoute />}>
           <Router path='/login' element={<Login />} />
+          <Router path='/github-login' element={<GithubLogin />} />
           <Router path='/register' element={<Register />} />
           <Router path='/forgot-password' element={<ForgotPassword />} />
           <Router path='/login/:id' element={<Login />} />

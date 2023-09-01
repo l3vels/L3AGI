@@ -21,7 +21,6 @@ import strawberry
 class AccountQuery:
     @strawberry.field
     def account(self, info: Info) -> Account:
-        print(info)
         account = info.context.account
         return account
 
