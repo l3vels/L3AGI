@@ -83,34 +83,34 @@ const AvatarDropDown = () => {
         <Avatar size={Avatar.sizes.SMALL} src={defaultAvatar} type={Avatar.types.IMG} rectangle />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
-        <StyledDropDownMenuItem onClick={() => navigate('/account')}>
+        {/* <StyledDropDownMenuItem onClick={() => navigate('/account')}>
           <img src={profileIcon} alt='profile' />
           {t('profile')}
-        </StyledDropDownMenuItem>
-        {userAccounts && userAccounts.length > 0 && (
-          <Sub>
-            <DropdownMenuSubTrigger>
-              <DropdownMenuSubTriggerGroup>
-                <img src={teamIcon} alt='switch account' />
-                Switch account
-              </DropdownMenuSubTriggerGroup>
-              <ArrowRightSvg />
-            </DropdownMenuSubTrigger>
-            <Portal>
-              <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
-                {userList}
-                {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
-              <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
-              <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
-              <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
-              </DropdownMenuDropdownMenuSubContent>
-            </Portal>
-          </Sub>
+        </StyledDropDownMenuItem> */}
+        {userAccounts && userAccounts.length > 0 && (<></>
+          // <Sub>
+          //   <DropdownMenuSubTrigger>
+          //     <DropdownMenuSubTriggerGroup>
+          //       <img src={teamIcon} alt='switch account' />
+          //       Switch account
+          //     </DropdownMenuSubTriggerGroup>
+          //     <ArrowRightSvg />
+          //   </DropdownMenuSubTrigger>
+          //   <Portal>
+          //     <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
+          //       {userList}
+          //       {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
+          //     <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
+          //     <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
+          //     <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
+          //     </DropdownMenuDropdownMenuSubContent>
+          //   </Portal>
+          // </Sub>
         )}
-        <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
+        {/* <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
           <img src={teamIcon} alt='team' />
           {t('Team')}
-        </StyledDropDownMenuItem>
+        </StyledDropDownMenuItem> */}
         {/* <StyledDropDownMenuItem onClick={() => navigate('/developers')}>
           <img src={developersIcon} alt='team' />
           {t('Developers')}
