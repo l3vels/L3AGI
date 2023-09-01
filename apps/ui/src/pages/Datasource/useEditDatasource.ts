@@ -2,7 +2,7 @@ import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import { useContext, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useConfigsService } from 'services/config/useConfigsService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
@@ -10,12 +10,12 @@ import { useUpdateDatasourceService } from 'services/datasource/useUpdateDatasou
 import { useDatasource } from './useDatasource'
 
 export const useEditDatasource = () => {
+  const navigate = useNavigate()
   const params = useParams()
   const { datasourceId } = params
 
   const { refetchDatasources } = useDatasource()
 
-  const { closeModal } = useModal()
   const { setToast } = useContext(ToastContext)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +59,7 @@ export const useEditDatasource = () => {
     })
     await refetchDatasources()
 
-    closeModal('edit-datasource-modal')
+    navigate('/datasources')
 
     setToast({
       message: 'Datasource was updated!',
@@ -70,10 +70,6 @@ export const useEditDatasource = () => {
     setIsLoading(false)
   }
 
-  const closeEditDatasourceModal = () => {
-    closeModal('edit-datasource-modal')
-  }
-
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
@@ -82,9 +78,7 @@ export const useEditDatasource = () => {
 
   return {
     formik,
-    closeEditDatasourceModal,
     handleSubmit,
-
     isLoading,
   }
 }
