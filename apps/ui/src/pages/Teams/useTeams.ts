@@ -62,7 +62,7 @@ const useAdministration = () => {
 
   const formik = useFormik({
     initialValues: { shared_email: '' },
-    validationSchema: administrationValidation,
+    // validationSchema: administrationValidation,
     onSubmit: values => handleSubmit(values),
   })
 
