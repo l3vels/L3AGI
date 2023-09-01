@@ -109,16 +109,17 @@ export default AgentForm
 const StyledRoot = styled.div`
   width: 100%;
   height: 100%;
+  overflow: scroll;
 `
 
 const StyledForm = styled.div`
   width: 100%;
   /* max-width: 600px; */
   height: 100%;
-  max-height: calc(100% - 150px);
-  overflow: scroll;
+  max-height: 100%;
+  /* overflow: scroll; */
 
-  margin-top: 40px;
+  /* margin-top: 40px; */
   display: flex;
   justify-content: center;
 `
@@ -127,7 +128,7 @@ const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 20px;
+  /* padding: 20px; */
 
   gap: 35px;
   width: 100%;
@@ -149,12 +150,4 @@ export const StyledTextareaWrapper = styled.div`
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
   }
-`
-const StyledFooter = styled.div`
-  height: 150px;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  padding: 20px;
 `

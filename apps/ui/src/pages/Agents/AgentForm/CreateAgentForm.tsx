@@ -21,7 +21,6 @@ const CreateAgentForm = () => {
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
-        {/* <StyledStickyHeader> */}
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle secondary>Create Agent</StyledSectionTitle>
@@ -36,9 +35,8 @@ const CreateAgentForm = () => {
             </Button>
           </div>
         </StyledHeaderGroup>
-        {/* </StyledStickyHeader> */}
 
-        <ComponentsWrapper>
+        <ComponentsWrapper noPadding>
           <StyledFormWrapper>
             <AgentForm formik={formik} isLoading={isLoading} handleSubmit={handleSubmit} />
           </StyledFormWrapper>
@@ -53,10 +51,5 @@ export default CreateAgentForm
 const StyledFormWrapper = styled.div`
   width: 100%;
 
-  /* height: calc(100vh - 450px); */
-`
-const StyledStickyHeader = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 102030;
+  height: calc(100vh - 430px);
 `
