@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import List, Optional
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, Boolean, UUID, ForeignKey
+from sqlalchemy.sql import and_, or_
 from models.base_model import BaseModel
 from typings.config import ConfigInput, ConfigQueryParams
 from exceptions import ConfigNotFoundException
@@ -19,7 +19,7 @@ class ConfigModel(BaseModel):
         id (UUID): The primary key of the tool configuration.
         key (String): The key of the tool configuration.
         agent_id (UUID): The ID of the agent associated with the configuration.
-        tool_id (UUID): The ID of the tool associated with the configuration.
+        toolkit_id (UUID): The ID of the toolkit associated with the configuration.
         account_id (UUID): The ID of the account associated with the configuration.
         project_id (UUID): The ID of the project associated with the configuration.
         datasource_id (UUID): The ID of the datasource associated with the configuration.
@@ -35,7 +35,7 @@ class ConfigModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     key = Column(String)
     agent_id = Column(UUID,ForeignKey('agent.id'), nullable=True)
-    tool_id = Column(UUID, ForeignKey('tool.id'), nullable=True)
+    toolkit_id = Column(UUID, nullable=True)
     account_id = Column(UUID, nullable=True)
     project_id = Column(UUID, ForeignKey('project.id'), nullable=True)
     datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
