@@ -8,8 +8,6 @@ import {
   useDeleteAccountAccessService,
   useUserAccountService,
 } from 'services'
-import { administrationValidation } from 'utils/validationsSchema'
-import columnConfig from './columnConfig'
 
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'

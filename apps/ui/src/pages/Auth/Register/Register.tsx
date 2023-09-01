@@ -2,12 +2,8 @@ import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 
 import useRegister from 'pages/Auth/Register/useRegister'
-
-import TextField from '@l3-lib/ui-core/dist/TextField'
-
+import TextFieldFormik from 'components/TextFieldFormik'
 import Button from '@l3-lib/ui-core/dist/Button'
-
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 
@@ -19,10 +15,16 @@ const Register = () => {
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextField name='name' placeholder='Full name' label='First name' />
-          <TextField name='account_name' placeholder='Company name' label='Company name' />
-          <TextField name='email' placeholder='Email' label='Email' />
-          <TextField name='password' placeholder='Password' label='Password' password />
+          <TextFieldFormik name='name' placeholder='Full name' label='First name' />
+          <TextFieldFormik name='account_name' placeholder='Company name' label='Company name' />
+          <TextFieldFormik name='email' placeholder='Email' label='Email' />
+          <TextFieldFormik name='password' placeholder='Password' label='Password' type="password" />
+          {/* <TextFieldFormik
+            name='confirm_password'
+            placeholder='Confirm password'
+            label='Confirm password'
+            type="password"
+          /> */}
         </FormikProvider>
         {/* <ButtonContainer> */}
         <Button onClick={formik.handleSubmit}>Register</Button>

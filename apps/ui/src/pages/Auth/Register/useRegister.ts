@@ -22,7 +22,10 @@ const validationSchema = Yup.object().shape({
     .matches(
       /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
       'Password must contain at least 8 characters, one uppercase, one number and one special case character.',
-    )
+    ),
+  // confirm_password: Yup.string()
+  //   .required('Please confirm your password')
+  //   .oneOf([Yup.ref('password'), null], "Passwords don't match."),
 })
 
 const initialValues = {
@@ -41,12 +44,13 @@ const useRegister = () => {
     const data = { ...values }
     const response = await registrationComplete(data)
 
+    console.log(response, "Register response")
     if (!response) {
       setAlertMessage({ type: 'danger', message: 'User email is already registered' })
       return
     }
 
-    // navigate('/login', { state: { message: response.message } })
+    navigate('/login', { state: { message: response.message } })
   }
 
   const formik = useFormik({

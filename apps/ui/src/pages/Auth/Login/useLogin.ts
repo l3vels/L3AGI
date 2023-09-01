@@ -72,6 +72,7 @@ const useLogin = () => {
     validationSchema,
     onSubmit: async values => {
       const response = await authLoginComplete(values.email, values.password)
+      console.log(response, "Login response")
 
       if (response.challengeName === 'NEW_PASSWORD_REQUIRED') {
         navigate('update-password', { state: { response } })
