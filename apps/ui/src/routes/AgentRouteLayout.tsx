@@ -5,6 +5,7 @@ import { AuthContext } from 'contexts'
 
 import { Footer, Header } from 'components/Layout'
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
+import MainNavigation from 'pages/Navigation/MainNavigation'
 
 const AgentRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -16,7 +17,10 @@ const AgentRouteLayout = () => {
   return (
     <StyledAppContainer className='app_container'>
       <Header />
-      <StyledMainContainer>{outlet}</StyledMainContainer>
+      <StyledMainContainer>
+        <MainNavigation />
+        {outlet}
+      </StyledMainContainer>
       <Footer />
     </StyledAppContainer>
   )

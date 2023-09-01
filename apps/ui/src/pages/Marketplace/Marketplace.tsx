@@ -49,35 +49,40 @@ const Marketplace = () => {
           </StyledAgentCardsWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
-      <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <StyledTextWrapper>
-            <StyledSectionTitle>Evolving AI Virtuosos: Powered by the Community</StyledSectionTitle>
-            <StyledSectionDescription>
-              Witness the growth of exceptional AI talents, nurtured by collective community
-              contributions.
-            </StyledSectionDescription>
-          </StyledTextWrapper>
-        </StyledHeaderGroup>
-        <ComponentsWrapper>
-          <StyledAgentCardsWrapper>
-            {templateAgents?.map((agentObj: any, index: number) => {
-              const { agent, configs } = agentObj
 
-              return (
-                <AgentCard
-                  key={index}
-                  title={agent.name}
-                  subTitle={agent.description}
-                  onViewClick={() => navigate(`/agents/${agent.id}`)}
-                  modelVersion={configs.model_version}
-                  provider={configs.mode_provider}
-                />
-              )
-            })}
-          </StyledAgentCardsWrapper>
-        </ComponentsWrapper>
-      </StyledSectionWrapper>
+      {templateAgents.length > 0 && (
+        <StyledSectionWrapper>
+          <StyledHeaderGroup className='header_group'>
+            <StyledTextWrapper>
+              <StyledSectionTitle>
+                Evolving AI Virtuosos: Powered by the Community
+              </StyledSectionTitle>
+              <StyledSectionDescription>
+                Witness the growth of exceptional AI talents, nurtured by collective community
+                contributions.
+              </StyledSectionDescription>
+            </StyledTextWrapper>
+          </StyledHeaderGroup>
+          <ComponentsWrapper>
+            <StyledAgentCardsWrapper>
+              {templateAgents?.map((agentObj: any, index: number) => {
+                const { agent, configs } = agentObj
+
+                return (
+                  <AgentCard
+                    key={index}
+                    title={agent.name}
+                    subTitle={agent.description}
+                    onViewClick={() => navigate(`/agents/${agent.id}`)}
+                    modelVersion={configs.model_version}
+                    provider={configs.mode_provider}
+                  />
+                )
+              })}
+            </StyledAgentCardsWrapper>
+          </ComponentsWrapper>
+        </StyledSectionWrapper>
+      )}
     </StyledRoot>
   )
 }

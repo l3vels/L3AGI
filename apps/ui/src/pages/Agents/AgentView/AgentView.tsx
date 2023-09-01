@@ -47,7 +47,7 @@ const AgentView = () => {
             <div>
               <Button size={Button.sizes.MEDIUM}>
                 <Download />
-                Install
+                Add
               </Button>
             </div>
           </StyledWrapper>
@@ -101,7 +101,7 @@ const StyledRoot = styled.div`
   padding-top: 50px;
 
   width: 100%;
-  height: 100%;
+  height: calc(100% - 100px);
 
   display: flex;
 
