@@ -14,6 +14,7 @@ from typings.auth import AuthJWTSettings
 from config import Config
 from models.db import Base, engine
 
+
 from controllers.auth import router as user_router
 from controllers.account import router as account_router
 from controllers.project import router as project_router
@@ -25,12 +26,37 @@ from controllers.configuration import router as config_router
 from controllers.datasource import router as datasource_router
 from controllers.tool import router as tool_router
 from controllers.llm import router as llm_router
+from resolvers.account import AccountQuery, AccountMutation
+from resolvers.user import UserQuery, UserMutation
 # from controllers.chat import router as chat_router
-
+from strawberry.fastapi import BaseContext, GraphQLRouter
+from strawberry.types import Info as _Info
+from strawberry.types.info import RootValueType
+from strawberry.fastapi import GraphQLRouter
+from functools import cached_property
+from typings.user import User
+import strawberry
+from resolvers.context import get_context
 
 VERSION = "0.3.1"
 
 app = FastAPI()
+
+
+@strawberry.type
+class Query(AccountQuery, UserQuery):
+    pass
+@strawberry.type
+class Mutation(AccountMutation, UserMutation):
+    pass
+
+
+
+
+schema = strawberry.Schema(query=Query, mutation=Mutation)
+graphql_app = GraphQLRouter(schema, context_getter=get_context)
+app.include_router(graphql_app, prefix="/graphql")
+
 
 if Config.NODE_ENV != "local":
     sentry_sdk.init(
