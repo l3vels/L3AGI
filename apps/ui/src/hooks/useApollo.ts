@@ -40,33 +40,38 @@ const useApollo = () => {
   const apollo = React.useMemo(
     () => {
       const logout = async () => {
-        const request: AxiosRequestConfig = {
-          method: 'POST',
-          url: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
-          withCredentials: true,
-        }
 
-        // if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
-         
+        //todo add logout later
+        
+        // const request: AxiosRequestConfig = {
+        //   method: 'POST',
+        //   url: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
+        //   withCredentials: true,
         // }
-        request.headers = authConfig.headers
 
-        await axios(request)
-        cleanCookie()
+        // // if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
+         
+        // // }
+        // request.headers = authConfig.headers
 
-        //todo need review when redirect to login page
-        if (!locations.includes(window.location.pathname)) {
-          window.location.href = '/login'
-        }
+        // await axios(request)
+        // cleanCookie()
+
+        // //todo need review when redirect to login page
+        // if (!locations.includes(window.location.pathname)) {
+        //   window.location.href = '/login'
+        // }
       }
 
       const errorLink = onError(context => {
         const { graphQLErrors, networkError } = context
 
+
         if (graphQLErrors) {
           graphQLErrors.map(({ extensions }: any) => {
             if (extensions?.exception?.status === 401) {
               logout()
+              
             }
 
             //eslint-disable-next-line
@@ -90,7 +95,6 @@ const useApollo = () => {
 
       const mLink = new MultiAPILink({
         endpoints: {
-          game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
         },
@@ -127,7 +131,6 @@ const useApollo = () => {
 
       const restLink = new RestLink({
         endpoints: {
-          game: `${import.meta.env.REACT_APP_SERVICES_URL}`,
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
         },

@@ -11,6 +11,8 @@ import forgotPasswordMutation from '../gql//user/forgotPassword.gql'
 import resetPasswordMutation from '../gql/user/resetPassword.gql'
 import resendVerifyEmailMutation from '../gql/user/resendVerifyEmail.gql'
 import loginCompleteMutation from '../gql/user/loginComplete.gql'
+import githubLoginCompleteMutation from '../gql/user/githubLoginComplete.gql'
+import githubLoginMutation from '../gql/user/githubLogin.gql'
 import resendCodeMutation from '../gql/user/resendCode.gql'
 import updatePasswordMutation from '../gql/user/updatePassword.gql'
 
@@ -200,4 +202,40 @@ export const useResendCodeService = () => {
   }
 
   return [resendCode]
+}
+
+
+export const useGithubLoginService = () => {
+  const [mutation] = useMutation(githubLoginMutation)
+
+  const githubLogin = async (
+   
+  ): Promise<{ auth_url: string}> => {
+    const {
+      data: { githubLogin },
+    } = await mutation({ variables: { body: {  } } })
+
+    return githubLogin
+  }
+
+  return [githubLogin]
+}
+
+export const useGithubLoginCompleteService = () => {
+  const [mutation] = useMutation(githubLoginCompleteMutation)
+
+  const githubLoginComplete = async (
+    code: string
+  ): Promise<{ message: string; success: boolean }> => {
+    const {
+      data: { githubLoginCompleted },
+    } = await mutation({ variables: { body: { code } } })
+
+    if(githubLoginCompleted.access_token){
+      authHelper.setTokens(githubLoginCompleted)
+    }
+    return githubLoginCompleted
+  }
+
+  return [githubLoginComplete]
 }

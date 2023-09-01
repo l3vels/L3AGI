@@ -16,7 +16,6 @@ from models.db import Base, engine
 
 
 from controllers.auth import router as user_router
-from controllers.account import router as account_router
 from controllers.project import router as project_router
 from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
@@ -78,6 +77,9 @@ origins = [
     "http://localhost:4000",
     "https://dashboard-dev.l3vels.xyz",
     "https://dashboard.l3vels.xyz",
+    "https://app.l3vels.xyz",
+    "https://www.l3vels.xyz",
+    "https://l3vels.xyz",
 ]
 
 app.add_middleware(
@@ -101,10 +103,8 @@ def jwt_exception_handler(request: Request, exc: AuthJWTException):
         status_code=exc.status_code,
         content={"detail": exc.message}
     )
-    
 
 app.include_router(user_router, prefix="/auth")
-app.include_router(account_router, prefix="/account")
 app.include_router(project_router, prefix="/project")
 app.include_router(team_router, prefix="/team")
 app.include_router(team_agent_router, prefix="/team-agent")

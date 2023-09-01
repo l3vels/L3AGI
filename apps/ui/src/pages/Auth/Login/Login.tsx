@@ -1,10 +1,12 @@
+import {useEffect} from "react"
 import { FormikProvider } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import useLogin from 'pages/Auth/Login/useLogin'
+import useGithubLogin from 'pages/Auth/Login/useGithubLogin'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 
@@ -23,10 +25,11 @@ const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
 )
 
 const Login = () => {
-  const { formik, alertMessage, showResendAlert, resendVerifyEmailHandle, handleCloseAlert } =
-    useLogin()
-  const navigate = useNavigate()
-  const { t } = useTranslation()
+  const { formik, alertMessage,
+    showResendAlert,
+     resendVerifyEmailHandle, 
+   } = useLogin()
+  const {githubLogin} = useGithubLogin()
 
   return (
     <StyledCenterFormContainer>
@@ -78,6 +81,9 @@ const Login = () => {
           type={Typography.types.label}
           size={Typography.sizes.lg}
           as={'a'}
+          onClick={()=>{
+            window.location.href = '/register'
+          }}
           customColor='#FFFFFF'
           style={{
             textDecorationLine: 'underline',
@@ -94,6 +100,18 @@ const Login = () => {
           size={Button.sizes.LARGE}
         >
           Start
+        </Button>
+
+        <Button
+          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 5}}
+          onClick={async () => {
+            const res = await githubLogin()
+            // console.log(res, "www")
+            window.location.href = res.auth_url
+          }}
+          size={Button.sizes.LARGE}
+        >
+          Login with Github
         </Button>
       </StyledFormContainer>
     </StyledCenterFormContainer>

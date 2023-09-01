@@ -21,7 +21,8 @@ class Context(BaseContext):
     def account(self) -> Account | None:
         if not self.request:
             return None
-
+        print(self.user)
+        #todo need return account 
         auth = AuthJWT(self.request, self.response)
         return authorize(auth)
 

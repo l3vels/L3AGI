@@ -36,6 +36,7 @@ const useLogin = () => {
   const navigate = useNavigate()
   const { ...args }: any = useLocation()
 
+
   useEffect(() => {
     if (id) {
       activateAccount(id, (activate: any) => {
@@ -138,7 +139,7 @@ const useLogin = () => {
     handleCloseAlert,
     authLoginCompleteLoading,
     activateAccountLoading,
-    resendVerifyEmailLoading,
+    resendVerifyEmailLoading
   }
 }
 

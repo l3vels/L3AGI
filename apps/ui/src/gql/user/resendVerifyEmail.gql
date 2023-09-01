@@ -5,7 +5,7 @@ mutation resendVerifyEmail($body: JSON!) @api(name: account) {
       path: "/auth/resend-verify-email"
       method: "POST"
       bodyKey: "body"
-      endpoint: "game"
+      endpoint: "account"
     ) {
     message
     success

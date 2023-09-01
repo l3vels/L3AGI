@@ -62,7 +62,8 @@ class UserModel(RootBaseModel):
 
         """
         db_user = UserModel()
-        user.password = cls.hash_password(user.password)  # Hash the password
+        if user.password:
+            user.password = cls.hash_password(user.password)  # Hash the password
         cls.update_model_from_input(db_user, user)
         db.session.add(db_user)
         db.session.flush()  # Flush pending changes to generate the user's ID
