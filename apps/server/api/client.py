@@ -27,13 +27,9 @@ class L3Api:
 
         from api.game import L3GameApi
         from api.collection import L3CollectionApi
-        from api.chat import L3ChatApi
-        from api.file import L3FileApi
 
         self.game = L3GameApi(self)
         self.collection = L3CollectionApi(self)
-        self.chat = L3ChatApi(self)
-        self.file = L3FileApi(self)
 
     def request_core(self, query, variable_values=None):
         client = create_client(L3_CORE_API_URL, self.headers, None)

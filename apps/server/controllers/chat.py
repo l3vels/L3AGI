@@ -16,6 +16,8 @@ from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
 from utils.chat import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
 from tools.get_tools import get_tools
+from models.agent import AgentModel
+
 
 azureService = PubSubService()
 
@@ -47,6 +49,7 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
 
     version = get_version_from_prompt(body.prompt)
 
+    agent = AgentModel.get_agent_by_id(db, "38020ac6-ad97-4bf5-b1a7-d3713036fe52", auth.account)
 
     tools = get_tools(['SerpGoogleSearch'])
 
@@ -60,15 +63,15 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         parent_id=body.parent_id
     )
 
-    human_message = history.create_human_message(body.prompt)
+    # human_message = history.create_human_message(body.prompt)
 
-    azureService.send_to_group(session_id, message={
-        'type': 'CHAT_MESSAGE_ADDED',
-        'from': auth.user.id,
-        'chat_message': human_message,
-        'is_private_chat': body.is_private_chat,
-        'local_chat_message_ref_id': body.local_chat_message_ref_id
-    })
+    # azureService.send_to_group(session_id, message={
+    #     'type': 'CHAT_MESSAGE_ADDED',
+    #     'from': auth.user.id,
+    #     'chat_message': human_message,
+    #     'is_private_chat': body.is_private_chat,
+    #     'local_chat_message_ref_id': body.local_chat_message_ref_id
+    # })
 
 
     # If team member is tagged and no agent is tagged, this means user sends a message to team member
@@ -84,7 +87,8 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
 
     if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
         conversational = L3Conversational(auth.user, auth.account, game, collection, session_id)
-        return conversational.run(tools, prompt, history, body.is_private_chat, human_message_id = human_message['id'])
+        # return conversational.run(tools, prompt, history, body.is_private_chat, human_message_id = human_message['id'])
+        return conversational.run(tools, prompt, history, body.is_private_chat, human_message_id = '123')
 
     if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
         l3_plan_and_execute = L3PlanAndExecute(

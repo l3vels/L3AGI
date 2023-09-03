@@ -1,6 +1,0 @@
-mutation generateUploadUrl($input: GenerateUploadUrlInput!) {
-  generateUploadUrl(input: $input) {
-    upload_url
-    file_location
-  }
-}
