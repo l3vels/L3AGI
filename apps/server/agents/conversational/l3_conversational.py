@@ -46,7 +46,7 @@ class L3Conversational(L3Base):
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
         system_message = format_system_message(
-            system_message, self.user, self.account, self.game, self.collection
+            system_message, self.user, self.account
         )
 
         model_name = agent_with_configs.configs.model_version

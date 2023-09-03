@@ -61,7 +61,7 @@ class L3PlanAndExecute(L3Base):
 
         planner_llm = ChatOpenAI(temperature=planner_agent_with_configs.configs.temperature, model_name=planner_agent_with_configs.configs.model_version)
         planner_system_message = SystemMessageBuilder(planner_agent_with_configs).build()
-        planner_system_message = format_system_message(planner_system_message, self.user, self.account, self.game, self.collection)
+        planner_system_message = format_system_message(planner_system_message, self.user, self.account)
         
         planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
 
@@ -90,7 +90,7 @@ class L3PlanAndExecute(L3Base):
             tools = l3_tools
 
         executor_system_message = SystemMessageBuilder(executor_agent_with_configs).build()
-        executor_system_message = format_system_message(executor_system_message, self.user, self.account, self.game, self.collection)
+        executor_system_message = format_system_message(executor_system_message, self.user, self.account)
 
         executor = initialize_executor(
             executor_llm,

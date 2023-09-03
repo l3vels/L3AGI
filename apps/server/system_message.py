@@ -93,7 +93,7 @@ def pick_with_comprehension(
 
 
 def  format_system_message(
-    current_system_message: str, user: UserOutput, account: AccountOutput, game, collection
+    current_system_message: str, user: UserOutput, account: AccountOutput
 ) -> str:
     system_message = current_system_message
 

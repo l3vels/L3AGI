@@ -1,6 +1,5 @@
 import re
-from typing import Optional
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 from fastapi_sqlalchemy import db
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
@@ -29,9 +28,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     """
 
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat)
-
-    game = None
-    collection = None
 
     version = get_version_from_prompt(body.prompt)
 
@@ -71,7 +67,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         prompt = prompt.replace(mention, "").strip()
 
     if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
-        conversational = L3Conversational(auth.user, auth.account, game, collection, session_id)
+        conversational = L3Conversational(auth.user, auth.account, session_id)
         # return conversational.run(tools, prompt, history, body.is_private_chat, human_message_id = human_message['id'])
         return conversational.run(tools, prompt, history, body.is_private_chat, human_message_id = '123')
 
@@ -79,8 +75,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         l3_plan_and_execute = L3PlanAndExecute(
             user=auth.user,
             account=auth.account,
-            game=game,
-            collection=collection,
             session_id=session_id,
         )
 
@@ -137,8 +131,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         l3_authoritarian_speaker = L3AuthoritarianSpeaker(
             user=auth.user,
             account=auth.account,
-            game=game,
-            collection=collection,
             session_id=session_id,
             word_limit=30
         )
@@ -196,8 +188,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         l3_agent_debates = L3AgentDebates(
             user=auth.user,
             account=auth.account,
-            game=game,
-            collection=collection,
             session_id=session_id,
             word_limit=30
         )
