@@ -10,18 +10,20 @@ from system_message import SYSTEM_MESSAGE, format_system_message
 from agents.conversational.output_parser import ConvoOutputParser
 from tools.get_tools import get_tools
 
-res = requests.post(
-    f"{Config.L3_AUTH_API_URL}/auth/login",
-    json={"email": Config.TEST_USER_EMAIL, "password": Config.TEST_USER_PASSWORD},
-    timeout=30,
-)
+# TODO: refactor test to use new auth
 
-auth_data = res.json()
+# res = requests.post(
+#     f"{Config.L3_AUTH_API_URL}/auth/login",
+#     json={"email": Config.TEST_USER_EMAIL, "password": Config.TEST_USER_PASSWORD},
+#     timeout=30,
+# )
 
-headers = {
-    "authorization": auth_data["access_token"],
-    "x-refresh-token": auth_data["refresh_token"],
-}
+# auth_data = res.json()
+
+# headers = {
+#     "authorization": auth_data["access_token"],
+#     "x-refresh-token": auth_data["refresh_token"],
+# }
 
 
 def agent_factory():
