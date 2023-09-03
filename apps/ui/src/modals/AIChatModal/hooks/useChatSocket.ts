@@ -1,38 +1,22 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from 'contexts'
-// import { ChatMessageVersionEnum } from 'services'
 import { WebPubSubClient } from '@azure/web-pubsub-client'
-import { useLocation } from 'react-router-dom'
 import getSessionId from '../utils/getSessionId'
 import useUpdateChatCache from './useUpdateChatCache'
-
-// interface ChatEvent {
-//   type: string
-//   message_id: string
-//   version: ChatMessageVersionEnum
-//   thoughts: { id: number; title: string; result: string | null; loading: boolean }[]
-//   game_id?: string
-// }
 
 type UseChatSocketProps = {
   isPrivateChat: boolean
 }
 
 const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
-  const location = useLocation()
-
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
   const [isNewMessage, setIsNewMessage] = useState(false)
 
   const typingTimeoutRef: any = useRef(null)
-  // TODO: Get gameId from useParams
-  // const { state: { gameId } = {} } = location
-  const gameId = location?.state?.gameId
 
   const groupId = getSessionId({
-    gameId,
     user,
     account,
     isPrivateChat,

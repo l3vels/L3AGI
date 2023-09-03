@@ -65,14 +65,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const gameId = urlParams.get('game')
-  const collectionId = urlParams.get('collection')
 
   const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   const version = ChatMessageVersionEnum.ChatConversational
 
   const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
-    gameId,
     isPrivateChat: isPrivate,
   })
 
@@ -85,7 +83,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       session_id: '',
       thoughts: null,
       version,
-      game_id: gameId,
       user_id: user.id,
       account_id: account.id,
       parent_id: null,
@@ -177,8 +174,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
       await createMessageService({
         message,
-        gameId: gameId ?? undefined,
-        collectionId: collectionId ?? undefined,
         isPrivateChat: isPrivate,
         version,
         localChatMessageRefId, // Used to update the message with socket

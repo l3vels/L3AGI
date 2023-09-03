@@ -38,14 +38,12 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             session_id: str,
             parent_id: Optional[str] = None,
             version: Optional[str] = None,
-            game_id: Optional[str] = None,
     ):
         self.account_id = account_id
         self.user_id = user_id
         self.user = user
         self.version = version
         self.session_id = session_id
-        self.game_id = game_id
         self.parent_id = parent_id
 
     def fetch_messages(self):
@@ -95,7 +93,6 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             message=_message_to_dict(message),
             version=self.version,
             session_id=self.session_id,
-            game_id=self.game_id,
             parent_id=parent_id
         )
 

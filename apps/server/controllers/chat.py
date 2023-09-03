@@ -23,27 +23,15 @@ azureService = PubSubService()
 router = APIRouter()
 
 @router.post("", status_code=201)
-def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAccount = Depends(authenticate)):
+def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
     """
     Create new chat message
     """
 
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.game_id)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat)
 
     game = None
     collection = None
-
-    # if body.game_id:
-    #     game = api.game.fetch_game_by_id(body.game_id)
-
-    #     if game is None:
-    #         return "Game not found"
-
-    # if body.collection_id:
-    #     collection = api.collection.fetch_collection_by_id(body.collection_id)
-
-    #     if collection is None:
-    #         return "Collection not found"
 
     version = get_version_from_prompt(body.prompt)
 
@@ -53,7 +41,6 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
-        game_id=body.game_id,
         version=version.value,
         account_id=auth.account.id,
         user_id=auth.user.id,
@@ -225,15 +212,14 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         return result
 
 @router.get("", status_code=200)
-def get_chat_messages(is_private_chat: bool, game_id: Optional[str] = None, auth: UserAccount = Depends(authenticate)):
+def get_chat_messages(is_private_chat: bool, auth: UserAccount = Depends(authenticate)):
     """
     Get chat messages
 
     Args:
         is_private_chat (bool): Is private or team chat
-        game_id (Optional[str], optional): Game ID. Defaults to None.
     """
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, game_id)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat)
 
     chat_messages = (db.session.query(ChatMessageModel)
                          .filter(ChatMessageModel.session_id == session_id)

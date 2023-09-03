@@ -110,25 +110,6 @@ Current user is: {user}
 Current account is: {account}
 """
 
-#     if game:
-#         game = pick_with_comprehension(
-#             game, ["id", "name", "category", "account_id", "created_by"]
-#         )
-
-#         result = f"""{result}
-# Current game is: {game}
-# """
-
-#     if collection:
-#         collection = pick_with_comprehension(
-#             collection,
-#             ["id", "name", "categories", "game_id", "account_id", "created_by"],
-#         )
-
-#         result = f"""{result}
-# Current collection is: {collection}
-# """
-
     system_message = (
         system_message.replace("{current_chat_data}", result)
         .replace("{", "{{")

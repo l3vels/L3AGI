@@ -17,7 +17,6 @@ class ChatMessage(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     parent_id = Column(UUID, ForeignKey('chat_message.id'))
-    game_id = Column(UUID)
     session_id = Column(String, nullable=False, index=True)
     user_id = Column(UUID, nullable=False)
     account_id = Column(UUID, nullable=False)
