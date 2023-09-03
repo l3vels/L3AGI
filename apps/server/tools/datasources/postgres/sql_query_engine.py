@@ -48,6 +48,8 @@ class SQLQueryEngine:
 
         table_node_mapping = SQLTableNodeMapping(self.sql_database)
 
+        # TODO: research about saving index
+
         obj_index = ObjectIndex.from_objects(
             table_schema_objs,
             table_node_mapping,
