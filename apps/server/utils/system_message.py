@@ -1,5 +1,7 @@
 from typing import List, Optional
 from typings.agent import AgentWithConfigsOutput
+from models.datasource import DatasourceModel
+from fastapi_sqlalchemy import db
 
 class SystemMessageBuilder:
     def __init__(self, agent_with_configs: AgentWithConfigsOutput):
@@ -14,9 +16,10 @@ class SystemMessageBuilder:
         goals = self.build_goals(self.configs.goals)
         instructions = self.build_instructions(self.configs.instructions)
         constraints = self.build_constraints(self.configs.constraints)
+        datasources = self.build_datasources(self.configs.datasources)
         tools = self.build_tools(self.configs.tools)
 
-        result = f"{role}\n{description}\n{goals}\n{instructions}\n{constraints}\n{tools}"
+        result = f"{role}\n{description}\n{goals}\n{instructions}\n{constraints}\n{datasources}\n{tools}"
         return result
 
 
@@ -53,13 +56,33 @@ class SystemMessageBuilder:
         constraints = "CONSTRAINTS: \n" + "\n".join(f"- {constraint}" for constraint in constraints) + "\n"
         return constraints
     
+    def build_datasources(self, datasource_ids: List[str]):
+        """Builds the data sources section of the system message."""
+        if len(datasource_ids) == 0:
+            return ""
+        
+        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(datasource_ids)).all()
+
+
+        result = (
+            "Data sources can be: SQL databases, CSV, JSON, Excel files. You can use tool to get data from them.\n"
+            "You can use the following data sources:\n"
+        )
+
+        for datasource in datasources:
+            result += f"- Datasource Type: {datasource.source_type}, Datasource Name: {datasource.name}, Useful for: {datasource.description}, Datasource Id for tool: {datasource.id}  \n"
+        
+        result += "\n"
+
+        return result
+    
     def build_tools(self, tools: List[str]):
         # if len(tools) == 0:
         #     return ""
         
         # tools = "TOOLS: \n" + "\n".join(f"- {tool}" for tool in tools) + "\n"
         tools = (
-            "{current_chat_data}\n"
+            # "{current_chat_data}\n"
             "TOOLS:"
             "------"
             "Assistant has access to the following tools:"
