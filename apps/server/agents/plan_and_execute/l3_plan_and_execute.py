@@ -55,7 +55,7 @@ class L3PlanAndExecute(L3Base):
             return_messages=True
         )
 
-        memory.human_name = self.user.first_name
+        memory.human_name = self.user.name
         memory.ai_name = "AI"
 
 

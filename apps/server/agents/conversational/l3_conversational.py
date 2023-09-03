@@ -38,10 +38,10 @@ class L3Conversational(L3Base):
             return_messages=True,
         )
 
-        memory.human_name = self.user.first_name
+        memory.human_name = self.user.name
         memory.ai_name = "AI"
 
-        agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "7d085797-1721-45cd-872f-1a8f51f31484", self.account))
+        agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "0eac23bf-c44f-4501-be06-ce10408986dc", self.account))
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
@@ -80,16 +80,16 @@ class L3Conversational(L3Base):
             sentry_sdk.capture_exception(err)
             res = "Something went wrong, please try again later"
 
-        ai_message = history.create_ai_message(res, human_message_id)
+        # ai_message = history.create_ai_message(res, human_message_id)
 
-        azureService.send_to_group(
-            self.session_id,
-            message={
-                "type": "CHAT_MESSAGE_ADDED",
-                "from": self.user.id,
-                "chat_message": ai_message,
-                "is_private_chat": is_private_chat,
-            },
-        )
+        # azureService.send_to_group(
+        #     self.session_id,
+        #     message={
+        #         "type": "CHAT_MESSAGE_ADDED",
+        #         "from": self.user.id,
+        #         "chat_message": ai_message,
+        #         "is_private_chat": is_private_chat,
+        #     },
+        # )
 
         return res

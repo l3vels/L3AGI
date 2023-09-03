@@ -29,8 +29,8 @@ def agent_factory():
     llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
 
     api = L3Api(headers, {})
-    user = api.user.fetch_user()
-    account = api.account.fetch_account()
+
+    # fetch user and account
 
     system_message = format_system_message(SYSTEM_MESSAGE, user, account, None, None)
 

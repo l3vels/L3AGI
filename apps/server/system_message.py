@@ -1,6 +1,6 @@
 from typing import Dict, List
-from api.user import User
-from api.account import Account
+from typings.user import UserOutput
+from typings.account import AccountOutput
 
 SYSTEM_MESSAGE = """The Assistant, developed by OpenAI, is a versatile language model designed to assist across various tasks. It can answer questions, provide detailed explanations, and engage in natural-sounding conversations. By processing and understanding extensive text, it offers coherent and pertinent responses. Continuously evolving, the Assistant's capabilities include generating human-like text for discussions and explanations. It's a potent tool for tasks and insights, whether addressing queries or engaging in topic-based conversations.
 
@@ -93,14 +93,14 @@ def pick_with_comprehension(
 
 
 def  format_system_message(
-    current_system_message: str, user: User, account: Account, game, collection
+    current_system_message: str, user: UserOutput, account: AccountOutput, game, collection
 ) -> str:
     system_message = current_system_message
 
     result = ""
 
-    user = pick_with_comprehension(dict(user), ["id", "email", "first_name", "last_name"])
-    account = pick_with_comprehension(dict(account), ["id", "company_name"])
+    user = pick_with_comprehension(dict(user), ["id", "email", "name"])
+    account = pick_with_comprehension(dict(account), ["id", "name"])
 
     result = f"""{result}
 Current user is: {user}
@@ -110,24 +110,24 @@ Current user is: {user}
 Current account is: {account}
 """
 
-    if game:
-        game = pick_with_comprehension(
-            game, ["id", "name", "category", "account_id", "created_by"]
-        )
+#     if game:
+#         game = pick_with_comprehension(
+#             game, ["id", "name", "category", "account_id", "created_by"]
+#         )
 
-        result = f"""{result}
-Current game is: {game}
-"""
+#         result = f"""{result}
+# Current game is: {game}
+# """
 
-    if collection:
-        collection = pick_with_comprehension(
-            collection,
-            ["id", "name", "categories", "game_id", "account_id", "created_by"],
-        )
+#     if collection:
+#         collection = pick_with_comprehension(
+#             collection,
+#             ["id", "name", "categories", "game_id", "account_id", "created_by"],
+#         )
 
-        result = f"""{result}
-Current collection is: {collection}
-"""
+#         result = f"""{result}
+# Current collection is: {collection}
+# """
 
     system_message = (
         system_message.replace("{current_chat_data}", result)

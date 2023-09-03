@@ -25,15 +25,11 @@ class L3Api:
 
         self.cookies = cookies
 
-        from api.user import L3UserApi
-        from api.account import L3AccountApi
         from api.game import L3GameApi
         from api.collection import L3CollectionApi
         from api.chat import L3ChatApi
         from api.file import L3FileApi
 
-        self.user = L3UserApi(self)
-        self.account = L3AccountApi(self)
         self.game = L3GameApi(self)
         self.collection = L3CollectionApi(self)
         self.chat = L3ChatApi(self)
