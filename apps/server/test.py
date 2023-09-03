@@ -8,7 +8,6 @@ from langchain.agents import initialize_agent, AgentType
 from config import Config
 from system_message import SYSTEM_MESSAGE, format_system_message
 from agents.conversational.output_parser import ConvoOutputParser
-from api.client import L3Api
 from tools.get_tools import get_tools
 
 res = requests.post(
@@ -28,7 +27,6 @@ headers = {
 def agent_factory():
     llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
 
-    api = L3Api(headers, {})
 
     # fetch user and account
 

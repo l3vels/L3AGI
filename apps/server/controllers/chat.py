@@ -6,7 +6,6 @@ from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from enums import ChatMessageVersion
 from typings.auth import UserAccount
-from api.client import L3Api
 from pubsub_service import PubSubService
 from agents.conversational.l3_conversational import L3Conversational
 from agents.plan_and_execute.l3_plan_and_execute import L3PlanAndExecute
@@ -29,23 +28,22 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
     Create new chat message
     """
 
-    api = L3Api(request.headers, request.cookies)
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.game_id)
 
     game = None
     collection = None
 
-    if body.game_id:
-        game = api.game.fetch_game_by_id(body.game_id)
+    # if body.game_id:
+    #     game = api.game.fetch_game_by_id(body.game_id)
 
-        if game is None:
-            return "Game not found"
+    #     if game is None:
+    #         return "Game not found"
 
-    if body.collection_id:
-        collection = api.collection.fetch_collection_by_id(body.collection_id)
+    # if body.collection_id:
+    #     collection = api.collection.fetch_collection_by_id(body.collection_id)
 
-        if collection is None:
-            return "Collection not found"
+    #     if collection is None:
+    #         return "Collection not found"
 
     version = get_version_from_prompt(body.prompt)
 

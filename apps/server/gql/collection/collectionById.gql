@@ -1,7 +1,0 @@
-#import "./collectionFragment.gql"
-
-query collectionById($id: ID!) {
-  collectionById(id: $id) {
-    ...CollectionFields
-  }
-}
