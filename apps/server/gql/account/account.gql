@@ -1,7 +1,0 @@
-query account {
-  account {
-    id
-    company_name
-    location
-  }
-}
