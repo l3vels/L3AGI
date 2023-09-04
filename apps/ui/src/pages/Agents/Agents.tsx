@@ -23,7 +23,7 @@ const Agents = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Agents</StyledSectionTitle>
-          <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
+          <StyledSectionDescription>Here are all your agents, managing tasks and operations.</StyledSectionDescription>
         </div>
 
         <StyledButtonWrapper>
