@@ -10,6 +10,7 @@ from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.datasource import convert_datasources_to_datasource_list, convert_model_to_response
 from exceptions import DatasourceNotFoundException
+from datasources.get_datasources import get_all_datasources
 
 router = APIRouter()
 
@@ -65,6 +66,11 @@ def get_data_loaders(auth: UserAccount = Depends(authenticate)) -> List[object]:
     Returns:
         List[Object]: List of tools associated with the account.
     """
+
+    datasources = get_all_datasources()
+
+    print(datasources)
+
     # Update comment
     return [
         {
