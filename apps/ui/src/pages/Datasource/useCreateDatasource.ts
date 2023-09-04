@@ -1,6 +1,6 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useCreateDatasourceService } from 'services/datasource/useCreateDatasourceService'
@@ -20,8 +20,6 @@ export const useCreateDatasource = () => {
 
   const { data: dataLoaders } = useDataLoadersService()
 
-  console.log(dataLoaders)
-
   const initialValues = {
     datasource_name: '',
     datasource_description: '',
@@ -34,6 +32,33 @@ export const useCreateDatasource = () => {
     onSubmit: async values => handleSubmit(values),
   })
 
+  const source_type = formik.values.datasource_source_type
+
+  const { setFieldValue } = formik
+
+  useEffect(() => {
+    if (!dataLoaders) return
+
+    const loader = dataLoaders.find((loader: any) => loader.source_type === source_type)
+    if (!loader) return
+
+    const { fields } = loader
+
+    const configs: any = {}
+
+    fields.forEach((field: any) => {
+      configs[field.key] = {
+        key: field.key,
+        key_type: field.type,
+        value: '',
+        is_secret: field.is_secret,
+        is_required: field.is_required,
+      }
+    })
+
+    setFieldValue('configs', configs)
+  }, [setFieldValue, source_type, dataLoaders])
+
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
     try {
@@ -45,14 +70,12 @@ export const useCreateDatasource = () => {
 
       const datasource = await createDatasource(datasourceInput)
 
-      console.log({ datasource, values })
-
       const promises = []
 
       for (const key in values.configs) {
         const cfg = values.configs[key]
 
-        const value = cfg.key_type === 'int' ? parseInt(cfg.value) : cfg.value
+        const value = cfg.value && cfg.key_type === 'int' ? parseInt(cfg.value) : cfg.value
 
         const promise = createConfig({
           key: cfg.key,

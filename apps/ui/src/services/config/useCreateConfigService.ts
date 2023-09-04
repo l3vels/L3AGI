@@ -22,9 +22,9 @@ export const useCreateConfigService = () => {
     } = await mutation({
       variables: {
         input: {
-          key: key,
-          value: value,
-          key_type: key_type,
+          key,
+          value,
+          key_type,
           is_secret,
           is_required,
           datasource_id: datasource_id,

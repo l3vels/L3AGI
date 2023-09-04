@@ -31,7 +31,7 @@ class PostgresDatabaseTool(BaseTool):
         """Convert natural language to SQL Query and execute. Return result."""
 
         question, datasource_id = query.split(';')
-        configs = db.session.query(ConfigModel).where(ConfigModel.datasource_id == datasource_id).all()
+        configs = db.session.query(ConfigModel).where(ConfigModel.datasource_id == datasource_id, ConfigModel.is_deleted == False).all()
 
         config = {}
 
