@@ -20,8 +20,8 @@ const StyledMainWrapper = styled.div<{ noPadding?: boolean }>`
   // padding-bottom: 90px;
   position: relative;
   height: 100%;
-  /* max-height: fit-content;
-  min-height: 325px; */
+  /* max-height: fit-content; */
+  min-height: 325px;
   width: 100%;
   ${p =>
     p.noPadding &&
