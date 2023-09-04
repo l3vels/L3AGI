@@ -49,7 +49,7 @@
 
 <p align="center">
 <a href="https://twitter.com/gigch_eth" target="blank">
-<img src="https://img.shields.io/twitter/follow/gigch_eth?label=Follow: gigch_eth&style=social" alt="Follow Chkhikvadze"/>
+<img src="https://img.shields.io/twitter/follow/gigch_eth?label=Follow: Giga&style=social" alt="Follow Chkhikvadze"/>
 </a>
 <a href="https://twitter.com/EduardoFaraday" target="blank">
 <img src="https://img.shields.io/twitter/follow/EduardoFaraday?label=Follow: EduardoFaraday&style=social" alt="Follow EduardoFaraday"/>
@@ -134,3 +134,11 @@
 
 - If you encounter issues when starting the services, ensure Docker and Docker Compose are installed and up to date.
 - Check the logs for any service-specific errors.
+
+
+
+## Contributors
+[![Chkhikvadze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/10281306?v=4&w=50&h=50&mask=circle)](https://github.com/Chkhikvadze) 
+[![MOkradze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/22216909?v=4&w=50&h=50&mask=circle)](https://github.com/MOkradze) 
+[![edufaraday](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/56274334?v=4&w=50&h=50&mask=circle)](https://github.com/edufaraday) 
+[![Levanion](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/91427080?v=4&w=50&h=50&mask=circle)](https://github.com/levanion) 
