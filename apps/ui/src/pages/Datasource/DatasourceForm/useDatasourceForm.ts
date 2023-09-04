@@ -15,7 +15,7 @@ export const useDatasourceForm = (formik: any) => {
   const pickedLoaderFields = dataLoaders
     ?.filter((loader: any) => loader.source_type === formik?.values?.datasource_source_type)
     .map((loader: any) => {
-      return { fields: loader.fields, category: loader.Category }
+      return { fields: loader.fields, category: loader.category }
     })[0] || { category: '', fields: [] }
 
   // console.log('dataLoaders', dataLoaders)

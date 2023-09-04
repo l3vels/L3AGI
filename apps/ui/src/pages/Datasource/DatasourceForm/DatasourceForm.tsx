@@ -43,6 +43,22 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
       <StyledInputWrapper>
         <FormikTextField name='datasource_name' placeholder='Name' label='Name' />
 
+        <StyledTextareaWrapper>
+          <Typography
+            value='Description'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <Textarea
+            hint=''
+            placeholder='Description'
+            name='datasource_description'
+            value={datasource_description}
+            onChange={onDescriptionChange}
+          />
+        </StyledTextareaWrapper>
+
         <StyledSourceTypeWrapper>
           <Typography
             value='Source Type'
@@ -86,7 +102,20 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
                   </StyledUploadFileWrapper>
                 )}
               </>
-              <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
+              <>
+                {category === 'Database' && (
+                  <div>
+                    {fields.map((field: any) => (
+                      <FormikTextField
+                        key={field.key}
+                        name={field.key}
+                        placeholder={field.label}
+                        label={field.label}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
               <>
                 {category === 'Text' && (
                   <StyledTextareaWrapper>
@@ -108,22 +137,6 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
             </>
           )}
         </StyledSourceTypeWrapper>
-
-        <StyledTextareaWrapper>
-          <Typography
-            value='Description'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-            customColor={'#FFF'}
-          />
-          <Textarea
-            hint=''
-            placeholder='Description'
-            name='datasource_description'
-            value={datasource_description}
-            onChange={onDescriptionChange}
-          />
-        </StyledTextareaWrapper>
       </StyledInputWrapper>
     </StyledFormContainer>
   )
