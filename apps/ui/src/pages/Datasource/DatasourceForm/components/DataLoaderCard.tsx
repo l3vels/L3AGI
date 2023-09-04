@@ -5,12 +5,21 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 type DataLoaderCardProps = {
   title: string
   onClick: () => void
+  isSelected: boolean
   isActive: boolean
 }
 
-const DataLoaderCard = ({ title, onClick, isActive }: DataLoaderCardProps) => {
+const DataLoaderCard = ({ title, onClick, isSelected, isActive }: DataLoaderCardProps) => {
   return (
-    <StyledDataLoaderCard onClick={onClick} isActive={isActive}>
+    <StyledDataLoaderCard
+      onClick={() => {
+        if (isActive) {
+          onClick()
+        }
+      }}
+      isSelected={isSelected}
+      isActive={isActive}
+    >
       <Typography
         value={title}
         type={Typography.types.LABEL}
@@ -23,7 +32,7 @@ const DataLoaderCard = ({ title, onClick, isActive }: DataLoaderCardProps) => {
 
 export default DataLoaderCard
 
-const StyledDataLoaderCard = styled.div<{ isActive: boolean }>`
+const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean }>`
   width: 150px;
   min-width: 150px;
   height: 50px;
@@ -43,7 +52,13 @@ const StyledDataLoaderCard = styled.div<{ isActive: boolean }>`
   cursor: pointer;
 
   ${p =>
-    p.isActive &&
+    !p.isActive &&
+    css`
+      opacity: 0.6;
+    `}
+
+  ${p =>
+    p.isSelected &&
     css`
       border-color: #48ecf0;
     `};

@@ -8,7 +8,7 @@ class MySQLDatasource(BaseDatasource):
     name: str = "MySQL"
     description: str = "MySQL datasource"
     category: DatasourceCategory = DatasourceCategory.DATABASE
-    type: DatasourceType = DatasourceType.MySQL
+    type: DatasourceType = DatasourceType.MYSQL
 
     def get_tools(self) -> List[BaseTool]:
         return [MySQLDatabaseTool()]

@@ -42,13 +42,24 @@ class DatasourceEnvKey(BaseModel):
 class DatasourceCategory(Enum):
     DATABASE = 'Database'
     FILE = 'File'
+    APPLICATION = 'Application'
+    CRAWLER = 'Crawler'
+    
 
     def __str__(self):
         return self.value
     
 class DatasourceType(Enum):
-    Postgres = 'Postgres'
-    MySQL = 'MySQL'
+    POSTGRES = 'Postgres'
+    MYSQL = 'MySQL'
+    UPLOAD_FILE = 'Upload File'
+    WEB_PAGE = 'Web Page'
+    NOTION = 'Notion'
+    SHOPIFY = 'Shopify'
+
+    def __str__(self):
+        return self.value
+
 
 class BaseDatasource(BaseModel):
     name: str

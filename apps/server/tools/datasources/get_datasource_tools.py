@@ -13,9 +13,9 @@ def get_datasource_tools(datasources: List[DatasourceModel]):
     datasource_types = list(set(datasource_types))
 
     for datasource_type in datasource_types:
-        if datasource_type == DatasourceType.Postgres.value:
+        if datasource_type == DatasourceType.POSTGRES.value:
             tools.append(PostgresDatabaseTool())
-        if datasource_type == DatasourceType.MySQL.value:
+        if datasource_type == DatasourceType.MYSQL.value:
             tools.append(MySQLDatabaseTool())
 
 

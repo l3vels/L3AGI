@@ -19,7 +19,7 @@ type DatasourceFormProps = {
 }
 
 const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
-  const { dataLoaderOptions, pickedLoaderFields, handleUploadFile, fileLoading } =
+  const { dataLoaders, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
 
   const { category, fields } = pickedLoaderFields
@@ -67,14 +67,15 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
             customColor={'#FFF'}
           />
           <StyledCardWrapper>
-            {dataLoaderOptions?.map((option: any, index: number) => {
+            {dataLoaders?.map((dataLoader: any, index: number) => {
               return (
                 <DataLoaderCard
-                  isActive={option.value === datasource_source_type}
-                  key={index}
-                  title={option.label}
+                  isSelected={dataLoader.source_type === datasource_source_type}
+                  isActive={dataLoader.is_active} // coming soon feature
+                  key={dataLoader.name}
+                  title={dataLoader.source_type}
                   onClick={() => {
-                    setFieldValue('datasource_source_type', option.value)
+                    setFieldValue('datasource_source_type', dataLoader.source_type)
                     setFieldValue('config_value', '')
                   }}
                 />

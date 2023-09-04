@@ -8,7 +8,7 @@ class PostgresDatasource(BaseDatasource):
     name: str = "Postgres"
     description: str = "PostgreSQL datasource"
     category: DatasourceCategory = DatasourceCategory.DATABASE
-    type: DatasourceType = DatasourceType.Postgres
+    type: DatasourceType = DatasourceType.POSTGRES
 
 
     def get_tools(self) -> List[BaseTool]:

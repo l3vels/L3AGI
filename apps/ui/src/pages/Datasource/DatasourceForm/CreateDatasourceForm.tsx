@@ -1,5 +1,4 @@
 import { FormikProvider } from 'formik'
-import { useDatasource } from '../useDatasource'
 import DatasourceForm from './DatasourceForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -14,9 +13,10 @@ import {
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { useCreateDatasource } from '../useCreateDatasource'
 
 const CreateDatasourceForm = () => {
-  const { formik, handleSubmit, isLoading } = useDatasource()
+  const { formik, handleSubmit, isLoading } = useCreateDatasource()
 
   return (
     <>
