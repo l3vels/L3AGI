@@ -1,18 +1,17 @@
 from typing import List
 from datasources.base import BaseDatasource, DatasourceEnvKey, DatasourceEnvKeyType, DatasourceCategory, DatasourceType
 from tools.base import BaseTool
-from tools.datasources.postgres.postgres import PostgresDatabaseTool
+from tools.datasources.mysql.mysql import MySQLDatabaseTool
 
 
-class PostgresDatasource(BaseDatasource):
-    name: str = "Postgres"
-    description: str = "PostgreSQL datasource"
+class MySQLDatasource(BaseDatasource):
+    name: str = "MySQL"
+    description: str = "MySQL datasource"
     category: DatasourceCategory = DatasourceCategory.DATABASE
-    type: DatasourceType = DatasourceType.Postgres
-
+    type: DatasourceType = DatasourceType.MySQL
 
     def get_tools(self) -> List[BaseTool]:
-        return [PostgresDatabaseTool()]
+        return [MySQLDatabaseTool()]
     
     def get_env_keys(self) -> List[DatasourceEnvKey]:
         return [

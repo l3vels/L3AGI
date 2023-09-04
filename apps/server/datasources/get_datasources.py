@@ -1,7 +1,9 @@
 from datasources.postgres.postgres import PostgresDatasource
+from datasources.mysql.mysql import MySQLDatasource
 
 DATASOURCES = [
     PostgresDatasource(),
+    MySQLDatasource(),
 ]
 
 def get_all_datasources():
@@ -15,6 +17,8 @@ def get_all_datasources():
                 "is_active": datasource.is_active,
                 "name": datasource.name,
                 "description": datasource.description,
+                "category": datasource.category,
+                "source_type": datasource.type,
                 "fields": [
                     {
                         "label": env_key.label,

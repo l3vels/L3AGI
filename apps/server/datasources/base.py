@@ -39,10 +39,23 @@ class DatasourceEnvKey(BaseModel):
         else:
             raise ValueError("key_type should be string/file/integer")
 
+class DatasourceCategory(Enum):
+    DATABASE = 'Database'
+    FILE = 'File'
+
+    def __str__(self):
+        return self.value
+    
+class DatasourceType(Enum):
+    Postgres = 'Postgres'
+    MySQL = 'MySQL'
 
 class BaseDatasource(BaseModel):
     name: str
     description: str
+    category: DatasourceCategory
+    type: str
+
     is_active: bool = Field(default=True)
 
     @abstractmethod

@@ -9,21 +9,21 @@ from tools.datasources.sql_query_engine import SQLQueryEngine
 from tools.base import BaseTool
 from models.config import ConfigModel
 
-class PostgresDatabaseSchema(BaseModel):
+class MySQLDatabaseSchema(BaseModel):
     query: str = Field(description="Containing Datasource Id and database question in English natural language, separated by semicolon")
 
 
-class PostgresDatabaseTool(BaseTool):
-    name = "PostgreSQL Database Q&A"
+class MySQLDatabaseTool(BaseTool):
+    name = "MySQL Database Q&A"
     
     description = (
-        "useful for when you need to answer questions over Postgres datasource.\n"
+        "useful for when you need to answer questions over MySQL datasource.\n"
         "Input is string. String is separated by semicolon. First is database question in English natural language. Second is datasource ID."
     )
 
-    args_schema: Type[PostgresDatabaseSchema] = PostgresDatabaseSchema
+    args_schema: Type[MySQLDatabaseSchema] = MySQLDatabaseSchema
 
-    tool_id = "f5a8fec0-7399-42f5-a076-be3a8c85b689"
+    tool_id = "50f76896-7321-4e12-a3b7-c9f34ab13b1d"
 
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
@@ -44,7 +44,7 @@ class PostgresDatabaseTool(BaseTool):
         port = config.get('port')
         name = config.get('name')
 
-        uri = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}"
+        uri = f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
         result = SQLQueryEngine(uri).run(question)
         return result

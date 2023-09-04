@@ -14,7 +14,7 @@ from llama_index.llm_predictor import LLMPredictor
 from langchain.chat_models import ChatOpenAI
 
 class SQLQueryEngine:
-    """LLamaIndex SQL Query Engine for Postgres datasource"""
+    """LLamaIndex SQL Query Engine for SQL datasource"""
 
     def __init__(self, uri: str):
         self.sql_database = SQLDatabase(engine=create_engine(uri))
