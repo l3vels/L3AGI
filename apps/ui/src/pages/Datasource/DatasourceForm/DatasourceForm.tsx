@@ -154,6 +154,8 @@ const StyledInputWrapper = styled.div`
   /* margin: auto; */
   height: calc(100% - 100px);
   /* max-height: 800px; */
+
+  padding: 0 20px;
 `
 const StyledSourceTypeWrapper = styled.div`
   display: flex;

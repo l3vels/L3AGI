@@ -125,7 +125,7 @@ const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* padding: 20px; */
+  padding: 0 20px;
 
   gap: 20px;
   width: 100%;
