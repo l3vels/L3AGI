@@ -25,7 +25,7 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { datasource_source_type, config_value, datasource_description } = values
+  const { datasource_source_type, config_value, datasource_description, configs } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('datasource_description', value)
@@ -84,53 +84,48 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
 
           {category?.length > 0 && (
             <>
-              <>
-                {category === 'File' && (
-                  <StyledUploadFileWrapper>
-                    <UploadButton
-                      onChange={handleUploadFile}
-                      isLoading={fileLoading}
-                      hasValue={config_value}
-                    />
+              {category === 'File' && (
+                <StyledUploadFileWrapper>
+                  <UploadButton
+                    onChange={handleUploadFile}
+                    isLoading={fileLoading}
+                    hasValue={config_value}
+                  />
 
-                    {config_value && (
-                      <UploadedFile
-                        onClick={() => setFieldValue('config_value', null)}
-                        name={'file'}
-                      />
-                    )}
-                  </StyledUploadFileWrapper>
-                )}
-              </>
-              <>
-                {category === 'Database' && (
-                  <div>
-                    {fields.map((field: any) => (
-                      <FormikTextField
-                        key={field.key}
-                        name={field.key}
-                        placeholder={field.label}
-                        label={field.label}
-                      />
-                    ))}
-                  </div>
-                )}
-              </>
-              <>
-                {category === 'Text' && (
-                  <StyledTextareaWrapper>
-                    <Textarea
-                      hint=''
-                      placeholder='Text'
-                      name='config_value'
-                      value={config_value}
-                      onChange={(text: string) => {
-                        formik.setFieldValue('config_value', text)
-                      }}
+                  {config_value && (
+                    <UploadedFile
+                      onClick={() => setFieldValue('config_value', null)}
+                      name={'file'}
                     />
-                  </StyledTextareaWrapper>
-                )}
-              </>
+                  )}
+                </StyledUploadFileWrapper>
+              )}
+
+              {category === 'Database' &&
+                fields.map((field: any) => (
+                  <FormikTextField
+                    key={field.key}
+                    name={`configs.${field.key}.value`}
+                    value={configs[field.key]?.value || ''}
+                    placeholder={field.label}
+                    label={field.label}
+                  />
+                ))}
+
+              {category === 'Text' && (
+                <StyledTextareaWrapper>
+                  <Textarea
+                    hint=''
+                    placeholder='Text'
+                    name='config_value'
+                    value={config_value}
+                    onChange={(text: string) => {
+                      formik.setFieldValue('config_value', text)
+                    }}
+                  />
+                </StyledTextareaWrapper>
+              )}
+
               <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
               <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
               <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>

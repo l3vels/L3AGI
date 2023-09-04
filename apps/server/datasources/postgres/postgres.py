@@ -16,9 +16,9 @@ class PostgresDatasource(BaseDatasource):
     
     def get_env_keys(self) -> List[DatasourceEnvKey]:
         return [
-            DatasourceEnvKey(label="Database Name", key="NAME", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
-            DatasourceEnvKey(label="Host", key="HOST", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
-            DatasourceEnvKey(label="Port", key="PORT", key_type=DatasourceEnvKeyType.INT, is_required=True, is_secret=True),
-            DatasourceEnvKey(label="User", key="USER", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
-            DatasourceEnvKey(label="Password", key="PASS", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
+            DatasourceEnvKey(label="Database Name", key="name", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
+            DatasourceEnvKey(label="Host", key="host", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
+            DatasourceEnvKey(label="Port", key="port", key_type=DatasourceEnvKeyType.INT, is_required=True, is_secret=True),
+            DatasourceEnvKey(label="User", key="user", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
+            DatasourceEnvKey(label="Password", key="pass", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
         ]
