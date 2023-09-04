@@ -1,21 +1,14 @@
-from typing import Optional
 import json
 import re
 from enums import ChatMessageVersion
 
-def get_chat_session_id(user_id: str, account_id: str, is_private_chat: bool, game_id: Optional[str] = None):
+def get_chat_session_id(user_id: str, account_id: str, is_private_chat: bool):
     if is_private_chat:
         # private chat
-        if game_id:
-            return f"{game_id}-{user_id}"
-        else:
-            return f"{account_id}-{user_id}"
+        return f"{account_id}-{user_id}"
     else:
         # Team chat
-        if game_id:
-            return game_id
-        else:
-            return account_id
+        return account_id
 
 
 AGENT_MENTIONS = [

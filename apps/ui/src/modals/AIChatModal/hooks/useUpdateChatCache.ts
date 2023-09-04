@@ -17,7 +17,6 @@ const useUpdateChatCache = () => {
   ) => {
     const queryVariables = omitBy(
       {
-        game_id: newChatMessage.game_id,
         is_private_chat: is_private_chat,
       },
       isNil,

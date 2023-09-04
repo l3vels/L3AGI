@@ -1,13 +1,12 @@
 import json
 import logging
-from typing import List, Optional, Dict, Type
+from typing import List, Optional, Dict
 import uuid
 from datetime import datetime
 from langchain.schema.messages import AIMessage, HumanMessage
 from models.chat_message import ChatMessage
 from fastapi_sqlalchemy import db
-from sqlalchemy.orm import joinedload
-from api.user import User
+from typings.user import UserOutput
 
 from langchain.schema import (
     BaseChatMessageHistory,
@@ -35,18 +34,16 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             self,
             account_id: str,
             user_id: str,
-            user: User,
+            user: UserOutput,
             session_id: str,
             parent_id: Optional[str] = None,
             version: Optional[str] = None,
-            game_id: Optional[str] = None,
     ):
         self.account_id = account_id
         self.user_id = user_id
         self.user = user
         self.version = version
         self.session_id = session_id
-        self.game_id = game_id
         self.parent_id = parent_id
 
     def fetch_messages(self):
@@ -96,7 +93,6 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             message=_message_to_dict(message),
             version=self.version,
             session_id=self.session_id,
-            game_id=self.game_id,
             parent_id=parent_id
         )
 
@@ -121,7 +117,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
     def create_human_message(self, message: str):
         print("human parent id", self.parent_id)
         return self.create_message(HumanMessage(content=message, additional_kwargs={
-            "name": self.user.first_name,
+            "name": self.user.name,
         }), parent_id=self.parent_id)
 
     def add_message(self, message: BaseMessage) -> str:

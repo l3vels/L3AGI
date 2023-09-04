@@ -1,10 +1,8 @@
-query MessageByGame($game_id: String, $is_private_chat: Boolean!, $version: String!)
-@api(name: "ai") {
-  messageByGame(game_id: $game_id, is_private_chat: $is_private_chat, version: $version)
+query MessageByGame($is_private_chat: Boolean!, $version: String!) @api(name: "ai") {
+  messageByGame(is_private_chat: $is_private_chat, version: $version)
     @rest(type: "ChatMessage", path: "/chat?{args}", method: "GET", endpoint: "ai") {
     id
     session_id
-    game_id
     user_id
     account_id
     message

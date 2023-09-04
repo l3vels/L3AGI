@@ -42,8 +42,6 @@ module "backend" {
     DB_PASS                        = var.DB_PASS
     AZURE_PUBSUB_CONNECTION_STRING = var.AZURE_PUBSUB_CONNECTION_STRING
     AZURE_PUBSUB_HUB_NAME          = var.AZURE_PUBSUB_HUB_NAME
-    L3_API_URL                     = var.L3_API_URL
-    L3_AUTH_API_URL                = var.L3_AUTH_API_URL
     ZEP_API_URL                    = var.ZEP_API_URL
     ZEP_API_KEY                    = var.ZEP_API_KEY
     SERPAPI_API_KEY                = var.SERPAPI_API_KEY
