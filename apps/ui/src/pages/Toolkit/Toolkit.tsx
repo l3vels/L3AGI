@@ -13,10 +13,13 @@ import ToolCard from './components/ToolCard'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import { toolLogos } from './constants'
+import { useNavigate } from 'react-router-dom'
 
 const Toolkit = () => {
   const { data: tools } = useToolsService()
   console.log('tools', tools)
+
+  const navigate = useNavigate()
 
   return (
     <StyledSectionWrapper>
@@ -33,15 +36,16 @@ const Toolkit = () => {
             const filteredLogos = toolLogos.filter(
               (toolLogo: any) => toolLogo.toolName === tool.name,
             )
-            console.log(filteredLogos)
+
             const logoSrc = filteredLogos?.[0]?.logoSrc || ''
 
             return (
               <ToolCard
                 key={index}
+                isDisabled={!tool.is_active}
                 title={tool.name}
                 subTitle={tool.is_active ? '' : 'Coming Soon'}
-                onClick={() => {}}
+                onClick={() => navigate(`/tools/${tool.toolkit_id}`)}
                 logoSrc={logoSrc}
               />
             )

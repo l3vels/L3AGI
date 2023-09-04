@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -7,11 +7,12 @@ type ToolCardProps = {
   subTitle?: string
   onClick: () => void
   logoSrc: string
+  isDisabled: boolean
 }
 
-const ToolCard = ({ title, subTitle, onClick, logoSrc }: ToolCardProps) => {
+const ToolCard = ({ title, subTitle, onClick, logoSrc, isDisabled }: ToolCardProps) => {
   return (
-    <StyledRoot onClick={onClick} bgImg={''}>
+    <StyledRoot onClick={onClick} bgImg={''} isDisabled={isDisabled}>
       <StyledWrapper>
         <StyledImg src={logoSrc} />
         <StyledTextWrapper>
@@ -51,7 +52,7 @@ const ToolCard = ({ title, subTitle, onClick, logoSrc }: ToolCardProps) => {
 
 export default ToolCard
 
-const StyledRoot = styled.div<{ bgImg: string }>`
+const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -64,6 +65,7 @@ const StyledRoot = styled.div<{ bgImg: string }>`
   height: 158px;
   min-height: 158px;
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
   border-radius: 16px;
   background-image: ${p =>
@@ -73,6 +75,14 @@ const StyledRoot = styled.div<{ bgImg: string }>`
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
+
+  ${p =>
+    p.isDisabled &&
+    css`
+      pointer-events: none;
+      opacity: 0.6;
+      background: #000;
+    `};
 `
 
 const StyledWrapper = styled.div`
