@@ -17,14 +17,6 @@
 	<a href="https://discord.gg/hQ9ZWabm">Community Discord</a>
 </h3>
 
-[![Release Notes](https://img.shields.io/github/release/l3vels/l3AGI)](https://github.com/l3vels/l3AGI/releases)
-[![Discord](https://img.shields.io/discord/1085735429426401340?label=Discord&logo=discord)](https://discord.gg/jbaHfsRVBW)
-[![Twitter Follow](https://img.shields.io/twitter/follow/l3vels?style=social)](https://twitter.com/l3vels)
-[![GitHub star chart](https://img.shields.io/github/stars/l3vels/L3AGI?style=social)](https://star-history.com/#l3vels/L3AGI)
-[![GitHub fork](https://img.shields.io/github/forks/l3vels/L3AGI?style=social)](https://github.com/l3vels/L3AGI/fork)
-
-
-
 
 <p align="center">
 <a href="https://github.com/l3vels/L3AGI/fork" target="blank">
