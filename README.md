@@ -1,4 +1,3 @@
-# L3AGI
 <p align="center">
   <a href="https://l3vels.xyz//#gh-light-mode-only">
     <img src="./apps/ui/src/assets/images/l3_logo.png" alt="L3AGI logo" width="150px" height="150px"/>
