@@ -58,7 +58,7 @@ const AgentCard = ({
       </StyledCardBody>
       <StyledCardFooter>
         {onViewClick && (
-          <Button onClick={onViewClick} size={Button.sizes.MEDIUM}>
+          <Button onClick={onViewClick} size={Button.sizes.SMALL}>
             View
           </Button>
         )}
