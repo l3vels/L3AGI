@@ -38,9 +38,6 @@
 <img src='https://img.shields.io/github/release/l3vels/L3AGI?&label=Latest&style=for-the-badge'>
 </a>
 
-<a href="https://github.com/l3vels/L3AGI/commits" target="blank">
-<img src="https://img.shields.io/github/commits-since/l3vels/L3AGI/v0.0.11.svg?style=for-the-badge" alt="L3AGI Commits"/>
-</a>
 </p>
 
 <p align="center"><b>Follow L3AGI </b></p>
