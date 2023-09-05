@@ -2,11 +2,13 @@ from __future__ import annotations
 from typing import List, Optional
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Integer
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Integer, and_
+from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
 from typings.team import TeamInput
 from exceptions import TeamNotFoundException
+from models.team_agent import TeamAgentModel
+from typings.team import QueryParams
 
 class TeamModel(BaseModel):
     """
@@ -100,6 +102,23 @@ class TeamModel(BaseModel):
             db.session.query(TeamModel)
             .filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .all()
+        )
+        return teams
+    
+    
+    @classmethod
+    def get_team_with_agents(cls, db, account, id: str):
+        #todo later need to filter by account_id        
+        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        filter_conditions = [or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+
+        filter_conditions.append(TeamModel.id == id)
+                
+        teams = (
+            db.session.query(TeamModel)
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
+            .filter(and_(*filter_conditions))
+            .first()
         )
         return teams
     
