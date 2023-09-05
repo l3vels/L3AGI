@@ -17,11 +17,16 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
+import { useToolsService } from 'services/tool/useToolsService'
+import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
+import BackButton from 'components/BackButton'
 
 const AgentView = () => {
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const { data: toolsData } = useToolsService()
+  const { data: datasourcesData } = useDatasourcesService()
 
   if (!agentById) return <div />
 
@@ -29,7 +34,36 @@ const AgentView = () => {
 
   const { name, description, role } = agent
 
-  const { tools, model_version, mode_provider, goals, constraints } = configs
+  const {
+    tools,
+    model_version,
+    mode_provider,
+    goals,
+    constraints,
+    instructions,
+    temperature,
+    datasources,
+  } = configs
+
+  const filteredTools = toolsData
+    ?.filter((tool: any) => {
+      if (tools?.includes(tool.toolkit_id)) {
+        return tool
+      } else {
+        return
+      }
+    })
+    .map((tool: any) => tool.name)
+
+  const filteredDatasources = datasourcesData
+    ?.filter((datasource: any) => {
+      if (datasources?.includes(datasource.id)) {
+        return datasource
+      } else {
+        return
+      }
+    })
+    .map((tool: any) => tool.name)
 
   return (
     <StyledSectionWrapper>
@@ -40,6 +74,10 @@ const AgentView = () => {
             Witness the growth of exceptional AI talents, nurtured by collective community
             contributions.
           </StyledSectionDescription>
+        </div>
+
+        <div>
+          <BackButton />
         </div>
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
@@ -85,11 +123,17 @@ const AgentView = () => {
               <StyledDivider />
 
               <StyledWrapper>
-                {tools.length > 0 && <TagsRow title='Tools' items={tools} />}
+                {tools.length > 0 && <TagsRow title='Tools' items={filteredTools} />}
+
+                {datasources.length > 0 && (
+                  <TagsRow title='Datasources' items={filteredDatasources} />
+                )}
 
                 {role && <TagsRow title='Role' items={[role]} />}
 
                 {model_version && <TagsRow title='Model' items={[model_version]} />}
+
+                {temperature && <TagsRow title='Temperature' items={[temperature]} />}
               </StyledWrapper>
             </StyledDetailsBox>
           </StyledLeftColumn>
@@ -107,6 +151,16 @@ const AgentView = () => {
                 items={constraints}
                 title={
                   constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
+                }
+              />
+            )}
+            {instructions.length > 0 && (
+              <AdditionalInfoBox
+                items={instructions}
+                title={
+                  instructions.length === 1
+                    ? '1 Instruction'
+                    : `${instructions.length} Instructions`
                 }
               />
             )}
