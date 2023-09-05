@@ -33,96 +33,97 @@ const AgentView = () => {
 
   return (
     <StyledSectionWrapper>
-    <StyledHeaderGroup className='header_group'>
-      <div>
-        <StyledSectionTitle>Agents</StyledSectionTitle>
-        <StyledSectionDescription>Here are all your agents, managing tasks and operations.</StyledSectionDescription>
-      </div>
+      <StyledHeaderGroup className='header_group'>
+        <div>
+          <StyledSectionTitle>Agent</StyledSectionTitle>
+          <StyledSectionDescription>
+            Here are all your agents, managing tasks and operations.
+          </StyledSectionDescription>
+        </div>
+      </StyledHeaderGroup>
+      <ComponentsWrapper noPadding>
+        <StyledInnerWrapper>
+          <StyledLeftColumn>
+            <StyledDetailsBox>
+              <StyledWrapper>
+                <Typography
+                  value={name}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                  customColor={'#FFF'}
+                />
+                {mode_provider && (
+                  <Typography
+                    value={`By ${mode_provider}`}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
+                    customColor={'rgba(255,255,255,0.6)'}
+                  />
+                )}
+                <div>
+                  <Button size={Button.sizes.MEDIUM}>
+                    <Download />
+                    Add
+                  </Button>
+                </div>
+              </StyledWrapper>
 
+              <StyledDivider />
 
-    </StyledHeaderGroup>
-    <ComponentsWrapper>
-    <StyledRoot>
-      <StyledLeftColumn>
-        <StyledDetailsBox>
-          <StyledWrapper>
-            <Typography
-              value={name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-              customColor={'#FFF'}
-            />
-            {mode_provider && (
-              <Typography
-                value={`By ${mode_provider}`}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={'rgba(255,255,255,0.6)'}
+              <StyledWrapper>
+                <Typography
+                  value={description}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'rgba(255,255,255,0.9)'}
+                />
+              </StyledWrapper>
+
+              <StyledDivider />
+
+              <StyledWrapper>
+                {tools.length > 0 && <TagsRow title='Tools' items={tools} />}
+
+                {role && <TagsRow title='Role' items={[role]} />}
+
+                {model_version && <TagsRow title='Model' items={[model_version]} />}
+              </StyledWrapper>
+            </StyledDetailsBox>
+          </StyledLeftColumn>
+
+          <StyledRightColumn>
+            {goals.length > 0 && (
+              <AdditionalInfoBox
+                items={goals}
+                title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
               />
             )}
-            <div>
-              <Button size={Button.sizes.MEDIUM}>
-                <Download />
-                Add
-              </Button>
-            </div>
-          </StyledWrapper>
 
-          <StyledDivider />
-
-          <StyledWrapper>
-            <Typography
-              value={description}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255,0.9)'}
-            />
-          </StyledWrapper>
-
-          <StyledDivider />
-
-          <StyledWrapper>
-            {tools.length > 0 && <TagsRow title='Tools' items={tools} />}
-
-            {role && <TagsRow title='Role' items={[role]} />}
-
-            {model_version && <TagsRow title='Model' items={[model_version]} />}
-          </StyledWrapper>
-        </StyledDetailsBox>
-      </StyledLeftColumn>
-
-      <StyledRightColumn>
-        {goals.length > 0 && (
-          <AdditionalInfoBox
-            items={goals}
-            title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
-          />
-        )}
-
-        {constraints.length > 0 && (
-          <AdditionalInfoBox
-            items={constraints}
-            title={constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`}
-          />
-        )}
-      </StyledRightColumn>
-    </StyledRoot>
-    </ComponentsWrapper>
+            {constraints.length > 0 && (
+              <AdditionalInfoBox
+                items={constraints}
+                title={
+                  constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
+                }
+              />
+            )}
+          </StyledRightColumn>
+        </StyledInnerWrapper>
+      </ComponentsWrapper>
     </StyledSectionWrapper>
   )
 }
 
 export default AgentView
 
-const StyledRoot = styled.div`
+const StyledInnerWrapper = styled.div`
   /* background: grey; */
-  padding-top: 50px;
 
   width: 100%;
-  height: calc(100% - 100px);
-
+  height: calc(100vh - 340px);
+  overflow-y: auto;
   display: flex;
-
+  padding: 0 20px;
   gap: 10px;
 `
 const StyledLeftColumn = styled.div``
