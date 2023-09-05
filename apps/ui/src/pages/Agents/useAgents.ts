@@ -34,6 +34,7 @@ export const useAgents = () => {
     agent_datasources: [],
     agent_model_version: '',
     agent_mode_provider: '',
+    agent_is_memory: true,
   }
 
   const handleSubmit = async (values: any) => {
@@ -52,6 +53,7 @@ export const useAgents = () => {
         instructions: values.agent_instructions,
         model_version: values.agent_model_version,
         mode_provider: values.agent_mode_provider,
+        is_memory: values.agent_is_memory,
       }
       await createAgentService(agentInput)
       await refetchAgents()
