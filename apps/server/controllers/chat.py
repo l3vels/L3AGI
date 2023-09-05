@@ -18,6 +18,7 @@ from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
+from models.team import TeamModel
 
 azureService = PubSubService()
 
@@ -86,50 +87,10 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     if version == ChatMessageVersion.AUTHORITARIAN_SPEAKER:
         topic = prompt
         
+        team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
+        agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+    
         
-        agents = get_agents_from_json(topic)
-        if(agents == []):
-            agents = [
-            {
-                'name': "Alexa Ray",
-                'role': "Project Manager",
-                'is_director': True,
-                'location': "Austin, Texas",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-                           "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            {
-                'name': "Liam Park",
-                'role': "Monetization and In-Game Purchase Advisor",
-                'location': "Seattle, Washington",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-                           "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            # {
-            #     'name': "Morgan Blake",
-            #     'role': "Blockchain Game Strategist",
-            #     'location': "San Francisco, California",
-            #     'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-            #                "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            # },
-            {
-                'name': "Taylor Greene",
-                'role': "Gameplay Analyst",
-                'location': "Brooklyn, New York",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-                           "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            }
-            ]
-        else:
-            pattern = r'json```[\s\S]*?\]```'
-            topic = re.sub(pattern, '', topic)
-
-        # TODO: tools
-        # for agent in agents:
-            # agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
-
-
-        print("AUTHORITARIAN_SPEAKER ------------------------------ start", body.version)
 
         l3_authoritarian_speaker = L3AuthoritarianSpeaker(
             user=auth.user,
@@ -140,8 +101,9 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
         result = l3_authoritarian_speaker.run(
             topic=topic,
-            agent_summaries=agents,
-            history=history,
+            team=team,
+            agents_with_configs=agents,
+            history= [], #history,
             is_private_chat=body.is_private_chat
         )
 
@@ -151,54 +113,23 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         print("AGENT_DEBATES ------------------------------ start", body.version)
 
         topic = prompt
-    
-        agents = get_agents_from_json(topic)
-        if(agents == []):
-            agents = [
-            {
-                # 'name': "Alexa Ray",
-                'name': "AI Gameplay Analyst",
-                'location': "Austin, Texas",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            {
-                # 'name': "Sasha Lane",
-                'name': "AI Monetization and In-Game Purchase Advisor",
-                'location': "Seattle, Washington",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            # {
-            #     # 'name': "Sasha Lane",
-            #     'name': "AI Blockchain Game Strategist",
-            #     'location': "Seattle, Washington",
-            #     'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            # },
-            {
-                # 'name': "Sasha Lane",
-                'name': "AI Game Narrative Designer",
-                'location': "Seattle, Washington",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            }
-        ]
-        else:
-            pattern = r'json```[\s\S]*?\]```'
-            topic = re.sub(pattern, '', topic)
-
-        # TODO: tools
-        # for agent in agents:
-        #     agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
+        
+        team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
+        agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
 
         l3_agent_debates = L3AgentDebates(
             user=auth.user,
             account=auth.account,
             session_id=session_id,
+
             word_limit=30
         )
 
         result = l3_agent_debates.run(
             topic=topic,
-            agent_summaries=agents,
-            history=history,
+            team=team,
+            agents_with_configs=agents,
+            history= [], #history,
             is_private_chat=body.is_private_chat
         )
 

@@ -14,17 +14,17 @@ class ToolFieldOutput(BaseModel):
     is_required: bool
     is_secret: bool
 
-class SingleToolResponse(BaseModel):
+class SingleToolOutput(BaseModel):
     tool_id: UUID4
     name: str
     description: str
 
-class ToolResponse(BaseModel):
+class ToolOutput(BaseModel):
     toolkit_id: UUID4
     is_active: bool
     is_system: bool
     name: str
     description: str
     fields: List[ToolFieldOutput]
-    tools: List[SingleToolResponse]
+    tools: List[SingleToolOutput]
 

@@ -37,14 +37,13 @@ class AgentModel(BaseModel):
     is_template = Column(Boolean, default=False)
     is_memory = Column(Boolean, default=True)
     avatar = Column(String)
-    account_id = Column(UUID, nullable=True)
-    
+    account_id = Column(UUID, nullable=True)    
     is_system = Column(Boolean, default=False)
     
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
     # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
     # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
-
+    team_agents = relationship("TeamAgentModel", back_populates="agent")
     
     def __repr__(self) -> str:
         return (

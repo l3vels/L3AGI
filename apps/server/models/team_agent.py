@@ -25,6 +25,7 @@ class TeamAgentModel(BaseModel):
     is_deleted = Column(Boolean, default=False)
     
     team = relationship("TeamModel", back_populates="team_agents")
+    agent = relationship("AgentModel", back_populates="team_agents")
     
     def __repr__(self) -> str:
         return (
