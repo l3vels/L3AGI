@@ -23,13 +23,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_model_version,
     agent_description,
     agent_is_memory,
+    agent_tools,
   } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('agent_description', value)
   }
 
-  const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
+  const { providerOptions, modelOptions, datasourceOptions, ToolOptions } = useAgentForm(formik)
 
   return (
     <StyledRoot>
@@ -65,7 +66,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             placeholder={'Constraint'}
           />
 
-          <CustomField formik={formik} formikField={'agent_tools'} placeholder={'Tool'} />
+          <AgentDropdown
+            isMulti
+            label={'Tools'}
+            fieldName={'agent_tools'}
+            fieldValue={agent_tools}
+            setFieldValue={setFieldValue}
+            options={ToolOptions}
+          />
 
           <AgentDropdown
             isMulti
