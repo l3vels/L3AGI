@@ -37,4 +37,5 @@ const StyledBodyContainer = styled.div`
 `
 const StyledFooterWrapper = styled.div`
   width: fit-content;
+  margin-top: auto;
 `
