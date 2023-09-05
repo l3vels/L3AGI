@@ -37,52 +37,52 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     agent = AgentModel.get_agent_by_id(db, "38020ac6-ad97-4bf5-b1a7-d3713036fe52", auth.account)
     agent_with_configs = convert_model_to_response(agent)
 
-    # datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+    datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
 
-    # datasource_tools = get_datasource_tools(datasources)
-    # user_tools = get_tools(['SerpGoogleSearch'])
-    # tools = datasource_tools + user_tools
+    datasource_tools = get_datasource_tools(datasources)
+    user_tools = get_tools(['SerpGoogleSearch'])
+    tools = datasource_tools + user_tools
 
-    # history = PostgresChatMessageHistory(
-    #     session_id=session_id,
-    #     version=version.value,
-    #     account_id=auth.account.id,
-    #     user_id=auth.user.id,
-    #     user=auth.user,
-    #     parent_id=body.parent_id
-    # )
+    history = PostgresChatMessageHistory(
+        session_id=session_id,
+        version=version.value,
+        account_id=auth.account.id,
+        user_id=auth.user.id,
+        user=auth.user,
+        parent_id=body.parent_id
+    )
 
-    # human_message = history.create_human_message(body.prompt)
+    human_message = history.create_human_message(body.prompt)
 
-    # azureService.send_to_group(session_id, message={
-    #     'type': 'CHAT_MESSAGE_ADDED',
-    #     'from': auth.user.id,
-    #     'chat_message': human_message,
-    #     'is_private_chat': body.is_private_chat,
-    #     'local_chat_message_ref_id': body.local_chat_message_ref_id
-    # })
+    azureService.send_to_group(session_id, message={
+        'type': 'CHAT_MESSAGE_ADDED',
+        'from': auth.user.id,
+        'chat_message': human_message,
+        'is_private_chat': body.is_private_chat,
+        'local_chat_message_ref_id': body.local_chat_message_ref_id
+    })
 
-    # # If team member is tagged and no agent is tagged, this means user sends a message to team member
-    # if has_team_member_mention(body.prompt) and not has_agent_mention(body.prompt):
-    #     return ""
+    # If team member is tagged and no agent is tagged, this means user sends a message to team member
+    if has_team_member_mention(body.prompt) and not has_agent_mention(body.prompt):
+        return ""
 
     prompt = body.prompt
     
     for mention in AGENT_MENTIONS:
         prompt = prompt.replace(mention, "").strip()
 
-    # if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
-    #     conversational = L3Conversational(auth.user, auth.account, session_id)
-    #     return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'])
+    if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
+        conversational = L3Conversational(auth.user, auth.account, session_id)
+        return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'])
 
-    # if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
-    #     l3_plan_and_execute = L3PlanAndExecute(
-    #         user=auth.user,
-    #         account=auth.account,
-    #         session_id=session_id,
-    #     )
+    if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
+        l3_plan_and_execute = L3PlanAndExecute(
+            user=auth.user,
+            account=auth.account,
+            session_id=session_id,
+        )
 
-    #     return l3_plan_and_execute.run(tools, prompt, history, version, body.is_private_chat, human_message['id'])
+        return l3_plan_and_execute.run(tools, prompt, history, version, body.is_private_chat, human_message['id'])
 
     if version == ChatMessageVersion.AUTHORITARIAN_SPEAKER:
         topic = prompt
