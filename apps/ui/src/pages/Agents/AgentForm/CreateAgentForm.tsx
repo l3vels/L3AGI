@@ -51,5 +51,5 @@ export default CreateAgentForm
 export const StyledFormWrapper = styled.div`
   width: 100%;
 
-  height: calc(100vh - 380px);
+  height: calc(100vh - 350px);
 `

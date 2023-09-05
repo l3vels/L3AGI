@@ -1,0 +1,21 @@
+query GetTools @api(name: "ai") {
+  getTools @rest(type: "Tool", path: "/tool", method: "GET", endpoint: "ai") {
+    toolkit_id
+    is_active
+    is_system
+    name
+    description
+    fields {
+      label
+      key
+      type
+      is_required
+      is_secret
+    }
+    tools {
+      tool_id
+      name
+      description
+    }
+  }
+}
