@@ -30,7 +30,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   }
 
   const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
-  console.log('agent_is_memory', agent_is_memory)
+
   return (
     <StyledRoot>
       <StyledForm>

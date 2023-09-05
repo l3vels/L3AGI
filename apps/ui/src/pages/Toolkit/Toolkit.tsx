@@ -12,6 +12,7 @@ import ToolCard from './components/ToolCard'
 
 import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
+import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
 const Toolkit = () => {
   const { data: tools } = useToolsService()
@@ -22,12 +23,12 @@ const Toolkit = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Toolkits</StyledSectionTitle>
-          <StyledSectionDescription>Here are all of your Tools</StyledSectionDescription>
+          <StyledSectionTitle secondary>Toolkits</StyledSectionTitle>
+          <StyledSectionDescription secondary>Here are all of your Tools</StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
 
-      <ComponentsWrapper>
+      <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {tools?.map((tool: any, index: number) => {
             const filteredLogos = toolLogos.filter(
@@ -55,17 +56,17 @@ const Toolkit = () => {
 
 export default Toolkit
 
-// const StyledRoot = styled.div`
-//   width: 100%;
-
-//   height: calc(100vh - 350px);
-// `
-
 const StyledCardsWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
+  height: calc(100vh - 340px);
+  padding-left: 20px;
+
   gap: 10px;
 `
-const StyledToolDetails = styled.div``

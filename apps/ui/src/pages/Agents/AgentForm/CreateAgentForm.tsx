@@ -25,7 +25,7 @@ const CreateAgentForm = () => {
           <div>
             <StyledSectionTitle secondary>Create Agent</StyledSectionTitle>
             <StyledSectionDescription secondary>
-            Here are all your agents, managing tasks and operations.
+              Here are all your agents, managing tasks and operations.
             </StyledSectionDescription>
           </div>
 
@@ -51,5 +51,5 @@ export default CreateAgentForm
 export const StyledFormWrapper = styled.div`
   width: 100%;
 
-  height: calc(100vh - 350px);
+  height: calc(100vh - 340px);
 `
