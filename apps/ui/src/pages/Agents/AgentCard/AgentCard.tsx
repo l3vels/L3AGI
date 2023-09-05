@@ -9,6 +9,7 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
 type AgentCardProps = {
   name: string
@@ -55,6 +56,16 @@ const AgentCard = ({
             type={Avatar.types.IMG}
             // ariaLabel='Hadas Fahri'
           />
+          <StyledChatButton className='chatButton'>
+            <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY}>
+              <StyledInnerButtonWrapper>
+                {'Chat'}
+                <StyledIconWrapper>
+                  <MoveArrowRight />
+                </StyledIconWrapper>
+              </StyledInnerButtonWrapper>
+            </Button>
+          </StyledChatButton>
         </StyledAvatarWrapper>
         <StyledBodyTextWrapper>
           <Typography
@@ -119,6 +130,12 @@ const StyledAgentCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  :hover {
+    .chatButton {
+      opacity: 1;
+    }
+  }
 `
 const StyledCardHeader = styled.div`
   width: 100%;
@@ -179,4 +196,29 @@ const StyledBodyTextWrapper = styled.div`
 `
 const StyledAvatarWrapper = styled.div`
   width: fit-content;
+  height: fit-content;
+  position: relative;
+  /* background: red; */
+`
+const StyledChatButton = styled.div`
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  opacity: 0;
+`
+const StyledIconWrapper = styled.div`
+  color: #000;
+
+  height: 16px;
+  width: 16px;
+`
+const StyledInnerButtonWrapper = styled.div`
+  display: flex;
+  /* align-items: flex-end; */
+
+  gap: 5px;
 `

@@ -35,7 +35,7 @@ const Agents = () => {
       <ComponentsWrapper>
         <StyledAgentCardsWrapper>
           {agentsData?.map((agentObj: any, index: number) => {
-            const { agent, configs } = agentObj
+            const { agent } = agentObj
 
             return (
               <AgentCard
