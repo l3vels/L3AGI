@@ -60,11 +60,7 @@ const AgentCard = ({
           />
           {onChatClick && (
             <StyledChatButton className='chatButton'>
-              <Button
-                size={Button.sizes.SMALL}
-                kind={Button.kinds.SECONDARY}
-                onClick={onDeleteClick}
-              >
+              <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY} onClick={onChatClick}>
                 <StyledInnerButtonWrapper>
                   {'Chat'}
                   <StyledIconWrapper>
@@ -220,7 +216,7 @@ const StyledChatButton = styled.div`
   width: fit-content;
   height: fit-content;
   position: absolute;
-  bottom: -10px;
+  bottom: -25px;
   left: 50%;
   transform: translateX(-50%);
 
@@ -228,7 +224,7 @@ const StyledChatButton = styled.div`
   transition: opacity 300ms;
 `
 const StyledIconWrapper = styled.div`
-  color: #000;
+  /* color: #000; */
 
   height: 16px;
   width: 16px;
@@ -236,6 +232,6 @@ const StyledIconWrapper = styled.div`
 const StyledInnerButtonWrapper = styled.div`
   display: flex;
   /* align-items: flex-end; */
-
+  color: #fff;
   gap: 5px;
 `
