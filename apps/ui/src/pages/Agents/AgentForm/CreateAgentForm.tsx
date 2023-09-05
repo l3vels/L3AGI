@@ -14,6 +14,7 @@ import {
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import styled from 'styled-components'
+import BackButton from 'components/BackButton'
 
 const CreateAgentForm = () => {
   const { formik, handleSubmit, isLoading } = useAgents()
@@ -29,11 +30,17 @@ const CreateAgentForm = () => {
             </StyledSectionDescription>
           </div>
 
-          <div>
-            <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
+          <StyledButtonWrapper>
+            <Button
+              onClick={() => handleSubmit(formik?.values)}
+              disabled={isLoading}
+              size={Button.sizes.SMALL}
+            >
               {isLoading ? <Loader size={32} /> : 'Save'}
             </Button>
-          </div>
+
+            <BackButton />
+          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
         <ComponentsWrapper noPadding>
@@ -52,4 +59,9 @@ export const StyledFormWrapper = styled.div`
   width: 100%;
 
   height: calc(100vh - 340px);
+`
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
 `

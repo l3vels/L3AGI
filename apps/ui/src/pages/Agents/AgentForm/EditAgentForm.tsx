@@ -10,8 +10,9 @@ import { useEditAgent } from '../useEditAgent'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledFormWrapper } from './CreateAgentForm'
+import { StyledButtonWrapper, StyledFormWrapper } from './CreateAgentForm'
 import AgentForm from './AgentForm'
+import BackButton from 'components/BackButton'
 
 const EditAgentForm = () => {
   const { formik, handleSubmit, isLoading } = useEditAgent()
@@ -27,11 +28,17 @@ const EditAgentForm = () => {
             </StyledSectionDescription>
           </div>
 
-          <div>
-            <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
+          <StyledButtonWrapper>
+            <Button
+              onClick={() => handleSubmit(formik?.values)}
+              disabled={isLoading}
+              size={Button.sizes.SMALL}
+            >
               {isLoading ? <Loader size={32} /> : 'Save'}
             </Button>
-          </div>
+
+            <BackButton />
+          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
         <ComponentsWrapper noPadding>

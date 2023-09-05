@@ -24,10 +24,15 @@ const Datasource = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Datasource</StyledSectionTitle>
-          <StyledSectionDescription>Here is your datasource, a collection of databases, APIs, files, and more.</StyledSectionDescription>
+          <StyledSectionDescription>
+            Here is your datasource, a collection of databases, APIs, files, and more.
+          </StyledSectionDescription>
         </div>
         <StyledButtonWrapper>
-          <Button onClick={() => navigate('/datasources/create-datasource')}>
+          <Button
+            onClick={() => navigate('/datasources/create-datasource')}
+            size={Button.sizes.SMALL}
+          >
             Create Datasource
           </Button>
         </StyledButtonWrapper>
