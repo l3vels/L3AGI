@@ -51,7 +51,7 @@ const AgentCard = ({
           <Avatar
             size={Avatar.sizes.LARGE}
             src={
-              'https://englishtribuneimages.blob.core.windows.net/gallary-content/2022/2/2022_2$largeimg_287503261.png'
+              'https://lablab.ai/_next/image?url=https%3A%2F%2Fimagedelivery.net%2FK11gkZF3xaVyYzFESMdWIQ%2F22285de8-b832-420f-4a42-fe5120654400%2Ffull&w=3840&q=100'
             }
             type={Avatar.types.IMG}
             // ariaLabel='Hadas Fahri'
@@ -83,12 +83,15 @@ const AgentCard = ({
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
-        {onViewClick && (
-          <Button onClick={onViewClick} size={Button.sizes.SMALL}>
-            View
-          </Button>
-        )}
-        <StyledButtonsWrapper>
+        <StyledButtonsWrapper className='footerButtons'>
+          {onDeleteClick && (
+            <IconButton
+              onClick={onDeleteClick}
+              icon={() => <Delete />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
+          )}
           {onEditClick && (
             <IconButton
               onClick={onEditClick}
@@ -97,13 +100,10 @@ const AgentCard = ({
               kind={IconButton.kinds.TERTIARY}
             />
           )}
-          {onDeleteClick && (
-            <IconButton
-              onClick={onDeleteClick}
-              icon={() => <Delete />}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-            />
+          {onViewClick && (
+            <Button onClick={onViewClick} size={Button.sizes.SMALL}>
+              View
+            </Button>
           )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
@@ -132,7 +132,7 @@ const StyledAgentCard = styled.div`
   justify-content: center;
 
   :hover {
-    .chatButton {
+    .footerButtons {
       opacity: 1;
     }
   }
@@ -181,9 +181,11 @@ const StyledButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
-  gap: 2px;
+  gap: 4px;
 
   margin-left: auto;
+  transition: opacity 300ms;
+  opacity: 0;
 `
 const StyledBodyTextWrapper = styled.div`
   display: flex;
@@ -199,6 +201,12 @@ const StyledAvatarWrapper = styled.div`
   height: fit-content;
   position: relative;
   /* background: red; */
+
+  :hover {
+    .chatButton {
+      opacity: 1;
+    }
+  }
 `
 const StyledChatButton = styled.div`
   width: fit-content;
@@ -209,6 +217,7 @@ const StyledChatButton = styled.div`
   transform: translateX(-50%);
 
   opacity: 0;
+  transition: opacity 300ms;
 `
 const StyledIconWrapper = styled.div`
   color: #000;
