@@ -24,20 +24,33 @@ export const useEditDatasource = () => {
   const [updateConfig] = useUpdateConfigService()
 
   const { data: datasourceById } = useDatasourceByIdService({ id: datasourceId || '' })
-  const { data: configsData } = useConfigsService()
+  const { data: configsData, refetch: refetchConfigs } = useConfigsService()
 
-  const filteredConfig = configsData?.filter((config: any) => config.datasource_id === datasourceId)
+  const filteredConfig = configsData?.filter((config: any) => config.datasource_id === datasourceId) // TODO: filter in backend
+
+  const configs = filteredConfig?.reduce((prev: any, config: any) => {
+    prev[config.key] = {
+      id: config.id,
+      key: config.key,
+      key_type: config.key_type,
+      value: config.value,
+      is_secret: config.is_secret,
+      is_required: config.is_required,
+    }
+
+    return prev
+  }, {})
 
   const defaultValues = {
     datasource_name: datasourceById?.name,
     datasource_description: datasourceById?.description,
     datasource_source_type: datasourceById?.source_type,
-    config_key: filteredConfig[0]?.key,
-    config_value: filteredConfig[0]?.value,
-    config_key_type: filteredConfig[0]?.key_type,
+    configs: configs || {},
   }
 
   const handleSubmit = async (values: any) => {
+    if (!datasourceId) return
+
     setIsLoading(true)
 
     const updatedDatasourceValues = {
@@ -45,19 +58,32 @@ export const useEditDatasource = () => {
       description: values.datasource_description,
       source_type: values.datasource_source_type,
     }
-    const updatedConfigData = {
-      key: values.config_key,
-      value: values.config_value,
-      key_type: values.config_key_type,
-      datasource_id: datasourceById,
+
+    const promises = [
+      updateDatasource(datasourceId, {
+        ...updatedDatasourceValues,
+      }),
+    ]
+
+    for (const key in values.configs) {
+      const cfg = values.configs[key]
+
+      const value = cfg.key_type === 'int' ? parseInt(cfg.value) : cfg.value
+
+      const promise = updateConfig(cfg.id, {
+        key: cfg.key,
+        value,
+        key_type: cfg.key_type,
+        datasource_id: datasourceId,
+        is_secret: cfg.is_secret,
+        is_required: cfg.is_required,
+      })
+
+      promises.push(promise)
     }
-    await updateDatasource(datasourceId || '', {
-      ...updatedDatasourceValues,
-    })
-    await updateConfig(filteredConfig[0]?.id, {
-      ...updatedConfigData,
-    })
-    await refetchDatasources()
+
+    await Promise.all(promises)
+    await Promise.all([refetchDatasources(), refetchConfigs()])
 
     navigate('/datasources')
 

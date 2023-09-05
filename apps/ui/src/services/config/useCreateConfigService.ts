@@ -7,27 +7,29 @@ export type ConfigInput = {
   value: string
   key_type: string
   datasource_id: string
+  is_secret: boolean
+  is_required: boolean
 }
 
 export const useCreateConfigService = () => {
   const [mutation] = useMutation(createConfigGql)
 
   const createConfigService = async (input: ConfigInput) => {
-    const { key, value, key_type, datasource_id } = input
+    const { key, value, key_type, datasource_id, is_secret, is_required } = input
 
     const {
       data: { createConfig },
     } = await mutation({
       variables: {
         input: {
-          key: key,
-          value: value,
-          key_type: key_type,
-          is_secret: true,
-          is_required: false,
+          key,
+          value,
+          key_type,
+          is_secret,
+          is_required,
+          datasource_id: datasource_id,
           agent_id: null,
           tool_id: null,
-          datasource_id: datasource_id,
           project_id: null,
         },
       },

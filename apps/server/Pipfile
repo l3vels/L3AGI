@@ -41,6 +41,7 @@ requests-toolbelt = "*"
 oauth2client = "*"
 fastapi-jwt-auth = "*"
 strawberry-graphql = {extras = ["fastapi"], version = "*"}
+pymysql = "*"
 
 [dev-packages]
 
