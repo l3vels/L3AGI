@@ -35,7 +35,8 @@ const AdditionalInfoBox = ({ items, title }: AdditionalInfoBoxProps) => {
 export default AdditionalInfoBox
 
 const StyledAdditionalInfo = styled.div`
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.2);
+
   width: 100%;
   max-width: 1440px;
   /* min-height: 400px; */

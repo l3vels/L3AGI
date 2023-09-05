@@ -37,7 +37,8 @@ const AgentView = () => {
         <div>
           <StyledSectionTitle>Agent</StyledSectionTitle>
           <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
+            Witness the growth of exceptional AI talents, nurtured by collective community
+            contributions.
           </StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
@@ -61,9 +62,11 @@ const AgentView = () => {
                   />
                 )}
                 <div>
-                  <Button size={Button.sizes.MEDIUM}>
-                    <Download />
-                    Add
+                  <Button size={Button.sizes.SMALL}>
+                    <StyledInnerButtonWrapper>
+                      <Download size={28} />
+                      Add
+                    </StyledInnerButtonWrapper>
                   </Button>
                 </div>
               </StyledWrapper>
@@ -136,7 +139,8 @@ const StyledRightColumn = styled.div`
   width: 100%;
 `
 const StyledDetailsBox = styled.div`
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.2);
+
   width: 300px;
   /* min-height: 400px; */
 
@@ -158,4 +162,10 @@ const StyledDivider = styled.div`
   width: 100%;
   height: 1px;
   background: rgba(255, 255, 255, 0.4);
+`
+const StyledInnerButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: 5px;
 `
