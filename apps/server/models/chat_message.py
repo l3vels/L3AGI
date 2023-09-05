@@ -25,4 +25,21 @@ class ChatMessage(BaseModel):
     thoughts = Column(JSONB)
 
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
-    # parent = relationship("Agent", remote_side=[id], cascade="all, delete")
+    agent = relationship("AgentModel", back_populates="chat_messages")
+
+    def to_dict(self):
+        """
+        Converts the current SQLAlchemy ORM object to a dictionary representation.
+
+        Returns:
+            A dictionary mapping column names to their corresponding values.
+        """
+        data = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+        if self.agent:
+            data['agent'] = self.agent.to_dict()
+
+        if self.parent:
+            data['parent'] = self.parent.to_dict()
+
+        return data

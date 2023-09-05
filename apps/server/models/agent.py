@@ -44,7 +44,7 @@ class AgentModel(BaseModel):
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
     # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
     # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
-
+    chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (

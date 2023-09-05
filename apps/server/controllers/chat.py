@@ -3,6 +3,7 @@ from typing import Optional, List
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_sqlalchemy import db
+from sqlalchemy.orm import joinedload
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
@@ -53,7 +54,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         account_id=auth.account.id,
         user_id=auth.user.id,
         user=auth.user,
-        parent_id=body.parent_id
+        parent_id=body.parent_id,
+        agent_id=agent.id
     )
 
     human_message = history.create_human_message(body.prompt)
@@ -216,14 +218,16 @@ def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, au
     session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id)
 
     chat_messages = (db.session.query(ChatMessageModel)
-                         .filter(ChatMessageModel.session_id == session_id)
-                         .order_by(ChatMessageModel.created_on.desc())
-                         .limit(50)
-                         .all())
+                 .filter(ChatMessageModel.session_id == session_id)
+                 .order_by(ChatMessageModel.created_on.desc())
+                 .limit(50)
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.parent))
+                 .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
-    
-    return chat_messages.reverse()
+    chat_messages.reverse()
+
+    return chat_messages
 
 
 @router.get('/negotiate', response_model=NegotiateOutput)

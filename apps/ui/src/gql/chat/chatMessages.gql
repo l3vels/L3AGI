@@ -11,5 +11,6 @@ query chatMessages($is_private_chat: Boolean!, $version: String!) @api(name: "ai
     parent
     parent_id
     agent_id
+    agent
   }
 }

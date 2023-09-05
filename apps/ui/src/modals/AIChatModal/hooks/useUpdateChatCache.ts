@@ -25,7 +25,7 @@ const useUpdateChatCache = () => {
     apolloClient.cache.updateQuery(
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {
-        const chatMessages = data?.messageByGame || []
+        const chatMessages = data?.chatMessages || []
         const newChatMessages = [...chatMessages]
         newChatMessage = { __typename: 'ChatMessage', parent: null, agent: null, ...newChatMessage }
 
@@ -58,7 +58,7 @@ const useUpdateChatCache = () => {
         })
 
         return {
-          messageByGame: newChatMessages,
+          chatMessages: newChatMessages,
         }
       },
     )

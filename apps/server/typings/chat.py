@@ -11,17 +11,19 @@ class ChatMessageInput(BaseModel):
     parent_id: Optional[str] = None
 
 
-class NegotiateOutput(BaseModel):
-    url: str
-
 class ChatMessageOutput(BaseModel):
     id: UUID
+    parent_id: Optional[UUID] = None
+    parent: Optional[Dict] = None
     session_id: str
+    agent_id: Optional[UUID] = None
+    agent: Optional[Dict] = None
     user_id: UUID
     account_id: UUID
-    parent: Optional[Dict] = None
-    parent_id: Optional[str] = None
-    agent_id: Optional[UUID] = None
     message: Dict
-    thoughts: Dict
+    thoughts: Optional[Dict] = None
     created_on: datetime
+
+
+class NegotiateOutput(BaseModel):
+    url: str

@@ -39,7 +39,7 @@ def parse_agent_mention(text: str):
             return agent_id, cleaned_string
 
     if not results:
-        return None
+        return (None, text)
     
     return results
 
