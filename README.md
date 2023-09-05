@@ -77,6 +77,36 @@
 
 <hr> -->
 
+## 🚀 Features
+
+L3AGI provides a comprehensive suite of features to build, manage, and run autonomous AI agents. Here are some of the key features:
+
+- **Autonomous AI Agents**: Create and manage individual AI agents with autonomy.
+
+- **Team Collaboration**: Build teams of AI agents that can work together effectively.
+
+- **Agent Memory**: Equip your AI agents with memory capabilities for retaining and recalling information.
+
+- **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
+
+- **Datasources**: Connect your AI agents to various data sources for information retrieval and processing. Supported data sources include:
+   - Postgres
+   - MySQL
+   - APIs
+   - Notions
+   - And more...
+
+- **Code Generator**: Generate code snippets automatically to speed up your development process.
+
+- **Chart Generator**: Visualize your data effectively with our chart generator.
+
+- **Report Generator**: Create comprehensive reports with ease using our report generator.
+
+- **Community Building**: Collaborate with the community to build and improve your AI agents.
+
+- **User Interface (UI)**: A user-friendly interface to build and manage your AI agents.
+
+- **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
 
 
 ## Directory Structure
@@ -94,7 +124,7 @@
 - Docker
 - Docker Compose
 
-## Quick Start
+## ⚡ Quick Start
 
 1. **Clone the repository:**
 
@@ -117,6 +147,7 @@
 
    This will build and start both the React UI and FastAPI services.
 
+## 🐳 Docker
 4. **Run Docker Compose:**
 
    ```bash
