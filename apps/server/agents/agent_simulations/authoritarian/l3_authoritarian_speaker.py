@@ -112,16 +112,17 @@ class L3AuthoritarianSpeaker(L3Base):
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
-        directors = [agent_config.agent for agent_config in agents_with_configs if agent_config.agent.is_director == True]
+        # directors = [agent_config.agent for agent_config in agents_with_configs if agent_config.agent.is_director == True]
+        directors = [agent_config.agent for agent_config in agents_with_configs if hasattr(agent_config.agent, 'is_director') and agent_config.agent.is_director == True]
         # Assuming there's only one director:
         
         director_agent = directors[0] if directors else agents_with_configs[0]
-        director_name = director_agent.name
+        director_name = director_agent.agent.name
         director_id = director_agent.agent.id
 
         director = DirectorDialogueAgentWithTools(
                     name=director_name,
-                    tools=director_agent.tools,
+                    tools=director_agent.configs.tools,
                     system_message=SystemMessageBuilder(director_agent).build(),
                     #later need support other llms
                     model=ChatOpenAI(temperature=director_agent.configs.temperature, 
