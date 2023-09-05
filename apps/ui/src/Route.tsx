@@ -9,7 +9,14 @@ import Saved from './pages/Saved'
 import Settings from './pages/Settings'
 import Teams from './pages/Teams'
 
-import { ForgotPassword, Login, Register, ResetPassword, TwoFAuthentication, GithubLogin } from 'pages/Auth'
+import {
+  ForgotPassword,
+  Login,
+  Register,
+  ResetPassword,
+  TwoFAuthentication,
+  GithubLogin,
+} from 'pages/Auth'
 import ApiKeys from 'pages/ApiKeys/ApiKeys'
 
 import MainComponent from 'pages/MainComponent'
@@ -54,6 +61,8 @@ import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
 import EditDatasourceForm from 'pages/Datasource/DatasourceForm/EditDatasourceForm'
+import Toolkit from 'pages/Toolkit'
+import ToolView from 'pages/Toolkit/ToolView'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -78,7 +87,7 @@ const Route = () => {
 
               {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
               {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
-              <Router path='tools' element={<div>Coming Soon</div>} key={document.location.href} />
+              {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
               <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
               <Router path='teams' element={<Teams />} key={document.location.href} />
               <Router path='channels' element={<Channels />} key={document.location.href} />
@@ -139,6 +148,11 @@ const Route = () => {
                 element={<EditDatasourceForm />}
                 key={document.location.href}
               />
+            </Router>
+
+            <Router path={'tools'} element={<AgentRouteLayout />} key={document.location.href}>
+              <Router index element={<Toolkit />} key={document.location.href} />
+              <Router path={':toolId'} element={<ToolView />} key={document.location.href} />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>

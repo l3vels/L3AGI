@@ -11,64 +11,25 @@ from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAge
 
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
+from typings.agent import AgentWithConfigsOutput
+from models.team import TeamModel
+from utils.system_message import SystemMessageBuilder
+from utils.agent import convert_model_to_response
+
+
 
 azureService = PubSubService()
-
-
-# os.environ["LANGCHAIN_TRACING"] = "false"
 
 class L3AgentDebates(L3Base):
     def __init__(
         self,
         user,
         account,
-        session_id,
-        game,
-        collection,
+        session_id,     
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(user=user, account=account, session_id=session_id, game=game, collection=collection)
+        super().__init__(user=user, account=account, session_id=session_id)
         self.word_limit = word_limit        
-        
-        self.agent_descriptor_system_message = SystemMessage(
-            content="You can add detail to the description of the conversation participant."
-        )
-        
-    def generate_agent_description(self, name, conversation_description):
-        agent_specifier_prompt = [
-            self.agent_descriptor_system_message,
-            HumanMessage(
-                content=f"""{conversation_description}
-                Please reply with a creative description of {name}, in {self.word_limit} words or less. 
-                Speak directly to {name}.
-                Give them a point of view.
-                Do not add anything else."""
-            ),
-        ]
-        agent_description = ChatOpenAI(temperature=1.0, model_name="gpt-4")(agent_specifier_prompt).content
-        return agent_description
-
-    def generate_system_message(self, name, description, tools, conversation_description):
-            return f"""{conversation_description}
-            
-        Your name is {name}.
-
-        Your description is as follows: {description}
-
-        Your goal is to persuade your conversation partner of your point of view.
-
-        DO look up information with your tool to refute your partner's claims.
-        DO cite your sources.
-        
-        Analyse chat history and DO NOT repeat the same things.
-
-        DO NOT fabricate fake citations.
-        DO NOT cite any source that you did not look up.
-
-        Do not add anything else.
-
-        Stop speaking the moment you finish speaking from your perspective.
-        """
         
     def select_next_speaker(self, step: int, agents: List[DialogueAgent]) -> int:
         idx = (step) % len(agents)
@@ -92,24 +53,30 @@ class L3AgentDebates(L3Base):
         return specified_topic
     
     def run(self,
-            topic: str,
-            agent_summaries: List[any],
+            topic: str,            
+            team: TeamModel, 
+            agents_with_configs: List[AgentWithConfigsOutput],   
+            # agent_summaries: List[any],
             history: PostgresChatMessageHistory,
             is_private_chat: bool):
-        names = [agent['name'] for agent in agent_summaries]
+        names = [agent_with_config.agent.name for agent_with_config in agents_with_configs]
 
-        conversation_description = f"""Here is the topic of conversation: {topic}
-        The participants are: {', '.join(names)}"""
+        # conversation_description = f"""Here is the topic of conversation: {topic}
+        # The participants are: {', '.join(names)}"""
+        
+
+        
+        # system_message = SystemMessageBuilder(agent_with_configs).build()
 
 
-        agent_descriptions = {
-            agent['name']: self.generate_agent_description(agent['name'], conversation_description) for agent in agent_summaries
-        }
+        # agent_descriptions = {
+        #     agent['name']: self.generate_agent_description(agent['name'], conversation_description) for agent in agent_summaries
+        # }
 
-        agent_system_messages = {
-            agent['name']: self.generate_system_message(agent['name'], description, agent['tools'], conversation_description)
-            for agent, description in zip(agent_summaries, agent_descriptions.values())
-        }
+        # agent_system_messages = {
+        #     agent['name']: self.generate_system_message(agent['name'], description, agent['tools'], conversation_description)
+        #     for agent, description in zip(agent_summaries, agent_descriptions.values())
+        # }
         
         
         specified_topic= self.generate_specified_prompt(topic, names)
@@ -119,15 +86,16 @@ class L3AgentDebates(L3Base):
 
         dialogue_agents = [
             DialogueAgentWithTools(
-                name=agent['name'],
-                system_message=SystemMessage(content=system_message),
-                model=ChatOpenAI(temperature=0.2, model_name="gpt-4", ),
-                tools=agent['tools'],
+                name=agent_with_config.agent.name,
+                system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
+                #later need support other llms
+                model=ChatOpenAI(temperature=agent_with_config.configs.temperature, 
+                                 model_name=agent_with_config.configs.model_version 
+                                 if agent_with_config.configs.model_version else "gpt-4"),
+                tools=agent_with_config.configs.tools,
                 top_k_results=2,
             )
-            for agent, system_message in zip(
-                agent_summaries, agent_system_messages.values()
-            )
+            for agent_with_config in agents_with_configs
         ]
 
         max_iters = 6
@@ -156,3 +124,44 @@ class L3AgentDebates(L3Base):
             print(f"({name}): {message}")
             print("\n")
             n += 1
+
+
+    # self.agent_descriptor_system_message = SystemMessage(
+    #     content="You can add detail to the description of the conversation participant."
+    # )
+        
+    # def generate_agent_description(self, name, conversation_description):
+    #     agent_specifier_prompt = [
+    #         self.agent_descriptor_system_message,
+    #         HumanMessage(
+    #             content=f"""{conversation_description}
+    #             Please reply with a creative description of {name}, in {self.word_limit} words or less. 
+    #             Speak directly to {name}.
+    #             Give them a point of view.
+    #             Do not add anything else."""
+    #         ),
+    #     ]
+    #     agent_description = ChatOpenAI(temperature=1.0, model_name="gpt-4")(agent_specifier_prompt).content
+    #     return agent_description
+
+    # def generate_system_message(self, name, description, tools, conversation_description):
+    #         return f"""{conversation_description}
+            
+    #     Your name is {name}.
+
+    #     Your description is as follows: {description}
+
+    #     Your goal is to persuade your conversation partner of your point of view.
+
+    #     DO look up information with your tool to refute your partner's claims.
+    #     DO cite your sources.
+        
+    #     Analyse chat history and DO NOT repeat the same things.
+
+    #     DO NOT fabricate fake citations.
+    #     DO NOT cite any source that you did not look up.
+
+    #     Do not add anything else.
+
+    #     Stop speaking the moment you finish speaking from your perspective.
+    #     """
