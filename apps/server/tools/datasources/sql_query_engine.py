@@ -39,7 +39,6 @@ class SQLQueryEngine:
         """Initialize LLamaIndex SQL index"""
         
         table_names = self.meta.tables.keys()
-        print("TABLES: ", table_names)
 
         table_schema_objs = [
             SQLTableSchema(table_name=table_name)
