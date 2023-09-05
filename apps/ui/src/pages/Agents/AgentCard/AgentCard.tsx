@@ -96,7 +96,8 @@ const StyledAgentCard = styled.div`
   padding: 20px;
 
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  /* background: rgba(0, 0, 0, 0.5); */
+  background: rgba(0, 0, 0, 0.2);
 
   display: flex;
   flex-direction: column;
