@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 from typings.team import TeamInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
+from models.agent import AgentModel
 from typings.team import QueryParams
 
 class TeamModel(BaseModel):
@@ -116,7 +117,7 @@ class TeamModel(BaseModel):
                 
         teams = (
             db.session.query(TeamModel)
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .filter(and_(*filter_conditions))
             .first()
         )
