@@ -1,7 +1,12 @@
 from uuid import UUID
 import json
 import re
-from enums import ChatMessageVersion
+from enum import Enum
+
+class MentionModule(Enum):
+    AGENT = 'agent'
+    USER = 'user'
+
 
 def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None):
     if is_private_chat:
@@ -17,19 +22,26 @@ def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, 
         return f"{account_id}"
 
 
-AGENT_MENTIONS = [
-    "@[L3-GPT](agent__L3-GPT)__mention__",
-    "@[L3-Planner](agent__L3-Planner)__mention__",
-    "@[L3-Authoritarian-Speaker](agent__L3-Authoritarian-Speaker)__mention__",
-    "@[L3-Agent-Debates](agent__L3-Agent-Debates)__mention__"
-]
+def parse_agent_mention(text: str):
+    """Finds agent mentions and returns id of the first agent found"""
 
-AGENT_MENTION_TO_VERSION = {
-    AGENT_MENTIONS[0]: ChatMessageVersion.CHAT_CONVERSATIONAL,
-    AGENT_MENTIONS[1]: ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS,
-    AGENT_MENTIONS[2]: ChatMessageVersion.AUTHORITARIAN_SPEAKER,
-    AGENT_MENTIONS[3]: ChatMessageVersion.AGENT_DEBATES
-}
+    pattern = r'@\[(?P<name>[^\]]+)\]\((?P<module>[^_]+)__' \
+              r'(?P<id>[^\)]+)\)__mention__'
+    
+    mentions = re.finditer(pattern, text)
+    
+    results = []
+    
+    for match in mentions:
+        if match.group("module") == MentionModule.AGENT.value:
+            agent_id = match.group("id")
+            cleaned_string = re.sub(pattern, '', text).strip()
+            return agent_id, cleaned_string
+
+    if not results:
+        return None
+    
+    return results
 
 def has_team_member_mention(text: str) -> bool:
     pattern = r'@\[[^\]]*\]\((user)__[^)]*\)__mention__'
@@ -38,10 +50,6 @@ def has_team_member_mention(text: str) -> bool:
         return True
 
     return False
-
-
-def has_agent_mention(text: str) -> bool:
-    return any(mention in text for mention in AGENT_MENTIONS)
 
 
 def get_agents_from_json(data_string: str):

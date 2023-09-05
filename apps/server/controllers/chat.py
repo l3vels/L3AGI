@@ -1,11 +1,10 @@
 import re
 from typing import Optional, List
 from uuid import UUID
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi_sqlalchemy import db
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
-from enums import ChatMessageVersion
 from typings.auth import UserAccount
 from pubsub_service import PubSubService
 from agents.conversational.l3_conversational import L3Conversational
@@ -14,7 +13,7 @@ from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3Au
 from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
-from utils.chat import get_chat_session_id, has_agent_mention, has_team_member_mention, AGENT_MENTIONS
+from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention
 from tools.get_tools import get_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
@@ -33,11 +32,14 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     """
 
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id)
+    
+    mentioned_agent_id, prompt = parse_agent_mention(body.prompt)
 
-    if body.agent_id:
-        agent_model = AgentModel.get_agent_by_id(db, body.agent_id, auth.account)
+    agent = AgentModel.get_agent_by_id(db, body.agent_id or mentioned_agent_id, auth.account)
 
-    agent = AgentModel.get_agent_by_id(db, "38020ac6-ad97-4bf5-b1a7-d3713036fe52", auth.account)
+    if not agent:
+        raise HTTPException(status_code=404, detail="Agent not found")
+
     agent_with_configs = convert_model_to_response(agent)
 
     datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
@@ -65,13 +67,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     })
 
     # If team member is tagged and no agent is tagged, this means user sends a message to team member
-    if has_team_member_mention(body.prompt) and not has_agent_mention(body.prompt):
+    if has_team_member_mention(body.prompt) and not mentioned_agent_id:
         return ""
-
-    prompt = body.prompt
-    
-    for mention in AGENT_MENTIONS:
-        prompt = prompt.replace(mention, "").strip()
 
     # if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
     conversational = L3Conversational(auth.user, auth.account, session_id)
