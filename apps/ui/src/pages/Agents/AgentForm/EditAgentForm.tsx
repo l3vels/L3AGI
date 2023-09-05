@@ -21,8 +21,8 @@ const EditAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle secondary>Edit Agent</StyledSectionTitle>
-            <StyledSectionDescription secondary>
+            <StyledSectionTitle>Edit Agent</StyledSectionTitle>
+            <StyledSectionDescription>
               Here are all your agents, managing tasks and operations.
             </StyledSectionDescription>
           </div>

@@ -23,8 +23,8 @@ const CreateAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle secondary>Create Agent</StyledSectionTitle>
-            <StyledSectionDescription secondary>
+            <StyledSectionTitle>Create Agent</StyledSectionTitle>
+            <StyledSectionDescription>
               Here are all your agents, managing tasks and operations.
             </StyledSectionDescription>
           </div>

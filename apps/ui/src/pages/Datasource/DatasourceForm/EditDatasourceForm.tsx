@@ -25,8 +25,8 @@ const EditDatasourceForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle secondary>Edit Datasource</StyledSectionTitle>
-              <StyledSectionDescription secondary>
+              <StyledSectionTitle>Edit Datasource</StyledSectionTitle>
+              <StyledSectionDescription>
                 Here is your datasource, a collection of databases, APIs, files, and more.
               </StyledSectionDescription>
             </div>

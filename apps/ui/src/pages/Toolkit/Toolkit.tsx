@@ -12,19 +12,18 @@ import ToolCard from './components/ToolCard'
 
 import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
-import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
 const Toolkit = () => {
   const { data: tools } = useToolsService()
-  console.log('tools', tools)
+
   const navigate = useNavigate()
 
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle secondary>Toolkits</StyledSectionTitle>
-          <StyledSectionDescription secondary>Here are all of your Tools</StyledSectionDescription>
+          <StyledSectionTitle>Toolkits</StyledSectionTitle>
+          <StyledSectionDescription>Here are all of your Tools</StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
 
