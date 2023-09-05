@@ -20,6 +20,7 @@ class ConfigInput(BaseModel):
     model_version: str
     temperature: float
     instructions: List[str]
+    suggestions: List[str]
     
 class AgentConfigInput(BaseModel):
     agent: AgentInput
@@ -35,6 +36,7 @@ class ConfigsOutput(BaseModel):
     model_version: str
     temperature: float
     instructions: List[str]
+    suggestions: List[str]
 
 
 class AgentResponse(BaseModel):
