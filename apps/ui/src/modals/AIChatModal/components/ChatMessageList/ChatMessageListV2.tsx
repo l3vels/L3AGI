@@ -50,7 +50,7 @@ const ChatMessageListV2 = ({
       version: chat?.version,
       parent: chat?.parent,
       username: chat.message.data.additional_kwargs.name,
-      agentName: chat.agent.name,
+      agentName: chat.agent?.name,
     }
   })
 

@@ -6,11 +6,7 @@ import moment from 'moment'
 import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
-import {
-  ChatMessageVersionEnum,
-  useCreateChatMessageService,
-  useChatMessagesService,
-} from 'services'
+import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
 
@@ -28,7 +24,7 @@ import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
@@ -62,21 +58,20 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { upsertChatMessageInCache } = useUpdateChatCache()
 
-  const urlParams = new URLSearchParams(window.location.search)
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
 
   const gameId = urlParams.get('game')
   const agentId = urlParams.get('agent')
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
-  const version = ChatMessageVersionEnum.ChatConversational
-
   const { data: chatMessages } = useChatMessagesService({
     isPrivateChat: isPrivate,
     agentId,
   })
 
-  const [createMessageService] = useCreateChatMessageService()
+  const [createChatMessageService] = useCreateChatMessageService()
 
   const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
     // Add message to cache immediately after user sends it. This message will be updated with sockets
@@ -85,10 +80,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       session_id: '',
       thoughts: null,
       user_id: user.id,
-      account_id: account.id,
+      account_id: '',
       parent_id: null,
       parent: null,
-      agent_id: null,
+      agent_id: agentId,
       agent: null,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
@@ -175,10 +170,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         setReply(defaultReplyState)
       }
 
-      await createMessageService({
+      await createChatMessageService({
         message,
         isPrivateChat: isPrivate,
-        version,
+        agentId,
         localChatMessageRefId, // Used to update the message with socket
         parentId: parentMessageId,
       })

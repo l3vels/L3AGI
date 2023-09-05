@@ -97,6 +97,7 @@ const Spotlight = () => {
       await createChatMessageService({
         message: formValue,
         isPrivateChat: false,
+        agentId,
       })
 
       navigate(route, {

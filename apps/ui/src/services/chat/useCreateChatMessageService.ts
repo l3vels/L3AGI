@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 
+import { Nullable } from 'types'
 import CREATE_CHAT_MESSAGE_GQL from '../../gql/chat/createChatMessage.gql'
 
 interface CreateMessageInput {
@@ -7,7 +8,7 @@ interface CreateMessageInput {
   isPrivateChat: boolean
   localChatMessageRefId?: string
   parentId?: string
-  agentId?: string
+  agentId?: Nullable<string>
 }
 
 export const useCreateChatMessageService = () => {
