@@ -50,6 +50,7 @@ const ChatMessageListV2 = ({
       version: chat?.version,
       parent: chat?.parent,
       username: chat.message.data.additional_kwargs.name,
+      agentName: chat.agent?.name,
     }
   })
 
@@ -181,11 +182,11 @@ const ChatMessageListV2 = ({
                   )}
                 </StyledReplyMessageContainer>
                 <AiMessage
+                  author={chat.agentName}
                   avatarImg={l3}
                   messageDate={chat.date}
                   messageText={chat.message}
                   thoughts={chat.thoughts}
-                  version={chat.version}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
                   onReplyClick={() => {
