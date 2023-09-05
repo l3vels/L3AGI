@@ -39,7 +39,7 @@ export const toolLogos = [
   },
   {
     logoSrc:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Twitter_logo_initial.svg/640px-Twitter_logo_initial.svg.png',
+      'https://seeklogo.com/images/T/twitter-x-logo-0339F999CF-seeklogo.com.png?v=638258077460000000',
     toolName: 'Twitter Toolkit',
   },
   {
