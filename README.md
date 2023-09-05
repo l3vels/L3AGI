@@ -109,22 +109,13 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 - **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
 
 
-## Directory Structure
+## ⚡ Quick Start
 
-```
-.
-├── apps/
-│ ├── ui/ # React UI Application
-│ └── server/ # Python FastAPI Server
-└── docker-compose.yml # Main Docker Compose File
-```
+### Pre-requisites
 
-## Pre-requisites
-
-- Docker
+- Docker 🐳
 - Docker Compose
 
-## ⚡ Quick Start
 
 1. **Clone the repository:**
 
@@ -138,7 +129,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
    cd L3AGI
    ```
 
-3. ** Setup Git Hooks **
+3. **Setup Git Hooks**
 
    ```bash
    chmod +x setup.sh
@@ -147,8 +138,8 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
    This will build and start both the React UI and FastAPI services.
 
-## 🐳 Docker
-4. **Run Docker Compose:**
+
+4. 🐳 **Run Docker Compose:**
 
    ```bash
    docker-compose up --build
@@ -160,6 +151,16 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - **React UI**: Open `http://localhost:3000` in your browser.
 - **FastAPI Server**: Open `http://localhost:4002` in your browser or API client.
+
+## Directory Structure
+
+```
+.
+├── apps/
+│ ├── ui/ # React UI Application
+│ └── server/ # Python FastAPI Server
+└── docker-compose.yml # Main Docker Compose File
+```
 
 ## Troubleshooting
 
