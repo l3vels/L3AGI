@@ -38,11 +38,10 @@ const Marketplace = () => {
               return (
                 <AgentCard
                   key={index}
-                  title={agent.name}
-                  subTitle={agent.description}
+                  name={agent.name}
+                  description={agent.description}
                   onViewClick={() => navigate(`/agents/${agent.id}`)}
-                  modelVersion={configs.model_version}
-                  provider={configs.mode_provider}
+                  headerTag={agent.role}
                 />
               )
             })}
@@ -71,11 +70,10 @@ const Marketplace = () => {
                 return (
                   <AgentCard
                     key={index}
-                    title={agent.name}
-                    subTitle={agent.description}
+                    name={agent.name}
+                    description={agent.description}
                     onViewClick={() => navigate(`/agents/${agent.id}`)}
-                    modelVersion={configs.model_version}
-                    provider={configs.mode_provider}
+                    headerTag={agent.role}
                   />
                 )
               })}

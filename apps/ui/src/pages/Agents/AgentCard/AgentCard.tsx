@@ -5,25 +5,26 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 
 type AgentCardProps = {
-  title: string
-  subTitle: string
-  modelVersion?: string
-  provider?: string
+  name: string
+  description: string
+  headerText?: string
+  headerTag?: string
   onEditClick?: () => void
   onDeleteClick?: () => void
   onViewClick: () => void
 }
 
 const AgentCard = ({
-  title,
-  subTitle,
-  modelVersion,
-  provider,
+  name,
+  description,
+  headerText,
+  headerTag,
   onDeleteClick,
   onEditClick,
   onViewClick,
@@ -31,30 +32,44 @@ const AgentCard = ({
   return (
     <StyledAgentCard>
       <StyledCardHeader>
-        {modelVersion && (
+        <div>
+          {headerText && (
+            <Typography
+              value={headerText}
+              type={Typography.types.P}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255,255,255, 0.8)'}
+            />
+          )}
+        </div>
+
+        <div>{headerTag && <Tags label={headerTag} readOnly size='small' />}</div>
+      </StyledCardHeader>
+      <StyledCardBody>
+        <StyledAvatarWrapper>
+          <Avatar
+            size={Avatar.sizes.LARGE}
+            src={
+              'https://englishtribuneimages.blob.core.windows.net/gallary-content/2022/2/2022_2$largeimg_287503261.png'
+            }
+            type={Avatar.types.IMG}
+            // ariaLabel='Hadas Fahri'
+          />
+        </StyledAvatarWrapper>
+        <StyledBodyTextWrapper>
           <Typography
-            value={modelVersion}
+            value={name}
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+          <Typography
+            value={description}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.8)'}
           />
-        )}
-
-        {provider && <Tags label={provider} readOnly size='small' />}
-      </StyledCardHeader>
-      <StyledCardBody>
-        <Typography
-          value={title}
-          type={Typography.types.P}
-          size={Typography.sizes.md}
-          customColor={'#FFF'}
-        />
-        <Typography
-          value={subTitle}
-          type={Typography.types.P}
-          size={Typography.sizes.sm}
-          customColor={'rgba(255,255,255, 0.8)'}
-        />
+        </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
         {onViewClick && (
@@ -88,12 +103,13 @@ const AgentCard = ({
 export default AgentCard
 
 const StyledAgentCard = styled.div`
-  width: 320px;
-  min-width: 320px;
-  height: 200px;
-  min-height: 200px;
+  width: 330px;
+  min-width: 330px;
+  height: 180px;
+  min-height: 180px;
 
-  padding: 20px;
+  padding: 15px;
+  padding-bottom: 10px;
 
   border-radius: 10px;
   /* background: rgba(0, 0, 0, 0.5); */
@@ -115,7 +131,7 @@ const StyledCardHeader = styled.div`
   padding-bottom: 5px;
 
   height: 20px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 `
 
 const StyledCardBody = styled.div`
@@ -125,8 +141,12 @@ const StyledCardBody = styled.div`
   margin-top: auto;
 
   display: flex;
-  flex-direction: column;
+
+  gap: 20px;
+  /* align-items: center; */
+  /* flex-direction: column; */
   /* justify-content: center; */
+  padding: 0 15px;
 
   overflow: hidden;
 `
@@ -147,4 +167,16 @@ const StyledButtonsWrapper = styled.div`
   gap: 2px;
 
   margin-left: auto;
+`
+const StyledBodyTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* gap: 5px; */
+
+  overflow: hidden;
+
+  padding-top: 5px;
+`
+const StyledAvatarWrapper = styled.div`
+  width: fit-content;
 `
