@@ -13,13 +13,15 @@ import styled from 'styled-components'
 import { toolLogos } from '../constants'
 import FormikTextField from 'components/TextFieldFormik'
 import { useToolView } from './useToolView'
+import { FormikProvider } from 'formik'
+import { useEffect } from 'react'
 
 const ToolView = () => {
-  const { tool } = useToolView()
+  const { tool, formik, handleSubmit } = useToolView()
 
-  if (!tool) return <div />
+  // if (!tool) return <div />
 
-  console.log('View PAge', tool)
+  // console.log('View PAge', tool)
 
   const name = tool[0]?.name
   const description = tool[0]?.tools[0]?.description || ''
@@ -27,59 +29,74 @@ const ToolView = () => {
 
   const toolLogo = toolLogos.filter((toolLogo: any) => toolLogo.toolName === name)
 
+  useEffect(() => {
+    formik?.setFieldValue('tool_key', fields?.[0]?.key)
+    formik?.setFieldValue('tool_key_type', fields?.[0]?.type)
+  }, [formik?.values?.tool_value])
+
   return (
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <div>
-          <StyledSectionTitle>Toolkit</StyledSectionTitle>
-          {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
-        </div>
+    <FormikProvider value={formik}>
+      <StyledSectionWrapper>
+        <StyledHeaderGroup className='header_group'>
+          <div>
+            <StyledSectionTitle>Toolkit</StyledSectionTitle>
+            {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
+          </div>
 
-        <StyledButtonWrapper>
-          <Button onClick={() => {}}>Save</Button>
-        </StyledButtonWrapper>
-      </StyledHeaderGroup>
-      <ComponentsWrapper>
-        <StyledInnerWrapper>
-          <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
+          <StyledButtonWrapper>
+            <Button onClick={() => handleSubmit(formik?.values)}>Save</Button>
+          </StyledButtonWrapper>
+        </StyledHeaderGroup>
+        <ComponentsWrapper>
+          <StyledInnerWrapper>
+            <StyledHeader></StyledHeader>
+            <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
+            <StyledTextWrapper>
+              <Typography
+                value={`By`}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255,255,255,0.8'}
+              />
 
-          <StyledTextWrapper>
-            <Typography
-              value={`By`}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255,255,255,0.8'}
-            />
+              <Typography
+                value={`L3`}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+                customColor={'rgba(255,255,255,0.8'}
+                style={{ textDecoration: 'underline' }}
+              />
+            </StyledTextWrapper>
+            <StyledMainTextWrapper>
+              <Typography
+                value={name}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.lg}
+                customColor={'#FFF'}
+              />
+              <Typography
+                value={description}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+                customColor={'rgba(255,255,255,0.8'}
+              />
+            </StyledMainTextWrapper>
 
-            <Typography
-              value={`L3`}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-              customColor={'rgba(255,255,255,0.8'}
-              style={{ textDecoration: 'underline' }}
-            />
-          </StyledTextWrapper>
-          <StyledMainTextWrapper>
-            <Typography
-              value={name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-              customColor={'#FFF'}
-            />
-            <Typography
-              value={description}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-              customColor={'rgba(255,255,255,0.8'}
-            />
-          </StyledMainTextWrapper>
-
-          {fields?.map((field: any, index: number) => {
-            // return <FormikTextField key={index} field_name='name' label={field.label} />
-          })}
-        </StyledInnerWrapper>
-      </ComponentsWrapper>
-    </StyledSectionWrapper>
+            {fields?.map((field: any, index: number) => {
+              return (
+                <FormikTextField
+                  key={index}
+                  name='tool_value'
+                  placeholder=''
+                  label={field.label}
+                  field_name={'tool_value'}
+                />
+              )
+            })}
+          </StyledInnerWrapper>
+        </ComponentsWrapper>
+      </StyledSectionWrapper>
+    </FormikProvider>
   )
 }
 
@@ -91,6 +108,7 @@ const StyledInnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `
 const StyledImg = styled.img`
   width: 48px;
@@ -113,4 +131,8 @@ const StyledMainTextWrapper = styled.div`
 
   width: 100%;
   max-width: 400px;
+`
+const StyledHeader = styled.div`
+  display: flex;
+  align-items: center;
 `

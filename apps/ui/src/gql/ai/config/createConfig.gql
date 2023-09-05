@@ -8,7 +8,7 @@ mutation createConfig($input: input!) @api(name: ai) {
     is_secret
     is_required
     agent_id
-    tool_id
+    toolkit_id
     datasource_id
     account_id
     project_id

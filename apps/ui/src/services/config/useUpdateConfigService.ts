@@ -6,7 +6,7 @@ import { ConfigInput } from './useCreateConfigService'
 export const useUpdateConfigService = () => {
   const [mutation] = useMutation(updateConfigGql)
   const updateConfig = async (id: string, input: ConfigInput) => {
-    const { key, value, key_type, datasource_id } = input
+    const { key, value, key_type, datasource_id, tool_id } = input
 
     const { data } = await mutation({
       variables: {
@@ -18,7 +18,7 @@ export const useUpdateConfigService = () => {
           is_secret: true,
           is_required: false,
           agent_id: null,
-          tool_id: null,
+          toolkit_id: tool_id,
           datasource_id: datasource_id,
           project_id: null,
         },

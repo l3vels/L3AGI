@@ -6,14 +6,15 @@ export type ConfigInput = {
   key: string
   value: string
   key_type: string
-  datasource_id: string
+  datasource_id?: string
+  tool_id?: string
 }
 
 export const useCreateConfigService = () => {
   const [mutation] = useMutation(createConfigGql)
 
   const createConfigService = async (input: ConfigInput) => {
-    const { key, value, key_type, datasource_id } = input
+    const { key, value, key_type, datasource_id, tool_id } = input
 
     const {
       data: { createConfig },
@@ -26,7 +27,7 @@ export const useCreateConfigService = () => {
           is_secret: true,
           is_required: false,
           agent_id: null,
-          tool_id: null,
+          toolkit_id: tool_id,
           datasource_id: datasource_id,
           project_id: null,
         },
