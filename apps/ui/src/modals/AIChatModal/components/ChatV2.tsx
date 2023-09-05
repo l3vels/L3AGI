@@ -9,7 +9,7 @@ import { useChatState } from '../hooks/useChat'
 import {
   ChatMessageVersionEnum,
   useCreateChatMessageService,
-  useMessageByGameService,
+  useChatMessagesService,
 } from 'services'
 
 import Toast from '@l3-lib/ui-core/dist/Toast'
@@ -66,11 +66,11 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const gameId = urlParams.get('game')
 
-  const { apiVersions, apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
+  const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   const version = ChatMessageVersionEnum.ChatConversational
 
-  const { data: chatMessages, refetch: messageRefetch } = useMessageByGameService({
+  const { data: chatMessages } = useChatMessagesService({
     isPrivateChat: isPrivate,
   })
 

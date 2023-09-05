@@ -17,7 +17,7 @@ import ChatLoader from './ChatLoader'
 import {
   ChatMessageVersionEnum,
   useCreateChatMessageService,
-  useMessageByGameService,
+  useChatMessagesService,
 } from 'services'
 
 import { useSuggestions } from './useSuggestions'
@@ -62,11 +62,11 @@ const Spotlight = () => {
   const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
 
   // Prefetch messages
-  const { refetch: messageRefetch } = useMessageByGameService({
+  useChatMessagesService({
     isPrivateChat: false,
   })
 
-  useMessageByGameService({
+  useChatMessagesService({
     isPrivateChat: true,
   })
 
@@ -116,18 +116,17 @@ const Spotlight = () => {
 
       await createMessageService({
         message: formValue,
-        gameId,
-        collectionId,
         isPrivateChat: false,
         version: ChatMessageVersionEnum.ChatConversational,
       })
-      // await messageRefetch()
+
       navigate(route, {
         state: {
           collectionId,
           gameId,
         },
       })
+
       setChatLoading(false)
       setFormValue('')
     } catch (e) {
