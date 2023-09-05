@@ -26,12 +26,6 @@ variable "AZURE_PUBSUB_CONNECTION_STRING" {
 variable "AZURE_PUBSUB_HUB_NAME" {
   type = string
 }
-variable "L3_API_URL" {
-  type = string
-}
-variable "L3_AUTH_API_URL" {
-  type = string
-}
 variable "ZEP_API_URL" {
   type = string
 }

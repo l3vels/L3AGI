@@ -19,13 +19,13 @@ type DatasourceFormProps = {
 }
 
 const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
-  const { dataLoaderOptions, pickedLoaderFields, handleUploadFile, fileLoading } =
+  const { dataLoaders, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
 
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { datasource_source_type, config_value, datasource_description } = values
+  const { datasource_source_type, config_value, datasource_description, configs } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('datasource_description', value)
@@ -43,72 +43,6 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
       <StyledInputWrapper>
         <FormikTextField name='datasource_name' placeholder='Name' label='Name' />
 
-        <StyledSourceTypeWrapper>
-          <Typography
-            value='Source Type'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-            customColor={'#FFF'}
-          />
-          <StyledCardWrapper>
-            {dataLoaderOptions?.map((option: any, index: number) => {
-              return (
-                <DataLoaderCard
-                  isActive={option.value === datasource_source_type}
-                  key={index}
-                  title={option.label}
-                  onClick={() => {
-                    setFieldValue('datasource_source_type', option.value)
-                    setFieldValue('config_value', '')
-                  }}
-                />
-              )
-            })}
-          </StyledCardWrapper>
-
-          {category?.length > 0 && (
-            <>
-              <>
-                {category === 'File' && (
-                  <StyledUploadFileWrapper>
-                    <UploadButton
-                      onChange={handleUploadFile}
-                      isLoading={fileLoading}
-                      hasValue={config_value}
-                    />
-
-                    {config_value && (
-                      <UploadedFile
-                        onClick={() => setFieldValue('config_value', null)}
-                        name={'file'}
-                      />
-                    )}
-                  </StyledUploadFileWrapper>
-                )}
-              </>
-              <>{category === 'Database' && <StyledText>Coming Soon</StyledText>}</>
-              <>
-                {category === 'Text' && (
-                  <StyledTextareaWrapper>
-                    <Textarea
-                      hint=''
-                      placeholder='Text'
-                      name='config_value'
-                      value={config_value}
-                      onChange={(text: string) => {
-                        formik.setFieldValue('config_value', text)
-                      }}
-                    />
-                  </StyledTextareaWrapper>
-                )}
-              </>
-              <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
-              <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
-              <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
-            </>
-          )}
-        </StyledSourceTypeWrapper>
-
         <StyledTextareaWrapper>
           <Typography
             value='Description'
@@ -124,6 +58,81 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
             onChange={onDescriptionChange}
           />
         </StyledTextareaWrapper>
+
+        <StyledSourceTypeWrapper>
+          <Typography
+            value='Source Type'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+          <StyledCardWrapper>
+            {dataLoaders?.map((dataLoader: any, index: number) => {
+              return (
+                <DataLoaderCard
+                  isSelected={dataLoader.source_type === datasource_source_type}
+                  isActive={dataLoader.is_active} // coming soon feature
+                  key={dataLoader.name}
+                  title={dataLoader.source_type}
+                  onClick={() => {
+                    setFieldValue('datasource_source_type', dataLoader.source_type)
+                    setFieldValue('config_value', '')
+                  }}
+                />
+              )
+            })}
+          </StyledCardWrapper>
+
+          {category?.length > 0 && (
+            <>
+              {category === 'File' && (
+                <StyledUploadFileWrapper>
+                  <UploadButton
+                    onChange={handleUploadFile}
+                    isLoading={fileLoading}
+                    hasValue={config_value}
+                  />
+
+                  {config_value && (
+                    <UploadedFile
+                      onClick={() => setFieldValue('config_value', null)}
+                      name={'file'}
+                    />
+                  )}
+                </StyledUploadFileWrapper>
+              )}
+
+              {category === 'Database' &&
+                fields.map((field: any) => (
+                  <FormikTextField
+                    key={field.key}
+                    name={`configs.${field.key}.value`}
+                    value={configs[field.key]?.value || ''}
+                    placeholder={field.label}
+                    label={field.label}
+                  />
+                ))}
+
+              {category === 'Text' && (
+                <StyledTextareaWrapper>
+                  <Textarea
+                    hint=''
+                    placeholder='Text'
+                    name='config_value'
+                    value={config_value}
+                    onChange={(text: string) => {
+                      formik.setFieldValue('config_value', text)
+                    }}
+                  />
+                </StyledTextareaWrapper>
+              )}
+
+              <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
+              <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
+              <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+            </>
+          )}
+        </StyledSourceTypeWrapper>
       </StyledInputWrapper>
     </StyledFormContainer>
   )

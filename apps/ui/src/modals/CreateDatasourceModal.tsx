@@ -5,7 +5,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import { useDatasource } from 'pages/Datasource/useDatasource'
+// import { useDatasource } from 'pages/Datasource/useDatasource'
 import DatasourceForm from 'pages/Datasource/DatasourceForm'
 
 import styled from 'styled-components'
@@ -13,7 +13,7 @@ import { Footer } from 'components/Layout'
 import Spotlight from 'components/Spotlight'
 
 const CreateDatasourceModal = () => {
-  const { formik, handleSubmit, isLoading } = useDatasource()
+  // const { formik, handleSubmit, isLoading } = useDatasource()
 
   return (
     // <Modal isClean fullscreen show onClose={closeDatasourceModal}>

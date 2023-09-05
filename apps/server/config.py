@@ -20,9 +20,6 @@ class Config:
     AZURE_PUBSUB_CONNECTION_STRING = os.environ.get("AZURE_PUBSUB_CONNECTION_STRING")
     AZURE_PUBSUB_HUB_NAME = os.environ.get("AZURE_PUBSUB_HUB_NAME")
 
-    L3_API_URL = os.environ.get("L3_API_URL")
-    L3_AUTH_API_URL = os.environ.get("L3_AUTH_API_URL")
-
     ZEP_API_URL = os.environ.get("ZEP_API_URL")
     ZEP_API_KEY = os.environ.get("ZEP_API_KEY")
 

@@ -7,15 +7,10 @@ import { useDataLoadersService } from 'services/datasource/useDataLoadersService
 export const useDatasourceForm = (formik: any) => {
   const { data: dataLoaders } = useDataLoadersService()
 
-  const dataLoaderOptions = dataLoaders?.map((loader: any) => {
-    const { source_type } = loader
-    return { value: source_type, label: source_type }
-  })
-
   const pickedLoaderFields = dataLoaders
     ?.filter((loader: any) => loader.source_type === formik?.values?.datasource_source_type)
     .map((loader: any) => {
-      return { fields: loader.fields, category: loader.Category }
+      return { fields: loader.fields, category: loader.category }
     })[0] || { category: '', fields: [] }
 
   // console.log('dataLoaders', dataLoaders)
@@ -59,9 +54,9 @@ export const useDatasourceForm = (formik: any) => {
   }
 
   return {
-    dataLoaderOptions,
     pickedLoaderFields,
     handleUploadFile,
     fileLoading,
+    dataLoaders,
   }
 }

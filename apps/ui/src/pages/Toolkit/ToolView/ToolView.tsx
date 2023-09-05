@@ -29,6 +29,8 @@ const ToolView = () => {
   useEffect(() => {
     formik?.setFieldValue('tool_key', fields?.[0]?.key)
     formik?.setFieldValue('tool_key_type', fields?.[0]?.type)
+    formik?.setFieldValue('tool_is_required', fields?.[0]?.is_required)
+    formik?.setFieldValue('tool_is_secret', fields?.[0]?.is_secret)
   }, [formik?.values?.tool_value])
 
   return (

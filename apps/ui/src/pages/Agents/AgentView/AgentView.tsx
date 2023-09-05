@@ -10,6 +10,13 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import TagsRow from './components/TagsRow'
 import AdditionalInfoBox from './components/AdditionalInfoBox'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import {
+  StyledHeaderGroup,
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+} from 'pages/Home/homeStyle.css'
 
 const AgentView = () => {
   const params = useParams()
@@ -25,6 +32,16 @@ const AgentView = () => {
   const { tools, model_version, mode_provider, goals, constraints } = configs
 
   return (
+    <StyledSectionWrapper>
+    <StyledHeaderGroup className='header_group'>
+      <div>
+        <StyledSectionTitle>Agents</StyledSectionTitle>
+        <StyledSectionDescription>Here are all your agents, managing tasks and operations.</StyledSectionDescription>
+      </div>
+
+
+    </StyledHeaderGroup>
+    <ComponentsWrapper>
     <StyledRoot>
       <StyledLeftColumn>
         <StyledDetailsBox>
@@ -90,6 +107,8 @@ const AgentView = () => {
         )}
       </StyledRightColumn>
     </StyledRoot>
+    </ComponentsWrapper>
+    </StyledSectionWrapper>
   )
 }
 

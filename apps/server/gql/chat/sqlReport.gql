@@ -1,3 +1,0 @@
-query sqlReport($sql: String!) {
-  sqlReport(sql: $sql)
-}

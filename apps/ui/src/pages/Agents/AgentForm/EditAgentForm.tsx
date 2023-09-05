@@ -23,7 +23,7 @@ const EditAgentForm = () => {
           <div>
             <StyledSectionTitle secondary>Edit Agent</StyledSectionTitle>
             <StyledSectionDescription secondary>
-              Here are all of your games, etc
+              Here are all your agents, managing tasks and operations.
             </StyledSectionDescription>
           </div>
 

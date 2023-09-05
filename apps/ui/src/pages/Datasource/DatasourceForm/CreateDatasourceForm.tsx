@@ -1,5 +1,4 @@
 import { FormikProvider } from 'formik'
-import { useDatasource } from '../useDatasource'
 import DatasourceForm from './DatasourceForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -14,9 +13,10 @@ import {
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { useCreateDatasource } from '../useCreateDatasource'
 
 const CreateDatasourceForm = () => {
-  const { formik, handleSubmit, isLoading } = useDatasource()
+  const { formik, handleSubmit, isLoading } = useCreateDatasource()
 
   return (
     <>
@@ -26,7 +26,7 @@ const CreateDatasourceForm = () => {
             <div>
               <StyledSectionTitle secondary>Create Datasource</StyledSectionTitle>
               <StyledSectionDescription secondary>
-                Here are all of your games, etc
+              Here is your datasource, a collection of databases, APIs, files, and more.
               </StyledSectionDescription>
             </div>
 

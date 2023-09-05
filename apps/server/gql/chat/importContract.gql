@@ -1,3 +1,0 @@
-mutation importContract($input: ImportContractInput!) {
-  importContract(input: $input)
-}

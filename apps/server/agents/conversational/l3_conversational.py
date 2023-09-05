@@ -12,10 +12,8 @@ from openai.error import RateLimitError
 import sentry_sdk
 from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
-from utils.agent import convert_model_to_response
-from models.agent import AgentModel
 from utils.system_message import SystemMessageBuilder
-
+from typings.agent import AgentWithConfigsOutput
 
 azureService = PubSubService()
 
@@ -24,6 +22,7 @@ os.environ["LANGCHAIN_TRACING"] = "false"
 class L3Conversational(L3Base):
     def run(
         self,
+        agent_with_configs: AgentWithConfigsOutput,
         tools,
         prompt: str,
         history: PostgresChatMessageHistory,
@@ -31,25 +30,23 @@ class L3Conversational(L3Base):
         human_message_id: str,
     ):
         memory = ZepMemory(
-            session_id=self.session_id,
+            session_id=str(self.session_id),
             url=Config.ZEP_API_URL,
             api_key=Config.ZEP_API_KEY,
             memory_key="chat_history",
             return_messages=True,
         )
 
-        memory.human_name = self.user.first_name
+        memory.human_name = self.user.name
         memory.ai_name = "AI"
-
-        agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "7d085797-1721-45cd-872f-1a8f51f31484", self.account))
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
         system_message = format_system_message(
-            system_message, self.user, self.account, self.game, self.collection
+            system_message, self.user, self.account
         )
 
-        model_name = agent_with_configs.configs.model_version
+        model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
         temperature = agent_with_configs.configs.temperature
 
         llm = ChatOpenAI(temperature=temperature, model_name=model_name)

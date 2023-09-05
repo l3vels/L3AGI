@@ -24,7 +24,7 @@ const Datasource = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Datasource</StyledSectionTitle>
-          <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription>
+          <StyledSectionDescription>Here is your datasource, a collection of databases, APIs, files, and more.</StyledSectionDescription>
         </div>
         <StyledButtonWrapper>
           <Button onClick={() => navigate('/datasources/create-datasource')}>

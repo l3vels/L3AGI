@@ -31,6 +31,8 @@ export const useToolView = () => {
     tool_key: filteredConfig[0]?.key,
     tool_value: filteredConfig[0]?.value,
     tool_key_type: filteredConfig[0]?.key_type,
+    tool_is_secret: filteredConfig[0]?.is_secret,
+    tool_is_required: filteredConfig[0]?.is_required,
   }
 
   const handleSubmit = async (values: any) => {
@@ -41,6 +43,8 @@ export const useToolView = () => {
         key: values.tool_key,
         value: values.tool_value,
         key_type: values.tool_key_type,
+        is_required: values.tool_is_required,
+        is_secret: values.tool_is_secret,
         tool_id: toolId,
       }
 

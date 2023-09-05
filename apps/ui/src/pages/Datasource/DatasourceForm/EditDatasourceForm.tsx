@@ -27,7 +27,7 @@ const EditDatasourceForm = () => {
             <div>
               <StyledSectionTitle secondary>Edit Datasource</StyledSectionTitle>
               <StyledSectionDescription secondary>
-                Here are all of your games, etc
+                Here is your datasource, a collection of databases, APIs, files, and more.
               </StyledSectionDescription>
             </div>
 

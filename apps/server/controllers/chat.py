@@ -1,12 +1,10 @@
 import re
-from typing import Optional
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 from fastapi_sqlalchemy import db
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from enums import ChatMessageVersion
 from typings.auth import UserAccount
-from api.client import L3Api
 from pubsub_service import PubSubService
 from agents.conversational.l3_conversational import L3Conversational
 from agents.plan_and_execute.l3_plan_and_execute import L3PlanAndExecute
@@ -16,43 +14,36 @@ from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
 from utils.chat import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
 from tools.get_tools import get_tools
+from models.agent import AgentModel
+from models.datasource import DatasourceModel
+from utils.agent import convert_model_to_response
+from tools.datasources.get_datasource_tools import get_datasource_tools
 
 azureService = PubSubService()
 
 router = APIRouter()
 
 @router.post("", status_code=201)
-def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAccount = Depends(authenticate)):
+def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
     """
     Create new chat message
     """
 
-    api = L3Api(request.headers, request.cookies)
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.game_id)
-
-    game = None
-    collection = None
-
-    if body.game_id:
-        game = api.game.fetch_game_by_id(body.game_id)
-
-        if game is None:
-            return "Game not found"
-
-    if body.collection_id:
-        collection = api.collection.fetch_collection_by_id(body.collection_id)
-
-        if collection is None:
-            return "Collection not found"
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat)
 
     version = get_version_from_prompt(body.prompt)
 
+    agent = AgentModel.get_agent_by_id(db, "38020ac6-ad97-4bf5-b1a7-d3713036fe52", auth.account)
+    agent_with_configs = convert_model_to_response(agent)
 
-    tools = get_tools(['SerpGoogleSearch'])
+    datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+
+    datasource_tools = get_datasource_tools(datasources)
+    user_tools = get_tools(['SerpGoogleSearch'])
+    tools = datasource_tools + user_tools
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
-        game_id=body.game_id,
         version=version.value,
         account_id=auth.account.id,
         user_id=auth.user.id,
@@ -70,12 +61,9 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         'local_chat_message_ref_id': body.local_chat_message_ref_id
     })
 
-
     # If team member is tagged and no agent is tagged, this means user sends a message to team member
     if has_team_member_mention(body.prompt) and not has_agent_mention(body.prompt):
         return ""
-
-
 
     prompt = body.prompt
     
@@ -83,15 +71,13 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         prompt = prompt.replace(mention, "").strip()
 
     if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
-        conversational = L3Conversational(auth.user, auth.account, game, collection, session_id)
-        return conversational.run(tools, prompt, history, body.is_private_chat, human_message_id = human_message['id'])
+        conversational = L3Conversational(auth.user, auth.account, session_id)
+        return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'])
 
     if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
         l3_plan_and_execute = L3PlanAndExecute(
             user=auth.user,
             account=auth.account,
-            game=game,
-            collection=collection,
             session_id=session_id,
         )
 
@@ -148,8 +134,6 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         l3_authoritarian_speaker = L3AuthoritarianSpeaker(
             user=auth.user,
             account=auth.account,
-            game=game,
-            collection=collection,
             session_id=session_id,
             word_limit=30
         )
@@ -207,8 +191,6 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         l3_agent_debates = L3AgentDebates(
             user=auth.user,
             account=auth.account,
-            game=game,
-            collection=collection,
             session_id=session_id,
             word_limit=30
         )
@@ -223,15 +205,14 @@ def create_chat_message(body: ChatMessageInput, request: Request, auth: UserAcco
         return result
 
 @router.get("", status_code=200)
-def get_chat_messages(is_private_chat: bool, game_id: Optional[str] = None, auth: UserAccount = Depends(authenticate)):
+def get_chat_messages(is_private_chat: bool, auth: UserAccount = Depends(authenticate)):
     """
     Get chat messages
 
     Args:
         is_private_chat (bool): Is private or team chat
-        game_id (Optional[str], optional): Game ID. Defaults to None.
     """
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, game_id)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat)
 
     chat_messages = (db.session.query(ChatMessageModel)
                          .filter(ChatMessageModel.session_id == session_id)
