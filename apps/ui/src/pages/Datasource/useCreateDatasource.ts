@@ -98,7 +98,7 @@ export const useCreateDatasource = () => {
       navigate('/datasources')
     } catch (e) {
       setToast({
-        message: 'Failed to create Datasource!',
+        message: 'Failed To Add Datasource!',
         type: 'negative',
         open: true,
       })

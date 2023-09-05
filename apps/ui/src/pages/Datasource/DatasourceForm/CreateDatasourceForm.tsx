@@ -24,7 +24,7 @@ const CreateDatasourceForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle secondary>Create Datasource</StyledSectionTitle>
+              <StyledSectionTitle secondary>Add Datasource</StyledSectionTitle>
               <StyledSectionDescription secondary>
               Here is your datasource, a collection of databases, APIs, files, and more.
               </StyledSectionDescription>

@@ -70,9 +70,9 @@ export const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
-      name: 'Create datasource',
+      name: 'Add datasource',
       modal_name: 'create-datasource-modal',
-      modal_title: 'Create datasource',
+      modal_title: 'Add datasource',
       url: '',
       option: 'open-modal',
       group_name: 'create',

@@ -28,7 +28,7 @@ const Datasource = () => {
         </div>
         <StyledButtonWrapper>
           <Button onClick={() => navigate('/datasources/create-datasource')}>
-            Create Datasource
+            Add Datasource
           </Button>
         </StyledButtonWrapper>
       </StyledHeaderGroup>
