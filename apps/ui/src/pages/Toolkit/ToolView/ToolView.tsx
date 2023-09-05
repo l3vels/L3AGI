@@ -4,7 +4,6 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { StyledButtonWrapper } from 'pages/Agents/Agents'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
@@ -16,6 +15,8 @@ import FormikTextField from 'components/TextFieldFormik'
 import { useToolView } from './useToolView'
 import { FormikProvider } from 'formik'
 import { useEffect } from 'react'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import BackButton from 'components/BackButton'
 
 const ToolView = () => {
   const { tool, formik, handleSubmit, isLoading } = useToolView()
@@ -41,18 +42,18 @@ const ToolView = () => {
             <StyledSectionTitle>Toolkit</StyledSectionTitle>
             {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
           </div>
-
-          {fields?.length > 0 && (
-            <StyledButtonWrapper>
+          <StyledButtonWrapper>
+            {fields?.length > 0 && (
               <Button
                 onClick={() => handleSubmit(formik?.values)}
                 disabled={isLoading}
-                size={Typography.sizes.sm}
+                size={Button.sizes.SMALL}
               >
                 {isLoading ? <Loader size={22} /> : 'Save'}
               </Button>
-            </StyledButtonWrapper>
-          )}
+            )}
+            <BackButton />
+          </StyledButtonWrapper>
         </StyledHeaderGroup>
         <ComponentsWrapper>
           <StyledInnerWrapper>

@@ -14,7 +14,8 @@ import {
 } from 'pages/Home/homeStyle.css'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import BackButton from 'components/BackButton'
 
 const EditDatasourceForm = () => {
   const { formik, handleSubmit, isLoading } = useEditDatasource()
@@ -25,17 +26,23 @@ const EditDatasourceForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle secondary>Edit Datasource</StyledSectionTitle>
-              <StyledSectionDescription secondary>
+              <StyledSectionTitle>Edit Datasource</StyledSectionTitle>
+              <StyledSectionDescription>
                 Here is your datasource, a collection of databases, APIs, files, and more.
               </StyledSectionDescription>
             </div>
 
-            <div>
-              <Button onClick={() => handleSubmit(formik?.values)} disabled={isLoading}>
+            <StyledButtonWrapper>
+              <Button
+                onClick={() => handleSubmit(formik?.values)}
+                size={Button.sizes.SMALL}
+                disabled={isLoading}
+              >
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </Button>
-            </div>
+
+              <BackButton />
+            </StyledButtonWrapper>
           </StyledHeaderGroup>
 
           <ComponentsWrapper noPadding>

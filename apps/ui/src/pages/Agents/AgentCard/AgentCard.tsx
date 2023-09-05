@@ -5,64 +5,97 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
 type AgentCardProps = {
-  title: string
-  subTitle: string
-  modelVersion?: string
-  provider?: string
+  name: string
+  description: string
+  headerText?: string
+  headerTag?: string
   onEditClick?: () => void
   onDeleteClick?: () => void
   onViewClick: () => void
+  onChatClick?: () => void
 }
 
 const AgentCard = ({
-  title,
-  subTitle,
-  modelVersion,
-  provider,
+  name,
+  description,
+  headerText,
+  headerTag,
   onDeleteClick,
   onEditClick,
   onViewClick,
+  onChatClick,
 }: AgentCardProps) => {
   return (
     <StyledAgentCard>
       <StyledCardHeader>
-        {modelVersion && (
+        <div>
+          {headerText && (
+            <Typography
+              value={headerText}
+              type={Typography.types.P}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255,255,255, 0.8)'}
+            />
+          )}
+        </div>
+
+        <div>{headerTag && <Tags label={headerTag} readOnly size='small' />}</div>
+      </StyledCardHeader>
+      <StyledCardBody>
+        <StyledAvatarWrapper>
+          <Avatar
+            size={Avatar.sizes.LARGE}
+            src={
+              'https://lablab.ai/_next/image?url=https%3A%2F%2Fimagedelivery.net%2FK11gkZF3xaVyYzFESMdWIQ%2F22285de8-b832-420f-4a42-fe5120654400%2Ffull&w=3840&q=100'
+            }
+            type={Avatar.types.IMG}
+            // ariaLabel='Hadas Fahri'
+          />
+          {onChatClick && (
+            <StyledChatButton className='chatButton'>
+              <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY} onClick={onChatClick}>
+                <StyledInnerButtonWrapper>
+                  {'Chat'}
+                  <StyledIconWrapper>
+                    <MoveArrowRight />
+                  </StyledIconWrapper>
+                </StyledInnerButtonWrapper>
+              </Button>
+            </StyledChatButton>
+          )}
+        </StyledAvatarWrapper>
+        <StyledBodyTextWrapper>
           <Typography
-            value={modelVersion}
+            value={name}
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+          <Typography
+            value={description}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.8)'}
           />
-        )}
-
-        {provider && <Tags label={provider} readOnly size='small' />}
-      </StyledCardHeader>
-      <StyledCardBody>
-        <Typography
-          value={title}
-          type={Typography.types.P}
-          size={Typography.sizes.md}
-          customColor={'#FFF'}
-        />
-        <Typography
-          value={subTitle}
-          type={Typography.types.P}
-          size={Typography.sizes.sm}
-          customColor={'rgba(255,255,255, 0.8)'}
-        />
+        </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
-        {onViewClick && (
-          <Button onClick={onViewClick} size={Button.sizes.SMALL}>
-            View
-          </Button>
-        )}
-        <StyledButtonsWrapper>
+        <StyledButtonsWrapper className='footerButtons'>
+          {onDeleteClick && (
+            <IconButton
+              onClick={onDeleteClick}
+              icon={() => <Delete />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
+          )}
           {onEditClick && (
             <IconButton
               onClick={onEditClick}
@@ -71,13 +104,10 @@ const AgentCard = ({
               kind={IconButton.kinds.TERTIARY}
             />
           )}
-          {onDeleteClick && (
-            <IconButton
-              onClick={onDeleteClick}
-              icon={() => <Delete />}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-            />
+          {onViewClick && (
+            <Button onClick={onViewClick} size={Button.sizes.SMALL}>
+              View
+            </Button>
           )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
@@ -88,20 +118,28 @@ const AgentCard = ({
 export default AgentCard
 
 const StyledAgentCard = styled.div`
-  width: 320px;
-  min-width: 320px;
-  height: 200px;
-  min-height: 200px;
+  width: 330px;
+  min-width: 330px;
+  height: 180px;
+  min-height: 180px;
 
-  padding: 20px;
+  padding: 15px;
+  padding-bottom: 10px;
 
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  /* background: rgba(0, 0, 0, 0.5); */
+  background: rgba(0, 0, 0, 0.2);
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  :hover {
+    .footerButtons {
+      opacity: 1;
+    }
+  }
 `
 const StyledCardHeader = styled.div`
   width: 100%;
@@ -114,7 +152,7 @@ const StyledCardHeader = styled.div`
   padding-bottom: 5px;
 
   height: 20px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 `
 
 const StyledCardBody = styled.div`
@@ -124,8 +162,12 @@ const StyledCardBody = styled.div`
   margin-top: auto;
 
   display: flex;
-  flex-direction: column;
+
+  gap: 20px;
+  /* align-items: center; */
+  /* flex-direction: column; */
   /* justify-content: center; */
+  padding: 0 15px;
 
   overflow: hidden;
 `
@@ -143,7 +185,53 @@ const StyledButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   /* justify-content: space-between; */
-  gap: 2px;
+  gap: 4px;
 
   margin-left: auto;
+  transition: opacity 300ms;
+  opacity: 0;
+`
+const StyledBodyTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* gap: 5px; */
+
+  overflow: hidden;
+
+  padding-top: 5px;
+`
+const StyledAvatarWrapper = styled.div`
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  /* background: red; */
+
+  :hover {
+    .chatButton {
+      opacity: 1;
+    }
+  }
+`
+const StyledChatButton = styled.div`
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  opacity: 0;
+  transition: opacity 300ms;
+`
+const StyledIconWrapper = styled.div`
+  /* color: #000; */
+
+  height: 16px;
+  width: 16px;
+`
+const StyledInnerButtonWrapper = styled.div`
+  display: flex;
+  /* align-items: flex-end; */
+  color: #fff;
+  gap: 5px;
 `

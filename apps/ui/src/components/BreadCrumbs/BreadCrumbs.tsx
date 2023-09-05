@@ -7,6 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
+import { useToolsService } from 'services/tool/useToolsService'
 
 const GetAgentName = () => {
   const params = useParams()
@@ -22,8 +23,18 @@ const GetDatasourceName = () => {
   const { datasourceId } = params
 
   const { data: datasourceById } = useDatasourceByIdService({ id: datasourceId || '' })
-  console.log('datasourceById', datasourceById)
+
   return <span>{datasourceById?.name}</span>
+}
+
+const GetToolkitName = () => {
+  const params = useParams()
+  const { toolId } = params
+
+  const { data: toolsData } = useToolsService()
+  const tool = toolsData?.filter((tool: any) => toolId === tool.toolkit_id)
+
+  return <span>{tool[0]?.name}</span>
 }
 
 const routes: any = [
@@ -39,6 +50,8 @@ const routes: any = [
 
   { path: '/datasources/:datasourceId', breadcrumb: GetDatasourceName },
   { path: '/datasources/create-datasource', breadcrumb: 'Add Datasource' },
+
+  { path: '/tools/:toolId', breadcrumb: GetToolkitName },
 
   //chat
   { path: '/copilot', breadcrumb: null },

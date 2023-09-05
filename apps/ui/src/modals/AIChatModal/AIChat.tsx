@@ -22,10 +22,10 @@ const AIChat = () => {
 
   return (
     <ChatContextProvider initialApiVersion={apiVersion} isPrivateChat={activeTab === 1}>
-      <StyledTabList size='small'>
+      {/* <StyledTabList size='small'>
         <Tab onClick={() => setActiveTab(0)}>Team</Tab>
         <Tab onClick={() => setActiveTab(1)}>Private</Tab>
-      </StyledTabList>
+      </StyledTabList> */}
       <StyledTabContext activeTabId={activeTab}>
         <TabPanels noAnimation className='TabsContextClass'>
           <TabPanel className='TabsContextClass'>

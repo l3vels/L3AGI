@@ -16,10 +16,10 @@ import { ChatMessageVersionEnum } from 'services'
 import MessageActions from './MessageActions'
 
 import AiMessageMarkdown from './AiMessageMarkdown'
-import { useAiMessage } from './useAiMessage'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 
 type AiMessageProps = {
+  author: string
   avatarImg: string
   messageDate: string
   messageText: string
@@ -31,17 +31,15 @@ type AiMessageProps = {
 }
 
 const AiMessage = ({
+  author,
   avatarImg,
   messageDate,
   messageText,
   thoughts,
-  version,
   isNewMessage,
   setIsNewMessage,
   onReplyClick,
 }: AiMessageProps) => {
-  const { name } = useAiMessage(version)
-
   function isMarkdownTable(markdownString: string) {
     const tableRegex = /(?<=(\r?\n){2}|^)([^\r\n]*\|[^\r\n]*(\r?\n)?)+(?=(\r?\n){2}|$)/
     return tableRegex.test(markdownString)
@@ -59,7 +57,7 @@ const AiMessage = ({
           <StyledMessageTop>
             <StyledMessageInfo>
               <Typography
-                value={name}
+                value={author}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor={'#FFF'}

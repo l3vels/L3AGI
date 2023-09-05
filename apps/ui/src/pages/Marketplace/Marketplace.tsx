@@ -1,7 +1,6 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import AgentCard from 'pages/Agents/AgentCard'
-
-import { StyledAgentCardsWrapper } from 'pages/Agents/Agents'
+import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 import {
   StyledHeaderGroup,
@@ -30,23 +29,22 @@ const Marketplace = () => {
             </StyledSectionDescription>
           </StyledTextWrapper>
         </StyledHeaderGroup>
-        <ComponentsWrapper>
-          <StyledAgentCardsWrapper>
+        <ComponentsWrapper noPadding>
+          <StyledCardsWrapper>
             {systemAgents?.map((agentObj: any, index: number) => {
               const { agent, configs } = agentObj
 
               return (
                 <AgentCard
                   key={index}
-                  title={agent.name}
-                  subTitle={agent.description}
+                  name={agent.name}
+                  description={agent.description}
                   onViewClick={() => navigate(`/agents/${agent.id}`)}
-                  modelVersion={configs.model_version}
-                  provider={configs.mode_provider}
+                  headerTag={agent.role}
                 />
               )
             })}
-          </StyledAgentCardsWrapper>
+          </StyledCardsWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
 
@@ -63,23 +61,22 @@ const Marketplace = () => {
               </StyledSectionDescription>
             </StyledTextWrapper>
           </StyledHeaderGroup>
-          <ComponentsWrapper>
-            <StyledAgentCardsWrapper>
+          <ComponentsWrapper noPadding>
+            <StyledCardsWrapper>
               {templateAgents?.map((agentObj: any, index: number) => {
                 const { agent, configs } = agentObj
 
                 return (
                   <AgentCard
                     key={index}
-                    title={agent.name}
-                    subTitle={agent.description}
+                    name={agent.name}
+                    description={agent.description}
                     onViewClick={() => navigate(`/agents/${agent.id}`)}
-                    modelVersion={configs.model_version}
-                    provider={configs.mode_provider}
+                    headerTag={agent.role}
                   />
                 )
               })}
-            </StyledAgentCardsWrapper>
+            </StyledCardsWrapper>
           </ComponentsWrapper>
         </StyledSectionWrapper>
       )}

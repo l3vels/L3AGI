@@ -7,16 +7,28 @@ import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
 
 const HeaderButtons = () => {
+  const openLinkTab = (url: string) => {
+    window.open(url, '_blank')
+  }
+
   return (
     <StyledButtonsWrapper>
-      <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL}>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => openLinkTab('https://discord.gg/hQ9ZWabm')}
+      >
         <StyledInnerButtonWrapper>
           <Discord size='20' />
           <Typography value='Discord' type={Typography.types.LABEL} size={Typography.sizes.sm} />
         </StyledInnerButtonWrapper>
       </Button>
 
-      <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL}>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => openLinkTab('https://github.com/l3vels/L3AGI')}
+      >
         <StyledInnerButtonWrapper>
           <StyledVideoWrapper>
             <StyledImg src={githubIcon} />

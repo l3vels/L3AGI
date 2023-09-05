@@ -18,22 +18,19 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
   const { setShowSwitcher, showSwitcher, handleMouseHover, handleMouseLeave } = useChatSwitcher()
 
   const params = useParams()
-  const { collectionId, gameId } = params
+  const { agentId } = params
 
   let route = 'copilot'
 
-  if (collectionId) {
-    route = `/copilot?game=${gameId}&collection=${collectionId}`
-  } else if (gameId) {
-    route = `/copilot?game=${gameId}`
+  if (agentId) {
+    route = `/copilot?agent=${agentId}`
   }
 
   const handleChatButton = () => {
     if (!isChatOpen) {
       navigate(route, {
         state: {
-          collectionId,
-          gameId,
+          agentId,
         },
       })
     }

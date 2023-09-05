@@ -2,38 +2,26 @@ import { useContext, useEffect, useRef, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
-import { useModal } from 'hooks'
-import NotificationsModal from 'modals/Notification/NotificationsModal'
-import { useUnreadNotificationsCountService } from 'services/useNotificationService'
-
-import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Notifications from '@l3-lib/ui-core/dist/icons/Notifications'
 
 import pluginsIcon from 'assets/icons/plugins.png'
 import SendIconSvg from 'assets/icons/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
-import {
-  ChatMessageVersionEnum,
-  useCreateChatMessageService,
-  useMessageByGameService,
-} from 'services'
+import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
 import { useSuggestions } from './useSuggestions'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AuthContext, ToastContext } from 'contexts'
+import { ToastContext } from 'contexts'
 import Mentions from 'components/Mentions'
 import CommandIcon from './CommandIcon'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 
 const Spotlight = () => {
-  const { openModal } = useModal()
   const navigate = useNavigate()
 
   const { setToast } = useContext(ToastContext)
 
-  const [show_banner, set_show_banner] = useState(true)
   const [expanded, setExpanded] = useState(false)
   const [showSuggestion, setShowSuggestion] = useState(false)
   const [showPlugins, setShowPlugins] = useState(false)
@@ -44,31 +32,23 @@ const Spotlight = () => {
 
   const { chatSuggestions } = useSuggestions()
 
-  const { gameId, collectionId } = useParams()
+  const { gameId, collectionId, agentId } = useParams()
 
   let route = '/copilot'
 
-  if (collectionId) {
-    route = `/copilot?game=${gameId}&collection=${collectionId}`
-  } else if (gameId) {
-    route = `/copilot?game=${gameId}`
+  if (agentId) {
+    route = `/copilot?agent=${agentId}`
   }
 
-  // const onHandleChangeTestMode = () => {
-  //   set_show_banner(true)
-  //   openModal({ name: 'contact-info-modal' })
-  // }
-
-  const { data: notificationsCount, refetch: refetchCount } = useUnreadNotificationsCountService()
-
   // Prefetch messages
-  const { refetch: messageRefetch } = useMessageByGameService({
+  useChatMessagesService({
     isPrivateChat: false,
+    agentId,
   })
 
-  useMessageByGameService({
-    isPrivateChat: true,
-  })
+  // useChatMessagesService({
+  //   isPrivateChat: true,
+  // })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -99,7 +79,7 @@ const Spotlight = () => {
     }
   }, [outsideClickRef, expanded, showPlugins])
 
-  const [createMessageService] = useCreateChatMessageService()
+  const [createChatMessageService] = useCreateChatMessageService()
 
   const handleSendMessage = async () => {
     try {
@@ -114,20 +94,19 @@ const Spotlight = () => {
         setTypingEffectText(false)
       }
 
-      await createMessageService({
+      await createChatMessageService({
         message: formValue,
-        gameId,
-        collectionId,
         isPrivateChat: false,
-        version: ChatMessageVersionEnum.ChatConversational,
+        agentId,
       })
-      // await messageRefetch()
+
       navigate(route, {
         state: {
           collectionId,
           gameId,
         },
       })
+
       setChatLoading(false)
       setFormValue('')
     } catch (e) {

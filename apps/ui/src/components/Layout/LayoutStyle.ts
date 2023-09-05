@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const StyledAppContainer = styled.div`
   background: linear-gradient(265.15deg, rgba(76, 166, 248, 1) -32.37%, rgba(33, 82, 243, 1) 100%);
   height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledMainLayout = styled.div`
@@ -20,6 +20,7 @@ const StyledHeader = styled.header`
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   height: 72px;
+  min-height: 72px;
   padding: 0 32px;
   grid-row: 1;
   position: sticky;
@@ -39,6 +40,7 @@ const StyledFooter = styled.footer`
   padding: 0 32px;
   align-items: center;
   margin-bottom: 8px;
+  margin-top: auto;
 `
 
 const StyledMainContainer = styled.main<{ expand?: boolean }>`
