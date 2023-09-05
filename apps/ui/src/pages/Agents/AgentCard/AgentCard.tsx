@@ -17,6 +17,7 @@ type AgentCardProps = {
   onEditClick?: () => void
   onDeleteClick?: () => void
   onViewClick: () => void
+  onChatClick?: () => void
 }
 
 const AgentCard = ({
@@ -27,6 +28,7 @@ const AgentCard = ({
   onDeleteClick,
   onEditClick,
   onViewClick,
+  onChatClick,
 }: AgentCardProps) => {
   return (
     <StyledAgentCard>
@@ -60,6 +62,11 @@ const AgentCard = ({
         {onViewClick && (
           <Button onClick={onViewClick} size={Button.sizes.MEDIUM}>
             View
+          </Button>
+        )}
+        {onChatClick && (
+          <Button onClick={onChatClick} size={Button.sizes.MEDIUM}>
+            Chat
           </Button>
         )}
         <StyledButtonsWrapper>

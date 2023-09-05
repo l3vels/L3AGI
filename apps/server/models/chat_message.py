@@ -18,10 +18,11 @@ class ChatMessage(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     parent_id = Column(UUID, ForeignKey('chat_message.id'))
     session_id = Column(String, nullable=False, index=True)
+    agent_id = Column(UUID, ForeignKey('agent.id'))
     user_id = Column(UUID, nullable=False)
     account_id = Column(UUID, nullable=False)
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
-    version = Column(String, nullable=False)
 
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
+    # parent = relationship("Agent", remote_side=[id], cascade="all, delete")

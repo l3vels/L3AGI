@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import { useContext } from 'react'
 import isNil from 'lodash/fp/isNil'
 import omitBy from 'lodash/omitBy'
-import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
+import CHAT_MESSAGES_GQL from '../../../gql/chat/chatMessages.gql'
 import { AuthContext } from 'contexts'
 import { Nullable } from 'types'
 
@@ -27,7 +27,7 @@ const useUpdateChatCache = () => {
       data => {
         const chatMessages = data?.messageByGame || []
         const newChatMessages = [...chatMessages]
-        newChatMessage = { __typename: 'ChatMessage', parent: null, ...newChatMessage }
+        newChatMessage = { __typename: 'ChatMessage', parent: null, agent: null, ...newChatMessage }
 
         if (localChatMessageRefId && user.id === newChatMessage.user_id) {
           // If the message is from the current user, we need to update the local message

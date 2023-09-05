@@ -65,6 +65,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const urlParams = new URLSearchParams(window.location.search)
 
   const gameId = urlParams.get('game')
+  const agentId = urlParams.get('agent')
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
@@ -72,6 +73,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { data: chatMessages } = useChatMessagesService({
     isPrivateChat: isPrivate,
+    agentId,
   })
 
   const [createMessageService] = useCreateChatMessageService()
@@ -82,11 +84,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       id: uuid(),
       session_id: '',
       thoughts: null,
-      version,
       user_id: user.id,
       account_id: account.id,
       parent_id: null,
       parent: null,
+      agent_id: null,
+      agent: null,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',

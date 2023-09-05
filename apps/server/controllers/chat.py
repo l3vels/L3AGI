@@ -1,4 +1,6 @@
 import re
+from typing import Optional, List
+from uuid import UUID
 from fastapi import APIRouter, Depends
 from fastapi_sqlalchemy import db
 from utils.auth import authenticate
@@ -12,12 +14,13 @@ from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3Au
 from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
-from utils.chat import get_chat_session_id, get_agents_from_json, has_agent_mention, has_team_member_mention, get_version_from_prompt, AGENT_MENTIONS
+from utils.chat import get_chat_session_id, has_agent_mention, has_team_member_mention, AGENT_MENTIONS
 from tools.get_tools import get_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
+from typings.chat import ChatMessageOutput
 
 azureService = PubSubService()
 
@@ -29,9 +32,10 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     Create new chat message
     """
 
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id)
 
-    version = get_version_from_prompt(body.prompt)
+    if body.agent_id:
+        agent_model = AgentModel.get_agent_by_id(db, body.agent_id, auth.account)
 
     agent = AgentModel.get_agent_by_id(db, "38020ac6-ad97-4bf5-b1a7-d3713036fe52", auth.account)
     agent_with_configs = convert_model_to_response(agent)
@@ -44,7 +48,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
-        version=version.value,
         account_id=auth.account.id,
         user_id=auth.user.id,
         user=auth.user,
@@ -55,7 +58,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     azureService.send_to_group(session_id, message={
         'type': 'CHAT_MESSAGE_ADDED',
-        'from': auth.user.id,
+        'from': str(auth.user.id),
         'chat_message': human_message,
         'is_private_chat': body.is_private_chat,
         'local_chat_message_ref_id': body.local_chat_message_ref_id
@@ -70,149 +73,150 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     for mention in AGENT_MENTIONS:
         prompt = prompt.replace(mention, "").strip()
 
-    if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
-        conversational = L3Conversational(auth.user, auth.account, session_id)
-        return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'])
+    # if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
+    conversational = L3Conversational(auth.user, auth.account, session_id)
+    return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'])
 
-    if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
-        l3_plan_and_execute = L3PlanAndExecute(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-        )
+    # if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
+    #     l3_plan_and_execute = L3PlanAndExecute(
+    #         user=auth.user,
+    #         account=auth.account,
+    #         session_id=session_id,
+    #     )
 
-        return l3_plan_and_execute.run(tools, prompt, history, version, body.is_private_chat, human_message['id'])
+    #     return l3_plan_and_execute.run(tools, prompt, history, version, body.is_private_chat, human_message['id'])
 
-    if version == ChatMessageVersion.AUTHORITARIAN_SPEAKER:
-        topic = prompt
+    # if version == ChatMessageVersion.AUTHORITARIAN_SPEAKER:
+    #     topic = prompt
         
         
-        agents = get_agents_from_json(topic)
-        if(agents == []):
-            agents = [
-            {
-                'name': "Alexa Ray",
-                'role': "Project Manager",
-                'is_director': True,
-                'location': "Austin, Texas",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-                           "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            {
-                'name': "Liam Park",
-                'role': "Monetization and In-Game Purchase Advisor",
-                'location': "Seattle, Washington",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-                           "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            # {
-            #     'name': "Morgan Blake",
-            #     'role': "Blockchain Game Strategist",
-            #     'location': "San Francisco, California",
-            #     'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-            #                "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            # },
-            {
-                'name': "Taylor Greene",
-                'role': "Gameplay Analyst",
-                'location': "Brooklyn, New York",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
-                           "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            }
-            ]
-        else:
-            pattern = r'json```[\s\S]*?\]```'
-            topic = re.sub(pattern, '', topic)
+    #     agents = get_agents_from_json(topic)
+    #     if(agents == []):
+    #         agents = [
+    #         {
+    #             'name': "Alexa Ray",
+    #             'role': "Project Manager",
+    #             'is_director': True,
+    #             'location': "Austin, Texas",
+    #             'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
+    #                        "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         },
+    #         {
+    #             'name': "Liam Park",
+    #             'role': "Monetization and In-Game Purchase Advisor",
+    #             'location': "Seattle, Washington",
+    #             'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
+    #                        "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         },
+    #         # {
+    #         #     'name': "Morgan Blake",
+    #         #     'role': "Blockchain Game Strategist",
+    #         #     'location': "San Francisco, California",
+    #         #     'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
+    #         #                "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         # },
+    #         {
+    #             'name': "Taylor Greene",
+    #             'role': "Gameplay Analyst",
+    #             'location': "Brooklyn, New York",
+    #             'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool",
+    #                        "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         }
+    #         ]
+    #     else:
+    #         pattern = r'json```[\s\S]*?\]```'
+    #         topic = re.sub(pattern, '', topic)
 
-        # TODO: tools
-        # for agent in agents:
-            # agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
+    #     # TODO: tools
+    #     # for agent in agents:
+    #         # agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
 
 
-        print("AUTHORITARIAN_SPEAKER ------------------------------ start", body.version)
+    #     print("AUTHORITARIAN_SPEAKER ------------------------------ start", body.version)
 
-        l3_authoritarian_speaker = L3AuthoritarianSpeaker(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-            word_limit=30
-        )
+    #     l3_authoritarian_speaker = L3AuthoritarianSpeaker(
+    #         user=auth.user,
+    #         account=auth.account,
+    #         session_id=session_id,
+    #         word_limit=30
+    #     )
 
-        result = l3_authoritarian_speaker.run(
-            topic=topic,
-            agent_summaries=agents,
-            history=history,
-            is_private_chat=body.is_private_chat
-        )
+    #     result = l3_authoritarian_speaker.run(
+    #         topic=topic,
+    #         agent_summaries=agents,
+    #         history=history,
+    #         is_private_chat=body.is_private_chat
+    #     )
 
-        return result
+    #     return result
 
-    if version == ChatMessageVersion.AGENT_DEBATES:
-        print("AGENT_DEBATES ------------------------------ start", body.version)
+    # if version == ChatMessageVersion.AGENT_DEBATES:
+    #     print("AGENT_DEBATES ------------------------------ start", body.version)
 
-        topic = prompt
+    #     topic = prompt
     
-        agents = get_agents_from_json(topic)
-        if(agents == []):
-            agents = [
-            {
-                # 'name': "Alexa Ray",
-                'name': "AI Gameplay Analyst",
-                'location': "Austin, Texas",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            {
-                # 'name': "Sasha Lane",
-                'name': "AI Monetization and In-Game Purchase Advisor",
-                'location': "Seattle, Washington",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            },
-            # {
-            #     # 'name': "Sasha Lane",
-            #     'name': "AI Blockchain Game Strategist",
-            #     'location': "Seattle, Washington",
-            #     'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            # },
-            {
-                # 'name': "Sasha Lane",
-                'name': "AI Game Narrative Designer",
-                'location': "Seattle, Washington",
-                'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
-            }
-        ]
-        else:
-            pattern = r'json```[\s\S]*?\]```'
-            topic = re.sub(pattern, '', topic)
+    #     agents = get_agents_from_json(topic)
+    #     if(agents == []):
+    #         agents = [
+    #         {
+    #             # 'name': "Alexa Ray",
+    #             'name': "AI Gameplay Analyst",
+    #             'location': "Austin, Texas",
+    #             'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         },
+    #         {
+    #             # 'name': "Sasha Lane",
+    #             'name': "AI Monetization and In-Game Purchase Advisor",
+    #             'location': "Seattle, Washington",
+    #             'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         },
+    #         # {
+    #         #     # 'name': "Sasha Lane",
+    #         #     'name': "AI Blockchain Game Strategist",
+    #         #     'location': "Seattle, Washington",
+    #         #     'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         # },
+    #         {
+    #             # 'name': "Sasha Lane",
+    #             'name': "AI Game Narrative Designer",
+    #             'location': "Seattle, Washington",
+    #             'tools':  ["arxiv", "ddg-search", "wikipedia", "l3_create_game_tool", "l3_report_tool", "l3_chart_code_generator_tool", "l3_import_contract_tool", "l3_web_search_tool"],
+    #         }
+    #     ]
+    #     else:
+    #         pattern = r'json```[\s\S]*?\]```'
+    #         topic = re.sub(pattern, '', topic)
 
-        # TODO: tools
-        # for agent in agents:
-        #     agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
+    #     # TODO: tools
+    #     # for agent in agents:
+    #     #     agent['tools'] = get_tools(agent['tools'], api, auth.user, auth.account, game)
 
-        l3_agent_debates = L3AgentDebates(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-            word_limit=30
-        )
+    #     l3_agent_debates = L3AgentDebates(
+    #         user=auth.user,
+    #         account=auth.account,
+    #         session_id=session_id,
+    #         word_limit=30
+    #     )
 
-        result = l3_agent_debates.run(
-            topic=topic,
-            agent_summaries=agents,
-            history=history,
-            is_private_chat=body.is_private_chat
-        )
+    #     result = l3_agent_debates.run(
+    #         topic=topic,
+    #         agent_summaries=agents,
+    #         history=history,
+    #         is_private_chat=body.is_private_chat
+    #     )
 
-        return result
+    #     return result
 
-@router.get("", status_code=200)
-def get_chat_messages(is_private_chat: bool, auth: UserAccount = Depends(authenticate)):
+@router.get("", status_code=200, response_model=List[ChatMessageOutput])
+def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
     """
     Get chat messages
 
     Args:
         is_private_chat (bool): Is private or team chat
+        agent_id (Optional[UUID]): Agent id
     """
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id)
 
     chat_messages = (db.session.query(ChatMessageModel)
                          .filter(ChatMessageModel.session_id == session_id)
@@ -220,7 +224,9 @@ def get_chat_messages(is_private_chat: bool, auth: UserAccount = Depends(authent
                          .limit(50)
                          .all())
     
-    return chat_messages
+    chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
+    
+    return chat_messages.reverse()
 
 
 @router.get('/negotiate', response_model=NegotiateOutput)

@@ -23,7 +23,9 @@ const Agents = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Agents</StyledSectionTitle>
-          <StyledSectionDescription>Here are all your agents, managing tasks and operations.</StyledSectionDescription>
+          <StyledSectionDescription>
+            Here are all your agents, managing tasks and operations.
+          </StyledSectionDescription>
         </div>
 
         <StyledButtonWrapper>
@@ -43,6 +45,7 @@ const Agents = () => {
                 onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
                 onViewClick={() => navigate(`/agents/${agent.id}`)}
+                onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
                 modelVersion={configs.model_version}
                 provider={configs.mode_provider}
               />
