@@ -28,14 +28,14 @@ const Agents = () => {
           </StyledSectionDescription>
         </div>
 
-        <StyledButtonWrapper>
+        <div>
           <Button onClick={() => navigate('/agents/create-agent')} size={Button.sizes.SMALL}>
             Create Agent
           </Button>
-        </StyledButtonWrapper>
+        </div>
       </StyledHeaderGroup>
-      <ComponentsWrapper>
-        <StyledAgentCardsWrapper>
+      <ComponentsWrapper noPadding>
+        <StyledCardsWrapper>
           {agentsData?.map((agentObj: any, index: number) => {
             const { agent } = agentObj
 
@@ -51,7 +51,7 @@ const Agents = () => {
               />
             )
           })}
-        </StyledAgentCardsWrapper>
+        </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
@@ -59,13 +59,14 @@ const Agents = () => {
 
 export default Agents
 
-export const StyledButtonWrapper = styled.div`
-  /* margin-left: auto;
-  margin-bottom: 20px; */
-`
-export const StyledAgentCardsWrapper = styled.div`
+export const StyledCardsWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+
+  max-height: calc(100vh - 325px);
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 20px;
 `
