@@ -38,7 +38,7 @@ const routes: any = [
   { path: '/agents/create-agent', breadcrumb: 'Create Agent' },
 
   { path: '/datasources/:datasourceId', breadcrumb: GetDatasourceName },
-  { path: '/datasources/create-datasource', breadcrumb: 'Create Datasource' },
+  { path: '/datasources/create-datasource', breadcrumb: 'Add Datasource' },
 
   //chat
   { path: '/copilot', breadcrumb: null },

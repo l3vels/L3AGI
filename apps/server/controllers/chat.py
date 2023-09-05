@@ -103,7 +103,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             topic=topic,
             team=team,
             agents_with_configs=agents,
-            history= [], #history,
+            history= history,
             is_private_chat=body.is_private_chat
         )
 
@@ -121,7 +121,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             user=auth.user,
             account=auth.account,
             session_id=session_id,
-
             word_limit=30
         )
 
@@ -129,7 +128,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             topic=topic,
             team=team,
             agents_with_configs=agents,
-            history= [], #history,
+            history= history,
             is_private_chat=body.is_private_chat
         )
 
