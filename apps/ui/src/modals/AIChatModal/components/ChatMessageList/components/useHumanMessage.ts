@@ -9,7 +9,7 @@ type useHumanMessageProps = {
 
 const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
   if (userId === user.id) {
-    return user.first_name
+    return user.name
   }
 
   const assignedUser = assignedUserList?.find((user: any) => user.assigned_user_id === userId)
@@ -23,7 +23,7 @@ const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
     return creatorUser.creator_user
   }
 
-  return user.first_name
+  return user.name
 }
 
 export const useHumanMessage = ({ userId, messageText }: useHumanMessageProps) => {

@@ -19,6 +19,7 @@ type AgentCardProps = {
   onEditClick?: () => void
   onDeleteClick?: () => void
   onViewClick: () => void
+  onChatClick?: () => void
 }
 
 const AgentCard = ({
@@ -29,6 +30,7 @@ const AgentCard = ({
   onDeleteClick,
   onEditClick,
   onViewClick,
+  onChatClick,
 }: AgentCardProps) => {
   return (
     <StyledAgentCard>
@@ -56,16 +58,22 @@ const AgentCard = ({
             type={Avatar.types.IMG}
             // ariaLabel='Hadas Fahri'
           />
-          <StyledChatButton className='chatButton'>
-            <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY}>
-              <StyledInnerButtonWrapper>
-                {'Chat'}
-                <StyledIconWrapper>
-                  <MoveArrowRight />
-                </StyledIconWrapper>
-              </StyledInnerButtonWrapper>
-            </Button>
-          </StyledChatButton>
+          {onChatClick && (
+            <StyledChatButton className='chatButton'>
+              <Button
+                size={Button.sizes.SMALL}
+                kind={Button.kinds.SECONDARY}
+                onClick={onDeleteClick}
+              >
+                <StyledInnerButtonWrapper>
+                  {'Chat'}
+                  <StyledIconWrapper>
+                    <MoveArrowRight />
+                  </StyledIconWrapper>
+                </StyledInnerButtonWrapper>
+              </Button>
+            </StyledChatButton>
+          )}
         </StyledAvatarWrapper>
         <StyledBodyTextWrapper>
           <Typography

@@ -18,10 +18,28 @@ class ChatMessage(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     parent_id = Column(UUID, ForeignKey('chat_message.id'))
     session_id = Column(String, nullable=False, index=True)
+    agent_id = Column(UUID, ForeignKey('agent.id'))
     user_id = Column(UUID, nullable=False)
     account_id = Column(UUID, nullable=False)
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
-    version = Column(String, nullable=False)
 
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
+    agent = relationship("AgentModel", back_populates="chat_messages")
+
+    def to_dict(self):
+        """
+        Converts the current SQLAlchemy ORM object to a dictionary representation.
+
+        Returns:
+            A dictionary mapping column names to their corresponding values.
+        """
+        data = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+        if self.agent:
+            data['agent'] = self.agent.to_dict()
+
+        if self.parent:
+            data['parent'] = self.parent.to_dict()
+
+        return data

@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import { useContext } from 'react'
 import isNil from 'lodash/fp/isNil'
 import omitBy from 'lodash/omitBy'
-import CHAT_MESSAGES_GQL from '../../../gql/chat/messageByGame.gql'
+import CHAT_MESSAGES_GQL from '../../../gql/chat/chatMessages.gql'
 import { AuthContext } from 'contexts'
 import { Nullable } from 'types'
 
@@ -18,6 +18,7 @@ const useUpdateChatCache = () => {
     const queryVariables = omitBy(
       {
         is_private_chat: is_private_chat,
+        agent_id: newChatMessage.agent_id,
       },
       isNil,
     )
@@ -25,9 +26,9 @@ const useUpdateChatCache = () => {
     apolloClient.cache.updateQuery(
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {
-        const chatMessages = data?.messageByGame || []
+        const chatMessages = data?.chatMessages || []
         const newChatMessages = [...chatMessages]
-        newChatMessage = { __typename: 'ChatMessage', parent: null, ...newChatMessage }
+        newChatMessage = { __typename: 'ChatMessage', parent: null, agent: null, ...newChatMessage }
 
         if (localChatMessageRefId && user.id === newChatMessage.user_id) {
           // If the message is from the current user, we need to update the local message
@@ -58,7 +59,7 @@ const useUpdateChatCache = () => {
         })
 
         return {
-          messageByGame: newChatMessages,
+          chatMessages: newChatMessages,
         }
       },
     )

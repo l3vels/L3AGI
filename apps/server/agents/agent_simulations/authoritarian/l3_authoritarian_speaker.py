@@ -12,6 +12,9 @@ from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAge
 from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import DirectorDialogueAgentWithTools
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
+from models.team import TeamModel
+from utils.system_message import SystemMessageBuilder
+from typings.agent import AgentWithConfigsOutput
 
 azureService = PubSubService()
 
@@ -24,57 +27,10 @@ class L3AuthoritarianSpeaker(L3Base):
         user,
         account,
         session_id,
-        game,
-        collection,
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(user=user, account=account, session_id=session_id, game=game, collection=collection)
+        super().__init__(user=user, account=account, session_id=session_id)
         self.word_limit = word_limit        
-        
-        self.agent_descriptor_system_message = SystemMessage(
-            content="You can add detail to the description of each person."
-        )
-    
-    def generate_agent_description(self, agent_name, agent_role, agent_location, conversation_description):
-        agent_specifier_prompt = [
-            self.agent_descriptor_system_message,
-            HumanMessage(
-                content=f"""{conversation_description}
-                Please reply with a creative description of {agent_name}, who is a {agent_role} in {agent_location}, that emphasizes their particular role and location.
-                Speak directly to {agent_name} in {self.word_limit} words or less.
-                Do not add anything else."""
-            ),
-        ]
-        agent_description = ChatOpenAI(temperature=1.0, model_name="gpt-4")(agent_specifier_prompt).content
-        return agent_description
-
-    def generate_agent_header(self, agent_name, agent_role, agent_location, agent_description, conversation_description, topic):
-        return f"""{conversation_description}
-
-    Your name is {agent_name}, your role is {agent_role}, and you are located in {agent_location}.
-
-    Your description is as follows: {agent_description}
-
-    You are discussing the topic: {topic}.
-
-    Your goal is to provide the most informative, creative, and novel perspectives of the topic from the perspective of your role and your location.
-    """
-
-    def generate_agent_system_message(self, agent_name, agent_header):
-        return SystemMessage(
-            content=(
-                f"""{agent_header}
-    You will speak in the style of {agent_name}, and exaggerate your personality.
-    Do not say the same things over and over again.
-    Speak in the first person from the perspective of {agent_name}
-    For describing your own body movements, wrap your description in '*'.
-    Do not change roles!
-    Do not speak from the perspective of anyone else.
-    Speak only from the perspective of {agent_name}.
-    Stop speaking the moment you finish speaking from your perspective.
-    Never forget to keep your response to {self.word_limit} words!
-    Do not add anything else.
-        """))
     
     def select_next_speaker(
             self, step: int, agents: List[DialogueAgentWithTools], director: DirectorDialogueAgentWithTools
@@ -111,12 +67,14 @@ class L3AuthoritarianSpeaker(L3Base):
         
     def run(self,
             topic: str,
-            agent_summaries: list[any],
+            team: TeamModel, 
+            agents_with_configs:List[AgentWithConfigsOutput],   
+            # agent_summaries: list[any],
             history: PostgresChatMessageHistory,
             is_private_chat: bool
             ):
         agent_summary_string = "\n- ".join(
-            [""] + [f"{agent['name']}: {agent['role']}, located in {agent['location']}" for agent in agent_summaries]
+            [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
         )
 
         conversation_description = f"""This is a Daily Show episode discussing the following topic: {topic}.
@@ -124,21 +82,21 @@ class L3AuthoritarianSpeaker(L3Base):
         The episode features {agent_summary_string}."""
 
 
-        agent_descriptions = [
-            self.generate_agent_description(agent['name'], agent['role'], 
-                                            agent['location'], conversation_description) for agent in agent_summaries
-        ]
+        # agent_descriptions = [
+        #     self.generate_agent_description(agent['name'], agent['role'], 
+        #                                     agent['location'], conversation_description) for agent in agent_summaries
+        # ]
 
-        agent_headers = [
-            self.generate_agent_header(agent['name'], agent['role'], agent['location'],
-                                       description,conversation_description=conversation_description, topic=topic )
-            for agent, description in zip(agent_summaries, agent_descriptions)
-        ]
+        # agent_headers = [
+        #     self.generate_agent_header(agent['name'], agent['role'], agent['location'],
+        #                                description,conversation_description=conversation_description, topic=topic )
+        #     for agent, description in zip(agent_summaries, agent_descriptions)
+        # ]
         
-        agent_system_messages = [
-            self.generate_agent_system_message(agent['name'], header)
-            for agent, header in zip(agent_summaries, agent_headers)
-        ]
+        # agent_system_messages = [
+        #     self.generate_agent_system_message(agent['name'], header)
+        #     for agent, header in zip(agent_summaries, agent_headers)
+        # ]
 
         # for name, description, header, system_message in zip(
         #     agent_summaries, agent_descriptions, agent_headers, agent_system_messages
@@ -154,29 +112,34 @@ class L3AuthoritarianSpeaker(L3Base):
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
-        directors = [agent for agent in agent_summaries if agent.get('is_director', False) == True]
+        # directors = [agent_config.agent for agent_config in agents_with_configs if agent_config.agent.is_director == True]
+        directors = [agent_config.agent for agent_config in agents_with_configs if hasattr(agent_config.agent, 'is_director') and agent_config.agent.is_director == True]
         # Assuming there's only one director:
         
-        director_agent = directors[0] if directors else agent_summaries[0]
-        director_name = director_agent['name']
+        director_agent = directors[0] if directors else agents_with_configs[0]
+        director_name = director_agent.agent.name
+        director_id = director_agent.agent.id
 
         director = DirectorDialogueAgentWithTools(
                     name=director_name,
-                    tools=director_agent['tools'],
-                    system_message=agent_system_messages[0], #todo need retrive director system message
-                    model=ChatOpenAI(temperature=0.2, model_name="gpt-4"),
-                    speakers=[agent['name'] for agent in agent_summaries if agent['name'] != director_name],
+                    tools=director_agent.configs.tools,
+                    system_message=SystemMessageBuilder(director_agent).build(),
+                    #later need support other llms
+                    model=ChatOpenAI(temperature=director_agent.configs.temperature, 
+                        model_name=director_agent.configs.model_version 
+                        if director_agent.configs.model_version else "gpt-4"),
+                    speakers=[agent_with_config.agent.name for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
                     stopping_probability=0.2,
                     )
+        
         agents = [director]
-        #todo need to valide is not more than 1 director
-        for agent, system_message in zip(agent_summaries, agent_system_messages):
-            if not agent.get('is_director', False):
+        for agent_with_config in agents_with_configs:
+            if not agent_with_config.agent.id != director_id:
                 agents.append(
                 DialogueAgentWithTools(
-                    name=agent['name'],
-                    tools=agent['tools'],
-                    system_message=system_message,
+                    name=agent_with_config.agent.name,
+                    tools=agent_with_config.configs.tools,
+                    system_message=SystemMessageBuilder(agent_with_config).build(),
                     model=ChatOpenAI(temperature=0.2, model_name="gpt-4"),
                 )
             )
@@ -209,3 +172,49 @@ class L3AuthoritarianSpeaker(L3Base):
             print("\n")
             if director.stop:
                 break
+
+        
+        # self.agent_descriptor_system_message = SystemMessage(
+        #     content="You can add detail to the description of each person."
+        # )
+    
+    # def generate_agent_description(self, agent_name, agent_role, agent_location, conversation_description):
+    #     agent_specifier_prompt = [
+    #         self.agent_descriptor_system_message,
+    #         HumanMessage(
+    #             content=f"""{conversation_description}
+    #             Please reply with a creative description of {agent_name}, who is a {agent_role} in {agent_location}, that emphasizes their particular role and location.
+    #             Speak directly to {agent_name} in {self.word_limit} words or less.
+    #             Do not add anything else."""
+    #         ),
+    #     ]
+    #     agent_description = ChatOpenAI(temperature=1.0, model_name="gpt-4")(agent_specifier_prompt).content
+    #     return agent_description
+
+    # def generate_agent_header(self, agent_name, agent_role, agent_location, agent_description, conversation_description, topic):
+    #     return f"""{conversation_description}
+
+    # Your name is {agent_name}, your role is {agent_role}, and you are located in {agent_location}.
+
+    # Your description is as follows: {agent_description}
+
+    # You are discussing the topic: {topic}.
+
+    # Your goal is to provide the most informative, creative, and novel perspectives of the topic from the perspective of your role and your location.
+    # """
+
+    # def generate_agent_system_message(self, agent_name, agent_header):
+    #     return SystemMessage(
+    #         content=(
+    #             f"""{agent_header}
+    # You will speak in the style of {agent_name}, and exaggerate your personality.
+    # Do not say the same things over and over again.
+    # Speak in the first person from the perspective of {agent_name}
+    # For describing your own body movements, wrap your description in '*'.
+    # Do not change roles!
+    # Do not speak from the perspective of anyone else.
+    # Speak only from the perspective of {agent_name}.
+    # Stop speaking the moment you finish speaking from your perspective.
+    # Never forget to keep your response to {self.word_limit} words!
+    # Do not add anything else.
+    #     """))

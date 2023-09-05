@@ -11,6 +11,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import l3Icon from 'assets/avatars/l3.png'
+import { useAgentsService } from 'services/agent/useAgentsService'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
@@ -27,32 +28,18 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsPr
 
   const { data: users } = useAssignedUserListService()
 
-  const mentionsData: any = [
-    {
-      display: 'L3-GPT',
-      id: `agent__L3-GPT`,
+  const { data: agents } = useAgentsService()
+
+  const mentionsData = agents.map((agent: any) => {
+    const { id, name } = agent.agent
+
+    return {
+      display: name,
+      id: `agent__${id}`,
       type: 'AI',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
-    },
-    {
-      display: 'L3-Planner',
-      id: `agent__L3-Planner`,
-      type: 'AI',
-      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
-    },
-    {
-      display: 'L3-Authoritarian-Speaker',
-      id: `agent__L3-Authoritarian-Speaker`,
-      type: 'AI',
-      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
-    },
-    {
-      display: 'L3-Agent-Debates',
-      id: `agent__L3-Agent-Debates`,
-      type: 'AI',
-      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
-    },
-  ]
+    }
+  })
 
   const usersData: any = users?.map((user: any) => {
     return {
