@@ -56,7 +56,7 @@ import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
 import Marketplace from 'pages/Marketplace'
 import AgentView from 'pages/Agents/AgentView'
-import AgentRouteLayout from 'routes/AgentRouteLayout'
+
 import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
@@ -116,7 +116,7 @@ const Route = () => {
               <Router index element={<AIChat />} key={document.location.href} />
             </Router>
 
-            <Router path={'agents'} element={<AgentRouteLayout />} key={document.location.href}>
+            <Router path={'agents'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Agents />} key={document.location.href} />
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
               <Router
@@ -131,11 +131,7 @@ const Route = () => {
               />
             </Router>
 
-            <Router
-              path={'datasources'}
-              element={<AgentRouteLayout />}
-              key={document.location.href}
-            >
+            <Router path={'datasources'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Datasource />} key={document.location.href} />
               <Router path={':datasourceId'} element={<AgentView />} key={document.location.href} />
               <Router
@@ -150,7 +146,7 @@ const Route = () => {
               />
             </Router>
 
-            <Router path={'tools'} element={<AgentRouteLayout />} key={document.location.href}>
+            <Router path={'tools'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
               <Router path={':toolId'} element={<ToolView />} key={document.location.href} />
             </Router>

@@ -19,15 +19,26 @@ const MainRouteLayout = () => {
   return (
     <StyledAppContainer className='app_container'>
       <Header hideUsers />
-
-      <StyledMainContainer>
+      <StyledNavigationWrapper>
         <MainNavigation />
-
-        {outlet}
-      </StyledMainContainer>
+      </StyledNavigationWrapper>
+      <StyledMainContainer>{outlet}</StyledMainContainer>
       <Footer />
     </StyledAppContainer>
   )
 }
 
 export default MainRouteLayout
+
+const StyledNavigationWrapper = styled.div`
+  position: sticky;
+  top: 0;
+
+  z-index: 102030;
+  /* max-height: 62px; */
+  padding: 0 165px;
+
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+`

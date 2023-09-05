@@ -17,11 +17,16 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
+import { useToolsService } from 'services/tool/useToolsService'
+import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
+import BackButton from 'components/BackButton'
 
 const AgentView = () => {
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const { data: toolsData } = useToolsService()
+  const { data: datasourcesData } = useDatasourcesService()
 
   if (!agentById) return <div />
 
@@ -29,100 +34,153 @@ const AgentView = () => {
 
   const { name, description, role } = agent
 
-  const { tools, model_version, mode_provider, goals, constraints } = configs
+  const {
+    tools,
+    model_version,
+    mode_provider,
+    goals,
+    constraints,
+    instructions,
+    temperature,
+    datasources,
+  } = configs
+
+  const filteredTools = toolsData
+    ?.filter((tool: any) => {
+      if (tools?.includes(tool.toolkit_id)) {
+        return tool
+      } else {
+        return
+      }
+    })
+    .map((tool: any) => tool.name)
+
+  const filteredDatasources = datasourcesData
+    ?.filter((datasource: any) => {
+      if (datasources?.includes(datasource.id)) {
+        return datasource
+      } else {
+        return
+      }
+    })
+    .map((tool: any) => tool.name)
 
   return (
     <StyledSectionWrapper>
-    <StyledHeaderGroup className='header_group'>
-      <div>
-        <StyledSectionTitle>Agents</StyledSectionTitle>
-        <StyledSectionDescription>Here are all your agents, managing tasks and operations.</StyledSectionDescription>
-      </div>
+      <StyledHeaderGroup className='header_group'>
+        <div>
+          <StyledSectionTitle>Agent</StyledSectionTitle>
+          <StyledSectionDescription>
+            Witness the growth of exceptional AI talents, nurtured by collective community
+            contributions.
+          </StyledSectionDescription>
+        </div>
 
+        <div>
+          <BackButton />
+        </div>
+      </StyledHeaderGroup>
+      <ComponentsWrapper noPadding>
+        <StyledInnerWrapper>
+          <StyledLeftColumn>
+            <StyledDetailsBox>
+              <StyledWrapper>
+                <Typography
+                  value={name}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                  customColor={'#FFF'}
+                />
+                {mode_provider && (
+                  <Typography
+                    value={`By ${mode_provider}`}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
+                    customColor={'rgba(255,255,255,0.6)'}
+                  />
+                )}
+                <div>
+                  <Button size={Button.sizes.SMALL}>
+                    <StyledInnerButtonWrapper>
+                      <Download size={28} />
+                      Add
+                    </StyledInnerButtonWrapper>
+                  </Button>
+                </div>
+              </StyledWrapper>
 
-    </StyledHeaderGroup>
-    <ComponentsWrapper>
-    <StyledRoot>
-      <StyledLeftColumn>
-        <StyledDetailsBox>
-          <StyledWrapper>
-            <Typography
-              value={name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-              customColor={'#FFF'}
-            />
-            {mode_provider && (
-              <Typography
-                value={`By ${mode_provider}`}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={'rgba(255,255,255,0.6)'}
+              <StyledDivider />
+
+              <StyledWrapper>
+                <Typography
+                  value={description}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                  customColor={'rgba(255,255,255,0.9)'}
+                />
+              </StyledWrapper>
+
+              <StyledDivider />
+
+              <StyledWrapper>
+                {tools.length > 0 && <TagsRow title='Tools' items={filteredTools} />}
+
+                {datasources.length > 0 && (
+                  <TagsRow title='Datasources' items={filteredDatasources} />
+                )}
+
+                {role && <TagsRow title='Role' items={[role]} />}
+
+                {model_version && <TagsRow title='Model' items={[model_version]} />}
+
+                {temperature && <TagsRow title='Temperature' items={[temperature]} />}
+              </StyledWrapper>
+            </StyledDetailsBox>
+          </StyledLeftColumn>
+
+          <StyledRightColumn>
+            {goals.length > 0 && (
+              <AdditionalInfoBox
+                items={goals}
+                title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
               />
             )}
-            <div>
-              <Button size={Button.sizes.MEDIUM}>
-                <Download />
-                Add
-              </Button>
-            </div>
-          </StyledWrapper>
 
-          <StyledDivider />
-
-          <StyledWrapper>
-            <Typography
-              value={description}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255,0.9)'}
-            />
-          </StyledWrapper>
-
-          <StyledDivider />
-
-          <StyledWrapper>
-            {tools.length > 0 && <TagsRow title='Tools' items={tools} />}
-
-            {role && <TagsRow title='Role' items={[role]} />}
-
-            {model_version && <TagsRow title='Model' items={[model_version]} />}
-          </StyledWrapper>
-        </StyledDetailsBox>
-      </StyledLeftColumn>
-
-      <StyledRightColumn>
-        {goals.length > 0 && (
-          <AdditionalInfoBox
-            items={goals}
-            title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
-          />
-        )}
-
-        {constraints.length > 0 && (
-          <AdditionalInfoBox
-            items={constraints}
-            title={constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`}
-          />
-        )}
-      </StyledRightColumn>
-    </StyledRoot>
-    </ComponentsWrapper>
+            {constraints.length > 0 && (
+              <AdditionalInfoBox
+                items={constraints}
+                title={
+                  constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
+                }
+              />
+            )}
+            {instructions.length > 0 && (
+              <AdditionalInfoBox
+                items={instructions}
+                title={
+                  instructions.length === 1
+                    ? '1 Instruction'
+                    : `${instructions.length} Instructions`
+                }
+              />
+            )}
+          </StyledRightColumn>
+        </StyledInnerWrapper>
+      </ComponentsWrapper>
     </StyledSectionWrapper>
   )
 }
 
 export default AgentView
 
-const StyledRoot = styled.div`
+const StyledInnerWrapper = styled.div`
   /* background: grey; */
-  padding-top: 50px;
 
   width: 100%;
-  height: calc(100% - 100px);
-
+  height: calc(100vh - 325px);
+  overflow-y: auto;
   display: flex;
-
+  padding: 0 20px;
   gap: 10px;
 `
 const StyledLeftColumn = styled.div``
@@ -135,7 +193,8 @@ const StyledRightColumn = styled.div`
   width: 100%;
 `
 const StyledDetailsBox = styled.div`
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.2);
+
   width: 300px;
   /* min-height: 400px; */
 
@@ -157,4 +216,10 @@ const StyledDivider = styled.div`
   width: 100%;
   height: 1px;
   background: rgba(255, 255, 255, 0.4);
+`
+const StyledInnerButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: 5px;
 `

@@ -28,30 +28,31 @@ const Agents = () => {
           </StyledSectionDescription>
         </div>
 
-        <StyledButtonWrapper>
-          <Button onClick={() => navigate('/agents/create-agent')}>Create Agent</Button>
-        </StyledButtonWrapper>
+        <div>
+          <Button onClick={() => navigate('/agents/create-agent')} size={Button.sizes.SMALL}>
+            Create Agent
+          </Button>
+        </div>
       </StyledHeaderGroup>
-      <ComponentsWrapper>
-        <StyledAgentCardsWrapper>
+      <ComponentsWrapper noPadding>
+        <StyledCardsWrapper>
           {agentsData?.map((agentObj: any, index: number) => {
-            const { agent, configs } = agentObj
+            const { agent } = agentObj
 
             return (
               <AgentCard
                 key={index}
-                title={agent.name}
-                subTitle={agent.description}
+                name={agent.name}
+                description={agent.description}
                 onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
                 onViewClick={() => navigate(`/agents/${agent.id}`)}
+                headerTag={agent.role}
                 onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
-                modelVersion={configs.model_version}
-                provider={configs.mode_provider}
               />
             )
           })}
-        </StyledAgentCardsWrapper>
+        </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
@@ -59,13 +60,14 @@ const Agents = () => {
 
 export default Agents
 
-export const StyledButtonWrapper = styled.div`
-  /* margin-left: auto;
-  margin-bottom: 20px; */
-`
-export const StyledAgentCardsWrapper = styled.div`
+export const StyledCardsWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+
+  max-height: calc(100vh - 325px);
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 20px;
 `

@@ -15,6 +15,7 @@ export type AgentInput = {
   instructions: string[]
   model_version: string
   mode_provider: string
+  is_memory: boolean
 }
 
 export const useCreateAgentService = () => {
@@ -34,6 +35,7 @@ export const useCreateAgentService = () => {
       instructions,
       model_version,
       mode_provider,
+      is_memory,
     } = input
 
     const {
@@ -46,6 +48,7 @@ export const useCreateAgentService = () => {
             description: description,
             role: role,
             is_template: is_template,
+            is_memory: is_memory,
           },
           configs: {
             goals: goals,

@@ -1,8 +1,8 @@
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
-import { StyledButtonWrapper } from 'pages/Agents/Agents'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -24,16 +24,21 @@ const Datasource = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Datasource</StyledSectionTitle>
-          <StyledSectionDescription>Here is your datasource, a collection of databases, APIs, files, and more.</StyledSectionDescription>
+          <StyledSectionDescription>
+            Here is your datasource, a collection of databases, APIs, files, and more.
+          </StyledSectionDescription>
         </div>
-        <StyledButtonWrapper>
-          <Button onClick={() => navigate('/datasources/create-datasource')}>
+        <div>
+          <Button
+            onClick={() => navigate('/datasources/create-datasource')}
+            size={Button.sizes.SMALL}
+          >
             Create Datasource
           </Button>
-        </StyledButtonWrapper>
+        </div>
       </StyledHeaderGroup>
-      <ComponentsWrapper>
-        <StyledDatasourceCardsWrapper>
+      <ComponentsWrapper noPadding>
+        <StyledCardsWrapper>
           {datasources?.map((datasource: any, index: number) => {
             return (
               <DatasourceCard
@@ -45,7 +50,7 @@ const Datasource = () => {
               />
             )
           })}
-        </StyledDatasourceCardsWrapper>
+        </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
@@ -53,9 +58,13 @@ const Datasource = () => {
 
 export default Datasource
 
-const StyledDatasourceCardsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-`
+// const StyledDatasourceCardsWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   flex-wrap: wrap;
+//   gap: 16px;
+
+//   height: calc(100vh - 325px);
+//   overflow-y: auto;
+//   padding: 0 20px;
+// `

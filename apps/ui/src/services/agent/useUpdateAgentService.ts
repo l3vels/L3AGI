@@ -19,6 +19,7 @@ export const useUpdateAgentService = () => {
       instructions,
       model_version,
       mode_provider,
+      is_memory,
     } = input
 
     const { data } = await mutation({
@@ -30,6 +31,7 @@ export const useUpdateAgentService = () => {
             description: description,
             role: role,
             is_template: is_template,
+            is_memory: is_memory,
           },
           configs: {
             goals: goals,

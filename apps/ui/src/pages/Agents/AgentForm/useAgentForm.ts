@@ -1,9 +1,11 @@
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { useProvidersService } from 'services/llm/useProvidersService'
+import { useToolsService } from 'services/tool/useToolsService'
 
 export const useAgentForm = (formik: any) => {
   const { data: providersData } = useProvidersService()
   const { data: datasourcesData } = useDatasourcesService()
+  const { data: tools } = useToolsService()
 
   const providerOptions = providersData?.map((item: any) => {
     return { value: item.provider, label: item.provider, isActive: item.isActive }
@@ -20,9 +22,14 @@ export const useAgentForm = (formik: any) => {
     return { value: datasource.id, label: datasource.name }
   })
 
+  const ToolOptions = tools?.map((tool: any) => {
+    return { value: tool.toolkit_id, label: tool.name }
+  })
+
   return {
     providerOptions,
     modelOptions,
     datasourceOptions,
+    ToolOptions,
   }
 }

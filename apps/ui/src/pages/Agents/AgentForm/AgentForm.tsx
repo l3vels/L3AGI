@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
 import FormikTextField from 'components/TextFieldFormik'
@@ -18,13 +17,20 @@ type AgentFormProps = {
 
 const AgentForm = ({ formik }: AgentFormProps) => {
   const { setFieldValue, values } = formik
-  const { agent_datasources, agent_mode_provider, agent_model_version, agent_description } = values
+  const {
+    agent_datasources,
+    agent_mode_provider,
+    agent_model_version,
+    agent_description,
+    agent_is_memory,
+    agent_tools,
+  } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('agent_description', value)
   }
 
-  const { providerOptions, modelOptions, datasourceOptions } = useAgentForm(formik)
+  const { providerOptions, modelOptions, datasourceOptions, ToolOptions } = useAgentForm(formik)
 
   return (
     <StyledRoot>
@@ -60,7 +66,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             placeholder={'Constraint'}
           />
 
-          <CustomField formik={formik} formikField={'agent_tools'} placeholder={'Tool'} />
+          <AgentDropdown
+            isMulti
+            label={'Tools'}
+            fieldName={'agent_tools'}
+            fieldValue={agent_tools}
+            setFieldValue={setFieldValue}
+            options={ToolOptions}
+          />
 
           <AgentDropdown
             isMulti
@@ -95,6 +108,16 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             fieldValue={agent_model_version}
             options={modelOptions}
           />
+
+          <StyledCheckboxWrapper>
+            <Checkbox
+              label='Memory'
+              kind='secondary'
+              name='agent_is_memory'
+              checked={agent_is_memory}
+              onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
+            />
+          </StyledCheckboxWrapper>
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -147,4 +170,8 @@ export const StyledTextareaWrapper = styled.div`
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
   }
+`
+const StyledCheckboxWrapper = styled.div`
+  height: fit-content;
+  padding-bottom: 5px;
 `

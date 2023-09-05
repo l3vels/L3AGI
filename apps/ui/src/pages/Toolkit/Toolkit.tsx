@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Toolkit = () => {
   const { data: tools } = useToolsService()
-  console.log('tools', tools)
+
   const navigate = useNavigate()
 
   return (
@@ -27,7 +27,7 @@ const Toolkit = () => {
         </div>
       </StyledHeaderGroup>
 
-      <ComponentsWrapper>
+      <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {tools?.map((tool: any, index: number) => {
             const filteredLogos = toolLogos.filter(
@@ -55,17 +55,17 @@ const Toolkit = () => {
 
 export default Toolkit
 
-// const StyledRoot = styled.div`
-//   width: 100%;
-
-//   height: calc(100vh - 350px);
-// `
-
 const StyledCardsWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
+  height: calc(100vh - 325px);
+  padding-left: 20px;
+
   gap: 10px;
 `
-const StyledToolDetails = styled.div``
