@@ -66,9 +66,9 @@ const Spotlight = () => {
     isPrivateChat: false,
   })
 
-  useChatMessagesService({
-    isPrivateChat: true,
-  })
+  // useChatMessagesService({
+  //   isPrivateChat: true,
+  // })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
