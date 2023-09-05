@@ -5,27 +5,24 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useState } from 'react'
+
 import { useToolsService } from 'services/tool/useToolsService'
 import styled from 'styled-components'
 import ToolCard from './components/ToolCard'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
 import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
 
 const Toolkit = () => {
   const { data: tools } = useToolsService()
   console.log('tools', tools)
-
   const navigate = useNavigate()
 
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Tools</StyledSectionTitle>
+          <StyledSectionTitle>Toolkits</StyledSectionTitle>
           <StyledSectionDescription>Here are all of your Tools</StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
