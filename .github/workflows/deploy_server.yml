@@ -51,7 +51,7 @@ jobs:
         
       - name: Change file name
         run: | 
-          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/dev.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
+          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/dev.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
       
       - name: Update task_container_version
         run: |
