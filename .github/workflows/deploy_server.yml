@@ -8,7 +8,7 @@ on:
     #   - 'apps/server/**'
 
 env:
-  ACR_REPOSITORY: "l3-api-ai"
+  ACR_REPOSITORY: "l3-api"
 
 jobs:
   Build:
@@ -43,7 +43,7 @@ jobs:
       path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
       gh_environment: dev
-      task_container_name: "l3-api-ai"
+      task_container_name: "l3-api"
       task_container_version: ${{ github.sha }}
       task_container_registry: ${{ vars.ACR_REGISTRY }}
     secrets:
@@ -63,7 +63,7 @@ jobs:
       path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
       gh_environment: dev
-      task_container_name: "l3-api-ai"
+      task_container_name: "l3-api"
       task_container_version: ${{ github.sha }}
       task_container_registry: ${{ vars.ACR_REGISTRY }}
     secrets:
@@ -92,7 +92,7 @@ jobs:
       path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
       gh_environment: prod
-      task_container_name: "l3-api-ai"
+      task_container_name: "l3-api"
       task_container_version: ${{ github.sha }}
       task_container_registry: ${{ vars.ACR_REGISTRY }}
     secrets:
@@ -112,7 +112,7 @@ jobs:
       path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
       gh_environment: prod
-      task_container_name: "l3-api-ai"
+      task_container_name: "l3-api"
       task_container_version: ${{ github.sha }}
       task_container_registry: ${{ vars.ACR_REGISTRY }}
     secrets:

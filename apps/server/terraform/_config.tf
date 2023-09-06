@@ -16,7 +16,7 @@ terraform {
     organization = "l3vels"
 
     workspaces {
-      prefix = "l3-api-ai-"
+      prefix = "l3-api-"
     }
   }
 }
