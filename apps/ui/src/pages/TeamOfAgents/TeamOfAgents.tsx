@@ -49,7 +49,7 @@ const TeamOfAgents = () => {
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
               />
             )
-          })}r
+          })}
         </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>

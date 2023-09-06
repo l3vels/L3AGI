@@ -22,13 +22,13 @@ export const useTeamOfAgents = () => {
             await refetchTeamOfAgents()
             closeModal('delete-confirmation-modal')
             setToast({
-              message: 'TeamOfAgents was deleted!',
+              message: 'Team was deleted!',
               type: 'positive',
               open: true,
             })
           } catch (e) {
             setToast({
-              message: 'Failed to delete TeamOfAgents!',
+              message: 'Failed to delete Team!',
               type: 'negative',
               open: true,
             })
@@ -38,8 +38,8 @@ export const useTeamOfAgents = () => {
         closeModal: () => {
           closeModal('delete-confirmation-modal')
         },
-        label: 'Delete TeamOfAgents?',
-        title: 'Delete TeamOfAgents?',
+        label: 'Delete Team?',
+        title: 'Delete Team?',
       },
     })
   }

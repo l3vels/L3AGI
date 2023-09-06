@@ -96,7 +96,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
     },
     {
         "is_system": True,
-        "is_active": False,
+        "is_active": True,
         "name": "Debates",
         "description": "Debates",
         "team_type": TeamType.DEBATES
@@ -171,7 +171,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
     {
         "is_system": True,
         "is_active": True,
-        "name": "Authoritarian_Speaker",
+        "name": "Authoritarian Speaker",
         "description": "Authoritarian Speaker description",
         "team_type": TeamType.AUTHORITARIAN_SPEAKER
     },
@@ -185,7 +185,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
     {
         "is_system": True,
         "is_active": False,
-        "name": "Decentralized speaker",
+        "name": "Decentralized speakers",
         "description": "Decentralized speakers",
         "team_type": TeamType.DECENTRALIZED_SPEAKERS
     }]

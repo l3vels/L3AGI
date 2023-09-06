@@ -46,7 +46,7 @@ export const useCreateTeamOfAgents = () => {
 
     const configs: any = {}
 
-    fields.forEach((field: any) => {
+    fields?.forEach((field: any) => {
       configs[field.key] = {
         key: field.key,
         key_type: field.type,
@@ -98,7 +98,7 @@ export const useCreateTeamOfAgents = () => {
       navigate('/team-of-agents')
     } catch (e) {
       setToast({
-        message: 'Failed To Add TeamOfAgents!',
+        message: 'Failed To Add Team!',
         type: 'negative',
         open: true,
       })

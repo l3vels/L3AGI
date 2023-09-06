@@ -6,7 +6,6 @@ class TeamInput(BaseModel):
     description: Optional[str]
     team_type: str
     workspace_id: Optional[UUID4]
-    type: str
 
 
 class TeamOutput(BaseModel):
@@ -15,7 +14,6 @@ class TeamOutput(BaseModel):
     description: Optional[str]
     team_type: str
     workspace_id: Optional[UUID4] 
-    type: str
     is_deleted: bool
     is_system: bool
     is_template: bool

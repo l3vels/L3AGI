@@ -67,15 +67,15 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             customColor={'#FFF'}
           />
           <StyledCardWrapper>
-            {teamTypes?.map((dataLoader: any, index: number) => {
+            {teamTypes?.map((teamType: any, index: number) => {
               return (
                 <DataLoaderCard
-                  isSelected={dataLoader.team_type === teamOfAgents_team_type}
-                  isActive={dataLoader.is_active} // coming soon feature
-                  key={dataLoader.name}
-                  title={dataLoader.team_type}
+                  isSelected={teamType.team_type === teamOfAgents_team_type}
+                  isActive={teamType.is_active} // coming soon feature
+                  key={teamType.name}
+                  title={teamType.name}
                   onClick={() => {
-                    setFieldValue('teamOfAgents_team_type', dataLoader.team_type)
+                    setFieldValue('teamOfAgents_team_type', teamType.team_type)
                     setFieldValue('config_value', '')
                   }}
                 />
