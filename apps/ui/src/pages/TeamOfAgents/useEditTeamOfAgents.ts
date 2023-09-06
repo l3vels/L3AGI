@@ -5,8 +5,8 @@ import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useConfigsService } from 'services/config/useConfigsService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
-import { useTeamOfAgentsByIdService } from 'services/teamOfAgents/useTeamOfAgentsByIdService'
-import { useUpdateTeamOfAgentsService } from 'services/teamOfAgents/useUpdateTeamOfAgentsService'
+import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+import { useUpdateTeamOfAgentsService } from 'services/team/useUpdateTeamOfAgentsService'
 import { useTeamOfAgents } from './useTeamOfAgents'
 
 export const useEditTeamOfAgents = () => {

@@ -2,7 +2,7 @@ mutation createTeamOfAgents($input: input!) @api(name: ai) {
   createTeamOfAgents(input: $input)
     @rest(
       type: "TeamOfAgents"
-      path: "/team-of-agents"
+      path: "/team"
       method: "POST"
       bodyKey: "input"
       endpoint: "ai"

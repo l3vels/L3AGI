@@ -1,6 +1,6 @@
 query getTeamTypes @api(name: "ai") {
   getTeamTypes
-    @rest(type: "TeamTypes", path: "/team-of-agents/types", method: "GET", endpoint: "ai") {
+    @rest(type: "TeamTypes", path: "/team/types", method: "GET", endpoint: "ai") {
     is_active
     name
     description

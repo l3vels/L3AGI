@@ -10,6 +10,7 @@ from typings.team_agent import TeamAgentOutput, TeamAgentInput, QueryParams
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from exceptions import TeamAgentNotFoundException
+from agents.team_base import TeamType
 
 router = APIRouter()
 
@@ -52,7 +53,7 @@ def update_team_agent(id: str, team_agent: TeamAgentInput, auth: UserAccount = D
     
     except TeamAgentNotFoundException:
         raise HTTPException(status_code=404, detail="TeamAgent not found")
-
+    
 @router.get("/", response_model=List[TeamAgentOutput])
 def get_team_agents(auth: UserAccount = Depends(authenticate),
                     params: QueryParams = Depends()) -> List[TeamAgentOutput]:

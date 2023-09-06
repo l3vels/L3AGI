@@ -2,7 +2,7 @@ import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
 import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
 import { useContext, useState } from 'react'
-import { useTeamTypesService } from 'services/teamOfAgents/useTeamTypesService'
+import { useTeamTypesService } from 'services/team/useTeamTypesService'
 
 export const useTeamOfAgentsForm = (formik: any) => {
   const { data: teamTypes } = useTeamTypesService()

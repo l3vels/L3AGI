@@ -3,9 +3,9 @@ import { useFormik } from 'formik'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
-import { useCreateTeamOfAgentsService } from 'services/teamOfAgents/useCreateTeamOfAgentsService'
-import { useTeamTypesService } from 'services/teamOfAgents/useTeamTypesService'
-import { useTeamOfAgentsService } from 'services/teamOfAgents/useTeamOfAgentsService'
+import { useCreateTeamOfAgentsService } from 'services/team/useCreateTeamOfAgentsService'
+import { useTeamTypesService } from 'services/team/useTeamTypesService'
+import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
 
 export const useCreateTeamOfAgents = () => {
   const navigate = useNavigate()

@@ -31,36 +31,6 @@ type CreateWebhookModalProps = {
 }
 
 const CreateWebhookModal = ({ closeModal }: CreateWebhookModalProps) => {
-  const code = `const L3vels = require('@l3vels/sdk')
-  const express = require('express');
-  
-  const app = express();
-  
-  const l3 = new L3vels()
-  
-  // This is your L3vels CLI webhook secret for testing your endpoint locally.
-  const endpointSecret = "l3_SVMTcJWcafeef366bc598102840c1c97f225856824622d6756c6923e16550589";
-  
-  app.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
-    const signature = request.headers['l3-signature'];
-  
-    let event;
-  
-    try {
-      event = l3.webhooks.constructEvent(request.body, signature, endpointSecret);
-    } catch (err) {
-      return response.status(400).send(\`Webhook Error: \${err.message}\`);
-    }
-  
-    // Handle the event
-    console.log(\`Unhandled event type \${event.type}\`);
-  
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
-  });
-  
-  app.listen(8000, () => console.log('Running on port 8000'));`
-
   const [showCode, setShowCode] = useState(false)
 
   const { formik } = useCreateWebhook()

@@ -1,5 +1,5 @@
 query getTeamOfAgents @api(name: "ai") {
-  getTeamOfAgents @rest(type: "TeamOfAgents", path: "/team-of-agents", method: "GET", endpoint: "ai") {
+  getTeamOfAgents @rest(type: "TeamOfAgents", path: "/team", method: "GET", endpoint: "ai") {
     id
     name
     description

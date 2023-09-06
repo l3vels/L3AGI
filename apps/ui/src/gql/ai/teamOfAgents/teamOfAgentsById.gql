@@ -1,6 +1,6 @@
 query teamOfAgentsById($id: id!) @api(name: "ai") {
   teamOfAgentsById(id: $id)
-    @rest(type: "TeamOfAgents", path: "/team-of-agents/{args.id}", method: "GET", endpoint: "ai") {
+    @rest(type: "TeamOfAgents", path: "/team/{args.id}", method: "GET", endpoint: "ai") {
     id
     name
     description

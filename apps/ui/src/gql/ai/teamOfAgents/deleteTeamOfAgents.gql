@@ -2,7 +2,7 @@ mutation deleteTeamOfAgents($id: id!) @api(name: ai) {
   deleteTeamOfAgents(id: $id)
     @rest(
       type: "TeamOfAgents"
-      path: "/team-of-agents/{args.id}"
+      path: "/team/{args.id}"
       method: "DELETE"
       bodyKey: "input"
       endpoint: "ai"

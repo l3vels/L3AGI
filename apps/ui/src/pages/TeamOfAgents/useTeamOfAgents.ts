@@ -1,8 +1,8 @@
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import { useContext } from 'react'
-import { useTeamOfAgentsService } from 'services/teamOfAgents/useTeamOfAgentsService'
-import { useDeleteTeamOfAgentstByIdService } from 'services/teamOfAgents/useDeleteTeamOfAgentsById'
+import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
+import { useDeleteTeamOfAgentstByIdService } from 'services/team/useDeleteTeamOfAgentsById'
 
 export const useTeamOfAgents = () => {
   const { setToast } = useContext(ToastContext)
