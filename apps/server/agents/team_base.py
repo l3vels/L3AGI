@@ -1,6 +1,6 @@
 from enum import Enum
 
-class TeamType(Enum):
+class TeamOfAgentsType(Enum):
     DEBATES = 'Debates'
     AUTHORITARIAN_SPEAKER = 'Authoritarian Speaker'
     PLAN_EXECUTE = 'Plan and Execute'
