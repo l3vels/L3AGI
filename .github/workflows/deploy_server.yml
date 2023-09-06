@@ -39,7 +39,8 @@ jobs:
   Init_dev:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: 'dev'
+    env: # Job level environment variables
+      ENVIRONMENT: 'dev'
     defaults:
       run:
         shell: bash
@@ -50,11 +51,11 @@ jobs:
         
       - name: Change file name
         run: | 
-          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/dev.tfvars  ${{ github.workspace }}/${{ env.environment }}/${{ env.environment  }}.auto.tfvars 
+          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/dev.tfvars  ${{ github.workspace }}/${{ env.ENVIRONMENT }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
       
       - name: Update task_container_version
         run: |
-          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.environment }}.auto.tfvars"
+          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT }}.auto.tfvars"
           echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
           echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
           echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
@@ -65,11 +66,30 @@ jobs:
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
-          echo -e "environment = \"${{ env.environment }}\"\n" >> $TFVARS
+          echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
+          echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
+          echo -e "DB_HOST = \"${{ secrets.DB_HOST }}\"\n" >> $TFVARS
+          echo -e "DB_PORT = \"${{ vars.DB_PORT }}\"\n" >> $TFVARS
+          echo -e "DB_USER = \"${{ secrets.DB_USER }}\"\n" >> $TFVARS
+          echo -e "DB_PASS = \"${{ secrets.DB_PASS }}\"\n" >> $TFVARS
+          echo -e "AZURE_PUBSUB_CONNECTION_STRING = \"${{ secrets.AZURE_PUBSUB_CONNECTION_STRING }}\"\n" >> $TFVARS
+          echo -e "AZURE_PUBSUB_HUB_NAME = \"${{ secrets.AZURE_PUBSUB_HUB_NAME }}\"\n" >> $TFVARS
+          echo -e "ZEP_API_URL = \"${{ vars.ZEP_API_URL }}\"\n" >> $TFVARS
+          echo -e "ZEP_API_KEY = \"${{ secrets.ZEP_API_KEY }}\"\n" >> $TFVARS
+          echo -e "SERPAPI_API_KEY = \"${{ secrets.SERPAPI_API_KEY }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_TRACING_V2 = \"${{ vars.LANGCHAIN_TRACING_V2 }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_ENDPOINT = \"${{ vars.LANGCHAIN_ENDPOINT }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_API_KEY = \"${{ secrets.LANGCHAIN_API_KEY }}\"\n" >> $TFVARS
+          echo -e "JWT_EXPIRY = \"${{ secrets.JWT_EXPIRY }}\"\n" >> $TFVARS
+          echo -e "JWT_SECRET_KEY = \"${{ secrets.JWT_SECRET_KEY }}\"\n" >> $TFVARS
+          echo -e "GITHUB_CLIENT_ID = \"${{ secrets.LOGIN_GITHUB_CLIENT_ID }}\"\n" >> $TFVARS
+          echo -e "GITHUB_CLIENT_SECRET = \"${{ secrets.LOGIN_GITHUB_CLIENT_SECRET }}\"\n" >> $TFVARS
+          echo -e "FRONTEND_URL = \"${{ vars.FRONTEND_URL }}\"\n" >> $TFVARS
+          echo -e "GOOGLE_API_KEY = \"${{ secrets.GOOGLE_API_KEY }}\"\n" >> $TFVARS
           
       - name: Display .auto.tfvars file content
         run: |
-          cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.environment  }}.auto.tfvars
+          cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
   
   Plan_dev:
     needs: Build
