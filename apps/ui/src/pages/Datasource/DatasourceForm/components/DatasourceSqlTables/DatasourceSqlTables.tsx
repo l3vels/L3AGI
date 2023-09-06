@@ -1,32 +1,18 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
 import DataGrid from 'components/DataGrid'
-import Typography from '@l3-lib/ui-core/dist/Typography'
 import { IDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
 import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
+
+import TextCellRenderer from './TextCellRenderer'
+import { GridReadyEvent } from 'ag-grid-community'
 
 type DatasourceSqlTablesProps = {
   data: IDatasourceSqlTables
   tables: string[]
   onTablesSelected: (tables: string[]) => void
 }
-
-type RendererProps = {
-  webhooks(data: string): string
-  value: string
-}
-
-const TextCellRenderer = (props: RendererProps) => (
-  <div>
-    <Typography
-      value={props.value}
-      type={Typography.types.LABEL}
-      size={Typography.sizes.sm}
-      customColor='rgba(255, 255, 255, 1)'
-    />
-  </div>
-)
 
 const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTablesProps) => {
   const gridRef = useRef<any>({})
@@ -47,7 +33,6 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
         headerName: 'Table',
         field: 'name',
         headerComponent: HeaderComponent,
-        // valueGetter: 'data.assigned_user_first_name + " " + data.assigned_user_last_name',
         filter: 'agTextColumnFilter',
         resizable: true,
         // cellRen
@@ -55,26 +40,16 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
         minWidth: 200,
         width: 350,
         flex: 2,
-        // sizeColumnsToFit: true,
-        // headerComponentParams: {
-        //   icon: <PersonaIcon />,
-        // },
       },
       {
         headerName: 'Rows',
         headerComponent: HeaderComponent,
         field: 'count',
         filter: 'agTextColumnFilter',
-        // cellRenderer: TextCellRenderer,
         resizable: true,
-        // headerComponentParams: {
-        //   icon: <EmailIcon />,
-        // },
-
         minWidth: 200,
         width: 350,
         flex: 2,
-        // sizeColumnsToFit: true,
       },
     ],
     [HeaderCheckbox, RowCheckbox],
@@ -86,6 +61,17 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
     onTablesSelected(tables)
   }
 
+  const onGridReady = (params: GridReadyEvent<any>) => {
+    if (!tables) return
+
+    tables.forEach(name => {
+      const rowNode = params.api.getRowNode(name)
+      if (rowNode) {
+        rowNode.setSelected(true)
+      }
+    })
+  }
+
   return (
     <div>
       <DataGrid
@@ -94,16 +80,7 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
         columnConfig={config}
         headerHeight={130}
         onSelectionChanged={onSelectionChanged}
-        onGridReady={params => {
-          if (!tables) return
-
-          tables.forEach(name => {
-            const rowNode = params.api.getRowNode(name)
-            if (rowNode) {
-              rowNode.setSelected(true)
-            }
-          })
-        }}
+        onGridReady={onGridReady}
       />
     </div>
   )

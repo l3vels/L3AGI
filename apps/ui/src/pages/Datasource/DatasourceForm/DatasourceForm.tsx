@@ -16,7 +16,7 @@ import DataLoaderCard from './components/DataLoaderCard'
 import FormikTextField from 'components/TextFieldFormik'
 import { DATA_LOADER_IMAGES } from '../constants'
 import { useDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
-import DatasourceSqlTables from './components/DatasourceSqlTables'
+import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlTables'
 import { useParams } from 'react-router-dom'
 
 type DatasourceFormProps = {
@@ -174,7 +174,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
               onClick={() => {
                 fetchSqlTables()
               }}
-              disabled={loading}
+              disabled={loading || data}
               size={Button.sizes.SMALL}
             >
               {loading ? <Loader size={32} /> : 'Connect'}

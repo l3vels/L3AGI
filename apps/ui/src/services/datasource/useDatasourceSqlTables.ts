@@ -23,7 +23,6 @@ type Variables = {
 
 export const useDatasourceSqlTables = (variables: Variables) => {
   const [fetchSqlTables, { data, loading }] = useLazyQuery<Data, Variables>(DATASOURCE_SQL_TABLES, {
-    notifyOnNetworkStatusChange: true,
     variables,
   })
 
