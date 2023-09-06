@@ -30,6 +30,7 @@ const Login = () => {
      resendVerifyEmailHandle, 
    } = useLogin()
   const {githubLogin} = useGithubLogin()
+  const navigate = useNavigate()
 
   return (
     <StyledCenterFormContainer>
@@ -76,14 +77,16 @@ const Login = () => {
             marginTop: 18,
           }}
         /> */}
+        <div  onClick={()=>{
+           navigate('/register')
+          }}>
+            
         <Typography
           value='Register?'
           type={Typography.types.label}
           size={Typography.sizes.lg}
           as={'a'}
-          onClick={()=>{
-            window.location.href = '/register'
-          }}
+        
           customColor='#FFFFFF'
           style={{
             textDecorationLine: 'underline',
@@ -93,7 +96,7 @@ const Login = () => {
             marginTop: 18,
           }}
         />
-
+      </div>
         <Button
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
           onClick={() => formik.handleSubmit()}

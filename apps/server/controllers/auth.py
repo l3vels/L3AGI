@@ -35,11 +35,10 @@ def login(body: LoginInput, req:Request, res: Response):
         
         return {
             "success": True,
+            "message": "Login successful",
             "access_token": token,
             "verified": user.is_active
         }
-    except UserNotFoundException:
-        raise HTTPException(status_code=404, detail="User not found")
     except UserException as e:
         raise HTTPException(status_code=400, detail=str(e))
       
@@ -110,9 +109,10 @@ def register(body: RegisterInput):
     """
     try:
         data = auth_service.register(input=body)
-        return data
-    except UserNotFoundException:
-        raise HTTPException(status_code=404, detail="User not found")
+        return {
+            "success": True,
+            "message": "User registration successful"
+        }
     except UserException as e:
         raise HTTPException(status_code=400, detail=str(e))
     

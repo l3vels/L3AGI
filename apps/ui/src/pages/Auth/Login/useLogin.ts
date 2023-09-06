@@ -73,25 +73,25 @@ const useLogin = () => {
     validationSchema,
     onSubmit: async values => {
       const response = await authLoginComplete(values.email, values.password)
-      console.log(response, "Login response")
 
       if (response.challengeName === 'NEW_PASSWORD_REQUIRED') {
         navigate('update-password', { state: { response } })
         return
       }
-
-      if (response.hasError && response?.error.networkError?.result?.statusCode === 400) {
+      const hasError = response.hasError
+      const networkError = response?.error?.networkError
+      if (hasError && networkError?.statusCode === 400) {
         return setAlertMessage({
           type: 'danger',
-          message: 'User email or password is incorrect',
+          message: networkError?.result?.detail || 'User email or password is incorrect',
         })
       }
 
-      if (response.hasError && !response?.error.networkError?.result) {
+      if (response.hasError && !networkError?.result) {
         return setAlertMessage({
           type: 'danger',
-          message:
-            'Something went wrong. If this error persists, please contact the administrator.',
+          message: networkError?.result?.detail || 
+          'Something went wrong. If this error persists, please contact the administrator.',
         })
       }
 

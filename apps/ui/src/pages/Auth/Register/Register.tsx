@@ -1,14 +1,15 @@
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
-
+import { useNavigate } from 'react-router-dom'
 import useRegister from 'pages/Auth/Register/useRegister'
 import TextFieldFormik from 'components/TextFieldFormik'
 import Button from '@l3-lib/ui-core/dist/Button'
-
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
+  const navigate = useNavigate()
 
   return (
     <StyledCenterFormContainer>
@@ -26,6 +27,26 @@ const Register = () => {
             type="password"
           /> */}
         </FormikProvider>
+        <div  onClick={()=>{
+          navigate('/login')
+          }}>
+            
+        <Typography
+          value='Login?'
+          type={Typography.types.label}
+          size={Typography.sizes.lg}
+          as={'a'}
+        
+          customColor='#FFFFFF'
+          style={{
+            textDecorationLine: 'underline',
+            cursor: 'pointer',
+            textAlign: 'center',
+            textUnderlineOffset: 5,
+            marginTop: 18,
+          }}
+        />
+      </div>
         {/* <ButtonContainer> */}
         <Button onClick={formik.handleSubmit}>Register</Button>
 

@@ -33,7 +33,7 @@ const useResetPassword = () => {
     onSubmit: async values => {
       const response = await resetPassword(values.password, values.confirm_password, id, () => {})
 
-      if (response.hasError && response?.error.networkError?.result?.statusCode === 400) {
+      if (response.hasError && response?.error?.networkError?.result?.statusCode === 400) {
         return setAlertMessage({ type: 'danger', message: 'Incorrect confirm password' })
       }
 

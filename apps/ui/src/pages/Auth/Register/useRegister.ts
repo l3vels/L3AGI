@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext} from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useRegistrationService } from 'services/useAuthService'
 import { useNavigate } from 'react-router-dom'
-
+import { ToastContext } from 'contexts'
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -39,17 +39,33 @@ const useRegister = () => {
   const [alertMessage, setAlertMessage] = React.useState({ type: '', message: '' })
   const [registrationComplete] = useRegistrationService()
   const navigate = useNavigate()
-
+  const { setToast } = useContext(ToastContext)
   const handleSubmit = async (values: any) => {
     const data = { ...values }
     const response = await registrationComplete(data)
+    const hasError = response?.hasError
+    const networkError = response?.error?.networkError
 
-    console.log(response, "Register response")
-    if (!response) {
-      setAlertMessage({ type: 'danger', message: 'User email is already registered' })
-      return
+    if (hasError && networkError?.statusCode === 400) {
+      return setAlertMessage({
+        type: 'danger',
+        message: networkError?.result?.detail || 'User email is already registered',
+      })
     }
 
+    if (response.hasError && !networkError?.result) {
+      return setAlertMessage({
+        type: 'danger',
+        message: networkError?.result?.detail || 
+        'Something went wrong. If this error persists, please contact the administrator.',
+      })
+    }
+
+    setToast({
+      message: 'User registered successfully, please login now!',
+      type: 'positive',
+      open: true,
+    })
     navigate('/login', { state: { message: response.message } })
   }
 
