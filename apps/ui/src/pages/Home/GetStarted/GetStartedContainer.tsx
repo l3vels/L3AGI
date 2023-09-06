@@ -8,6 +8,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Connect from '@l3-lib/ui-core/dist/icons/Connect'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { SectionDivider } from 'styles/globalStyle.css'
 
 type GetStartedContainerProps = {
   children: ReactNode
@@ -40,6 +41,7 @@ const GetStartedContainer = ({ children, bottomBorder = false }: GetStartedConta
       </StyledHeader>
 
       <StyledDragScroll>{children}</StyledDragScroll>
+      <SectionDivider />
     </StyledGetStarted>
   )
 }
@@ -87,6 +89,8 @@ const StyledDragScroll = styled(ScrollContainer)`
   position: relative;
   flex-wrap: wrap;
   width: 100%;
+
+  margin-bottom: 20px;
 `
 const StyledCloseButton = styled.div`
   cursor: pointer;
