@@ -7,7 +7,7 @@ on:
 jobs:
   Plan_Dev:
     if: github.ref == 'refs/heads/main'
-    uses: l3vels/l3-ui/.github/workflows/tf_plan.yml@main
+    uses: l3vels/L3AGI/.github/workflows/ui/tf_plan.yml@main
     with:
       path: terraform
       tf_vars_file: dev.tfvars
@@ -17,7 +17,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
-    uses: l3vels/l3-ui/.github/workflows/tf_apply.yml@main
+    uses: l3vels/L3AGI/.github/workflows/ui/tf_apply.yml@main
     with:
       path: terraform
       tf_vars_file: dev.tfvars
@@ -78,7 +78,7 @@ jobs:
 
   Plan_Prod:
     needs: Init_Prod
-    uses: l3vels/l3-ui/.github/workflows/tf_plan.yml@main
+    uses: l3vels/L3AGI/.github/workflows/ui/tf_plan.yml@main
     with:
       path: terraform
       tf_vars_file: prod.tfvars
@@ -88,7 +88,7 @@ jobs:
 
   Deploy_Prod:
     needs: Plan_Prod
-    uses: l3vels/l3-ui/.github/workflows/tf_apply.yml@main
+    uses: l3vels/L3AGI/.github/workflows/ui/tf_apply.yml@main
     with:
       path: terraform
       tf_vars_file: prod.tfvars
