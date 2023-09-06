@@ -41,6 +41,12 @@ variable "LANGCHAIN_TRACING_V2" {
 variable "LANGCHAIN_ENDPOINT" {
   type = string
 }
+variable "LANGCHAIN_API_KEY" {
+  type = string
+}
+variable "LANGCHAIN_PROJECT" {
+  type = string
+}
 variable "JWT_EXPIRY" {
   type = string
 }
