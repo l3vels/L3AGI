@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { useModal } from 'hooks'
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
@@ -21,7 +22,13 @@ export const useAgents = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const initialValues = {
+  const urlParams = new URLSearchParams(window.location.search)
+
+  const agentId = urlParams.get('agentId')
+
+  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+
+  let initialValues = {
     agent_name: '',
     agent_role: '',
     agent_description: '',
@@ -35,6 +42,24 @@ export const useAgents = () => {
     agent_model_version: '',
     agent_mode_provider: '',
     agent_is_memory: true,
+  }
+
+  if (agentById) {
+    initialValues = {
+      agent_name: agentById.agent?.name,
+      agent_role: agentById.agent?.role,
+      agent_description: agentById.agent?.description,
+      agent_is_template: agentById.agent?.is_template,
+      agent_is_memory: agentById.agent?.is_memory,
+      agent_temperature: agentById.configs?.temperature,
+      agent_goals: agentById.configs?.goals,
+      agent_constraints: agentById.configs?.constraints,
+      agent_tools: agentById.configs?.tools,
+      agent_instructions: agentById.configs?.instructions,
+      agent_datasources: agentById.configs?.datasources,
+      agent_model_version: agentById.configs?.model_version,
+      agent_mode_provider: agentById.configs?.mode_provider,
+    }
   }
 
   const handleSubmit = async (values: any) => {

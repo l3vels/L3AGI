@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import styled from 'styled-components'
 
@@ -22,6 +22,8 @@ import { useDatasourcesService } from 'services/datasource/useDatasourcesService
 import BackButton from 'components/BackButton'
 
 const AgentView = () => {
+  const navigate = useNavigate()
+
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
@@ -100,7 +102,10 @@ const AgentView = () => {
                   />
                 )}
                 <div>
-                  <Button size={Button.sizes.SMALL}>
+                  <Button
+                    size={Button.sizes.SMALL}
+                    onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
+                  >
                     <StyledInnerButtonWrapper>
                       <Download size={28} />
                       Add
