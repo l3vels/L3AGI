@@ -4,7 +4,7 @@ query getTeamOfAgents @api(name: "ai") {
     name
     description
     team_type
-    project_id
+    workspace_id
     is_deleted
     is_system
     account_id

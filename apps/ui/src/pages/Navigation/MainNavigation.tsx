@@ -35,10 +35,6 @@ const MainNavigation = () => {
         <About />
         <span>Home</span>
       </StyledLi>
-      <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-        <About />
-        <span>Team of Agents</span>
-      </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
         <Players />
         <span>Agents</span>
@@ -70,7 +66,7 @@ const MainNavigation = () => {
         <StyledIconWrapper>
           <Team size={30} />
         </StyledIconWrapper>
-        <span>Team</span>
+        <span>Team of AGI</span>
       </StyledLi>
     </StyledUl>
   )
