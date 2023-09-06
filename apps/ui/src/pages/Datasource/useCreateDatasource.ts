@@ -95,7 +95,7 @@ export const useCreateDatasource = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/datasources')
+      navigate(`/datasources/${datasource.id}/edit-datasource`)
     } catch (e) {
       setToast({
         message: 'Failed To Add Datasource!',

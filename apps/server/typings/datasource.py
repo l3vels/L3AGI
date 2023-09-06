@@ -21,3 +21,8 @@ class DatasourceOutput(BaseModel):
     modified_by: Optional[UUID4]
 
 
+
+class DatasourceSQLTableOutput(BaseModel):
+    id: str
+    name: str
+    count: int

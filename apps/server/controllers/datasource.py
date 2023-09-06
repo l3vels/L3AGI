@@ -3,14 +3,18 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
 from pydantic import BaseModel
+from sqlalchemy import create_engine, MetaData, text
 
 from models.datasource import DatasourceModel
-from typings.datasource import DatasourceOutput, DatasourceInput
+from models.config import ConfigModel
+from typings.datasource import DatasourceOutput, DatasourceInput, DatasourceSQLTableOutput
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.datasource import convert_datasources_to_datasource_list, convert_model_to_response
 from exceptions import DatasourceNotFoundException
 from datasources.get_datasources import get_all_datasources
+from datasources.base import DatasourceType
+from typings.config import ConfigQueryParams
 
 router = APIRouter()
 
@@ -82,6 +86,68 @@ def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[Datasourc
     """
     db_datasources = DatasourceModel.get_datasources(db=db, account=auth.account)
     return convert_datasources_to_datasource_list(db_datasources)
+
+@router.get("/{id}/sql/tables", response_model=List[DatasourceSQLTableOutput])
+def get_sql_tables(id: str, auth: UserAccount = Depends(authenticate)):
+    """
+    Get all SQL database table names and counts for a datasource by its ID.
+    """
+
+    datasource = DatasourceModel.get_datasource_by_id(db, datasource_id=id, account=auth.account)
+
+    if not datasource or datasource.is_deleted:
+        raise HTTPException(status_code=404, detail="Datasource not found")  # Ensure consistent case in error messages
+
+    configs = ConfigModel.get_configs(db, ConfigQueryParams(datasource_id=id), account=auth.account)
+
+    config = {}
+
+    for cfg in configs:
+        config[cfg.key] = cfg.value
+
+    user = config.get('user')
+    password = config.get('pass')
+    host = config.get('host')
+    port = config.get('port')
+    name = config.get('name')
+
+    prefix = ""
+
+    if datasource.source_type == DatasourceType.POSTGRES.value:
+        prefix = "postgresql+psycopg2"
+    elif datasource.source_type == DatasourceType.MYSQL.value:
+        prefix = "mysql+pymysql"
+
+    uri = f"{prefix}://{user}:{password}@{host}:{port}/{name}"
+    
+    engine = create_engine(uri)
+    meta = MetaData()
+    meta.reflect(bind=engine)
+
+    tables = meta.tables.keys()
+
+    result = []
+
+    for table in tables:
+        
+        result.append({
+            "id": table,
+            "name": table,
+            "count": 0,
+        })
+
+        # with engine.connect() as conn:
+        #     count = conn.execute(text(f"SELECT COUNT(*) FROM {table}")).scalar()
+
+        #     result.append({
+        #         "id": table,
+        #         "name": table,
+        #         "count": count,
+        #     })
+
+    return result
+
+
 
 @router.get("/{id}", response_model=DatasourceOutput)
 def get_datasource_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import UploadedFile from 'components/UploadedFile'
 
@@ -13,6 +15,9 @@ import UploadButton from './components/UploadButton'
 import DataLoaderCard from './components/DataLoaderCard'
 import FormikTextField from 'components/TextFieldFormik'
 import { DATA_LOADER_IMAGES } from '../constants'
+import { useDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
+import DatasourceSqlTables from './components/DatasourceSqlTables'
+import { useParams } from 'react-router-dom'
 
 type DatasourceFormProps = {
   formik: any
@@ -27,6 +32,10 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
 
   const { values, setFieldValue } = formik
   const { datasource_source_type, config_value, datasource_description, configs } = values
+
+  const { datasourceId } = useParams()
+
+  const { data, refetch, loading } = useDatasourceSqlTables(datasourceId || '')
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('datasource_description', value)
@@ -143,6 +152,20 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
             </>
           )}
         </StyledSourceTypeWrapper>
+
+        <div>
+          <Button
+            onClick={() => {
+              refetch()
+            }}
+            disabled={loading}
+            size={Button.sizes.MEDIUM}
+          >
+            {loading ? <Loader size={32} /> : 'Connect'}
+          </Button>
+        </div>
+
+        {data && <DatasourceSqlTables data={data} />}
       </StyledInputWrapper>
     </StyledFormContainer>
   )

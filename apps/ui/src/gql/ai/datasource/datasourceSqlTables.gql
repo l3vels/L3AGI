@@ -1,0 +1,8 @@
+query getDatasourceSqlTables($id: id!) @api(name: "ai") {
+  getDatasourceSqlTables(id: $id)
+    @rest(type: "String", path: "/datasource/{args.id}/sql/tables", method: "GET", endpoint: "ai") {
+    id
+    name
+    count
+  }
+}
