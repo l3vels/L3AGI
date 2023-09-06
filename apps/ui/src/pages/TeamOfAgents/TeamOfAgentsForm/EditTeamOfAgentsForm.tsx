@@ -26,9 +26,9 @@ const EditTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Edit TeamOfAgents</StyledSectionTitle>
+              <StyledSectionTitle>Edit Team Of Agents</StyledSectionTitle>
               <StyledSectionDescription>
-                Here is your teamOfAgents, a collection of databases, APIs, files, and more.
+                Here is your team of agents, a collection of databases, APIs, files, and more.
               </StyledSectionDescription>
             </div>
 

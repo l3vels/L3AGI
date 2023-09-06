@@ -106,7 +106,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "is_active": False,
         "name": "Decentralized speaker",
         "description": "Decentralized speakers",
-        "team_type": TeamType.DECENTRALIZED_SPEAKERS
+        "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKERS
     }]
     
 @router.get("/{id}", response_model=TeamOutput)
