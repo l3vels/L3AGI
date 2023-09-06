@@ -4,7 +4,7 @@ from typing import List, Optional
 class TeamInput(BaseModel):
     name: str
     description: Optional[str]
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
     type: str
 
 
@@ -12,7 +12,7 @@ class TeamOutput(BaseModel):
     id: UUID4
     name: str
     description: Optional[str]
-    project_id: Optional[UUID4] 
+    workspace_id: Optional[UUID4] 
     type: str
     is_deleted: bool
     is_system: bool
@@ -24,5 +24,5 @@ class TeamOutput(BaseModel):
 
 class QueryParams(BaseModel):
     id: Optional[str]
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
 

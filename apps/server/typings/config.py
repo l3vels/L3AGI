@@ -10,7 +10,7 @@ class ConfigInput(BaseModel):
     agent_id: Optional[UUID4]
     toolkit_id: Optional[UUID4]
     datasource_id: Optional[UUID4]
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
 
 
 class ConfigOutput(BaseModel):
@@ -24,7 +24,7 @@ class ConfigOutput(BaseModel):
     toolkit_id: Optional[UUID4]
     datasource_id: Optional[UUID4]
     account_id: UUID4
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
     is_deleted: bool
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]
@@ -35,7 +35,7 @@ class ConfigQueryParams(BaseModel):
     agent_id: Optional[UUID4]
     toolkit_id: Optional[UUID4]
     datasource_id: Optional[UUID4]
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
 
 
 

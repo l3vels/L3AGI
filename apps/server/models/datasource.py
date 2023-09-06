@@ -31,11 +31,9 @@ class DatasourceModel(BaseModel):
     description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
     is_system = Column(Boolean, default=False)
-    project_id = Column(UUID, ForeignKey('project.id'), nullable=True) #gonna use if need store datasources based on game, project or any
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) #gonna use if need store datasources based on game, project or any
     account_id = Column(UUID, nullable=True)
-    
-    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
-    # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
+
     
     def __repr__(self) -> str:
         return (

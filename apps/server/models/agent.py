@@ -30,7 +30,7 @@ class AgentModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     role = Column(String) 
-    project_id = Column(UUID, ForeignKey('project.id'), nullable=True) #gonna use if need store agents based on game, project or any
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) #gonna use if need store agents based on game, project or any
     agent_type = Column(String) # Later add as Enum
     description = Column(String)
     is_deleted = Column(Boolean, default=False)
@@ -41,8 +41,6 @@ class AgentModel(BaseModel):
     is_system = Column(Boolean, default=False)
     
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
-    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
-    # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
     chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete")
     team_agents = relationship("TeamAgentModel", back_populates="agent")
     

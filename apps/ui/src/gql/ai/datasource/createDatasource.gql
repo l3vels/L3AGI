@@ -11,7 +11,7 @@ mutation createDatasource($input: input!) @api(name: ai) {
     name
     description
     source_type
-    project_id
+    workspace_id
     is_deleted
     is_system
     account_id

@@ -16,7 +16,7 @@ from models.db import Base, engine
 
 
 from controllers.auth import router as user_router
-from controllers.project import router as project_router
+from controllers.workspace import router as workspace_router
 from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
 
@@ -105,7 +105,7 @@ def jwt_exception_handler(request: Request, exc: AuthJWTException):
     )
 
 app.include_router(user_router, prefix="/auth")
-app.include_router(project_router, prefix="/project")
+app.include_router(workspace_router, prefix="/workspace")
 app.include_router(team_router, prefix="/team")
 app.include_router(team_agent_router, prefix="/team-agent")
 app.include_router(agent_router, prefix="/agent")

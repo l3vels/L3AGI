@@ -29,7 +29,7 @@ class TeamModel(BaseModel):
     is_deleted = Column(Boolean, default=False)
     is_system = Column(Boolean, default=False)
     is_template = Column(Boolean, default=False)
-    project_id = Column(UUID, ForeignKey('project.id'), nullable=True) 
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
     account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
     
     account = relationship("AccountModel", cascade="all, delete")
@@ -40,7 +40,7 @@ class TeamModel(BaseModel):
             f"Team(id={self.id}, "
             f"name='{self.name}', type='{self.type}', description='{self.description}', "
             f"is_deleted={self.is_deleted}, is_system={self.is_system}, is_template={self.is_template}, "
-            f"project_id={self.project_id}, account_id={self.account_id})"
+            f"workspace_id={self.workspace_id}, account_id={self.account_id})"
         )
 
     @classmethod
