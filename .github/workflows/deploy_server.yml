@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/sever/docker/Dockerfile .
+           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/server/docker/Dockerfile .
            docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }}
            echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
