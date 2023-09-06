@@ -22,14 +22,16 @@ export const useAgentForm = (formik: any) => {
     return { value: datasource.id, label: datasource.name }
   })
 
-  const ToolOptions = tools?.map((tool: any) => {
-    return { value: tool.toolkit_id, label: tool.name }
-  })
+  const toolOptions = tools
+    ?.filter((tool: any) => tool.is_active)
+    .map((tool: any) => {
+      return { value: tool.toolkit_id, label: tool.name }
+    })
 
   return {
     providerOptions,
     modelOptions,
     datasourceOptions,
-    ToolOptions,
+    toolOptions,
   }
 }

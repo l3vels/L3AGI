@@ -15,7 +15,7 @@ from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention
-from tools.get_tools import get_tools
+from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
@@ -47,8 +47,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
 
     datasource_tools = get_datasource_tools(datasources)
-    user_tools = get_tools(['SerpGoogleSearch'])
-    tools = datasource_tools + user_tools
+    agent_tools = get_agent_tools(agent_with_configs.configs.tools)
+    tools = datasource_tools + agent_tools
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
