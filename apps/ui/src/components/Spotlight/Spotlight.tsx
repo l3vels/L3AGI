@@ -191,15 +191,18 @@ const Spotlight = () => {
             </>
           ) : (
             <>
-              <StyledPluginButton
+              <div>
+                {/* <StyledPluginButton
                 src={pluginsIcon}
                 active={showPlugins}
                 onClick={() => setShowPlugins(!showPlugins)}
-              />
+              /> */}
+              </div>
+
               <StyledInputWrapper onClick={handleChatClick}>
                 {!expanded && (
                   <Typography
-                    value={'Ask or Generate anything'}
+                    value={'Ask anything to your agents and teams'}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.sm}
                     customColor={'rgba(255, 255, 255, 0.4)'}
@@ -386,8 +389,8 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
   padding: 0px 23px 0px 16px;
   gap: 12px;
 
-  min-width: 320px;
-  width: 320px;
+  min-width: 360px;
+  width: 360px;
   height: 48px;
 
   background: rgba(0, 0, 0, 0.1);
