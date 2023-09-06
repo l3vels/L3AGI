@@ -41,10 +41,22 @@ variable "LANGCHAIN_TRACING_V2" {
 variable "LANGCHAIN_ENDPOINT" {
   type = string
 }
-variable "LANGCHAIN_API_KEY" {
+variable "JWT_EXPIRY" {
   type = string
 }
-variable "LANGCHAIN_PROJECT" {
+variable "JWT_SECRET_KEY" {
+  type = string
+}
+variable "GITHUB_CLIENT_ID" {
+  type = string
+}
+variable "GITHUB_CLIENT_SECRET" {
+  type = string
+}
+variable "FRONTEND_URL" {
+  type = string
+}
+variable "GOOGLE_API_KEY" {
   type = string
 }
 

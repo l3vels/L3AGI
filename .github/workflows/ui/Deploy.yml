@@ -1,15 +1,18 @@
-name: 'Deploy to AWS CloudFront'
+name: 'Deploy Frontend'
 on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/server/**'
+
 
 jobs:
   Plan_Dev:
     if: github.ref == 'refs/heads/main'
     uses: l3vels/L3AGI/.github/workflows/ui/tf_plan.yml@main
     with:
-      path: terraform
+      path: apps/ui/terraform
       tf_vars_file: dev.tfvars
       gh_environment: dev
     secrets:
@@ -19,7 +22,7 @@ jobs:
     needs: Plan_Dev
     uses: l3vels/L3AGI/.github/workflows/ui/tf_apply.yml@main
     with:
-      path: terraform
+      path: apps/ui/terraform
       tf_vars_file: dev.tfvars
       gh_environment: dev
     secrets:
@@ -80,7 +83,7 @@ jobs:
     needs: Init_Prod
     uses: l3vels/L3AGI/.github/workflows/ui/tf_plan.yml@main
     with:
-      path: terraform
+      path: apps/ui/terraform
       tf_vars_file: prod.tfvars
       gh_environment: prod
     secrets:
@@ -90,7 +93,7 @@ jobs:
     needs: Plan_Prod
     uses: l3vels/L3AGI/.github/workflows/ui/tf_apply.yml@main
     with:
-      path: terraform
+      path: apps/ui/terraform
       tf_vars_file: prod.tfvars
       gh_environment: prod
     secrets:

@@ -1,9 +1,11 @@
-name: Deploy to Azure K8S
+name: Deploy Backend server
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/server/**'
 
 env:
   ACR_REPOSITORY: "l3-api-ai"
@@ -28,7 +30,7 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f docker/Dockerfile .
+           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/sever/docker/Dockerfile .
            docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }}
            echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
@@ -38,7 +40,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     uses: l3vels/L3AGI/.github/workflows/server/tf_plan.yml@main
     with:
-      path: terraform
+      path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
       gh_environment: dev
       task_container_name: "l3-api-ai"
@@ -58,7 +60,7 @@ jobs:
     needs: [Build, Plan_dev]
     uses: l3vels/L3AGI/.github/workflows/server/tf_apply.yml@main
     with:
-      path: terraform
+      path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
       gh_environment: dev
       task_container_name: "l3-api-ai"
@@ -87,7 +89,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     uses: l3vels/L3AGI/.github/workflows/server/tf_plan.yml@main
     with:
-      path: terraform
+      path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
       gh_environment: prod
       task_container_name: "l3-api-ai"
@@ -107,7 +109,7 @@ jobs:
     needs: [Build, Plan_prod]
     uses: l3vels/L3AGI/.github/workflows/server/tf_apply.yml@main
     with:
-      path: terraform
+      path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
       gh_environment: prod
       task_container_name: "l3-api-ai"
