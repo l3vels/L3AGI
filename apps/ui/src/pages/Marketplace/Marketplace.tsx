@@ -22,12 +22,12 @@ const Marketplace = () => {
     <StyledRoot>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
-          <StyledTextWrapper>
+          <div>
             <StyledSectionTitle>Top-tier AI Thinkers</StyledSectionTitle>
             <StyledSectionDescription>
               Discover the foremost minds shaping AI's future with their innovative ideas
             </StyledSectionDescription>
-          </StyledTextWrapper>
+          </div>
         </StyledHeaderGroup>
         <ComponentsWrapper noPadding>
           <StyledCardsWrapper>
@@ -51,7 +51,7 @@ const Marketplace = () => {
       {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
-            <StyledTextWrapper>
+            <div>
               <StyledSectionTitle>
                 Evolving AI Virtuosos: Powered by the Community
               </StyledSectionTitle>
@@ -59,7 +59,7 @@ const Marketplace = () => {
                 Witness the growth of exceptional AI talents, nurtured by collective community
                 contributions.
               </StyledSectionDescription>
-            </StyledTextWrapper>
+            </div>
           </StyledHeaderGroup>
           <ComponentsWrapper noPadding>
             <StyledCardsWrapper>
@@ -90,9 +90,4 @@ const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   gap: 100px;
-`
-const StyledTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 `

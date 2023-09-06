@@ -12,6 +12,7 @@ import UploadButton from './components/UploadButton'
 
 import DataLoaderCard from './components/DataLoaderCard'
 import FormikTextField from 'components/TextFieldFormik'
+import { DATA_LOADER_IMAGES } from '../constants'
 
 type DatasourceFormProps = {
   formik: any
@@ -37,6 +38,8 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
       setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
     }
   }, [datasource_source_type])
+
+  console.log('dataLoaders', dataLoaders)
 
   return (
     <StyledFormContainer>
@@ -67,9 +70,16 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
             customColor={'#FFF'}
           />
           <StyledCardWrapper>
-            {dataLoaders?.map((dataLoader: any, index: number) => {
+            {dataLoaders?.map((dataLoader: any) => {
+              const filteredLogos = DATA_LOADER_IMAGES.filter(
+                (loaderImages: any) => loaderImages.sourceName === dataLoader.source_type,
+              )
+
+              const imageSrc = filteredLogos?.[0]?.imageSrc || ''
+
               return (
                 <DataLoaderCard
+                  backgroundImg={imageSrc}
                   isSelected={dataLoader.source_type === datasource_source_type}
                   isActive={dataLoader.is_active} // coming soon feature
                   key={dataLoader.name}

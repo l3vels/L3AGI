@@ -15,11 +15,8 @@ const Home = () => {
       <StyledInnerWrapperEdit>
         <GetStartedComponent />
 
-        <SectionDivider />
-
         {!isProduction && (
           <>
-            <StyledDivider />
             <Agents />
             <StyledDivider />
             <Datasource />
@@ -42,6 +39,6 @@ const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   gap: 20px;
 `
 const StyledDivider = styled.div`
-  height: 40px;
+  height: 20px;
   width: 100%;
 `

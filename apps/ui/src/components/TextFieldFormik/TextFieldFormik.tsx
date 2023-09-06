@@ -12,8 +12,10 @@ const FormikTextField = ({
   disabled,
   onBlur,
   onChange,
+  value,
   ...props
 }: {
+  value?: string
   field_name?: string
   placeholder?: string
   title?: string
@@ -39,6 +41,7 @@ const FormikTextField = ({
 
         return (
           <TextField
+            value={value}
             name={field.name}
             {...field}
             placeholder={placeholder ?? 'Please enter value'}

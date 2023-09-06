@@ -33,6 +33,7 @@ const EditDatasourceForm = () => {
             </div>
 
             <StyledButtonWrapper>
+              <BackButton />
               <Button
                 onClick={() => handleSubmit(formik?.values)}
                 size={Button.sizes.SMALL}
@@ -40,8 +41,6 @@ const EditDatasourceForm = () => {
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </Button>
-
-              <BackButton />
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 

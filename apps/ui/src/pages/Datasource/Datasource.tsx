@@ -10,7 +10,8 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
+import { DATA_LOADER_IMAGES } from './constants'
+
 import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 
@@ -40,13 +41,20 @@ const Datasource = () => {
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {datasources?.map((datasource: any, index: number) => {
+            const filteredLogos = DATA_LOADER_IMAGES.filter(
+              (loaderImages: any) => loaderImages.sourceName === datasource.source_type,
+            )
+
+            const imageSrc = filteredLogos?.[0]?.imageSrc || ''
+
             return (
               <DatasourceCard
                 key={index}
-                title={datasource.name}
-                subTitle={datasource.source_type}
+                name={datasource.name}
+                description={datasource.description}
                 onEditClick={() => navigate(`/datasources/${datasource.id}/edit-datasource`)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
+                imageSrc={imageSrc}
               />
             )
           })}

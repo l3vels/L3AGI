@@ -32,6 +32,7 @@ const CreateDatasourceForm = () => {
             </div>
 
             <StyledButtonWrapper>
+              <BackButton />
               <Button
                 onClick={() => handleSubmit(formik?.values)}
                 size={Button.sizes.SMALL}
@@ -39,8 +40,6 @@ const CreateDatasourceForm = () => {
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </Button>
-
-              <BackButton />
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 

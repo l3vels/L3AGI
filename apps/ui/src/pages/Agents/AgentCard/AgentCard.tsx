@@ -5,11 +5,12 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
+
+import Avatar from 'react-avatar'
 
 type AgentCardProps = {
   name: string
@@ -32,6 +33,11 @@ const AgentCard = ({
   onViewClick,
   onChatClick,
 }: AgentCardProps) => {
+  let shortDescription = description
+  if (description.length > 70) {
+    shortDescription = `${description.slice(0, 70)}...`
+  }
+
   return (
     <StyledAgentCard>
       <StyledCardHeader>
@@ -46,18 +52,11 @@ const AgentCard = ({
           )}
         </div>
 
-        <div>{headerTag && <Tags label={headerTag} readOnly size='small' />}</div>
+        <div>{headerTag && <Tags label={headerTag} readOnly size='small' outlined />}</div>
       </StyledCardHeader>
       <StyledCardBody>
         <StyledAvatarWrapper>
-          <Avatar
-            size={Avatar.sizes.LARGE}
-            src={
-              'https://lablab.ai/_next/image?url=https%3A%2F%2Fimagedelivery.net%2FK11gkZF3xaVyYzFESMdWIQ%2F22285de8-b832-420f-4a42-fe5120654400%2Ffull&w=3840&q=100'
-            }
-            type={Avatar.types.IMG}
-            // ariaLabel='Hadas Fahri'
-          />
+          <Avatar name={name} size='80' textSizeRatio={3} round />
           {onChatClick && (
             <StyledChatButton className='chatButton'>
               <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY} onClick={onChatClick}>
@@ -79,7 +78,7 @@ const AgentCard = ({
             customColor={'#FFF'}
           />
           <Typography
-            value={description}
+            value={shortDescription}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.8)'}
@@ -87,6 +86,14 @@ const AgentCard = ({
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
+        <div>
+          <Typography
+            value={'L3'}
+            type={Typography.types.P}
+            size={Typography.sizes.sm}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+        </div>
         <StyledButtonsWrapper className='footerButtons'>
           {onDeleteClick && (
             <IconButton
@@ -118,10 +125,10 @@ const AgentCard = ({
 export default AgentCard
 
 const StyledAgentCard = styled.div`
-  width: 330px;
-  min-width: 330px;
-  height: 180px;
-  min-height: 180px;
+  width: 335px;
+  min-width: 335px;
+  height: 185px;
+  min-height: 185px;
 
   padding: 15px;
   padding-bottom: 10px;
@@ -136,7 +143,7 @@ const StyledAgentCard = styled.div`
   justify-content: center;
 
   :hover {
-    .footerButtons {
+    .chatButton {
       opacity: 1;
     }
   }
@@ -151,7 +158,7 @@ const StyledCardHeader = styled.div`
   margin-bottom: auto;
   padding-bottom: 5px;
 
-  height: 20px;
+  min-height: 20px;
   /* margin-bottom: 10px; */
 `
 
@@ -163,10 +170,8 @@ const StyledCardBody = styled.div`
 
   display: flex;
 
-  gap: 20px;
-  /* align-items: center; */
-  /* flex-direction: column; */
-  /* justify-content: center; */
+  gap: 15px;
+
   padding: 0 15px;
 
   overflow: hidden;
@@ -188,8 +193,6 @@ const StyledButtonsWrapper = styled.div`
   gap: 4px;
 
   margin-left: auto;
-  transition: opacity 300ms;
-  opacity: 0;
 `
 const StyledBodyTextWrapper = styled.div`
   display: flex;
@@ -201,11 +204,13 @@ const StyledBodyTextWrapper = styled.div`
   padding-top: 5px;
 `
 const StyledAvatarWrapper = styled.div`
-  width: fit-content;
-  height: fit-content;
   position: relative;
-  /* background: red; */
+  text-align: center;
+  height: fit-content;
 
+  .sb-avatar {
+    font-family: unset !important;
+  }
   :hover {
     .chatButton {
       opacity: 1;
@@ -216,7 +221,7 @@ const StyledChatButton = styled.div`
   width: fit-content;
   height: fit-content;
   position: absolute;
-  bottom: -25px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
 
