@@ -10,7 +10,6 @@ from typings.team_agent import TeamAgentOutput, TeamAgentInput, QueryParams
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from exceptions import TeamAgentNotFoundException
-from agents.team_base import TeamType
 
 router = APIRouter()
 
