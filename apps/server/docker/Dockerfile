@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 
 # Install dependencies
-COPY ./apps/server/Pipfile ./apps/server/Pipfile.lock /code/
+COPY Pipfile Pipfile.lock /code/
 RUN pip install pipenv && pipenv install --system
 
 # Copy project
@@ -18,6 +18,6 @@ COPY ./ /code/
 EXPOSE 4002
 
 # Run the application
-COPY ./apps/server/entrypoint.sh /app_entry/
+COPY .entrypoint.sh /app_entry/
 RUN chmod +x /app_entry/entrypoint.sh
 ENTRYPOINT ["/app_entry/entrypoint.sh"]

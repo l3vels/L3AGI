@@ -30,14 +30,14 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/server/docker/Dockerfile .
+           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/server/docker/Dockerfile apps/server
            docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }}
            echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
   
   Plan_dev:
     needs: Build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/deploy'
     uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
     with:
       path: apps/server/terraform
@@ -86,7 +86,7 @@ jobs:
 
   Plan_prod:
     needs: Init_Prod
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/deploy'
     uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
     with:
       path: apps/server/terraform
