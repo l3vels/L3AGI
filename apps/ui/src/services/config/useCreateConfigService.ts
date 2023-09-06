@@ -8,6 +8,7 @@ export type ConfigInput = {
   key_type: string
   datasource_id?: string
   tool_id?: string
+  team_id?: string
   is_secret: boolean
   is_required: boolean
 }

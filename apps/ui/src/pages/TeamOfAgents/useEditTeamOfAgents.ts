@@ -12,7 +12,7 @@ import { useTeamOfAgents } from './useTeamOfAgents'
 export const useEditTeamOfAgents = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { teamOfAgentsId } = params
+  const { teamId } = params
 
   const { refetchTeamOfAgents } = useTeamOfAgents()
 
@@ -23,10 +23,10 @@ export const useEditTeamOfAgents = () => {
   const [updateTeamOfAgents] = useUpdateTeamOfAgentsService()
   const [updateConfig] = useUpdateConfigService()
 
-  const { data: teamOfAgentsById } = useTeamOfAgentsByIdService({ id: teamOfAgentsId || '' })
+  const { data: teamOfAgentsById } = useTeamOfAgentsByIdService({ id: teamId || '' })
   const { data: configsData, refetch: refetchConfigs } = useConfigsService()
 
-  const filteredConfig = configsData?.filter((config: any) => config.teamOfAgents_id === teamOfAgentsId) // TODO: filter in backend
+  const filteredConfig = configsData?.filter((config: any) => config.team_id === teamId) // TODO: filter in backend
 
   const configs = filteredConfig?.reduce((prev: any, config: any) => {
     prev[config.key] = {
@@ -44,23 +44,23 @@ export const useEditTeamOfAgents = () => {
   const defaultValues = {
     teamOfAgents_name: teamOfAgentsById?.name,
     teamOfAgents_description: teamOfAgentsById?.description,
-    teamOfAgents_source_type: teamOfAgentsById?.source_type,
+    teamOfAgents_team_type: teamOfAgentsById?.team_type,
     configs: configs || {},
   }
 
   const handleSubmit = async (values: any) => {
-    if (!teamOfAgentsId) return
+    if (!teamId) return
 
     setIsLoading(true)
 
     const updatedTeamOfAgentsValues = {
       name: values.teamOfAgents_name,
       description: values.teamOfAgents_description,
-      source_type: values.teamOfAgents_source_type,
+      team_type: values.teamOfAgents_team_type,
     }
 
     const promises = [
-      updateTeamOfAgents(teamOfAgentsId, {
+      updateTeamOfAgents(teamId, {
         ...updatedTeamOfAgentsValues,
       }),
     ]
@@ -74,7 +74,7 @@ export const useEditTeamOfAgents = () => {
         key: cfg.key,
         value,
         key_type: cfg.key_type,
-        teamOfAgents_id: teamOfAgentsId,
+        team_id: teamId,
         is_secret: cfg.is_secret,
         is_required: cfg.is_required,
       })
@@ -85,10 +85,10 @@ export const useEditTeamOfAgents = () => {
     await Promise.all(promises)
     await Promise.all([refetchTeamOfAgents(), refetchConfigs()])
 
-    navigate('/teamOfAgents')
+    navigate('/team-of-agents')
 
     setToast({
-      message: 'TeamOfAgents was updated!',
+      message: 'Team was updated!',
       type: 'positive',
       open: true,
     })

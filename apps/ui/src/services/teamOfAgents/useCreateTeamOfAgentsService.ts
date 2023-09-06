@@ -5,14 +5,14 @@ import createTeamOfAgentsGql from '../../gql/ai/teamOfAgents/createTeamOfAgents.
 export type TeamOfAgentsInput = {
   name: string
   description: string
-  source_type: string
+  team_type: string
 }
 
 export const useCreateTeamOfAgentsService = () => {
   const [mutation] = useMutation(createTeamOfAgentsGql)
 
   const createTeamOfAgentsService = async (input: TeamOfAgentsInput) => {
-    const { name, description, source_type } = input
+    const { name, description, team_type } = input
 
     const {
       data: { createTeamOfAgents },
@@ -21,7 +21,7 @@ export const useCreateTeamOfAgentsService = () => {
         input: {
           name,
           description,
-          source_type,
+          team_type,
         },
       },
     })

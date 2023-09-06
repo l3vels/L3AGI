@@ -149,15 +149,15 @@ const Route = () => {
               />
             </Router>
             <Router path={'team-of-agents'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Datasource />} key={document.location.href} />
-              <Router path={':teamOfAgentsId'} element={<TeamOfAgents />} key={document.location.href} />
+              <Router index element={<TeamOfAgents />} key={document.location.href} />
+              <Router path={':teamId'} element={<TeamOfAgents />} key={document.location.href} />
               <Router
-                path={'create-team-of-agents'}
+                path={'create-team'}
                 element={<CreateTeamOfAgentsForm />}
                 key={document.location.href}
               />
               <Router
-                path={':teamOfAgentsId/edit-team-of-agents'}
+                path={':teamId/edit-team'}
                 element={<EditTeamOfAgentsForm />}
                 key={document.location.href}
               />

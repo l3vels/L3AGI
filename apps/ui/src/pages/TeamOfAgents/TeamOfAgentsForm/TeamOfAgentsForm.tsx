@@ -19,24 +19,24 @@ type TeamOfAgentsFormProps = {
 }
 
 const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
-  const { dataLoaders, pickedLoaderFields, handleUploadFile, fileLoading } =
+  const { teamTypes, pickedLoaderFields, handleUploadFile, fileLoading } =
     useTeamOfAgentsForm(formik)
 
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { teamOfAgents_source_type, config_value, teamOfAgents_description, configs } = values
+  const { teamOfAgents_team_type, config_value, teamOfAgents_description, configs } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('teamOfAgents_description', value)
   }
 
   useEffect(() => {
-    if (teamOfAgents_source_type?.length > 0 && !isLoading && fields) {
+    if (teamOfAgents_team_type?.length > 0 && !isLoading && fields) {
       setFieldValue('config_key', pickedLoaderFields?.fields[0]?.key)
       setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
     }
-  }, [teamOfAgents_source_type])
+  }, [teamOfAgents_team_type])
 
   return (
     <StyledFormContainer>
@@ -61,21 +61,21 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <StyledSourceTypeWrapper>
           <Typography
-            value='Source Type'
+            value='Team Type'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
             customColor={'#FFF'}
           />
           <StyledCardWrapper>
-            {dataLoaders?.map((dataLoader: any, index: number) => {
+            {teamTypes?.map((dataLoader: any, index: number) => {
               return (
                 <DataLoaderCard
-                  isSelected={dataLoader.source_type === teamOfAgents_source_type}
+                  isSelected={dataLoader.team_type === teamOfAgents_team_type}
                   isActive={dataLoader.is_active} // coming soon feature
                   key={dataLoader.name}
-                  title={dataLoader.source_type}
+                  title={dataLoader.team_type}
                   onClick={() => {
-                    setFieldValue('teamOfAgents_source_type', dataLoader.source_type)
+                    setFieldValue('teamOfAgents_team_type', dataLoader.team_type)
                     setFieldValue('config_value', '')
                   }}
                 />

@@ -23,17 +23,17 @@ const TeamOfAgents = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>TeamOfAgents</StyledSectionTitle>
+          <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
           <StyledSectionDescription>
-            Here is your teamOfAgents, a collection of databases, APIs, files, and more.
+            Create and manage your team of AI agents for interactive experiences
           </StyledSectionDescription>
         </div>
         <div>
           <Button
-            onClick={() => navigate('/teamOfAgents/create-team-of-agents')}
+            onClick={() => navigate('/team-of-agents/create-team')}
             size={Button.sizes.SMALL}
           >
-            Add TeamOfAgents
+            Add Team 
           </Button>
         </div>
       </StyledHeaderGroup>
@@ -44,12 +44,12 @@ const TeamOfAgents = () => {
               <TeamOfAgentsCard
                 key={index}
                 title={teamOfAgents.name}
-                subTitle={teamOfAgents.source_type}
-                onEditClick={() => navigate(`/teamOfAgents/${teamOfAgents.id}/edit-team-of-agents`)}
+                subTitle={teamOfAgents.team_type}
+                onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
               />
             )
-          })}
+          })}r
         </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>

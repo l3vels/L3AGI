@@ -18,12 +18,12 @@ export const useCreateTeamOfAgents = () => {
   const [createTeamOfAgents] = useCreateTeamOfAgentsService()
   const [createConfig] = useCreateConfigService()
 
-  const { data: dataLoaders } = useTeamTypesService()
+  const { data: teamTypes } = useTeamTypesService()
 
   const initialValues = {
     teamOfAgents_name: '',
     teamOfAgents_description: '',
-    teamOfAgents_source_type: 'Postgres',
+    teamOfAgents_team_type: 'DEBATES',
     configs: {},
   }
 
@@ -32,14 +32,14 @@ export const useCreateTeamOfAgents = () => {
     onSubmit: async values => handleSubmit(values),
   })
 
-  const source_type = formik.values.teamOfAgents_source_type
+  const team_type = formik.values.teamOfAgents_team_type
 
   const { setFieldValue } = formik
 
   useEffect(() => {
-    if (!dataLoaders) return
+    if (!teamTypes) return
 
-    const loader = dataLoaders.find((loader: any) => loader.source_type === source_type)
+    const loader = teamTypes.find((loader: any) => loader.team_type === team_type)
     if (!loader) return
 
     const { fields } = loader
@@ -57,7 +57,7 @@ export const useCreateTeamOfAgents = () => {
     })
 
     setFieldValue('configs', configs)
-  }, [setFieldValue, source_type, dataLoaders])
+  }, [setFieldValue, team_type, teamTypes])
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
@@ -65,7 +65,7 @@ export const useCreateTeamOfAgents = () => {
       const teamOfAgentsInput = {
         name: values.teamOfAgents_name,
         description: values.teamOfAgents_description,
-        source_type: values.teamOfAgents_source_type,
+        team_type: values.teamOfAgents_team_type,
       }
 
       const teamOfAgents = await createTeamOfAgents(teamOfAgentsInput)
@@ -81,7 +81,7 @@ export const useCreateTeamOfAgents = () => {
           key: cfg.key,
           value,
           key_type: cfg.key_type,
-          teamOfAgents_id: teamOfAgents.id,
+          team_id: teamOfAgents.id,
           is_secret: cfg.is_secret,
           is_required: cfg.is_required,
         })
@@ -91,11 +91,11 @@ export const useCreateTeamOfAgents = () => {
 
       await refetchTeamOfAgents()
       setToast({
-        message: 'New TeamOfAgents was Created!',
+        message: 'New team was Created!',
         type: 'positive',
         open: true,
       })
-      navigate('/teamOfAgents')
+      navigate('/team-of-agents')
     } catch (e) {
       setToast({
         message: 'Failed To Add TeamOfAgents!',

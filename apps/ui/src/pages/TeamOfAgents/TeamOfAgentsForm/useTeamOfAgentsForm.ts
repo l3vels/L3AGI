@@ -8,7 +8,7 @@ export const useTeamOfAgentsForm = (formik: any) => {
   const { data: teamTypes } = useTeamTypesService()
 
   const pickedLoaderFields = teamTypes
-    ?.filter((loader: any) => loader.source_type === formik?.values?.teamOfAgents_source_type)
+    ?.filter((loader: any) => loader.team_type === formik?.values?.teamOfAgents_team_type)
     .map((loader: any) => {
       return { fields: loader.fields, category: loader.category }
     })[0] || { category: '', fields: [] }
@@ -55,6 +55,6 @@ export const useTeamOfAgentsForm = (formik: any) => {
     pickedLoaderFields,
     handleUploadFile,
     fileLoading,
-    dataLoaders,
+    teamTypes,
   }
 }

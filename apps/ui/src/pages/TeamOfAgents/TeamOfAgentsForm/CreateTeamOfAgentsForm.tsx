@@ -25,9 +25,9 @@ const CreateTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Add TeamOfAgents</StyledSectionTitle>
+              <StyledSectionTitle>Add Team</StyledSectionTitle>
               <StyledSectionDescription>
-                Here is your teamOfAgents, a collection of databases, APIs, files, and more.
+              Create and manage your team of AI agents for interactive experiences.
               </StyledSectionDescription>
             </div>
 
