@@ -5,7 +5,7 @@ class DatasourceInput(BaseModel):
     name: str
     description: Optional[str]
     source_type: str #later enum (web-scrapping, notion, db, and so on)
-    project_id: Optional[UUID4] 
+    workspace_id: Optional[UUID4] 
 
 
 class DatasourceOutput(BaseModel):
@@ -13,7 +13,7 @@ class DatasourceOutput(BaseModel):
     name: str
     description: Optional[str]
     source_type: str #later enum (web-scrapping, notion, db, and so on)
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
     is_deleted: bool
     is_system: bool
     account_id: UUID4

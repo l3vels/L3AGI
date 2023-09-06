@@ -21,7 +21,7 @@ class ConfigModel(BaseModel):
         agent_id (UUID): The ID of the agent associated with the configuration.
         toolkit_id (UUID): The ID of the toolkit associated with the configuration.
         account_id (UUID): The ID of the account associated with the configuration.
-        project_id (UUID): The ID of the project associated with the configuration.
+        workspace_id (UUID): The ID of the project associated with the configuration.
         datasource_id (UUID): The ID of the datasource associated with the configuration.
         value (String): The value of the tool configuration.
         key_type (String): The type of key used.
@@ -37,7 +37,7 @@ class ConfigModel(BaseModel):
     agent_id = Column(UUID,ForeignKey('agent.id'), nullable=True)
     toolkit_id = Column(UUID, nullable=True)
     account_id = Column(UUID, nullable=True)
-    project_id = Column(UUID, ForeignKey('project.id'), nullable=True)
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True)
     datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
     team_id = Column(UUID, ForeignKey('team.id'), nullable=True)
     team_agent_id = Column(UUID, ForeignKey('team_agent.id'), nullable=True)
@@ -47,14 +47,7 @@ class ConfigModel(BaseModel):
     is_required = Column(Boolean)    
     is_deleted = Column(Boolean, default=False)
 
-    # account = relationship("AccountModel", back_populates="account", cascade="all, delete")
-    # project = relationship("ProjectModel", back_populates="project", cascade="all, delete")
-    # tool = relationship("ToolModel", back_populates="tool", cascade="all, delete")
-    # datasource = relationship("DatasourceModel", back_populates="datasource", cascade="all, delete")
-    # agent = relationship("AgentModel", back_populates="agent", cascade="all, delete")
-    # team = relationship("TeamModel", back_populates="team", cascade="all, delete")
-    # team_agent = relationship("TeamAgentModel", back_populates="team_agent", cascade="all, delete")
-    
+
     def __repr__(self) -> str:
         return (
             f"Config(id={self.id}, "

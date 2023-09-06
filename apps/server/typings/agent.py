@@ -5,7 +5,7 @@ class AgentInput(BaseModel):
     name: str
     description: Optional[str]
     agent_type:Optional[str]
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
     role: Optional[str]
     is_memory: Optional[bool]
     avatar: Optional[str]
@@ -44,7 +44,7 @@ class AgentResponse(BaseModel):
     name: str
     description: str
     agent_type: Optional[str]
-    project_id: Optional[UUID4]
+    workspace_id: Optional[UUID4]
     role: str
     is_template: bool
     is_deleted: bool

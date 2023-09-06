@@ -10,7 +10,7 @@ query getConfigs @api(name: "ai") {
     toolkit_id
     datasource_id
     account_id
-    project_id
+    workspace_id
     is_deleted
     created_by
     modified_by
