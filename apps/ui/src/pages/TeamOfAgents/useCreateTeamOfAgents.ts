@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useCreateTeamOfAgentsService } from 'services/teamOfAgents/useCreateTeamOfAgentsService'
-import { useDataLoadersService } from 'services/teamOfAgents/useDataLoadersService'
+import { useTeamTypesService } from 'services/teamOfAgents/useTeamTypesService'
 import { useTeamOfAgentsService } from 'services/teamOfAgents/useTeamOfAgentsService'
 
 export const useCreateTeamOfAgents = () => {
@@ -18,7 +18,7 @@ export const useCreateTeamOfAgents = () => {
   const [createTeamOfAgents] = useCreateTeamOfAgentsService()
   const [createConfig] = useCreateConfigService()
 
-  const { data: dataLoaders } = useDataLoadersService()
+  const { data: dataLoaders } = useTeamTypesService()
 
   const initialValues = {
     teamOfAgents_name: '',

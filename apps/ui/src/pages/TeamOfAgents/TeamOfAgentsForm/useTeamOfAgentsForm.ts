@@ -2,20 +2,18 @@ import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
 import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
 import { useContext, useState } from 'react'
-import { useDataLoadersService } from 'services/teamOfAgents/useDataLoadersService'
+import { useTeamTypesService } from 'services/teamOfAgents/useTeamTypesService'
 
 export const useTeamOfAgentsForm = (formik: any) => {
-  const { data: dataLoaders } = useDataLoadersService()
+  const { data: teamTypes } = useTeamTypesService()
 
-  const pickedLoaderFields = dataLoaders
+  const pickedLoaderFields = teamTypes
     ?.filter((loader: any) => loader.source_type === formik?.values?.teamOfAgents_source_type)
     .map((loader: any) => {
       return { fields: loader.fields, category: loader.category }
     })[0] || { category: '', fields: [] }
 
-  // console.log('dataLoaders', dataLoaders)
-  // console.log('dataLoaderOptions', dataLoaderOptions)
-  // console.log('pickedLoaderFields', pickedLoaderFields)
+
 
   const { setToast } = useContext(ToastContext)
 
