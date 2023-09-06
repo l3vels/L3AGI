@@ -7,29 +7,46 @@ import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 
 type DatasourceCardProps = {
-  title: string
-  subTitle: string
+  name: string
+  description: string
   onEditClick: () => void
   onDeleteClick: () => void
+  imageSrc: string
 }
 
-const DatasourceCard = ({ title, subTitle, onEditClick, onDeleteClick }: DatasourceCardProps) => {
+const DatasourceCard = ({
+  name,
+  description,
+  onEditClick,
+  onDeleteClick,
+  imageSrc,
+}: DatasourceCardProps) => {
+  let shortDescription = description
+  if (description.length > 90) {
+    shortDescription = `${description.slice(0, 90)}...`
+  }
+
   return (
     <StyledCard>
-      <StyledTextWrapper>
-        <Typography
-          value={title}
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-          customColor={'#FFF'}
-        />
-        <Typography
-          value={subTitle}
-          type={Typography.types.P}
-          size={Typography.sizes.md}
-          customColor={'rgba(255,255,255, 0.8)'}
-        />
-      </StyledTextWrapper>
+      <StyledBodyWrapper>
+        <StyledImg src={imageSrc} />
+        <StyledDescriptionWrapper>
+          <Typography
+            value={shortDescription}
+            type={Typography.types.P}
+            size={Typography.sizes.sm}
+            customColor={'rgba(255,255,255, 0.7)'}
+          />
+        </StyledDescriptionWrapper>
+        <StyledNameWrapper>
+          <Typography
+            value={name}
+            type={Typography.types.P}
+            size={Typography.sizes.md}
+            customColor={'#FFF'}
+          />
+        </StyledNameWrapper>
+      </StyledBodyWrapper>
       <StyledButtonsWrapper>
         <IconButton
           onClick={onEditClick}
@@ -51,14 +68,14 @@ const DatasourceCard = ({ title, subTitle, onEditClick, onDeleteClick }: Datasou
 export default DatasourceCard
 
 const StyledCard = styled.div`
+  position: relative;
   width: 320px;
   min-width: 320px;
-  height: 150px;
-  min-height: 150px;
+  height: 170px;
+  min-height: 170px;
 
   background: rgba(0, 0, 0, 0.2);
-  /* backdrop-filter: blur(10px); */
-  border: 1px solid #5d6a7d;
+
   border-radius: 10px;
 
   display: flex;
@@ -66,18 +83,46 @@ const StyledCard = styled.div`
   justify-content: space-between;
   /* align-items: center; */
 
-  padding: 20px;
+  padding: 10px;
+  padding-bottom: 0px;
 `
 const StyledButtonsWrapper = styled.div`
   display: flex;
-  align-items: center;
-  /* justify-content: space-between; */
+  align-items: flex-end;
+  justify-content: flex-end;
   gap: 2px;
 
-  margin-left: auto;
+  margin-top: auto;
+  /* width: 100%; */
+  /* padding: 5px; */
+  /* margin-left: auto; */
+
+  position: absolute;
+  bottom: 3px;
+  right: 10px;
 `
-const StyledTextWrapper = styled.div`
+const StyledBodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
+
+  gap: 5px;
+  padding: 8px 20px;
+
+  height: 100%;
+  overflow: hidden;
+  line-height: 14px;
+  /* text-align: center; */
+`
+const StyledImg = styled.img`
+  border-radius: 8px;
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+`
+const StyledDescriptionWrapper = styled.div`
+  overflow: hidden;
+`
+const StyledNameWrapper = styled.div`
+  margin-top: auto;
 `

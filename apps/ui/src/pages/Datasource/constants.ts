@@ -11,17 +11,17 @@ export const DATA_LOADER_IMAGES = [
   {
     sourceName: 'Upload File',
     imageSrc:
-      'https://png.pngtree.com/element_our/20190601/ourmid/pngtree-white-upload-icon-image_1338667.jpg',
+      'https://w7.pngwing.com/pngs/382/24/png-transparent-computer-icons-symbol-windows-10-symbol-miscellaneous-angle-rectangle-thumbnail.png',
   },
   {
     sourceName: 'Web Page',
     imageSrc:
-      'https://png.pngtree.com/thumb_back/fh260/background/20210403/pngtree-simple-white-flat-vectors-with-diagonal-cuts-decorative-backdrops-for-your-image_597614.jpg',
+      'https://e7.pngegg.com/pngimages/272/463/png-clipart-computer-icons-web-development-globe-internet-globe-miscellaneous-emblem.png',
   },
   {
     sourceName: 'Notion',
     imageSrc:
-      'https://e0.pxfuel.com/wallpapers/377/354/desktop-wallpaper-using-notion-as-your-second-brain-thumbnail.jpg',
+      'https://seuladogeek.com.br/wp-content/uploads/2023/01/notion-logo-vector-and-png.png',
   },
   {
     sourceName: 'Shopify',

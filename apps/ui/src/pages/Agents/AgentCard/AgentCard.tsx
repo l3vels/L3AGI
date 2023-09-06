@@ -33,6 +33,11 @@ const AgentCard = ({
   onViewClick,
   onChatClick,
 }: AgentCardProps) => {
+  let shortDescription = description
+  if (description.length > 70) {
+    shortDescription = `${description.slice(0, 70)}...`
+  }
+
   return (
     <StyledAgentCard>
       <StyledCardHeader>
@@ -73,7 +78,7 @@ const AgentCard = ({
             customColor={'#FFF'}
           />
           <Typography
-            value={description}
+            value={shortDescription}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.8)'}
@@ -81,7 +86,15 @@ const AgentCard = ({
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
-        <StyledButtonsWrapper>
+        <div>
+          <Typography
+            value={'L3'}
+            type={Typography.types.P}
+            size={Typography.sizes.sm}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+        </div>
+        <StyledButtonsWrapper className='footerButtons'>
           {onDeleteClick && (
             <IconButton
               onClick={onDeleteClick}

@@ -10,7 +10,7 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
+
 import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 
@@ -43,10 +43,13 @@ const Datasource = () => {
             return (
               <DatasourceCard
                 key={index}
-                title={datasource.name}
-                subTitle={datasource.source_type}
+                name={datasource.name}
+                description={datasource.description}
                 onEditClick={() => navigate(`/datasources/${datasource.id}/edit-datasource`)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
+                imageSrc={
+                  'https://w7.pngwing.com/pngs/441/460/png-transparent-postgresql-plain-wordmark-logo-icon-thumbnail.png'
+                }
               />
             )
           })}
