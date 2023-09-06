@@ -1,0 +1,21 @@
+mutation createTeamOfAgents($input: input!) @api(name: ai) {
+  createTeamOfAgents(input: $input)
+    @rest(
+      type: "TeamOfAgents"
+      path: "/team-of-agents"
+      method: "POST"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    id
+    name
+    description
+    source_type
+    project_id
+    is_deleted
+    is_system
+    account_id
+    created_by
+    modified_by
+  }
+}

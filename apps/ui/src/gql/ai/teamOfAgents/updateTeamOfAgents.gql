@@ -1,0 +1,15 @@
+mutation updateTeamOfAgents($id: id!, $input: input!) @api(name: "ai") {
+  updateTeamOfAgents(id: $id, input: $input)
+    @rest(type: "TeamOfAgents", path: "/team-of-agents/{args.id}", method: "PUT", endpoint: "ai") {
+    id
+    name
+    description
+    source_type
+    project_id
+    is_deleted
+    is_system
+    account_id
+    created_by
+    modified_by
+  }
+}

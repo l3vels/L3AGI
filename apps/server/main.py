@@ -107,7 +107,7 @@ def jwt_exception_handler(request: Request, exc: AuthJWTException):
 app.include_router(user_router, prefix="/auth")
 app.include_router(project_router, prefix="/project")
 app.include_router(team_router, prefix="/team")
-app.include_router(team_agent_router, prefix="/team-agent")
+app.include_router(team_agent_router, prefix="/team-of-agents")
 app.include_router(agent_router, prefix="/agent")
 app.include_router(config_router, prefix="/config")
 app.include_router(datasource_router, prefix="/datasource")
