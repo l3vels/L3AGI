@@ -15,7 +15,7 @@ import TeamOfAgentsCard from './TeamOfAgentsCard'
 import { useTeamOfAgents } from './useTeamOfAgents'
 
 const TeamOfAgents = () => {
-  const { teamOfAgentss, deleteTeamOfAgentsHandler } = useTeamOfAgents()
+  const { teamOfAgents, deleteTeamOfAgentsHandler } = useTeamOfAgents()
 
   const navigate = useNavigate()
 
@@ -30,7 +30,7 @@ const TeamOfAgents = () => {
         </div>
         <div>
           <Button
-            onClick={() => navigate('/teamOfAgentss/create-teamOfAgents')}
+            onClick={() => navigate('/teamOfAgents/create-team-of-agents')}
             size={Button.sizes.SMALL}
           >
             Add TeamOfAgents
@@ -39,13 +39,13 @@ const TeamOfAgents = () => {
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {teamOfAgentss?.map((teamOfAgents: any, index: number) => {
+          {teamOfAgents?.map((teamOfAgents: any, index: number) => {
             return (
               <TeamOfAgentsCard
                 key={index}
                 title={teamOfAgents.name}
                 subTitle={teamOfAgents.source_type}
-                onEditClick={() => navigate(`/teamOfAgentss/${teamOfAgents.id}/edit-teamOfAgents`)}
+                onEditClick={() => navigate(`/teamOfAgents/${teamOfAgents.id}/edit-team-of-agents`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
               />
             )

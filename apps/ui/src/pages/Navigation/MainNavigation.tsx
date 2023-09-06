@@ -5,6 +5,7 @@ import About from '@l3-lib/ui-core/dist/icons/About'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
+import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Dashboard from '@l3-lib/ui-core/dist/icons/Dashboard'
 
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -34,6 +35,10 @@ const MainNavigation = () => {
         <About />
         <span>Home</span>
       </StyledLi>
+      <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
+        <About />
+        <span>Team of Agents</span>
+      </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
         <Players />
         <span>Agents</span>
@@ -43,7 +48,7 @@ const MainNavigation = () => {
         onClick={() => onHandleClick('/datasources')}
       >
         <Collection />
-        <span>Datasources</span>
+        <span>Data sources</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('/tools')}>
         <Games />
@@ -57,6 +62,15 @@ const MainNavigation = () => {
           <Dashboard size={30} />
         </StyledIconWrapper>
         <span>Marketplace</span>
+      </StyledLi>
+      <StyledLi
+        isActive={includes(active, 'teamOfAgents')}
+        onClick={() => onHandleClick('/team-of-agents')}
+      >
+        <StyledIconWrapper>
+          <Team size={30} />
+        </StyledIconWrapper>
+        <span>Team</span>
       </StyledLi>
     </StyledUl>
   )

@@ -52,8 +52,9 @@ import CreateAgentModal from 'modals/CreateAgentModal'
 import EditAgentModal from 'modals/EditAgentModal'
 import CreateDatasourceModal from 'modals/CreateDatasourceModal'
 import EditDatasourceModal from 'modals/EditDatasourceModal'
-import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
+import TeamOfAgents from 'pages/TeamOfAgents'
+import Agents from 'pages/Agents'
 import Marketplace from 'pages/Marketplace'
 import AgentView from 'pages/Agents/AgentView'
 
@@ -61,6 +62,8 @@ import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
 import EditDatasourceForm from 'pages/Datasource/DatasourceForm/EditDatasourceForm'
+import CreateTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/CreateTeamOfAgentsForm'
+import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
 
@@ -142,6 +145,20 @@ const Route = () => {
               <Router
                 path={':datasourceId/edit-datasource'}
                 element={<EditDatasourceForm />}
+                key={document.location.href}
+              />
+            </Router>
+            <Router path={'team-of-agents'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Datasource />} key={document.location.href} />
+              <Router path={':teamOfAgentsId'} element={<TeamOfAgents />} key={document.location.href} />
+              <Router
+                path={'create-team-of-agents'}
+                element={<CreateTeamOfAgentsForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':teamOfAgentsId/edit-team-of-agents'}
+                element={<EditTeamOfAgentsForm />}
                 key={document.location.href}
               />
             </Router>

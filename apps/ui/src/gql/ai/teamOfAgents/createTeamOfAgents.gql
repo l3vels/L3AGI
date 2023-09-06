@@ -10,9 +10,10 @@ mutation createTeamOfAgents($input: input!) @api(name: ai) {
     id
     name
     description
-    source_type
+    team_type
     project_id
     is_deleted
+    is_template
     is_system
     account_id
     created_by

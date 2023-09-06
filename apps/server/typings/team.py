@@ -5,7 +5,7 @@ class TeamInput(BaseModel):
     name: str
     description: Optional[str]
     project_id: Optional[UUID4]
-    type: str
+    team_type: str
 
 
 class TeamOutput(BaseModel):
@@ -13,7 +13,7 @@ class TeamOutput(BaseModel):
     name: str
     description: Optional[str]
     project_id: Optional[UUID4] 
-    type: str
+    team_type: str
     is_deleted: bool
     is_system: bool
     is_template: bool

@@ -1,0 +1,14 @@
+query getTeamOfAgents @api(name: "ai") {
+  getTeamOfAgents @rest(type: "TeamOfAgents", path: "/team-of-agents", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+    team_type
+    project_id
+    is_deleted
+    is_system
+    account_id
+    created_by
+    modified_by
+  }
+}

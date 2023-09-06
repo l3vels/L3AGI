@@ -1,13 +1,13 @@
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import { useContext } from 'react'
-import { useTeamOfAgentssService } from 'services/teamOfAgents/useTeamOfAgentssService'
+import { useTeamOfAgentsService } from 'services/teamOfAgents/useTeamOfAgentsService'
 import { useDeleteTeamOfAgentstByIdService } from 'services/teamOfAgents/useDeleteTeamOfAgentsById'
 
 export const useTeamOfAgents = () => {
   const { setToast } = useContext(ToastContext)
 
-  const { data: teamOfAgentss, refetch: refetchTeamOfAgentss } = useTeamOfAgentssService()
+  const { data: teamOfAgents, refetch: refetchTeamOfAgents } = useTeamOfAgentsService()
   const { deleteTeamOfAgentsById } = useDeleteTeamOfAgentstByIdService()
 
   const { openModal, closeModal } = useModal()
@@ -19,7 +19,7 @@ export const useTeamOfAgents = () => {
         deleteItem: async () => {
           try {
             await deleteTeamOfAgentsById(id)
-            await refetchTeamOfAgentss()
+            await refetchTeamOfAgents()
             closeModal('delete-confirmation-modal')
             setToast({
               message: 'TeamOfAgents was deleted!',
@@ -45,8 +45,8 @@ export const useTeamOfAgents = () => {
   }
 
   return {
-    teamOfAgentss,
+    teamOfAgents,
     deleteTeamOfAgentsHandler,
-    refetchTeamOfAgentss,
+    refetchTeamOfAgents,
   }
 }

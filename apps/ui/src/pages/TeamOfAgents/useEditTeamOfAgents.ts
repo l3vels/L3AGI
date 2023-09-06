@@ -14,7 +14,7 @@ export const useEditTeamOfAgents = () => {
   const params = useParams()
   const { teamOfAgentsId } = params
 
-  const { refetchTeamOfAgentss } = useTeamOfAgents()
+  const { refetchTeamOfAgents } = useTeamOfAgents()
 
   const { setToast } = useContext(ToastContext)
 
@@ -83,9 +83,9 @@ export const useEditTeamOfAgents = () => {
     }
 
     await Promise.all(promises)
-    await Promise.all([refetchTeamOfAgentss(), refetchConfigs()])
+    await Promise.all([refetchTeamOfAgents(), refetchConfigs()])
 
-    navigate('/teamOfAgentss')
+    navigate('/teamOfAgents')
 
     setToast({
       message: 'TeamOfAgents was updated!',

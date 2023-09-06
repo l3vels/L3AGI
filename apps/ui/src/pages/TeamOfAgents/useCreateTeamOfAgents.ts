@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useCreateTeamOfAgentsService } from 'services/teamOfAgents/useCreateTeamOfAgentsService'
 import { useDataLoadersService } from 'services/teamOfAgents/useDataLoadersService'
-import { useTeamOfAgentssService } from 'services/teamOfAgents/useTeamOfAgentssService'
+import { useTeamOfAgentsService } from 'services/teamOfAgents/useTeamOfAgentsService'
 
 export const useCreateTeamOfAgents = () => {
   const navigate = useNavigate()
@@ -13,7 +13,7 @@ export const useCreateTeamOfAgents = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { refetch: refetchTeamOfAgentss } = useTeamOfAgentssService()
+  const { refetch: refetchTeamOfAgents } = useTeamOfAgentsService()
 
   const [createTeamOfAgents] = useCreateTeamOfAgentsService()
   const [createConfig] = useCreateConfigService()
@@ -89,13 +89,13 @@ export const useCreateTeamOfAgents = () => {
         promises.push(promise)
       }
 
-      await refetchTeamOfAgentss()
+      await refetchTeamOfAgents()
       setToast({
         message: 'New TeamOfAgents was Created!',
         type: 'positive',
         open: true,
       })
-      navigate('/teamOfAgentss')
+      navigate('/teamOfAgents')
     } catch (e) {
       setToast({
         message: 'Failed To Add TeamOfAgents!',
