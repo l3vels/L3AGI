@@ -38,7 +38,7 @@ jobs:
   Plan_dev:
     needs: Build
     if: github.ref == 'refs/heads/main'
-    uses: l3vels/L3AGI/.github/workflows/server/tf_plan.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
@@ -58,7 +58,7 @@ jobs:
 
   Deploy_dev:
     needs: [Build, Plan_dev]
-    uses: l3vels/L3AGI/.github/workflows/server/tf_apply.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
@@ -87,7 +87,7 @@ jobs:
   Plan_prod:
     needs: Init_Prod
     if: github.ref == 'refs/heads/main'
-    uses: l3vels/L3AGI/.github/workflows/server/tf_plan.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
@@ -107,7 +107,7 @@ jobs:
 
   Deploy_prod:
     needs: [Build, Plan_prod]
-    uses: l3vels/L3AGI/.github/workflows/server/tf_apply.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
