@@ -3,9 +3,9 @@ name: Deploy Backend server
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'apps/server/**'
+      - deploy
+    # paths:
+    #   - 'apps/server/**'
 
 env:
   ACR_REPOSITORY: "l3-api-ai"
