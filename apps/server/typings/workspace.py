@@ -1,7 +1,7 @@
 from pydantic import BaseModel, UUID4
 from typing import List, Optional
 
-class ProjectInput(BaseModel):
+class WorkspaceInput(BaseModel):
     name: str
     description: Optional[str]
     source_type: str #later enum (web-scrapping, notion, db, and so on)
@@ -9,7 +9,7 @@ class ProjectInput(BaseModel):
     is_system: Optional[bool]
 
 
-class ProjectOutput(BaseModel):
+class WorkspaceOutput(BaseModel):
     id: str
     name: str
     description: Optional[str]

@@ -1,19 +1,19 @@
-from models.project import ProjectModel
+from models.workspace import WorkspaceModel
 from typing import List, Optional
-from typings.project import ProjectOutput, ProjectInput
+from typings.workspace import WorkspaceOutput, WorkspaceInput
 from utils.type import convert_value_to_type
 
-def convert_model_to_response(project_model: ProjectModel) -> ProjectOutput:
+def convert_model_to_response(project_model: WorkspaceModel) -> WorkspaceOutput:
     project_data = {}
     
-    # Extract attributes from ProjectModel using annotations of Project
-    for key in ProjectOutput.__annotations__.keys():
+    # Extract attributes from WorkspaceModel using annotations of Project
+    for key in WorkspaceOutput.__annotations__.keys():
         if hasattr(project_model, key):
-            target_type = ProjectOutput.__annotations__.get(key)
+            target_type = WorkspaceOutput.__annotations__.get(key)
             project_data[key] = convert_value_to_type(value=getattr(project_model, key), target_type=target_type)
 
-    return ProjectOutput(**project_data)
+    return WorkspaceOutput(**project_data)
 
 
-def convert_projects_to_project_list(projects: List[ProjectModel]) -> List[ProjectOutput]:
+def convert_workspaces_to_workspace_list(projects: List[WorkspaceModel]) -> List[WorkspaceOutput]:
     return [convert_model_to_response(project_model) for project_model in projects]

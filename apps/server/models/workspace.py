@@ -5,10 +5,10 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from typings.project import ProjectInput
+from typings.workspace import WorkspaceInput
 from exceptions import ProjectNotFoundException
 
-class ProjectModel(BaseModel):
+class WorkspaceModel(BaseModel):
     """
     Represents an project entity.
 
@@ -21,7 +21,7 @@ class ProjectModel(BaseModel):
         account_id (UUID): ID of the account associated with the project.
         is_system (bool): Flag indicating if the project is a system project.
     """
-    __tablename__ = 'project'
+    __tablename__ = 'workspace'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)

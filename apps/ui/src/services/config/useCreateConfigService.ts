@@ -31,7 +31,7 @@ export const useCreateConfigService = () => {
           datasource_id: datasource_id,
           agent_id: null,
           toolkit_id: tool_id,
-          project_id: null,
+          workspace_id: null,
         },
       },
     })

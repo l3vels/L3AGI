@@ -24,7 +24,7 @@ class AccountModel(BaseModel):
     deleted = Column(Boolean, default=False)
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")
-    # projects = relationship("ProjectModel", back_populates="account")
+    # projects = relationship("WorkspaceModel", back_populates="account")
     
     def __repr__(self) -> str:
         return (
