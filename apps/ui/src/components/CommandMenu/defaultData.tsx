@@ -13,6 +13,7 @@ import Logs from '@l3-lib/ui-core/dist/icons/Logs'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 import StarVector from 'assets/svgComponents/StarVector'
+import TeamOfAgents from 'pages/TeamOfAgents/TeamOfAgents'
 
 export const defaultData = (path_id?: any) => {
   return [
@@ -43,6 +44,14 @@ export const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
+      name: 'Team Of Agents',
+      url: '/team-of-agents',
+      option: 'link',
+      group_name: ['go_to'],
+      icon: <TeamOfAgents />,
+    },
+    {
+      id: uuidv4(),
       name: 'Tools',
       url: '/tools',
       option: 'link',
@@ -57,7 +66,6 @@ export const defaultData = (path_id?: any) => {
       group_name: ['go_to'],
       icon: <Teams />,
     },
-
     {
       id: uuidv4(),
       name: 'Create agent',

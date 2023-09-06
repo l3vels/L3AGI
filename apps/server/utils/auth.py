@@ -27,7 +27,7 @@ def authenticate(request: Request, response: Response) -> Tuple[UserOutput, Acco
         authorize.jwt_required()
         email = authorize.get_jwt_subject()
         db_user = UserModel.get_user_by_email(db, email)
-        account_id = request.headers['account_id']
+        account_id = request.headers.get('account_id', None)
         if account_id == 'undefined' or  not account_id:
             db_account = AccountModel.get_account_created_by(db, db_user.id)            
         else:

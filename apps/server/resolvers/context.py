@@ -23,7 +23,7 @@ class Context(BaseContext):
     def user_account(self) -> UserAccount | None:
         if not self.request:
             return None
-        account_id = self.request.headers['account_id']
+        account_id = self.request.headers.get('account_id', None)
         auth = AuthJWT(self.request, self.response)
         user_account = authorize(account_id, auth)
         return user_account

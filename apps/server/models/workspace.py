@@ -18,8 +18,8 @@ class WorkspaceModel(BaseModel):
         role (str): Role of the project.
         description (str): Description of the project.
         is_deleted (bool): Flag indicating if the project has been soft-deleted.
-        account_id (UUID): ID of the account associated with the project.
-        is_system (bool): Flag indicating if the project is a system project.
+        account_id (UUID): ID of the account associated with the workspace.
+        is_system (bool): Flag indicating if the project is a system workspace.
     """
     __tablename__ = 'workspace'
 
@@ -31,5 +31,4 @@ class WorkspaceModel(BaseModel):
     is_system = Column(Boolean, default=False)
     account_id = Column(UUID, nullable=True)
     
-    # account = relationship("AccountModel", back_populates="projects", cascade="all, delete")
     

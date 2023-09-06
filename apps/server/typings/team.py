@@ -4,16 +4,16 @@ from typing import List, Optional
 class TeamInput(BaseModel):
     name: str
     description: Optional[str]
+    team_type: str
     workspace_id: Optional[UUID4]
-    type: str
 
 
 class TeamOutput(BaseModel):
     id: UUID4
     name: str
     description: Optional[str]
+    team_type: str
     workspace_id: Optional[UUID4] 
-    type: str
     is_deleted: bool
     is_system: bool
     is_template: bool

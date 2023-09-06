@@ -10,6 +10,7 @@ from typings.team import TeamOutput, TeamInput
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from exceptions import TeamNotFoundException
+from agents.team_base import TeamOfAgentsType
 
 router = APIRouter()
 
@@ -67,6 +68,47 @@ def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
     db_teams = TeamModel.get_teams(db=db, account=auth.account)
     return convert_teams_to_team_list(db_teams)
 
+@router.get("/types", response_model=List[object])
+def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
+    """
+    Get all tools by account ID.
+
+    Args:
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        List[Object]: List of tools associated with the account.
+    """
+
+    return [{
+        "is_system": True,
+        "is_active": True,
+        "name": "Plan and Execute",
+        "description": "Plan and Execute",
+        "team_type": TeamOfAgentsType.PLAN_EXECUTE
+    },
+    {
+        "is_system": True,
+        "is_active": True,
+        "name": "Authoritarian_Speaker",
+        "description": "Authoritarian Speaker description",
+        "team_type": TeamOfAgentsType.AUTHORITARIAN_SPEAKER
+    },
+    {
+        "is_system": True,
+        "is_active": True,
+        "name": "Debates",
+        "description": "Debates",
+        "team_type": TeamOfAgentsType.DEBATES
+    },
+    {
+        "is_system": True,
+        "is_active": False,
+        "name": "Decentralized speaker",
+        "description": "Decentralized speakers",
+        "team_type": TeamType.DECENTRALIZED_SPEAKERS
+    }]
+    
 @router.get("/{id}", response_model=TeamOutput)
 def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
@@ -105,3 +147,42 @@ def delete_team(team_id: str, auth: UserAccount = Depends(authenticate)):
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
 
+
+    """
+    Get all tools by account ID.
+
+    Args:
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        List[Object]: List of tools associated with the account.
+    """
+
+    return [{
+        "is_system": True,
+        "is_active": True,
+        "name": "Plan and Execute",
+        "description": "Plan and Execute",
+        "team_type": TeamType.PLAN_EXECUTE
+    },
+    {
+        "is_system": True,
+        "is_active": True,
+        "name": "Authoritarian Speaker",
+        "description": "Authoritarian Speaker description",
+        "team_type": TeamType.AUTHORITARIAN_SPEAKER
+    },
+    {
+        "is_system": True,
+        "is_active": False,
+        "name": "Debates",
+        "description": "Debates",
+        "team_type": TeamType.DEBATES
+    },
+    {
+        "is_system": True,
+        "is_active": False,
+        "name": "Decentralized speakers",
+        "description": "Decentralized speakers",
+        "team_type": TeamType.DECENTRALIZED_SPEAKERS
+    }]
