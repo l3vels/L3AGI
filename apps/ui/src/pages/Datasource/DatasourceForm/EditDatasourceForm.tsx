@@ -46,7 +46,7 @@ const EditDatasourceForm = () => {
 
           <ComponentsWrapper noPadding>
             <StyledFormWrapper>
-              <DatasourceForm formik={formik} isLoading={isLoading} />
+              <DatasourceForm formik={formik} isLoading={isLoading} isEdit />
             </StyledFormWrapper>
           </ComponentsWrapper>
         </StyledSectionWrapper>

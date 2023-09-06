@@ -1,6 +1,21 @@
-query getDatasourceSqlTables($id: id!) @api(name: "ai") {
-  getDatasourceSqlTables(id: $id)
-    @rest(type: "String", path: "/datasource/{args.id}/sql/tables", method: "GET", endpoint: "ai") {
+query getDatasourceSqlTables(
+  $source_type: String
+  $host: String
+  $port: Int
+  $user: String
+  $password: String
+  $name: String
+  $id: String
+) @api(name: "ai") {
+  getDatasourceSqlTables(
+    source_type: $source_type
+    host: $host
+    port: $port
+    user: $user
+    password: $password
+    name: $name
+    id: $id
+  ) @rest(type: "String", path: "/datasource/sql/tables?{args}", method: "GET", endpoint: "ai") {
     id
     name
     count

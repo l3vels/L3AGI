@@ -1,9 +1,9 @@
 
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel
 from sqlalchemy import create_engine, MetaData, text
+from concurrent.futures import ThreadPoolExecutor
 
 from models.datasource import DatasourceModel
 from models.config import ConfigModel
@@ -87,36 +87,43 @@ def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[Datasourc
     db_datasources = DatasourceModel.get_datasources(db=db, account=auth.account)
     return convert_datasources_to_datasource_list(db_datasources)
 
-@router.get("/{id}/sql/tables", response_model=List[DatasourceSQLTableOutput])
-def get_sql_tables(id: str, auth: UserAccount = Depends(authenticate)):
+
+@router.get("/sql/tables", response_model=List[DatasourceSQLTableOutput])
+def get_sql_tables(source_type: Optional[str] = None, host: Optional[str] = None, port: Optional[int] = None, user: Optional[str] = None, password: Optional[str] = None, name: Optional[str] = None, id: Optional[str] = None, auth: UserAccount = Depends(authenticate)):
     """
-    Get all SQL database table names and counts for a datasource by its ID.
+    Get all SQL database table names and counts for a datasource by its ID or by provided credentials.
     """
 
-    datasource = DatasourceModel.get_datasource_by_id(db, datasource_id=id, account=auth.account)
+    if id:
+        datasource = DatasourceModel.get_datasource_by_id(db, datasource_id=id, account=auth.account)
 
-    if not datasource or datasource.is_deleted:
-        raise HTTPException(status_code=404, detail="Datasource not found")  # Ensure consistent case in error messages
+        if not datasource or datasource.is_deleted:
+            raise HTTPException(status_code=404, detail="Datasource not found")  # Ensure consistent case in error messages
 
-    configs = ConfigModel.get_configs(db, ConfigQueryParams(datasource_id=id), account=auth.account)
+        configs = ConfigModel.get_configs(db, ConfigQueryParams(datasource_id=id), account=auth.account)
 
-    config = {}
+        config = {}
 
-    for cfg in configs:
-        config[cfg.key] = cfg.value
+        for cfg in configs:
+            config[cfg.key] = cfg.value
 
-    user = config.get('user')
-    password = config.get('pass')
-    host = config.get('host')
-    port = config.get('port')
-    name = config.get('name')
+        user = config.get('user')
+        password = config.get('pass')
+        host = config.get('host')
+        port = config.get('port')
+        name = config.get('name')
 
-    prefix = ""
+        source_type = datasource.source_type
+    else:
+        if not all([source_type, host, port, user, password, name]):
+            raise HTTPException(status_code=400, detail="All parameters must be provided when id is not given")
 
-    if datasource.source_type == DatasourceType.POSTGRES.value:
+    if source_type == DatasourceType.POSTGRES.value:
         prefix = "postgresql+psycopg2"
-    elif datasource.source_type == DatasourceType.MYSQL.value:
+    elif source_type == DatasourceType.MYSQL.value:
         prefix = "mysql+pymysql"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid source_type")
 
     uri = f"{prefix}://{user}:{password}@{host}:{port}/{name}"
     
@@ -125,25 +132,19 @@ def get_sql_tables(id: str, auth: UserAccount = Depends(authenticate)):
     meta.reflect(bind=engine)
 
     tables = meta.tables.keys()
-
     result = []
 
-    for table in tables:
+    def get_table_count(table):
+        with engine.connect() as conn:
+            count = conn.execute(text(f"SELECT COUNT(*) FROM {table}")).scalar()
+            return {
+                "id": table,
+                "name": table,
+                "count": count,
+            }
         
-        result.append({
-            "id": table,
-            "name": table,
-            "count": 0,
-        })
-
-        # with engine.connect() as conn:
-        #     count = conn.execute(text(f"SELECT COUNT(*) FROM {table}")).scalar()
-
-        #     result.append({
-        #         "id": table,
-        #         "name": table,
-        #         "count": count,
-        #     })
+    with ThreadPoolExecutor() as executor:
+        result = list(executor.map(get_table_count, tables))
 
     return result
 

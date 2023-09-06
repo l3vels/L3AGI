@@ -42,6 +42,9 @@ class ToolEnvKey(BaseModel):
 class BaseTool(LangchainBaseTool):
     tool_id: str
 
+    def get_env_key():
+        pass
+
 
 class BaseToolkit(BaseModel):
     toolkit_id: str

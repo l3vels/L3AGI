@@ -26,6 +26,7 @@ import styled from 'styled-components'
 import { LayoutContext } from 'contexts'
 import { useLocation } from 'react-router-dom'
 import { includes } from 'lodash'
+import { GridReadyEvent } from 'ag-grid-community'
 
 interface IProps {
   data: any
@@ -37,6 +38,7 @@ interface IProps {
   headerHeight?: number
   isResourceHub?: boolean
   onSelectionChanged?: () => void
+  onGridReady?: (params: GridReadyEvent<any>) => void
 }
 
 const DataGrid = forwardRef(
@@ -50,6 +52,7 @@ const DataGrid = forwardRef(
       headerHeight,
       isResourceHub,
       onSelectionChanged,
+      onGridReady,
     }: IProps,
     ref,
   ) => {
@@ -272,7 +275,7 @@ const DataGrid = forwardRef(
           suppressRowClickSelection={true}
           singleClickEdit={true}
           onSelectionChanged={onSelectionChanged}
-          onGridReady={async (params: any) => {
+          onGridReady={async params => {
             const gridApi = params.api
             gridApi.sizeColumnsToFit()
             window.onresize = () => {
@@ -287,6 +290,8 @@ const DataGrid = forwardRef(
                 params.columnApi.setColumnVisible(key[0], key[1])
               })
             }
+
+            if (onGridReady) onGridReady(params)
           }}
           // fillOperation={(params: any) => {
           //   cellEditFn({

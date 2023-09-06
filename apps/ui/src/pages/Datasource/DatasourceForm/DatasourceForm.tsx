@@ -22,20 +22,37 @@ import { useParams } from 'react-router-dom'
 type DatasourceFormProps = {
   formik: any
   isLoading?: boolean
+  isEdit?: boolean
 }
 
-const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
+const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormProps) => {
   const { dataLoaders, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
+
+  const { datasourceId } = useParams()
 
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
   const { datasource_source_type, config_value, datasource_description, configs } = values
 
-  const { datasourceId } = useParams()
+  const { host, port, user, pass, name, tables } = values.configs
 
-  const { data, refetch, loading } = useDatasourceSqlTables(datasourceId || '')
+  const { data, fetchSqlTables, loading } = useDatasourceSqlTables({
+    id: datasourceId,
+    host: host?.value,
+    port: port?.value && Number(port?.value),
+    user: user?.value,
+    password: pass?.value,
+    name: name?.value,
+    source_type: datasource_source_type,
+  })
+
+  useEffect(() => {
+    if (isEdit) {
+      fetchSqlTables()
+    }
+  }, [isEdit])
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('datasource_description', value)
@@ -47,8 +64,6 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
       setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
     }
   }, [datasource_source_type])
-
-  console.log('dataLoaders', dataLoaders)
 
   return (
     <StyledFormContainer>
@@ -153,19 +168,36 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
           )}
         </StyledSourceTypeWrapper>
 
-        <div>
-          <Button
-            onClick={() => {
-              refetch()
-            }}
-            disabled={loading}
-            size={Button.sizes.MEDIUM}
-          >
-            {loading ? <Loader size={32} /> : 'Connect'}
-          </Button>
-        </div>
+        {!isEdit && (
+          <div>
+            <Button
+              onClick={() => {
+                fetchSqlTables()
+              }}
+              disabled={loading}
+              size={Button.sizes.SMALL}
+            >
+              {loading ? <Loader size={32} /> : 'Connect'}
+            </Button>
+          </div>
+        )}
 
-        {data && <DatasourceSqlTables data={data} />}
+        {data && (
+          <DatasourceSqlTables
+            data={data}
+            tables={tables && JSON.parse(tables.value)}
+            onTablesSelected={(selectedTables: string[]) => {
+              formik.setFieldValue('configs.tables', {
+                ...(tables || {}),
+                key: 'tables',
+                key_type: 'string',
+                value: JSON.stringify(selectedTables),
+                is_secret: false,
+                is_required: true,
+              })
+            }}
+          />
+        )}
       </StyledInputWrapper>
     </StyledFormContainer>
   )

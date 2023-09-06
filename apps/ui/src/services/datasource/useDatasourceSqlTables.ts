@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@apollo/client'
+import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import DATASOURCE_SQL_TABLES from '../../gql/ai/datasource/datasourceSqlTables.gql'
 
 export type IDatasourceSqlTables = {
@@ -11,13 +11,21 @@ interface Data {
   getDatasourceSqlTables: IDatasourceSqlTables
 }
 
-export const useDatasourceSqlTables = (datasourceId: string) => {
-  const { data, refetch, loading } = useQuery<Data>(DATASOURCE_SQL_TABLES, {
-    variables: {
-      id: datasourceId,
-    },
+type Variables = {
+  id?: string
+  host?: string
+  port?: number
+  user?: string
+  password?: string
+  name?: string
+  source_type?: string
+}
+
+export const useDatasourceSqlTables = (variables: Variables) => {
+  const [fetchSqlTables, { data, loading }] = useLazyQuery<Data, Variables>(DATASOURCE_SQL_TABLES, {
     notifyOnNetworkStatusChange: true,
+    variables,
   })
 
-  return { data: data?.getDatasourceSqlTables, refetch, loading }
+  return { data: data?.getDatasourceSqlTables, fetchSqlTables, loading }
 }

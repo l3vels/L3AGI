@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import DataGrid from 'components/DataGrid'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -8,6 +8,7 @@ import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 
 type DatasourceSqlTablesProps = {
   data: IDatasourceSqlTables
+  tables: string[]
   onTablesSelected: (tables: string[]) => void
 }
 
@@ -27,7 +28,7 @@ const TextCellRenderer = (props: RendererProps) => (
   </div>
 )
 
-const DatasourceSqlTables = ({ data, onTablesSelected }: DatasourceSqlTablesProps) => {
+const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTablesProps) => {
   const gridRef = useRef<any>({})
 
   const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
@@ -93,6 +94,16 @@ const DatasourceSqlTables = ({ data, onTablesSelected }: DatasourceSqlTablesProp
         columnConfig={config}
         headerHeight={130}
         onSelectionChanged={onSelectionChanged}
+        onGridReady={params => {
+          if (!tables) return
+
+          tables.forEach(name => {
+            const rowNode = params.api.getRowNode(name)
+            if (rowNode) {
+              rowNode.setSelected(true)
+            }
+          })
+        }}
       />
     </div>
   )
