@@ -29,6 +29,7 @@ const EditAgentForm = () => {
           </div>
 
           <StyledButtonWrapper>
+            <BackButton />
             <Button
               onClick={() => handleSubmit(formik?.values)}
               disabled={isLoading}
@@ -36,8 +37,6 @@ const EditAgentForm = () => {
             >
               {isLoading ? <Loader size={32} /> : 'Save'}
             </Button>
-
-            <BackButton />
           </StyledButtonWrapper>
         </StyledHeaderGroup>
 

@@ -43,6 +43,7 @@ const ToolView = () => {
             {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
           </div>
           <StyledButtonWrapper>
+            <BackButton />
             {fields?.length > 0 && (
               <Button
                 onClick={() => handleSubmit(formik?.values)}
@@ -52,7 +53,6 @@ const ToolView = () => {
                 {isLoading ? <Loader size={22} /> : 'Save'}
               </Button>
             )}
-            <BackButton />
           </StyledButtonWrapper>
         </StyledHeaderGroup>
         <ComponentsWrapper>
