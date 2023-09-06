@@ -30,7 +30,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     formik.setFieldValue('agent_description', value)
   }
 
-  const { providerOptions, modelOptions, datasourceOptions, ToolOptions } = useAgentForm(formik)
+  const { providerOptions, modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
 
   return (
     <StyledRoot>
@@ -72,7 +72,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             fieldName={'agent_tools'}
             fieldValue={agent_tools}
             setFieldValue={setFieldValue}
-            options={ToolOptions}
+            options={toolOptions}
           />
 
           <AgentDropdown

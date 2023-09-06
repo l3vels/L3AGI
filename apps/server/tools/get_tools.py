@@ -1,3 +1,4 @@
+from typing import List
 from tools.serp_google_search.serp_google_search_toolkit import SerpGoogleSearchToolkit
 from tools.webscraper.webscraper_toolkit import WebScraperToolkit
 from tools.duck_duck_go.duck_duck_go_search_toolkit import DuckDuckGoSearchToolkit
@@ -67,11 +68,12 @@ def get_all_tools():
     return result
 
 
-def get_tools(tool_names: str):
+def get_agent_tools(toolkit_ids: List[str]):
     """Return a list of tools."""
     tools = []
 
-    # for tool_name in tool_names:
-    # tools.append(TOOLS[tool_name])
+    for toolkit in TOOLKITS:
+        if toolkit.toolkit_id in toolkit_ids:
+            tools.extend(toolkit.get_tools())
 
     return tools
