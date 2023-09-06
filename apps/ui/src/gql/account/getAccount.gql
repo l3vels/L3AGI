@@ -1,7 +1,6 @@
 query account @api(name: account) {
   account {
     id
-    company_name
-    location
+    name
   }
 }

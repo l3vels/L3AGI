@@ -57,8 +57,8 @@ const AccountForm = () => {
               />
             </StyledTypographyWrapper>
             <TextField
-              name='company_name'
-              value={`${formik.values.company_name}`}
+              name='name'
+              value={`${formik.values.name}`}
               placeholder={'value'}
               size={TextField.sizes.SMALL}
             />

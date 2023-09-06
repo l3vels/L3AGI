@@ -7,10 +7,8 @@ const useAccount = () => {
 
   const initialValues: any = {
     email: user?.email || '',
-    first_name: user?.first_name || '',
-    last_name: user?.last_name || '',
-    company_name: account?.company_name || '',
-    location: account?.location || '',
+    full_name: user?.name || '',
+    name: account?.name || '',
   }
 
   const formik = useFormik({
