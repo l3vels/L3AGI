@@ -30,7 +30,7 @@ class AgentModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     role = Column(String) 
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) #gonna use if need store agents based on game, project or any
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
     agent_type = Column(String) # Later add as Enum
     description = Column(String)
     is_deleted = Column(Boolean, default=False)
