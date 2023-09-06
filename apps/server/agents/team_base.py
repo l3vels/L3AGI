@@ -1,7 +1,7 @@
 from enum import Enum
 
 class TeamType(Enum):
-    DEBATES = 'Postgres'
+    DEBATES = 'Debates'
     AUTHORITARIAN_SPEAKER = 'AUTHORITARIAN_SPEAKER'
     PLAN_EXECUTE = 'PLAN_EXECUTE'
     DECENTRALIZED_SPEAKERS = 'DECENTRALIZED_SPEAKERS'
