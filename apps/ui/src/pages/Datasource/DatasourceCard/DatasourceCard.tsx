@@ -22,8 +22,8 @@ const DatasourceCard = ({
   imageSrc,
 }: DatasourceCardProps) => {
   let shortDescription = description
-  if (description.length > 90) {
-    shortDescription = `${description.slice(0, 90)}...`
+  if (description.length > 70) {
+    shortDescription = `${description.slice(0, 70)}...`
   }
 
   return (
@@ -31,6 +31,14 @@ const DatasourceCard = ({
       <StyledBodyWrapper>
         <StyledImg src={imageSrc} />
         <StyledDescriptionWrapper>
+          <StyledNameWrapper>
+            <Typography
+              value={name}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
+          </StyledNameWrapper>
           <Typography
             value={shortDescription}
             type={Typography.types.P}
@@ -38,14 +46,6 @@ const DatasourceCard = ({
             customColor={'rgba(255,255,255, 0.7)'}
           />
         </StyledDescriptionWrapper>
-        <StyledNameWrapper>
-          <Typography
-            value={name}
-            type={Typography.types.P}
-            size={Typography.sizes.md}
-            customColor={'#FFF'}
-          />
-        </StyledNameWrapper>
       </StyledBodyWrapper>
       <StyledButtonsWrapper>
         <IconButton
@@ -69,8 +69,8 @@ export default DatasourceCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 320px;
-  min-width: 320px;
+  width: 335px;
+  min-width: 335px;
   height: 170px;
   min-height: 170px;
 
@@ -116,7 +116,7 @@ const StyledBodyWrapper = styled.div`
 `
 const StyledImg = styled.img`
   border-radius: 8px;
-  width: 54px;
+  /* width: 54px; */
   height: 54px;
   object-fit: contain;
 `
@@ -125,4 +125,5 @@ const StyledDescriptionWrapper = styled.div`
 `
 const StyledNameWrapper = styled.div`
   margin-top: auto;
+  text-align: center;
 `

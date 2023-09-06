@@ -10,6 +10,7 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import { useNavigate } from 'react-router-dom'
+import { DATA_LOADER_IMAGES } from './constants'
 
 import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
@@ -40,6 +41,12 @@ const Datasource = () => {
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {datasources?.map((datasource: any, index: number) => {
+            const filteredLogos = DATA_LOADER_IMAGES.filter(
+              (loaderImages: any) => loaderImages.sourceName === datasource.source_type,
+            )
+
+            const imageSrc = filteredLogos?.[0]?.imageSrc || ''
+
             return (
               <DatasourceCard
                 key={index}
@@ -47,9 +54,7 @@ const Datasource = () => {
                 description={datasource.description}
                 onEditClick={() => navigate(`/datasources/${datasource.id}/edit-datasource`)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
-                imageSrc={
-                  'https://w7.pngwing.com/pngs/441/460/png-transparent-postgresql-plain-wordmark-logo-icon-thumbnail.png'
-                }
+                imageSrc={imageSrc}
               />
             )
           })}

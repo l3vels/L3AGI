@@ -71,8 +71,6 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
           />
           <StyledCardWrapper>
             {dataLoaders?.map((dataLoader: any) => {
-              DATA_LOADER_IMAGES
-
               const filteredLogos = DATA_LOADER_IMAGES.filter(
                 (loaderImages: any) => loaderImages.sourceName === dataLoader.source_type,
               )
