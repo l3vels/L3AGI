@@ -18,6 +18,6 @@ COPY ./ /code/
 EXPOSE 4002
 
 # Run the application
-COPY .app/server/entrypoint.sh /app_entry/
+COPY ./apps/server/entrypoint.sh /app_entry/
 RUN chmod +x /app_entry/entrypoint.sh
 ENTRYPOINT ["/app_entry/entrypoint.sh"]
