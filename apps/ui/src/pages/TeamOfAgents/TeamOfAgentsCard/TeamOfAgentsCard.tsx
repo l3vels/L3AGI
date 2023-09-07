@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
@@ -11,9 +12,19 @@ type TeamOfAgentsCardProps = {
   subTitle: string
   onEditClick: () => void
   onDeleteClick: () => void
+  onChatClick: () => void
 }
 
-const TeamOfAgentsCard = ({ title, subTitle, onEditClick, onDeleteClick }: TeamOfAgentsCardProps) => {
+const TeamOfAgentsCard = ({
+  title,
+  subTitle,
+  onEditClick,
+  onDeleteClick,
+  onChatClick,
+}: // TODO: add delete, view
+TeamOfAgentsCardProps) => {
+  // TODO: add agents to the card with avatars
+
   return (
     <StyledCard>
       <StyledTextWrapper>
@@ -31,6 +42,9 @@ const TeamOfAgentsCard = ({ title, subTitle, onEditClick, onDeleteClick }: TeamO
         />
       </StyledTextWrapper>
       <StyledButtonsWrapper>
+        <Button onClick={onChatClick} size={Button.sizes.SMALL}>
+          Chat
+        </Button>
         <IconButton
           onClick={onEditClick}
           icon={() => <Edit />}

@@ -28,7 +28,7 @@ class L3PlanAndExecute(L3Base):
     thoughts: List[Dict] = []
     ai_message_id: str
 
-    def run(self, l3_tools, prompt: str, history: PostgresChatMessageHistory, version: ChatMessageVersion, is_private_chat: bool, human_message_id: str):
+    def run(self, l3_tools, prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
         planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "b7f1ccce-44f0-4e7e-9098-a12fb7b93388", self.account))
         executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "13f71e37-350e-4cec-a9d2-72050811f934", self.account))
 

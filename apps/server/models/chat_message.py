@@ -19,6 +19,7 @@ class ChatMessage(BaseModel):
     parent_id = Column(UUID, ForeignKey('chat_message.id'))
     session_id = Column(String, nullable=False, index=True)
     agent_id = Column(UUID, ForeignKey('agent.id'))
+    team_id = Column(UUID, ForeignKey('team.id'))
     user_id = Column(UUID, nullable=False)
     account_id = Column(UUID, nullable=False)
     message = Column(JSONB, nullable=False)
@@ -26,6 +27,7 @@ class ChatMessage(BaseModel):
 
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
     agent = relationship("AgentModel", back_populates="chat_messages")
+    team = relationship("TeamModel", back_populates="chat_messages")
 
     def to_dict(self):
         """
@@ -38,6 +40,9 @@ class ChatMessage(BaseModel):
 
         if self.agent:
             data['agent'] = self.agent.to_dict()
+
+        if self.team:
+            data['team'] = self.team.to_dict()
 
         if self.parent:
             data['parent'] = self.parent.to_dict()

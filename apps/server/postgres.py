@@ -37,7 +37,8 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             user: UserOutput,
             session_id: str,
             parent_id: Optional[str] = None,
-            agent_id: Optional[str] = None
+            agent_id: Optional[str] = None,
+            team_id: Optional[str] = None,
     ):
         self.account_id = account_id
         self.user_id = user_id
@@ -45,6 +46,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         self.session_id = session_id
         self.parent_id = parent_id
         self.agent_id = agent_id
+        self.team_id = team_id
 
     def fetch_messages(self):
         try:
@@ -93,6 +95,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             message=_message_to_dict(message),
             session_id=self.session_id,
             agent_id=self.agent_id,
+            team_id=self.team_id,
             parent_id=parent_id,
         )
 

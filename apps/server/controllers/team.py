@@ -71,7 +71,7 @@ def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
 @router.get("/types", response_model=List[object])
 def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
     """
-    Get all tools by account ID.
+    Get all agent team types by account ID.
 
     Args:
         auth (UserAccount): Authenticated user account.

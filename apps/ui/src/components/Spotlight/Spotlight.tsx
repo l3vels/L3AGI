@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import pluginsIcon from 'assets/icons/plugins.png'
 import SendIconSvg from 'assets/icons/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
@@ -32,7 +31,7 @@ const Spotlight = () => {
 
   const { chatSuggestions } = useSuggestions()
 
-  const { gameId, collectionId, agentId } = useParams()
+  const { agentId, teamId } = useParams()
 
   let route = '/copilot'
 
@@ -98,14 +97,10 @@ const Spotlight = () => {
         message: formValue,
         isPrivateChat: false,
         agentId,
+        teamId,
       })
 
-      navigate(route, {
-        state: {
-          collectionId,
-          gameId,
-        },
-      })
+      navigate(route)
 
       setChatLoading(false)
       setFormValue('')
