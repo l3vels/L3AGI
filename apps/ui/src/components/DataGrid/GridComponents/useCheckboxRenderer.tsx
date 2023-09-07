@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import styled from 'styled-components'
 
@@ -6,7 +6,7 @@ const useCheckboxRenderer = () => {
   const [checked, setChecked] = useState(false)
   const [indeterminate, setIndeterminate] = useState(false)
 
-  const HeaderCheckbox = (p: any) => {
+  const HeaderCheckbox = useCallback((p: any) => {
     const handleCheckboxChange = () => {
       const selectedRows = p.api.getSelectedRows()
       const allRows = p.api.getModel().gridOptionsWrapper.gridOptions.rowData
@@ -38,9 +38,9 @@ const useCheckboxRenderer = () => {
         />
       </StyledDiv>
     )
-  }
+  }, [])
 
-  const RowCheckbox = (p: any) => {
+  const RowCheckbox = useCallback((p: any) => {
     const handleCheckboxChange = () => {
       if (p.node.isSelected()) {
         p.node.setSelected(false)
@@ -73,7 +73,7 @@ const useCheckboxRenderer = () => {
         />
       </StyledDiv>
     )
-  }
+  }, [])
 
   return {
     HeaderCheckbox,

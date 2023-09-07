@@ -5,7 +5,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import DatasourceForm from 'pages/Datasource/DatasourceForm'
+// import DatasourceForm from 'pages/Datasource/DatasourceForm'
 import { useEditDatasource } from 'pages/Datasource/useEditDatasource'
 
 import {
