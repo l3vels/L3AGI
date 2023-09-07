@@ -54,7 +54,7 @@ jobs:
         run: yarn install
         working-directory: ./apps/ui
 
-      - name: Build Game
+      - name: Build 
         working-directory: apps/ui
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
@@ -118,7 +118,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 18
-        working-directory: apps/ui
 
       - name: Setup yarn
         run: npm install -g yarn
@@ -128,7 +127,6 @@ jobs:
         with:
           node-version: 18
           cache: yarn        
-        working-directory: apps/ui
 
       - name: Install game dependencies
         run: yarn install
