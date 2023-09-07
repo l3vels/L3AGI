@@ -3,7 +3,7 @@ name: Deploy Backend API
 on:
   push:
     branches:
-      - deploy
+      - main
     paths:
       - 'apps/server/**'
 
@@ -101,8 +101,8 @@ jobs:
 
   Plan_dev:
     needs: [Build, Init_dev]
-    if: github.ref == 'refs/heads/deploy'
-    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
+    if: github.ref == 'refs/heads/main'
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@main
 
     with:
       path: apps/server/terraform
@@ -124,7 +124,7 @@ jobs:
 
   Deploy_dev:
     needs: [Build, Plan_dev]
-    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@deploy
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
@@ -209,8 +209,8 @@ jobs:
 
   Plan_prod:
     needs: Init_Prod
-    if: github.ref == 'refs/heads/deploy'
-    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
+    if: github.ref == 'refs/heads/main'
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
@@ -230,7 +230,7 @@ jobs:
 
   Deploy_prod:
     needs: [Build, Plan_prod]
-    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@deploy
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@main
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/prod.tfvars
