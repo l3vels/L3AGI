@@ -66,7 +66,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         'from': str(auth.user.id),
         'chat_message': human_message,
         'is_private_chat': body.is_private_chat,
-        'local_chat_message_ref_id': body.local_chat_message_ref_id
+        'local_chat_message_ref_id': body.local_chat_message_ref_id,
+        'agent_id': str(body.agent_id) if body.agent_id else body.agent_id,
     })
 
     # If team member is tagged and no agent is tagged, this means user sends a message to team member
@@ -75,7 +76,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     # if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
     conversational = L3Conversational(auth.user, auth.account, session_id)
-    return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'])
+    return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'], body.agent_id)
 
     if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
         l3_plan_and_execute = L3PlanAndExecute(

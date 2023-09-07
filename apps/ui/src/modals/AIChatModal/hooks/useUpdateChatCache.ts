@@ -13,12 +13,15 @@ const useUpdateChatCache = () => {
   const upsertChatMessageInCache = (
     newChatMessage: Record<string, unknown>,
     is_private_chat: boolean,
-    { localChatMessageRefId }: { localChatMessageRefId?: Nullable<string> } = {},
+    {
+      localChatMessageRefId,
+      agentId,
+    }: { localChatMessageRefId?: Nullable<string>; agentId?: string } = {},
   ) => {
     const queryVariables = omitBy(
       {
         is_private_chat: is_private_chat,
-        agent_id: newChatMessage.agent_id,
+        agent_id: agentId,
       },
       isNil,
     )

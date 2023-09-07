@@ -1,3 +1,4 @@
+from typing import Optional
 from langchain.agents import initialize_agent, AgentType
 from langchain.chat_models import ChatOpenAI
 from postgres import PostgresChatMessageHistory
@@ -28,6 +29,7 @@ class L3Conversational(L3Base):
         history: PostgresChatMessageHistory,
         is_private_chat: bool,
         human_message_id: str,
+        agent_id: Optional[str] = None,
     ):
         memory = ZepMemory(
             session_id=str(self.session_id),
@@ -86,6 +88,7 @@ class L3Conversational(L3Base):
                 "from": str(self.user.id),
                 "chat_message": ai_message,
                 "is_private_chat": is_private_chat,
+                "agent_id": str(agent_id) if agent_id else agent_id,
             },
         )
 
