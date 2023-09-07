@@ -1,5 +1,5 @@
 locals {
-  subdomain = "api-ai-${var.environment}"
+  subdomain = "api-${var.environment}"
 }
 resource "azurerm_resource_group" "l3_resource_group" {
   name     = "l3-k8s_group"

@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - deploy
-    paths:
-      - 'apps/server/**'
+    # paths:
+    #   - 'apps/server/**'
 
 
 jobs:
