@@ -80,6 +80,9 @@ origins = [
     "https://app.l3vels.xyz",
     "https://www.l3vels.xyz",
     "https://l3vels.xyz",
+    "https://l3agi.com",
+    "https://dev.l3agi.xyz",
+    "https://staging.l3agi.xyz",
 ]
 
 app.add_middleware(

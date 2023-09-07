@@ -52,11 +52,13 @@ jobs:
 
       - name: Install game dependencies
         run: yarn install
+        working-directory: apps/ui
 
       - name: Build Game
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn run build:dev
+        working-directory: apps/ui
 
       - name: Postbuild
         run: yarn run postbuild
@@ -72,6 +74,7 @@ jobs:
         env:
           S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
         run: aws s3 sync dist/ s3://dashboard-dev.${{ env.S3_DOMAIN_NAME }} --delete
+        working-directory: apps/ui
 
   Init_Prod:
     runs-on: ubuntu-latest
