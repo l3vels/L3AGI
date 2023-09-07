@@ -34,7 +34,7 @@ export const useToolView = () => {
     tool_is_secret: filteredConfig[0]?.is_secret,
     tool_is_required: filteredConfig[0]?.is_required,
   }
-  console.log('toolsData', toolsData)
+
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
 
