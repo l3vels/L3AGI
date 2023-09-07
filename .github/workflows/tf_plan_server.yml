@@ -58,12 +58,6 @@ on:
       github_personal_access_token:
         description: 'GitHub Personal Access Token'
         required: true
-      DB_NAME:
-        description: 'GitHub Personal Access Token'
-        required: true
-      DB_HOST:
-        description: 'GitHub Personal Access Token'
-        required: true
 
 
 jobs:
