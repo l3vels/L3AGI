@@ -97,7 +97,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+          path: ${{ github.workspace }}/${{ env.TR_DIRECTORY  }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+
   Plan_dev:
     needs: [Build, Init_dev]
     if: github.ref == 'refs/heads/deploy'

@@ -93,15 +93,16 @@ jobs:
       #     echo -e "github_personal_access_token = \"${{ secrets.github_personal_access_token }}\"\n" >> $TFVARS
       #     echo -e "environment = \"${{ inputs.gh_environment }}\"\n" >> $TFVARS
           
-      - name: Display .auto.tfvars file content
-        run: |
-          cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
-
       - name: Download file
         uses: actions/download-artifact@v2
         with:
           name: my-artifact
           path: ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+
+      - name: Display .auto.tfvars file content
+        run: |
+          cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+
 
 
       # - name: Get Task Container Version
