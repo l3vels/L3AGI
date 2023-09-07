@@ -97,6 +97,12 @@ jobs:
         run: |
           cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
 
+      - name: Download file
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
+
 
       # - name: Get Task Container Version
       #   run: echo "The selected tag is ${{ inputs.task_container_version }}"

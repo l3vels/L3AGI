@@ -53,6 +53,7 @@ jobs:
         run: | 
           mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
       
+
       - name: Update task_container_version
         run: |
           TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
@@ -92,6 +93,11 @@ jobs:
         run: |
           cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
   
+      - name: Upload file
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
   Plan_dev:
     needs: [Build, Init_dev]
     if: github.ref == 'refs/heads/deploy'
