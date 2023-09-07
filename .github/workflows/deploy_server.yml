@@ -143,6 +143,7 @@ jobs:
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Init_Prod:
+    needs: [Deploy_dev]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: prod
@@ -158,7 +159,7 @@ jobs:
       - name: Change file name
         run: | 
           mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
-      
+            
       - name: Update task_container_version
         run: |
           TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
@@ -194,6 +195,17 @@ jobs:
           echo -e "GITHUB_CLIENT_SECRET = \"${{ secrets.LOGIN_GITHUB_CLIENT_SECRET }}\"\n" >> $TFVARS
           echo -e "FRONTEND_URL = \"${{ vars.FRONTEND_URL }}\"\n" >> $TFVARS
           echo -e "GOOGLE_API_KEY = \"${{ secrets.GOOGLE_API_KEY }}\"\n" >> $TFVARS
+          
+      - name: Display .auto.tfvars file content
+        run: |
+          cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+  
+      - name: Upload file
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/${{ env.TR_DIRECTORY  }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+  
 
   Plan_prod:
     needs: Init_Prod
