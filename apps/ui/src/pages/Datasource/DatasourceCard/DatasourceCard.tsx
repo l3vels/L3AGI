@@ -22,8 +22,8 @@ const DatasourceCard = ({
   imageSrc,
 }: DatasourceCardProps) => {
   let shortDescription = description
-  if (description.length > 70) {
-    shortDescription = `${description.slice(0, 70)}...`
+  if (description.length > 45) {
+    shortDescription = `${description.slice(0, 45)}...`
   }
 
   return (
@@ -69,12 +69,13 @@ export default DatasourceCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 335px;
-  min-width: 335px;
+  width: 250px;
+  min-width: 250px;
   height: 170px;
   min-height: 170px;
 
   background: rgba(0, 0, 0, 0.2);
+  /* background: rgba(0, 0, 0, 0.4); */
 
   border-radius: 10px;
 
@@ -116,8 +117,8 @@ const StyledBodyWrapper = styled.div`
 `
 const StyledImg = styled.img`
   border-radius: 8px;
-  /* width: 54px; */
-  height: 54px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
 `
 const StyledDescriptionWrapper = styled.div`

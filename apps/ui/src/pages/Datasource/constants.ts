@@ -2,11 +2,12 @@ export const DATA_LOADER_IMAGES = [
   {
     sourceName: 'Postgres',
     imageSrc:
-      'https://res.cloudinary.com/practicaldev/image/fetch/s--twVcwT-B--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://dev-to-uploads.s3.amazonaws.com/i/kbjzeples71613068b1i.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/800px-Postgresql_elephant.svg.png',
   },
   {
     sourceName: 'MySQL',
-    imageSrc: 'https://logowik.com/content/uploads/images/mysql8604.logowik.com.webp',
+    imageSrc:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStwXG33lFYL4EOU3XEdsb0gT3e14xyOuwC4A&usqp=CAU',
   },
   {
     sourceName: 'Upload File',
