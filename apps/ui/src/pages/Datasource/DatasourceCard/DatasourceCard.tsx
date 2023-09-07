@@ -49,16 +49,18 @@ const DatasourceCard = ({
       </StyledBodyWrapper>
       <StyledButtonsWrapper>
         <IconButton
-          onClick={onEditClick}
-          icon={() => <Edit />}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
-        />
-        <IconButton
           onClick={onDeleteClick}
           icon={() => <Delete />}
           size={IconButton.sizes.SMALL}
           kind={IconButton.kinds.TERTIARY}
+          ariaLabel='Delete'
+        />
+        <IconButton
+          onClick={onEditClick}
+          icon={() => <Edit />}
+          size={IconButton.sizes.SMALL}
+          kind={IconButton.kinds.TERTIARY}
+          ariaLabel='Edit'
         />
       </StyledButtonsWrapper>
     </StyledCard>
