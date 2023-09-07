@@ -51,11 +51,11 @@ jobs:
         
       - name: Change file name
         run: | 
-          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/dev.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
+          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
       
       - name: Update task_container_version
         run: |
-          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/*.auto.tfvars"
+          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
           echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
           echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
           echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
@@ -67,6 +67,7 @@ jobs:
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
           echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
+          echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
           echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
           echo -e "DB_HOST = \"${{ secrets.DB_HOST }}\"\n" >> $TFVARS
           echo -e "DB_PORT = \"${{ vars.DB_PORT }}\"\n" >> $TFVARS
@@ -112,8 +113,6 @@ jobs:
       azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      DB_NAME: "Testt" 
-      DB_HOST: "Testt2" 
 
   # Deploy_dev:
   #   needs: [Build, Plan_dev]
