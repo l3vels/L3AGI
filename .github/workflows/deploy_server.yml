@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - deploy
-    paths:
-      - 'apps/server/**'
+    # paths:
+    #   - 'apps/server/**'
 
 env:
   ACR_REPOSITORY: "l3-api"
