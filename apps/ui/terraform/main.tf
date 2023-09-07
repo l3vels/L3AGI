@@ -28,7 +28,6 @@ module "frontend" {
   source = "git::https://github.com/l3vels/l3-infra.git//frontend/aws"
   unique_id        = var.unique_id
   interface_url    = "${local.subdomain}.${var.deployment_domain}"
-  # acm_cert_arn_clf = data.terraform_remote_state.region_common.outputs.certs[var.deployment_domain].arn
 
   environment = var.environment
 }
