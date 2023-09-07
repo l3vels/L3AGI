@@ -12,6 +12,7 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import l3Icon from 'assets/avatars/l3.png'
 import { useAgentsService } from 'services/agent/useAgentsService'
+import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
@@ -29,33 +30,42 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsPr
   const { data: users } = useAssignedUserListService()
 
   const { data: agents } = useAgentsService()
+  const { data: teamOfAgents } = useTeamOfAgentsService()
 
-  const mentionsData = agents.map((agent: any) => {
+  const agentMentions = agents.map((agent: any) => {
     const { id, name } = agent.agent
 
     return {
       display: name,
       id: `agent__${id}`,
-      type: 'AI',
+      type: 'Agent',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     }
   })
 
-  const usersData: any = users?.map((user: any) => {
+  const teamOfAgentsMentions = teamOfAgents.map((team: any) => {
+    const { id, name } = team
+
+    return {
+      display: name,
+      id: `team__${id}`,
+      type: 'Team of Agents',
+      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+    }
+  })
+
+  const usersMentions: any = users.map((user: any) => {
     return {
       display: user.assigned_user_first_name,
       id: `user__${user.assigned_user_id}`,
       type: 'Team Member',
-      // icon: <RandomAvatarIcon />,
     }
   })
 
-  if (usersData) {
-    mentionsData.push(...usersData)
-  }
+  const mentions = [...agentMentions, ...teamOfAgentsMentions, ...usersMentions]
 
   const displayTransform = (id: string) => {
-    const display = mentionsData.find((item: any) => item.id.includes(id))?.display
+    const display = mentions.find((item: any) => item.id.includes(id))?.display
     // Add the "@" symbol to the display when the suggestion is picked
     return `@${display} `
   }
@@ -111,7 +121,7 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsPr
               }}
               style={defaultMentionStyle}
               displayTransform={displayTransform}
-              data={mentionsData}
+              data={mentions}
               trigger={'@'}
               markup='@[__display__](__id__)__mention__'
             />
