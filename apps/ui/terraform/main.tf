@@ -21,13 +21,14 @@ provider "aws" {
 }
 
 locals {
-  subdomain = var.environment == "prod" ? "${var.unique_id}" : "${var.unique_id}-${var.environment}"
+  # subdomain = var.environment == "prod" ? "${var.unique_id}" : "${var.unique_id}-${var.environment}"
+  subdomain = var.environment == "prod" ? "" : "${var.environment}"
 }
 
 module "frontend" {
   source = "git::https://github.com/l3vels/l3-infra.git//frontend/aws"
   unique_id        = var.unique_id
-  interface_url    = "${local.subdomain}.${var.deployment_domain}"
+  interface_url    = local.subdomain == "" ? "${var.deployment_domain}" : "${local.subdomain}.${var.deployment_domain}" 
 
   environment = var.environment
 }
