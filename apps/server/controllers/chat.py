@@ -19,9 +19,11 @@ from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
+from utils.team import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from typings.chat import ChatMessageOutput
 from models.team import TeamModel
+from agents.team_base import TeamOfAgentsType
 
 azureService = PubSubService()
 
@@ -63,13 +65,9 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         if not team:
             raise HTTPException(status_code=404, detail="Team of agents not found")
 
+        print(team)
+
         # agent_with_configs = convert_model_to_response(agent)
-
-    datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-
-    datasource_tools = get_datasource_tools(datasources)
-    agent_tools = get_agent_tools(agent_with_configs.configs.tools)
-    tools = datasource_tools + agent_tools
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
@@ -98,67 +96,75 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         return ""
 
     if agent:
+        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+
+        datasource_tools = get_datasource_tools(datasources)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools)
+        tools = datasource_tools + agent_tools
+
         conversational = L3Conversational(auth.user, auth.account, session_id)
         return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'], body.agent_id)
 
     if team:
-        plan_and_execute = L3PlanAndExecute(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-        )
+        if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
+            plan_and_execute = L3PlanAndExecute(
+                user=auth.user,
+                account=auth.account,
+                session_id=session_id,
+            )
 
-        return plan_and_execute.run(tools, prompt, history, body.is_private_chat, human_message['id'])
+            return plan_and_execute.run(team, tools, prompt, history, body.is_private_chat, human_message['id'])
 
-    # if version == ChatMessageVersion.AUTHORITARIAN_SPEAKER:
-    #     topic = prompt
+        if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
+            topic = prompt
         
-    #     team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
-    #     agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
-    
-        
+            team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
+            agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+            
+            l3_authoritarian_speaker = L3AuthoritarianSpeaker(
+                user=auth.user,
+                account=auth.account,
+                session_id=session_id,
+                word_limit=30
+            )
 
-    #     l3_authoritarian_speaker = L3AuthoritarianSpeaker(
-    #         user=auth.user,
-    #         account=auth.account,
-    #         session_id=session_id,
-    #         word_limit=30
-    #     )
+            result = l3_authoritarian_speaker.run(
+                topic=topic,
+                team=team,
+                agents_with_configs=agents,
+                history= history,
+                is_private_chat=body.is_private_chat
+            )
 
-    #     result = l3_authoritarian_speaker.run(
-    #         topic=topic,
-    #         team=team,
-    #         agents_with_configs=agents,
-    #         history= history,
-    #         is_private_chat=body.is_private_chat
-    #     )
+            return result
 
-    #     return result
+        if team.team_type == TeamOfAgentsType.DEBATES.value:
+            topic = prompt
+            
+            team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
+            agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
 
-    # if version == ChatMessageVersion.AGENT_DEBATES:
-    #     print("AGENT_DEBATES ------------------------------ start", body.version)
+            l3_agent_debates = L3AgentDebates(
+                user=auth.user,
+                account=auth.account,
+                session_id=session_id,
+                word_limit=30
+            )
 
-    #     topic = prompt
-        
-    #     team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
-    #     agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+            result = l3_agent_debates.run(
+                topic=topic,
+                team=team,
+                agents_with_configs=agents,
+                history= history,
+                is_private_chat=body.is_private_chat
+            )
 
-    #     l3_agent_debates = L3AgentDebates(
-    #         user=auth.user,
-    #         account=auth.account,
-    #         session_id=session_id,
-    #         word_limit=30
-    #     )
+            return result            
 
-    #     result = l3_agent_debates.run(
-    #         topic=topic,
-    #         team=team,
-    #         agents_with_configs=agents,
-    #         history= history,
-    #         is_private_chat=body.is_private_chat
-    #     )
+        if team.team_type == TeamOfAgentsType.DECENTRALIZED_SPEAKERS.value:
+            pass
 
-    #     return result
+
 
 @router.get("", status_code=200, response_model=List[ChatMessageOutput])
 def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):

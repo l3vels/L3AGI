@@ -20,6 +20,7 @@ from utils.agent import convert_model_to_response
 from models.agent import AgentModel
 from utils.system_message import SystemMessageBuilder
 from tools.base import BaseTool
+from models.team import TeamModel
 
 azure_service = PubSubService()
 
@@ -27,7 +28,7 @@ class L3PlanAndExecute(L3Base):
     thoughts: List[Dict] = []
     ai_message_id: str
 
-    def run(self, tools: List[BaseTool], prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
+    def run(self, team: TeamModel, tools: List[BaseTool], prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
         # TODO: receive team of agent with configs. get planner and executor configs from agent configs
 
         planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "b7f1ccce-44f0-4e7e-9098-a12fb7b93388", self.account))
@@ -88,7 +89,6 @@ class L3PlanAndExecute(L3Base):
             history.create_ai_message(msg, human_message_id)
             return msg
         except Exception as err:
-            print(err)
             sentry_sdk.capture_exception(err)
             msg = "Something went wrong, please try again later"
             history.delete_message(ai_message_id)

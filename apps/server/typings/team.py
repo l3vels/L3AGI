@@ -1,5 +1,5 @@
 from pydantic import BaseModel, UUID4
-from typing import List, Optional
+from typing import Optional
 
 class TeamInput(BaseModel):
     name: str

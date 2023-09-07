@@ -9,7 +9,6 @@ from typings.team import TeamInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
-from typings.team import QueryParams
 
 class TeamModel(BaseModel):
     """
@@ -39,7 +38,7 @@ class TeamModel(BaseModel):
     def __repr__(self) -> str:
         return (
             f"Team(id={self.id}, "
-            f"name='{self.name}', type='{self.type}', description='{self.description}', "
+            f"name='{self.name}', type='{self.team_type}', description='{self.description}', "
             f"is_deleted={self.is_deleted}, is_system={self.is_system}, is_template={self.is_template}, "
             f"workspace_id={self.workspace_id}, account_id={self.account_id})"
         )

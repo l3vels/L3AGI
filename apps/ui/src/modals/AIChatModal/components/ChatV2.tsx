@@ -85,7 +85,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       parent: null,
       agent_id: agentId,
       agent: null,
-      teamId: teamId,
+      team_id: teamId,
       team: null,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
