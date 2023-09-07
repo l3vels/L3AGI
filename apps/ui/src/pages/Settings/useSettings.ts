@@ -25,16 +25,9 @@ export const useSettings = () => {
     (config: any) => config.account_id === currentAccount.id && config.key === 'hugging_face_token',
   )
 
-  let initialValues = {
-    open_api_key: '',
-    hugging_face_token: '',
-  }
-
-  if (openApiKeyConfig?.length > 0 || huggingFaceConfig?.length > 0) {
-    initialValues = {
-      open_api_key: openApiKeyConfig[0]?.value || '',
-      hugging_face_token: huggingFaceConfig[0]?.value || '',
-    }
+  const initialValues = {
+    open_api_key: openApiKeyConfig[0]?.value || '',
+    hugging_face_token: huggingFaceConfig[0]?.value || '',
   }
 
   const handleSubmit = async (values: any) => {
