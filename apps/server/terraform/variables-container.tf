@@ -47,6 +47,24 @@ variable "LANGCHAIN_API_KEY" {
 variable "LANGCHAIN_PROJECT" {
   type = string
 }
+variable "JWT_EXPIRY" {
+  type = string
+}
+variable "JWT_SECRET_KEY" {
+  type = string
+}
+variable "GITHUB_CLIENT_ID" {
+  type = string
+}
+variable "GITHUB_CLIENT_SECRET" {
+  type = string
+}
+variable "FRONTEND_URL" {
+  type = string
+}
+variable "GOOGLE_API_KEY" {
+  type = string
+}
 
 locals {
   task_container_env_vars = [ ]

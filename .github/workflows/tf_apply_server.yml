@@ -74,30 +74,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.1.0
         
-      - name: Change file name
-        run: | 
-          mv ${{ github.workspace }}/${{ inputs.path }}/varfiles/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
+      - name: Download file
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/${{ inputs.path }}
 
-      - name: Update task_container_version
-        run: |
-          TFVARS="${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars"
-          echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
-          echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
-          echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
-          echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
-          echo -e "task_container_registry = \"${{ inputs.task_container_registry }}\"\n" >> $TFVARS
-          echo -e "task_container_name = \"${{ inputs.task_container_name }}\"\n" >> $TFVARS
-          echo -e "task_container_version = \"${{ inputs.task_container_version }}\"\n" >> $TFVARS
-          echo -e "azure_acr_username = \"${{ secrets.azure_acr_username }}\"\n" >> $TFVARS
-          echo -e "azure_acr_password = \"${{ secrets.azure_acr_password }}\"\n" >> $TFVARS
-          echo -e "github_personal_access_token = \"${{ secrets.github_personal_access_token }}\"\n" >> $TFVARS
-          echo -e "environment = \"${{ inputs.gh_environment }}\"\n" >> $TFVARS
-        
-        
       - name: Display .auto.tfvars file content
         run: |
           cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
-          
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.2
         with:

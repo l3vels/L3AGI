@@ -63,7 +63,7 @@ on:
 jobs:
   build-plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment: ${{ inputs.gh_environment }}
     defaults:
       run:
@@ -74,33 +74,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.1.0
         
-      - name: Change file name
-        run: | 
-          mv ${{ github.workspace }}/${{ inputs.path }}/varfiles/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
-      
-      - name: Update task_container_version
-        run: |
-          TFVARS="${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars"
-          echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
-          echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
-          echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
-          echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
-          echo -e "task_container_registry = \"${{ inputs.task_container_registry }}\"\n" >> $TFVARS
-          echo -e "task_container_name = \"${{ inputs.task_container_name }}\"\n" >> $TFVARS
-          echo -e "task_container_version = \"${{ inputs.task_container_version }}\"\n" >> $TFVARS
-          echo -e "azure_acr_username = \"${{ secrets.azure_acr_username }}\"\n" >> $TFVARS
-          echo -e "azure_acr_password = \"${{ secrets.azure_acr_password }}\"\n" >> $TFVARS
-          echo -e "github_personal_access_token = \"${{ secrets.github_personal_access_token }}\"\n" >> $TFVARS
-          echo -e "environment = \"${{ inputs.gh_environment }}\"\n" >> $TFVARS
-          
+      - name: Download file
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/${{ inputs.path }}
+
       - name: Display .auto.tfvars file content
         run: |
           cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
-
-
-      - name: Get Task Container Version
-        run: echo "The selected tag is ${{ inputs.task_container_version }}"
-  
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.2
@@ -116,15 +98,6 @@ jobs:
           git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
           terraform init
       
-      # - name: Terraform Workspace Creation
-      #   run: terraform workspace new ${{ inputs.task_container_name }}-${{ inputs.gh_environment }} || true
-      
-      # - name: Terraform Workspace Selection
-      #   run: terraform workspace select ${{ inputs.task_container_name }}-${{ inputs.gh_environment }}
-
-      # - name: Terraform Workspace Selection 
-      #   run: terraform workspace select -or-create ${{ inputs.task_container_name }}-${{ inputs.gh_environment }}
-
       - name: Terraform Validate
         id: validate
         run: terraform validate
@@ -145,6 +118,7 @@ jobs:
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
+
         run: terraform plan
         continue-on-error: true
 

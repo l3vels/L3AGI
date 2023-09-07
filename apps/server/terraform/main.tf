@@ -1,5 +1,5 @@
 locals {
-  subdomain = "api-ai-${var.environment}"
+  subdomain = "api-${var.environment}"
 }
 resource "azurerm_resource_group" "l3_resource_group" {
   name     = "l3-k8s_group"
@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "l3_resource_group" {
 
 
 module "backend" {
-  source = "git::https://github.com/l3vels/l3-infrastructure.git//service/azure"
+  source = "git::https://github.com/l3vels/l3-infra.git//service/azure"
   unique_id          = local.subdomain
    // azure_location     = var.azure_location
 
@@ -49,5 +49,11 @@ module "backend" {
     LANGCHAIN_ENDPOINT             = var.LANGCHAIN_ENDPOINT
     LANGCHAIN_API_KEY              = var.LANGCHAIN_API_KEY
     LANGCHAIN_PROJECT              = var.LANGCHAIN_PROJECT
+    JWT_EXPIRY                     = var.JWT_EXPIRY
+    JWT_SECRET_KEY                 = var.JWT_SECRET_KEY
+    GITHUB_CLIENT_ID               = var.GITHUB_CLIENT_ID
+    GITHUB_CLIENT_SECRET           = var.GITHUB_CLIENT_SECRET
+    FRONTEND_URL                   = var.FRONTEND_URL
+    GOOGLE_API_KEY                 = var.GOOGLE_API_KEY
   }
 }

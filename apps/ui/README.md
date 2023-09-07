@@ -64,6 +64,7 @@ Commit Types:
 | ci       | Changes to our CI configuration files and scripts                            |
 | revert   | Reverts a previous commit                                                    |
 
+
 ## Available Scripts
 
 In the game directory, you can run:
@@ -90,3 +91,4 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
