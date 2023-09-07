@@ -16,7 +16,7 @@ const HeaderButtons = () => {
       <Button
         kind={Button.kinds.TERTIARY}
         size={Button.sizes.SMALL}
-        onClick={() => openLinkTab('https://discord.gg/hQ9ZWabm')}
+        onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
       >
         <StyledInnerButtonWrapper>
           <Discord size='20' />
@@ -27,7 +27,7 @@ const HeaderButtons = () => {
       <Button
         kind={Button.kinds.TERTIARY}
         size={Button.sizes.SMALL}
-        onClick={() => openLinkTab('https://github.com/l3vels/L3AGI')}
+        onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
       >
         <StyledInnerButtonWrapper>
           <StyledVideoWrapper>

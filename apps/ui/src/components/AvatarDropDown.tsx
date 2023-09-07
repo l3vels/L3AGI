@@ -29,6 +29,9 @@ import teamIcon from 'assets/icons/team_icon.svg'
 import signOutIcon from 'assets/icons/signout_icon.svg'
 import ArrowRightSvg from 'assets/svgComponents/ArrowRightSvg'
 
+import Settings from '@l3-lib/ui-core/dist/icons/Settings'
+import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
+
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
@@ -87,7 +90,8 @@ const AvatarDropDown = () => {
           <img src={profileIcon} alt='profile' />
           {t('profile')}
         </StyledDropDownMenuItem> */}
-        {userAccounts && userAccounts.length > 0 && (<></>
+        {userAccounts && userAccounts.length > 0 && (
+          <></>
           // <Sub>
           //   <DropdownMenuSubTrigger>
           //     <DropdownMenuSubTriggerGroup>
@@ -115,8 +119,12 @@ const AvatarDropDown = () => {
           <img src={developersIcon} alt='team' />
           {t('Developers')}
         </StyledDropDownMenuItem> */}
+        <StyledDropDownMenuItem onClick={() => navigate('/settings')}>
+          <Settings size={20} />
+          Settings
+        </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={handleLogout}>
-          <img src={signOutIcon} alt='team' />
+          <LogOut size={20} />
           {t('logout')}
         </StyledDropDownMenuItem>
         <Arrow className='text-white' fill='currentColor' />
@@ -261,7 +269,7 @@ const StyledDropDownMenuItem = styled(Item)`
   border-radius: 3px;
   display: flex;
   align-items: center;
-  padding: 12px 20px;
+  padding: 12px 10px;
   position: relative;
   cursor: pointer;
   user-select: none;

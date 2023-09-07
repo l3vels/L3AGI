@@ -94,6 +94,7 @@ const Route = () => {
               <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
               <Router path='teams' element={<Teams />} key={document.location.href} />
               <Router path='channels' element={<Channels />} key={document.location.href} />
+
               {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
               {/* // disabled routes  */}
