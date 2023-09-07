@@ -63,7 +63,7 @@ jobs:
         run: yarn install
         working-directory: apps/ui
 
-      - name: Build Game
+      - name: Build 
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn run build:dev
@@ -129,6 +129,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v2
         with:
           node-version: 18
@@ -136,22 +137,33 @@ jobs:
       - name: Setup yarn
         run: npm install -g yarn
 
-      - name: Setup Nodejs with yarn caching
-        uses: actions/setup-node@v3
+      # Get yarn cache directory path
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        working-directory: apps/ui
+
+      # Cache yarn dependencies using the determined directory path
+      - uses: actions/cache@v2
         with:
-          node-version: 18
-          cache: yarn        
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('apps/ui/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install game dependencies
         run: yarn install
+        working-directory: apps/ui
 
       - name: Build 
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn run build:prod
+        working-directory: apps/ui
 
       - name: Postbuild
         run: yarn run postbuild
+        working-directory: apps/ui
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
@@ -163,4 +175,5 @@ jobs:
       - name: Sync files to S3
         env:
           S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
-        run: aws s3 sync dist/ s3://dashboard.${{ env.S3_DOMAIN_NAME }} --delete
+        run: aws s3 sync dist/ s3://dashboard-dev.${{ env.S3_DOMAIN_NAME }} --delete
+        working-directory: apps/ui
