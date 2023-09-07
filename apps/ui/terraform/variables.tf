@@ -11,12 +11,12 @@ variable "product" {
 variable "deployment_domain" {
   type        = string
   description = "The apex domain name for the deployment"
-  default     = "l3vels.xyz"
+  default     = "l3agi.com"
 }
 variable "zone_id" {
   type        = string
   description = "Hosted zone id for the deployment domain"
-  default     = "Z05700231L5IKHCADKDVM"
+  default     = "Z0263117158Y9QYCLMYZ3"
 }
 variable "environment" {
   type        = string

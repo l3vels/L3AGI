@@ -2,15 +2,15 @@ name: 'Deploy Frontend UI'
 on:
   push:
     branches:
-      - main
+      - deploy
     paths:
       - 'apps/server/**'
 
 
 jobs:
   Plan_Dev:
-    if: github.ref == 'refs/heads/main'
-    uses: l3vels/L3AGI/.github/workflows/tf_plan_ui.yml@main
+    if: github.ref == 'refs/heads/deploy'
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_ui.yml@deploy
     with:
       path: apps/ui/terraform
       tf_vars_file: dev.tfvars
@@ -21,7 +21,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
-    uses: l3vels/L3AGI/.github/workflows/tf_apply_ui.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_ui.yml@deploy
     with:
       path: apps/ui/terraform
       tf_vars_file: dev.tfvars
@@ -101,7 +101,7 @@ jobs:
 
   Plan_Prod:
     needs: Init_Prod
-    uses: l3vels/L3AGI/.github/workflows/tf_plan_ui.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_ui.yml@deploy
     with:
       path: apps/ui/terraform
       tf_vars_file: prod.tfvars
@@ -112,7 +112,7 @@ jobs:
 
   Deploy_Prod:
     needs: Plan_Prod
-    uses: l3vels/L3AGI/.github/workflows/tf_apply_ui.yml@main
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_ui.yml@deploy
     with:
       path: apps/ui/terraform
       tf_vars_file: prod.tfvars
