@@ -40,7 +40,8 @@ data "aws_route53_zone" "deployment" {
 
 resource "aws_route53_record" "site" {
   zone_id = data.aws_route53_zone.deployment.zone_id
-  name    = "${local.subdomain}.${var.deployment_domain}"
+  # name    = "${local.subdomain}.${var.deployment_domain}"
+  name    =  local.subdomain == "" ? "www.${var.deployment_domain}" : "${local.subdomain}.${var.deployment_domain}" 
   type    = "A"
 
   alias {
