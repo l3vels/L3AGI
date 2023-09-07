@@ -111,6 +111,8 @@ jobs:
       azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_HOST: ${{ secrets.DB_HOST }}
 
   Deploy_dev:
     needs: [Build, Plan_dev]

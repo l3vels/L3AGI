@@ -58,6 +58,12 @@ on:
       github_personal_access_token:
         description: 'GitHub Personal Access Token'
         required: true
+      DB_NAME:
+        description: 'GitHub Personal Access Token'
+        required: true
+      DB_HOST:
+        description: 'GitHub Personal Access Token'
+        required: true
 
 
 jobs:
@@ -98,8 +104,8 @@ jobs:
       #     cat ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars
 
 
-      - name: Get Task Container Version
-        run: echo "The selected tag is ${{ inputs.task_container_version }}"
+      # - name: Get Task Container Version
+      #   run: echo "The selected tag is ${{ inputs.task_container_version }}"
   
 
       - name: Setup Terraform
@@ -136,6 +142,8 @@ jobs:
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
+          DB_NAME: ${{secrets.DB_NAME}}
+          DB_HOST: ${{secrets.DB_HOST}}
         run: terraform plan
         continue-on-error: true
 
