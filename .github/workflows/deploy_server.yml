@@ -93,7 +93,7 @@ jobs:
           cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
   
   Plan_dev:
-    needs: Build
+    needs: [Build, Init_dev]
     if: github.ref == 'refs/heads/deploy'
     uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
 
