@@ -66,6 +66,7 @@ import CreateTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/CreateTe
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
+import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -148,9 +149,13 @@ const Route = () => {
                 key={document.location.href}
               />
             </Router>
-            <Router path={'team-of-agents'} element={<MainRouteLayout />} key={document.location.href}>
+            <Router
+              path={'team-of-agents'}
+              element={<MainRouteLayout />}
+              key={document.location.href}
+            >
               <Router index element={<TeamOfAgents />} key={document.location.href} />
-              <Router path={':teamId'} element={<TeamOfAgents />} key={document.location.href} />
+              <Router path={':teamId'} element={<TeamOfAgentView />} key={document.location.href} />
               <Router
                 path={'create-team'}
                 element={<CreateTeamOfAgentsForm />}

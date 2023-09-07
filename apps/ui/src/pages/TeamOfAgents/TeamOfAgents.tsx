@@ -40,8 +40,10 @@ const TeamOfAgents = () => {
             return (
               <TeamOfAgentsCard
                 key={teamOfAgents.id}
-                title={teamOfAgents.name}
-                subTitle={teamOfAgents.team_type}
+                name={teamOfAgents.name}
+                description={teamOfAgents.description}
+                headerTag={teamOfAgents.team_type}
+                onViewClick={() => navigate(`/team-of-agents/${teamOfAgents.id}`)}
                 onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
                 onChatClick={() => navigate(`/copilot?team=${teamOfAgents.id}`)}
