@@ -82,7 +82,7 @@ jobs:
 
       - name: Sync files to S3
         env:
-          S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+          S3_DOMAIN_NAME: ${{ vars.AGI_DOMAIN_NAME }}
         run: aws s3 sync dist/ s3://dev.${{ env.S3_DOMAIN_NAME }} --delete
         working-directory: apps/ui
 
@@ -174,6 +174,6 @@ jobs:
 
       - name: Sync files to S3
         env:
-          S3_DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+          S3_DOMAIN_NAME: ${{ vars.AGI_DOMAIN_NAME }}
         run: aws s3 sync dist/ s3://www.${{ env.S3_DOMAIN_NAME }} --delete
         working-directory: apps/ui
