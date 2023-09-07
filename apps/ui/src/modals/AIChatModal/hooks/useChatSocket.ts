@@ -55,6 +55,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       }
       if (data.type === 'CHAT_MESSAGE_ADDED') {
         upsertChatMessageInCache(data.chat_message, isPrivateChat, {
+          agentId: data.agent_id,
           localChatMessageRefId: data.local_chat_message_ref_id,
         })
 
