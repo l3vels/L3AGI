@@ -95,6 +95,7 @@ jobs:
     needs: Build
     if: github.ref == 'refs/heads/deploy'
     uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
+
     with:
       path: apps/server/terraform
       tf_vars_file: varfiles/dev.tfvars
@@ -111,8 +112,8 @@ jobs:
       azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_NAME: "Testt" 
+      DB_HOST: "Testt2" 
 
   Deploy_dev:
     needs: [Build, Plan_dev]
