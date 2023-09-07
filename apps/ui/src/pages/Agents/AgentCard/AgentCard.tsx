@@ -56,7 +56,7 @@ const AgentCard = ({
       </StyledCardHeader>
       <StyledCardBody>
         <StyledAvatarWrapper>
-          <Avatar name={name} size='80' textSizeRatio={3} round />
+          <Avatar name={name} size='60' textSizeRatio={3} round />
           {onChatClick && (
             <StyledChatButton className='chatButton'>
               <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY} onClick={onChatClick}>
