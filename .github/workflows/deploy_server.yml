@@ -82,6 +82,7 @@ jobs:
           echo -e "LANGCHAIN_TRACING_V2 = \"${{ vars.LANGCHAIN_TRACING_V2 }}\"\n" >> $TFVARS
           echo -e "LANGCHAIN_ENDPOINT = \"${{ vars.LANGCHAIN_ENDPOINT }}\"\n" >> $TFVARS
           echo -e "LANGCHAIN_API_KEY = \"${{ secrets.LANGCHAIN_API_KEY }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_PROJECT = \"${{ secrets.LANGCHAIN_PROJECT }}\"\n" >> $TFVARS
           echo -e "JWT_EXPIRY = \"${{ secrets.JWT_EXPIRY }}\"\n" >> $TFVARS
           echo -e "JWT_SECRET_KEY = \"${{ secrets.JWT_SECRET_KEY }}\"\n" >> $TFVARS
           echo -e "GITHUB_CLIENT_ID = \"${{ secrets.LOGIN_GITHUB_CLIENT_ID }}\"\n" >> $TFVARS

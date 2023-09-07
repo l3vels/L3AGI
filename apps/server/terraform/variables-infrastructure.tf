@@ -43,12 +43,6 @@ variable "task_container_version" {
   default     = "latest"
 }
 
-variable "rds_security_group_id" {
-  type = string
-}
-
-// Azure variables
-
 variable "client_id" {
   description = "The Client ID of the Service Principal."
   type        = string
