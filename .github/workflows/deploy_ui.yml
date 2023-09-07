@@ -40,7 +40,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 18
-          working-directory: apps/ui
 
       - name: Setup yarn
         run: npm install -g yarn
@@ -56,13 +55,14 @@ jobs:
         working-directory: ./apps/ui
 
       - name: Build Game
+        working-directory: apps/ui
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn run build:dev
-        working-directory:./apps/ui
 
       - name: Postbuild
         run: yarn run postbuild
+        working-directory: apps/ui
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
