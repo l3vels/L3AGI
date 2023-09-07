@@ -6,11 +6,14 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
+import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
-import Avatar from 'react-avatar'
+import l3Logo from 'assets/images/l3_logo.png'
+
+import Avatar, { ConfigProvider } from 'react-avatar'
 
 type AgentCardProps = {
   name: string
@@ -34,8 +37,8 @@ const AgentCard = ({
   onChatClick,
 }: AgentCardProps) => {
   let shortDescription = description
-  if (description.length > 70) {
-    shortDescription = `${description.slice(0, 70)}...`
+  if (description.length > 95) {
+    shortDescription = `${description.slice(0, 95)}...`
   }
 
   return (
@@ -56,16 +59,24 @@ const AgentCard = ({
       </StyledCardHeader>
       <StyledCardBody>
         <StyledAvatarWrapper>
-          <Avatar name={name} size='60' textSizeRatio={3} round />
+          <ConfigProvider
+            colors={[
+              'linear-gradient(180deg, #E332E6 0%, #A822F3 100%)',
+              'linear-gradient(180deg, #73FAFD 0%, #50B1D7 100%)',
+              'linear-gradient(180deg, #4CA6F8 0%, #2152F3 100%)',
+            ]}
+          >
+            <Avatar name={name} size='50' textSizeRatio={3} round />
+          </ConfigProvider>
           {onChatClick && (
             <StyledChatButton className='chatButton'>
-              <Button size={Button.sizes.SMALL} kind={Button.kinds.SECONDARY} onClick={onChatClick}>
-                <StyledInnerButtonWrapper>
-                  {'Chat'}
-                  <StyledIconWrapper>
-                    <MoveArrowRight />
-                  </StyledIconWrapper>
-                </StyledInnerButtonWrapper>
+              <Button
+                size={Button.sizes.SMALL}
+                kind={Button.kinds.PRIMARY}
+                onClick={onChatClick}
+                rightIcon={() => <MoveArrowRight size={14} />}
+              >
+                <StyledInnerButtonWrapper>Chat</StyledInnerButtonWrapper>
               </Button>
             </StyledChatButton>
           )}
@@ -86,14 +97,15 @@ const AgentCard = ({
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
-        <div>
+        <StyledCreatorWrapper>
+          <StyledLogo src={l3Logo} />
           <Typography
             value={'L3'}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.6)'}
           />
-        </div>
+        </StyledCreatorWrapper>
         <StyledButtonsWrapper className='footerButtons'>
           {onDeleteClick && (
             <IconButton
@@ -112,9 +124,16 @@ const AgentCard = ({
             />
           )}
           {onViewClick && (
-            <Button onClick={onViewClick} size={Button.sizes.SMALL}>
-              View
-            </Button>
+            <IconButton
+              onClick={onViewClick}
+              icon={() => (
+                <StyledIconWrapper>
+                  <EyeOpen size={50} />
+                </StyledIconWrapper>
+              )}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+            />
           )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
@@ -125,6 +144,7 @@ const AgentCard = ({
 export default AgentCard
 
 const StyledAgentCard = styled.div`
+  position: relative;
   width: 335px;
   min-width: 335px;
   height: 185px;
@@ -172,7 +192,7 @@ const StyledCardBody = styled.div`
 
   gap: 15px;
 
-  padding: 0 15px;
+  /* padding: 0 15px; */
 
   overflow: hidden;
 `
@@ -201,10 +221,10 @@ const StyledBodyTextWrapper = styled.div`
 
   overflow: hidden;
 
-  padding-top: 5px;
+  /* padding-top: 5px; */
 `
 const StyledAvatarWrapper = styled.div`
-  position: relative;
+  /* position: relative; */
   text-align: center;
   height: fit-content;
 
@@ -221,22 +241,28 @@ const StyledChatButton = styled.div`
   width: fit-content;
   height: fit-content;
   position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 80px;
+  left: 15px;
+  /* transform: translateX(-50%); */
 
   opacity: 0;
   transition: opacity 300ms;
 `
 const StyledIconWrapper = styled.div`
   /* color: #000; */
-
-  height: 16px;
-  width: 16px;
+  color: transparent;
 `
 const StyledInnerButtonWrapper = styled.div`
   display: flex;
   /* align-items: flex-end; */
   color: #fff;
   gap: 5px;
+`
+const StyledLogo = styled.img`
+  width: 20px;
+`
+const StyledCreatorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `

@@ -1,7 +1,7 @@
 import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
 import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
-import { SectionDivider } from 'styles/globalStyle.css'
+
 import styled from 'styled-components'
 
 import Agents from 'pages/Agents'
