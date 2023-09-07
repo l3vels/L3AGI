@@ -55,7 +55,7 @@ jobs:
       
       - name: Update task_container_version
         run: |
-          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT }}.auto.tfvars"
+          TFVARS="${{ github.workspace }}/*.auto.tfvars"
           echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
           echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
           echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
@@ -115,56 +115,56 @@ jobs:
       DB_NAME: "Testt" 
       DB_HOST: "Testt2" 
 
-  Deploy_dev:
-    needs: [Build, Plan_dev]
-    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@deploy
-    with:
-      path: apps/server/terraform
-      tf_vars_file: varfiles/dev.tfvars
-      gh_environment: dev
-      task_container_name: "l3-api"
-      task_container_version: ${{ github.sha }}
-      task_container_registry: ${{ vars.ACR_REGISTRY }}
-    secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      azure_acr_username: ${{ secrets.AZURE_USERNAME }}
-      azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
-      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-      azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
-      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  # Deploy_dev:
+  #   needs: [Build, Plan_dev]
+  #   uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@deploy
+  #   with:
+  #     path: apps/server/terraform
+  #     tf_vars_file: varfiles/dev.tfvars
+  #     gh_environment: dev
+  #     task_container_name: "l3-api"
+  #     task_container_version: ${{ github.sha }}
+  #     task_container_registry: ${{ vars.ACR_REGISTRY }}
+  #   secrets:
+  #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  #     azure_acr_username: ${{ secrets.AZURE_USERNAME }}
+  #     azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
+  #     azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+  #     azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+  #     azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+  #     github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  Init_Prod:
-    runs-on: ubuntu-latest
-    needs: [Build, Deploy_dev]
-    environment: prod
-    steps:
-      - name: "Say Hello Mona it's Prod"
-        run: echo "Start Prod"
+  # Init_Prod:
+  #   runs-on: ubuntu-latest
+  #   needs: [Build, Deploy_dev]
+  #   environment: prod
+  #   steps:
+  #     - name: "Say Hello Mona it's Prod"
+  #       run: echo "Start Prod"
 
-  Plan_prod:
-    needs: Init_Prod
-    if: github.ref == 'refs/heads/deploy'
-    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
-    with:
-      path: apps/server/terraform
-      tf_vars_file: varfiles/prod.tfvars
-      gh_environment: prod
-      task_container_name: "l3-api"
-      task_container_version: ${{ github.sha }}
-      task_container_registry: ${{ vars.ACR_REGISTRY }}
-    secrets:
-      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      azure_acr_username: ${{ secrets.AZURE_USERNAME }}
-      azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
-      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-      azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
-      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  # Plan_prod:
+  #   needs: Init_Prod
+  #   if: github.ref == 'refs/heads/deploy'
+  #   uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@deploy
+  #   with:
+  #     path: apps/server/terraform
+  #     tf_vars_file: varfiles/prod.tfvars
+  #     gh_environment: prod
+  #     task_container_name: "l3-api"
+  #     task_container_version: ${{ github.sha }}
+  #     task_container_registry: ${{ vars.ACR_REGISTRY }}
+  #   secrets:
+  #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  #     azure_acr_username: ${{ secrets.AZURE_USERNAME }}
+  #     azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
+  #     azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+  #     azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
+  #     azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+  #     github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  Deploy_prod:
+  # Deploy_prod:
     needs: [Build, Plan_prod]
     uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@deploy
     with:
