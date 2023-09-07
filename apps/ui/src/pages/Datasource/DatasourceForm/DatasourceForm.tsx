@@ -79,7 +79,7 @@ const DatasourceForm = ({ formik, isLoading }: DatasourceFormProps) => {
 
               return (
                 <DataLoaderCard
-                  backgroundImg={imageSrc}
+                  iconSrc={imageSrc}
                   isSelected={dataLoader.source_type === datasource_source_type}
                   isActive={dataLoader.is_active} // coming soon feature
                   key={dataLoader.name}
