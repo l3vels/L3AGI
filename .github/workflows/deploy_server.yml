@@ -7,6 +7,7 @@ on:
     # paths:
     #   - 'apps/server/**'
 
+    
 env:
   ACR_REPOSITORY: "l3-api"
   TR_DIRECTORY: "apps/server/terraform"
