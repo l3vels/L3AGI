@@ -13,7 +13,7 @@ import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
 import l3Logo from 'assets/images/l3_logo.png'
 
-import Avatar, { ConfigProvider } from 'react-avatar'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type AgentCardProps = {
   name: string
@@ -59,15 +59,7 @@ const AgentCard = ({
       </StyledCardHeader>
       <StyledCardBody>
         <StyledAvatarWrapper>
-          <ConfigProvider
-            colors={[
-              'linear-gradient(180deg, #E332E6 0%, #A822F3 100%)',
-              'linear-gradient(180deg, #73FAFD 0%, #50B1D7 100%)',
-              'linear-gradient(180deg, #4CA6F8 0%, #2152F3 100%)',
-            ]}
-          >
-            <Avatar name={name} size='50' textSizeRatio={3} round />
-          </ConfigProvider>
+          <AvatarGenerator name={name} size={50} />
           {onChatClick && (
             <StyledChatButton className='chatButton'>
               <Button
@@ -241,8 +233,8 @@ const StyledChatButton = styled.div`
   width: fit-content;
   height: fit-content;
   position: absolute;
-  top: 80px;
-  left: 15px;
+  top: 75px;
+  left: 10px;
   /* transform: translateX(-50%); */
 
   opacity: 0;
