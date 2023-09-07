@@ -64,6 +64,7 @@ Commit Types:
 | ci       | Changes to our CI configuration files and scripts                            |
 | revert   | Reverts a previous commit                                                    |
 
+
 ## Available Scripts
 
 In the game directory, you can run:
