@@ -40,10 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: dev
+    env:
+      ENVIRONMENT: dev
     defaults:
       run:
-        shell: bash
-        
+        shell: bash        
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
