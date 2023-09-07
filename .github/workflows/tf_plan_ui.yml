@@ -25,6 +25,10 @@ on:
       cli_config_credentials_token:
         description: 'cli config credentials token'
         required: true
+      github_personal_access_token:
+        description: 'GitHub Personal Access Token'
+        required: true
+  
 
 jobs:
   build-plan:
@@ -60,6 +64,7 @@ jobs:
 
       - name: Terraform Init
         env:
+          GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
         run: |
           git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"

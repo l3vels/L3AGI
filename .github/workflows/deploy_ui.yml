@@ -17,6 +17,7 @@ jobs:
       gh_environment: dev
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Deploy_Dev:
     needs: Plan_Dev
@@ -27,6 +28,7 @@ jobs:
       gh_environment: dev
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Build_Sync_S3_Dev:
     needs: Deploy_Dev
@@ -88,6 +90,7 @@ jobs:
       gh_environment: prod
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Deploy_Prod:
     needs: Plan_Prod
@@ -98,6 +101,7 @@ jobs:
       gh_environment: prod
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Build_Sync_S3_Prod:
     needs: Deploy_Prod
