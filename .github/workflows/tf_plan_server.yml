@@ -74,9 +74,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.1.0
         
-      - name: Change file name
-        run: | 
-          mv ${{ github.workspace }}/${{ inputs.path }}/varfiles/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
+      # - name: Change file name
+      #   run: | 
+      #     mv ${{ github.workspace }}/${{ inputs.path }}/varfiles/${{ inputs.gh_environment }}.tfvars  ${{ github.workspace }}/${{ inputs.path }}/${{ inputs.gh_environment }}.auto.tfvars 
       
       # - name: Update task_container_version
       #   run: |
