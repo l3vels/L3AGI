@@ -39,8 +39,7 @@ jobs:
   Init_dev:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env: # Job level environment variables
-      ENVIRONMENT: 'dev'
+    environment: dev
     defaults:
       run:
         shell: bash
@@ -56,15 +55,15 @@ jobs:
       - name: Update task_container_version
         run: |
           TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT }}.auto.tfvars"
-          echo -e "client_id = \"${{ env.azure_client_id }}\"\n" >> $TFVARS
-          echo -e "client_secret = \"${{ env.azure_client_secret }}\"\n" >> $TFVARS
-          echo -e "subscription_id = \"${{ env.azure_subscription_id }}\"\n" >> $TFVARS
-          echo -e "tenant_id = \"${{ env.azure_tenant_id }}\"\n" >> $TFVARS
+          echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
+          echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
+          echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
+          echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
           echo -e "task_container_registry = \"${{ vars.ACR_REGISTRY }}\"\n" >> $TFVARS
           echo -e "task_container_name = \"${{ vars.ACR_REGISTRY  }}\"\n" >> $TFVARS
           echo -e "task_container_version = \"${{ github.sha }}\"\n" >> $TFVARS
-          echo -e "azure_acr_username = \"${{ env.AZURE_USERNAME }}\"\n" >> $TFVARS
-          echo -e "azure_acr_password = \"${{ env.AZURE_PASSWORD }}\"\n" >> $TFVARS
+          echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
+          echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
           echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
           echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
