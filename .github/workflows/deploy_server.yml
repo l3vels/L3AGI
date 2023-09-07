@@ -55,7 +55,7 @@ jobs:
       
       - name: Update task_container_version
         run: |
-          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT }}.auto.tfvars"
+          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/*.auto.tfvars"
           echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
           echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
           echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
