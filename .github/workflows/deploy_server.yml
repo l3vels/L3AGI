@@ -7,7 +7,7 @@ on:
     # paths:
     #   - 'apps/server/**'
 
-    
+
 env:
   ACR_REPOSITORY: "l3-api"
   TR_DIRECTORY: "apps/server/terraform"
@@ -61,7 +61,7 @@ jobs:
           echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
           echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
           echo -e "task_container_registry = \"${{ vars.ACR_REGISTRY }}\"\n" >> $TFVARS
-          echo -e "task_container_name = \"${{ vars.ACR_REGISTRY  }}\"\n" >> $TFVARS
+          echo -e "task_container_name = \"${{ env.ACR_REPOSITORY  }}\"\n" >> $TFVARS
           echo -e "task_container_version = \"${{ github.sha }}\"\n" >> $TFVARS
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
@@ -168,7 +168,7 @@ jobs:
           echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
           echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
           echo -e "task_container_registry = \"${{ vars.ACR_REGISTRY }}\"\n" >> $TFVARS
-          echo -e "task_container_name = \"${{ vars.ACR_REGISTRY  }}\"\n" >> $TFVARS
+          echo -e "task_container_name = \"${{ env.ACR_REPOSITORY  }}\"\n" >> $TFVARS
           echo -e "task_container_version = \"${{ github.sha }}\"\n" >> $TFVARS
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
