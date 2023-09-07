@@ -63,7 +63,7 @@ on:
 jobs:
   build-plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment: ${{ inputs.gh_environment }}
     defaults:
       run:

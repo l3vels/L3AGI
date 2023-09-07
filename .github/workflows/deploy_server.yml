@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - deploy
-    # paths:
-    #   - 'apps/server/**'
+    paths:
+      - 'apps/server/**'
 
 
 env:
@@ -16,7 +16,7 @@ env:
 jobs:
   Build:
     name: Build Application Container
-    timeout-minutes: 10
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     outputs:
       tag_name: ${{ steps.build-image.outputs.TAG_NAME }}
@@ -38,7 +38,7 @@ jobs:
 
   Init_dev:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment: dev
     env:
       ENVIRONMENT: dev
@@ -145,7 +145,7 @@ jobs:
   Init_Prod:
     needs: [Deploy_dev]
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment: prod
     env:
       ENVIRONMENT: prod

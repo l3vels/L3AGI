@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - deploy
-    # paths:
-    #   - 'apps/ui/**'
+    paths:
+      - 'apps/ui/**'
 
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
   Build_Sync_S3_Dev:
     needs: Deploy_Dev
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v2
@@ -124,7 +124,7 @@ jobs:
   Build_Sync_S3_Prod:
     needs: Deploy_Prod
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment: prod
 
     steps:
