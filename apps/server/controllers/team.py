@@ -14,7 +14,7 @@ from agents.team_base import TeamOfAgentsType
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=TeamOutput)
+@router.post("", status_code=201, response_model=TeamOutput)
 def create_team(team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Create a new team with configurations.
@@ -54,7 +54,7 @@ def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authentica
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
 
-@router.get("/", response_model=List[TeamOutput])
+@router.get("", response_model=List[TeamOutput])
 def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
     """
     Get all teams by account ID.

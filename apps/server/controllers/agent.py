@@ -17,7 +17,7 @@ from exceptions import AgentNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=AgentWithConfigsOutput)
+@router.post("", status_code=201, response_model=AgentWithConfigsOutput)
 def create_agent(agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
     """
     Create a new agent with configurations.
@@ -58,7 +58,7 @@ def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccoun
     except AgentNotFoundException:
         raise HTTPException(status_code=404, detail="Agent not found")
 
-@router.get("/", response_model=List[AgentWithConfigsOutput])
+@router.get("", response_model=List[AgentWithConfigsOutput])
 def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfigsOutput]:
     """
     Get all agents by account ID.

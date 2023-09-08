@@ -75,7 +75,6 @@ Base.metadata.create_all(bind=engine)
 origins = [
     "http://localhost:8080",
     "http://localhost:4000",
-    "https://dashboard-dev.l3vels.xyz",
     "https://l3vels.xyz",
     "https://l3agi.com",
     "https://dev.l3agi.com",

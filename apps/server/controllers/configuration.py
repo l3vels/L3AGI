@@ -12,7 +12,7 @@ from exceptions import ConfigNotFoundException
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=ConfigOutput)
+@router.post("", status_code=201, response_model=ConfigOutput)
 def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
     """
     Create a new config with configurations.
@@ -52,7 +52,7 @@ def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(auth
     except ConfigNotFoundException:
         raise HTTPException(status_code=404, detail="Config not found")
 
-@router.get("/", response_model=List[ConfigOutput])
+@router.get("", response_model=List[ConfigOutput])
 def get_configs(auth: UserAccount = Depends(authenticate),
                 params: ConfigQueryParams = Depends()
                 ) -> List[ConfigOutput]:

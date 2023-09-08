@@ -18,7 +18,7 @@ from typings.config import ConfigQueryParams
 
 router = APIRouter()
 
-@router.post("/", status_code=201, response_model=DatasourceOutput)
+@router.post("", status_code=201, response_model=DatasourceOutput)
 def create_datasource(datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
     """
     Create a new datasource with configurations.
@@ -73,7 +73,7 @@ def get_data_loaders(auth: UserAccount = Depends(authenticate)) -> List[object]:
 
     return get_all_datasources()
     
-@router.get("/", response_model=List[DatasourceOutput])
+@router.get("", response_model=List[DatasourceOutput])
 def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[DatasourceOutput]:
     """
     Get all datasources by account ID.
