@@ -7,19 +7,12 @@ type DataLoaderCardProps = {
   onClick: () => void
   isSelected: boolean
   isActive: boolean
-  backgroundImg: string
+  iconSrc: string
 }
 
-const DataLoaderCard = ({
-  title,
-  onClick,
-  isSelected,
-  isActive,
-  backgroundImg,
-}: DataLoaderCardProps) => {
+const DataLoaderCard = ({ title, onClick, isSelected, isActive, iconSrc }: DataLoaderCardProps) => {
   return (
     <StyledDataLoaderCard
-      bgImg={backgroundImg}
       onClick={() => {
         if (isActive) {
           onClick()
@@ -28,6 +21,7 @@ const DataLoaderCard = ({
       isSelected={isSelected}
       isActive={isActive}
     >
+      <StyledIcon src={iconSrc} />
       <Typography
         value={title}
         type={Typography.types.LABEL}
@@ -40,22 +34,26 @@ const DataLoaderCard = ({
 
 export default DataLoaderCard
 
-const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean; bgImg: string }>`
+const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean }>`
   width: 150px;
   min-width: 150px;
-  height: 70px;
-  min-height: 70px;
+  height: 45px;
+  min-height: 45px;
 
   border-radius: 8px;
-  border: 2px solid #5d6a7d;
+  border: 2px solid rgba(0, 0, 0, 0.1);
 
-  box-shadow: inset 0px 1px 20px rgba(8, 8, 16, 0.1);
+  /* box-shadow: inset 0px 1px 20px rgba(8, 8, 16, 0.1); */
 
-  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: rgba(0, 0, 0, 0.3);
 
   display: flex;
-  justify-content: center;
+  /* justify-content: space-between; */
   align-items: center;
+
+  gap: 10px;
+
+  padding: 10px;
 
   cursor: pointer;
 
@@ -70,11 +68,9 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
     css`
       border-color: #48ecf0;
     `};
-
-  background-image: ${p =>
-    p.bgImg &&
-    `linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%), url(${p.bgImg})`};
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+`
+const StyledIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
 `

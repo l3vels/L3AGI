@@ -20,7 +20,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
   const params = useParams()
   const { agentId } = params
 
-  let route = 'copilot'
+  let route = '/copilot'
 
   if (agentId) {
     route = `/copilot?agent=${agentId}`

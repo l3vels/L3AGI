@@ -1,4 +1,4 @@
-import {useEffect} from "react"
+import { useEffect } from 'react'
 import { FormikProvider } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -25,11 +25,8 @@ const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
 )
 
 const Login = () => {
-  const { formik, alertMessage,
-    showResendAlert,
-     resendVerifyEmailHandle, 
-   } = useLogin()
-  const {githubLogin} = useGithubLogin()
+  const { formik, alertMessage, showResendAlert, resendVerifyEmailHandle } = useLogin()
+  const { githubLogin } = useGithubLogin()
   const navigate = useNavigate()
 
   return (
@@ -40,18 +37,18 @@ const Login = () => {
 
       <Heading
         value={'Complete your mission'}
-        type={Heading.types.h1}
+        type={Heading.types.h2}
         customColor='rgba(255, 255, 255, 0.4)'
-        style={{ fontSize: 52, lineHeight: 'normal' }}
+        style={{ fontSize: 24, lineHeight: 'normal', marginTop: '50px' }}
       />
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextFieldFormik field_name='email' placeholder='Email*' size='large' />
+          <TextFieldFormik field_name='email' placeholder='Email*' size='small' />
           <TextFieldFormik
             field_name='password'
             placeholder='Password*'
             type='password'
-            size='large'
+            size='small'
           />
         </FormikProvider>
         {/* <StyledColumnContainer>
@@ -77,42 +74,42 @@ const Login = () => {
             marginTop: 18,
           }}
         /> */}
-        <div  onClick={()=>{
-           navigate('/register')
-          }}>
-            
-        <Typography
-          value='Register?'
-          type={Typography.types.label}
-          size={Typography.sizes.lg}
-          as={'a'}
-        
-          customColor='#FFFFFF'
-          style={{
-            textDecorationLine: 'underline',
-            cursor: 'pointer',
-            textAlign: 'center',
-            textUnderlineOffset: 5,
-            marginTop: 18,
+        <div
+          onClick={() => {
+            navigate('/register')
           }}
-        />
-      </div>
+        >
+          <Typography
+            value='Register?'
+            type={Typography.types.label}
+            size={Typography.sizes.lg}
+            as={'a'}
+            customColor='#FFFFFF'
+            style={{
+              textDecorationLine: 'underline',
+              cursor: 'pointer',
+              textAlign: 'center',
+              textUnderlineOffset: 5,
+              marginTop: 18,
+            }}
+          />
+        </div>
         <Button
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
           onClick={() => formik.handleSubmit()}
-          size={Button.sizes.LARGE}
+          size={Button.sizes.MEDIUM}
         >
           Start
         </Button>
 
         <Button
-          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 5}}
+          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 5 }}
           onClick={async () => {
             const res = await githubLogin()
             // console.log(res, "www")
             window.location.href = res.auth_url
           }}
-          size={Button.sizes.LARGE}
+          size={Button.sizes.MEDIUM}
         >
           Login with Github
         </Button>

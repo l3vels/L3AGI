@@ -18,7 +18,7 @@ export const useUpdateConfigService = () => {
           is_secret,
           is_required,
           datasource_id: datasource_id,
-          team_id : team_id,
+          team_id: team_id,
           agent_id: null,
           toolkit_id: tool_id,
           workspace_id: null,
