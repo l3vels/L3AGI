@@ -66,8 +66,6 @@ def get_team_agents(auth: UserAccount = Depends(authenticate),
         List[TeamAgentOutput]: List of team_agents associated with the account.
     """
     db_team_agents = TeamAgentModel.get_team_agents(db=db, query=params, account=auth.account)
-    print(db_team_agents[0].agent)
-    print(db_team_agents[1].agent)
     return convert_team_agents_to_team_agent_list(db_team_agents)
 
 @router.get("/{id}", response_model=TeamAgentOutput)

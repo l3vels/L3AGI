@@ -38,11 +38,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
     mentioned_agent_id, mentioned_team_id, prompt = parse_agent_mention(body.prompt)
 
-    # we have to fetch either single agent or team
-    # Todo: fetch team by team id or id from mention
-    # get agents for team
-    # run plan and execute
-
     agent_id = body.agent_id or mentioned_agent_id
     team_id = body.team_id or mentioned_team_id
 
