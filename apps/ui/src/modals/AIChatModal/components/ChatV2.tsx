@@ -61,8 +61,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
 
-  const gameId = urlParams.get('game')
   const agentId = urlParams.get('agent')
+  const teamId = urlParams.get('team')
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
@@ -80,11 +80,13 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       session_id: '',
       thoughts: null,
       user_id: user.id,
-      account_id: '',
+      account_id: account.id,
       parent_id: null,
       parent: null,
       agent_id: agentId,
       agent: null,
+      team_id: teamId,
+      team: null,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',
@@ -118,7 +120,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         type: files[0].type,
         fileSize: files[0].size,
         locationField: 'chat',
-        game_id: gameId,
+        // game_id: gameId,
       }
 
       const fileName = files[0].name
@@ -174,6 +176,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         message,
         isPrivateChat: isPrivate,
         agentId,
+        teamId,
         localChatMessageRefId, // Used to update the message with socket
         parentId: parentMessageId,
       })

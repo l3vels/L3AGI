@@ -13,8 +13,9 @@ from tools.instagram.instagram_toolkit import InstagramToolkit
 from tools.slack.slack_toolkit import SlackToolkit
 from tools.gmail.gmail_toolkit import GmailToolkit
 from tools.google_calendar.google_calendar_toolkit import GoogleCalendarToolkit
+from tools.base import BaseToolkit, BaseTool
 
-TOOLKITS = [
+TOOLKITS: List[BaseToolkit] = [
     SerpGoogleSearchToolkit(),
     WebScraperToolkit(),
     DuckDuckGoSearchToolkit(),
@@ -68,7 +69,7 @@ def get_all_tools():
     return result
 
 
-def get_agent_tools(toolkit_ids: List[str]):
+def get_agent_tools(toolkit_ids: List[str]) ->  List[BaseTool]:
     """Return a list of tools."""
     tools = []
 

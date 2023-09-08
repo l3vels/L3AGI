@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import teamOfAgentsByIdGql from '../../gql/ai/teamOfAgents/teamOfAgentsById.gql'
 
-export const useTeamOfAgentsByIdService = ({ id }: { id: string }) => {
+export const useTeamOfAgentsByIdService = ({ id }: { id?: string }) => {
   const {
     data: { teamOfAgentsById } = {},
     error,

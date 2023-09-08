@@ -8,6 +8,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useToolsService } from 'services/tool/useToolsService'
+import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 const GetAgentName = () => {
   const params = useParams()
@@ -37,6 +38,15 @@ const GetToolkitName = () => {
   return <span>{tool[0]?.name}</span>
 }
 
+const GetTeamOfAgentsName = () => {
+  const params = useParams()
+  const { teamId } = params
+
+  const { data: teamOfAgent } = useTeamOfAgentsByIdService({ id: teamId || '' })
+
+  return <span>{teamOfAgent?.name}</span>
+}
+
 const routes: any = [
   { path: '/developers', breadcrumb: 'Developers' },
   { path: '/developers/logs', breadcrumb: 'Logs' },
@@ -52,6 +62,8 @@ const routes: any = [
   { path: '/datasources/create-datasource', breadcrumb: 'Add Datasource' },
 
   { path: '/tools/:toolId', breadcrumb: GetToolkitName },
+
+  { path: '/team-of-agents/:teamId', breadcrumb: GetTeamOfAgentsName },
 
   //chat
   { path: '/copilot', breadcrumb: null },

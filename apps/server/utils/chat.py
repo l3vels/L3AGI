@@ -1,3 +1,4 @@
+from typing import Tuple
 from uuid import UUID
 import json
 import re
@@ -5,24 +6,32 @@ from enum import Enum
 
 class MentionModule(Enum):
     AGENT = 'agent'
+    TEAM = 'team'
     USER = 'user'
 
 
-def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None):
+def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None, team_id: UUID = None) -> str:
     if is_private_chat:
         # private chat
         if agent_id:
             return f"{agent_id}-{user_id}"
+        
+        if team_id:
+            return f"{team_id}-{user_id}"
+        
         return f"{account_id}-{user_id}"
     else:
         # Team chat
         if agent_id:
             return f"{agent_id}"
 
+        if team_id:
+            return f"{team_id}"
+
         return f"{account_id}"
 
 
-def parse_agent_mention(text: str):
+def parse_agent_mention(text: str) -> Tuple[str, str, str]:
     """Finds agent mentions and returns id of the first agent found"""
 
     pattern = r'@\[(?P<name>[^\]]+)\]\((?P<module>[^_]+)__' \
@@ -33,13 +42,19 @@ def parse_agent_mention(text: str):
     results = []
     
     for match in mentions:
-        if match.group("module") == MentionModule.AGENT.value:
+        module = match.group("module")
+        
+        if module == MentionModule.AGENT.value:
             agent_id = match.group("id")
             cleaned_string = re.sub(pattern, '', text).strip()
-            return agent_id, cleaned_string
+            return agent_id, None, cleaned_string
+        if module == MentionModule.TEAM.value:
+            team_id = match.group("id")
+            cleaned_string = re.sub(pattern, '', text).strip()
+            return None, team_id, cleaned_string
 
     if not results:
-        return (None, text)
+        return (None, None, text)
     
     return results
 

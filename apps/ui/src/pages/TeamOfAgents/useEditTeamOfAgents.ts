@@ -46,6 +46,7 @@ export const useEditTeamOfAgents = () => {
     teamOfAgents_description: teamOfAgentsById?.description,
     teamOfAgents_team_type: teamOfAgentsById?.team_type,
     configs: configs || {},
+    agents: [],
   }
 
   const handleSubmit = async (values: any) => {

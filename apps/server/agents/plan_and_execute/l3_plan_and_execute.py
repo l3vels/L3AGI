@@ -1,36 +1,44 @@
 from langchain.chat_models import ChatOpenAI
-from langchain import SerpAPIWrapper
-from langchain.agents.tools import Tool
-from langchain import LLMMathChain
-from fastapi_sqlalchemy import db
-
 from typing import Dict, List
+from fastapi_sqlalchemy import db
+from openai.error import RateLimitError
+import sentry_sdk
+
 from pubsub_service import PubSubService
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
-from enums import ChatMessageVersion
 from system_message import format_system_message
 from agents.plan_and_execute.chat_planner import initialize_chat_planner
 from agents.plan_and_execute.agent_executor import initialize_executor
 from agents.plan_and_execute.plan_and_execute import PlanAndExecute
-from openai.error import RateLimitError
-import sentry_sdk
 from memory.zep import ZepMemory
 from config import Config
 from utils.agent import convert_model_to_response
-from models.agent import AgentModel
 from utils.system_message import SystemMessageBuilder
+from tools.base import BaseTool
+from models.agent import AgentModel
+from models.team import TeamModel
+from models.team import TeamAgentModel
+from typings.team_agent import TeamAgentRole
+from typings.agent import AgentWithConfigsOutput
 
 azure_service = PubSubService()
-
 
 class L3PlanAndExecute(L3Base):
     thoughts: List[Dict] = []
     ai_message_id: str
 
-    def run(self, l3_tools, prompt: str, history: PostgresChatMessageHistory, version: ChatMessageVersion, is_private_chat: bool, human_message_id: str):
-        planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "b7f1ccce-44f0-4e7e-9098-a12fb7b93388", self.account))
-        executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, "13f71e37-350e-4cec-a9d2-72050811f934", self.account))
+    def run(self, team: TeamModel, tools: List[BaseTool], prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
+        agents: List[TeamAgentModel] = team.team_agents
+        
+        planner_agent_with_configs: AgentWithConfigsOutput = None
+        executor_agent_with_configs: AgentWithConfigsOutput = None
+
+        for agent in agents:
+            if agent.role == TeamAgentRole.PLANNER.value:
+                planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.account))
+            if agent.role == TeamAgentRole.EXECUTOR.value:
+                executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.account))
 
         ai_message = history.create_ai_message("", human_message_id)
         ai_message_id = ai_message['id']
@@ -56,8 +64,7 @@ class L3PlanAndExecute(L3Base):
         )
 
         memory.human_name = self.user.name
-        memory.ai_name = "AI"
-
+        memory.ai_name = team.name
 
         planner_llm = ChatOpenAI(temperature=planner_agent_with_configs.configs.temperature, model_name=planner_agent_with_configs.configs.model_version)
         planner_system_message = SystemMessageBuilder(planner_agent_with_configs).build()
@@ -65,33 +72,10 @@ class L3PlanAndExecute(L3Base):
         
         planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
 
-
         executor_llm = ChatOpenAI(temperature=executor_agent_with_configs.configs.temperature, model_name=executor_agent_with_configs.configs.model_version)
-
-        tools = []
-
-        if version == ChatMessageVersion.PLAN_AND_EXECUTE:
-            search = SerpAPIWrapper()
-            llm_math_chain = LLMMathChain.from_llm(llm=executor_llm, verbose=True)
-
-            tools = [
-                Tool(
-                    name="Search",
-                    func=search.run,
-                    description="useful for when you need to answer questions about current events"
-                ),
-                Tool(
-                    name="Calculator",
-                    func=llm_math_chain.run,
-                    description="useful for when you need to answer questions about math"
-                ),
-            ]
-        elif version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
-            tools = l3_tools
-
         executor_system_message = SystemMessageBuilder(executor_agent_with_configs).build()
         executor_system_message = format_system_message(executor_system_message, self.user, self.account)
-
+        
         executor = initialize_executor(
             executor_llm,
             tools,
@@ -105,14 +89,13 @@ class L3PlanAndExecute(L3Base):
                 "input": prompt,
                 "chat_history": memory.load_memory_variables({})['chat_history'],
             })
-        except RateLimitError as e:
+        except RateLimitError:
             msg = "AI is at rate limit, please try again later"
             history.delete_message(ai_message_id)
             history.create_ai_message(msg, human_message_id)
             return msg
-        except Exception as e:
-            print(e)
-            sentry_sdk.capture_exception(e)
+        except Exception as err:
+            sentry_sdk.capture_exception(err)
             msg = "Something went wrong, please try again later"
             history.delete_message(ai_message_id)
             history.create_ai_message(msg, human_message_id)

@@ -29,24 +29,25 @@ const TeamOfAgents = () => {
           </StyledSectionDescription>
         </div>
         <div>
-          <Button
-            onClick={() => navigate('/team-of-agents/create-team')}
-            size={Button.sizes.SMALL}
-          >
-            Add Team 
+          <Button onClick={() => navigate('/team-of-agents/create-team')} size={Button.sizes.SMALL}>
+            Add Team
           </Button>
         </div>
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {teamOfAgents?.map((teamOfAgents: any, index: number) => {
+          {teamOfAgents?.map((teamOfAgents: any) => {
             return (
               <TeamOfAgentsCard
-                key={index}
-                title={teamOfAgents.name}
-                subTitle={teamOfAgents.team_type}
+                key={teamOfAgents.id}
+                name={teamOfAgents.name}
+                description={teamOfAgents.description}
+                headerTag={teamOfAgents.team_type}
+                teamAgents={teamOfAgents.team_agents}
+                onViewClick={() => navigate(`/team-of-agents/${teamOfAgents.id}`)}
                 onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
+                onChatClick={() => navigate(`/copilot?team=${teamOfAgents.id}`)}
               />
             )
           })}

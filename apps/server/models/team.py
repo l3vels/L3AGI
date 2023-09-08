@@ -9,7 +9,6 @@ from typings.team import TeamInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
-from typings.team import QueryParams
 
 class TeamModel(BaseModel):
     """
@@ -34,11 +33,13 @@ class TeamModel(BaseModel):
     
     account = relationship("AccountModel", cascade="all, delete")
     team_agents = relationship("TeamAgentModel", back_populates="team")
+    chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete")
+    configs = relationship("ConfigModel", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (
             f"Team(id={self.id}, "
-            f"name='{self.name}', type='{self.type}', description='{self.description}', "
+            f"name='{self.name}', type='{self.team_type}', description='{self.description}', "
             f"is_deleted={self.is_deleted}, is_system={self.is_system}, is_template={self.is_template}, "
             f"workspace_id={self.workspace_id}, account_id={self.account_id})"
         )
@@ -102,6 +103,7 @@ class TeamModel(BaseModel):
         teams = (
             db.session.query(TeamModel)
             .filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .all()
         )
         return teams

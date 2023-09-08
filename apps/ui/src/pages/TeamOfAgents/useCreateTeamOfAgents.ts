@@ -23,8 +23,10 @@ export const useCreateTeamOfAgents = () => {
   const initialValues = {
     teamOfAgents_name: '',
     teamOfAgents_description: '',
-    teamOfAgents_team_type: 'DEBATES',
+    teamOfAgents_team_type: 'Plan and Execute',
     configs: {},
+    agents: [],
+    // TODO: add agents selected in form
   }
 
   const formik = useFormik({
@@ -50,7 +52,7 @@ export const useCreateTeamOfAgents = () => {
       configs[field.key] = {
         key: field.key,
         key_type: field.type,
-        value: '',
+        value: field.default,
         is_secret: field.is_secret,
         is_required: field.is_required,
       }
@@ -67,6 +69,8 @@ export const useCreateTeamOfAgents = () => {
         description: values.teamOfAgents_description,
         team_type: values.teamOfAgents_team_type,
       }
+
+      // TODO: save agents selected in form
 
       const teamOfAgents = await createTeamOfAgents(teamOfAgentsInput)
 

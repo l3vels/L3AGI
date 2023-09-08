@@ -71,7 +71,7 @@ def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
 @router.get("/types", response_model=List[object])
 def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
     """
-    Get all tools by account ID.
+    Get all team types by account ID.
 
     Args:
         auth (UserAccount): Authenticated user account.
@@ -85,28 +85,74 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "is_active": True,
         "name": "Plan and Execute",
         "description": "Plan and Execute",
-        "team_type": TeamOfAgentsType.PLAN_EXECUTE
+        "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE,
+        "fields": [],
+        "agents": [
+            {"id": 1, "role": "Planner"},
+            {"id": 2, "role": "Executor"}
+        ]
     },
     {
         "is_system": True,
         "is_active": True,
-        "name": "Authoritarian_Speaker",
+        "name": "Authoritarian Speaker",
         "description": "Authoritarian Speaker description",
-        "team_type": TeamOfAgentsType.AUTHORITARIAN_SPEAKER
+        "team_type": TeamOfAgentsType.AUTHORITARIAN_SPEAKER,
+        "fields": [
+            {
+                "label": "Word limit",
+                "key": "word_limit",
+                "type": "int",
+                "is_required": True,
+                "is_secret": False,
+                "default": 30,
+            },
+            {
+                "label": "Stopping Probability",
+                "key": "stopping_probability",
+                "type": "float",
+                "is_required": True,
+                "is_secret": False,
+                "default": 0.2
+            }
+        ],
+        "agents": [
+            { "id": 1, "role": "Director"},
+            { "id": 2, "role": "Speaker"},
+            { "id": 3, "role": "Speaker"},
+            { "id": 4, "role": "Speaker"},
+            { "id": 5, "role": "Speaker"},
+            { "id": 6, "role": "Speaker"},
+        ]
     },
     {
         "is_system": True,
         "is_active": True,
         "name": "Debates",
         "description": "Debates",
-        "team_type": TeamOfAgentsType.DEBATES
+        "team_type": TeamOfAgentsType.DEBATES,
+        "fields": [
+            {
+                "label": "Word limit",
+                "key": "word_limit",
+                "type": "int",
+                "is_required": True,
+                "is_secret": False,
+                "default": 30,
+            }
+        ],
+        "agents": [
+            {"id": 1, "role": "Debater"}
+        ]
     },
     {
         "is_system": True,
         "is_active": False,
         "name": "Decentralized speaker",
         "description": "Decentralized speakers",
-        "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKERS
+        "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKERS,
+        "fields": [],
+        "agents": []
     }]
     
 @router.get("/{id}", response_model=TeamOutput)
@@ -146,43 +192,3 @@ def delete_team(team_id: str, auth: UserAccount = Depends(authenticate)):
 
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
-
-
-    """
-    Get all tools by account ID.
-
-    Args:
-        auth (UserAccount): Authenticated user account.
-
-    Returns:
-        List[Object]: List of tools associated with the account.
-    """
-
-    return [{
-        "is_system": True,
-        "is_active": True,
-        "name": "Plan and Execute",
-        "description": "Plan and Execute",
-        "team_type": TeamType.PLAN_EXECUTE
-    },
-    {
-        "is_system": True,
-        "is_active": True,
-        "name": "Authoritarian Speaker",
-        "description": "Authoritarian Speaker description",
-        "team_type": TeamType.AUTHORITARIAN_SPEAKER
-    },
-    {
-        "is_system": True,
-        "is_active": False,
-        "name": "Debates",
-        "description": "Debates",
-        "team_type": TeamType.DEBATES
-    },
-    {
-        "is_system": True,
-        "is_active": False,
-        "name": "Decentralized speakers",
-        "description": "Decentralized speakers",
-        "team_type": TeamType.DECENTRALIZED_SPEAKERS
-    }]

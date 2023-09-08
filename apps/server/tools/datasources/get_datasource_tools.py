@@ -3,8 +3,9 @@ from models.datasource import DatasourceModel
 from datasources.base import DatasourceType
 from tools.datasources.postgres.postgres import PostgresDatabaseTool
 from tools.datasources.mysql.mysql import MySQLDatabaseTool
+from tools.base import BaseTool
 
-def get_datasource_tools(datasources: List[DatasourceModel]):
+def get_datasource_tools(datasources: List[DatasourceModel]) -> List[BaseTool]:
     """Get tools needed for datasources. For example Postgres datasource needs SQL tool to execute queries."""
 
     tools = []

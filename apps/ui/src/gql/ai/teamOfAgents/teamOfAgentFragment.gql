@@ -1,0 +1,21 @@
+fragment TeamOfAgentFragment on TeamOfAgents {
+  id
+  name
+  description
+  team_type
+  workspace_id
+  is_deleted
+  is_system
+  account_id
+  created_by
+  modified_by
+  team_agents {
+    id
+    role
+    agent {
+      id
+      name
+      role
+    }
+  }
+}

@@ -28,7 +28,7 @@ const EditTeamOfAgentsForm = () => {
             <div>
               <StyledSectionTitle>Edit Team Of Agents</StyledSectionTitle>
               <StyledSectionDescription>
-                Here is your team of agents, a collection of databases, APIs, files, and more.
+                Edit and manage your team of AI agents for interactive experiences
               </StyledSectionDescription>
             </div>
 

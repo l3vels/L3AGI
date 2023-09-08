@@ -66,6 +66,7 @@ import CreateTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/CreateTe
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
+import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
 import MarketplaceRouteLayout from 'routes/MarketplaceRouteLayout'
 import LoginModal from 'modals/LoginModal'
 
@@ -161,7 +162,7 @@ const Route = () => {
               key={document.location.href}
             >
               <Router index element={<TeamOfAgents />} key={document.location.href} />
-              <Router path={':teamId'} element={<TeamOfAgents />} key={document.location.href} />
+              <Router path={':teamId'} element={<TeamOfAgentView />} key={document.location.href} />
               <Router
                 path={'create-team'}
                 element={<CreateTeamOfAgentsForm />}

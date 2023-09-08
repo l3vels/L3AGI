@@ -1,5 +1,6 @@
 from pydantic import BaseModel, UUID4
-from typing import List, Optional
+from typing import Optional, List
+from typings.team_agent import TeamAgentOutput
 
 class TeamInput(BaseModel):
     name: str
@@ -20,6 +21,7 @@ class TeamOutput(BaseModel):
     account_id: UUID4
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]
+    team_agents: List[TeamAgentOutput]
 
 
 class QueryParams(BaseModel):

@@ -19,9 +19,11 @@ from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
+# from utils.team import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from typings.chat import ChatMessageOutput
 from models.team import TeamModel
+from agents.team_base import TeamOfAgentsType
 
 azureService = PubSubService()
 
@@ -33,22 +35,37 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     Create new chat message
     """
 
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id)
-    
-    mentioned_agent_id, prompt = parse_agent_mention(body.prompt)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
+    mentioned_agent_id, mentioned_team_id, prompt = parse_agent_mention(body.prompt)
 
-    agent = AgentModel.get_agent_by_id(db, body.agent_id or mentioned_agent_id, auth.account)
+    agent_id = body.agent_id or mentioned_agent_id
+    team_id = body.team_id or mentioned_team_id
 
-    if not agent:
-        raise HTTPException(status_code=404, detail="Agent not found")
+    agent = None
+    agent_with_configs = None
+    team: TeamModel = None
+    team_configs = None
 
-    agent_with_configs = convert_model_to_response(agent)
+    if agent_id:
+        agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
 
-    datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+        if not agent:
+            raise HTTPException(status_code=404, detail="Agent not found")
 
-    datasource_tools = get_datasource_tools(datasources)
-    agent_tools = get_agent_tools(agent_with_configs.configs.tools)
-    tools = datasource_tools + agent_tools
+        agent_with_configs = convert_model_to_response(agent)
+
+
+    if team_id:
+        team = TeamModel.get_team_with_agents(db, auth.account, team_id)
+        
+        if not team:
+            raise HTTPException(status_code=404, detail="Team of agents not found")
+        
+        team_configs = {}
+
+        for config in team.configs:
+            team_configs[config.key] = config.value
+
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
@@ -56,7 +73,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         user_id=auth.user.id,
         user=auth.user,
         parent_id=body.parent_id,
-        agent_id=agent.id
+        team_id=team_id,
+        agent_id=agent_id
     )
 
     human_message = history.create_human_message(body.prompt)
@@ -68,91 +86,101 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         'is_private_chat': body.is_private_chat,
         'local_chat_message_ref_id': body.local_chat_message_ref_id,
         'agent_id': str(body.agent_id) if body.agent_id else body.agent_id,
+        'team_id': str(body.team_id) if body.team_id else body.team_id,
     })
 
-    # If team member is tagged and no agent is tagged, this means user sends a message to team member
-    if has_team_member_mention(body.prompt) and not mentioned_agent_id:
+    # If team member is tagged and no agent or team of agents is tagged, this means user sends a message to team member
+    if has_team_member_mention(body.prompt) and not mentioned_agent_id and not mentioned_team_id:
         return ""
 
-    # if version == ChatMessageVersion.CHAT_CONVERSATIONAL:
-    conversational = L3Conversational(auth.user, auth.account, session_id)
-    return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'], body.agent_id)
+    if agent:
+        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
 
-    if version == ChatMessageVersion.PLAN_AND_EXECUTE or version == ChatMessageVersion.PLAN_AND_EXECUTE_WITH_TOOLS:
-        l3_plan_and_execute = L3PlanAndExecute(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-        )
+        datasource_tools = get_datasource_tools(datasources)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools)
+        tools = datasource_tools + agent_tools
 
-        return l3_plan_and_execute.run(tools, prompt, history, version, body.is_private_chat, human_message['id'])
+        conversational = L3Conversational(auth.user, auth.account, session_id)
+        return conversational.run(agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'], body.agent_id)
 
-    if version == ChatMessageVersion.AUTHORITARIAN_SPEAKER:
-        topic = prompt
-        
-        team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
-        agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
-    
-        
+    if team:
+        if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
+            plan_and_execute = L3PlanAndExecute(
+                user=auth.user,
+                account=auth.account,
+                session_id=session_id,
+            )
 
-        l3_authoritarian_speaker = L3AuthoritarianSpeaker(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-            word_limit=30
-        )
+            return plan_and_execute.run(team, tools, prompt, history, body.is_private_chat, human_message['id'])
 
-        result = l3_authoritarian_speaker.run(
-            topic=topic,
-            team=team,
-            agents_with_configs=agents,
-            history= history,
-            is_private_chat=body.is_private_chat
-        )
+        if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
+            topic = prompt
+            agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+            stopping_probability = team_configs.get("stopping_probability", 0.2)
+            word_limit = team_configs.get("word_limit", 30)
 
-        return result
+            l3_authoritarian_speaker = L3AuthoritarianSpeaker(
+                user=auth.user,
+                account=auth.account,
+                session_id=session_id,
+                stopping_probability=float(stopping_probability),
+                word_limit=int(word_limit)
+            )
 
-    if version == ChatMessageVersion.AGENT_DEBATES:
-        print("AGENT_DEBATES ------------------------------ start", body.version)
+            result = l3_authoritarian_speaker.run(
+                topic=topic,
+                team=team,
+                agents_with_configs=agents,
+                history= history,
+                is_private_chat=body.is_private_chat
+            )
 
-        topic = prompt
-        
-        team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
-        agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+            return result
 
-        l3_agent_debates = L3AgentDebates(
-            user=auth.user,
-            account=auth.account,
-            session_id=session_id,
-            word_limit=30
-        )
+        if team.team_type == TeamOfAgentsType.DEBATES.value:
+            topic = prompt
+            agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+            word_limit = team_configs.get("word_limit", 30)
 
-        result = l3_agent_debates.run(
-            topic=topic,
-            team=team,
-            agents_with_configs=agents,
-            history= history,
-            is_private_chat=body.is_private_chat
-        )
+            l3_agent_debates = L3AgentDebates(
+                user=auth.user,
+                account=auth.account,
+                session_id=session_id,
+                word_limit=int(word_limit)
+            )
 
-        return result
+            result = l3_agent_debates.run(
+                topic=topic,
+                team=team,
+                agents_with_configs=agents,
+                history= history,
+                is_private_chat=body.is_private_chat
+            )
+
+            return result            
+
+        if team.team_type == TeamOfAgentsType.DECENTRALIZED_SPEAKERS.value:
+            pass
+
+
 
 @router.get("", status_code=200, response_model=List[ChatMessageOutput])
-def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
+def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
     """
     Get chat messages
 
     Args:
         is_private_chat (bool): Is private or team chat
         agent_id (Optional[UUID]): Agent id
+        team_id (Optional[UUID]): Team of agents id
     """
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id, team_id)
 
     chat_messages = (db.session.query(ChatMessageModel)
                  .filter(ChatMessageModel.session_id == session_id)
                  .order_by(ChatMessageModel.created_on.desc())
                  .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.parent))
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent))
                  .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]

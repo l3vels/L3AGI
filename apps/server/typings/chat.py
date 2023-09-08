@@ -8,6 +8,7 @@ class ChatMessageInput(BaseModel):
     is_private_chat: bool
     local_chat_message_ref_id: Optional[str] = None
     agent_id: Optional[UUID] = None
+    team_id: Optional[UUID] = None
     parent_id: Optional[str] = None
 
 
@@ -18,6 +19,8 @@ class ChatMessageOutput(BaseModel):
     session_id: str
     agent_id: Optional[UUID] = None
     agent: Optional[Dict] = None
+    team_id: Optional[UUID] = None
+    team: Optional[Dict] = None
     user_id: UUID
     account_id: UUID
     message: Dict
