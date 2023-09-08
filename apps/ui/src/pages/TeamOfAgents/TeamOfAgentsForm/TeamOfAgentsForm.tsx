@@ -137,17 +137,19 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
           )}
         </StyledSourceTypeWrapper>
 
-        {teamType?.fields.map((field: any) => {
-          return (
-            <FormikTextField
-              key={field.key}
-              name={`configs.${field.key}.value`}
-              value={configs[field.key]?.value}
-              placeholder={field.label}
-              label={field.label}
-            />
-          )
-        })}
+        <StyledFields>
+          {teamType?.fields.map((field: any) => {
+            return (
+              <FormikTextField
+                key={field.key}
+                name={`configs.${field.key}.value`}
+                value={configs[field.key]?.value}
+                placeholder={field.label}
+                label={field.label}
+              />
+            )
+          })}
+        </StyledFields>
 
         <TeamOfAgentsTable selectedTeamType={teamType} />
       </StyledInputWrapper>
@@ -208,4 +210,9 @@ const StyledText = styled.span`
 const StyledUploadFileWrapper = styled.div`
   display: flex;
   gap: 10px;
+`
+
+const StyledFields = styled.div`
+  display: flex;
+  gap: 40px;
 `

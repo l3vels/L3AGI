@@ -19,7 +19,7 @@ from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
-from utils.team import convert_model_to_response
+# from utils.team import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from typings.chat import ChatMessageOutput
 from models.team import TeamModel
@@ -49,6 +49,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     agent = None
     agent_with_configs = None
     team: TeamModel = None
+    team_configs = None
 
     if agent_id:
         agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
@@ -64,10 +65,12 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         
         if not team:
             raise HTTPException(status_code=404, detail="Team of agents not found")
+        
+        team_configs = {}
 
-        print(team)
+        for config in team.configs:
+            team_configs[config.key] = config.value
 
-        # agent_with_configs = convert_model_to_response(agent)
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
@@ -118,12 +121,15 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
             topic = prompt
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
-            
+            stopping_probability = team_configs.get("stopping_probability", 0.2)
+            word_limit = team_configs.get("word_limit", 30)
+
             l3_authoritarian_speaker = L3AuthoritarianSpeaker(
                 user=auth.user,
                 account=auth.account,
                 session_id=session_id,
-                word_limit=30
+                stopping_probability=float(stopping_probability),
+                word_limit=int(word_limit)
             )
 
             result = l3_authoritarian_speaker.run(
@@ -139,12 +145,13 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         if team.team_type == TeamOfAgentsType.DEBATES.value:
             topic = prompt
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
+            word_limit = team_configs.get("word_limit", 30)
 
             l3_agent_debates = L3AgentDebates(
                 user=auth.user,
                 account=auth.account,
                 session_id=session_id,
-                word_limit=30
+                word_limit=int(word_limit)
             )
 
             result = l3_agent_debates.run(

@@ -1,5 +1,6 @@
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 
 // TODO: fix after services types
@@ -20,7 +21,12 @@ const AgentRenderer = ({ params, options }: AgentRendererProps) => {
   return (
     <StyledAgents>
       <Tooltip content={agent.name}>
-        <Tags label={agent.name} readOnly color={Tags.colors.white} size='small' noAnimation />
+        <Typography
+          value={agent.name}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+          customColor={'#FFF'}
+        />
       </Tooltip>
     </StyledAgents>
   )

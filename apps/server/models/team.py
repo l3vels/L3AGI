@@ -34,6 +34,7 @@ class TeamModel(BaseModel):
     account = relationship("AccountModel", cascade="all, delete")
     team_agents = relationship("TeamAgentModel", back_populates="team")
     chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete")
+    configs = relationship("ConfigModel", cascade="all, delete")
     
     def __repr__(self) -> str:
         return (

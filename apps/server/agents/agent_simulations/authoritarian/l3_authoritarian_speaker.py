@@ -27,10 +27,12 @@ class L3AuthoritarianSpeaker(L3Base):
         user,
         account,
         session_id,
+        stopping_probability: int,
         word_limit: Optional[int] = 50,
     ) -> None:
         super().__init__(user=user, account=account, session_id=session_id)
-        self.word_limit = word_limit        
+        self.word_limit = word_limit    
+        self.stopping_probability = stopping_probability    
     
     def select_next_speaker(
             self, step: int, agents: List[DialogueAgentWithTools], director: DirectorDialogueAgentWithTools
@@ -129,7 +131,7 @@ class L3AuthoritarianSpeaker(L3Base):
                         model_name=director_agent.configs.model_version 
                         if director_agent.configs.model_version else "gpt-4"),
                     speakers=[agent_with_config.agent.name for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
-                    stopping_probability=0.2,
+                    stopping_probability=self.stopping_probability,
                     )
         
         agents = [director]
