@@ -64,7 +64,7 @@ contract Main is ERC1155, Ownable, WeaponSupply {
           </StyledHeadingWrapper>
           <StyledTypographyWrapper>
             <Typography
-              value='Set up your webhook endpoint to receive live events from L3vels or learn more about webhooks.'
+              value='Set up your webhook endpoint to receive live events from L3AGI or learn more about webhooks.'
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />

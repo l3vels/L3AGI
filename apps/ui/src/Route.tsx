@@ -120,7 +120,7 @@ const Route = () => {
               <Router path='log/:id' element={<Log />} key={document.location.href} />
               <Router path='successful/:id' element={<Log />} key={document.location.href} />
               <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
-              <Router path='webhook' element={<Webhook />} key={document.location.href} />
+              {/* <Router path='webhook' element={<Webhook />} key={document.location.href} /> */}
             </Router>
 
             <Router path={'copilot'} element={<ChatRouteLayout />} key={document.location.href}>
