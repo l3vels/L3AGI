@@ -12,7 +12,7 @@ const AgentRouteLayout = () => {
 
   const outlet = useOutlet()
 
-  if (!user) return <Navigate to='/login' />
+  if (!user) return <Navigate to='/marketplace' />
 
   return (
     <StyledAppContainer className='app_container'>

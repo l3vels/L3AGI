@@ -66,6 +66,8 @@ import CreateTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/CreateTe
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
+import MarketplaceRouteLayout from 'routes/MarketplaceRouteLayout'
+import LoginModal from 'modals/LoginModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -85,13 +87,17 @@ const Route = () => {
       <Routes>
         <>
           <Router element={<RootLayout />}>
+            <Router element={<MarketplaceRouteLayout />}>
+              <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
+            </Router>
+
             <Router element={<MainRouteLayout />}>
               <Router path='/' element={<Home />} key={document.location.href} />
 
               {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
               {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
               {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
-              <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
+
               <Router path='teams' element={<Teams />} key={document.location.href} />
               <Router path='channels' element={<Channels />} key={document.location.href} />
 
@@ -149,7 +155,11 @@ const Route = () => {
                 key={document.location.href}
               />
             </Router>
-            <Router path={'team-of-agents'} element={<MainRouteLayout />} key={document.location.href}>
+            <Router
+              path={'team-of-agents'}
+              element={<MainRouteLayout />}
+              key={document.location.href}
+            >
               <Router index element={<TeamOfAgents />} key={document.location.href} />
               <Router path={':teamId'} element={<TeamOfAgents />} key={document.location.href} />
               <Router
@@ -200,6 +210,7 @@ const Route = () => {
       <EditAgentModal />
       <CreateDatasourceModal />
       <EditDatasourceModal />
+      <LoginModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}

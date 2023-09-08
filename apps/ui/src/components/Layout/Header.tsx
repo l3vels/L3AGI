@@ -11,16 +11,19 @@ import styled from 'styled-components'
 
 interface HeaderTypes {
   expandMode?: boolean
-  hideUsers?: boolean
-  activeUsers?: any
+  isPublicRoute?: boolean
 }
 
-const Header = ({ expandMode = false, hideUsers = false, activeUsers = [] }: HeaderTypes) => {
+const Header = ({ expandMode = false, isPublicRoute }: HeaderTypes) => {
   return (
     <StyledHeader id='main_header'>
       <StyledNavigationColumn>
-        <ArrowNavigation />
-        <Breadcrumbs />
+        {!isPublicRoute && (
+          <>
+            <ArrowNavigation />
+            <Breadcrumbs />
+          </>
+        )}
       </StyledNavigationColumn>
       {!expandMode && (
         <StyledLogoWrapper to='/'>
@@ -29,11 +32,6 @@ const Header = ({ expandMode = false, hideUsers = false, activeUsers = [] }: Hea
       )}
       {!expandMode && (
         <>
-          {/* {!hideUsers && (
-            <div style={{ justifySelf: 'end' }}>
-              <HeaderShare activeUsers={activeUsers} />
-            </div>
-          )} */}
           <StyledHeaderButtonWrapper>
             <HeaderButtons />
           </StyledHeaderButtonWrapper>
