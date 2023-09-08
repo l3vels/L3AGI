@@ -23,7 +23,9 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Toolkits</StyledSectionTitle>
-          <StyledSectionDescription>Here are all of your Tools</StyledSectionDescription>
+          <StyledSectionDescription>
+            Discover the complete range of tools available for your agents and teams.
+          </StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
 
