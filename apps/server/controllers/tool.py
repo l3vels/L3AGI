@@ -12,7 +12,7 @@ from tools.get_tools import get_all_tools
 router = APIRouter()  
 
 @router.get("/", response_model=List[ToolOutput])
-def get_tools(auth: UserAccount = Depends(authenticate)) -> List[ToolOutput]:
+def get_tools() -> List[ToolOutput]:
     """
     Get all tools by account ID.
 
