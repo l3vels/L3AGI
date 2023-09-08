@@ -8,20 +8,18 @@ import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
 
 const Home = () => {
-  const isProduction = import.meta.env.REACT_APP_ENV === 'production'
+  // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
 
   return (
     <>
       <StyledInnerWrapperEdit>
         <GetStartedComponent />
 
-        {!isProduction && (
-          <>
-            <Agents />
-            <StyledDivider />
-            <Datasource />
-          </>
-        )}
+        <>
+          <Agents />
+          <StyledDivider />
+          <Datasource />
+        </>
 
         {/* 
         <TopCharts />
