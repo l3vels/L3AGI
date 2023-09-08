@@ -68,9 +68,9 @@ const StyledCardsWrapper = styled.div`
 
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 
-  height: calc(100vh - 325px);
+  max-height: calc(100vh - 325px);
   padding-left: 20px;
 
   gap: 10px;
