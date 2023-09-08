@@ -50,7 +50,7 @@ const ApiKeys = () => {
                   />
                   <StyledTypographyWrapper>
                     <Button
-                      onClick={() => window.open('https://docs.l3vels.xyz', '_blank')}
+                      onClick={() => window.open('https://docs.l3agi.com', '_blank')}
                       kind={Button.kinds.TERTIARY}
                       size={Button.sizes.SMALL}
                     >

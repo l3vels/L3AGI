@@ -8,7 +8,7 @@ const Doc: React.FC = () => {
       // Store the previous route in session storage before redirecting to external link
       sessionStorage.setItem('previousRoute', window.location.pathname)
       window.history.pushState({}, '', '/developers/docs')
-      windowRef.current = window.open('https://docs.l3vels.xyz/', '_blank')
+      windowRef.current = window.open('https://docs.l3agi.com/', '_blank')
     } else {
       windowRef.current.focus()
     }
@@ -21,7 +21,7 @@ const Doc: React.FC = () => {
       if (
         previousRoute &&
         windowRef.current?.closed &&
-        window.location.href === 'https://docs.l3vels.xyz/'
+        window.location.href === 'https://docs.l3agi.com/'
       ) {
         window.history.pushState({}, '', previousRoute)
         console.log(window.history.pushState({}, '', previousRoute))

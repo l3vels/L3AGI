@@ -13,7 +13,7 @@ const PrivateRoute = () => {
   const { user } = React.useContext(AuthContext)
   const outlet = useOutlet()
 
-  if (!user) return <Navigate to='/login' />
+  if (!user) return <Navigate to='/marketplace' />
 
   return (
     <StyledAppContainer>

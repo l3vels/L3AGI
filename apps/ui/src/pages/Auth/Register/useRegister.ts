@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
     .required('Please enter the name of your company'),
   email: Yup.string()
     .email('Invalid email')
-    .required('Please use a valid email format. Example - user@l3vels.xyz'),
+    .required('Please use a valid email format. Example - user@l3agi.com'),
   password: Yup.string()
     .required('Please enter your password')
     .matches(

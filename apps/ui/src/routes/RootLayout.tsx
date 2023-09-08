@@ -15,16 +15,16 @@ const RootLayout = () => {
 
   const outlet = useOutlet()
 
-  if (!user) return <Navigate to='/login' />
+  // if (!user) return <Navigate to='/marketplace' />
 
   return (
     <>
       <>{outlet}</>
 
       <StyledChatInputWrapper isHidden={isCheckedRoute}>
-        <Spotlight />
+        {user && <Spotlight />}
       </StyledChatInputWrapper>
-      <ChatSwitcher isChatOpen={isCheckedRoute} />
+      {user && <ChatSwitcher isChatOpen={isCheckedRoute} />}
     </>
   )
 }

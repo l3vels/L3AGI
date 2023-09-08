@@ -67,6 +67,8 @@ import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOf
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
 import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
+import MarketplaceRouteLayout from 'routes/MarketplaceRouteLayout'
+import LoginModal from 'modals/LoginModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -86,15 +88,20 @@ const Route = () => {
       <Routes>
         <>
           <Router element={<RootLayout />}>
+            <Router element={<MarketplaceRouteLayout />}>
+              <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
+            </Router>
+
             <Router element={<MainRouteLayout />}>
               <Router path='/' element={<Home />} key={document.location.href} />
 
               {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
               {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
               {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
-              <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
+
               <Router path='teams' element={<Teams />} key={document.location.href} />
               <Router path='channels' element={<Channels />} key={document.location.href} />
+
               {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
               {/* // disabled routes  */}
@@ -204,6 +211,7 @@ const Route = () => {
       <EditAgentModal />
       <CreateDatasourceModal />
       <EditDatasourceModal />
+      <LoginModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}

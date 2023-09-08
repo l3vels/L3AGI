@@ -15,5 +15,5 @@ export const administrationValidation = yup.object().shape({
   shared_email: yup
     .string()
     .email('Invalid email')
-    .required('Please use a valid email format. Example - user@l3vels.xyz'),
+    .required('Please use a valid email format. Example - user@l3agi.com'),
 })
