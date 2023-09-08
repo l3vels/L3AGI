@@ -3,6 +3,9 @@ __pycache__
 .idea
 
 .env
+.env.develop
+.env.production
+.env.local
 
 process_pids
 

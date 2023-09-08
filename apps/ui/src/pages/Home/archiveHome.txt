@@ -25,7 +25,7 @@ const Home = () => {
           <h1>Welcome, Eduardo!</h1>
           <p>
             Browse our <span>developers docs </span> or <span> explore all the ways</span> to start
-            using L3vels.
+            using L3AGI.
           </p>
         </StyledWelcomeContainer>
         <GetStartedComponent />

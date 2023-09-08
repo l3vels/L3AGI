@@ -6,7 +6,7 @@ variable "unique_id" {
 variable "product" {
   type        = string
   description = "The product being deployed"
-  default = "L3vels UI"
+  default = "L3AGI UI"
 }
 variable "deployment_domain" {
   type        = string

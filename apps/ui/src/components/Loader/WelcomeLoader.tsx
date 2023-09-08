@@ -19,7 +19,7 @@ export const WelcomeLoader = () => {
       <StyledCenterContainer>
         <img src={Logo} alt='' />
         <Heading
-          value={'Welcome to L3vels'}
+          value={'Welcome to L3AGI'}
           type={Heading.types.h1}
           customColor='#fff'
           style={{ fontSize: 90, lineHeight: 'normal' }}
