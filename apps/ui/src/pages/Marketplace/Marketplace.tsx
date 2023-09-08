@@ -1,4 +1,5 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { AuthContext } from 'contexts'
 import AgentCard from 'pages/Agents/AgentCard'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
@@ -8,12 +9,16 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
+import Toolkit from 'pages/Toolkit'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useMarketplace } from './useMarketplace'
 
 const Marketplace = () => {
+  const { user } = React.useContext(AuthContext)
+
   const navigate = useNavigate()
 
   const { systemAgents, templateAgents } = useMarketplace()
@@ -80,6 +85,8 @@ const Marketplace = () => {
           </ComponentsWrapper>
         </StyledSectionWrapper>
       )}
+
+      {!user && <Toolkit isPublic />}
     </StyledRoot>
   )
 }

@@ -37,6 +37,7 @@ const MarketplaceRouteLayout = () => {
           </Button>
         </StyledLoginWrapper>
       )}
+      {!user && <StyledSpace />}
     </StyledAppContainer>
   )
 }
@@ -59,4 +60,7 @@ const StyledLoginWrapper = styled.div`
   position: fixed;
   bottom: 30px;
   left: 40px;
+`
+const StyledSpace = styled.div`
+  height: 200px;
 `
