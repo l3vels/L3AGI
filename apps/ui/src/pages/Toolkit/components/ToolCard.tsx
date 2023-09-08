@@ -8,11 +8,19 @@ type ToolCardProps = {
   onClick: () => void
   logoSrc: string
   isDisabled: boolean
+  isReadOnly?: boolean
 }
 
-const ToolCard = ({ title, subTitle, onClick, logoSrc, isDisabled }: ToolCardProps) => {
+const ToolCard = ({
+  title,
+  subTitle,
+  onClick,
+  logoSrc,
+  isDisabled,
+  isReadOnly = false,
+}: ToolCardProps) => {
   return (
-    <StyledRoot onClick={onClick} bgImg={''} isDisabled={isDisabled}>
+    <StyledRoot onClick={onClick} bgImg={''} isDisabled={isDisabled} isReadOnly={isReadOnly}>
       <StyledWrapper>
         <StyledImg src={logoSrc} />
         <StyledTextWrapper>
@@ -52,7 +60,7 @@ const ToolCard = ({ title, subTitle, onClick, logoSrc, isDisabled }: ToolCardPro
 
 export default ToolCard
 
-const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean }>`
+const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -82,6 +90,12 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean }>`
       pointer-events: none;
       opacity: 0.6;
       background: #000;
+    `};
+
+  ${p =>
+    p.isReadOnly &&
+    css`
+      pointer-events: none;
     `};
 `
 

@@ -13,7 +13,7 @@ import ToolCard from './components/ToolCard'
 import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
 
-const Toolkit = () => {
+const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: tools } = useToolsService()
 
   const navigate = useNavigate()
@@ -23,7 +23,9 @@ const Toolkit = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Toolkits</StyledSectionTitle>
-          <StyledSectionDescription>Here are all of your Tools</StyledSectionDescription>
+          <StyledSectionDescription>
+            Discover the complete range of tools available for your agents and teams.
+          </StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
 
@@ -39,10 +41,14 @@ const Toolkit = () => {
             return (
               <ToolCard
                 key={index}
-                isDisabled={!tool.is_active}
+                isReadOnly={isPublic}
+                isDisabled={!tool.is_active && !isPublic}
                 title={tool.name}
-                subTitle={tool.is_active ? '' : 'Coming Soon'}
-                onClick={() => navigate(`/tools/${tool.toolkit_id}`)}
+                subTitle={!tool.is_active && !isPublic ? 'Coming Soon' : ''}
+                onClick={() => {
+                  if (isPublic) return
+                  navigate(`/tools/${tool.toolkit_id}`)
+                }}
                 logoSrc={logoSrc}
               />
             )
@@ -62,9 +68,9 @@ const StyledCardsWrapper = styled.div`
 
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 
-  height: calc(100vh - 325px);
+  max-height: calc(100vh - 325px);
   padding-left: 20px;
 
   gap: 10px;

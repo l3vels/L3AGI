@@ -1,22 +1,42 @@
 import withRenderModal from 'hocs/withRenderModal'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
-import { Login } from 'pages/Auth'
+import { Login, Register } from 'pages/Auth'
 import { useModal } from 'hooks'
+import styled from 'styled-components'
 
-const LoginModal = () => {
+type LoginModalProps = {
+  data: {
+    isRegister?: boolean
+  }
+}
+
+const LoginModal = ({ data }: LoginModalProps) => {
   const { closeModal } = useModal()
 
+  const { isRegister } = data
+
   return (
-    <Modal
+    <StyledModal
       onClose={() => closeModal('login-modal')}
       show
-      backgroundColor='dark'
+      backgroundColor='light'
       //   hideCloseButton={true}
     >
-      <Login />
-    </Modal>
+      <StyledModalBody>{isRegister ? <Register /> : <Login />}</StyledModalBody>
+    </StyledModal>
   )
 }
 
 export default withRenderModal('login-modal')(LoginModal)
+
+const StyledModalBody = styled.div`
+  /* height: 100vh; */
+  /* max-height: 600px; */
+  padding-bottom: 10px;
+`
+const StyledModal = styled(Modal)`
+  .components-Modal-Modal-module__overlay--OO00T {
+    backdrop-filter: unset;
+  }
+`

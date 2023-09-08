@@ -10,12 +10,14 @@ import { Footer, Header } from 'components/Layout'
 import MainNavigation from 'pages/Navigation/MainNavigation'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+
 import { useModal } from 'hooks'
+import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
 
 const MarketplaceRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
 
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
 
   const outlet = useOutlet()
 
@@ -32,11 +34,14 @@ const MarketplaceRouteLayout = () => {
 
       {!user && (
         <StyledLoginWrapper>
-          <Button kind={Button.kinds.SECONDARY} onClick={() => openModal({ name: 'login-modal' })}>
+          <Button kind={Button.kinds.PRIMARY} onClick={() => openModal({ name: 'login-modal' })}>
             Login / Sign Up
           </Button>
+
+          <TermsAndPrivacyButtons />
         </StyledLoginWrapper>
       )}
+      {!user && <StyledSpace />}
     </StyledAppContainer>
   )
 }
@@ -57,6 +62,14 @@ const StyledNavigationWrapper = styled.div`
 `
 const StyledLoginWrapper = styled.div`
   position: fixed;
-  bottom: 30px;
+  bottom: 5px;
   left: 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+`
+const StyledSpace = styled.div`
+  height: 200px;
 `
