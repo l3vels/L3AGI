@@ -5,6 +5,7 @@ __pycache__
 .env
 .env.develop
 .env.production
+.env.local
 
 process_pids
 
