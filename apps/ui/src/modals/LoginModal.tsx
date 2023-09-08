@@ -17,14 +17,14 @@ const LoginModal = ({ data }: LoginModalProps) => {
   const { isRegister } = data
 
   return (
-    <Modal
+    <StyledModal
       onClose={() => closeModal('login-modal')}
       show
       backgroundColor='light'
       //   hideCloseButton={true}
     >
       <StyledModalBody>{isRegister ? <Register /> : <Login />}</StyledModalBody>
-    </Modal>
+    </StyledModal>
   )
 }
 
@@ -33,4 +33,9 @@ export default withRenderModal('login-modal')(LoginModal)
 const StyledModalBody = styled.div`
   height: 100vh;
   max-height: 800px;
+`
+const StyledModal = styled(Modal)`
+  .components-Modal-Modal-module__overlay--OO00T {
+    backdrop-filter: unset;
+  }
 `
