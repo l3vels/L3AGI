@@ -37,7 +37,6 @@ export const useSettings = () => {
         key: 'open_api_key',
         key_type: 'string',
         value: values.open_api_key,
-        account_id: currentAccount.id,
         is_secret: true,
         is_required: true,
       }
@@ -45,7 +44,6 @@ export const useSettings = () => {
         key: 'hugging_face_token',
         key_type: 'string',
         value: values.hugging_face_token,
-        account_id: currentAccount.id,
         is_secret: true,
         is_required: true,
       }
