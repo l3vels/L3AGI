@@ -30,14 +30,17 @@ const StyledCenterFormContainer = styled.div`
   align-self: center;
   justify-self: center;
   display: grid;
+  width: 100%;
   max-width: 550px;
   justify-items: center;
+
+  overflow: auto;
 `
 
 const StyledFormContainer = styled.div`
-  margin-top: 64px;
+  margin-top: 22px;
   display: grid;
-  grid-row-gap: 16px;
+  grid-row-gap: 22px;
   padding: 0 87px;
   width: 550px;
   max-width: 550px;

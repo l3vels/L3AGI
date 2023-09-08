@@ -31,8 +31,9 @@ const LoginModal = ({ data }: LoginModalProps) => {
 export default withRenderModal('login-modal')(LoginModal)
 
 const StyledModalBody = styled.div`
-  height: 100vh;
-  max-height: 800px;
+  /* height: 100vh; */
+  /* max-height: 600px; */
+  padding-bottom: 10px;
 `
 const StyledModal = styled(Modal)`
   .components-Modal-Modal-module__overlay--OO00T {

@@ -20,6 +20,7 @@ import {
   StyledImg,
   StyledInnerButtonWrapper,
 } from 'components/HeaderButtons/HeaderButtons'
+import OrDivider from 'components/OrDivider/OrDivider'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -41,22 +42,22 @@ const Login = () => {
 
       {showResendAlert && <ErrorResendVerification resendVerifyEmail={resendVerifyEmailHandle} />}
 
-      <Heading
-        value={'Complete your mission'}
-        type={Heading.types.h2}
-        customColor='rgba(255, 255, 255, 0.4)'
-        style={{ fontSize: 24, lineHeight: 'normal', marginTop: '50px' }}
-      />
+      <StyledHeaderWrapper>
+        <Heading
+          value={'Complete your mission'}
+          type={Heading.types.h2}
+          customColor='rgba(255, 255, 255, 0.9)'
+          style={{ fontSize: 24, lineHeight: 'normal' }}
+        />
+        <Typography
+          value={`AI agents' team collaboration as effective as human collaboration.`}
+          type={Typography.types.label}
+          size={Typography.sizes.sm}
+          customColor={'rgba(255,255,255, 0.6)'}
+        />
+      </StyledHeaderWrapper>
+
       <StyledFormContainer>
-        <FormikProvider value={formik}>
-          <TextFieldFormik field_name='email' placeholder='Email*' size='small' />
-          <TextFieldFormik
-            field_name='password'
-            placeholder='Password*'
-            type='password'
-            size='small'
-          />
-        </FormikProvider>
         {/* <StyledColumnContainer>
           <Checkbox
             size='small'
@@ -65,7 +66,6 @@ const Login = () => {
             labelClassName='checkbox_label'
           />
         </StyledColumnContainer> */}
-
         {/* <Typography
           value='Forget password?'
           type={Typography.types.label}
@@ -80,36 +80,7 @@ const Login = () => {
             marginTop: 18,
           }}
         /> */}
-        <div
-          onClick={() => {
-            openModal({ name: 'login-modal', data: { isRegister: true } })
-          }}
-        >
-          <Typography
-            value='Sign up'
-            type={Typography.types.label}
-            size={Typography.sizes.lg}
-            as={'a'}
-            customColor='#FFFFFF'
-            style={{
-              textDecorationLine: 'underline',
-              cursor: 'pointer',
-              textAlign: 'center',
-              textUnderlineOffset: 5,
-              marginTop: 18,
-            }}
-          />
-        </div>
         <Button
-          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
-          onClick={() => formik.handleSubmit()}
-          size={Button.sizes.MEDIUM}
-        >
-          Start
-        </Button>
-
-        <Button
-          style={{ width: 'fit-content', justifySelf: 'center', marginTop: 5 }}
           onClick={async () => {
             const res = await githubLogin()
             window.location.href = res.auth_url
@@ -122,6 +93,59 @@ const Login = () => {
             Login with Github
           </StyledInnerButtonWrapper>
         </Button>
+
+        <OrDivider />
+
+        <FormikProvider value={formik}>
+          <StyledInputWrapper>
+            <TextFieldFormik
+              label='Email'
+              field_name='email'
+              placeholder='Enter email...'
+              size='small'
+            />
+            <TextFieldFormik
+              label='Password'
+              field_name='password'
+              placeholder='Enter password...'
+              type='password'
+              size='small'
+            />
+          </StyledInputWrapper>
+        </FormikProvider>
+
+        <Button onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
+          Start
+        </Button>
+
+        <StyledSignUpWrapper>
+          <Typography
+            value={`Don't have an account?`}
+            type={Typography.types.label}
+            size={Typography.sizes.md}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+          <button
+            onClick={() => {
+              openModal({ name: 'login-modal', data: { isRegister: true } })
+            }}
+          >
+            <Typography
+              value='Sign up'
+              type={Typography.types.label}
+              size={Typography.sizes.md}
+              as={'a'}
+              customColor='#FFFFFF'
+              style={{
+                textDecorationLine: 'underline',
+                cursor: 'pointer',
+                textAlign: 'center',
+                textUnderlineOffset: 5,
+                marginTop: 18,
+              }}
+            />
+          </button>
+        </StyledSignUpWrapper>
       </StyledFormContainer>
     </StyledCenterFormContainer>
   )
@@ -132,4 +156,26 @@ export default Login
 const StyledNavLink = styled.a`
   color: #19b3ff;
   cursor: pointer;
+`
+const StyledSignUpWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`
+
+export const StyledInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+export const StyledHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 87px;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+
+  margin-top: 10px;
 `

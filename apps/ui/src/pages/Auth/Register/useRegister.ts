@@ -1,9 +1,10 @@
-import React, { useEffect, useContext} from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useRegistrationService } from 'services/useAuthService'
 import { useNavigate } from 'react-router-dom'
 import { ToastContext } from 'contexts'
+import { useModal } from 'hooks'
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -32,13 +33,15 @@ const initialValues = {
   name: '',
   email: '',
   password: '',
-  account_name: ''
+  account_name: '',
 }
 
 const useRegister = () => {
   const [alertMessage, setAlertMessage] = React.useState({ type: '', message: '' })
   const [registrationComplete] = useRegistrationService()
-  const navigate = useNavigate()
+
+  const { openModal } = useModal()
+
   const { setToast } = useContext(ToastContext)
   const handleSubmit = async (values: any) => {
     const data = { ...values }
@@ -56,8 +59,9 @@ const useRegister = () => {
     if (response.hasError && !networkError?.result) {
       return setAlertMessage({
         type: 'danger',
-        message: networkError?.result?.detail || 
-        'Something went wrong. If this error persists, please contact the administrator.',
+        message:
+          networkError?.result?.detail ||
+          'Something went wrong. If this error persists, please contact the administrator.',
       })
     }
 
@@ -66,7 +70,7 @@ const useRegister = () => {
       type: 'positive',
       open: true,
     })
-    navigate('/login', { state: { message: response.message } })
+    openModal({ name: 'login-modal', data: { isRegister: false } })
   }
 
   const formik = useFormik({
@@ -84,8 +88,6 @@ const useRegister = () => {
       }
     }
   }, [formik])
-
- 
 
   return {
     formik,
