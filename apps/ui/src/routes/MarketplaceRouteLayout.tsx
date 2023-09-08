@@ -32,7 +32,7 @@ const MarketplaceRouteLayout = () => {
 
       {!user && (
         <StyledLoginWrapper>
-          <Button kind={Button.kinds.SECONDARY} onClick={() => openModal({ name: 'login-modal' })}>
+          <Button kind={Button.kinds.PRIMARY} onClick={() => openModal({ name: 'login-modal' })}>
             Login / Sign Up
           </Button>
         </StyledLoginWrapper>
