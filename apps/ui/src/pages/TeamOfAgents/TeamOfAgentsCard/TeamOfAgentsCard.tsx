@@ -10,6 +10,7 @@ import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import l3Logo from 'assets/images/l3_logo.png'
 
@@ -18,6 +19,7 @@ type TeamOfAgentCardProps = {
   description: string
   headerText?: string
   headerTag?: string
+  teamAgents: any[]
   onEditClick?: () => void
   onDeleteClick?: () => void
   onViewClick: () => void
@@ -29,6 +31,7 @@ const TeamOfAgentCard = ({
   description,
   headerText,
   headerTag,
+  teamAgents,
   onDeleteClick,
   onEditClick,
   onViewClick,
@@ -84,6 +87,14 @@ const TeamOfAgentCard = ({
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.8)'}
           />
+
+          <StyledAgentCards>
+            {teamAgents?.map((teamAgents: any) => {
+              const { id, agent } = teamAgents
+
+              return <AvatarGenerator key={id} name={agent.name} size={30} />
+            })}
+          </StyledAgentCards>
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
@@ -258,4 +269,10 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 2px;
+`
+
+const StyledAgentCards = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 `

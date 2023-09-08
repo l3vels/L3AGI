@@ -103,6 +103,7 @@ class TeamModel(BaseModel):
         teams = (
             db.session.query(TeamModel)
             .filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .all()
         )
         return teams

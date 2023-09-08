@@ -22,6 +22,7 @@ class TeamAgentModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     team_id = Column(UUID, ForeignKey('team.id'), nullable=True) 
     agent_id = Column(UUID, ForeignKey('agent.id'), nullable=False)
+    role = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
     
     team = relationship("TeamModel", back_populates="team_agents")

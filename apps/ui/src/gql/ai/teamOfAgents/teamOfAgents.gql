@@ -10,5 +10,14 @@ query getTeamOfAgents @api(name: "ai") {
     account_id
     created_by
     modified_by
+    team_agents {
+      id
+      role
+      agent {
+        id
+        name
+        role
+      }
+    }
   }
 }

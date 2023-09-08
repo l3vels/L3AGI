@@ -43,6 +43,7 @@ const TeamOfAgents = () => {
                 name={teamOfAgents.name}
                 description={teamOfAgents.description}
                 headerTag={teamOfAgents.team_type}
+                teamAgents={teamOfAgents.team_agents}
                 onViewClick={() => navigate(`/team-of-agents/${teamOfAgents.id}`)}
                 onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
