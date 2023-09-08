@@ -273,6 +273,6 @@ const StyledCreatorWrapper = styled.div`
 
 const StyledAgentCards = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 5px;
   margin-top: 10px;
 `
