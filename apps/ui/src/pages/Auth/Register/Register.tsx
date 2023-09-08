@@ -19,10 +19,13 @@ import { StyledHeaderWrapper, StyledInputWrapper } from '../Login/Login'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import OrDivider from 'components/OrDivider/OrDivider'
+import useGithubLogin from '../Login/useGithubLogin'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
   const { openModal } = useModal()
+
+  const { githubLogin } = useGithubLogin()
 
   return (
     <StyledCenterFormContainer>
@@ -44,7 +47,12 @@ const Register = () => {
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
-        <Button onClick={formik.handleSubmit}>
+        <Button
+          onClick={async () => {
+            const res = await githubLogin()
+            window.location.href = res.auth_url
+          }}
+        >
           <StyledInnerButtonWrapper>
             <StyledImageWrapper secondary>
               <StyledImg src={githubIcon} />
