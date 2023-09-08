@@ -6,10 +6,11 @@ import TextFieldFormik from 'components/TextFieldFormik'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+import { useModal } from 'hooks'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
-  const navigate = useNavigate()
+  const { openModal } = useModal()
 
   return (
     <StyledCenterFormContainer>
@@ -19,7 +20,12 @@ const Register = () => {
           <TextFieldFormik name='name' placeholder='Full name' label='First name' />
           <TextFieldFormik name='account_name' placeholder='Company name' label='Company name' />
           <TextFieldFormik name='email' placeholder='Email' label='Email' />
-          <TextFieldFormik name='password' placeholder='Password' label='Password' type="password" />
+          <TextFieldFormik
+            name='password'
+            placeholder='Password'
+            label='Password'
+            type='password'
+          />
           {/* <TextFieldFormik
             name='confirm_password'
             placeholder='Confirm password'
@@ -27,26 +33,26 @@ const Register = () => {
             type="password"
           /> */}
         </FormikProvider>
-        <div  onClick={()=>{
-          navigate('/login')
-          }}>
-            
-        <Typography
-          value='Login?'
-          type={Typography.types.label}
-          size={Typography.sizes.lg}
-          as={'a'}
-        
-          customColor='#FFFFFF'
-          style={{
-            textDecorationLine: 'underline',
-            cursor: 'pointer',
-            textAlign: 'center',
-            textUnderlineOffset: 5,
-            marginTop: 18,
+        <div
+          onClick={() => {
+            openModal({ name: 'login-modal', data: { isRegister: false } })
           }}
-        />
-      </div>
+        >
+          <Typography
+            value='Login?'
+            type={Typography.types.label}
+            size={Typography.sizes.lg}
+            as={'a'}
+            customColor='#FFFFFF'
+            style={{
+              textDecorationLine: 'underline',
+              cursor: 'pointer',
+              textAlign: 'center',
+              textUnderlineOffset: 5,
+              marginTop: 18,
+            }}
+          />
+        </div>
         {/* <ButtonContainer> */}
         <Button onClick={formik.handleSubmit}>Register</Button>
 

@@ -193,9 +193,9 @@ const Route = () => {
           </Router>
         </>
         <Router element={<PublicRoute />}>
-          <Router path='/login' element={<Login />} />
+          {/* <Router path='/login' element={<Login />} /> */}
           <Router path='/github-login' element={<GithubLogin />} />
-          <Router path='/register' element={<Register />} />
+          {/* <Router path='/register' element={<Register />} /> */}
           <Router path='/forgot-password' element={<ForgotPassword />} />
           <Router path='/login/:id' element={<Login />} />
           <Router path='/reset-password/:id' element={<ResetPassword />} />

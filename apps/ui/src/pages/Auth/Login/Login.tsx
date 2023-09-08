@@ -14,6 +14,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import './login.css'
+import { useModal } from 'hooks'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -27,7 +28,7 @@ const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
 const Login = () => {
   const { formik, alertMessage, showResendAlert, resendVerifyEmailHandle } = useLogin()
   const { githubLogin } = useGithubLogin()
-  const navigate = useNavigate()
+  const { openModal } = useModal()
 
   return (
     <StyledCenterFormContainer>
@@ -76,11 +77,11 @@ const Login = () => {
         /> */}
         <div
           onClick={() => {
-            navigate('/register')
+            openModal({ name: 'login-modal', data: { isRegister: true } })
           }}
         >
           <Typography
-            value='Register?'
+            value='Sign up'
             type={Typography.types.label}
             size={Typography.sizes.lg}
             as={'a'}

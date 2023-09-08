@@ -15,7 +15,7 @@ import { useModal } from 'hooks'
 const MarketplaceRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
 
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
 
   const outlet = useOutlet()
 
