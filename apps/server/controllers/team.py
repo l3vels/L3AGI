@@ -85,28 +85,70 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "is_active": True,
         "name": "Plan and Execute",
         "description": "Plan and Execute",
-        "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE
+        "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE,
+        "fields": [],
+        "agents": [
+            {"role": "Planner", "max_count": 1},
+            {"role": "Executor", "max_count": 1}
+        ]
     },
     {
         "is_system": True,
         "is_active": True,
-        "name": "Authoritarian_Speaker",
+        "name": "Authoritarian Speaker",
         "description": "Authoritarian Speaker description",
-        "team_type": TeamOfAgentsType.AUTHORITARIAN_SPEAKER
+        "team_type": TeamOfAgentsType.AUTHORITARIAN_SPEAKER,
+        "fields": [
+            {
+                "label": "Word limit",
+                "key": "word_limit",
+                "type": "int",
+                "is_required": True,
+                "is_secret": False,
+                "default": 30,
+            },
+            {
+                "label": "Stopping Probability",
+                "key": "stopping_probability",
+                "type": "float",
+                "is_required": True,
+                "is_secret": False,
+                "default": 0.2
+            }
+        ],
+        "agents": [
+            {"role": "Director", "max_count": 1},
+            {"role": "Speaker", "max_count": 5},
+        ]
     },
     {
         "is_system": True,
         "is_active": True,
         "name": "Debates",
         "description": "Debates",
-        "team_type": TeamOfAgentsType.DEBATES
+        "team_type": TeamOfAgentsType.DEBATES,
+        "fields": [
+            {
+                "label": "Word limit",
+                "key": "word_limit",
+                "type": "int",
+                "is_required": True,
+                "is_secret": False,
+                "default": 30,
+            }
+        ],
+        "agents": [
+            {"role": "Debater", "max_count": 5}
+        ]
     },
     {
         "is_system": True,
         "is_active": False,
         "name": "Decentralized speaker",
         "description": "Decentralized speakers",
-        "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKERS
+        "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKERS,
+        "fields": [],
+        "agents": []
     }]
     
 @router.get("/{id}", response_model=TeamOutput)

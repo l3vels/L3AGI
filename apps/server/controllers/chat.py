@@ -48,7 +48,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     agent = None
     agent_with_configs = None
-    team = None
+    team: TeamModel = None
 
     if agent_id:
         agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
@@ -117,8 +117,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
         if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
             topic = prompt
-        
-            team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
             
             l3_authoritarian_speaker = L3AuthoritarianSpeaker(
@@ -140,8 +138,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
         if team.team_type == TeamOfAgentsType.DEBATES.value:
             topic = prompt
-            
-            team = TeamModel.get_team_with_agents(db, auth.account, "e838c58e-c569-4b40-93a6-463a6f5956a3")
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
 
             l3_agent_debates = L3AgentDebates(

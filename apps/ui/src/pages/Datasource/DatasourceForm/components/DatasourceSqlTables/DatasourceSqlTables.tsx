@@ -35,8 +35,7 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
         headerComponent: HeaderComponent,
         filter: 'agTextColumnFilter',
         resizable: true,
-        // cellRen
-        derer: TextCellRenderer,
+        cellRenderer: TextCellRenderer,
         minWidth: 200,
         width: 350,
         flex: 2,

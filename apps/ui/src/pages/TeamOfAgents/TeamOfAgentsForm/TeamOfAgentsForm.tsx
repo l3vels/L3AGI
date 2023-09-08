@@ -12,6 +12,7 @@ import UploadButton from './components/UploadButton'
 
 import DataLoaderCard from './components/DataLoaderCard'
 import FormikTextField from 'components/TextFieldFormik'
+import TeamOfAgentsTable from '../TeamOfAgentsTable'
 
 type TeamOfAgentsFormProps = {
   formik: any
@@ -37,6 +38,8 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
       setFieldValue('config_key_type', pickedLoaderFields?.fields[0]?.type)
     }
   }, [teamOfAgents_team_type])
+
+  const teamType = teamTypes?.find((teamType: any) => teamType.team_type === teamOfAgents_team_type)
 
   return (
     <StyledFormContainer>
@@ -133,6 +136,20 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             </>
           )}
         </StyledSourceTypeWrapper>
+
+        {teamType?.fields.map((field: any) => {
+          return (
+            <FormikTextField
+              key={field.key}
+              name={`configs.${field.key}.value`}
+              value={configs[field.key]?.value}
+              placeholder={field.label}
+              label={field.label}
+            />
+          )
+        })}
+
+        <TeamOfAgentsTable selectedTeamType={teamType} />
       </StyledInputWrapper>
     </StyledFormContainer>
   )

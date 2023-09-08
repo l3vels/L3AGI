@@ -33,8 +33,7 @@ const DataLoaderCard = ({ title, onClick, isSelected, isActive }: DataLoaderCard
 export default DataLoaderCard
 
 const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean }>`
-  width: 150px;
-  min-width: 150px;
+  flex-grow: 1;
   height: 50px;
   min-height: 50px;
 
