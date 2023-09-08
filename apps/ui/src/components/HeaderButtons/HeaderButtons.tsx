@@ -6,11 +6,11 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
 
-const HeaderButtons = () => {
-  const openLinkTab = (url: string) => {
-    window.open(url, '_blank')
-  }
+export const openLinkTab = (url: string) => {
+  window.open(url, '_blank')
+}
 
+const HeaderButtons = () => {
   return (
     <StyledButtonsWrapper>
       <Button
