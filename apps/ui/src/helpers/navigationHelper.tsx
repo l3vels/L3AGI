@@ -42,7 +42,7 @@ const DEVELOPERS_ITEM_LIST = [
     // routeLink: 'docs',
     icon: Doc,
     active: 'new tab',
-    routeLink: 'https://docs.l3vels.xyz/docs',
+    routeLink: 'https://docs.l3agi.com/docs',
   },
 ]
 

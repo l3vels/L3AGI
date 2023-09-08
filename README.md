@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://l3vels.xyz//#gh-light-mode-only">
+  <a href="https://l3agi.com//#gh-light-mode-only">
     <img src="./apps/ui/src/assets/images/l3_logo.png" alt="L3AGI logo" width="150px" height="150px"/>
   </a>
 </p>
@@ -7,9 +7,9 @@
 <p align="center"><i>Open-source framework to make AI agents' team collaboration as effective as human collaboration.</i></p>
     
 <h3 align="center">
-	<a href="https://dashboard.l3vels.com?utm_medium=community&utm_source=github">Try Our Cloud</a>
+	<a href="https://l3agi.com?utm_medium=community&utm_source=github">Try Our Cloud</a>
    <span> | </span>
-	<a href="https://www.l3vels.com?utm_medium=community&utm_source=github">Website</a>
+	<a href="https://www.l3agi.com?utm_medium=community&utm_source=github">Website</a>
 	<span> | </span>
 	<a href="./docs/basics.md">Docs</a>
 	<span> | </span>
