@@ -110,7 +110,7 @@ const StyledBodyWrapper = styled.div`
   align-items: center;
 
   gap: 5px;
-  padding: 8px 20px;
+  padding: 8px 10px;
 
   height: 100%;
   overflow: hidden;
