@@ -1,12 +1,19 @@
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+
 import useRegister from 'pages/Auth/Register/useRegister'
 import TextFieldFormik from 'components/TextFieldFormik'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import { useModal } from 'hooks'
+
+import githubIcon from 'assets/icons/githubIcon.png'
+import {
+  StyledImageWrapper,
+  StyledImg,
+  StyledInnerButtonWrapper,
+} from 'components/HeaderButtons/HeaderButtons'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
@@ -33,7 +40,7 @@ const Register = () => {
             type="password"
           /> */}
         </FormikProvider>
-        <div
+        <StyledWrapper
           onClick={() => {
             openModal({ name: 'login-modal', data: { isRegister: false } })
           }}
@@ -52,12 +59,18 @@ const Register = () => {
               marginTop: 18,
             }}
           />
-        </div>
-        {/* <ButtonContainer> */}
-        <Button onClick={formik.handleSubmit}>Register</Button>
+        </StyledWrapper>
 
-        <Button onClick={formik.handleSubmit}>Register with Github</Button>
-        {/* </ButtonContainer> */}
+        <Button onClick={formik.handleSubmit}>Sign up</Button>
+
+        <Button onClick={formik.handleSubmit}>
+          <StyledInnerButtonWrapper>
+            <StyledImageWrapper secondary>
+              <StyledImg src={githubIcon} />
+            </StyledImageWrapper>
+            Sign up with Github
+          </StyledInnerButtonWrapper>
+        </Button>
       </StyledFormContainer>
 
       {/* <StyledFormContainer>
@@ -79,3 +92,4 @@ const StyledFormContainer = styled.div`
   width: 550px;
   max-width: 550px;
 `
+const StyledWrapper = styled.div``

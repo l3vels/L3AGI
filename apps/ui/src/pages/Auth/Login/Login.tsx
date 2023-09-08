@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import { FormikProvider } from 'formik'
-import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router-dom'
+
 import styled from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
@@ -13,8 +11,15 @@ import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalSty
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 
+import githubIcon from 'assets/icons/githubIcon.png'
+
 import './login.css'
 import { useModal } from 'hooks'
+import {
+  StyledImageWrapper,
+  StyledImg,
+  StyledInnerButtonWrapper,
+} from 'components/HeaderButtons/HeaderButtons'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -107,12 +112,15 @@ const Login = () => {
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 5 }}
           onClick={async () => {
             const res = await githubLogin()
-            // console.log(res, "www")
             window.location.href = res.auth_url
           }}
-          size={Button.sizes.MEDIUM}
         >
-          Login with Github
+          <StyledInnerButtonWrapper>
+            <StyledImageWrapper secondary>
+              <StyledImg src={githubIcon} />
+            </StyledImageWrapper>
+            Login with Github
+          </StyledInnerButtonWrapper>
         </Button>
       </StyledFormContainer>
     </StyledCenterFormContainer>

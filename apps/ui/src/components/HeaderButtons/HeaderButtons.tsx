@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -30,9 +30,9 @@ const HeaderButtons = () => {
         onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
       >
         <StyledInnerButtonWrapper>
-          <StyledVideoWrapper>
+          <StyledImageWrapper>
             <StyledImg src={githubIcon} />
-          </StyledVideoWrapper>
+          </StyledImageWrapper>
           <Typography value='Github' type={Typography.types.LABEL} size={Typography.sizes.sm} />
         </StyledInnerButtonWrapper>
       </Button>
@@ -48,19 +48,28 @@ const StyledButtonsWrapper = styled.div`
 
   gap: 5px;
 `
-const StyledImg = styled.img`
+export const StyledImg = styled.img`
   width: 16px;
   height: 16px;
   object-fit: cover;
   transform: scale(1.4);
 `
-const StyledVideoWrapper = styled.div`
+export const StyledImageWrapper = styled.div<{ secondary?: boolean }>`
   max-width: 20px;
   max-height: 20px;
   border-radius: 100px;
+  border: 1px solid transparent;
   overflow: hidden;
+
+  margin-bottom: 2px;
+
+  ${p =>
+    p.secondary &&
+    css`
+      border: 1px solid #fff;
+    `};
 `
-const StyledInnerButtonWrapper = styled.div`
+export const StyledInnerButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
