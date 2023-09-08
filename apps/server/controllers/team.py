@@ -88,8 +88,8 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE,
         "fields": [],
         "agents": [
-            {"role": "Planner", "max_count": 1},
-            {"role": "Executor", "max_count": 1}
+            {"id": 1, "role": "Planner"},
+            {"id": 2, "role": "Executor"}
         ]
     },
     {
@@ -117,8 +117,12 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
             }
         ],
         "agents": [
-            {"role": "Director", "max_count": 1},
-            {"role": "Speaker", "max_count": 5},
+            { "id": 1, "role": "Director"},
+            { "id": 2, "role": "Speaker"},
+            { "id": 3, "role": "Speaker"},
+            { "id": 4, "role": "Speaker"},
+            { "id": 5, "role": "Speaker"},
+            { "id": 6, "role": "Speaker"},
         ]
     },
     {
@@ -138,7 +142,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
             }
         ],
         "agents": [
-            {"role": "Debater", "max_count": 5}
+            {"id": 1, "role": "Debater"}
         ]
     },
     {

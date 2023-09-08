@@ -26,7 +26,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { teamOfAgents_team_type, config_value, teamOfAgents_description, configs } = values
+  const { teamOfAgents_team_type, config_value, teamOfAgents_description, configs, agents } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('teamOfAgents_description', value)
@@ -151,7 +151,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
           })}
         </StyledFields>
 
-        <TeamOfAgentsTable selectedTeamType={teamType} />
+        <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
       </StyledInputWrapper>
     </StyledFormContainer>
   )

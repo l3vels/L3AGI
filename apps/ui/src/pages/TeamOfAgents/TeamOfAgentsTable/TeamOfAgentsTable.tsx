@@ -9,18 +9,21 @@ import AgentRenderer from './AgentRenderer'
 
 type TeamOfAgentsTableProps = {
   selectedTeamType?: any
+  formik: any
 }
 
-const TeamOfAgentsTable = ({ selectedTeamType }: TeamOfAgentsTableProps) => {
+const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps) => {
   const gridRef = useRef<any>({})
 
   const { data: agents } = useAgentsService()
+
+  const { agents: selectedAgents } = formik.values
 
   const config = useMemo(
     () => [
       {
         headerName: 'Role',
-        field: 'name',
+        field: 'role',
         headerComponent: HeaderComponent,
         filter: 'agTextColumnFilter',
         resizable: true,
@@ -32,8 +35,8 @@ const TeamOfAgentsTable = ({ selectedTeamType }: TeamOfAgentsTableProps) => {
       {
         headerName: 'Agent',
         headerComponent: HeaderComponent,
-        field: 'agent',
         filter: 'agTextColumnFilter',
+        field: 'agent_id',
         resizable: true,
         editable: true,
         enableRowGroup: false,
@@ -46,20 +49,16 @@ const TeamOfAgentsTable = ({ selectedTeamType }: TeamOfAgentsTableProps) => {
             value: agent.agent.id,
           })),
         },
-        // valueSetter: (params: any) => {
-        //   const newValue = params.newValue
-        //   const field = params.colDef.field
+        valueSetter: (params: any) => {
+          const { newValue: newAgentId, data } = params
 
-        //   cellEditFn({
-        //     field,
-        //     newValue,
-        //     params,
-        //   })
-        //   return true
-        // },
-        // headerComponentParams: {
-        //   icon: <Bolt />,
-        // },
+          formik.setFieldValue(`agents[${params.data.id - 1}]`, {
+            role: data.role,
+            agent_id: newAgentId,
+          })
+
+          return true
+        },
         minWidth: 200,
         width: 350,
         flex: 2,
@@ -72,9 +71,9 @@ const TeamOfAgentsTable = ({ selectedTeamType }: TeamOfAgentsTableProps) => {
 
   const gridData =
     selectedTeamType.agents.map((agent: any) => ({
-      id: agent.role,
-      name: agent.role,
-      agent: null,
+      id: agent.id,
+      role: agent.role,
+      agent_id: selectedAgents[agent.id - 1]?.agent_id,
     })) || []
 
   return (

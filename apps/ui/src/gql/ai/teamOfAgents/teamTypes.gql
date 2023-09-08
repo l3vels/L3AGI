@@ -5,8 +5,8 @@ query getTeamTypes @api(name: "ai") {
     description
     team_type
     agents {
+      id
       role
-      max_count
     }
     fields
   }
