@@ -29,8 +29,15 @@ class BingSearchTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Search Bing and return the results."""
-        search = BingSearchAPIWrapper()
-        search.bing_search_url = "https://api.bing.microsoft.com/v7.0/search"
-        search.bing_subscription_key = self.get_env_key("BING_SUBSCRIPTION_KEY")
+        bing_subscription_key = self.get_env_key("BING_SUBSCRIPTION_KEY")
+
+        if not bing_subscription_key:
+            return "Please fill Bing Subscription Key in the Bing Search Toolkit."
+
+        search = BingSearchAPIWrapper(
+            bing_subscription_key=bing_subscription_key,
+            bing_search_url="https://api.bing.microsoft.com/v7.0/search"
+        )
+
         return search.run(query)
 

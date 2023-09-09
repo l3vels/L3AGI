@@ -4,7 +4,6 @@ from langchain import SerpAPIWrapper
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
-# from langchain.agents.agent_toolkits import Toolkit, GmailToolkit, JsonToolkit
 from tools.base import BaseTool
 
 
@@ -30,7 +29,11 @@ class SerpGoogleSearchTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Search Google and return the results."""
-        search = SerpAPIWrapper()
-        search.serpapi_api_key = self.get_env_key("SERP_API_KEY")
+        serpapi_api_key = self.get_env_key("SERP_API_KEY")
+
+        if not serpapi_api_key:
+            return "Please fill Serp API Key in the Google SERP Search Toolkit."
+
+        search = SerpAPIWrapper(serpapi_api_key=serpapi_api_key)
         return search.run(query)
 

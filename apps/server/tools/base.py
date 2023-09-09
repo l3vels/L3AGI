@@ -1,8 +1,10 @@
 from abc import abstractmethod
 from pydantic import BaseModel, Field, validator
-from typing import List, Any
+from typing import List, Dict
 from langchain.tools import BaseTool as LangchainBaseTool
 from enum import Enum
+from models.config import ConfigModel
+from typings.config import ConfigQueryParams
 
 class ToolEnvKeyType(Enum):
     STRING = 'string'
@@ -41,9 +43,10 @@ class ToolEnvKey(BaseModel):
 
 class BaseTool(LangchainBaseTool):
     tool_id: str
+    configs: Dict[str, str] = {}
 
-    def get_env_key():
-        pass
+    def get_env_key(self, key: str):
+        return self.configs.get(key)
 
 
 class BaseToolkit(BaseModel):
@@ -51,6 +54,16 @@ class BaseToolkit(BaseModel):
     name: str
     description: str
     is_active: bool = Field(default=True)
+
+    def get_tools_with_configs(self, db, account) -> List[BaseTool]:
+        configs = ConfigModel.get_configs(db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account)
+        config_dict = {config.key: config.value for config in configs}
+        tools = self.get_tools()
+        
+        for tool in tools:
+            tool.configs = config_dict
+        
+        return tools
 
     @abstractmethod
     def get_tools(self) -> List[BaseTool]:
