@@ -43,6 +43,7 @@ fastapi-jwt-auth = "*"
 strawberry-graphql = {extras = ["fastapi"], version = "*"}
 pymysql = "*"
 youtube-search = "*"
+pyowm = "*"
 
 [dev-packages]
 
