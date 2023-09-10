@@ -15,22 +15,23 @@ from typings.agent import AgentWithConfigsOutput
 from models.team import TeamModel
 from utils.system_message import SystemMessageBuilder
 from utils.agent import convert_model_to_response
-
-
+from typings.config import AccountSettings
 
 azureService = PubSubService()
 
 class L3AgentDebates(L3Base):
     def __init__(
         self,
+        settings: AccountSettings,
         user,
         account,
         session_id,     
         word_limit: Optional[int] = 50,
     ) -> None:
         super().__init__(user=user, account=account, session_id=session_id)
-        self.word_limit = word_limit        
-        
+        self.word_limit = word_limit
+        self.settings = settings
+ 
     def select_next_speaker(self, step: int, agents: List[DialogueAgent]) -> int:
         idx = (step) % len(agents)
         return idx  
@@ -49,7 +50,7 @@ class L3AgentDebates(L3Base):
                 Do not add anything else."""
             ),
         ]
-        specified_topic = ChatOpenAI(temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
+        specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
         return specified_topic
     
     def run(self,
@@ -89,7 +90,7 @@ class L3AgentDebates(L3Base):
                 name=agent_with_config.agent.name,
                 system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
                 #later need support other llms
-                model=ChatOpenAI(temperature=agent_with_config.configs.temperature, 
+                model=ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=agent_with_config.configs.temperature, 
                                  model_name=agent_with_config.configs.model_version 
                                  if agent_with_config.configs.model_version else "gpt-4"),
                 tools=agent_with_config.configs.tools,

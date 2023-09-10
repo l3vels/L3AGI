@@ -41,4 +41,6 @@ class ConfigQueryParams(BaseModel):
     workspace_id: Optional[UUID4]
 
 
-
+class AccountSettings(BaseModel):
+    openai_api_key: Optional[str]
+    hugging_face_auth_token: Optional[str]

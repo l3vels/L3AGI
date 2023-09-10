@@ -9,12 +9,13 @@ from memory.zep import ZepMemory
 from pubsub_service import PubSubService
 import os
 from l3_base import L3Base
-from openai.error import RateLimitError
+from openai.error import RateLimitError, AuthenticationError
 import sentry_sdk
 from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
 from utils.system_message import SystemMessageBuilder
 from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings
 
 azureService = PubSubService()
 
@@ -23,6 +24,7 @@ os.environ["LANGCHAIN_TRACING"] = "false"
 class L3Conversational(L3Base):
     def run(
         self,
+        settings: AccountSettings,
         agent_with_configs: AgentWithConfigsOutput,
         tools,
         prompt: str,
@@ -30,6 +32,7 @@ class L3Conversational(L3Base):
         is_private_chat: bool,
         human_message_id: str,
         agent_id: Optional[str] = None,
+        team_id: Optional[str] = None,
     ):
         memory = ZepMemory(
             session_id=str(self.session_id),
@@ -51,7 +54,7 @@ class L3Conversational(L3Base):
         model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
         temperature = agent_with_configs.configs.temperature
 
-        llm = ChatOpenAI(temperature=temperature, model_name=model_name)
+        llm = ChatOpenAI(openai_api_key=settings.openai_api_key,temperature=temperature, model_name=model_name)
 
         agent = initialize_agent(
             tools,
@@ -74,6 +77,8 @@ class L3Conversational(L3Base):
             res = agent.run(prompt)
         except RateLimitError:
             res = "AI is at rate limit, please try again later"
+        except AuthenticationError:
+            res = "Your OpenAI API key is invalid. Please recheck it in [Settings](/settings)"
         except Exception as err:
             print(err)
             sentry_sdk.capture_exception(err)
@@ -89,6 +94,7 @@ class L3Conversational(L3Base):
                 "chat_message": ai_message,
                 "is_private_chat": is_private_chat,
                 "agent_id": str(agent_id) if agent_id else agent_id,
+                'team_id': str(team_id) if team_id else team_id,
             },
         )
 
