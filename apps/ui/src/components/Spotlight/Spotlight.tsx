@@ -37,6 +37,8 @@ const Spotlight = () => {
 
   if (agentId) {
     route = `/copilot?agent=${agentId}`
+  } else if (teamId) {
+    route = `/copilot?team=${teamId}`
   }
 
   // Prefetch messages
@@ -232,6 +234,7 @@ const Spotlight = () => {
                           value={formValue}
                           onKeyDown={handleKeyDown}
                           setValue={setFormValue}
+                          isGeneralChat={!agentId && !teamId}
                         />
                       </StyledInputCover>
 

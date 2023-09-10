@@ -22,9 +22,17 @@ type MentionsProps = {
   onChange: OnChangeHandlerType
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
   setValue: any
+  isGeneralChat: boolean
 }
 
-const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsProps) => {
+const Mentions = ({
+  inputRef,
+  onChange,
+  onKeyDown,
+  value,
+  setValue,
+  isGeneralChat,
+}: MentionsProps) => {
   const [focusAfterAdd, setFocusAfterAdd] = useState(false)
 
   const { data: users } = useAssignedUserListService()
@@ -62,7 +70,9 @@ const Mentions = ({ inputRef, onChange, onKeyDown, value, setValue }: MentionsPr
     }
   })
 
-  const mentions = [...agentMentions, ...teamOfAgentsMentions, ...usersMentions]
+  const mentions = isGeneralChat
+    ? [...agentMentions, ...teamOfAgentsMentions, ...usersMentions]
+    : usersMentions
 
   const displayTransform = (id: string) => {
     const display = mentions.find((item: any) => item.id.includes(id))?.display
