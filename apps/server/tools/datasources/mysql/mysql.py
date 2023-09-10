@@ -8,6 +8,7 @@ from langchain.callbacks.manager import (
 from tools.datasources.sql_query_engine import SQLQueryEngine
 from tools.base import BaseTool
 from models.config import ConfigModel
+from utils.encyption import decrypt_data, is_encrypted
 
 class MySQLDatabaseSchema(BaseModel):
     query: str = Field(description="Containing Datasource Id and database question in English natural language, separated by semicolon")
@@ -36,7 +37,7 @@ class MySQLDatabaseTool(BaseTool):
         config = {}
 
         for cfg in configs:
-            config[cfg.key] = cfg.value
+            config[cfg.key] = decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
 
         user = config.get('user')
         password = config.get('pass')
