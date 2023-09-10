@@ -47,6 +47,6 @@ class MySQLDatabaseTool(BaseTool):
 
         uri = f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
-        result = SQLQueryEngine(uri).run(question)
+        result = SQLQueryEngine(self.settings, uri).run(question)
         return result
 

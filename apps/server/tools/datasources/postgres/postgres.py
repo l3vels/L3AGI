@@ -47,6 +47,6 @@ class PostgresDatabaseTool(BaseTool):
 
         uri = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}"
 
-        result = SQLQueryEngine(uri).run(question)
+        result = SQLQueryEngine(self.settings, uri).run(question)
         return result
 
