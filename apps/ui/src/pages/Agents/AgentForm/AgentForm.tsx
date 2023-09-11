@@ -24,7 +24,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_description,
     agent_is_memory,
     agent_tools,
-    agent_welcome_text,
+    agent_greeting,
   } = values
 
   const onTextareaChange = (field: string, value: string) => {
@@ -115,9 +115,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             <Textarea
               hint=''
               placeholder='Welcome Text'
-              value={agent_welcome_text}
-              name='agent_welcome_text'
-              onChange={(value: string) => onTextareaChange('agent_welcome_text', value)}
+              value={agent_greeting}
+              name='agent_greeting'
+              onChange={(value: string) => onTextareaChange('agent_greeting', value)}
             />
           </StyledTextareaWrapper>
 

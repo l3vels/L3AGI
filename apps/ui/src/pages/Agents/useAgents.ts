@@ -41,7 +41,7 @@ export const useAgents = () => {
     agent_datasources: [],
     agent_suggestions: [],
     agent_model_version: '',
-    agent_welcome_text: '',
+    agent_greeting: '',
     agent_mode_provider: '',
     agent_is_memory: true,
   }
@@ -62,7 +62,7 @@ export const useAgents = () => {
       agent_model_version: agentById.configs?.model_version,
       agent_mode_provider: agentById.configs?.mode_provider,
       agent_suggestions: agentById.configs?.suggestions,
-      agent_welcome_text: agentById.configs?.welcome_text,
+      agent_greeting: agentById.configs?.greeting,
     }
   }
 
@@ -84,7 +84,7 @@ export const useAgents = () => {
         mode_provider: values.agent_mode_provider,
         is_memory: values.agent_is_memory,
         suggestions: values.agent_suggestions,
-        welcome_text: values.agent_welcome_text,
+        greeting: values.agent_greeting,
       }
       await createAgentService(agentInput)
       await refetchAgents()
