@@ -14,7 +14,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import { useModal } from 'hooks'
 import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
 
-const MarketplaceRouteLayout = () => {
+const HomeRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
 
   const { openModal } = useModal()
@@ -46,7 +46,7 @@ const MarketplaceRouteLayout = () => {
   )
 }
 
-export default MarketplaceRouteLayout
+export default HomeRouteLayout
 
 const StyledNavigationWrapper = styled.div`
   position: sticky;
