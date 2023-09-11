@@ -12,6 +12,7 @@ import Marketplace from 'pages/Marketplace'
 import GetStartedCard from './GetStarted/GetStartedCard'
 
 import cardBg4 from 'assets/images/whiteBg.png'
+import GetStartedContainer from './GetStarted/GetStartedContainer'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -23,13 +24,16 @@ const Home = () => {
         {user ? (
           <GetStartedComponent />
         ) : (
-          <GetStartedCard
-            subTitle={'Learn about'}
-            title={'Empower your tasks with self-sufficient AI agents. Begin chatting today'}
-            image={cardBg4}
-            bgColor={'red'}
-            link={import.meta.env.REACT_APP_DATASOURCES_LINK}
-          />
+          <GetStartedContainer noText>
+            <GetStartedCard
+              fullWidth
+              subTitle={'Learn about'}
+              title={'Empower your tasks with self-sufficient AI agents. Begin chatting today!'}
+              image={cardBg4}
+              bgColor={'red'}
+              link={import.meta.env.REACT_APP_DATASOURCES_LINK}
+            />
+          </GetStartedContainer>
         )}
         {user ? (
           <>
