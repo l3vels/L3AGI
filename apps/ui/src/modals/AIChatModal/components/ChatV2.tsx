@@ -8,8 +8,6 @@ import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
-import Toast from '@l3-lib/ui-core/dist/Toast'
-
 import SendIconSvg from 'assets/icons/send_icon.svg'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
@@ -24,7 +22,7 @@ import UploadButton from 'components/UploadButton'
 import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
@@ -54,7 +52,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { chatSuggestions } = useSuggestions()
 
-  const { setToast, toast } = useContext(ToastContext)
+  const { setToast } = useContext(ToastContext)
 
   const { upsertChatMessageInCache } = useUpdateChatCache()
 
@@ -415,13 +413,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
           </StyledChatBottom>
         </StyledChatInputWrapper>
       </StyledChatFooter>
-      <Toast
-        label={toast?.message}
-        type={toast?.type}
-        autoHideDuration={2500}
-        open={toast?.open}
-        onClose={() => setToast({ open: false })}
-      />
     </StyledWrapper>
   )
 }
