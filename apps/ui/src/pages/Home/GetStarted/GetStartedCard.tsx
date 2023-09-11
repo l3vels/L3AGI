@@ -7,6 +7,7 @@ type GetStartedCardProps = {
   image: string
   bgColor?: string
   link: string
+  fullWidth?: boolean
 }
 
 const GetStartedCard = ({
@@ -16,13 +17,14 @@ const GetStartedCard = ({
   image,
   bgColor = 'pink',
   link,
+  fullWidth = false,
 }: GetStartedCardProps) => {
   const openNewTabHandler = () => {
     window.open(link, '_blank')
   }
 
   return (
-    <StyledLinkCard onClick={openNewTabHandler} bgColor={bgColor}>
+    <StyledLinkCard onClick={openNewTabHandler} bgColor={bgColor} fullWidth={fullWidth}>
       <StyledTextWrapper>
         <h2>{subTitle}</h2>
         <h1>{title}</h1>
@@ -34,12 +36,13 @@ const GetStartedCard = ({
 
 export default GetStartedCard
 
-const StyledLinkCard = styled.div<{ bgColor: string }>`
+const StyledLinkCard = styled.div<{ bgColor: string; fullWidth: boolean }>`
   padding: 28px 24px;
   min-width: 240px;
   box-sizing: border-box;
   padding-bottom: 16px;
   background: ${p => (p.bgColor ? `var(--color-gradient-${p.bgColor})` : p.bgColor)};
+  width: ${p => (p.fullWidth ? `100%` : 'auto')};
   border-radius: 16px;
   position: relative;
   overflow: hidden;

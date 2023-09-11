@@ -13,9 +13,14 @@ import { SectionDivider } from 'styles/globalStyle.css'
 type GetStartedContainerProps = {
   children: ReactNode
   bottomBorder?: boolean
+  noText?: boolean
 }
 
-const GetStartedContainer = ({ children, bottomBorder = false }: GetStartedContainerProps) => {
+const GetStartedContainer = ({
+  children,
+  bottomBorder = false,
+  noText,
+}: GetStartedContainerProps) => {
   const [show, setShow] = useState(true)
 
   return (
@@ -25,19 +30,28 @@ const GetStartedContainer = ({ children, bottomBorder = false }: GetStartedConta
           <StyledCloseButton onClick={() => setShow(false)}>
             <Close />
           </StyledCloseButton>
-          <Heading type={Heading.types.h1} value='Get Started' size='medium' customColor={'#fff'} />
+          {!noText && (
+            <Heading
+              type={Heading.types.h1}
+              value='Get Started'
+              size='medium'
+              customColor={'#fff'}
+            />
+          )}
         </StyledColumn>
-        <StyledColumn>
-          <Typography
-            value='Learn'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-            customColor={'rgba(255, 255, 255, 0.6)'}
-          />
-          <StyledIconWrapper>
-            <Connect />
-          </StyledIconWrapper>
-        </StyledColumn>
+        {!noText && (
+          <StyledColumn>
+            <Typography
+              value='Learn'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
+            <StyledIconWrapper>
+              <Connect />
+            </StyledIconWrapper>
+          </StyledColumn>
+        )}
       </StyledHeader>
 
       <StyledDragScroll>{children}</StyledDragScroll>

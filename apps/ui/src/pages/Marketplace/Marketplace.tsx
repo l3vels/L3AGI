@@ -1,5 +1,6 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { AuthContext } from 'contexts'
+import { useModal } from 'hooks'
 import AgentCard from 'pages/Agents/AgentCard'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
@@ -21,7 +22,17 @@ const Marketplace = () => {
 
   const navigate = useNavigate()
 
+  const { openModal } = useModal()
+
   const { systemAgents, templateAgents } = useMarketplace()
+
+  const handleChatClick = (agentId: string) => {
+    if (!user) {
+      openModal({ name: 'login-modal' })
+    } else {
+      navigate(`/copilot?agent=${agentId}`)
+    }
+  }
 
   return (
     <StyledRoot>
@@ -45,6 +56,7 @@ const Marketplace = () => {
                   name={agent.name}
                   description={agent.description}
                   onViewClick={() => navigate(`/agents/${agent.id}`)}
+                  onChatClick={() => handleChatClick(agent.id)}
                   headerTag={agent.role}
                 />
               )
@@ -77,6 +89,7 @@ const Marketplace = () => {
                     name={agent.name}
                     description={agent.description}
                     onViewClick={() => navigate(`/agents/${agent.id}`)}
+                    onChatClick={() => handleChatClick(agent.id)}
                     headerTag={agent.role}
                   />
                 )

@@ -7,9 +7,11 @@ export const useAgentForm = (formik: any) => {
   const { data: datasourcesData } = useDatasourcesService()
   const { data: tools } = useToolsService()
 
-  const providerOptions = providersData?.map((item: any) => {
-    return { value: item.provider, label: item.provider, isActive: item.isActive }
-  })
+  const providerOptions = providersData
+    ?.filter((item: any) => item.isActive === true)
+    .map((item: any) => {
+      return { value: item.provider, label: item.provider, isActive: item.isActive }
+    })
 
   const modelOptions = providersData
     ?.filter((item: any) => item.provider === formik?.values?.agent_mode_provider)

@@ -23,7 +23,7 @@ type AiMessageProps = {
   avatarImg: string
   messageDate: string
   messageText: string
-  version: ChatMessageVersionEnum
+  version?: ChatMessageVersionEnum
   thoughts?: any[]
   isNewMessage: boolean
   setIsNewMessage: (state: boolean) => void
