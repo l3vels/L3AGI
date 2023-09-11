@@ -3,6 +3,7 @@ import { AuthContext } from 'contexts'
 import { WebPubSubClient } from '@azure/web-pubsub-client'
 import getSessionId from '../utils/getSessionId'
 import useUpdateChatCache from './useUpdateChatCache'
+import { useLocation } from 'react-router-dom'
 
 type UseChatSocketProps = {
   isPrivateChat: boolean
@@ -16,10 +17,18 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const typingTimeoutRef: any = useRef(null)
 
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+
+  const agentId = urlParams.get('agent')
+  const teamId = urlParams.get('team')
+
   const groupId = getSessionId({
     user,
     account,
     isPrivateChat,
+    agentId,
+    teamId,
   })
 
   const [connectedUsers, setConnectedUsers] = useState<string[]>([])
