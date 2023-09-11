@@ -12,7 +12,7 @@ import SendIconSvg from 'assets/icons/send_icon.svg'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 
-import { useSuggestions } from 'components/Spotlight/useSuggestions'
+// import { useSuggestions } from 'components/Spotlight/useSuggestions'
 
 import { AuthContext, ToastContext } from 'contexts'
 
@@ -30,6 +30,7 @@ import useUpdateChatCache from '../hooks/useUpdateChatCache'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
+import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -50,7 +51,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const { user, account } = useContext(AuthContext)
 
-  const { chatSuggestions } = useSuggestions()
+  // const { chatSuggestions } = useSuggestions()
 
   const { setToast } = useContext(ToastContext)
 
@@ -68,6 +69,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     isPrivateChat: isPrivate,
     agentId,
   })
+
+  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+
+  const chatSuggestions = agentById?.configs?.suggestions || []
 
   const [createChatMessageService] = useCreateChatMessageService()
 
