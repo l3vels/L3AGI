@@ -40,6 +40,7 @@ module "backend" {
     DB_PORT                        = var.DB_PORT
     DB_USER                        = var.DB_USER
     DB_PASS                        = var.DB_PASS
+    SENTRY_DSN                     = var.SENTRY_DSN
     AZURE_PUBSUB_CONNECTION_STRING = var.AZURE_PUBSUB_CONNECTION_STRING
     AZURE_PUBSUB_HUB_NAME          = var.AZURE_PUBSUB_HUB_NAME
     ZEP_API_URL                    = var.ZEP_API_URL

@@ -20,6 +20,9 @@ variable "DB_USER" {
 variable "DB_PASS" {
   type = string
 }
+variable "SENTRY_DSN" {
+  type = string
+}
 variable "AZURE_PUBSUB_CONNECTION_STRING" {
   type = string
 }
