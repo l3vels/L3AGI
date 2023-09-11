@@ -20,6 +20,8 @@ export const useUpdateAgentService = () => {
       model_version,
       mode_provider,
       is_memory,
+      suggestions,
+      welcome_text,
     } = input
 
     const { data } = await mutation({
@@ -42,6 +44,8 @@ export const useUpdateAgentService = () => {
             model_version: model_version,
             temperature: temperature,
             instructions: instructions,
+            suggestions: suggestions,
+            welcome_text: welcome_text,
           },
         },
       },
