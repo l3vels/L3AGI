@@ -14,7 +14,7 @@ export const useToolView = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { toolId } = params
+  const { toolkitId } = params
 
   const { data: toolsData } = useToolsService()
 
@@ -23,9 +23,9 @@ export const useToolView = () => {
   const [createConfig] = useCreateConfigService()
   const [updateConfig] = useUpdateConfigService()
 
-  const tool = toolsData?.filter((tool: any) => toolId === tool.toolkit_id)
+  const tool = toolsData?.filter((tool: any) => toolkitId === tool.toolkit_id)
 
-  const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === toolId)
+  const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === toolkitId)
 
   const initialValues = {
     tool_key: filteredConfig[0]?.key,
@@ -45,7 +45,7 @@ export const useToolView = () => {
         key_type: values.tool_key_type,
         is_required: values.tool_is_required,
         is_secret: values.tool_is_secret,
-        tool_id: toolId,
+        tool_id: toolkitId,
       }
 
       if (filteredConfig.length === 0) {

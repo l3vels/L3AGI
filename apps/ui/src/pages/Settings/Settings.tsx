@@ -45,11 +45,11 @@ const Settings = () => {
           <StyledForm>
             <StyledWrapper>
               <FormikTextField name='open_api_key' placeholder='' label='Open AI API key' />
-              <FormikTextField
+              {/* <FormikTextField
                 name='hugging_face_token'
                 placeholder=''
                 label='Hugging Face auth token'
-              />
+              /> */}
             </StyledWrapper>
           </StyledForm>
         </ComponentsWrapper>

@@ -14,28 +14,28 @@ const GetStartedComponent = () => {
         title={'The Basics'}
         image={cardBg1}
         bgColor={'pink'}
-        link={'https://docs.l3agi.com/docs/welcome-to-l3vels'}
+        link={import.meta.env.REACT_APP_BASICS_LINK}
       />
       <GetStartedCard
         subTitle={'Create your'}
         title={'First Agent'}
         image={cardBg2}
         bgColor={'orange'}
-        link={'https://docs.l3agi.com/docs/build-manage-your-game'}
+        link={import.meta.env.REACT_APP_AGENTS_LINK}
+      />
+      <GetStartedCard
+        subTitle={'Learn about'}
+        title={'Developer Panels'}
+        image={cardBg3}
+        bgColor={'blue'}
+        link={import.meta.env.REACT_APP_TOOLS_LINK}
       />
       <GetStartedCard
         subTitle={'Learn about'}
         title={'Datasources'}
-        image={cardBg3}
-        bgColor={'blue'}
-        link={'https://docs.l3agi.com/docs/sdks'}
-      />
-      <GetStartedCard
-        subTitle={'Learn about'}
-        title={'Tools'}
         image={cardBg4}
         bgColor={'red'}
-        link={'https://docs.l3agi.com/docs/create-organize-assets'}
+        link={import.meta.env.REACT_APP_DATASOURCES_LINK}
       />
     </GetStartedContainer>
   )

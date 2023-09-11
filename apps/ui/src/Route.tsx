@@ -67,7 +67,7 @@ import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOf
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
 import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
-import MarketplaceRouteLayout from 'routes/MarketplaceRouteLayout'
+import HomeRouteLayout from 'routes/HomeRouteLayout'
 import LoginModal from 'modals/LoginModal'
 
 const Route = () => {
@@ -88,12 +88,12 @@ const Route = () => {
       <Routes>
         <>
           <Router element={<RootLayout />}>
-            <Router element={<MarketplaceRouteLayout />}>
-              <Router path='marketplace' element={<Marketplace />} key={document.location.href} />
+            <Router element={<HomeRouteLayout />}>
+              <Router path='/' element={<Home />} key={document.location.href} />
             </Router>
 
             <Router element={<MainRouteLayout />}>
-              <Router path='/' element={<Home />} key={document.location.href} />
+              <Router path='/marketplace' element={<Marketplace />} key={document.location.href} />
 
               {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
               {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
@@ -175,9 +175,9 @@ const Route = () => {
               />
             </Router>
 
-            <Router path={'tools'} element={<MainRouteLayout />} key={document.location.href}>
+            <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
-              <Router path={':toolId'} element={<ToolView />} key={document.location.href} />
+              <Router path={':toolkitId'} element={<ToolView />} key={document.location.href} />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>

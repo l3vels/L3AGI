@@ -14,7 +14,7 @@ const MainRouteLayout = () => {
 
   const outlet = useOutlet()
 
-  if (!user) return <Navigate to='/marketplace' />
+  if (!user) return <Navigate to='/' />
 
   return (
     <StyledAppContainer className='app_container'>

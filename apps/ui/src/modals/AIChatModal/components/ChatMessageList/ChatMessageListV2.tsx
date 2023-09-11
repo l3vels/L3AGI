@@ -24,6 +24,7 @@ type ChatMessageListV2Props = {
   setIsNewMessage: (state: boolean) => void
   setReply: (state: ReplyStateProps) => void
   reply: ReplyStateProps
+  greeting: string | null
 }
 
 const ChatMessageListV2 = ({
@@ -33,12 +34,13 @@ const ChatMessageListV2 = ({
   setIsNewMessage,
   setReply,
   reply,
+  greeting,
 }: ChatMessageListV2Props) => {
   const [listIsReady, setListIsReady] = useState(true)
 
   const virtuoso = useRef<VirtuosoHandle>(null)
 
-  const initialChat = data?.map((chat: any) => {
+  const filteredData = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
     return {
       id: chat?.id,
@@ -53,6 +55,26 @@ const ChatMessageListV2 = ({
       agentName: chat.agent?.name || chat.team?.name,
     }
   })
+
+  let initialChat
+
+  if (greeting) {
+    const currentDate = new Date()
+    const chatDate = moment(currentDate).format('HH:mm')
+
+    initialChat = [
+      {
+        message: greeting,
+        type: 'ai',
+        date: chatDate,
+        agentName: 'L3-GPT',
+        isGreeting: true,
+      },
+      ...filteredData,
+    ]
+  } else {
+    initialChat = filteredData
+  }
 
   const loader = useMemo(() => {
     return (
@@ -73,7 +95,7 @@ const ChatMessageListV2 = ({
     if (thinking) {
       setTimeout(() => {
         virtuoso.current?.scrollToIndex({
-          index: data.length + 1,
+          index: initialChat.length + 1,
           align: 'end',
         })
       }, 100)
@@ -93,7 +115,7 @@ const ChatMessageListV2 = ({
 
     setTimeout(() => {
       virtuoso.current?.scrollToIndex({
-        index: data.length,
+        index: initialChat.length,
         align: 'end',
       })
 
@@ -102,7 +124,7 @@ const ChatMessageListV2 = ({
           setListIsReady(true)
 
           virtuoso.current?.scrollToIndex({
-            index: data.length,
+            index: initialChat.length,
             align: 'end',
           })
         }, 1000)
@@ -171,7 +193,7 @@ const ChatMessageListV2 = ({
               </StyledWrapper>
             )}
             {chat?.type === 'ai' && (
-              <StyledWrapper isReplying={chat.id === reply.messageId}>
+              <StyledWrapper isReplying={chat.id === reply.messageId && !chat.isGreeting}>
                 <StyledReplyMessageContainer className='reply'>
                   {chat?.parent && (
                     <HumanReply
@@ -189,14 +211,18 @@ const ChatMessageListV2 = ({
                   thoughts={chat.thoughts}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
-                  onReplyClick={() => {
-                    setReply({
-                      isReply: true,
-                      messageId: chat.id,
-                      version: chat.version,
-                      messageText: chat.message,
-                    })
-                  }}
+                  onReplyClick={
+                    chat.isGreeting
+                      ? undefined
+                      : () => {
+                          setReply({
+                            isReply: true,
+                            messageId: chat.id,
+                            version: chat.version,
+                            messageText: chat.message,
+                          })
+                        }
+                  }
                 />
               </StyledWrapper>
             )}
