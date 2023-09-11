@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, ForeignKey
 from sqlalchemy.sql import and_, or_
 from models.base_model import BaseModel
-from typings.config import ConfigInput, ConfigQueryParams
+from typings.config import ConfigInput, ConfigQueryParams, AccountSettings
 from exceptions import ConfigNotFoundException
 from utils.encyption import encrypt_data, decrypt_data, is_encrypted
 
@@ -158,6 +158,23 @@ class ConfigModel(BaseModel):
             config.value = decrypt_data(config.value)
             
         return config
+    
+    @classmethod
+    def get_account_settings(cls, db, account) -> AccountSettings:
+        keys = ["open_api_key", "hugging_face_token"]
+
+        configs: List[ConfigModel] = (
+            db.session.query(ConfigModel)
+            .filter(ConfigModel.key.in_(keys), ConfigModel.account_id == account.id, or_(or_(ConfigModel.is_deleted == False, ConfigModel.is_deleted is None), ConfigModel.is_deleted is None))
+            .all()
+        )
+
+        config = {}
+
+        for cfg in configs:
+            config[cfg.key] = decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
+
+        return AccountSettings(openai_api_key=config.get("open_api_key"), hugging_face_auth_token=config.get("hugging_face_token"))
 
     @classmethod
     def delete_by_id(cls, db, config_id, account):

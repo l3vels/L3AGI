@@ -12,14 +12,16 @@ from llama_index.prompts.prompt_type import PromptType
 from llama_index.llms import LangChainLLM
 from llama_index.llm_predictor import LLMPredictor
 from langchain.chat_models import ChatOpenAI
+from typings.config import AccountSettings
 
 class SQLQueryEngine:
     """LLamaIndex SQL Query Engine for SQL datasource"""
 
-    def __init__(self, uri: str):
+    def __init__(self, settings: AccountSettings, uri: str):
         self.sql_database = SQLDatabase(engine=create_engine(uri))
         self.meta = MetaData()
         self.meta.reflect(bind=self.sql_database.engine)
+        self.settings = settings
 
     def run(self, query: str):
         """Run query and return result"""
@@ -64,7 +66,7 @@ class SQLQueryEngine:
             prompt_type=PromptType.TEXT_TO_SQL,
         )
 
-        llm = LangChainLLM(llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0))
+        llm = LangChainLLM(llm=ChatOpenAI(openai_api_key=self.settings.openai_api_key, model_name="gpt-3.5-turbo", temperature=0))
         llm_predictor = LLMPredictor(llm=llm)
 
         service_context = ServiceContext.from_defaults(

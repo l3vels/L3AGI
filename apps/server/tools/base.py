@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from pydantic import BaseModel, Field, validator
-from typing import List, Dict
+from typing import List, Dict, Optional
 from langchain.tools import BaseTool as LangchainBaseTool
 from enum import Enum
 from models.config import ConfigModel
-from typings.config import ConfigQueryParams
+from typings.config import ConfigQueryParams, AccountSettings
 
 class ToolEnvKeyType(Enum):
     STRING = 'string'
@@ -44,6 +44,7 @@ class ToolEnvKey(BaseModel):
 class BaseTool(LangchainBaseTool):
     tool_id: str
     configs: Dict[str, str] = {}
+    settings: Optional[AccountSettings] = None
 
     def get_env_key(self, key: str):
         return self.configs.get(key)

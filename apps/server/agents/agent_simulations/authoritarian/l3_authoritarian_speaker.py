@@ -15,15 +15,16 @@ from postgres import PostgresChatMessageHistory
 from models.team import TeamModel
 from utils.system_message import SystemMessageBuilder
 from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings
 
 azureService = PubSubService()
-
 
 # os.environ["LANGCHAIN_TRACING"] = "false"
 
 class L3AuthoritarianSpeaker(L3Base):
     def __init__(
         self,
+        settings: AccountSettings,
         user,
         account,
         session_id,
@@ -32,7 +33,8 @@ class L3AuthoritarianSpeaker(L3Base):
     ) -> None:
         super().__init__(user=user, account=account, session_id=session_id)
         self.word_limit = word_limit    
-        self.stopping_probability = stopping_probability    
+        self.stopping_probability = stopping_probability
+        self.settings = settings
     
     def select_next_speaker(
             self, step: int, agents: List[DialogueAgentWithTools], director: DirectorDialogueAgentWithTools
@@ -62,7 +64,7 @@ class L3AuthoritarianSpeaker(L3Base):
                 Do not add anything else."""
             ),
         ]
-        specified_topic = ChatOpenAI(temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
+        specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
         return specified_topic
 
        
@@ -127,7 +129,7 @@ class L3AuthoritarianSpeaker(L3Base):
                     tools=director_agent.configs.tools,
                     system_message=SystemMessageBuilder(director_agent).build(),
                     #later need support other llms
-                    model=ChatOpenAI(temperature=director_agent.configs.temperature, 
+                    model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=director_agent.configs.temperature, 
                         model_name=director_agent.configs.model_version 
                         if director_agent.configs.model_version else "gpt-4"),
                     speakers=[agent_with_config.agent.name for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
@@ -142,7 +144,7 @@ class L3AuthoritarianSpeaker(L3Base):
                     name=agent_with_config.agent.name,
                     tools=agent_with_config.configs.tools,
                     system_message=SystemMessageBuilder(agent_with_config).build(),
-                    model=ChatOpenAI(temperature=0.2, model_name="gpt-4"),
+                    model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
                 )
             )
                 
