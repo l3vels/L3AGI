@@ -20,7 +20,7 @@ class ConfigInput(BaseModel):
     model_version: str
     temperature: float
     instructions: List[str]
-    suggestions: List[str]
+    suggestions: Optional[List[str]]
     greeting: Optional[str]
 
     
@@ -38,7 +38,7 @@ class ConfigsOutput(BaseModel):
     model_version: str
     temperature: float
     instructions: List[str]
-    suggestions: List[str]
+    suggestions: Optional[List[str]]
     greeting: Optional[str]
 
 

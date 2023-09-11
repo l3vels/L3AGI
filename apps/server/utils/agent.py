@@ -17,11 +17,6 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput
     for config_model in agent_model.configs:
         key = getattr(config_model, "key")
         value = getattr(config_model, "value")
-        if key == "suggestions":
-            print(value)
-            
-        if key == "greeting":
-            print(value)
         
         # Convert value to the type specified in ConfigsOutput
         target_type = ConfigsOutput.__annotations__.get(key)

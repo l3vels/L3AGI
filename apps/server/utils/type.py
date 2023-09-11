@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 import ast
 import uuid
 
@@ -13,26 +13,27 @@ def convert_value_to_type(value, target_type):
     elif target_type == str:
         return str(value)
     elif target_type == uuid.UUID:
-        # If the target type is UUID, check if the value is already a UUID or convert it
         if isinstance(value, uuid.UUID):
             return value
-        return uuid.UUID(value)  # Convert the string to a UUID object
+        return uuid.UUID(value)    
+    # Handle Optional type (Union with NoneType)
+    if hasattr(target_type, "__origin__") and target_type.__origin__ == Union:
+        if value is None:
+            return None
+        # Get non-None types from the Union
+        valid_types = [t for t in target_type.__args__ if t != type(None)]
+        # If only one valid type, set the target_type to that type
+        if len(valid_types) == 1:
+            target_type = valid_types[0]
+        else:
+            # For this case, we'll just return the value as is, since we don't
+            # know which type to convert it to among the Union types.
+            return value    
     elif hasattr(target_type, "__origin__") and target_type.__origin__ == list:
-        # Handle List type - introspect to get the inner type
         inner_type = target_type.__args__[0]
-        
-        # If value is a string representation of a list, parse it
         if isinstance(value, str) and value.startswith('[') and value.endswith(']'):
             value = ast.literal_eval(value)
-        
         converted_list = [convert_value_to_type(item, inner_type) for item in value]
-        
-        # Debugging information:
-        # print(f"Converted {value} to {converted_list} for target type {target_type}")
-        
         return converted_list
     else:
-        # Default: Return the value as-is
         return value
-
-
