@@ -299,9 +299,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               </StyledFileWrapper>
             )}
             <StyledTextareaWrapper>
-              {!isProduction && (
+              {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
-              )}
+              )} */}
 
               {typingEffectText ? (
                 <StyledInputWrapper secondary>
