@@ -21,8 +21,8 @@ const DatasourceCard = ({
   onDeleteClick,
   imageSrc,
 }: DatasourceCardProps) => {
-  let shortDescription = description
-  if (description.length > 45) {
+  let shortDescription = description || ''
+  if (shortDescription.length > 45) {
     shortDescription = `${description.slice(0, 45)}...`
   }
 
