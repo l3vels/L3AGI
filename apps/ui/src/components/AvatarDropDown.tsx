@@ -29,7 +29,8 @@ const AvatarDropDown = () => {
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
-  const { data: userAccounts } = useUserAccountsService()
+  const userAccounts = null
+  // const { data: userAccounts } = useUserAccountsService()
 
   const handleLogout = async () => {
     try {
