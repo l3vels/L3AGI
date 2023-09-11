@@ -26,6 +26,8 @@ class ToolException(AppBaseException):
 class ToolNotFoundException(DatasourceException):
     pass
 
+class ToolEnvKeyException(AppBaseException):
+    pass
 
 class ConfigException(AppBaseException):
     pass
