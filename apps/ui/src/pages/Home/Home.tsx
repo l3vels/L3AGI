@@ -9,6 +9,9 @@ import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
 import { AuthContext } from 'contexts'
 import Marketplace from 'pages/Marketplace'
+import GetStartedCard from './GetStarted/GetStartedCard'
+
+import cardBg4 from 'assets/images/whiteBg.png'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -18,8 +21,18 @@ const Home = () => {
     <>
       <StyledInnerWrapperEdit>
         {user ? (
+          <GetStartedComponent />
+        ) : (
+          <GetStartedCard
+            subTitle={'Learn about'}
+            title={'Empower your tasks with self-sufficient AI agents. Begin chatting today'}
+            image={cardBg4}
+            bgColor={'red'}
+            link={import.meta.env.REACT_APP_DATASOURCES_LINK}
+          />
+        )}
+        {user ? (
           <>
-            <GetStartedComponent />
             <Agents />
             <StyledDivider />
             <Datasource />
