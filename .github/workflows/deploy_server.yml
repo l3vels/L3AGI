@@ -73,6 +73,7 @@ jobs:
           echo -e "DB_PORT = \"${{ vars.DB_PORT }}\"\n" >> $TFVARS
           echo -e "DB_USER = \"${{ secrets.DB_USER }}\"\n" >> $TFVARS
           echo -e "DB_PASS = \"${{ secrets.DB_PASS }}\"\n" >> $TFVARS
+          echo -e "SENTRY_DSN = \"${{ secrets.SENTRY_DSN }}\"\n" >> $TFVARS
           echo -e "AZURE_PUBSUB_CONNECTION_STRING = \"${{ secrets.AZURE_PUBSUB_CONNECTION_STRING }}\"\n" >> $TFVARS
           echo -e "AZURE_PUBSUB_HUB_NAME = \"${{ secrets.AZURE_PUBSUB_HUB_NAME }}\"\n" >> $TFVARS
           echo -e "ZEP_API_URL = \"${{ vars.ZEP_API_URL }}\"\n" >> $TFVARS
@@ -180,6 +181,7 @@ jobs:
           echo -e "DB_PORT = \"${{ vars.DB_PORT }}\"\n" >> $TFVARS
           echo -e "DB_USER = \"${{ secrets.DB_USER }}\"\n" >> $TFVARS
           echo -e "DB_PASS = \"${{ secrets.DB_PASS }}\"\n" >> $TFVARS
+          echo -e "SENTRY_DSN = \"${{ secrets.SENTRY_DSN }}\"\n" >> $TFVARS
           echo -e "AZURE_PUBSUB_CONNECTION_STRING = \"${{ secrets.AZURE_PUBSUB_CONNECTION_STRING }}\"\n" >> $TFVARS
           echo -e "AZURE_PUBSUB_HUB_NAME = \"${{ secrets.AZURE_PUBSUB_HUB_NAME }}\"\n" >> $TFVARS
           echo -e "ZEP_API_URL = \"${{ vars.ZEP_API_URL }}\"\n" >> $TFVARS
