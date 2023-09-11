@@ -94,7 +94,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
     }
 
-    upsertChatMessageInCache(message, isPrivate)
+    upsertChatMessageInCache(message, isPrivate, {
+      agentId,
+    })
 
     return message
   }
@@ -339,6 +341,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                     value={formValue}
                     onKeyDown={handleKeyDown}
                     setValue={setFormValue}
+                    isGeneralChat={!agentId && !teamId}
                   />
                 </StyledInputWrapper>
               )}

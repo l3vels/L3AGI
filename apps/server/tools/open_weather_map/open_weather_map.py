@@ -33,7 +33,11 @@ class OpenWeatherMapTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Search DuckDuckGo and return the results."""
-        search = OpenWeatherMapAPIWrapper()
-        search.openweathermap_api_key = self.get_env_key("OPENWEATHERMAP_API_KEY")
+        openweathermap_api_key = self.get_env_key("OPENWEATHERMAP_API_KEY")
+
+        if not openweathermap_api_key:
+            return "Please fill OpenWeatherMap API Key in the OpenWeatherMap Toolkit."
+
+        search = OpenWeatherMapAPIWrapper(openweathermap_api_key=openweathermap_api_key)
         return search.run(query)
 

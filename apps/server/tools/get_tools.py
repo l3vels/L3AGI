@@ -69,12 +69,12 @@ def get_all_tools():
     return result
 
 
-def get_agent_tools(toolkit_ids: List[str]) ->  List[BaseTool]:
+def get_agent_tools(toolkit_ids: List[str], db, account) ->  List[BaseTool]:
     """Return a list of tools."""
     tools = []
 
     for toolkit in TOOLKITS:
         if toolkit.toolkit_id in toolkit_ids:
-            tools.extend(toolkit.get_tools())
+            tools.extend(toolkit.get_tools_with_configs(db, account))
 
     return tools
