@@ -53,3 +53,4 @@ This will result in creating new migration file in `migrations/versions` folder.
 lt --port 4002 --print-requests
 ngrok http 4002
 
+
