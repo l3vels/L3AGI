@@ -107,14 +107,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <StyledTextareaWrapper>
             <Typography
-              value='Welcome Text'
+              value='Greeting'
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
               customColor={'#FFF'}
             />
             <Textarea
               hint=''
-              placeholder='Welcome Text'
+              placeholder='Greeting'
               value={agent_greeting}
               name='agent_greeting'
               onChange={(value: string) => onTextareaChange('agent_greeting', value)}
