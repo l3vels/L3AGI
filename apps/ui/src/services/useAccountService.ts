@@ -119,13 +119,17 @@ export const useUserAccountService = () => {
 }
 
 export const useAssignedUserListService = () => {
-  const { data: { assignedUserList } = [], error, loading, refetch } = useQuery(assignedUserListGql)
+  //todo Add it later
+  // const { data: { assignedUserList } = [], error, loading, refetch } = useQuery(assignedUserListGql)
 
+  // return {
+  //   data: assignedUserList || [],
+  //   error,
+  //   loading,
+  //   refetch,
+  // }
   return {
-    data: assignedUserList || [],
-    error,
-    loading,
-    refetch,
+    data: []
   }
 }
 

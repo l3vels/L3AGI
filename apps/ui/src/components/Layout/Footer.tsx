@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <StyledFooter id='main_footer'>
       <StyledAvatarContainer>
-        <AvatarDropDown />
+        {/* <AvatarDropDown /> */}
         <StyledFirstName>{first_name}</StyledFirstName>
       </StyledAvatarContainer>
     </StyledFooter>

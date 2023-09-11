@@ -163,7 +163,7 @@ const Navbar = ({
           </DialogContentContainer>
 
           <StyledAvatarColumn showMenu={showMenu}>
-            <AvatarDropDown />
+            {/* <AvatarDropDown /> */}
             {!showMenu && <span>{fullName}</span>}
           </StyledAvatarColumn>
           {uploadLogoHandler && (
