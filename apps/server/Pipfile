@@ -44,6 +44,7 @@ strawberry-graphql = {extras = ["fastapi"], version = "*"}
 pymysql = "*"
 youtube-search = "*"
 pyowm = "*"
+bs4 = "*"
 
 [dev-packages]
 
