@@ -16,6 +16,7 @@ from agents.conversational.output_parser import ConvoOutputParser
 from utils.system_message import SystemMessageBuilder
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
+from exceptions import ToolEnvKeyException
 
 azureService = PubSubService()
 
@@ -79,6 +80,8 @@ class L3Conversational(L3Base):
             res = "AI is at rate limit, please try again later"
         except AuthenticationError:
             res = "Your OpenAI API key is invalid. Please recheck it in [Settings](/settings)"
+        except ToolEnvKeyException as err:
+            res = str(err)
         except Exception as err:
             print(err)
             sentry_sdk.capture_exception(err)
@@ -87,7 +90,7 @@ class L3Conversational(L3Base):
         ai_message = history.create_ai_message(res, human_message_id)
 
         azureService.send_to_group(
-            self.session_id,
+            str(self.session_id),
             message={
                 "type": "CHAT_MESSAGE_ADDED",
                 "from": str(self.user.id),
