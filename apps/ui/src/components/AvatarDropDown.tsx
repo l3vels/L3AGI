@@ -37,7 +37,7 @@ const AvatarDropDown = () => {
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
-  // const { data: userAccounts } = useUserAccountsService()
+  const { data: userAccounts } = useUserAccountsService()
   const { account: currentAccount, user: currentUser } = useContext(AuthContext)
 
   const handleLogout = async () => {
