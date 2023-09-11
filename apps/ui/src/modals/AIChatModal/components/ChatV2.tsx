@@ -73,6 +73,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
   const chatSuggestions = agentById?.configs?.suggestions || []
+  const chatGreeting = agentById?.configs?.greeting || ''
 
   const [createChatMessageService] = useCreateChatMessageService()
 
@@ -268,6 +269,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}
+            greeting={
+              chatMessages?.length === 0 &&
+              (!agentId
+                ? `Hello ${user.name}, you can chat with agents and teams on your dashboard.`
+                : chatGreeting)
+            }
           />
         </StyledChatWrapper>
       </StyledMessages>
