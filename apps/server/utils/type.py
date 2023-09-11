@@ -4,6 +4,22 @@ import uuid
 
 def convert_value_to_type(value, target_type):
     # Convert the value to the specified type
+
+    # Handle Optional type (Union with NoneType)
+    if hasattr(target_type, "__origin__") and target_type.__origin__ == Union:
+        # If the value is None, return it immediately
+        if value is None:
+            return None
+        # Otherwise, get non-None types from the Union
+        valid_types = [t for t in target_type.__args__ if t != type(None)]
+        # If only one valid type, set the target_type to that type
+        if len(valid_types) == 1:
+            target_type = valid_types[0]
+        else:
+            # For this case, we'll just return the value as is, since we don't
+            # know which type to convert it to among the Union types.
+            return value
+    
     if target_type == bool:
         return bool(value)
     elif target_type == int:
@@ -15,20 +31,7 @@ def convert_value_to_type(value, target_type):
     elif target_type == uuid.UUID:
         if isinstance(value, uuid.UUID):
             return value
-        return uuid.UUID(value)    
-    # Handle Optional type (Union with NoneType)
-    if hasattr(target_type, "__origin__") and target_type.__origin__ == Union:
-        if value is None:
-            return None
-        # Get non-None types from the Union
-        valid_types = [t for t in target_type.__args__ if t != type(None)]
-        # If only one valid type, set the target_type to that type
-        if len(valid_types) == 1:
-            target_type = valid_types[0]
-        else:
-            # For this case, we'll just return the value as is, since we don't
-            # know which type to convert it to among the Union types.
-            return value    
+        return uuid.UUID(value)
     elif hasattr(target_type, "__origin__") and target_type.__origin__ == list:
         inner_type = target_type.__args__[0]
         if isinstance(value, str) and value.startswith('[') and value.endswith(']'):
