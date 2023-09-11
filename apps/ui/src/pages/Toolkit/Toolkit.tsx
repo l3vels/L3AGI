@@ -47,7 +47,7 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
                 subTitle={!tool.is_active && !isPublic ? 'Coming Soon' : ''}
                 onClick={() => {
                   if (isPublic) return
-                  navigate(`/tools/${tool.toolkit_id}`)
+                  navigate(`/toolkits/${tool.toolkit_id}`)
                 }}
                 logoSrc={logoSrc}
               />

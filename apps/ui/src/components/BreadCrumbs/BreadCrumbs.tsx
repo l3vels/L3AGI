@@ -30,10 +30,10 @@ const GetDatasourceName = () => {
 
 const GetToolkitName = () => {
   const params = useParams()
-  const { toolId } = params
+  const { toolkitId } = params
 
   const { data: toolsData } = useToolsService()
-  const tool = toolsData?.filter((tool: any) => toolId === tool.toolkit_id)
+  const tool = toolsData?.filter((tool: any) => toolkitId === tool.toolkit_id)
 
   return <span>{tool[0]?.name}</span>
 }
@@ -61,7 +61,7 @@ const routes: any = [
   { path: '/datasources/:datasourceId', breadcrumb: GetDatasourceName },
   { path: '/datasources/create-datasource', breadcrumb: 'Add Datasource' },
 
-  { path: '/tools/:toolId', breadcrumb: GetToolkitName },
+  { path: '/toolkits/:toolkitId', breadcrumb: GetToolkitName },
 
   { path: '/team-of-agents/:teamId', breadcrumb: GetTeamOfAgentsName },
 

@@ -46,9 +46,9 @@ const MainNavigation = () => {
         <Collection />
         <span>Data sources</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'tools')} onClick={() => onHandleClick('/tools')}>
+      <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
         <Games />
-        <span>Tools</span>
+        <span>Toolkits</span>
       </StyledLi>
       <StyledLi
         isActive={includes(active, 'marketplace')}

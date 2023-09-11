@@ -175,9 +175,9 @@ const Route = () => {
               />
             </Router>
 
-            <Router path={'tools'} element={<MainRouteLayout />} key={document.location.href}>
+            <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
-              <Router path={':toolId'} element={<ToolView />} key={document.location.href} />
+              <Router path={':toolkitId'} element={<ToolView />} key={document.location.href} />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
