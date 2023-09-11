@@ -4,6 +4,7 @@ from langchain import SerpAPIWrapper
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
+from exceptions import ToolEnvKeyException
 from tools.base import BaseTool
 
 
@@ -32,8 +33,14 @@ class SerpGoogleSearchTool(BaseTool):
         serpapi_api_key = self.get_env_key("SERP_API_KEY")
 
         if not serpapi_api_key:
-            return "Please fill Serp API Key in the Google SERP Search Toolkit."
-
+            raise ToolEnvKeyException(f"Please fill Serp API Key in the [Google SERP Search Toolkit](/tools/{self.toolkit_id})")
+        
         search = SerpAPIWrapper(serpapi_api_key=serpapi_api_key)
-        return search.run(query)
 
+        try:
+            return search.run(query)
+        except Exception as err:
+            if "Invalid API key" in str(err):
+                raise ToolEnvKeyException(f"Serp API Key is not valid. Please check in the [Google SERP Search Toolkit](/tools/{self.toolkit_id})")
+
+            return "Could not search Google. Please try again later."
