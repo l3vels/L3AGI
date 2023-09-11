@@ -64,6 +64,7 @@ const AgentDropdown = ({
         multi={isMulti}
         menuPlacement={'top'}
         // insideOverflow
+        multiline
         size={Dropdown.size.MEDIUM}
         value={value}
         placeholder={value}
