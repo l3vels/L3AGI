@@ -5,7 +5,7 @@ const TeamOfAgentView = () => {
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
 
-  if (!data) return
+  if (!data) return <div />
 
   const { name, description, team_type } = data
 
