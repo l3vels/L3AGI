@@ -21,14 +21,6 @@ import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
 
-import { useContext } from 'react'
-import { AuthContext } from 'contexts'
-
-import profileIcon from 'assets/icons/profile_icon.svg'
-import teamIcon from 'assets/icons/team_icon.svg'
-import signOutIcon from 'assets/icons/signout_icon.svg'
-import ArrowRightSvg from 'assets/svgComponents/ArrowRightSvg'
-
 import Settings from '@l3-lib/ui-core/dist/icons/Settings'
 import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
 
@@ -38,7 +30,6 @@ const AvatarDropDown = () => {
   const [logout] = useLogoutService()
   const navigate = useNavigate()
   const { data: userAccounts } = useUserAccountsService()
-  const { account: currentAccount, user: currentUser } = useContext(AuthContext)
 
   const handleLogout = async () => {
     try {
@@ -52,33 +43,6 @@ const AvatarDropDown = () => {
       window.location.href = '/'
     }
   }
-
-  const userList = userAccounts?.map((item: any, index: number) => {
-    const { creator_user, assigned_account_name } = item
-
-    let note = `(${creator_user})`
-    if (currentUser.id === item.creator_user_id) {
-      note = `(Your Company)`
-    }
-    if (currentAccount.id === item.assigned_account_id) {
-      note += ' - Active'
-    }
-
-    return (
-      <StyledPickedText picked={currentAccount.id === item.assigned_account_id} key={index}>
-        <StyledDropDownMenuItem
-          onClick={() => {
-            navigate('/')
-            setAccountId(item.assigned_account_id)
-            // history.go(0)
-          }}
-        >
-          {assigned_account_name}
-          <span>{note}</span>
-        </StyledDropDownMenuItem>
-      </StyledPickedText>
-    )
-  })
 
   return (
     <StyledDropDownMenuRoot>

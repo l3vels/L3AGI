@@ -36,6 +36,8 @@ export const useEditAgent = () => {
     agent_datasources: agentById?.configs?.datasources,
     agent_model_version: agentById?.configs?.model_version,
     agent_mode_provider: agentById?.configs?.mode_provider,
+    agent_suggestions: agentById?.configs?.suggestions,
+    agent_greeting: agentById?.configs?.greeting,
   }
 
   const handleSubmit = async (values: any) => {
@@ -55,6 +57,8 @@ export const useEditAgent = () => {
       instructions: values.agent_instructions,
       model_version: values.agent_model_version,
       mode_provider: values.agent_mode_provider,
+      suggestions: values.agent_suggestions,
+      greeting: values.agent_greeting,
     }
 
     await updateAgent(agentId || '', {

@@ -27,7 +27,7 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput
         configs[key] = value
     
     return AgentWithConfigsOutput(agent=AgentResponse(**agent_data), 
-                                    configs= ConfigsOutput(**configs, is_deleted=False) )
+                                    configs= ConfigsOutput(**configs) )
 
 
 def convert_agents_to_agent_list(agents: List[AgentModel]) -> List[AgentWithConfigsOutput]:

@@ -5,6 +5,7 @@ import createAgentGql from '../../gql/ai/agent/createAgent.gql'
 export type AgentInput = {
   name: string
   role: string
+  greeting: string
   description: string
   is_template: boolean
   temperature: number
@@ -16,6 +17,7 @@ export type AgentInput = {
   model_version: string
   mode_provider: string
   is_memory: boolean
+  suggestions: string[]
 }
 
 export const useCreateAgentService = () => {
@@ -36,6 +38,8 @@ export const useCreateAgentService = () => {
       model_version,
       mode_provider,
       is_memory,
+      suggestions,
+      greeting,
     } = input
 
     const {
@@ -59,6 +63,8 @@ export const useCreateAgentService = () => {
             model_version: model_version,
             temperature: temperature,
             instructions: instructions,
+            suggestions: suggestions,
+            greeting: greeting,
           },
         },
       },
