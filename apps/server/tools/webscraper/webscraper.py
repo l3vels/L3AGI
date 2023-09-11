@@ -3,11 +3,11 @@ import re
 from typing import Optional, Type
 from pydantic import BaseModel, Field
 import requests
-from langchain.tools import BaseTool
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 from bs4 import BeautifulSoup
+from tools.base import BaseTool
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0",
@@ -75,7 +75,7 @@ class WebScraperTool(BaseTool):
                 main_content_areas = soup.find_all(['main', 'article', 'section', 'div'])
                 if main_content_areas:
                     main_content = max(main_content_areas, key=lambda x: len(x.text))
-                    content_tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+                    content_tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a']
                     content = ' '.join([tag.text.strip() for tag in main_content.find_all(content_tags)])
                 else:
                     content = ' '.join([tag.text.strip() for tag in soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])])
