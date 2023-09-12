@@ -7,15 +7,21 @@ import CHAT_MESSAGES_GQL from '../../gql/chat/chatMessages.gql'
 type UseChatMessagesService = {
   isPrivateChat: boolean
   agentId?: Nullable<string>
+  teamId?: Nullable<string>
 }
 
-export const useChatMessagesService = ({ isPrivateChat, agentId }: UseChatMessagesService) => {
+export const useChatMessagesService = ({
+  isPrivateChat,
+  agentId,
+  teamId,
+}: UseChatMessagesService) => {
   const { data, error, loading, refetch } = useQuery(CHAT_MESSAGES_GQL, {
     // Omit undefined variables to exclude in query params
     variables: omitBy(
       {
         is_private_chat: isPrivateChat,
         agent_id: agentId,
+        team_id: teamId,
       },
       isNil,
     ),

@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, List, Dict
 from uuid import UUID
 from pydantic import BaseModel
 from datetime import datetime
@@ -24,7 +24,7 @@ class ChatMessageOutput(BaseModel):
     user_id: UUID
     account_id: UUID
     message: Dict
-    thoughts: Optional[Dict] = None
+    thoughts: Optional[List[Dict]] = None
     created_on: datetime
 
 

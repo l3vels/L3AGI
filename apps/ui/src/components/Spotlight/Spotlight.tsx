@@ -45,6 +45,7 @@ const Spotlight = () => {
   useChatMessagesService({
     isPrivateChat: false,
     agentId,
+    teamId,
   })
 
   // useChatMessagesService({
