@@ -100,13 +100,13 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 <table align="center" style="border: none;">
   <tr>
-    <td align="center"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px"><br>Wikipedia</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px" style="border: none;"><br>Wikipedia</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
+    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
   </tr>
 </table>
 <table align="center" style="border: none;">
