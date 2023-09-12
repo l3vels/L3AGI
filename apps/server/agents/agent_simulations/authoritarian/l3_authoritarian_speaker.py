@@ -137,7 +137,7 @@ class L3AuthoritarianSpeaker(L3Base):
         director = DirectorDialogueAgentWithTools(
                     name=director_name,
                     tools=self.get_tools(director_agent, self.settings),
-                    system_message=SystemMessageBuilder(director_agent).build(),
+                    system_message=SystemMessage(content=SystemMessageBuilder(director_agent).build()),
                     #later need support other llms
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=director_agent.configs.temperature, 
                         model_name=director_agent.configs.model_version 
@@ -153,7 +153,7 @@ class L3AuthoritarianSpeaker(L3Base):
                 DialogueAgentWithTools(
                     name=agent_with_config.agent.name,
                     tools=self.get_tools(agent_with_config, self.settings),
-                    system_message=SystemMessageBuilder(agent_with_config).build(),
+                    system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
                 )
             )
