@@ -25,6 +25,7 @@ type ChatMessageListV2Props = {
   setReply: (state: ReplyStateProps) => void
   reply: ReplyStateProps
   greeting: string | null
+  agentName: string
 }
 
 const ChatMessageListV2 = ({
@@ -35,6 +36,7 @@ const ChatMessageListV2 = ({
   setReply,
   reply,
   greeting,
+  agentName,
 }: ChatMessageListV2Props) => {
   const [listIsReady, setListIsReady] = useState(true)
 
@@ -67,7 +69,7 @@ const ChatMessageListV2 = ({
         message: greeting,
         type: 'ai',
         date: chatDate,
-        agentName: 'L3-GPT',
+        agentName: agentName,
         isGreeting: true,
       },
       ...filteredData,

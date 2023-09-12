@@ -71,6 +71,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   })
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const agentName = agentById?.agent?.name
 
   const chatSuggestions = agentById?.configs?.suggestions || []
   const chatGreeting = agentById?.configs?.greeting || ''
@@ -269,6 +270,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}
+            agentName={agentName || ''}
             greeting={
               chatMessages &&
               chatMessages?.length === 0 &&
