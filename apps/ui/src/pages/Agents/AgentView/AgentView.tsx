@@ -184,7 +184,19 @@ const StyledInnerWrapper = styled.div`
     flex-direction: column;
   }
 `
-const StyledLeftColumn = styled.div``
+const StyledLeftColumn = styled.div`
+  position: sticky;
+  top: 0;
+
+  overflow-y: auto;
+  min-width: fit-content;
+
+  @media only screen and (max-width: 800px) {
+    position: unset;
+    top: unset;
+    overflow-y: unset;
+  }
+`
 
 const StyledRightColumn = styled.div`
   display: flex;
@@ -197,6 +209,7 @@ const StyledDetailsBox = styled.div`
   background: rgba(0, 0, 0, 0.2);
 
   width: 300px;
+  height: fit-content;
   /* min-height: 400px; */
 
   border-radius: 10px;
