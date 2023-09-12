@@ -128,7 +128,7 @@ class L3AgentDebates(L3Base):
 
             azureService.send_to_group(self.session_id, message={
                 'type': 'CHAT_MESSAGE_ADDED',
-                'from': self.user.id,
+                'from': str(self.user.id),
                 'chat_message': ai_message,
                 'is_private_chat': is_private_chat,
             })
