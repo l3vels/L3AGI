@@ -37,7 +37,7 @@
 <a href="https://twitter.com/l3velshq" target="blank">
 <img src="https://img.shields.io/twitter/follow/l3vels?label=Follow: l3vels&style=social" alt="Follow L3AGI"/>
 </a>
-<a href="https://www.reddit.com/r/L3AGI" target="_blank"><img src="https://img.shields.io/twitter/url?label=/r/L3AGI&logo=reddit&style=social&url=https://github.com/l3vels/L3AGI"/></a>
+<a href="https://wwwhttps://github.com/orgs/l3vels/projects/1/views/1.reddit.com/r/L3AGI" target="_blank"><img src="https://img.shields.io/twitter/url?label=/r/L3AGI&logo=reddit&style=social&url=https://github.com/l3vels/L3AGI"/></a>
 
 <a href="https://discord.gg/hQ9ZWabm" target="blank">
 <img src="https://img.shields.io/discord/1085735429426401340?label=Join%20L3AGI&logo=discord&style=social" alt="Join L3AGI Discord Community"/>
@@ -61,7 +61,7 @@
 
 
 
-## 🚀 Features
+## ✨ Features
 
 L3AGI provides a comprehensive suite of features to build, manage, and run autonomous AI agents. Here are some of the key features:
 
@@ -93,7 +93,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 - **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
 
 
-## 🗺️ Roadmap [see here](https://github.com/orgs/l3vels/projects/1)
+## 🚀 Roadmap [see here](https://github.com/orgs/l3vels/projects/1)
 <br>
 
 ## ⚡ Quick Start
