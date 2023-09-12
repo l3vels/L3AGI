@@ -69,37 +69,6 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - **Agent Memory**: Equip your AI agents with memory capabilities for retaining and recalling information.
 
-- **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
-
-
-<table align="center">
-  <tr>
-    <td align="center"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px"><br>Wikipedia</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
-  </tr>
-</table>
-<table align="center">
-  <tr>
-    <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="40px" height="40px"><br>Twilio</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="40px" height="40px"><br>Twitter</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/instagram.webp" width="40px" height="40px"><br>Instagram</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/Slack.png" width="40px" height="40px"><br>Slack</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/gmail.png" width="40px" height="40px"><br>Gmail</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/googleCalendar.png" width="40px" height="40px"><br>Google Calendar</td>
-  </tr>
-</table>
-
-
-
-
-
-
-
 
 - **Data Sources**: Connect your AI agents to various data sources for information retrieval and processing. Supported data sources include:
   <!-- - ## <img src="./apps/ui/src/assets/images/postgres.png" width="30px" height="30"> Postgres 
@@ -111,7 +80,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
   - ## <img src="./apps/ui/src/assets/images/firebase.svg" width="30" height="30"> Firebase -->
 
 
-<table align="center">
+<table align="center" border="0">
   <tr>
     <td align="center"><img src="./apps/ui/src/assets/images/postgres.png" width="64px" height="64px"><br>Postgres</td>
     <td align="center"><img src="./apps/ui/src/assets/images/mySql.png" width="64px" height="64px"><br>Mysql</td>
@@ -126,8 +95,34 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 
 
+- **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
 
-- **Code Generator**: Generate code snippets automatically to speed up your development process.
+
+<table align="center" border="0">
+  <tr>
+    <td align="center"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px"><br>Wikipedia</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
+  </tr>
+</table>
+<table align="center" border="0">
+  <tr>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="40px" height="40px"><br>Twilio</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="40px" height="40px"><br>Twitter</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/instagram.webp" width="40px" height="40px"><br>Instagram</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/slack.png" width="40px" height="40px"><br>Slack</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/gmail.png" width="40px" height="40px"><br>Gmail</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/googleCalendar.png" width="40px" height="40px"><br>Google Calendar</td>
+  </tr>
+</table>
+
+
+
+<!-- - **Code Generator**: Generate code snippets automatically to speed up your development process. -->
 
 - **Chart Generator**: Visualize your data effectively with our chart generator.
 
@@ -140,7 +135,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 - **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
 
 
-## 🚀 Roadmap [see here](https://github.com/orgs/l3vels/projects/1)
+## 🚀 Roadmap [here](https://github.com/orgs/l3vels/projects/1)
 <br>
 
 
