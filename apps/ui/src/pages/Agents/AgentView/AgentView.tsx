@@ -17,9 +17,10 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
+
 import BackButton from 'components/BackButton'
 import AgentToolkits from './components/AgentToolkits'
+import AgentDatasources from './components/AgentDatasources'
 
 const AgentView = () => {
   const navigate = useNavigate()
@@ -27,8 +28,6 @@ const AgentView = () => {
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
-
-  const { data: datasourcesData } = useDatasourcesService()
 
   if (!agentById) return <div />
 
@@ -46,16 +45,6 @@ const AgentView = () => {
     temperature,
     datasources,
   } = configs
-
-  const filteredDatasources = datasourcesData
-    ?.filter((datasource: any) => {
-      if (datasources?.includes(datasource.id)) {
-        return datasource
-      } else {
-        return
-      }
-    })
-    .map((tool: any) => tool.name)
 
   return (
     <StyledSectionWrapper>
@@ -121,12 +110,6 @@ const AgentView = () => {
               <StyledDivider />
 
               <StyledWrapper>
-                {/* {tools.length > 0 && <TagsRow title='Tools' items={filteredTools} />} */}
-
-                {datasources.length > 0 && (
-                  <TagsRow title='Datasources' items={filteredDatasources} />
-                )}
-
                 {role && <TagsRow title='Role' items={[role]} />}
 
                 {model_version && <TagsRow title='Model' items={[model_version]} />}
@@ -138,6 +121,8 @@ const AgentView = () => {
 
           <StyledRightColumn>
             {tools.length > 0 && <AgentToolkits tools={tools} />}
+
+            {datasources.length > 0 && <AgentDatasources datasources={datasources} />}
 
             {goals.length > 0 && (
               <AdditionalInfoBox

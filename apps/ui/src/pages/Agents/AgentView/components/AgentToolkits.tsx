@@ -56,6 +56,21 @@ const AgentToolkits = ({ tools }: { tools: string[] }) => {
 
 export default AgentToolkits
 
+export const StyledWrapper = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+
+  width: 100%;
+  max-width: 1440px;
+  /* min-height: 400px; */
+
+  border-radius: 10px;
+  padding: 30px 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
 const StyledToolkit = styled.div`
   /* padding: 0 20px; */
 
@@ -81,18 +96,4 @@ const StyledMainTextWrapper = styled.div`
 
   width: 100%;
   max-width: 400px;
-`
-const StyledWrapper = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-
-  width: 100%;
-  max-width: 1440px;
-  /* min-height: 400px; */
-
-  border-radius: 10px;
-  padding: 30px 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 `
