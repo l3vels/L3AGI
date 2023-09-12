@@ -9,7 +9,7 @@ type AgentDropdownProps = {
   options: any
   setFieldValue: any
   onChange?: () => void
-
+  optionSize?: 'large' | 'medium' | 'small'
   isMulti?: boolean
 }
 
@@ -21,6 +21,7 @@ const AgentDropdown = ({
   onChange = () => {},
   label,
   isMulti,
+  optionSize = 'medium',
 }: AgentDropdownProps) => {
   let value = fieldValue
 
@@ -52,6 +53,17 @@ const AgentDropdown = ({
     }
   }
 
+  const OptionRenderer = ({ label }: { label: string }) => {
+    return (
+      <Typography
+        value={label}
+        type={Typography.types.LABEL}
+        size={optionSize}
+        customColor={'#FFF'}
+      />
+    )
+  }
+
   return (
     <StyledWrapper>
       <Typography
@@ -64,12 +76,14 @@ const AgentDropdown = ({
         multi={isMulti}
         menuPlacement={'top'}
         // insideOverflow
+        multiline
         size={Dropdown.size.MEDIUM}
         value={value}
         placeholder={value}
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}
+        OptionRenderer={OptionRenderer}
       />
     </StyledWrapper>
   )
@@ -81,4 +95,5 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 `

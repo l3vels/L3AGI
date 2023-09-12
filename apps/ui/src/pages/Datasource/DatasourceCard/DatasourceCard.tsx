@@ -115,7 +115,7 @@ const StyledBodyWrapper = styled.div`
   height: 100%;
   overflow: hidden;
   line-height: 14px;
-  /* text-align: center; */
+  text-align: center;
 `
 const StyledImg = styled.img`
   border-radius: 8px;

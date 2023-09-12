@@ -228,7 +228,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems.go_to, 1, 6)?.map((item, index) => (
+                      {slice(groupedItems.go_to, 1, 8)?.map((item, index) => (
                         <>
                           <CommandItem
                             index={index}

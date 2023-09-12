@@ -17,9 +17,10 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useToolsService } from 'services/tool/useToolsService'
-import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
+
 import BackButton from 'components/BackButton'
+import AgentToolkits from './components/AgentToolkits'
+import AgentDatasources from './components/AgentDatasources'
 
 const AgentView = () => {
   const navigate = useNavigate()
@@ -27,8 +28,6 @@ const AgentView = () => {
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
-  const { data: toolsData } = useToolsService()
-  const { data: datasourcesData } = useDatasourcesService()
 
   if (!agentById) return <div />
 
@@ -45,27 +44,9 @@ const AgentView = () => {
     instructions,
     temperature,
     datasources,
+    suggestions,
+    greeting,
   } = configs
-
-  const filteredTools = toolsData
-    ?.filter((tool: any) => {
-      if (tools?.includes(tool.toolkit_id)) {
-        return tool
-      } else {
-        return
-      }
-    })
-    .map((tool: any) => tool.name)
-
-  const filteredDatasources = datasourcesData
-    ?.filter((datasource: any) => {
-      if (datasources?.includes(datasource.id)) {
-        return datasource
-      } else {
-        return
-      }
-    })
-    .map((tool: any) => tool.name)
 
   return (
     <StyledSectionWrapper>
@@ -114,26 +95,23 @@ const AgentView = () => {
                 </div>
               </StyledWrapper>
 
+              {description && (
+                <>
+                  <StyledDivider />
+                  <StyledWrapper>
+                    <Typography
+                      value={description}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'rgba(255,255,255,0.9)'}
+                    />
+                  </StyledWrapper>
+                </>
+              )}
+
               <StyledDivider />
 
               <StyledWrapper>
-                <Typography
-                  value={description}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255,255,255,0.9)'}
-                />
-              </StyledWrapper>
-
-              <StyledDivider />
-
-              <StyledWrapper>
-                {tools.length > 0 && <TagsRow title='Tools' items={filteredTools} />}
-
-                {datasources.length > 0 && (
-                  <TagsRow title='Datasources' items={filteredDatasources} />
-                )}
-
                 {role && <TagsRow title='Role' items={[role]} />}
 
                 {model_version && <TagsRow title='Model' items={[model_version]} />}
@@ -144,6 +122,10 @@ const AgentView = () => {
           </StyledLeftColumn>
 
           <StyledRightColumn>
+            {tools.length > 0 && <AgentToolkits tools={tools} />}
+
+            {datasources.length > 0 && <AgentDatasources datasources={datasources} />}
+
             {goals.length > 0 && (
               <AdditionalInfoBox
                 items={goals}
@@ -169,6 +151,15 @@ const AgentView = () => {
                 }
               />
             )}
+            {suggestions.length > 0 && (
+              <AdditionalInfoBox
+                items={suggestions}
+                title={
+                  suggestions.length === 1 ? '1 Suggestion' : `${suggestions.length} Suggestions`
+                }
+              />
+            )}
+            {greeting.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>
@@ -182,13 +173,30 @@ const StyledInnerWrapper = styled.div`
   /* background: grey; */
 
   width: 100%;
-  height: calc(100vh - 325px);
+  max-height: calc(100vh - 325px);
+  height: 100%;
   overflow-y: auto;
   display: flex;
   padding: 0 20px;
   gap: 10px;
+
+  @media only screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `
-const StyledLeftColumn = styled.div``
+const StyledLeftColumn = styled.div`
+  position: sticky;
+  top: 0;
+
+  overflow-y: auto;
+  min-width: fit-content;
+
+  @media only screen and (max-width: 800px) {
+    position: unset;
+    top: unset;
+    overflow-y: unset;
+  }
+`
 
 const StyledRightColumn = styled.div`
   display: flex;
@@ -201,6 +209,7 @@ const StyledDetailsBox = styled.div`
   background: rgba(0, 0, 0, 0.2);
 
   width: 300px;
+  height: fit-content;
   /* min-height: 400px; */
 
   border-radius: 10px;

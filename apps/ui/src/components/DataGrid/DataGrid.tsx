@@ -39,6 +39,7 @@ interface IProps {
   isResourceHub?: boolean
   onSelectionChanged?: () => void
   onGridReady?: (params: GridReadyEvent<any>) => void
+  maxHeight?: number | null
 }
 
 const DataGrid = forwardRef(
@@ -53,6 +54,7 @@ const DataGrid = forwardRef(
       isResourceHub,
       onSelectionChanged,
       onGridReady,
+      maxHeight = null,
     }: IProps,
     ref,
   ) => {
@@ -260,6 +262,7 @@ const DataGrid = forwardRef(
         className={noBorder ? `ag-theme-alpine no-border` : `ag-theme-alpine`}
         headerHeight={headerHeight}
         elementHeights={elementHeights}
+        maxHeight={maxHeight}
         // isResourceHub={isResourceHub}
       >
         <AgGridReact
@@ -342,9 +345,10 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number }>`
+const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number; maxHeight: number }>`
   height: ${p =>
     p.elementHeights ? `calc(100vh - ${p.elementHeights}px) ` : 'calc(100vh - 175px)'};
   // height: ${p => (p.elementHeights ? `100vh - ${p.elementHeights}` : '100vh')};
+  max-height: ${p => p.maxHeight && `${p.maxHeight}px`};
   width: 100%;
 `
