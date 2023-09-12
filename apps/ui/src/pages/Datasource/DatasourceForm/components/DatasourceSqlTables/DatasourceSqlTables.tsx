@@ -78,6 +78,7 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
         data={data || []}
         columnConfig={config}
         headerHeight={130}
+        maxHeight={400}
         onSelectionChanged={onSelectionChanged}
         onGridReady={onGridReady}
       />
