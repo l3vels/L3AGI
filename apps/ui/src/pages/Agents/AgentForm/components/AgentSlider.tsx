@@ -15,7 +15,7 @@ const AgentSlider = ({ formik }: { formik: any }) => {
         />
         {formik?.values.agent_temperature ? formik?.values.agent_temperature : 0}/{1}
       </StyledSliderHeader>
-      <Slider
+      <StyledSlide
         className='slider'
         color={Slider.colors.POSITIVE}
         defaultValue={2}
@@ -42,4 +42,7 @@ const StyledSliderHeader = styled.div`
   align-items: center;
   width: 100%;
   color: #fff;
+`
+const StyledSlide = styled(Slider)`
+  max-width: 100%;
 `
