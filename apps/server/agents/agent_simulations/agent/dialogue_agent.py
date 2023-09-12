@@ -86,5 +86,6 @@ class DialogueSimulator:
             return speaker.name, message
         except Exception as e:
             print(e)
+            #todo return error as message
             self._step += 1
     

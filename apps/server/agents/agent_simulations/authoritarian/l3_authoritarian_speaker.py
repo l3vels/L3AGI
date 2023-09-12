@@ -148,7 +148,7 @@ class L3AuthoritarianSpeaker(L3Base):
         
         agents = [director]
         for agent_with_config in agents_with_configs:
-            if not agent_with_config.agent.id != director_id:
+            if agent_with_config.agent.id != director_id:
                 agents.append(
                 DialogueAgentWithTools(
                     name=agent_with_config.agent.name,
@@ -169,23 +169,29 @@ class L3AuthoritarianSpeaker(L3Base):
 
 
         while True:
-            name, message = simulator.step()
+            try:
+                name, message = simulator.step()
 
-            res = f"({name}): {message}"
-            # res = agent.run(prompt, callbacks=[handler])
+                res = f"({name}): {message}"
+                # res = agent.run(prompt, callbacks=[handler])
 
-            ai_message = history.create_ai_message(res)
+                ai_message = history.create_ai_message(res)
 
-            azureService.send_to_group(self.session_id, message={
-                'type': 'CHAT_MESSAGE_ADDED',
-                'from': str(self.user.id),
-                'chat_message': ai_message,
-                'is_private_chat': is_private_chat,
-            })
-            print(f"({name}): {message}")
-            print("\n")
-            if director.stop:
-                break
+                azureService.send_to_group(self.session_id, message={
+                    'type': 'CHAT_MESSAGE_ADDED',
+                    'from': str(self.user.id),
+                    'chat_message': ai_message,
+                    'is_private_chat': is_private_chat,
+                })
+                print(f"({name}): {message}")
+                print("\n")
+                if director.stop:
+                    break
+            except Exception as e:
+                print(e)
+                #todo return error as message
+                self._step += 1
+                
 
         
         # self.agent_descriptor_system_message = SystemMessage(
