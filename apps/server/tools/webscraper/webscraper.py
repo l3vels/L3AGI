@@ -34,8 +34,8 @@ class WebScraperTool(BaseTool):
     name = "Web Scraper"
     
     description = (
-        "A tool for scraping data from webpages."
-        "useful for when you need to extract specific information from a website"
+        "This tool extracts data from webpages, "
+        "ideal for retrieving specific information from a website."
     )
 
     args_schema: Type[WebScraperSchema] = WebScraperSchema
