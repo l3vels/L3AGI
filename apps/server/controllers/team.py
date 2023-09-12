@@ -4,9 +4,11 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
 
 from models.team import TeamModel
+from models.team_agent import TeamAgentModel
 from utils.auth import authenticate
 from utils.team import convert_teams_to_team_list, convert_model_to_response
-from typings.team import TeamOutput, TeamInput
+from typings.team import TeamOutput, TeamOfAgentsInput
+from typings.team_agent import TeamAgentInput
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from exceptions import TeamNotFoundException
@@ -15,7 +17,7 @@ from agents.team_base import TeamOfAgentsType
 router = APIRouter()
 
 @router.post("", status_code=201, response_model=TeamOutput)
-def create_team(team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+def create_team(team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Create a new team with configurations.
 
@@ -28,10 +30,14 @@ def create_team(team: TeamInput, auth: UserAccount = Depends(authenticate)) -> T
     """
     # Consider adding try-except for error handling during creation if needed
     db_team = TeamModel.create_team(db, team=team, user=auth.user, account=auth.account)
+
+    team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
+    TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
+
     return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
 
 @router.put("/{id}", status_code=200, response_model=TeamOutput)  # Changed status code to 200
-def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Update an existing team with configurations.
 
@@ -49,6 +55,11 @@ def update_team(id: str, team: TeamInput, auth: UserAccount = Depends(authentica
                                            team=team, 
                                            user=auth.user, 
                                            account=auth.account)
+        
+        team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
+        TeamAgentModel.delete_by_team_id(db, id, auth.account)
+        TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
+
         return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
     
     except TeamNotFoundException:
@@ -142,7 +153,11 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
             }
         ],
         "agents": [
-            {"id": 1, "role": "Debater"}
+            {"id": 1, "role": "Debater"},
+            {"id": 2, "role": "Debater"},
+            {"id": 3, "role": "Debater"},
+            {"id": 4, "role": "Debater"},
+            {"id": 5, "role": "Debater"},
         ]
     },
     {

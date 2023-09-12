@@ -8,6 +8,17 @@ class TeamInput(BaseModel):
     team_type: str
     workspace_id: Optional[UUID4]
 
+class TeamAgentInput(BaseModel):
+    agent_id: UUID4
+    role: str
+
+class TeamOfAgentsInput(BaseModel):
+    name: str
+    description: Optional[str]
+    team_type: str
+    workspace_id: Optional[UUID4]
+    team_agents: List[TeamAgentInput]
+
 
 class TeamOutput(BaseModel):
     id: UUID4
@@ -21,8 +32,7 @@ class TeamOutput(BaseModel):
     account_id: UUID4
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]
-    team_agents: List[TeamAgentOutput]
-
+    team_agents: Optional[List[TeamAgentOutput]]
 
 class QueryParams(BaseModel):
     id: Optional[str]

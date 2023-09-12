@@ -46,7 +46,11 @@ export const useEditTeamOfAgents = () => {
     teamOfAgents_description: teamOfAgentsById?.description,
     teamOfAgents_team_type: teamOfAgentsById?.team_type,
     configs: configs || {},
-    agents: [],
+    agents:
+      teamOfAgentsById?.team_agents.map((team_agent: any) => ({
+        agent_id: team_agent.agent.id,
+        role: team_agent.role,
+      })) || [],
   }
 
   const handleSubmit = async (values: any) => {
@@ -58,6 +62,7 @@ export const useEditTeamOfAgents = () => {
       name: values.teamOfAgents_name,
       description: values.teamOfAgents_description,
       team_type: values.teamOfAgents_team_type,
+      team_agents: values.agents.filter((agent: any) => agent?.agent_id),
     }
 
     const promises = [

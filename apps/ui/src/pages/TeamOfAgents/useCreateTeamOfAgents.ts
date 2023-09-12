@@ -68,9 +68,8 @@ export const useCreateTeamOfAgents = () => {
         name: values.teamOfAgents_name,
         description: values.teamOfAgents_description,
         team_type: values.teamOfAgents_team_type,
+        team_agents: values.agents.filter((agent: any) => agent?.agent_id),
       }
-
-      // TODO: save agents selected in form
 
       const teamOfAgents = await createTeamOfAgents(teamOfAgentsInput)
 

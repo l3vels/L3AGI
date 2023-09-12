@@ -7,7 +7,6 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
@@ -22,7 +21,6 @@ type TeamOfAgentCardProps = {
   teamAgents: any[]
   onEditClick?: () => void
   onDeleteClick?: () => void
-  onViewClick: () => void
   onChatClick?: () => void
 }
 
@@ -34,7 +32,6 @@ const TeamOfAgentCard = ({
   teamAgents,
   onDeleteClick,
   onEditClick,
-  onViewClick,
   onChatClick,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description
@@ -124,19 +121,6 @@ const TeamOfAgentCard = ({
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               ariaLabel='Edit'
-            />
-          )}
-          {onViewClick && (
-            <IconButton
-              onClick={onViewClick}
-              icon={() => (
-                <StyledIconWrapper>
-                  <EyeOpen size={50} />
-                </StyledIconWrapper>
-              )}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              ariaLabel='View'
             />
           )}
         </StyledButtonsWrapper>
