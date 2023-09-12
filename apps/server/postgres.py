@@ -114,7 +114,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         # print("the result", json.loads(data_json))
         return json.loads(data_json)
 
-    def create_ai_message(self, message: str, parent_id: str):
+    def create_ai_message(self, message: str, parent_id: Optional[str] = None):
         return self.create_message(AIMessage(content=message), parent_id)
 
     def create_human_message(self, message: str):
