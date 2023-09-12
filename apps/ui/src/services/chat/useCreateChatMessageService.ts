@@ -25,7 +25,7 @@ export const useCreateChatMessageService = () => {
         input: {
           prompt: message,
           agent_id: agentId,
-          teamId: teamId,
+          team_id: teamId,
           is_private_chat: isPrivateChat,
           local_chat_message_ref_id: localChatMessageRefId,
           parent_id: parentId,
