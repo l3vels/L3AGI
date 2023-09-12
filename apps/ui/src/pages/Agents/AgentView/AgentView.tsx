@@ -17,9 +17,9 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useToolsService } from 'services/tool/useToolsService'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import BackButton from 'components/BackButton'
+import AgentToolkits from './components/AgentToolkits'
 
 const AgentView = () => {
   const navigate = useNavigate()
@@ -27,7 +27,7 @@ const AgentView = () => {
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
-  const { data: toolsData } = useToolsService()
+
   const { data: datasourcesData } = useDatasourcesService()
 
   if (!agentById) return <div />
@@ -46,16 +46,6 @@ const AgentView = () => {
     temperature,
     datasources,
   } = configs
-
-  const filteredTools = toolsData
-    ?.filter((tool: any) => {
-      if (tools?.includes(tool.toolkit_id)) {
-        return tool
-      } else {
-        return
-      }
-    })
-    .map((tool: any) => tool.name)
 
   const filteredDatasources = datasourcesData
     ?.filter((datasource: any) => {
@@ -114,21 +104,24 @@ const AgentView = () => {
                 </div>
               </StyledWrapper>
 
+              {description && (
+                <>
+                  <StyledDivider />
+                  <StyledWrapper>
+                    <Typography
+                      value={description}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'rgba(255,255,255,0.9)'}
+                    />
+                  </StyledWrapper>
+                </>
+              )}
+
               <StyledDivider />
 
               <StyledWrapper>
-                <Typography
-                  value={description}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                  customColor={'rgba(255,255,255,0.9)'}
-                />
-              </StyledWrapper>
-
-              <StyledDivider />
-
-              <StyledWrapper>
-                {tools.length > 0 && <TagsRow title='Tools' items={filteredTools} />}
+                {/* {tools.length > 0 && <TagsRow title='Tools' items={filteredTools} />} */}
 
                 {datasources.length > 0 && (
                   <TagsRow title='Datasources' items={filteredDatasources} />
@@ -144,6 +137,8 @@ const AgentView = () => {
           </StyledLeftColumn>
 
           <StyledRightColumn>
+            {tools.length > 0 && <AgentToolkits tools={tools} />}
+
             {goals.length > 0 && (
               <AdditionalInfoBox
                 items={goals}
@@ -188,6 +183,10 @@ const StyledInnerWrapper = styled.div`
   display: flex;
   padding: 0 20px;
   gap: 10px;
+
+  @media only screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `
 const StyledLeftColumn = styled.div``
 
