@@ -182,7 +182,8 @@ const StyledInnerWrapper = styled.div`
   /* background: grey; */
 
   width: 100%;
-  height: calc(100vh - 325px);
+  max-height: calc(100vh - 325px);
+  height: 100%;
   overflow-y: auto;
   display: flex;
   padding: 0 20px;
