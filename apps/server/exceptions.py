@@ -85,3 +85,9 @@ class TeamAgentException(AppBaseException):
 
 class TeamAgentNotFoundException(DatasourceException):
     pass
+
+class ApiKeyException(AppBaseException):
+    pass
+
+class ApiKeyNotFoundException(DatasourceException):
+    pass

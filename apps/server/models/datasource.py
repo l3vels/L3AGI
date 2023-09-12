@@ -31,7 +31,7 @@ class DatasourceModel(BaseModel):
     description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
     is_system = Column(Boolean, default=False)
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) #gonna use if need store datasources based on game, project or any
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True)
     account_id = Column(UUID, nullable=True)
 
     
