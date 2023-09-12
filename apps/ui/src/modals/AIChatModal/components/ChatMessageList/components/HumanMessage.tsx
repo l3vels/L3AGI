@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import UploadedFile from 'components/UploadedFile'
 
@@ -9,6 +8,7 @@ import HumanMessageText from './HumanMessageText'
 
 import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -36,7 +36,7 @@ const HumanMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+          <AvatarGenerator name={authorName} size={50} />
         </StyledAvatarWrapper>
 
         <StyledMainContent>

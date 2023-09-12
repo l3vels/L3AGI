@@ -170,6 +170,7 @@ const ChatMessageListV2 = ({
                       />
                     ) : (
                       <AiReply
+                        author={chat.parent?.agent?.name}
                         avatarImg={l3}
                         messageText={chat.parent.message.data.content}
                         thoughts={chat.parent.thoughts}
