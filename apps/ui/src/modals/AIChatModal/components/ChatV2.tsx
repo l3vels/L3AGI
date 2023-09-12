@@ -68,6 +68,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const { data: chatMessages } = useChatMessagesService({
     isPrivateChat: isPrivate,
     agentId,
+    teamId,
   })
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
@@ -101,6 +102,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
     upsertChatMessageInCache(message, isPrivate, {
       agentId,
+      teamId,
     })
 
     return message

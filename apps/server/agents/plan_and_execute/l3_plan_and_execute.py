@@ -15,7 +15,6 @@ from memory.zep import ZepMemory
 from config import Config
 from utils.agent import convert_model_to_response
 from utils.system_message import SystemMessageBuilder
-from tools.base import BaseTool
 from models.datasource import DatasourceModel
 from models.agent import AgentModel
 from models.team import TeamModel
@@ -58,7 +57,7 @@ class L3PlanAndExecute(L3Base):
 
             data = {
                 "type": "CHAT_MESSAGE_ADDED",
-                "from": self.user.id,
+                "from": str(self.user.id),
                 "chat_message": updated_message,
                 "is_private_chat": is_private_chat,
             }
