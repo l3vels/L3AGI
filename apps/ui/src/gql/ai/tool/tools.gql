@@ -5,6 +5,7 @@ query GetTools @api(name: "ai") {
     is_system
     name
     description
+    slug
     fields {
       label
       key

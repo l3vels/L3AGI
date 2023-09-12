@@ -44,6 +44,7 @@ def get_all_tools():
                 "is_system": True,
                 "is_active": toolkit.is_active,
                 "name": toolkit.name,
+                "slug": toolkit.slug,
                 "description": toolkit.description,
                 "fields": [
                     {

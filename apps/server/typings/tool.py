@@ -25,6 +25,7 @@ class ToolOutput(BaseModel):
     is_system: bool
     name: str
     description: str
+    slug: str
     fields: List[ToolFieldOutput]
     tools: List[SingleToolOutput]
 

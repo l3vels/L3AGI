@@ -55,6 +55,7 @@ class BaseToolkit(BaseModel):
     toolkit_id: str
     name: str
     description: str
+    slug: str
     is_active: bool = Field(default=True)
 
     def get_tools_with_configs(self, db, account) -> List[BaseTool]:
