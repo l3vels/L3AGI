@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import About from '@l3-lib/ui-core/dist/icons/About'
 import Home from '@l3-lib/ui-core/dist/icons/Home'
+
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Doc from '@l3-lib/ui-core/dist/icons/Doc'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
@@ -13,7 +14,6 @@ import Logs from '@l3-lib/ui-core/dist/icons/Logs'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 import StarVector from 'assets/svgComponents/StarVector'
-import TeamOfAgents from 'pages/TeamOfAgents/TeamOfAgents'
 
 export const defaultData = (path_id?: any) => {
   return [
@@ -48,42 +48,40 @@ export const defaultData = (path_id?: any) => {
       url: '/team-of-agents',
       option: 'link',
       group_name: ['go_to'],
-      icon: <TeamOfAgents />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Tools',
-      url: '/tools',
-      option: 'link',
-      group_name: ['go_to'],
-      icon: <Games />,
-    },
-    {
-      id: uuidv4(),
-      name: 'Teams',
-      url: '/teams',
-      option: 'link',
-      group_name: ['go_to'],
       icon: <Teams />,
     },
     {
       id: uuidv4(),
+      name: 'Toolkits',
+      url: '/toolkits',
+      option: 'link',
+      group_name: ['go_to'],
+      icon: <Games />,
+    },
+    // {
+    //   id: uuidv4(),
+    //   name: 'Teams',
+    //   url: '/teams',
+    //   option: 'link',
+    //   group_name: ['go_to'],
+    //   icon: <Teams />,
+    // },
+
+    {
+      id: uuidv4(),
       name: 'Create agent',
-      modal_name: 'create-agent-modal',
-      modal_title: 'Create agent',
-      url: '',
-      option: 'open-modal',
-      group_name: 'create',
+      url: '/agents/create-agent',
+      option: 'link',
+      group_name: ['go_to'],
       icon: <Players />,
     },
+
     {
       id: uuidv4(),
       name: 'Add datasource',
-      modal_name: 'create-datasource-modal',
-      modal_title: 'Add datasource',
-      url: '',
-      option: 'open-modal',
-      group_name: 'create',
+      url: '/datasources/create-datasource',
+      option: 'link',
+      group_name: ['go_to'],
       icon: <Collection />,
     },
 
@@ -114,14 +112,14 @@ export const defaultData = (path_id?: any) => {
     //   icon: <Contracts />,
     // },
 
-    {
-      id: uuidv4(),
-      name: 'Change Password',
-      url: '/change-password',
-      option: 'modal',
-      group_name: 'go_to',
-      icon: <Players />,
-    },
+    // {
+    //   id: uuidv4(),
+    //   name: 'Change Password',
+    //   url: '/change-password',
+    //   option: 'modal',
+    //   group_name: 'go_to',
+    //   icon: <Players />,
+    // },
     {
       id: uuidv4(),
       name: 'Profile',
