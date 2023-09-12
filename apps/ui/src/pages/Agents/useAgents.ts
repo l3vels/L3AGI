@@ -42,7 +42,7 @@ export const useAgents = () => {
     agent_suggestions: [],
     agent_model_version: '',
     agent_greeting: '',
-    agent_mode_provider: '',
+    agent_mode_provider: 'OpenAI',
     agent_is_memory: true,
   }
 
