@@ -24,7 +24,8 @@ class TeamAgentModel(BaseModel):
     agent_id = Column(UUID, ForeignKey('agent.id'), nullable=False)
     role = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
-    
+    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
+
     team = relationship("TeamModel", back_populates="team_agents")
     agent = relationship("AgentModel", back_populates="team_agents")
     
@@ -49,7 +50,7 @@ class TeamAgentModel(BaseModel):
         """
         db_team_agent = TeamAgentModel(
                          created_by=user.id, 
-                        #  account_id=account.id,
+                         account_id=account.id,
                          )
         cls.update_model_from_input(db_team_agent, team_agent)
         db.session.add(db_team_agent)
@@ -57,6 +58,34 @@ class TeamAgentModel(BaseModel):
         db.session.commit()
         
         return db_team_agent
+    
+    @classmethod
+    def create_team_agents(cls, db, team, team_agents, user, account):
+        """
+        Creates a new team_agent with the provided configuration.
+
+        Args:
+            db: The database object.
+            team_agent_with_config: The object containing the team_agent and configuration details.
+
+        Returns:
+            TeamAgent: The created team_agent.
+
+        """
+        db_team_agents = []
+
+        for team_agent in team_agents:
+            db_team_agent = TeamAgentModel(
+                             created_by=user.id, 
+                             account_id=account.id,
+                             team_id=team.id
+                             )
+            cls.update_model_from_input(db_team_agent, team_agent)
+            db_team_agents.append(db_team_agent)
+
+        db.session.add_all(db_team_agents)
+        db.session.flush()
+        db.session.commit()
        
     @classmethod
     def update_team_agent(cls, db, id, team_agent, user, account):
@@ -136,3 +165,15 @@ class TeamAgentModel(BaseModel):
         db.session.commit()
 
     
+    @classmethod
+    def delete_by_team_id(cls, db, team_id: str, account):
+        team_agents = db.session.query(TeamAgentModel).filter(
+            TeamAgentModel.team_id == team_id, 
+            TeamAgentModel.account_id == account.id, 
+            TeamAgentModel.is_deleted == False
+        ).all()
+        
+        for team_agent in team_agents:
+            db.session.delete(team_agent)
+
+        db.session.commit()

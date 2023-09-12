@@ -17,6 +17,8 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 
   const { data: agents } = useAgentsService()
 
+  const { setFieldValue } = formik
+
   const { agents: selectedAgents } = formik.values
 
   const config = useMemo(
@@ -52,7 +54,7 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
         valueSetter: (params: any) => {
           const { newValue: newAgentId, data } = params
 
-          formik.setFieldValue(`agents[${params.data.id - 1}]`, {
+          setFieldValue(`agents[${params.data.id - 1}]`, {
             role: data.role,
             agent_id: newAgentId,
           })
@@ -64,7 +66,7 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
         flex: 2,
       },
     ],
-    [agents],
+    [agents, setFieldValue],
   )
 
   if (!selectedTeamType) return null
@@ -84,5 +86,3 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 }
 
 export default TeamOfAgentsTable
-
-// style={{ height: '500px', maxHeight: '600px', width: '100%', padding: '40px' }}

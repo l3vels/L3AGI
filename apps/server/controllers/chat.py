@@ -132,7 +132,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 session_id=session_id,
             )
 
-            return plan_and_execute.run(settings, team, tools, prompt, history, body.is_private_chat, human_message['id'])
+            return plan_and_execute.run(settings, team, prompt, history, body.is_private_chat, human_message['id'])
 
         if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
             topic = prompt
@@ -153,7 +153,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,
-                history= history,
+                history=history,
                 is_private_chat=body.is_private_chat
             )
 
@@ -176,7 +176,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,
-                history= history,
+                history=history,
                 is_private_chat=body.is_private_chat
             )
 

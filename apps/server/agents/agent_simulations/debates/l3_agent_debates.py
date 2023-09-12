@@ -5,6 +5,7 @@ from langchain.schema import (
     HumanMessage,
     SystemMessage,
 )
+from fastapi_sqlalchemy import db
 from pubsub_service import PubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent, DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
@@ -16,6 +17,9 @@ from models.team import TeamModel
 from utils.system_message import SystemMessageBuilder
 from utils.agent import convert_model_to_response
 from typings.config import AccountSettings
+from tools.get_tools import get_agent_tools
+from tools.datasources.get_datasource_tools import get_datasource_tools
+from models.datasource import DatasourceModel
 
 azureService = PubSubService()
 
@@ -52,7 +56,13 @@ class L3AgentDebates(L3Base):
         ]
         specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
         return specified_topic
-    
+
+    def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
+        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+        datasource_tools = get_datasource_tools(datasources, settings)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account)
+        return datasource_tools + agent_tools
+
     def run(self,
             topic: str,            
             team: TeamModel, 
@@ -93,7 +103,7 @@ class L3AgentDebates(L3Base):
                 model=ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=agent_with_config.configs.temperature, 
                                  model_name=agent_with_config.configs.model_version 
                                  if agent_with_config.configs.model_version else "gpt-4"),
-                tools=agent_with_config.configs.tools,
+                tools=self.get_tools(agent_with_config, self.settings),
                 top_k_results=2,
             )
             for agent_with_config in agents_with_configs

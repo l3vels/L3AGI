@@ -45,7 +45,7 @@ class TeamModel(BaseModel):
         )
 
     @classmethod
-    def create_team(cls, db, team, user, account):
+    def create_team(cls, db, team: TeamInput, user, account) -> TeamModel:
         """
         Creates a new team with the provided configuration.
 
@@ -69,7 +69,7 @@ class TeamModel(BaseModel):
         return db_team
        
     @classmethod
-    def update_team(cls, db, id, team, user, account):
+    def update_team(cls, db, id, team: TeamInput, user, account):
         """
         Creates a new team with the provided configuration.
 
