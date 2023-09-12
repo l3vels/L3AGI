@@ -10,29 +10,33 @@ type AiMessageThoughtsProps = {
 const AiMessageThoughts = ({ thoughts }: AiMessageThoughtsProps) => {
   return (
     <ol>
-      {thoughts?.map(({ id, title, result, loading }: any) => (
-        <StyledThought key={id}>
-          <Typography
-            value={title}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-            customColor={loading ? '#fff' : '#78db36'}
-          />
+      {thoughts?.map(({ id, title, result, loading }: any, index: number) => {
+        const isLast = index === thoughts.length - 1
 
-          {loading && (
-            <StyledLoaderWrapper>
-              <Loader size={20} />
-            </StyledLoaderWrapper>
-          )}
-          <br />
+        return (
+          <StyledThought key={id}>
+            <Typography
+              value={title}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+              customColor={loading ? '#fff' : '#78db36'}
+            />
 
-          {result && !result.includes('action_input') && (
-            <StyledThoughtResult>
-              <AiMessageMarkdown children={result} />
-            </StyledThoughtResult>
-          )}
-        </StyledThought>
-      ))}
+            {loading && (
+              <StyledLoaderWrapper>
+                <Loader size={20} />
+              </StyledLoaderWrapper>
+            )}
+            <br />
+
+            {result && !result.includes('action_input') && !isLast && (
+              <StyledThoughtResult>
+                <AiMessageMarkdown children={result} />
+              </StyledThoughtResult>
+            )}
+          </StyledThought>
+        )
+      })}
     </ol>
   )
 }
