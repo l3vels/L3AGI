@@ -35,8 +35,16 @@ COMING_SOON = [
     {
         "is_system": True,
         "is_active": False,
-        "name": "Shopify",
-        "description": "Shopify",
+        "name": "Google Analytics",
+        "description": "Google Analytics",
+        "category": DatasourceCategory.APPLICATION,
+        "source_type": DatasourceType.SHOPIFY,
+    },
+    {
+        "is_system": True,
+        "is_active": False,
+        "name": "Firebase",
+        "description": "Firebase",
         "category": DatasourceCategory.APPLICATION,
         "source_type": DatasourceType.SHOPIFY,
     }

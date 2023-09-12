@@ -59,8 +59,6 @@
 </a>
 </p>
 
-
-
 ## ✨ Features
 
 L3AGI provides a comprehensive suite of features to build, manage, and run autonomous AI agents. Here are some of the key features:
@@ -73,12 +71,61 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
 
-- **Datasources**: Connect your AI agents to various data sources for information retrieval and processing. Supported data sources include:
-   - Postgres
-   - MySQL
-   - APIs
-   - Notions
-   - And more...
+
+<table align="center">
+  <tr>
+    <td align="center"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px"><br>Wikipedia</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
+  </tr>
+</table>
+<table align="center">
+  <tr>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="40px" height="40px"><br>Twilio</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="40px" height="40px"><br>Twitter</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/instagram.webp" width="40px" height="40px"><br>Instagram</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/Slack.png" width="40px" height="40px"><br>Slack</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/gmail.png" width="40px" height="40px"><br>Gmail</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/googleCalendar.png" width="40px" height="40px"><br>Google Calendar</td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+- **Data Sources**: Connect your AI agents to various data sources for information retrieval and processing. Supported data sources include:
+  <!-- - ## <img src="./apps/ui/src/assets/images/postgres.png" width="30px" height="30"> Postgres 
+  - ## <img src="./apps/ui/src/assets/images/mySql.png" width="30px" height="30px"> Mysql 
+  - ## <img src="./apps/ui/src/assets/images/file.png" width="30px" height="30px"> Upload Files 
+  - ## <img src="./apps/ui/src/assets/images/web.jpg" width="30" height="30"> Web Page Scrapping 
+  - ## <img src="./apps/ui/src/assets/images/notion.png" width="30" height="30"> Notion 
+  - ## <img src="./apps/ui/src/assets/images/google_analytics.png" width="30" height="30"> Google Analytics 
+  - ## <img src="./apps/ui/src/assets/images/firebase.svg" width="30" height="30"> Firebase -->
+
+
+<table align="center">
+  <tr>
+    <td align="center"><img src="./apps/ui/src/assets/images/postgres.png" width="64px" height="64px"><br>Postgres</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/mySql.png" width="64px" height="64px"><br>Mysql</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/uploadFile.png" width="64px" height="64px"><br>Files</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/web.jpg" width="64px" height="64px"><br>WebPage</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/notion.png" width="64px" height="64px"><br>Notion</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/google_analytics.png" width="64px" height="64px"><br>Google Analytics</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/firebase.svg" width="64px" height="64px"><br>Firebase</td>
+  </tr>
+</table>
+
+
+
+
 
 - **Code Generator**: Generate code snippets automatically to speed up your development process.
 
@@ -95,6 +142,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 ## 🚀 Roadmap [see here](https://github.com/orgs/l3vels/projects/1)
 <br>
+
 
 ## ⚡ Quick Start
 
