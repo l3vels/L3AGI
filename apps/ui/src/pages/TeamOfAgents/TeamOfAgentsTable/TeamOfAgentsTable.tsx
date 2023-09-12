@@ -78,7 +78,13 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 
   return (
     <div>
-      <DataGrid ref={gridRef} data={gridData} columnConfig={config} headerHeight={130} />
+      <DataGrid
+        ref={gridRef}
+        data={gridData}
+        columnConfig={config}
+        headerHeight={130}
+        maxHeight={310}
+      />
     </div>
   )
 }
