@@ -60,22 +60,6 @@
 </p>
 
 
-<!-- <p align="center"><b>Share L3AGI Repository</b></p> -->
-
-
-
-<!-- <p align="center">
-
-<a href="https://twitter.com/intent/tweet?text=Open-source%20framework%20to%20make%20AI%20agents'%20team%20collaboration%20as%20effective%20as%20human%20collaboration.%0A%0Ahttps%3A//github.com/l3vels/L3AGI%0A%23l3vels%20%23l3ai%20%23l3agi%20" target="blank">
-<img src="https://img.shields.io/twitter/follow/l3velsh1?label=Twitter&style=social" alt="Follow l3vels"/></a> 
-<a href="https://www.reddit.com/submit?url=https://github.com/l3vels/L3AGI&title=Check%20this%20GitHub%20repository%20out.%20L3AGI%20-%20Let's%20you%20easily%20build,%20manage%20and%20run%20useful%20autonomous%20AI%20agents.
-" target="blank">
-<img src="https://img.shields.io/twitter/url?label=Reddit&logo=Reddit&style=social&url=https://github.com/l3vels/L3AGI" alt="Share on Reddit"/>
-</a> 
-<a href="mailto:?subject=Check%20this%20GitHub%20repository%20out.&body=L3AGI%20-%20Let%27s%20you%20easily%20build,%20manage%20and%20run%20useful%20autonomous%20AI%20agents.%3A%0Ahttps://github.com/l3vels/L3AGI" target="_blank"><img src="https://img.shields.io/twitter/url?label=Gmail&logo=Gmail&style=social&url=https://github.com/l3vels/L3AGI"/></a> 
-
-
-<hr> -->
 
 ## 🚀 Features
 
@@ -108,6 +92,9 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
 
+
+## 🗺️ Roadmap [see here](https://github.com/orgs/l3vels/projects/1)
+<br>
 
 ## ⚡ Quick Start
 

@@ -42,7 +42,7 @@ export const useAgents = () => {
     agent_suggestions: [],
     agent_model_version: '',
     agent_greeting: '',
-    agent_mode_provider: '',
+    agent_model_provider: '',
     agent_is_memory: true,
   }
 
@@ -60,7 +60,7 @@ export const useAgents = () => {
       agent_instructions: agentById.configs?.instructions,
       agent_datasources: agentById.configs?.datasources,
       agent_model_version: agentById.configs?.model_version,
-      agent_mode_provider: agentById.configs?.mode_provider,
+      agent_model_provider: agentById.configs?.model_provider,
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
     }
@@ -81,7 +81,7 @@ export const useAgents = () => {
         datasources: values.agent_datasources,
         instructions: values.agent_instructions,
         model_version: values.agent_model_version,
-        mode_provider: values.agent_mode_provider,
+        model_provider: values.agent_model_provider,
         is_memory: values.agent_is_memory,
         suggestions: values.agent_suggestions,
         greeting: values.agent_greeting,

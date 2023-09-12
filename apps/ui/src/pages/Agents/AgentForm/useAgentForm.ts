@@ -14,7 +14,7 @@ export const useAgentForm = (formik: any) => {
     })
 
   const modelOptions = providersData
-    ?.filter((item: any) => item.provider === formik?.values?.agent_mode_provider)
+    ?.filter((item: any) => item.provider === formik?.values?.agent_model_provider)
     ?.map((filteredItem: any) => filteredItem.models)[0]
     ?.map((model: any) => {
       return { value: model, label: model }

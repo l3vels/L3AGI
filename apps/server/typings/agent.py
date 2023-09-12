@@ -16,7 +16,7 @@ class ConfigInput(BaseModel):
     constraints: List[str]
     tools: List[str]
     datasources: List[str]
-    mode_provider: str
+    model_provider: str
     model_version: str
     temperature: float
     instructions: List[str]
@@ -34,7 +34,7 @@ class ConfigsOutput(BaseModel):
     constraints: List[str]
     tools: List[str]
     datasources: List[str]
-    mode_provider: str
+    model_provider: str
     model_version: str
     temperature: float
     instructions: List[str]

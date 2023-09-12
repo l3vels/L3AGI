@@ -39,7 +39,7 @@ const AgentView = () => {
   const {
     tools,
     model_version,
-    mode_provider,
+    model_provider,
     goals,
     constraints,
     instructions,
@@ -93,9 +93,9 @@ const AgentView = () => {
                   size={Typography.sizes.lg}
                   customColor={'#FFF'}
                 />
-                {mode_provider && (
+                {model_provider && (
                   <Typography
-                    value={`By ${mode_provider}`}
+                    value={`By ${model_provider}`}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
                     customColor={'rgba(255,255,255,0.6)'}
