@@ -87,6 +87,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               onChange={() => {
                 setFieldValue('agent_model_version', '')
               }}
+              optionSize={'small'}
             />
             <AgentDropdown
               label={'Model Version'}
@@ -94,6 +95,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               setFieldValue={setFieldValue}
               fieldValue={agent_model_version}
               options={modelOptions}
+              optionSize={'small'}
             />
           </StyledCombinedFields>
 
