@@ -38,7 +38,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
       <StyledForm>
         <StyledInputWrapper>
           <FormikTextField name='agent_name' placeholder='Name' label='Name' />
+
           <FormikTextField name='agent_role' placeholder='Role' label='Role' />
+
           <StyledTextareaWrapper>
             <Typography
               value='Description'
@@ -54,13 +56,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               onChange={(value: string) => onTextareaChange('agent_description', value)}
             />
           </StyledTextareaWrapper>
-          <AgentSlider formik={formik} />
-          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
-          <CustomField
-            formik={formik}
-            formikField={'agent_constraints'}
-            placeholder={'Constraint'}
-          />
+
           <AgentDropdown
             isMulti
             label={'Tools'}
@@ -69,6 +65,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             setFieldValue={setFieldValue}
             options={toolOptions}
           />
+
           <AgentDropdown
             isMulti
             label={'Datasource'}
@@ -77,32 +74,45 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             setFieldValue={setFieldValue}
             options={datasourceOptions}
           />
-          <CustomField
-            formik={formik}
-            formikField={'agent_instructions'}
-            placeholder={'Instruction'}
-          />
+
+          <AgentSlider formik={formik} />
+
+          <StyledCombinedFields>
+            <AgentDropdown
+              label={'Mode Provider'}
+              fieldName={'agent_model_provider'}
+              setFieldValue={setFieldValue}
+              fieldValue={agent_model_provider}
+              options={providerOptions}
+              onChange={() => {
+                setFieldValue('agent_model_version', '')
+              }}
+              optionSize={'small'}
+            />
+            <AgentDropdown
+              label={'Model Version'}
+              fieldName={'agent_model_version'}
+              setFieldValue={setFieldValue}
+              fieldValue={agent_model_version}
+              options={modelOptions}
+              optionSize={'small'}
+            />
+          </StyledCombinedFields>
+
+          <StyledCheckboxWrapper>
+            <Checkbox
+              label='Memory'
+              kind='secondary'
+              name='agent_is_memory'
+              checked={agent_is_memory}
+              onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
+            />
+          </StyledCheckboxWrapper>
+
           <CustomField
             formik={formik}
             formikField={'agent_suggestions'}
             placeholder={'Suggestion'}
-          />
-          <AgentDropdown
-            label={'Model Provider'}
-            fieldName={'agent_model_provider'}
-            setFieldValue={setFieldValue}
-            fieldValue={agent_model_provider}
-            options={providerOptions}
-            onChange={() => {
-              setFieldValue('agent_model_version', '')
-            }}
-          />
-          <AgentDropdown
-            label={'Model Version'}
-            fieldName={'agent_model_version'}
-            setFieldValue={setFieldValue}
-            fieldValue={agent_model_version}
-            options={modelOptions}
           />
 
           <StyledTextareaWrapper>
@@ -121,15 +131,19 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
           </StyledTextareaWrapper>
 
-          <StyledCheckboxWrapper>
-            <Checkbox
-              label='Memory'
-              kind='secondary'
-              name='agent_is_memory'
-              checked={agent_is_memory}
-              onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
-            />
-          </StyledCheckboxWrapper>
+          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_instructions'}
+            placeholder={'Instruction'}
+          />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_constraints'}
+            placeholder={'Constraint'}
+          />
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -186,4 +200,12 @@ export const StyledTextareaWrapper = styled.div`
 const StyledCheckboxWrapper = styled.div`
   height: fit-content;
   padding-bottom: 5px;
+`
+const StyledCombinedFields = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
 `

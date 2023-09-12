@@ -173,7 +173,7 @@ const StyledInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
-  margin-top: 50px;
+
   gap: 25px;
 
   width: 100%;

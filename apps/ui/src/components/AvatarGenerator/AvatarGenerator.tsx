@@ -1,9 +1,11 @@
 import Avatar, { ConfigProvider } from 'react-avatar'
+import styled from 'styled-components'
 
 type AvatarGeneratorProps = {
   name: string
   size: number
   isRound?: boolean
+  textSizeRatio?: number
 }
 
 const AVATAR_COLORS = [
@@ -12,12 +14,21 @@ const AVATAR_COLORS = [
   'linear-gradient(180deg, #4CA6F8 0%, #2152F3 100%)',
 ]
 
-const AvatarGenerator = ({ name, size, isRound = true }: AvatarGeneratorProps) => {
+const AvatarGenerator = ({
+  name,
+  size,
+  isRound = true,
+  textSizeRatio = 3,
+}: AvatarGeneratorProps) => {
   return (
     <ConfigProvider colors={AVATAR_COLORS}>
-      <Avatar name={name} size={`${size}`} textSizeRatio={3} round={isRound} />
+      <StyledAvatar name={name} size={`${size}`} textSizeRatio={textSizeRatio} round={isRound} />
     </ConfigProvider>
   )
 }
 
 export default AvatarGenerator
+
+const StyledAvatar = styled(Avatar)`
+  font-family: unset !important;
+`

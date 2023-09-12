@@ -60,7 +60,7 @@ const MainNavigation = () => {
         <span>Marketplace</span>
       </StyledLi>
       <StyledLi
-        isActive={includes(active, 'teamOfAgents')}
+        isActive={includes(active, 'team-of-agents')}
         onClick={() => onHandleClick('/team-of-agents')}
       >
         <StyledIconWrapper>

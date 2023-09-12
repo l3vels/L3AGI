@@ -8,23 +8,26 @@ import {
 } from './HumanReply'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
+
 import AiMessageMarkdown from './AiMessageMarkdown'
 import { ChatMessageVersionEnum } from 'services'
 import { useAiMessage } from './useAiMessage'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 const AiReply = ({
   avatarImg,
   messageText,
   thoughts,
   version,
+  author,
 }: {
   avatarImg: string
   messageText: string
   thoughts?: any[]
   version: ChatMessageVersionEnum
+  author: string
 }) => {
-  const { name } = useAiMessage(version)
+  // const { name } = useAiMessage(version)
 
   return (
     <StyledReplyWrapper>
@@ -33,10 +36,10 @@ const AiReply = ({
       </StyledReplyLineWrapper>
       <StyledReplyInfoWrapper>
         <StyledSmallAvatarWrapper>
-          <Avatar size={Avatar.sizes.XXS} src={avatarImg} type={Avatar.types.IMG} rectangle />
+          <AvatarGenerator name={author} size={16} textSizeRatio={1.5} />
         </StyledSmallAvatarWrapper>
         <Typography
-          value={`@${name}`}
+          value={`@${author}`}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
           customColor={'#FFF'}

@@ -9,7 +9,7 @@ import {
   StyledMessageActionsWrapper,
 } from './HumanMessage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
+
 import AiMessageThoughts from './AiMessageThoughts'
 import { ChatMessageVersionEnum } from 'services'
 
@@ -17,6 +17,7 @@ import MessageActions from './MessageActions'
 
 import AiMessageMarkdown from './AiMessageMarkdown'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type AiMessageProps = {
   author: string
@@ -51,7 +52,7 @@ const AiMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <Avatar size={Avatar.sizes.MEDIUM} src={avatarImg} type={Avatar.types.IMG} rectangle />
+          <AvatarGenerator name={author} size={50} />
         </StyledAvatarWrapper>
         <StyledMainContent>
           <StyledMessageTop>

@@ -223,9 +223,6 @@ const StyledAvatarWrapper = styled.div`
   text-align: center;
   height: fit-content;
 
-  .sb-avatar {
-    font-family: unset !important;
-  }
   :hover {
     .chatButton {
       opacity: 1;
