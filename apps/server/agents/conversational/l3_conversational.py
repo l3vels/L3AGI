@@ -44,13 +44,9 @@ class L3Conversational(L3Base):
         )
 
         memory.human_name = self.user.name
-        memory.ai_name = "AI"
+        memory.ai_name = agent_with_configs.agent.name
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
-
-        system_message = format_system_message(
-            system_message, self.user, self.account
-        )
 
         model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
         temperature = agent_with_configs.configs.temperature
@@ -65,8 +61,6 @@ class L3Conversational(L3Base):
             memory=memory,
             handle_parsing_errors="Check your output and make sure it conforms!",
             agent_kwargs={
-                # "prefix": system_message,
-                # "format_instructions": FORMAT_INSTRUCTIONS,
                 "system_message": system_message,
                 "output_parser": ConvoOutputParser(),
             },

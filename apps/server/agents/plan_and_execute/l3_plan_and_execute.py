@@ -16,12 +16,15 @@ from config import Config
 from utils.agent import convert_model_to_response
 from utils.system_message import SystemMessageBuilder
 from tools.base import BaseTool
+from models.datasource import DatasourceModel
 from models.agent import AgentModel
 from models.team import TeamModel
 from models.team import TeamAgentModel
 from typings.team_agent import TeamAgentRole
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
+from tools.get_tools import get_agent_tools
+from tools.datasources.get_datasource_tools import get_datasource_tools
 
 azure_service = PubSubService()
 
@@ -29,7 +32,13 @@ class L3PlanAndExecute(L3Base):
     thoughts: List[Dict] = []
     ai_message_id: str
 
-    def run(self, settings: AccountSettings, team: TeamModel, tools: List[BaseTool], prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
+    def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
+        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+        datasource_tools = get_datasource_tools(datasources, settings)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account)
+        return datasource_tools + agent_tools
+
+    def run(self, settings: AccountSettings, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
         agents: List[TeamAgentModel] = team.team_agents
         
         planner_agent_with_configs: AgentWithConfigsOutput = None
@@ -69,17 +78,16 @@ class L3PlanAndExecute(L3Base):
 
         planner_llm = ChatOpenAI(openai_api_key=settings.openai_api_key, temperature=planner_agent_with_configs.configs.temperature, model_name=planner_agent_with_configs.configs.model_version)
         planner_system_message = SystemMessageBuilder(planner_agent_with_configs).build()
-        planner_system_message = format_system_message(planner_system_message, self.user, self.account)
         
         planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
 
         executor_llm = ChatOpenAI(openai_api_key=settings.openai_api_key, temperature=executor_agent_with_configs.configs.temperature, model_name=executor_agent_with_configs.configs.model_version)
         executor_system_message = SystemMessageBuilder(executor_agent_with_configs).build()
-        executor_system_message = format_system_message(executor_system_message, self.user, self.account)
-        
+        executor_tools = self.get_tools(executor_agent_with_configs, settings)
+
         executor = initialize_executor(
             executor_llm,
-            tools,
+            executor_tools,
             executor_system_message,
         )
 
