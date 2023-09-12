@@ -35,7 +35,7 @@ export const useEditAgent = () => {
     agent_instructions: agentById?.configs?.instructions,
     agent_datasources: agentById?.configs?.datasources,
     agent_model_version: agentById?.configs?.model_version,
-    agent_mode_provider: agentById?.configs?.mode_provider,
+    agent_model_provider: agentById?.configs?.model_provider,
     agent_suggestions: agentById?.configs?.suggestions,
     agent_greeting: agentById?.configs?.greeting,
   }
@@ -56,7 +56,7 @@ export const useEditAgent = () => {
       datasources: values.agent_datasources,
       instructions: values.agent_instructions,
       model_version: values.agent_model_version,
-      mode_provider: values.agent_mode_provider,
+      model_provider: values.agent_model_provider,
       suggestions: values.agent_suggestions,
       greeting: values.agent_greeting,
     }

@@ -18,8 +18,8 @@ class SerpGoogleSearchTool(BaseTool):
     name = "Serp Google Search"
     
     description = (
-        "A tool for performing a Google search and extracting snippets and webpages."
-        "useful for when you need to answer questions about current events"
+        "This tool performs Google searches and extracts relevant snippets and webpages. "
+        "It's particularly useful for staying updated with current events and finding quick answers to your queries."
     )
 
     args_schema: Type[SerpGoogleSearchSchema] = SerpGoogleSearchSchema

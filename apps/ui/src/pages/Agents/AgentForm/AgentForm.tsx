@@ -19,7 +19,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const { setFieldValue, values } = formik
   const {
     agent_datasources,
-    agent_mode_provider,
+    agent_model_provider,
     agent_model_version,
     agent_description,
     agent_is_memory,
@@ -80,9 +80,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           <StyledCombinedFields>
             <AgentDropdown
               label={'Mode Provider'}
-              fieldName={'agent_mode_provider'}
+              fieldName={'agent_model_provider'}
               setFieldValue={setFieldValue}
-              fieldValue={agent_mode_provider}
+              fieldValue={agent_model_provider}
               options={providerOptions}
               onChange={() => {
                 setFieldValue('agent_model_version', '')
