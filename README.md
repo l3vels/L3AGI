@@ -80,7 +80,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
   - ## <img src="./apps/ui/src/assets/images/firebase.svg" width="30" height="30"> Firebase -->
 
 
-<table align="center" style="border: none;">
+<table align="center" border="0">
   <tr>
     <td align="center"><img src="./apps/ui/src/assets/images/postgres.png" width="64px" height="64px"><br>Postgres</td>
     <td align="center"><img src="./apps/ui/src/assets/images/mySql.png" width="64px" height="64px"><br>Mysql</td>
@@ -98,18 +98,18 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 - **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
 
 
-<table align="center" style="border: none;">
+<table align="center" border="0">
   <tr>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px" style="border: none;"><br>Wikipedia</td>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
-    <td align="center" style="border: none;"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px" border="0"><br>Wikipedia</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
+    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
   </tr>
 </table>
-<table align="center" style="border: none;">
+<table align="center" border="0">
   <tr>
     <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="40px" height="40px"><br>Twilio</td>
     <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="40px" height="40px"><br>Twitter</td>
