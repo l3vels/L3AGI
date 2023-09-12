@@ -86,7 +86,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
     <td align="center"><img src="./apps/ui/src/assets/images/mySql.png" width="64px" height="64px"><br>Mysql</td>
     <td align="center"><img src="./apps/ui/src/assets/images/uploadFile.png" width="64px" height="64px"><br>Files</td>
     <td align="center"><img src="./apps/ui/src/assets/images/web.jpg" width="64px" height="64px"><br>WebPage</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/notion.png" width="64px" height="64px"><br>Notion</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/notionLogo.png" width="64px" height="64px"><br>Notion</td>
     <td align="center"><img src="./apps/ui/src/assets/images/google_analytics.png" width="64px" height="64px"><br>Google Analytics</td>
     <td align="center"><img src="./apps/ui/src/assets/images/firebase.svg" width="64px" height="64px"><br>Firebase</td>
   </tr>
