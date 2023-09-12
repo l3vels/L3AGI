@@ -44,6 +44,8 @@ const AgentView = () => {
     instructions,
     temperature,
     datasources,
+    suggestions,
+    greeting,
   } = configs
 
   return (
@@ -149,6 +151,15 @@ const AgentView = () => {
                 }
               />
             )}
+            {suggestions.length > 0 && (
+              <AdditionalInfoBox
+                items={suggestions}
+                title={
+                  suggestions.length === 1 ? '1 Suggestion' : `${suggestions.length} Suggestions`
+                }
+              />
+            )}
+            {greeting.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>
