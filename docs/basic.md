@@ -43,7 +43,15 @@ The building blocks of L3AGI, AI Agents can function independently or as part of
   - **Name**: A unique identifier for the agent.
   - **Role**: Denotes the primary function or purpose of the agent.
   - **Goals**: What the agent aims to achieve.
-  ... [And so on for other fields]
+  - **Constraints**: Limitations or restrictions the agent needs to adhere to.
+  - **Tools**: The set of tools or utilities the agent uses to perform its tasks.
+  - **Datasources**: The sources of data or information the agent can access.
+  - **Model Provider**: The provider of the AI model that the agent uses.
+  - **Model Version**: The version of the AI model that the agent uses.
+  - **Temperature**: A parameter that influences the randomness of the agent's outputs.
+  - **Instructions**: Specific directives or commands given to the agent.
+  - **Suggestions**: Optional recommendations or advice for the agent.
+  - **Greeting**: An optional greeting message that the agent can use.
 
 ---
 
