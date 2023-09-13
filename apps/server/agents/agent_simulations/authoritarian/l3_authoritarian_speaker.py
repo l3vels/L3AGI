@@ -7,10 +7,10 @@ from langchain.schema import (
 )
 import functools
 from fastapi_sqlalchemy import db
-from pubsub_service import PubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import DirectorDialogueAgentWithTools
+from services.pubsub import ChatPubSubService
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
 from models.team import TeamModel
@@ -22,14 +22,12 @@ from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
 
-azureService = PubSubService()
-
-# os.environ["LANGCHAIN_TRACING"] = "false"
 
 class L3AuthoritarianSpeaker(L3Base):
     def __init__(
         self,
         settings: AccountSettings,
+        chat_pubsub_service: ChatPubSubService,
         user,
         account,
         session_id,
@@ -40,6 +38,7 @@ class L3AuthoritarianSpeaker(L3Base):
         self.word_limit = word_limit    
         self.stopping_probability = stopping_probability
         self.settings = settings
+        self.chat_pubsub_service = chat_pubsub_service
     
     def select_next_speaker(
             self, step: int, agents: List[DialogueAgentWithTools], director: DirectorDialogueAgentWithTools
@@ -177,12 +176,8 @@ class L3AuthoritarianSpeaker(L3Base):
 
                 ai_message = history.create_ai_message(res)
 
-                azureService.send_to_group(self.session_id, message={
-                    'type': 'CHAT_MESSAGE_ADDED',
-                    'from': str(self.user.id),
-                    'chat_message': ai_message,
-                    'is_private_chat': is_private_chat,
-                })
+                self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+
                 print(f"({name}): {message}")
                 print("\n")
                 if director.stop:

@@ -10,10 +10,6 @@ from langchain_experimental.plan_and_execute.schema import (
     ListStepContainer,
 )
 
-from pubsub_service import PubSubService
-
-azure_service = PubSubService()
-
 
 class PlanAndExecute(Chain):
     planner: BasePlanner

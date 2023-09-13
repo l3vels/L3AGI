@@ -6,7 +6,7 @@ from langchain.schema import (
     SystemMessage,
 )
 from fastapi_sqlalchemy import db
-from pubsub_service import PubSubService
+from services.pubsub import ChatPubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent, DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 
@@ -21,12 +21,11 @@ from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
 
-azureService = PubSubService()
-
 class L3AgentDebates(L3Base):
     def __init__(
         self,
         settings: AccountSettings,
+        chat_pubsub_service: ChatPubSubService,
         user,
         account,
         session_id,     
@@ -35,6 +34,7 @@ class L3AgentDebates(L3Base):
         super().__init__(user=user, account=account, session_id=session_id)
         self.word_limit = word_limit
         self.settings = settings
+        self.chat_pubsub_service = chat_pubsub_service
  
     def select_next_speaker(self, step: int, agents: List[DialogueAgent]) -> int:
         idx = (step) % len(agents)
@@ -126,12 +126,8 @@ class L3AgentDebates(L3Base):
 
             ai_message = history.create_ai_message(db_message)
 
-            azureService.send_to_group(self.session_id, message={
-                'type': 'CHAT_MESSAGE_ADDED',
-                'from': str(self.user.id),
-                'chat_message': ai_message,
-                'is_private_chat': is_private_chat,
-            })
+            self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+
             print(f"({name}): {message}")
             print("\n")
             n += 1

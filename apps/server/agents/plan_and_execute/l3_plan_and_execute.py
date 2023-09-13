@@ -4,7 +4,6 @@ from fastapi_sqlalchemy import db
 from openai.error import RateLimitError
 import sentry_sdk
 
-from pubsub_service import PubSubService
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
 from system_message import format_system_message
@@ -24,8 +23,8 @@ from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
+from services.pubsub import ChatPubSubService
 
-azure_service = PubSubService()
 
 class L3PlanAndExecute(L3Base):
     thoughts: List[Dict] = []
@@ -37,7 +36,7 @@ class L3PlanAndExecute(L3Base):
         agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account)
         return datasource_tools + agent_tools
 
-    def run(self, settings: AccountSettings, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
+    def run(self, settings: AccountSettings, chat_pubsub_service: ChatPubSubService, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
         agents: List[TeamAgentModel] = team.team_agents
         
         planner_agent_with_configs: AgentWithConfigsOutput = None
@@ -54,15 +53,7 @@ class L3PlanAndExecute(L3Base):
 
         def on_thoughts(thoughts: List[Dict]):
             updated_message = history.update_thoughts(ai_message_id, thoughts)
-
-            data = {
-                "type": "CHAT_MESSAGE_ADDED",
-                "from": str(self.user.id),
-                "chat_message": updated_message,
-                "is_private_chat": is_private_chat,
-            }
-
-            azure_service.send_to_group(self.session_id, data)
+            chat_pubsub_service.send_chat_message(chat_message=updated_message)
 
         memory = ZepMemory(
             session_id=self.session_id,
