@@ -6,6 +6,7 @@ from langchain.schema import (
 from uuid import UUID
 from typing import List, Callable
 from typings.agent import AgentWithConfigsOutput
+from agents.handle_agent_errors import handle_agent_error
 
 class DialogueAgent:
     def __init__(
@@ -70,12 +71,14 @@ class DialogueSimulator:
         # increment time
         self._step += 1
 
-    def step(self) -> tuple[str, UUID, str]:
-        try:
-            # 1. choose the next speaker
-            speaker_idx = self.select_next_speaker(self._step, self.agents)
-            speaker = self.agents[speaker_idx]
+    def step(self) -> tuple[UUID, str]:
+        message: str
 
+        # 1. choose next speaker
+        speaker_idx = self.select_next_speaker(self._step, self.agents)
+        speaker = self.agents[speaker_idx]
+
+        try:
             # 2. next speaker sends message
             message = speaker.send()
 
@@ -85,12 +88,8 @@ class DialogueSimulator:
 
             # 4. increment time
             self._step += 1
-
-            
-            # return speaker.name, message
-            return speaker.agent_with_configs.agent.id, message
-        except Exception as e:
-            print(e)
-            #todo return error as message
+        except Exception as err:
+            message = handle_agent_error(err)
             self._step += 1
-    
+
+        return speaker.agent_with_configs.agent.id, message

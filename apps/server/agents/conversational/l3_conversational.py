@@ -1,20 +1,15 @@
-import os
-from typing import Optional
 from langchain.agents import initialize_agent, AgentType
 from langchain.chat_models import ChatOpenAI
 from postgres import PostgresChatMessageHistory
 from memory.zep import ZepMemory
 from services.pubsub import ChatPubSubService
 from l3_base import L3Base
-from openai.error import RateLimitError, AuthenticationError, Timeout as TimeoutError, ServiceUnavailableError
-import sentry_sdk
 from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
 from utils.system_message import SystemMessageBuilder
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from exceptions import ToolEnvKeyException
-from agents.handle_agent_errors import handle_agent_errors
+from agents.handle_agent_errors import handle_agent_error
 
 class L3Conversational(L3Base):
     def run(
@@ -58,8 +53,14 @@ class L3Conversational(L3Base):
             },
         )
 
-        res = handle_agent_errors(agent, prompt)
 
+        res: str
+
+        try:
+            res = agent.run(prompt)
+        except Exception as err:
+            res = handle_agent_error(err)
+        
         ai_message = history.create_ai_message(res, human_message_id)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 

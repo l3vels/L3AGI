@@ -22,7 +22,7 @@ from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from services.pubsub import ChatPubSubService
-from agents.handle_agent_errors import handle_agent_errors
+from agents.handle_agent_errors import handle_agent_error
 from exceptions import PlannerEmptyTasksException
 
 class L3PlanAndExecute(L3Base):
@@ -85,12 +85,15 @@ class L3PlanAndExecute(L3Base):
 
         agent = PlanAndExecute(planner=planner, executor=executor, on_thoughts=on_thoughts)
 
-        res, is_success = handle_agent_errors(agent, {
-            "input": prompt,
-            "chat_history": memory.load_memory_variables({})['chat_history'],
-        })
+        res: str
 
-        if not is_success:
+        try:
+            res = agent.run({
+                "input": prompt,
+                "chat_history": memory.load_memory_variables({})['chat_history'],
+            })
+        except Exception as err:
+            res = handle_agent_error(err)
             history.delete_message(ai_message_id)
             ai_message = history.create_ai_message(res)
             chat_pubsub_service.send_chat_message(chat_message=ai_message)

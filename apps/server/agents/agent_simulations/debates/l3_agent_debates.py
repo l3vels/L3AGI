@@ -20,6 +20,7 @@ from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
+from agents.handle_agent_errors import handle_agent_error
 
 class L3AgentDebates(L3Base):
     def __init__(
@@ -101,11 +102,10 @@ class L3AgentDebates(L3Base):
         simulator = DialogueSimulator(agents=dialogue_agents, selection_function=self.select_next_speaker)
         simulator.reset()
         simulator.inject("Moderator", specified_topic)
-        print(f"(Moderator): {specified_topic}")
-        print("\n")
 
         while n < max_iters:
             agent_id, message = simulator.step()
             ai_message = history.create_ai_message(message, None, agent_id)
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
             n += 1
+ 

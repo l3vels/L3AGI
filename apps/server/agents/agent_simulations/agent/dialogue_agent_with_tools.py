@@ -42,6 +42,7 @@ class DialogueAgentWithTools(DialogueAgent):
                 memory_key="chat_history", return_messages=True
             ),
         )
+
         message = AIMessage(
             content=agent_chain.run(
                 input="\n".join(

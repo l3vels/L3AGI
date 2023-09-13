@@ -139,19 +139,11 @@ class L3AuthoritarianSpeaker(L3Base):
         )
         simulator.reset()
         simulator.inject("Audience member", specified_topic)
-        print(f"(Audience member): {specified_topic}")
-        print("\n")
-
 
         while True:
-            try:
-                agent_id, message = simulator.step()
-                ai_message = history.create_ai_message(message, None, agent_id)
-                self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+            agent_id, message = simulator.step()
+            ai_message = history.create_ai_message(message, None, agent_id)
+            self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
-                if director.stop:
-                    break
-            except Exception as e:
-                print(e)
-                #todo return error as message
-                self._step += 1
+            if director.stop:
+                break
