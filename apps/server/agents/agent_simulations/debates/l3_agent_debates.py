@@ -71,24 +71,6 @@ class L3AgentDebates(L3Base):
             history: PostgresChatMessageHistory,
             is_private_chat: bool):
         names = [agent_with_config.agent.name for agent_with_config in agents_with_configs]
-
-        # conversation_description = f"""Here is the topic of conversation: {topic}
-        # The participants are: {', '.join(names)}"""
-        
-
-        
-        # system_message = SystemMessageBuilder(agent_with_configs).build()
-
-
-        # agent_descriptions = {
-        #     agent['name']: self.generate_agent_description(agent['name'], conversation_description) for agent in agent_summaries
-        # }
-
-        # agent_system_messages = {
-        #     agent['name']: self.generate_system_message(agent['name'], description, agent['tools'], conversation_description)
-        #     for agent, description in zip(agent_summaries, agent_descriptions.values())
-        # }
-        
         
         specified_topic= self.generate_specified_prompt(topic, names)
 
@@ -127,44 +109,3 @@ class L3AgentDebates(L3Base):
             ai_message = history.create_ai_message(message, None, agent_id)
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
             n += 1
-
-
-    # self.agent_descriptor_system_message = SystemMessage(
-    #     content="You can add detail to the description of the conversation participant."
-    # )
-        
-    # def generate_agent_description(self, name, conversation_description):
-    #     agent_specifier_prompt = [
-    #         self.agent_descriptor_system_message,
-    #         HumanMessage(
-    #             content=f"""{conversation_description}
-    #             Please reply with a creative description of {name}, in {self.word_limit} words or less. 
-    #             Speak directly to {name}.
-    #             Give them a point of view.
-    #             Do not add anything else."""
-    #         ),
-    #     ]
-    #     agent_description = ChatOpenAI(temperature=1.0, model_name="gpt-4")(agent_specifier_prompt).content
-    #     return agent_description
-
-    # def generate_system_message(self, name, description, tools, conversation_description):
-    #         return f"""{conversation_description}
-            
-    #     Your name is {name}.
-
-    #     Your description is as follows: {description}
-
-    #     Your goal is to persuade your conversation partner of your point of view.
-
-    #     DO look up information with your tool to refute your partner's claims.
-    #     DO cite your sources.
-        
-    #     Analyse chat history and DO NOT repeat the same things.
-
-    #     DO NOT fabricate fake citations.
-    #     DO NOT cite any source that you did not look up.
-
-    #     Do not add anything else.
-
-    #     Stop speaking the moment you finish speaking from your perspective.
-    #     """
