@@ -33,7 +33,6 @@ There are different types of teams tailored to different collaborative scenarios
     - **Description**: This is a scenario where no specific agent has control, but each agent contributes to the conversation based on its expertise or role.
     - **Roles**: Varies based on configuration.
 
-We would like to thank the LangChain community for their valuable resources and continuous support.
 
 ### Creating a Team of Agents
 
