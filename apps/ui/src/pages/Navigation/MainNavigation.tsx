@@ -40,6 +40,15 @@ const MainNavigation = () => {
         <span>Agents</span>
       </StyledLi>
       <StyledLi
+        isActive={includes(active, 'team-of-agents')}
+        onClick={() => onHandleClick('/team-of-agents')}
+      >
+        <StyledIconWrapper>
+          <Team size={30} />
+        </StyledIconWrapper>
+        <span>Team of AGI</span>
+      </StyledLi>
+      <StyledLi
         isActive={includes(active, 'datasources')}
         onClick={() => onHandleClick('/datasources')}
       >
@@ -51,23 +60,15 @@ const MainNavigation = () => {
         <span>Toolkits</span>
       </StyledLi>
       <StyledLi
-        isActive={includes(active, 'marketplace')}
-        onClick={() => onHandleClick('/marketplace')}
+        isActive={includes(active, 'discover')}
+        onClick={() => onHandleClick('/discover')}
       >
         <StyledIconWrapper>
           <Dashboard size={30} />
         </StyledIconWrapper>
-        <span>Marketplace</span>
+        <span>Discover</span>
       </StyledLi>
-      <StyledLi
-        isActive={includes(active, 'team-of-agents')}
-        onClick={() => onHandleClick('/team-of-agents')}
-      >
-        <StyledIconWrapper>
-          <Team size={30} />
-        </StyledIconWrapper>
-        <span>Team of AGI</span>
-      </StyledLi>
+
     </StyledUl>
   )
 }

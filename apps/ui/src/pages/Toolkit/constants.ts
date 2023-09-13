@@ -30,7 +30,7 @@ export const toolLogos = [
     toolName: 'ArXiv Toolkit',
   },
   {
-    logoSrc: 'https://graphql-engine-cdn.hasura.io/assets/main-site/marketplace/openweather.svg',
+    logoSrc: 'https://graphql-engine-cdn.hasura.io/assets/main-site/discover/openweather.svg',
     toolName: 'OpenWeatherMap Toolkit',
   },
   {

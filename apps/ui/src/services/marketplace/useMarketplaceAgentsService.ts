@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
-import marketplaceAgentsGql from '../../gql/ai/marketplace/marketplaceAgents.gql'
+import discoverAgentsGql from '../../gql/ai/discover/discoverAgents.gql'
 
-export const useMarketplaceAgentsService = () => {
-  const { data, error, loading, refetch } = useQuery(marketplaceAgentsGql)
+export const useDiscoverAgentsService = () => {
+  const { data, error, loading, refetch } = useQuery(discoverAgentsGql)
 
   return {
-    data: data?.getMarketplaceAgents || [],
+    data: data?.getDiscoverAgents || [],
     error,
     loading,
     refetch,

@@ -55,7 +55,7 @@ import EditDatasourceModal from 'modals/EditDatasourceModal'
 import Datasource from 'pages/Datasource'
 import TeamOfAgents from 'pages/TeamOfAgents'
 import Agents from 'pages/Agents'
-import Marketplace from 'pages/Marketplace'
+import Discover from 'pages/Discover'
 import AgentView from 'pages/Agents/AgentView'
 
 import CreateAgentForm from 'pages/Agents/AgentForm/CreateAgentForm'
@@ -93,7 +93,7 @@ const Route = () => {
             </Router>
 
             <Router element={<MainRouteLayout />}>
-              <Router path='/marketplace' element={<Marketplace />} key={document.location.href} />
+              <Router path='/discover' element={<Discover />} key={document.location.href} />
 
               {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
               {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
