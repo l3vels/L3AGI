@@ -27,7 +27,7 @@ class TeamOutput(BaseModel):
     team_type: str
     workspace_id: Optional[UUID4] 
     is_deleted: bool
-    is_system: bool
+    is_public: bool
     is_template: bool
     account_id: UUID4
     created_by: Optional[UUID4]

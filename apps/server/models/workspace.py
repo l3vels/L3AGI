@@ -19,7 +19,7 @@ class WorkspaceModel(BaseModel):
         description (str): Description of the project.
         is_deleted (bool): Flag indicating if the project has been soft-deleted.
         account_id (UUID): ID of the account associated with the workspace.
-        is_system (bool): Flag indicating if the project is a system workspace.
+        is_public (bool): Flag indicating if the project is a system workspace.
     """
     __tablename__ = 'workspace'
 
@@ -28,7 +28,7 @@ class WorkspaceModel(BaseModel):
     source_type = Column(String) # Later add as Enum
     description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
-    is_system = Column(Boolean, default=False)
+    is_public = Column(Boolean, default=False)
     account_id = Column(UUID, nullable=True)
     
     

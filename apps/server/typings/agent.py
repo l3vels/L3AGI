@@ -52,7 +52,7 @@ class AgentResponse(BaseModel):
     role: str
     is_template: bool
     is_deleted: bool
-    is_system: bool
+    is_public: bool
     account_id: UUID4
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]

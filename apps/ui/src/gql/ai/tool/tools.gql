@@ -2,7 +2,7 @@ query GetTools @api(name: "ai") {
   getTools @rest(type: "Tool", path: "/tool", method: "GET", endpoint: "ai") {
     toolkit_id
     is_active
-    is_system
+    is_public
     name
     description
     slug

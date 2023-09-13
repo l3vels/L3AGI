@@ -23,7 +23,7 @@ class ApiKeyModel(BaseModel):
         is_template (bool): Flag indicating if the api_key is a template.
         user_id (UUID): ID of the user associated with the api_key.
         account_id (UUID): ID of the account associated with the api_key.
-        is_system (bool): Flag indicating if the api_key is a system api_key.
+        is_public (bool): Flag indicating if the api_key is a system api_key.
     """
     __tablename__ = 'api_key'
 

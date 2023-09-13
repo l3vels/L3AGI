@@ -22,7 +22,7 @@ class AgentModel(BaseModel):
         is_template (bool): Flag indicating if the agent is a template.
         user_id (UUID): ID of the user associated with the agent.
         account_id (UUID): ID of the account associated with the agent.
-        is_system (bool): Flag indicating if the agent is a system agent.
+        is_public (bool): Flag indicating if the agent is a system agent.
         configs: Relationship with agent configurations.
     """
     __tablename__ = 'agent'
@@ -38,7 +38,7 @@ class AgentModel(BaseModel):
     is_memory = Column(Boolean, default=True)
     avatar = Column(String)
     account_id = Column(UUID, nullable=True)    
-    is_system = Column(Boolean, default=False)
+    is_public = Column(Boolean, default=False)
     
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
     chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete")
@@ -49,7 +49,7 @@ class AgentModel(BaseModel):
             f"Agent(id={self.id}, "
             f"name='{self.name}', role='{self.role}', description='{self.description}', "
             f"is_deleted={self.is_deleted}, is_template={self.is_template}, user_id={self.created_by}, "
-            f"account_id={self.account_id}, is_system={self.is_system})"
+            f"account_id={self.account_id}, is_public={self.is_public})"
         )
 
     @classmethod
@@ -139,7 +139,7 @@ class AgentModel(BaseModel):
             db.session.query(AgentModel)
             .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
-                    AgentModel.is_system == True)
+                    AgentModel.is_public == True)
             .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .all()
         )

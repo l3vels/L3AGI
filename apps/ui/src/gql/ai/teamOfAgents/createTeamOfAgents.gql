@@ -14,7 +14,7 @@ mutation createTeamOfAgents($input: input!) @api(name: ai) {
     workspace_id
     is_deleted
     is_template
-    is_system
+    is_public
     account_id
     created_by
     modified_by

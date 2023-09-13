@@ -41,7 +41,7 @@ def get_all_tools():
         result.append(
             {
                 "toolkit_id": toolkit.toolkit_id,
-                "is_system": True,
+                "is_public": True,
                 "is_active": toolkit.is_active,
                 "name": toolkit.name,
                 "slug": toolkit.slug,
