@@ -35,8 +35,8 @@ const TeamOfAgentCard = ({
   onChatClick,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description
-  if (description.length > 95) {
-    shortDescription = `${description.slice(0, 95)}...`
+  if (description.length > 40) {
+    shortDescription = `${description.slice(0, 40)}...`
   }
 
   return (
