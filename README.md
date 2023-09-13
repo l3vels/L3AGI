@@ -176,6 +176,15 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 └── docker-compose.yml # Main Docker Compose File
 ```
 
+## L3AGI Architecture
+<details>
+  <summary>Database Schema!</summary>
+  
+  ![DB ERD](docs/assets/ERD.jpg)
+</details>
+
+<br/>
+
 ## Troubleshooting
 
 - If you encounter issues when starting the services, ensure Docker and Docker Compose are installed and up to date.
