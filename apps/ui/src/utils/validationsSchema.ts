@@ -17,3 +17,11 @@ export const administrationValidation = yup.object().shape({
     .email('Invalid email')
     .required('Please use a valid email format. Example - user@l3agi.com'),
 })
+
+export const agentValidationSchema = yup.object().shape({
+  agent_name: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Please enter name'),
+})
+
+export const datasourceValidationSchema = yup.object().shape({
+  agent_name: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Please enter name'),
+})

@@ -17,7 +17,7 @@ import styled from 'styled-components'
 import BackButton from 'components/BackButton'
 
 const CreateAgentForm = () => {
-  const { formik, handleSubmit, isLoading } = useAgents()
+  const { formik, isLoading } = useAgents()
 
   return (
     <FormikProvider value={formik}>
@@ -32,11 +32,7 @@ const CreateAgentForm = () => {
 
           <StyledButtonWrapper>
             <BackButton />
-            <Button
-              onClick={() => handleSubmit(formik?.values)}
-              disabled={isLoading}
-              size={Button.sizes.SMALL}
-            >
+            <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
               {isLoading ? <Loader size={32} /> : 'Save'}
             </Button>
           </StyledButtonWrapper>
