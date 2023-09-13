@@ -58,72 +58,68 @@
 </a>
 </p>
 
+Of course! Here's the revised "Features" section with the requested emojis and in its entirety:
+
+---
+
 ## ✨ Features
 
-L3AGI provides a comprehensive suite of features to build, manage, and run autonomous AI agents. Here are some of the key features:
+L3AGI offers a robust set of functionalities that empower you to design, supervise, and execute both autonomous AI agents and Teams of Agents. Here's what sets us apart:
 
-- **Autonomous AI Agents**: Create and manage individual AI agents with autonomy.
+- **🤖 Team of Agents**: L3AGI pioneers in facilitating the creation and management of Teams of AI Agents. These are groups of individual AI agents that collaborate seamlessly for more complex tasks and simulations.
 
-- **Team Collaboration**: Build teams of AI agents that can work together effectively.
+- **🔧 Autonomous AI Agents**: Design and oversee standalone AI agents that act autonomously based on their configuration.
 
-- **Agent Memory**: Equip your AI agents with memory capabilities for retaining and recalling information.
+- **🧠 Agent Memory**: Equip your AI agents with the ability to retain and recall information, enabling them to make more informed decisions.
 
-- **Data Sources**: Connect your AI agents to various data sources for information retrieval and processing. Supported data sources include:
-  <!-- - ## <img src="./apps/ui/src/assets/images/postgres.png" width="30px" height="30"> Postgres
-  - ## <img src="./apps/ui/src/assets/images/mySql.png" width="30px" height="30px"> Mysql
-  - ## <img src="./apps/ui/src/assets/images/file.png" width="30px" height="30px"> Upload Files
-  - ## <img src="./apps/ui/src/assets/images/web.jpg" width="30" height="30"> Web Page Scrapping
-  - ## <img src="./apps/ui/src/assets/images/notion.png" width="30" height="30"> Notion
-  - ## <img src="./apps/ui/src/assets/images/google_analytics.png" width="30" height="30"> Google Analytics
-  - ## <img src="./apps/ui/src/assets/images/firebase.svg" width="30" height="30"> Firebase -->
+- **🔗 Data Sources & Integration**: 
+  - Connect your AI agents to an array of data sources for efficient information retrieval and processing.
+  - Integrate VectorDBs for enhanced data management and querying capabilities.
+  - Employ the LlamaIndex (GPT Index) to boost the data framework for your LLM application.
 
 <table align="center" border="0">
   <tr>
-    <td align="center"><img src="./apps/ui/src/assets/images/postgres.png" width="64px" height="64px"><br>Postgres</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/mySql.png" width="64px" height="64px"><br>Mysql</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/uploadFile.png" width="64px" height="64px"><br>Files</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/web_black.png" width="64px" height="64px"><br>WebPage</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/notionLogo.png" width="64px" height="64px"><br>Notion</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/google_analytics.png" width="64px" height="64px"><br>Google Analytics</td>
-    <td align="center"><img src="./apps/ui/src/assets/images/firebase.svg" width="64px" height="64px"><br>Firebase</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/postgres.png" width="50px"><br>Postgres</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/mySql.png" width="50px"><br>Mysql</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/uploadFile.png" width="50px"><br>Files</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/web_black.png" width="50px"><br>WebPage</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/notionLogo.png" width="50px"><br>Notion</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/google_analytics.png" width="50px"><br>Google Analytics</td>
+    <td align="center"><img src="./apps/ui/src/assets/images/firebase.svg" width="50px"><br>Firebase</td>
   </tr>
 </table>
 
-- **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
+- **🛠 Toolkits**: Empower your AI agents with our curated sets of tools, tailor-made for specific tasks.
 
 <table align="center" border="0">
   <tr>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/google.png" width="40px" height="40px"><br>SERP</td>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="40px" height="40px"><br>Web Scraper</td>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="40px" height="40px"><br>DuckDuckGo</td>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/bing.png" width="40px" height="40px"><br>Bing Search</td>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="40px" height="40px" border="0"><br>Wikipedia</td>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="40px" height="40px"><br>Arxiv</td>
-    <td align="center" border="0"><img src="./apps/ui/src/assets/tools/openweather.svg" width="40px" height="40px"><br>OpenWeatherMap</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/google.png" width="35px"><br>SERP</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/webscrapping.png" width="35px"><br>Web Scraper</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/DuckDuckGo.png" width="35px"><br>DuckDuckGo</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/bing.png" width="35px"><br>Bing</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/wikipedia.png" width="35px"><br>Wikipedia</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/arxiv.jpeg" width="35px"><br>Arxiv</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/openweather.svg" width="35px"><br>OpenWeather</td>
   </tr>
-</table>
-<table align="center" border="0">
   <tr>
-    <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="40px" height="40px"><br>Twilio</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="40px" height="40px"><br>Twitter</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/instagram.webp" width="40px" height="40px"><br>Instagram</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/slack.png" width="40px" height="40px"><br>Slack</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/gmail.png" width="40px" height="40px"><br>Gmail</td>
-    <td align="center"><img src="./apps/ui/src/assets/tools/googleCalendar.png" width="40px" height="40px"><br>Google Calendar</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="35px"><br>Twilio</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="35px"><br>Twitter</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/instagram.webp" width="35px"><br>Instagram</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/slack.png" width="35px"><br>Slack</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/gmail.png" width="35px"><br>Gmail</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/googleCalendar.png" width="35px"><br>Google Calendar</td>
   </tr>
 </table>
 
-<!-- - **Code Generator**: Generate code snippets automatically to speed up your development process. -->
+- **📊 Chart Generator**: Turn your data into insightful visualizations with our intuitive chart generator.
 
-- **Chart Generator**: Visualize your data effectively with our chart generator.
+- **📄 Report Generator**: Streamline report creation with our user-friendly report generator tool.
 
-- **Report Generator**: Create comprehensive reports with ease using our report generator.
+- **🌐 Community Building**: Engage with a dynamic community to collectively enhance and refine your AI agents.
 
-- **Community Building**: Collaborate with the community to build and improve your AI agents.
+- **🖥 User Interface (UI)**: Utilize our sleek, user-friendly interface for building and managing your AI agents and their teams.
 
-- **User Interface (UI)**: A user-friendly interface to build and manage your AI agents.
-
-- **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
+- **📡 APIs**: Robust APIs ensure smooth integration of L3AGI with other systems and support advanced customizations for your specific needs.
 
 ## 🚀 Roadmap [here](https://github.com/orgs/l3vels/projects/1)
 
