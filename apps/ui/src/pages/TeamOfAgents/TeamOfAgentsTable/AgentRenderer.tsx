@@ -22,7 +22,7 @@ const AgentRenderer = ({ params, options }: AgentRendererProps) => {
     <StyledAgents>
       <Tooltip content={agent.name}>
         <Typography
-          value={agent.name}
+          value={agent.role.length > 0 ? `${agent.name} - ${agent.role}` : agent.name}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
           customColor={'#FFF'}

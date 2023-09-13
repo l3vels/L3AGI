@@ -119,7 +119,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 export default MultiselectEditor
 
 const StyledDiv = styled.div`
-  min-width: 200px;
+  min-width: 350px;
   max-width: 400px;
 `
 const StyledDropDown = styled(Dropdown)`

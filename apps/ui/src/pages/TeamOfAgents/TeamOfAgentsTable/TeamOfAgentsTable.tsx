@@ -47,7 +47,10 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
         cellEditor: MultiselectEditor,
         cellEditorParams: {
           optionsArr: agents.map((agent: any) => ({
-            label: agent.agent.name,
+            label:
+              agent.agent.role.length > 0
+                ? `${agent.agent.name} - ${agent.agent.role}`
+                : agent.agent.name,
             value: agent.agent.id,
           })),
         },
