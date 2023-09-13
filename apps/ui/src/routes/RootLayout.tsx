@@ -15,7 +15,7 @@ const RootLayout = () => {
 
   const outlet = useOutlet()
 
-  // if (!user) return <Navigate to='/marketplace' />
+  // if (!user) return <Navigate to='/discover' />
 
   return (
     <>

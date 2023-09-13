@@ -15,7 +15,7 @@ class DatasourceOutput(BaseModel):
     source_type: str #later enum (web-scrapping, notion, db, and so on)
     workspace_id: Optional[UUID4]
     is_deleted: bool
-    is_system: bool
+    is_public: bool
     account_id: UUID4
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]

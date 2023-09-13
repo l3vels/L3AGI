@@ -5,6 +5,7 @@ from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 class InstagramToolkit(BaseToolkit, ABC):
     name: str = "Instagram Toolkit"
     description: str = "Toolkit containing tools for Instagram"
+    slug: str = "instagram"
     toolkit_id = "5fc51d2a-8681-4674-9554-9a1004443dd3"
 
     is_active = False

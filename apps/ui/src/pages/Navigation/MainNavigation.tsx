@@ -6,7 +6,8 @@ import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Team from '@l3-lib/ui-core/dist/icons/Team'
-import Dashboard from '@l3-lib/ui-core/dist/icons/Dashboard'
+import Launch from '@l3-lib/ui-core/dist/icons/Launch'
+
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
@@ -40,6 +41,15 @@ const MainNavigation = () => {
         <span>Agents</span>
       </StyledLi>
       <StyledLi
+        isActive={includes(active, 'team-of-agents')}
+        onClick={() => onHandleClick('/team-of-agents')}
+      >
+        <StyledIconWrapper>
+          <Team size={30} />
+        </StyledIconWrapper>
+        <span>Team of AGI</span>
+      </StyledLi>
+      <StyledLi
         isActive={includes(active, 'datasources')}
         onClick={() => onHandleClick('/datasources')}
       >
@@ -51,23 +61,15 @@ const MainNavigation = () => {
         <span>Toolkits</span>
       </StyledLi>
       <StyledLi
-        isActive={includes(active, 'marketplace')}
-        onClick={() => onHandleClick('/marketplace')}
+        isActive={includes(active, 'discover')}
+        onClick={() => onHandleClick('/discover')}
       >
         <StyledIconWrapper>
-          <Dashboard size={30} />
+          <Launch size={30} />
         </StyledIconWrapper>
-        <span>Marketplace</span>
+        <span>Discover</span>
       </StyledLi>
-      <StyledLi
-        isActive={includes(active, 'team-of-agents')}
-        onClick={() => onHandleClick('/team-of-agents')}
-      >
-        <StyledIconWrapper>
-          <Team size={30} />
-        </StyledIconWrapper>
-        <span>Team of AGI</span>
-      </StyledLi>
+
     </StyledUl>
   )
 }

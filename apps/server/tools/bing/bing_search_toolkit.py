@@ -6,6 +6,7 @@ from tools.bing.bing_search import BingSearchTool
 class BingSearchToolkit(BaseToolkit, ABC):
     name: str = "Bing Search Toolkit"
     description: str = "Toolkit containing tools for performing Bing search"
+    slug: str = "bing"
     toolkit_id = "505a8bc1-820a-428a-b7a9-1a33807fe172"
 
     def get_tools(self) -> List[BaseTool]:

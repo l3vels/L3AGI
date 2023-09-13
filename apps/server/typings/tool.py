@@ -22,9 +22,10 @@ class SingleToolOutput(BaseModel):
 class ToolOutput(BaseModel):
     toolkit_id: UUID4
     is_active: bool
-    is_system: bool
+    is_public: bool
     name: str
     description: str
+    slug: str
     fields: List[ToolFieldOutput]
     tools: List[SingleToolOutput]
 

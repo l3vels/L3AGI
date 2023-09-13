@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Agents from 'pages/Agents'
 import Datasource from 'pages/Datasource'
 import { AuthContext } from 'contexts'
-import Marketplace from 'pages/Marketplace'
+import Discover from 'pages/Discover'
 import GetStartedCard from './GetStarted/GetStartedCard'
 
 import cardBg4 from 'assets/images/whiteBg.png'
@@ -42,7 +42,7 @@ const Home = () => {
             <Datasource />
           </>
         ) : (
-          <Marketplace />
+          <Discover />
         )}
         {/* 
         <TopCharts />

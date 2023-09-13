@@ -72,7 +72,7 @@ def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfi
     db_agents = AgentModel.get_agents(db=db, account=auth.account)
     return convert_agents_to_agent_list(db_agents)
 
-@router.get("/marketplace", response_model=Dict[str, List[AgentWithConfigsOutput]])
+@router.get("/discover", response_model=Dict[str, List[AgentWithConfigsOutput]])
 def get_template_and_system_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
     template_agents = AgentModel.get_template_agents(db=db)
     system_agents = AgentModel.get_system_agents(db=db)

@@ -21,7 +21,7 @@ class DatasourceModel(BaseModel):
         is_template (bool): Flag indicating if the datasource is a template.
         user_id (UUID): ID of the user associated with the datasource.
         account_id (UUID): ID of the account associated with the datasource.
-        is_system (bool): Flag indicating if the datasource is a system datasource.
+        is_public (bool): Flag indicating if the datasource is a system datasource.
     """
     __tablename__ = 'datasource'
 
@@ -30,7 +30,7 @@ class DatasourceModel(BaseModel):
     source_type = Column(String) # Later add as Enum
     description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False)
-    is_system = Column(Boolean, default=False)
+    is_public = Column(Boolean, default=False)
     workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True)
     account_id = Column(UUID, nullable=True)
 
@@ -39,7 +39,7 @@ class DatasourceModel(BaseModel):
         return (
             f"Datasource(id={self.id}, "
             f"name='{self.name}', source_type='{self.source_type}', description='{self.description}', "
-            f"is_deleted={self.is_deleted}, is_system={self.is_system}, account_id={self.account_id})"
+            f"is_deleted={self.is_deleted}, is_public={self.is_public}, account_id={self.account_id})"
         )
 
     @classmethod

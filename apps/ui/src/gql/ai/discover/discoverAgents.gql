@@ -1,0 +1,13 @@
+query getDiscoverAgents @api(name: "ai") {
+  getDiscoverAgents
+    @rest(type: "Agent", path: "/agent/discover", method: "GET", endpoint: "ai") {
+    templateAgents {
+      agent
+      configs
+    }
+    systemAgents {
+      agent
+      configs
+    }
+  }
+}

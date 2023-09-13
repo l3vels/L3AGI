@@ -6,7 +6,7 @@ query getDatasources @api(name: "ai") {
     source_type
     workspace_id
     is_deleted
-    is_system
+    is_public
     account_id
     created_by
     modified_by

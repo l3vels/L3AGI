@@ -26,7 +26,7 @@ class TeamModel(BaseModel):
     team_type = Column(String) #todo replace as enum (Debates, Plan_Execute, Authoritarian_Speaker, Decentralized_speaker)
     description = Column(String, nullable=True) 
     is_deleted = Column(Boolean, default=False)
-    is_system = Column(Boolean, default=False)
+    is_public = Column(Boolean, default=False)
     is_template = Column(Boolean, default=False)
     workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
     account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
@@ -40,7 +40,7 @@ class TeamModel(BaseModel):
         return (
             f"Team(id={self.id}, "
             f"name='{self.name}', type='{self.team_type}', description='{self.description}', "
-            f"is_deleted={self.is_deleted}, is_system={self.is_system}, is_template={self.is_template}, "
+            f"is_deleted={self.is_deleted}, is_public={self.is_public}, is_template={self.is_template}, "
             f"workspace_id={self.workspace_id}, account_id={self.account_id})"
         )
 
