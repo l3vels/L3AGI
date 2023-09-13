@@ -7,6 +7,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 import { useDeleteAgentByIdService } from 'services/agent/useDeleteAgentByIdService'
+import { agentValidationSchema } from 'utils/validationsSchema'
 
 export const useAgents = () => {
   const { setToast } = useContext(ToastContext)
@@ -96,7 +97,7 @@ export const useAgents = () => {
       navigate('/agents')
     } catch (e) {
       console.log('rrorr', e)
-      navigate('/agents')
+      // navigate('/agents')
 
       setToast({
         message: 'Failed to create Agent!',
@@ -110,7 +111,7 @@ export const useAgents = () => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
-    // validationSchema: gameValidationSchema,
+    validationSchema: agentValidationSchema,
     // enableReinitialize: true,
   })
 

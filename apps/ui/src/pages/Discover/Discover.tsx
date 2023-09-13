@@ -34,6 +34,14 @@ const Discover = () => {
     }
   }
 
+  const handleViewClick = (agentId: string) => {
+    if (!user) {
+      openModal({ name: 'login-modal' })
+    } else {
+      navigate(`/agents/${agentId}`)
+    }
+  }
+
   return (
     <StyledRoot>
       <StyledSectionWrapper>
@@ -55,7 +63,7 @@ const Discover = () => {
                   key={index}
                   name={agent.name}
                   description={agent.description}
-                  onViewClick={() => navigate(`/agents/${agent.id}`)}
+                  onViewClick={() => handleViewClick(agent.id)}
                   onChatClick={() => handleChatClick(agent.id)}
                   headerTag={agent.role}
                 />
@@ -87,7 +95,7 @@ const Discover = () => {
                     key={index}
                     name={agent.name}
                     description={agent.description}
-                    onViewClick={() => navigate(`/agents/${agent.id}`)}
+                    onViewClick={() => handleViewClick(agent.id)}
                     onChatClick={() => handleChatClick(agent.id)}
                     headerTag={agent.role}
                   />

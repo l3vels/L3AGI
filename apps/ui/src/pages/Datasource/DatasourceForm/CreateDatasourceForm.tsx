@@ -17,7 +17,7 @@ import { useCreateDatasource } from '../useCreateDatasource'
 import BackButton from 'components/BackButton'
 
 const CreateDatasourceForm = () => {
-  const { formik, handleSubmit, isLoading } = useCreateDatasource()
+  const { formik, isLoading } = useCreateDatasource()
 
   return (
     <>
@@ -33,11 +33,7 @@ const CreateDatasourceForm = () => {
 
             <StyledButtonWrapper>
               <BackButton />
-              <Button
-                onClick={() => handleSubmit(formik?.values)}
-                size={Button.sizes.SMALL}
-                disabled={isLoading}
-              >
+              <Button onClick={formik?.handleSubmit} size={Button.sizes.SMALL} disabled={isLoading}>
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </Button>
             </StyledButtonWrapper>

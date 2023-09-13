@@ -1,15 +1,25 @@
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
+import Help from '@l3-lib/ui-core/dist/icons/Help'
 
 type DataLoaderCardProps = {
   title: string
   onClick: () => void
   isSelected: boolean
   isActive: boolean
+  onHelpClick?: () => void
 }
 
-const DataLoaderCard = ({ title, onClick, isSelected, isActive }: DataLoaderCardProps) => {
+const DataLoaderCard = ({
+  title,
+  onClick,
+  isSelected,
+  isActive,
+  onHelpClick,
+}: DataLoaderCardProps) => {
   return (
     <StyledDataLoaderCard
       onClick={() => {
@@ -26,6 +36,16 @@ const DataLoaderCard = ({ title, onClick, isSelected, isActive }: DataLoaderCard
         size={Typography.sizes.md}
         customColor={'#FFF'}
       />
+
+      {onHelpClick && (
+        <IconButton
+          onClick={onHelpClick}
+          icon={Help}
+          kind={IconButton.kinds.SECONDARY}
+          // ariaLabel='Help'
+          size={IconButton.sizes.XXS}
+        />
+      )}
     </StyledDataLoaderCard>
   )
 }
@@ -47,6 +67,8 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
   display: flex;
   justify-content: center;
   align-items: center;
+
+  gap: 8px;
 
   cursor: pointer;
 

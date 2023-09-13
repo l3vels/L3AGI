@@ -13,6 +13,8 @@ import UploadButton from './components/UploadButton'
 import DataLoaderCard from './components/DataLoaderCard'
 import FormikTextField from 'components/TextFieldFormik'
 import TeamOfAgentsTable from '../TeamOfAgentsTable'
+import { teamTypeDocs } from './constants'
+import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 
 type TeamOfAgentsFormProps = {
   formik: any
@@ -70,7 +72,9 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             customColor={'#FFF'}
           />
           <StyledCardWrapper>
-            {teamTypes?.map((teamType: any, index: number) => {
+            {teamTypes?.map((teamType: any) => {
+              const docUrl = teamTypeDocs.filter((type: any) => teamType.name === type.name)[0]
+
               return (
                 <DataLoaderCard
                   isSelected={teamType.team_type === teamOfAgents_team_type}
@@ -81,6 +85,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
                     setFieldValue('teamOfAgents_team_type', teamType.team_type)
                     setFieldValue('config_value', '')
                   }}
+                  onHelpClick={() => openLinkTab(docUrl.link)}
                 />
               )
             })}
