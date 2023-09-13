@@ -16,7 +16,6 @@
 	<a href="https://discord.gg/hQ9ZWabm">Community Discord</a>
 </h3>
 
-
 <p align="center">
 <a href="https://github.com/l3vels/L3AGI/fork" target="blank">
 <img src="https://img.shields.io/github/forks/l3vels/L3AGI?style=for-the-badge" alt="L3AGI forks"/>
@@ -69,16 +68,14 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - **Agent Memory**: Equip your AI agents with memory capabilities for retaining and recalling information.
 
-
 - **Data Sources**: Connect your AI agents to various data sources for information retrieval and processing. Supported data sources include:
-  <!-- - ## <img src="./apps/ui/src/assets/images/postgres.png" width="30px" height="30"> Postgres 
-  - ## <img src="./apps/ui/src/assets/images/mySql.png" width="30px" height="30px"> Mysql 
-  - ## <img src="./apps/ui/src/assets/images/file.png" width="30px" height="30px"> Upload Files 
-  - ## <img src="./apps/ui/src/assets/images/web.jpg" width="30" height="30"> Web Page Scrapping 
-  - ## <img src="./apps/ui/src/assets/images/notion.png" width="30" height="30"> Notion 
-  - ## <img src="./apps/ui/src/assets/images/google_analytics.png" width="30" height="30"> Google Analytics 
+  <!-- - ## <img src="./apps/ui/src/assets/images/postgres.png" width="30px" height="30"> Postgres
+  - ## <img src="./apps/ui/src/assets/images/mySql.png" width="30px" height="30px"> Mysql
+  - ## <img src="./apps/ui/src/assets/images/file.png" width="30px" height="30px"> Upload Files
+  - ## <img src="./apps/ui/src/assets/images/web.jpg" width="30" height="30"> Web Page Scrapping
+  - ## <img src="./apps/ui/src/assets/images/notion.png" width="30" height="30"> Notion
+  - ## <img src="./apps/ui/src/assets/images/google_analytics.png" width="30" height="30"> Google Analytics
   - ## <img src="./apps/ui/src/assets/images/firebase.svg" width="30" height="30"> Firebase -->
-
 
 <table align="center" border="0">
   <tr>
@@ -92,11 +89,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
   </tr>
 </table>
 
-
-
-
 - **Toolkits**: Use our pre-built collections of tools, designed to be used together for specific tasks, to enhance your AI agents' capabilities.
-
 
 <table align="center" border="0">
   <tr>
@@ -120,8 +113,6 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
   </tr>
 </table>
 
-
-
 <!-- - **Code Generator**: Generate code snippets automatically to speed up your development process. -->
 
 - **Chart Generator**: Visualize your data effectively with our chart generator.
@@ -134,10 +125,9 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - **APIs**: Robust APIs for integrating L3AGI with other systems and for advanced customizations.
 
-
 ## 🚀 Roadmap [here](https://github.com/orgs/l3vels/projects/1)
-<br>
 
+<br>
 
 ## ⚡ Quick Start
 
@@ -145,7 +135,6 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
 - Docker 🐳
 - Docker Compose
-
 
 1. **Clone the repository:**
 
@@ -168,7 +157,6 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 
    This will build and start both the React UI and FastAPI services.
 
-
 4. 🐳 **Run Docker Compose:**
 
    ```bash
@@ -180,7 +168,7 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 ## Access the Services
 
 - **React UI**: Open `http://localhost:3000` in your browser.
-- **FastAPI Server**: Open `http://localhost:4002` in your browser or API client.
+- **FastAPI Server**: Open `http://localhost:4000` in your browser or API client.
 
 ## Directory Structure
 
@@ -197,10 +185,9 @@ L3AGI provides a comprehensive suite of features to build, manage, and run auton
 - If you encounter issues when starting the services, ensure Docker and Docker Compose are installed and up to date.
 - Check the logs for any service-specific errors.
 
-
-
 ## Contributors
-[![Chkhikvadze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/10281306?v=4&w=50&h=50&mask=circle)](https://github.com/Chkhikvadze) 
-[![MOkradze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/22216909?v=4&w=50&h=50&mask=circle)](https://github.com/MOkradze) 
-[![edufaraday](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/56274334?v=4&w=50&h=50&mask=circle)](https://github.com/edufaraday) 
-[![Levanion](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/91427080?v=4&w=50&h=50&mask=circle)](https://github.com/levanion) 
+
+[![Chkhikvadze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/10281306?v=4&w=50&h=50&mask=circle)](https://github.com/Chkhikvadze)
+[![MOkradze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/22216909?v=4&w=50&h=50&mask=circle)](https://github.com/MOkradze)
+[![edufaraday](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/56274334?v=4&w=50&h=50&mask=circle)](https://github.com/edufaraday)
+[![Levanion](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/91427080?v=4&w=50&h=50&mask=circle)](https://github.com/levanion)

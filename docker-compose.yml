@@ -6,7 +6,7 @@ services:
       context: ./apps/ui
       dockerfile: docker/Dockerfile
     ports:
-      - "8080:8080"
+      - "3000:3000"
     volumes:
       - ./apps/ui:/app
       - /app/node_modules
@@ -18,4 +18,4 @@ services:
     volumes:
       - ./apps/server:/code
     ports:
-      - "4002:4002"
+      - "4000:4000"

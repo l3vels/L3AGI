@@ -14,7 +14,7 @@ pipenv install
 ## Running with Uvicorn (without Docker)
 
 ```commandline
-uvicorn main:app --reload --port 4002
+uvicorn main:app --reload --port 4000
 ```
 
 ## Running with Docker
@@ -37,11 +37,11 @@ docker build -t l3_ai_api -f docker/Dockerfile .
 Run server with hot reload
 
 ```commandline
-docker run -p 4002:4002 -v .:/code l3_ai_api
+docker run -p 4000:4000 -v .:/code l3_ai_api
 ```
 
-
 ## Migrations
+
 We use `Alembic` for migrations. To create new migration run:
 
 ```commandline
@@ -50,7 +50,5 @@ alembic revision --autogenerate -m "Migration name"
 
 This will result in creating new migration file in `migrations/versions` folder.
 
-lt --port 4002 --print-requests
-ngrok http 4002
-
-
+lt --port 4000 --print-requests
+ngrok http 4000

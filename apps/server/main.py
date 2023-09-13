@@ -73,7 +73,7 @@ app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 Base.metadata.create_all(bind=engine)
 
 origins = [
-    "http://localhost:8080",
+    "http://localhost:3000",
     "http://localhost:4000",
     "https://l3vels.xyz",
     "https://l3agi.com",
@@ -122,6 +122,7 @@ def root():
     return f"Version {VERSION} is up!"
 
 
-print("Project run on 4002 port")
+print("Project run on 4000 port")
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=4002)
+    uvicorn.run(app, host="0.0.0.0", port=4000)
