@@ -1,7 +1,7 @@
 import json
 import logging
 from typing import List, Optional, Dict
-import uuid
+from uuid import UUID
 from datetime import datetime
 from langchain.schema.messages import AIMessage, HumanMessage
 from models.chat_message import ChatMessage
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 class ChatMessageJSONEncoder(json.JSONEncoder):
     def default(self, obj: object):
-        if isinstance(obj, uuid.UUID):
+        if isinstance(obj, UUID):
             # if the obj is uuid, we simply return the value of uuid
             return str(obj)
         if isinstance(obj, datetime):
@@ -55,14 +55,14 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         return []
 
 
-    def create_message(self, message, parent_id):
+    def create_message(self, message, parent_id: Optional[str] = None, agent_id: Optional[UUID] = None):
         # Append the message to the record in PostgreSQL
         chat_message = ChatMessage(
             user_id=self.user_id,
             account_id=self.account_id,
             message=_message_to_dict(message),
             session_id=self.session_id,
-            agent_id=self.agent_id,
+            agent_id=self.agent_id or agent_id,
             team_id=self.team_id,
             parent_id=parent_id,
         )
@@ -82,8 +82,8 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         # print("the result", json.loads(data_json))
         return json.loads(data_json)
 
-    def create_ai_message(self, message: str, parent_id: Optional[str] = None):
-        return self.create_message(AIMessage(content=message), parent_id)
+    def create_ai_message(self, message: str, parent_id: Optional[str] = None, agent_id: Optional[str] = None):
+        return self.create_message(AIMessage(content=message), parent_id, agent_id)
 
     def create_human_message(self, message: str):
         print("human parent id", self.parent_id)

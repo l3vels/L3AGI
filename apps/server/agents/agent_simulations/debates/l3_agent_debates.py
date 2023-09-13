@@ -101,6 +101,7 @@ class L3AgentDebates(L3Base):
         dialogue_agents = [
             DialogueAgentWithTools(
                 name=agent_with_config.agent.name,
+                agent_with_configs=agent_with_config,
                 system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
                 #later need support other llms
                 model=ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=agent_with_config.configs.temperature, 
@@ -122,17 +123,9 @@ class L3AgentDebates(L3Base):
         print("\n")
 
         while n < max_iters:
-            name, message = simulator.step()
-
-            db_message = f"({name}): {message}"
-            # res = agent.run(prompt, callbacks=[handler])
-
-            ai_message = history.create_ai_message(db_message)
-
+            agent_id, message = simulator.step()
+            ai_message = history.create_ai_message(message, None, agent_id)
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
-
-            print(f"({name}): {message}")
-            print("\n")
             n += 1
 
 

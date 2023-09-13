@@ -145,7 +145,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 team=team,
                 agents_with_configs=agents,
                 history=history,
-                is_private_chat=body.is_private_chat
             )
 
             return result

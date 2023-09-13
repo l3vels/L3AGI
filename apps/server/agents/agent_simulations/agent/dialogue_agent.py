@@ -3,17 +3,20 @@ from langchain.schema import (
     HumanMessage,
     SystemMessage,
 )
+from uuid import UUID
 from typing import List, Callable
+from typings.agent import AgentWithConfigsOutput
 
 class DialogueAgent:
     def __init__(
         self,
         name: str,
+        agent_with_configs: AgentWithConfigsOutput,
         system_message: SystemMessage,
-        
-        model: ChatOpenAI,
+        model: ChatOpenAI
     ) -> None:
         self.name = name
+        self.agent_with_configs = agent_with_configs
         self.system_message = system_message
         self.model = model
         self.prefix = f"{self.name}: "
@@ -67,7 +70,7 @@ class DialogueSimulator:
         # increment time
         self._step += 1
 
-    def step(self) -> tuple[str, str]:
+    def step(self) -> tuple[str, UUID, str]:
         try:
             # 1. choose the next speaker
             speaker_idx = self.select_next_speaker(self._step, self.agents)
@@ -83,7 +86,9 @@ class DialogueSimulator:
             # 4. increment time
             self._step += 1
 
-            return speaker.name, message
+            
+            # return speaker.name, message
+            return speaker.agent_with_configs.agent.id, message
         except Exception as e:
             print(e)
             #todo return error as message
