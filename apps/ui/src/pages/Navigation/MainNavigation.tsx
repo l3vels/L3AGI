@@ -6,7 +6,8 @@ import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Team from '@l3-lib/ui-core/dist/icons/Team'
-import Dashboard from '@l3-lib/ui-core/dist/icons/Dashboard'
+import Launch from '@l3-lib/ui-core/dist/icons/Launch'
+
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
@@ -64,7 +65,7 @@ const MainNavigation = () => {
         onClick={() => onHandleClick('/discover')}
       >
         <StyledIconWrapper>
-          <Dashboard size={30} />
+          <Launch size={30} />
         </StyledIconWrapper>
         <span>Discover</span>
       </StyledLi>
