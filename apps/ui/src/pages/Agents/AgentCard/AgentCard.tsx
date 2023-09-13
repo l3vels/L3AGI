@@ -37,8 +37,8 @@ const AgentCard = ({
   onChatClick,
 }: AgentCardProps) => {
   let shortDescription = description
-  if (description.length > 95) {
-    shortDescription = `${description.slice(0, 95)}...`
+  if (description.length > 85) {
+    shortDescription = `${description.slice(0, 85)}...`
   }
 
   return (
