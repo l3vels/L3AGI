@@ -21,9 +21,9 @@ import BackButton from 'components/BackButton'
 const ToolView = () => {
   const { tool, formik, handleSubmit, isLoading } = useToolView()
 
-  const name = tool[0]?.name
-  const description = tool[0]?.tools[0]?.description || ''
-  const fields = tool[0]?.fields
+  const name = tool?.name
+  const description = tool?.description || ''
+  const fields = tool?.fields
 
   const toolLogo = toolLogos.filter((toolLogo: any) => toolLogo.toolName === name)
 

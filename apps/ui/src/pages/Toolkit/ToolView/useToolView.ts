@@ -14,18 +14,18 @@ export const useToolView = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { toolkitId } = params
+  const { slug } = params
 
-  const { data: toolsData } = useToolsService()
+  const { data: toolkits } = useToolsService()
 
   const { data: configsData, refetch: refetchConfigs } = useConfigsService()
 
   const [createConfig] = useCreateConfigService()
   const [updateConfig] = useUpdateConfigService()
 
-  const tool = toolsData?.filter((tool: any) => toolkitId === tool.toolkit_id)
+  const tool = toolkits?.find((toolkit: any) => slug === toolkit.slug)
 
-  const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === toolkitId)
+  const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === tool.toolkit_id)
 
   const initialValues = {
     tool_key: filteredConfig[0]?.key,
@@ -45,7 +45,7 @@ export const useToolView = () => {
         key_type: values.tool_key_type,
         is_required: values.tool_is_required,
         is_secret: values.tool_is_secret,
-        tool_id: toolkitId,
+        tool_id: tool.toolkit_id,
       }
 
       if (filteredConfig.length === 0) {
@@ -62,8 +62,6 @@ export const useToolView = () => {
         open: true,
       })
     } catch (e) {
-      console.log('rrorr', e)
-
       setToast({
         message: 'Failed to save!',
         type: 'negative',
@@ -76,8 +74,6 @@ export const useToolView = () => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
-    // validationSchema: gameValidationSchema,
-    // enableReinitialize: true,
   })
 
   return { tool, formik, handleSubmit, isLoading }

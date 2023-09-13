@@ -6,6 +6,7 @@ from tools.open_weather_map.open_weather_map import OpenWeatherMapTool
 class OpenWeatherMapToolkit(BaseToolkit, ABC):
     name: str = "OpenWeatherMap Toolkit"
     description: str = "Toolkit containing tools for performing DuckDuckGo search"
+    slug: str = "openweathermap"
     toolkit_id = "045dfbae-a9e7-4b73-9563-8a381a5e239b"
 
     def get_tools(self) -> List[BaseTool]:
