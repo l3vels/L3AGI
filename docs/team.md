@@ -20,16 +20,20 @@ There are different types of teams tailored to different collaborative scenarios
     - **Fields**:
         - **Word limit**: Maximum number of words an agent can use in a single response.
         - **Stopping Probability**: Likelihood of the agent concluding its statement.
+    - **Reference**: [LangChain Multi-agent authoritarian speaker selection](https://python.langchain.com/docs/use_cases/more/agents/agent_simulations/multiagent_authoritarian)
 
 3. **Debates**:
     - **Description**: Simulates multi-agent dialogues where agents engage in debate or discussions.
     - **Roles**: Debater.
     - **Fields**:
         - **Word limit**: Maximum number of words an agent can use in a single response.
+    - **Reference**: [LangChain Agent Debates with Tools](https://python.langchain.com/docs/use_cases/more/agents/agent_simulations/two_agent_debate_tools)
 
 4. **Decentralized Speaker**:
     - **Description**: This is a scenario where no specific agent has control, but each agent contributes to the conversation based on its expertise or role.
     - **Roles**: Varies based on configuration.
+
+We would like to thank the LangChain community for their valuable resources and continuous support.
 
 ### Creating a Team of Agents
 

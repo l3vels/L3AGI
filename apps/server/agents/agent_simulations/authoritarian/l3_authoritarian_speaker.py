@@ -95,32 +95,6 @@ class L3AuthoritarianSpeaker(L3Base):
 
         The episode features {agent_summary_string}."""
 
-
-        # agent_descriptions = [
-        #     self.generate_agent_description(agent['name'], agent['role'], 
-        #                                     agent['location'], conversation_description) for agent in agent_summaries
-        # ]
-
-        # agent_headers = [
-        #     self.generate_agent_header(agent['name'], agent['role'], agent['location'],
-        #                                description,conversation_description=conversation_description, topic=topic )
-        #     for agent, description in zip(agent_summaries, agent_descriptions)
-        # ]
-        
-        # agent_system_messages = [
-        #     self.generate_agent_system_message(agent['name'], header)
-        #     for agent, header in zip(agent_summaries, agent_headers)
-        # ]
-
-        # for name, description, header, system_message in zip(
-        #     agent_summaries, agent_descriptions, agent_headers, agent_system_messages
-        # ):
-        #     print(f"\n\n{name} Description:")
-        #     print(f"\n{description}")
-        #     print(f"\nHeader:\n{header}")
-        #     print(f"\nSystem Message:\n{system_message.content}")
-
-
         specified_topic = self.generate_specified_prompt(topic, conversation_description)
 
         print(f"Original topic:\n{topic}\n")
@@ -191,50 +165,3 @@ class L3AuthoritarianSpeaker(L3Base):
                 print(e)
                 #todo return error as message
                 self._step += 1
-                
-
-        
-        # self.agent_descriptor_system_message = SystemMessage(
-        #     content="You can add detail to the description of each person."
-        # )
-    
-    # def generate_agent_description(self, agent_name, agent_role, agent_location, conversation_description):
-    #     agent_specifier_prompt = [
-    #         self.agent_descriptor_system_message,
-    #         HumanMessage(
-    #             content=f"""{conversation_description}
-    #             Please reply with a creative description of {agent_name}, who is a {agent_role} in {agent_location}, that emphasizes their particular role and location.
-    #             Speak directly to {agent_name} in {self.word_limit} words or less.
-    #             Do not add anything else."""
-    #         ),
-    #     ]
-    #     agent_description = ChatOpenAI(temperature=1.0, model_name="gpt-4")(agent_specifier_prompt).content
-    #     return agent_description
-
-    # def generate_agent_header(self, agent_name, agent_role, agent_location, agent_description, conversation_description, topic):
-    #     return f"""{conversation_description}
-
-    # Your name is {agent_name}, your role is {agent_role}, and you are located in {agent_location}.
-
-    # Your description is as follows: {agent_description}
-
-    # You are discussing the topic: {topic}.
-
-    # Your goal is to provide the most informative, creative, and novel perspectives of the topic from the perspective of your role and your location.
-    # """
-
-    # def generate_agent_system_message(self, agent_name, agent_header):
-    #     return SystemMessage(
-    #         content=(
-    #             f"""{agent_header}
-    # You will speak in the style of {agent_name}, and exaggerate your personality.
-    # Do not say the same things over and over again.
-    # Speak in the first person from the perspective of {agent_name}
-    # For describing your own body movements, wrap your description in '*'.
-    # Do not change roles!
-    # Do not speak from the perspective of anyone else.
-    # Speak only from the perspective of {agent_name}.
-    # Stop speaking the moment you finish speaking from your perspective.
-    # Never forget to keep your response to {self.word_limit} words!
-    # Do not add anything else.
-    #     """))
