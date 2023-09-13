@@ -36,7 +36,7 @@ class OpenWeatherMapTool(BaseTool):
         openweathermap_api_key = self.get_env_key("OPENWEATHERMAP_API_KEY")
 
         if not openweathermap_api_key:
-            raise ToolEnvKeyException(f"OpenWeatherMap API Key in the [OpenWeatherMap Toolkit](/tools/{self.toolkit_id})")
+            raise ToolEnvKeyException(f"OpenWeatherMap API Key in the [OpenWeatherMap Toolkit](/toolkits/{self.toolkit_slug})")
 
         search = OpenWeatherMapAPIWrapper(openweathermap_api_key=openweathermap_api_key)
 
@@ -44,6 +44,6 @@ class OpenWeatherMapTool(BaseTool):
             return search.run(query)
         except Exception as err:
             if "Invalid API Key" in str(err):
-                raise ToolEnvKeyException(f"OpenWeatherMap API Key is not valid. Please check in the [OpenWeatherMap Toolkit](/tools/{self.toolkit_id})")
+                raise ToolEnvKeyException(f"OpenWeatherMap API Key is not valid. Please check in the [OpenWeatherMap Toolkit](/toolkits/{self.toolkit_slug})")
 
             return "Could not retrieve weather information using OpenWeatherMap. Please try again later."
