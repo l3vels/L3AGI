@@ -25,10 +25,10 @@ const GetStartedComponent = () => {
       />
       <GetStartedCard
         subTitle={'Learn about'}
-        title={'Developer Panels'}
+        title={'Team of Agents'}
         image={cardBg3}
         bgColor={'blue'}
-        link={import.meta.env.REACT_APP_TOOLS_LINK}
+        link={import.meta.env.REACT_APP_TEAM_LINK}
       />
       <GetStartedCard
         subTitle={'Learn about'}

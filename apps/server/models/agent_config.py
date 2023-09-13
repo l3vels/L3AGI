@@ -26,7 +26,6 @@ class AgentConfigModel(BaseModel):
     agent_id = Column(UUID(as_uuid=True), ForeignKey('agent.id'))
     key = Column(String)
     value = Column(Text)
-    module_name = Column(Text)
     
     agent = relationship("AgentModel", back_populates="configs", cascade="all, delete")
 

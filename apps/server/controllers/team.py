@@ -140,7 +140,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "is_public": True,
         "is_active": True,
         "name": "Debates",
-        "description": "Debates",
+        "description": "This example shows how to simulate multi-agent dialogues where agents have access to tools.",
         "team_type": TeamOfAgentsType.DEBATES,
         "fields": [
             {
@@ -148,7 +148,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
                 "key": "word_limit",
                 "type": "int",
                 "is_required": True,
-                "is_secret": False,
+                "is_s=ecret": False,
                 "default": 30,
             }
         ],
@@ -164,7 +164,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "is_public": True,
         "is_active": False,
         "name": "Decentralized speaker",
-        "description": "Decentralized speakers",
+        "description": "This notebook showcases how to implement a multi-agent simulation where a privileged agent decides who to speak",
         "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKERS,
         "fields": [],
         "agents": []
