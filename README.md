@@ -72,7 +72,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 
 - **🧠 Agent Memory**: Equip your AI agents with the ability to retain and recall information, enabling them to make more informed decisions.
 
-- **🔗 Data Sources & Integration**: 
+- **🔗 Data Sources & Integration**:
   - Connect your AI agents to an array of data sources for efficient information retrieval and processing.
   - Integrate VectorDBs for enhanced data management and querying capabilities.
   - Employ the LlamaIndex (GPT Index) to boost the data framework for your LLM application.
@@ -177,6 +177,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 ```
 
 ## L3AGI Architecture
+
 <details>
   <summary>Database Schema</summary>
   
@@ -184,6 +185,19 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 </details>
 
 <br/>
+
+## Tech Stack
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-6f7f6f?style=for-the-badge&logo=SQLAlchemy&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-b7d019?style=for-the-badge&logo=LangChain&logoColor=white)
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![ESLint](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E)
 
 ## Troubleshooting
 
