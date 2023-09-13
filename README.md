@@ -178,7 +178,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 
 ## L3AGI Architecture
 <details>
-  <summary>Database Schema!</summary>
+  <summary>Database Schema</summary>
   
   ![DB ERD](docs/assets/ERD.jpg)
 </details>
