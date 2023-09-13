@@ -3,13 +3,10 @@ from typing import Optional
 from langchain.agents import initialize_agent, AgentType
 from langchain.chat_models import ChatOpenAI
 from postgres import PostgresChatMessageHistory
-from fastapi_sqlalchemy import db
-from system_message import format_system_message
-
 from memory.zep import ZepMemory
 from services.pubsub import ChatPubSubService
 from l3_base import L3Base
-from openai.error import RateLimitError, AuthenticationError
+from openai.error import RateLimitError, AuthenticationError, Timeout as TimeoutError, ServiceUnavailableError
 import sentry_sdk
 from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
@@ -65,15 +62,19 @@ class L3Conversational(L3Base):
         try:
             res = agent.run(prompt)
         except RateLimitError:
-            res = "AI is at rate limit, please try again later"
+            res = "OpenAI reached it's rate limit, please check billing on OpenAI"
         except AuthenticationError:
             res = "Your OpenAI API key is invalid. Please recheck it in [Settings](/settings)"
+        except TimeoutError as err:
+            res = "OpenAI timed out, please try again later"
+        except ServiceUnavailableError:
+            res = "OpenAI service is unavailable at the moment, please try again later"
         except ToolEnvKeyException as err:
             res = str(err)
         except Exception as err:
             print(err)
             sentry_sdk.capture_exception(err)
-            res = "Something went wrong, please try again later"
+            res = f"Something went wrong. Error: {err}"
 
         ai_message = history.create_ai_message(res, human_message_id)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
