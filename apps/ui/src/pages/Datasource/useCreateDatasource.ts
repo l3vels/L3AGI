@@ -6,6 +6,7 @@ import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useCreateDatasourceService } from 'services/datasource/useCreateDatasourceService'
 import { useDataLoadersService } from 'services/datasource/useDataLoadersService'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
+import { datasourceValidationSchema } from 'utils/validationsSchema'
 
 export const useCreateDatasource = () => {
   const navigate = useNavigate()
@@ -29,6 +30,7 @@ export const useCreateDatasource = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
+    validationSchema: datasourceValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

@@ -18,7 +18,7 @@ import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/C
 import BackButton from 'components/BackButton'
 
 const EditDatasourceForm = () => {
-  const { formik, handleSubmit, isLoading } = useEditDatasource()
+  const { formik, isLoading } = useEditDatasource()
 
   return (
     <>
@@ -34,11 +34,7 @@ const EditDatasourceForm = () => {
 
             <StyledButtonWrapper>
               <BackButton />
-              <Button
-                onClick={() => handleSubmit(formik?.values)}
-                size={Button.sizes.SMALL}
-                disabled={isLoading}
-              >
+              <Button onClick={formik?.handleSubmit} size={Button.sizes.SMALL} disabled={isLoading}>
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </Button>
             </StyledButtonWrapper>

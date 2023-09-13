@@ -7,6 +7,7 @@ import { useConfigsService } from 'services/config/useConfigsService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useUpdateDatasourceService } from 'services/datasource/useUpdateDatasourceService'
+import { datasourceValidationSchema } from 'utils/validationsSchema'
 import { useDatasource } from './useDatasource'
 
 export const useEditDatasource = () => {
@@ -98,6 +99,7 @@ export const useEditDatasource = () => {
 
   const formik = useFormik({
     initialValues: defaultValues,
+    validationSchema: datasourceValidationSchema,
     enableReinitialize: true,
     onSubmit: async values => handleSubmit(values),
   })

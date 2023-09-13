@@ -23,5 +23,9 @@ export const agentValidationSchema = yup.object().shape({
 })
 
 export const datasourceValidationSchema = yup.object().shape({
-  agent_name: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Please enter name'),
+  datasource_name: yup
+    .string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Please enter name'),
 })
