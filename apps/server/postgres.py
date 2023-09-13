@@ -48,44 +48,12 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         self.agent_id = agent_id
         self.team_id = team_id
 
-    def fetch_messages(self):
-        try:
-            chat_messages = (db.session.query(ChatMessage)
-                         .filter(ChatMessage.session_id == self.session_id)
-                        #  .options(joinedload(ChatMessage.parent))
-                         .order_by(ChatMessage.created_on.desc())
-                         .limit(50)
-                         .all())
-
-            result = []
-            for chat_message in chat_messages:
-                chat_message_dict = chat_message.to_dict()
-                if chat_message.parent:
-                    parent_dict = chat_message.parent.to_dict()
-                    chat_message_dict['parent'] = parent_dict
-                result.append(chat_message_dict)
-
-            result.reverse()
-          
-            return result
-        except Exception as e:
-            print(f"Error fetching messages: {e}")
-        return []
 
     @property
     def messages(self) -> List[BaseMessage]:  # type: ignore
         """Retrieve the messages from PostgreSQL"""
-        items = [record["message"] for record in self.fetch_messages()]
+        return []
 
-        # We add user message before calling agent. When agent gets message history we remove user's current question.
-        items.pop()
-
-        messages = messages_from_dict(items)
-        return messages
-
-    def get_messages(self):
-        """Retrieve the messages from PostgreSQL"""
-        return self.fetch_messages()
 
     def create_message(self, message, parent_id):
         # Append the message to the record in PostgreSQL

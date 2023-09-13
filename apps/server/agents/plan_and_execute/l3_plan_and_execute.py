@@ -1,12 +1,10 @@
 from langchain.chat_models import ChatOpenAI
 from typing import Dict, List
 from fastapi_sqlalchemy import db
-from openai.error import RateLimitError
-import sentry_sdk
+from uuid import UUID
 
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
-from system_message import format_system_message
 from agents.plan_and_execute.chat_planner import initialize_chat_planner
 from agents.plan_and_execute.agent_executor import initialize_executor
 from agents.plan_and_execute.plan_and_execute import PlanAndExecute
@@ -24,7 +22,8 @@ from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from services.pubsub import ChatPubSubService
-
+from agents.handle_agent_errors import handle_agent_errors
+from exceptions import PlannerEmptyTasksException
 
 class L3PlanAndExecute(L3Base):
     thoughts: List[Dict] = []
@@ -36,7 +35,7 @@ class L3PlanAndExecute(L3Base):
         agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account)
         return datasource_tools + agent_tools
 
-    def run(self, settings: AccountSettings, chat_pubsub_service: ChatPubSubService, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, is_private_chat: bool, human_message_id: str):
+    def run(self, settings: AccountSettings, chat_pubsub_service: ChatPubSubService, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, human_message_id: UUID):
         agents: List[TeamAgentModel] = team.team_agents
         
         planner_agent_with_configs: AgentWithConfigsOutput = None
@@ -52,6 +51,9 @@ class L3PlanAndExecute(L3Base):
         ai_message_id = ai_message['id']
 
         def on_thoughts(thoughts: List[Dict]):
+            if len(thoughts) == 0:
+                raise PlannerEmptyTasksException()
+
             updated_message = history.update_thoughts(ai_message_id, thoughts)
             chat_pubsub_service.send_chat_message(chat_message=updated_message)
 
@@ -83,20 +85,14 @@ class L3PlanAndExecute(L3Base):
 
         agent = PlanAndExecute(planner=planner, executor=executor, on_thoughts=on_thoughts)
 
-        try:
-            return agent.run({
-                "input": prompt,
-                "chat_history": memory.load_memory_variables({})['chat_history'],
-            })
-        except RateLimitError:
-            msg = "AI is at rate limit, please try again later"
-            history.delete_message(ai_message_id)
-            history.create_ai_message(msg, human_message_id)
-            return msg
-        except Exception as err:
-            sentry_sdk.capture_exception(err)
-            msg = "Something went wrong, please try again later"
-            history.delete_message(ai_message_id)
-            history.create_ai_message(msg, human_message_id)
-            return msg
+        res, is_success = handle_agent_errors(agent, {
+            "input": prompt,
+            "chat_history": memory.load_memory_variables({})['chat_history'],
+        })
 
+        if not is_success:
+            history.delete_message(ai_message_id)
+            ai_message = history.create_ai_message(res)
+            chat_pubsub_service.send_chat_message(chat_message=ai_message)
+        
+        return res

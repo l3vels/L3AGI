@@ -78,6 +78,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     human_message = history.create_human_message(body.prompt)
 
+    human_message_id = UUID(human_message['id'])
+
     chat_pubsub_service = ChatPubSubService(
         session_id=session_id,
         user=auth.user,
@@ -96,7 +98,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     if not settings.openai_api_key:
         message_text = f"Please add OpenAI API key in [Settings](/settings)"
-        ai_message = history.create_ai_message(message_text, human_message['id'])
+        ai_message = history.create_ai_message(message_text, human_message_id)
 
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
@@ -110,7 +112,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         tools = datasource_tools + agent_tools
 
         conversational = L3Conversational(auth.user, auth.account, session_id)
-        return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message['id'])
+        return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)
 
     if team:
         if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
@@ -120,7 +122,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 session_id=session_id,
             )
 
-            return plan_and_execute.run(settings, chat_pubsub_service, team, prompt, history, body.is_private_chat, human_message['id'])
+            return plan_and_execute.run(settings, chat_pubsub_service, team, prompt, history, human_message_id)
 
         if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
             topic = prompt

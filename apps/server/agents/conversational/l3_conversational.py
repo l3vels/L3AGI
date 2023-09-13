@@ -14,6 +14,7 @@ from utils.system_message import SystemMessageBuilder
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from exceptions import ToolEnvKeyException
+from agents.handle_agent_errors import handle_agent_errors
 
 class L3Conversational(L3Base):
     def run(
@@ -57,24 +58,7 @@ class L3Conversational(L3Base):
             },
         )
 
-        res: str
-
-        try:
-            res = agent.run(prompt)
-        except RateLimitError:
-            res = "OpenAI reached it's rate limit, please check billing on OpenAI"
-        except AuthenticationError:
-            res = "Your OpenAI API key is invalid. Please recheck it in [Settings](/settings)"
-        except TimeoutError as err:
-            res = "OpenAI timed out, please try again later"
-        except ServiceUnavailableError:
-            res = "OpenAI service is unavailable at the moment, please try again later"
-        except ToolEnvKeyException as err:
-            res = str(err)
-        except Exception as err:
-            print(err)
-            sentry_sdk.capture_exception(err)
-            res = f"Something went wrong. Error: {err}"
+        res = handle_agent_errors(agent, prompt)
 
         ai_message = history.create_ai_message(res, human_message_id)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
