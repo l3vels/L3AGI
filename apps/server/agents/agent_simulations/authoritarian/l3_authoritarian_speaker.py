@@ -125,6 +125,9 @@ class L3AuthoritarianSpeaker(L3Base):
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
+        specified_topic_ai_message = history.create_ai_message(specified_topic)
+        self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
+
         # directors = [agent_config.agent for agent_config in agents_with_configs if agent_config.agent.is_director == True]
         directors = [agent_config.agent for agent_config in agents_with_configs if hasattr(agent_config.agent, 'is_director') and agent_config.agent.is_director == True]
         # Assuming there's only one director:
