@@ -9,7 +9,7 @@ DATASOURCES = [
 
 COMING_SOON = [
     {
-        "is_system": True,
+        "is_public": True,
         "is_active": False,
         "name": "File",
         "description": "Upload a file",
@@ -17,7 +17,7 @@ COMING_SOON = [
         "source_type": DatasourceType.UPLOAD_FILE,
     },
     {
-        "is_system": True,
+        "is_public": True,
         "is_active": False,
         "name": "Crawler",
         "description": "Crawl the web page",
@@ -25,7 +25,7 @@ COMING_SOON = [
         "source_type": DatasourceType.WEB_PAGE,
     },
     {
-        "is_system": True,
+        "is_public": True,
         "is_active": False,
         "name": "Notion",
         "description": "Notion",
@@ -33,7 +33,7 @@ COMING_SOON = [
         "source_type": DatasourceType.NOTION,
     },
     {
-        "is_system": True,
+        "is_public": True,
         "is_active": False,
         "name": "Google Analytics",
         "description": "Google Analytics",
@@ -41,7 +41,7 @@ COMING_SOON = [
         "source_type": DatasourceType.SHOPIFY,
     },
     {
-        "is_system": True,
+        "is_public": True,
         "is_active": False,
         "name": "Firebase",
         "description": "Firebase",
@@ -57,7 +57,7 @@ def get_all_datasources():
     for datasource in DATASOURCES:
         result.append(
             {
-                "is_system": True,
+                "is_public": True,
                 "is_active": datasource.is_active,
                 "name": datasource.name,
                 "description": datasource.description,
