@@ -69,6 +69,7 @@ import ToolView from 'pages/Toolkit/ToolView'
 import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
 import HomeRouteLayout from 'routes/HomeRouteLayout'
 import LoginModal from 'modals/LoginModal'
+import CreateAgentTemplate from 'pages/Agents/AgentForm/CreateAgentTempate'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -130,6 +131,11 @@ const Route = () => {
             <Router path={'agents'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Agents />} key={document.location.href} />
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
+              <Router
+                path={'create-agent-template'}
+                element={<CreateAgentTemplate />}
+                key={document.location.href}
+              />
               <Router
                 path={'create-agent'}
                 element={<CreateAgentForm />}

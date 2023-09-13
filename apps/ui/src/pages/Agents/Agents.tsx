@@ -29,7 +29,10 @@ const Agents = () => {
         </div>
 
         <div>
-          <Button onClick={() => navigate('/agents/create-agent')} size={Button.sizes.SMALL}>
+          <Button
+            onClick={() => navigate('/agents/create-agent-template')}
+            size={Button.sizes.SMALL}
+          >
             Create Agent
           </Button>
         </div>

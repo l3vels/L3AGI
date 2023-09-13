@@ -24,6 +24,7 @@ type AgentCardProps = {
   onDeleteClick?: () => void
   onViewClick: () => void
   onChatClick?: () => void
+  onCreateClick?: () => void
 }
 
 const AgentCard = ({
@@ -35,6 +36,7 @@ const AgentCard = ({
   onEditClick,
   onViewClick,
   onChatClick,
+  onCreateClick,
 }: AgentCardProps) => {
   let shortDescription = description
   if (description.length > 85) {
@@ -99,6 +101,11 @@ const AgentCard = ({
           />
         </StyledCreatorWrapper>
         <StyledButtonsWrapper className='footerButtons'>
+          {onCreateClick && (
+            <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY} onClick={onCreateClick}>
+              Create
+            </Button>
+          )}
           {onDeleteClick && (
             <IconButton
               onClick={onDeleteClick}
@@ -138,7 +145,7 @@ const AgentCard = ({
 
 export default AgentCard
 
-const StyledAgentCard = styled.div`
+export const StyledAgentCard = styled.div`
   position: relative;
   width: 335px;
   min-width: 335px;

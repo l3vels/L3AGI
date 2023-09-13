@@ -32,6 +32,7 @@ const CreateAgentForm = () => {
 
           <StyledButtonWrapper>
             <BackButton />
+
             <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
               {isLoading ? <Loader size={32} /> : 'Save'}
             </Button>
