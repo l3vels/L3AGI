@@ -23,7 +23,7 @@ module "backend" {
   task_container_registry         = var.task_container_registry 
   task_container_name             = var.task_container_name
   task_container_version          = var.task_container_version
-  task_container_port             = 4002
+  task_container_port             = 4000
   host_header = ["${local.subdomain}.${var.deployment_domain}"]
   task_container_env_vars = local.task_container_env_vars
   task_desired_count  = var.task_desired_count

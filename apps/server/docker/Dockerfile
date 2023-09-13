@@ -15,7 +15,7 @@ RUN pip install pipenv && pipenv install --system
 COPY ./ /code/
 
 # Expose the application's port
-EXPOSE 4002
+EXPOSE 4000
 
 # Run the application
 COPY entrypoint.sh /app_entry/
