@@ -7,7 +7,6 @@ from sqlalchemy.orm import joinedload
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
-from pubsub_service import PubSubService
 from agents.conversational.l3_conversational import L3Conversational
 from agents.plan_and_execute.l3_plan_and_execute import L3PlanAndExecute
 from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3AuthoritarianSpeaker
@@ -25,8 +24,7 @@ from typings.chat import ChatMessageOutput
 from models.team import TeamModel
 from models.config import ConfigModel
 from agents.team_base import TeamOfAgentsType
-
-azureService = PubSubService()
+from services.pubsub import ChatPubSubService, AzurePubSubService
 
 router = APIRouter()
 
@@ -80,15 +78,17 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     human_message = history.create_human_message(body.prompt)
 
-    azureService.send_to_group(session_id, message={
-        'type': 'CHAT_MESSAGE_ADDED',
-        'from': str(auth.user.id),
-        'chat_message': human_message,
-        'is_private_chat': body.is_private_chat,
-        'local_chat_message_ref_id': body.local_chat_message_ref_id,
-        'agent_id': str(body.agent_id) if body.agent_id else body.agent_id,
-        'team_id': str(body.team_id) if body.team_id else body.team_id,
-    })
+    human_message_id = UUID(human_message['id'])
+
+    chat_pubsub_service = ChatPubSubService(
+        session_id=session_id,
+        user=auth.user,
+        is_private_chat=body.is_private_chat,
+        agent_id=str(body.agent_id) if body.agent_id else body.agent_id,
+        team_id=str(body.team_id) if body.team_id else body.team_id,
+    )
+
+    chat_pubsub_service.send_chat_message(chat_message=human_message, local_chat_message_ref_id=body.local_chat_message_ref_id)
 
     # If team member is tagged and no agent or team of agents is tagged, this means user sends a message to team member
     if has_team_member_mention(body.prompt) and not mentioned_agent_id and not mentioned_team_id:
@@ -98,19 +98,9 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     if not settings.openai_api_key:
         message_text = f"Please add OpenAI API key in [Settings](/settings)"
-        ai_message = history.create_ai_message(message_text, human_message['id'])
+        ai_message = history.create_ai_message(message_text, human_message_id)
 
-        azureService.send_to_group(
-            session_id,
-            message={
-                "type": "CHAT_MESSAGE_ADDED",
-                "from": str(auth.user.id),
-                "chat_message": ai_message,
-                "is_private_chat": body.is_private_chat,
-                "agent_id": str(body.agent_id) if body.agent_id else body.agent_id,
-                'team_id': str(body.team_id) if body.team_id else body.team_id,
-            },
-        )
+        chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return message_text
 
@@ -122,7 +112,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         tools = datasource_tools + agent_tools
 
         conversational = L3Conversational(auth.user, auth.account, session_id)
-        return conversational.run(settings, agent_with_configs, tools, prompt, history, body.is_private_chat, human_message['id'], body.agent_id, body.team_id)
+        return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)
 
     if team:
         if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
@@ -132,7 +122,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 session_id=session_id,
             )
 
-            return plan_and_execute.run(settings, team, prompt, history, body.is_private_chat, human_message['id'])
+            return plan_and_execute.run(settings, chat_pubsub_service, team, prompt, history, human_message_id)
 
         if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
             topic = prompt
@@ -142,6 +132,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
             l3_authoritarian_speaker = L3AuthoritarianSpeaker(
                 settings=settings,
+                chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
                 account=auth.account,
                 session_id=session_id,
@@ -154,7 +145,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 team=team,
                 agents_with_configs=agents,
                 history=history,
-                is_private_chat=body.is_private_chat
             )
 
             return result
@@ -166,6 +156,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
             l3_agent_debates = L3AgentDebates(
                 settings=settings,
+                chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
                 account=auth.account,
                 session_id=session_id,
@@ -224,5 +215,5 @@ def negotiate(id: str):
         NegotiateOutput: url with access token
     """
 
-    token = azureService.get_client_access_token(user_id=id)
+    token = AzurePubSubService().get_client_access_token(user_id=id)
     return NegotiateOutput(url=token['url'])

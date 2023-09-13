@@ -44,6 +44,7 @@ const ChatMessageListV2 = ({
 
   const filteredData = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
+
     return {
       id: chat?.id,
       message: chat?.message?.data?.content,
@@ -54,7 +55,8 @@ const ChatMessageListV2 = ({
       version: chat?.version,
       parent: chat?.parent,
       username: chat.message.data.additional_kwargs.name,
-      agentName: chat.agent?.name || chat.team?.name,
+      agentName: chat.agent?.name,
+      teamName: chat.team?.name,
     }
   })
 
@@ -207,7 +209,8 @@ const ChatMessageListV2 = ({
                   )}
                 </StyledReplyMessageContainer>
                 <AiMessage
-                  author={chat.agentName}
+                  agentName={chat.agentName}
+                  teamName={chat.teamName}
                   avatarImg={l3}
                   messageDate={chat.date}
                   messageText={chat.message}

@@ -12,6 +12,7 @@ from langchain.schema import (
     SystemMessage,
 )
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
+from typings.agent import AgentWithConfigsOutput
 
 class IntegerOutputParser(RegexParser):
     def get_format_instructions(self) -> str:
@@ -22,13 +23,14 @@ class DirectorDialogueAgentWithTools(DialogueAgentWithTools):
     def __init__(
         self,
         name,
+        agent_with_configs: AgentWithConfigsOutput,
         system_message: SystemMessage,
         model: ChatOpenAI,
         speakers: List[DialogueAgentWithTools],
         stopping_probability: float,
         tools: List[any],
     ) -> None:
-        super().__init__(name=name, system_message=system_message, model=model, tools=tools)
+        super().__init__(name=name, agent_with_configs=agent_with_configs,  system_message=system_message, model=model, tools=tools)
         self.speakers = speakers
         self.next_speaker = ""
 

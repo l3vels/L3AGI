@@ -91,3 +91,6 @@ class ApiKeyException(AppBaseException):
 
 class ApiKeyNotFoundException(DatasourceException):
     pass
+
+class PlannerEmptyTasksException(AppBaseException):
+    pass

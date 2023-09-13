@@ -6,7 +6,7 @@ from langchain.schema import (
     SystemMessage,
 )
 from fastapi_sqlalchemy import db
-from pubsub_service import PubSubService
+from services.pubsub import ChatPubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent, DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 
@@ -20,13 +20,13 @@ from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
-
-azureService = PubSubService()
+from agents.handle_agent_errors import handle_agent_error
 
 class L3AgentDebates(L3Base):
     def __init__(
         self,
         settings: AccountSettings,
+        chat_pubsub_service: ChatPubSubService,
         user,
         account,
         session_id,     
@@ -35,6 +35,7 @@ class L3AgentDebates(L3Base):
         super().__init__(user=user, account=account, session_id=session_id)
         self.word_limit = word_limit
         self.settings = settings
+        self.chat_pubsub_service = chat_pubsub_service
  
     def select_next_speaker(self, step: int, agents: List[DialogueAgent]) -> int:
         idx = (step) % len(agents)
@@ -77,9 +78,13 @@ class L3AgentDebates(L3Base):
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
+        specified_topic_ai_message = history.create_ai_message(specified_topic)
+        self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
+
         dialogue_agents = [
             DialogueAgentWithTools(
                 name=agent_with_config.agent.name,
+                agent_with_configs=agent_with_config,
                 system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
                 #later need support other llms
                 model=ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=agent_with_config.configs.temperature, 
@@ -97,23 +102,10 @@ class L3AgentDebates(L3Base):
         simulator = DialogueSimulator(agents=dialogue_agents, selection_function=self.select_next_speaker)
         simulator.reset()
         simulator.inject("Moderator", specified_topic)
-        print(f"(Moderator): {specified_topic}")
-        print("\n")
 
         while n < max_iters:
-            name, message = simulator.step()
-
-            db_message = f"({name}): {message}"
-            # res = agent.run(prompt, callbacks=[handler])
-
-            ai_message = history.create_ai_message(db_message)
-
-            azureService.send_to_group(self.session_id, message={
-                'type': 'CHAT_MESSAGE_ADDED',
-                'from': str(self.user.id),
-                'chat_message': ai_message,
-                'is_private_chat': is_private_chat,
-            })
-            print(f"({name}): {message}")
-            print("\n")
+            agent_id, message = simulator.step()
+            ai_message = history.create_ai_message(message, None, agent_id)
+            self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
             n += 1
+ 

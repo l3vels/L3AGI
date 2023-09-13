@@ -20,7 +20,8 @@ import Typewriter from 'components/ChatTypingEffect/Typewriter'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type AiMessageProps = {
-  author: string
+  agentName?: string
+  teamName?: string
   avatarImg: string
   messageDate: string
   messageText: string
@@ -32,7 +33,8 @@ type AiMessageProps = {
 }
 
 const AiMessage = ({
-  author,
+  agentName = '',
+  teamName = '',
   avatarImg,
   messageDate,
   messageText,
@@ -48,17 +50,19 @@ const AiMessage = ({
 
   const isTable = isMarkdownTable(messageText)
 
+  const name = agentName || teamName
+
   return (
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={author} size={50} />
+          <AvatarGenerator name={name} size={50} />
         </StyledAvatarWrapper>
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
               <Typography
-                value={author}
+                value={agentName && teamName ? `${agentName} (${teamName})` : name}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor={'#FFF'}

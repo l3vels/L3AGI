@@ -3,17 +3,21 @@ from langchain.schema import (
     HumanMessage,
     SystemMessage,
 )
+from uuid import UUID
 from typing import List, Callable
+from typings.agent import AgentWithConfigsOutput
+from agents.handle_agent_errors import handle_agent_error
 
 class DialogueAgent:
     def __init__(
         self,
         name: str,
+        agent_with_configs: AgentWithConfigsOutput,
         system_message: SystemMessage,
-        
-        model: ChatOpenAI,
+        model: ChatOpenAI
     ) -> None:
         self.name = name
+        self.agent_with_configs = agent_with_configs
         self.system_message = system_message
         self.model = model
         self.prefix = f"{self.name}: "
@@ -67,12 +71,14 @@ class DialogueSimulator:
         # increment time
         self._step += 1
 
-    def step(self) -> tuple[str, str]:
-        try:
-            # 1. choose the next speaker
-            speaker_idx = self.select_next_speaker(self._step, self.agents)
-            speaker = self.agents[speaker_idx]
+    def step(self) -> tuple[UUID, str]:
+        message: str
 
+        # 1. choose next speaker
+        speaker_idx = self.select_next_speaker(self._step, self.agents)
+        speaker = self.agents[speaker_idx]
+
+        try:
             # 2. next speaker sends message
             message = speaker.send()
 
@@ -82,10 +88,8 @@ class DialogueSimulator:
 
             # 4. increment time
             self._step += 1
-
-            return speaker.name, message
-        except Exception as e:
-            print(e)
-            #todo return error as message
+        except Exception as err:
+            message = handle_agent_error(err)
             self._step += 1
-    
+
+        return speaker.agent_with_configs.agent.id, message

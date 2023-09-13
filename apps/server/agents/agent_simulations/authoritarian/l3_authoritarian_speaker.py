@@ -7,10 +7,10 @@ from langchain.schema import (
 )
 import functools
 from fastapi_sqlalchemy import db
-from pubsub_service import PubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import DirectorDialogueAgentWithTools
+from services.pubsub import ChatPubSubService
 from l3_base import L3Base
 from postgres import PostgresChatMessageHistory
 from models.team import TeamModel
@@ -21,15 +21,15 @@ from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
+from typings.team_agent import TeamAgentRole
+from utils.agent import convert_model_to_response
 
-azureService = PubSubService()
-
-# os.environ["LANGCHAIN_TRACING"] = "false"
 
 class L3AuthoritarianSpeaker(L3Base):
     def __init__(
         self,
         settings: AccountSettings,
+        chat_pubsub_service: ChatPubSubService,
         user,
         account,
         session_id,
@@ -40,6 +40,7 @@ class L3AuthoritarianSpeaker(L3Base):
         self.word_limit = word_limit    
         self.stopping_probability = stopping_probability
         self.settings = settings
+        self.chat_pubsub_service = chat_pubsub_service
     
     def select_next_speaker(
             self, step: int, agents: List[DialogueAgentWithTools], director: DirectorDialogueAgentWithTools
@@ -83,9 +84,7 @@ class L3AuthoritarianSpeaker(L3Base):
             topic: str,
             team: TeamModel, 
             agents_with_configs:List[AgentWithConfigsOutput],   
-            # agent_summaries: list[any],
             history: PostgresChatMessageHistory,
-            is_private_chat: bool
             ):
         agent_summary_string = "\n- ".join(
             [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
@@ -100,19 +99,20 @@ class L3AuthoritarianSpeaker(L3Base):
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
-        # directors = [agent_config.agent for agent_config in agents_with_configs if agent_config.agent.is_director == True]
-        directors = [agent_config.agent for agent_config in agents_with_configs if hasattr(agent_config.agent, 'is_director') and agent_config.agent.is_director == True]
-        # Assuming there's only one director:
-        
+        specified_topic_ai_message = history.create_ai_message(specified_topic)
+        self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
+
+        directors = [convert_model_to_response(team_agent.agent) for team_agent in team.team_agents if team_agent.role == TeamAgentRole.DIRECTOR.value]
+
         director_agent = directors[0] if directors else agents_with_configs[0]
         director_name = director_agent.agent.name
         director_id = director_agent.agent.id
 
         director = DirectorDialogueAgentWithTools(
                     name=director_name,
+                    agent_with_configs=director_agent,
                     tools=self.get_tools(director_agent, self.settings),
                     system_message=SystemMessage(content=SystemMessageBuilder(director_agent).build()),
-                    #later need support other llms
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=director_agent.configs.temperature, 
                         model_name=director_agent.configs.model_version 
                         if director_agent.configs.model_version else "gpt-4"),
@@ -121,13 +121,14 @@ class L3AuthoritarianSpeaker(L3Base):
                     )
         
         agents = [director]
-        for agent_with_config in agents_with_configs:
-            if agent_with_config.agent.id != director_id:
+        for agent_with_configs in agents_with_configs:
+            if agent_with_configs.agent.id != director_id:
                 agents.append(
                 DialogueAgentWithTools(
-                    name=agent_with_config.agent.name,
-                    tools=self.get_tools(agent_with_config, self.settings),
-                    system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
+                    name=agent_with_configs.agent.name,
+                    agent_with_configs=agent_with_configs,
+                    tools=self.get_tools(agent_with_configs, self.settings),
+                    system_message=SystemMessage(content=SystemMessageBuilder(agent_with_configs).build()),
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
                 )
             )
@@ -138,30 +139,11 @@ class L3AuthoritarianSpeaker(L3Base):
         )
         simulator.reset()
         simulator.inject("Audience member", specified_topic)
-        print(f"(Audience member): {specified_topic}")
-        print("\n")
-
 
         while True:
-            try:
-                name, message = simulator.step()
+            agent_id, message = simulator.step()
+            ai_message = history.create_ai_message(message, None, agent_id)
+            self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
-                res = f"({name}): {message}"
-                # res = agent.run(prompt, callbacks=[handler])
-
-                ai_message = history.create_ai_message(res)
-
-                azureService.send_to_group(self.session_id, message={
-                    'type': 'CHAT_MESSAGE_ADDED',
-                    'from': str(self.user.id),
-                    'chat_message': ai_message,
-                    'is_private_chat': is_private_chat,
-                })
-                print(f"({name}): {message}")
-                print("\n")
-                if director.stop:
-                    break
-            except Exception as e:
-                print(e)
-                #todo return error as message
-                self._step += 1
+            if director.stop:
+                break
