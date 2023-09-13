@@ -31,7 +31,7 @@ const Home = () => {
               title={'Empower your tasks with self-sufficient AI agents. Begin chatting today!'}
               image={cardBg4}
               bgColor={'red'}
-              link={import.meta.env.REACT_APP_DATASOURCES_LINK}
+              link={""}
             />
           </GetStartedContainer>
         )}
