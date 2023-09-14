@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -21,9 +21,12 @@ import {
 import BackButton from 'components/BackButton'
 import AgentToolkits from './components/AgentToolkits'
 import AgentDatasources from './components/AgentDatasources'
+import { useModal } from 'hooks'
 
 const AgentView = ({ agentData }: { agentData?: any }) => {
   const navigate = useNavigate()
+
+  const { closeModal } = useModal()
 
   const params = useParams()
   const { agentId } = params
@@ -52,21 +55,25 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Agent</StyledSectionTitle>
-          <StyledSectionDescription>
-            Witness the growth of exceptional AI talents, nurtured by collective community
-            contributions.
-          </StyledSectionDescription>
+          {!agentData && (
+            <>
+              <StyledSectionTitle>Agent</StyledSectionTitle>
+              <StyledSectionDescription>
+                Witness the growth of exceptional AI talents, nurtured by collective community
+                contributions.
+              </StyledSectionDescription>
+            </>
+          )}
         </div>
 
-        {!agentData && (
-          <div>
-            <BackButton />
-          </div>
-        )}
+        <div>
+          <BackButton
+            customOnClick={agentData ? () => closeModal('agent-view-modal') : undefined}
+          />
+        </div>
       </StyledHeaderGroup>
-      <ComponentsWrapper noPadding>
-        <StyledInnerWrapper>
+      <ComponentsWrapper noPadding hideBox={agentData}>
+        <StyledInnerWrapper noPadding={agentData}>
           <StyledLeftColumn>
             <StyledDetailsBox>
               <StyledWrapper>
@@ -87,7 +94,12 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
                 <div>
                   <Button
                     size={Button.sizes.SMALL}
-                    onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
+                    onClick={() => {
+                      if (agentData) {
+                        closeModal('agent-view-modal')
+                      }
+                      navigate(`/agents/create-agent?agentId=${agent.id}`)
+                    }}
                   >
                     <StyledInnerButtonWrapper>
                       <Download size={28} />
@@ -171,12 +183,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
 export default AgentView
 
-const StyledRoot = styled.div`
-  width: 500px;
-  height: 500px;
-`
-
-export const StyledInnerWrapper = styled.div`
+export const StyledInnerWrapper = styled.div<{ noPadding?: boolean }>`
   /* background: grey; */
 
   width: 100%;
@@ -186,6 +193,12 @@ export const StyledInnerWrapper = styled.div`
   display: flex;
   padding: 0 20px;
   gap: 10px;
+
+  ${p =>
+    p.noPadding &&
+    css`
+      padding: 0px;
+    `};
 
   @media only screen and (max-width: 800px) {
     flex-direction: column;

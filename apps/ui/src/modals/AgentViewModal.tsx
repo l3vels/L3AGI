@@ -21,8 +21,7 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
       onClose={() => closeModal('agent-view-modal')}
       show
       backgroundColor='light'
-
-      //   hideCloseButton={true}
+      hideCloseButton
     >
       <StyledModalBody>
         <AgentView agentData={agent} />
@@ -34,7 +33,7 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
 export default withRenderModal('agent-view-modal')(AgentViewModal)
 
 const StyledModalBody = styled.div`
-  /* padding-top: 0px; */
+  /* padding-top: 50px; */
 `
 const StyledModal = styled(Modal)`
   .components-Modal-Modal-module__overlay--OO00T {
