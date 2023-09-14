@@ -32,10 +32,10 @@ class TeamModel(BaseModel):
     workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
     account_id = Column(UUID, ForeignKey('account.id'), nullable=True, index=True)
     
-    account = relationship("AccountModel", cascade="all, delete")
-    team_agents = relationship("TeamAgentModel", back_populates="team")
-    chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete")
-    configs = relationship("ConfigModel", cascade="all, delete")
+    account = relationship("AccountModel", cascade="all, delete", lazy='noload')
+    team_agents = relationship("TeamAgentModel", back_populates="team", lazy='noload')
+    chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete", lazy='noload')
+    configs = relationship("ConfigModel", cascade="all, delete", lazy='noload')
     
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
@@ -150,6 +150,27 @@ class TeamModel(BaseModel):
             db.session.query(TeamModel)
             .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
+            .first()
+        )
+        
+    @classmethod
+    def get_team_by_id_with_account(cls, db, team_id):
+        """
+            Get Team from team_id
+
+            Args:
+                session: The database session.
+                team_id(int) : Unique identifier of an Team.
+
+            Returns:
+                Team: Team object is returned.
+        """
+        # return db.session.query(TeamModel).filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)).all()
+        teams = (
+            db.session.query(TeamModel)
+            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.creator))
+            .options(joinedload(TeamModel.account))
             .first()
         )
         return teams
