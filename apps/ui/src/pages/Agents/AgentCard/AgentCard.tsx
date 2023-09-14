@@ -107,7 +107,7 @@ const AgentCard = ({
               icon={() => <Delete />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Delete'
+              // ariaLabel='Delete'
             />
           )}
           {onEditClick && (
@@ -116,7 +116,7 @@ const AgentCard = ({
               icon={() => <Edit />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Edit'
+              // ariaLabel='Edit'
             />
           )}
           {onViewClick && (
@@ -129,7 +129,7 @@ const AgentCard = ({
               )}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='View'
+              // ariaLabel='View'
             />
           )}
           {onCreateClick && (

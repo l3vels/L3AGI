@@ -23,12 +23,15 @@ import { useNavigate } from 'react-router-dom'
 import { StyledButtonWrapper } from './CreateAgentForm'
 import CreateAgentButtonCard from './components/CreateAgentButtonCard'
 import { useModal } from 'hooks'
+import { useAgentTemplatesService } from 'services/discover/useAgentTemplatesService'
 
 const CreateAgentTemplate = () => {
-  const { agentsData, refetchAgent } = useAgents()
+  const { refetchAgent } = useAgents()
+
+  const { data: agentsData } = useAgentTemplatesService()
 
   const { openModal } = useModal()
-
+  console.log('agentsData', agentsData)
   const navigate = useNavigate()
 
   return (
