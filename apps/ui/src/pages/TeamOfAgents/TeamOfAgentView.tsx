@@ -111,11 +111,9 @@ const TeamOfAgentView = () => {
                     name={agent.name}
                     description={role}
                     onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
-                    // onDeleteClick={() => deleteAgentHandler(agent.id)}
                     onViewClick={() => navigate(`/agents/${agent.id}`)}
                     headerTag={agent.role}
                     onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
-                    creator={agent.creator.name}
                   />
                 )
               })}
