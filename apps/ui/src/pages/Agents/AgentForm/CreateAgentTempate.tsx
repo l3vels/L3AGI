@@ -66,7 +66,6 @@ const CreateAgentTemplate = () => {
                   description={agent.description}
                   onViewClick={() => navigate(`/agents/${agent.id}`)}
                   headerTag={agent.role}
-                  onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
                   onCreateClick={async () => {
                     await refetchAgent({ id: agent.id })
                     navigate(`/agents/create-agent?agentId=${agent.id}`)

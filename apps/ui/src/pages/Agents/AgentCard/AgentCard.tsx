@@ -101,11 +101,6 @@ const AgentCard = ({
           />
         </StyledCreatorWrapper>
         <StyledButtonsWrapper className='footerButtons'>
-          {onCreateClick && (
-            <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY} onClick={onCreateClick}>
-              Create
-            </Button>
-          )}
           {onDeleteClick && (
             <IconButton
               onClick={onDeleteClick}
@@ -136,6 +131,11 @@ const AgentCard = ({
               kind={IconButton.kinds.TERTIARY}
               ariaLabel='View'
             />
+          )}
+          {onCreateClick && (
+            <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onCreateClick}>
+              Create
+            </Button>
           )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
