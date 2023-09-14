@@ -1,7 +1,7 @@
 from langchain.agents import initialize_agent, AgentType
 from langchain.chat_models import ChatOpenAI
 from postgres import PostgresChatMessageHistory
-from memory.zep import ZepMemory
+from memory.zep.zep_memory import ZepMemory
 from services.pubsub import ChatPubSubService
 from l3_base import L3Base
 from config import Config
