@@ -28,6 +28,12 @@ class ChatMessage(BaseModel):
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
     agent = relationship("AgentModel", back_populates="chat_messages")
     team = relationship("TeamModel", back_populates="chat_messages")
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='noload')
+
 
     def to_dict(self):
         """

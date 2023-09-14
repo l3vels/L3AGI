@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Boolean, UUID, func, or_
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
 from sqlalchemy.dialects.postgresql import JSONB
@@ -21,7 +21,12 @@ class AccountModel(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None) 
-    deleted = Column(Boolean, default=False)
+    deleted = Column(Boolean, default=False)       
+    
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='noload')
+    
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")
     # projects = relationship("WorkspaceModel", back_populates="account")

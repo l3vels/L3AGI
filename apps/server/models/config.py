@@ -3,6 +3,7 @@ from typing import List, Optional
 import uuid
 
 from sqlalchemy import Column, String, Boolean, UUID, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import and_, or_
 from models.base_model import BaseModel
 from typings.config import ConfigInput, ConfigQueryParams, AccountSettings
@@ -46,6 +47,11 @@ class ConfigModel(BaseModel):
     is_secret = Column(Boolean)
     is_required = Column(Boolean)    
     is_deleted = Column(Boolean, default=False)
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='noload')
 
 
     def __repr__(self) -> str:

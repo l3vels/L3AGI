@@ -1,8 +1,7 @@
 import json
-from sqlalchemy import Column, DateTime, UUID
+from sqlalchemy import Column, DateTime, UUID, ForeignKey
 from datetime import datetime
 from models.db import Base
-
 
 class BaseModel(Base):
     """
@@ -22,8 +21,7 @@ class BaseModel(Base):
     __abstract__ = True
     created_on = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
     updated_on = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    created_by = Column(UUID, nullable=True)
-    modified_by = Column(UUID, nullable=True)
+
     
     def to_dict(self):
         """
