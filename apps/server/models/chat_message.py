@@ -17,7 +17,7 @@ class ChatMessage(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     parent_id = Column(UUID, ForeignKey('chat_message.id'), index=True)
-    session_id = Column(String, nullable=False, index=True, index=True)
+    session_id = Column(String, nullable=False, index=True)
     agent_id = Column(UUID, ForeignKey('agent.id'), index=True)
     team_id = Column(UUID, ForeignKey('team.id'), index=True)
     user_id = Column(UUID, nullable=False, index=True)
