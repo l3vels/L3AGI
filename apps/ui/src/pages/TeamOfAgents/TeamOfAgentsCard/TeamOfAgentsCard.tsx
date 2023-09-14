@@ -115,7 +115,7 @@ const TeamOfAgentCard = ({
               icon={() => <Delete />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Delete'
+              // ariaLabel='Delete'
             />
           )}
           {onEditClick && (
@@ -124,7 +124,7 @@ const TeamOfAgentCard = ({
               icon={() => <Edit />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Edit'
+              // ariaLabel='Edit'
             />
           )}
           {onViewClick && (
@@ -137,7 +137,7 @@ const TeamOfAgentCard = ({
               )}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='View'
+              // ariaLabel='View'
             />
           )}
         </StyledButtonsWrapper>

@@ -3,37 +3,38 @@ import withRenderModal from 'hocs/withRenderModal'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
-import AgentView from 'pages/Agents/AgentView'
 
-type AgentViewModalProps = {
+import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
+
+type TeamOfAgentsViewModalProps = {
   data: {
-    agent: any
+    teamOfAgents: any
   }
 }
 
-const AgentViewModal = ({ data }: AgentViewModalProps) => {
+const TeamOfAgentViewModal = ({ data }: TeamOfAgentsViewModalProps) => {
   const { closeModal } = useModal()
 
-  const { agent } = data
+  const { teamOfAgents } = data
 
   return (
     <StyledModal
-      onClose={() => closeModal('agent-view-modal')}
+      onClose={() => closeModal('team-of-agent-view-modal')}
       show
       backgroundColor='light'
       hideCloseButton
     >
       <StyledModalBody>
-        <AgentView agentData={agent} />
+        <TeamOfAgentView teamOfAgentsData={teamOfAgents} />
       </StyledModalBody>
     </StyledModal>
   )
 }
 
-export default withRenderModal('agent-view-modal')(AgentViewModal)
+export default withRenderModal('team-of-agent-view-modal')(TeamOfAgentViewModal)
 
 const StyledModalBody = styled.div`
-  max-width: 670px;
+  max-width: 650px;
 `
 const StyledModal = styled(Modal)`
   .components-Modal-Modal-module__overlay--OO00T {
