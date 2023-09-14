@@ -31,7 +31,7 @@ class TeamAgentModel(BaseModel):
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:
         return (

@@ -51,7 +51,7 @@ class AgentModel(BaseModel):
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
-    creator = relationship("UserModel", foreign_keys=[created_by])
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:
         return (
@@ -124,8 +124,12 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
             .filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None))
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(UserModel.agents))
             .all()
         )
         return agents
@@ -136,18 +140,20 @@ class AgentModel(BaseModel):
             db.session.query(AgentModel) 
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
                     AgentModel.is_template == True)
+            .options(joinedload(AgentModel.creator))
             .all()
         )
         return agents  
 
     @classmethod
-    def get_system_agents(cls, db):
+    def get_public_agents(cls, db):
         agents = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            # .join(UserModel, AgentModel.created_by == UserModel.id)           
+            # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
                     AgentModel.is_public == True)
+            .options(joinedload(AgentModel.creator))
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             # .options(joinedload(UserModel.agents))
             .all()
@@ -171,8 +177,12 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
             .filter(AgentModel.id == agent_id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None))
             .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(UserModel.agents))
             .first()
         )
         return agents

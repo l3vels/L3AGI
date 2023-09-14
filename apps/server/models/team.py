@@ -40,7 +40,7 @@ class TeamModel(BaseModel):
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:
         return (
@@ -161,5 +161,31 @@ class TeamModel(BaseModel):
 
         db_team.is_deleted = True
         db.session.commit()
+        
+    @classmethod        
+    def get_template_agents(cls, db):
+        agents = (
+            db.session.query(TeamModel) 
+            .filter(or_(TeamModel.is_deleted == False, TeamModel.is_deleted.is_(None)),
+                    TeamModel.is_template == True)
+            .options(joinedload(TeamModel.creator))
+            .all()
+        )
+        return agents  
+
+    @classmethod
+    def get_public_agents(cls, db):
+        agents = (
+            db.session.query(TeamModel)
+            # .join(AgentConfigModel, TeamModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, TeamModel.created_by == TeamModel.id)           
+            .filter(or_(TeamModel.is_deleted == False, TeamModel.is_deleted.is_(None)),
+                    TeamModel.is_public == True)
+            .options(joinedload(TeamModel.creator))
+            # .options(joinedload(TeamModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(TeamModel.agents))
+            .all()
+        )
+        return agents  
 
     
