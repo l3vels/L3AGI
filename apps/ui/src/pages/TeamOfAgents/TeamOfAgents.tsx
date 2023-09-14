@@ -49,6 +49,7 @@ const TeamOfAgents = () => {
                 onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
                 onChatClick={() => navigate(`/copilot?team=${teamOfAgents.id}`)}
+                creator={teamOfAgents.creator.name}
               />
             )
           })}

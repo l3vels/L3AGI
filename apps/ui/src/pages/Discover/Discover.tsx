@@ -46,6 +46,8 @@ const Discover = () => {
     }
   }
 
+  console.log('publicTeamAgents', publicTeamAgents)
+
   return (
     <StyledRoot>
       {!user && (
@@ -71,6 +73,7 @@ const Discover = () => {
                     teamAgents={teamOfAgents.team_agents}
                     onViewClick={() => handleChatClick(`/team-of-agents/${teamOfAgents.id}`)}
                     onChatClick={() => handleViewClick(`/copilot?team=${teamOfAgents.id}`)}
+                    creator={teamOfAgents.creator.name}
                   />
                 )
               })}

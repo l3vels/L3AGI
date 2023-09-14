@@ -25,6 +25,7 @@ type TeamOfAgentCardProps = {
   onDeleteClick?: () => void
   onChatClick?: () => void
   onViewClick?: () => void
+  creator?: any
 }
 
 const TeamOfAgentCard = ({
@@ -37,6 +38,7 @@ const TeamOfAgentCard = ({
   onEditClick,
   onChatClick,
   onViewClick,
+  creator,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description
   if (description.length > 40) {
@@ -100,9 +102,10 @@ const TeamOfAgentCard = ({
       </StyledCardBody>
       <StyledCardFooter>
         <StyledCreatorWrapper>
-          <StyledLogo src={l3Logo} />
+          <AvatarGenerator name={creator} size={16} textSizeRatio={1.5} />
+
           <Typography
-            value={'L3'}
+            value={creator}
             type={Typography.types.P}
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.6)'}
@@ -269,7 +272,7 @@ const StyledLogo = styled.img`
 const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 `
 
 const StyledAgentCards = styled.div`
