@@ -162,30 +162,27 @@ class TeamModel(BaseModel):
         db_team.is_deleted = True
         db.session.commit()
         
+    
     @classmethod        
-    def get_template_agents(cls, db):
-        agents = (
-            db.session.query(TeamModel) 
-            .filter(or_(TeamModel.is_deleted == False, TeamModel.is_deleted.is_(None)),
-                    TeamModel.is_template == True)
+    def get_template_teams(cls, db):
+        teams = (
+            db.session.query(TeamModel)
+            .filter(TeamModel.is_template == True, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
             .options(joinedload(TeamModel.creator))
             .all()
         )
-        return agents  
+        return teams
 
     @classmethod
-    def get_public_agents(cls, db):
-        agents = (
+    def get_public_teams(cls, db):
+        teams = (
             db.session.query(TeamModel)
-            # .join(AgentConfigModel, TeamModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, TeamModel.created_by == TeamModel.id)           
-            .filter(or_(TeamModel.is_deleted == False, TeamModel.is_deleted.is_(None)),
-                    TeamModel.is_public == True)
+            .filter(TeamModel.is_public == True, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
             .options(joinedload(TeamModel.creator))
-            # .options(joinedload(TeamModel.configs))  # if you have a relationship set up named "configs"
-            # .options(joinedload(TeamModel.agents))
             .all()
         )
-        return agents  
+        return teams
 
     

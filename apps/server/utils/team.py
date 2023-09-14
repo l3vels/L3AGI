@@ -20,7 +20,7 @@ def convert_model_to_response(team_model: TeamModel) -> TeamOutput:
             
         
     if team_model.creator:
-       team_model['creator'] = user_convert_model_to_response(team_model.creator)
+       team_data['creator'] = user_convert_model_to_response(team_model.creator)
        
     return TeamOutput(**team_data)
 

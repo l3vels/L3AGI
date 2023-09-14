@@ -82,13 +82,13 @@ def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
 
 @router.get("/discover/public", response_model=List[TeamOutput])
 def get_template_and_system_agents() -> List[TeamOutput]:
-    public_agents = TeamModel.get_public_agents(db=db)
+    public_agents = TeamModel.get_public_teams(db=db)
     
     return  convert_teams_to_team_list(public_agents)
 
 @router.get("/discover/templates", response_model=List[TeamOutput])
 def get_template_and_system_agents() -> List[TeamOutput]:
-    template_agents = TeamModel.get_template_agents(db=db)
+    template_agents = TeamModel.get_template_teams(db=db)
     return convert_teams_to_team_list(template_agents)
 
 @router.get("/types", response_model=List[object])
