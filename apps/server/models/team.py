@@ -128,6 +128,7 @@ class TeamModel(BaseModel):
             db.session.query(TeamModel)
             .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .filter(and_(*filter_conditions))
+            .options(joinedload(TeamModel.creator))
             .first()
         )
         return teams
