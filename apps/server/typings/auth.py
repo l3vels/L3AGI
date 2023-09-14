@@ -15,6 +15,7 @@ class RegisterInput(BaseModel):
     email: str
     account_name: str
     password:Optional[str]
+    avatar:Optional[str]
 
 class UserAccount(BaseModel):
     user: UserOutput
