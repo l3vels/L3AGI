@@ -45,7 +45,7 @@ class BaseTool(LangchainBaseTool):
     tool_id: str
     configs: Dict[str, str] = {}
     settings: Optional[AccountSettings] = None
-    toolkit_id: Optional[str] = None
+    toolkit_slug: Optional[str] = None
 
     def get_env_key(self, key: str):
         return self.configs.get(key)
@@ -65,7 +65,7 @@ class BaseToolkit(BaseModel):
         
         for tool in tools:
             tool.configs = config_dict
-            tool.toolkit_id = self.toolkit_id
+            tool.toolkit_slug = self.slug
         
         return tools
 
