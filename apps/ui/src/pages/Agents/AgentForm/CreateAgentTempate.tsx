@@ -31,7 +31,7 @@ const CreateAgentTemplate = () => {
   const { data: agentsData } = useAgentTemplatesService()
 
   const { openModal } = useModal()
-  console.log('agentsData', agentsData)
+
   const navigate = useNavigate()
 
   return (
@@ -57,7 +57,7 @@ const CreateAgentTemplate = () => {
             <Typography
               value='Choose Template'
               type={Typography.types.LABEL}
-              size={Typography.sizes.md}
+              size={Typography.sizes.lg}
               customColor={'#FFF'}
             />
           </StyledTemplateHeader>
