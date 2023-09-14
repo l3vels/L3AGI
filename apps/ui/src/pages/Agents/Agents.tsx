@@ -52,6 +52,7 @@ const Agents = () => {
                 onViewClick={() => navigate(`/agents/${agent.id}`)}
                 headerTag={agent.role}
                 onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
+                creator={agent.creator}
               />
             )
           })}

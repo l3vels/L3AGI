@@ -92,7 +92,8 @@ def auth_handler(body: AuthHandlerInput):
 
     user_email = user_data.get("email") or f'{user_data["login"]}@github.com'
     account_name = user_data["company"] if user_data["company"] else user_data["name"]
-    user = auth_service.login_with_github(name=user_data["name"], email=user_email, account_name=account_name)
+    avatar = user_data["avatar_url"]
+    user = auth_service.login_with_github(name=user_data["name"], email=user_email, account_name=account_name, avatar=avatar)
 
 
     token = generate_token(user.email, Authorize)

@@ -10,9 +10,11 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
+import TeamOfAgentsCard from 'pages/TeamOfAgents/TeamOfAgentsCard'
 import Toolkit from 'pages/Toolkit'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTeamOfAgentsPublicService } from 'services/team/useTeamOfAgentsPublicService'
 import styled from 'styled-components'
 
 import { useDiscover } from './useDiscover'
@@ -26,30 +28,66 @@ const Discover = () => {
 
   const { systemAgents, templateAgents } = useDiscover()
 
-  const handleChatClick = (agentId: string) => {
+  const { data: publicTeamAgents } = useTeamOfAgentsPublicService()
+
+  const handleChatClick = (url: string) => {
     if (!user) {
       openModal({ name: 'login-modal' })
     } else {
-      navigate(`/copilot?agent=${agentId}`)
+      navigate(url)
     }
   }
 
-  const handleViewClick = (agentId: string) => {
+  const handleViewClick = (url: string) => {
     if (!user) {
       openModal({ name: 'login-modal' })
     } else {
-      navigate(`/agents/${agentId}`)
+      navigate(url)
     }
   }
+
+  console.log('publicTeamAgents', publicTeamAgents)
 
   return (
     <StyledRoot>
+      {!user && (
+        <StyledSectionWrapper>
+          <StyledHeaderGroup className='header_group'>
+            <div>
+              <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
+
+              <StyledSectionDescription>
+                Create and manage your team of AI agents for interactive experiences
+              </StyledSectionDescription>
+            </div>
+          </StyledHeaderGroup>
+          <ComponentsWrapper noPadding>
+            <StyledCardsWrapper>
+              {publicTeamAgents?.map((teamOfAgents: any) => {
+                return (
+                  <TeamOfAgentsCard
+                    key={teamOfAgents.id}
+                    name={teamOfAgents.name}
+                    description={teamOfAgents.description}
+                    headerTag={teamOfAgents.team_type}
+                    teamAgents={teamOfAgents.team_agents}
+                    onViewClick={() => handleChatClick(`/team-of-agents/${teamOfAgents.id}`)}
+                    onChatClick={() => handleViewClick(`/copilot?team=${teamOfAgents.id}`)}
+                    creator={teamOfAgents.creator.name}
+                  />
+                )
+              })}
+            </StyledCardsWrapper>
+          </ComponentsWrapper>
+        </StyledSectionWrapper>
+      )}
+
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle>Discover AI Agents built with L3</StyledSectionTitle>
             <StyledSectionDescription>
-             Chat with the foremost minds shaping AI's future or create your own innovative ideas
+              Chat with the foremost minds shaping AI's future or create your own innovative ideas
             </StyledSectionDescription>
           </div>
         </StyledHeaderGroup>
@@ -63,9 +101,10 @@ const Discover = () => {
                   key={index}
                   name={agent.name}
                   description={agent.description}
-                  onViewClick={() => handleViewClick(agent.id)}
-                  onChatClick={() => handleChatClick(agent.id)}
+                  onViewClick={() => handleViewClick(`/agents/${agent.id}`)}
+                  onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
                   headerTag={agent.role}
+                  creator={agent.creator}
                 />
               )
             })}
@@ -81,7 +120,8 @@ const Discover = () => {
                 AI Agents Powered by the Efforts of the Community
               </StyledSectionTitle>
               <StyledSectionDescription>
-                Start a conversation with these exceptional AI talents today, or unleash your creativity and build your own.
+                Start a conversation with these exceptional AI talents today, or unleash your
+                creativity and build your own.
               </StyledSectionDescription>
             </div>
           </StyledHeaderGroup>
@@ -95,9 +135,10 @@ const Discover = () => {
                     key={index}
                     name={agent.name}
                     description={agent.description}
-                    onViewClick={() => handleViewClick(agent.id)}
-                    onChatClick={() => handleChatClick(agent.id)}
+                    onViewClick={() => handleViewClick(`/agents/${agent.id}`)}
+                    onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
                     headerTag={agent.role}
+                    creator={agent.creator}
                   />
                 )
               })}

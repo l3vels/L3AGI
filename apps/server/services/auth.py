@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
 from pydantic import BaseModel
@@ -61,38 +61,38 @@ def login(input:LoginInput):
 
     
 
-def login_with_google(token: str):
-    """
-    Authenticate with Google
-    """
-    try:
-        # Verify the token with Google's API
-        response = requests.get(f'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}')
+# def login_with_google(token: str):
+#     """
+#     Authenticate with Google
+#     """
+#     try:
+#         # Verify the token with Google's API
+#         response = requests.get(f'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}')
 
-        if response.status_code == 200:
-            # If the token is valid, Google's API will return the user's information
-            user_info = response.json()
+#         if response.status_code == 200:
+#             # If the token is valid, Google's API will return the user's information
+#             user_info = response.json()
 
-            # You can then use this information to create or update a user in your database
-            # For example, you might have a function like this:
-            # user = create_or_update_user(user_info)
+#             # You can then use this information to create or update a user in your database
+#             # For example, you might have a function like this:
+#             # user = create_or_update_user(user_info)
 
-            return user
+#             return user
 
-        else:
-            # If the token is not valid, Google's API will return an error
-            raise AuthenticationException('Invalid token')
+#         else:
+#             # If the token is not valid, Google's API will return an error
+#             raise AuthenticationException('Invalid token')
 
-    except requests.exceptions.RequestException as e:
-        raise AuthenticationException('Could not authenticate with Google')
+#     except requests.exceptions.RequestException as e:
+#         raise AuthenticationException('Could not authenticate with Google')
     
-def login_with_github(name:str, email: str, account_name:str):
+def login_with_github(name:str, email: str, account_name:str, avatar:Optional[str]):
     """
     Authenticate with Google
     """
     user = UserModel.get_user_by_email(db, email)
     if not user:
-        register_input = RegisterInput(name=name, email=email, account_name=account_name)
+        register_input = RegisterInput(name=name, email=email, account_name=account_name, avatar=avatar)
         registered = register(register_input)
         return registered['user']        
    

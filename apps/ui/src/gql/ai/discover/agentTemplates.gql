@@ -1,0 +1,7 @@
+query getAgentTemplates @api(name: "ai") {
+  getAgentTemplates
+    @rest(type: "Agent", path: "/agent/discover/templates", method: "GET", endpoint: "ai") {
+    agent
+    configs
+  }
+}

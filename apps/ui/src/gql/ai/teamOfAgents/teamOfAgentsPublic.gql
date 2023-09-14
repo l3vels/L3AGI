@@ -1,0 +1,8 @@
+#import "./teamOfAgentFragment.gql"
+
+query getTeamOfAgentsPublic @api(name: "ai") {
+  getTeamOfAgentsPublic
+    @rest(type: "TeamOfAgents", path: "/team/discover/public", method: "GET", endpoint: "ai") {
+    ...TeamOfAgentFragment
+  }
+}

@@ -8,6 +8,12 @@ fragment TeamOfAgentFragment on TeamOfAgents {
   is_public
   account_id
   created_by
+  creator {
+    id
+    name
+    email
+    avatar
+  }
   modified_by
   team_agents {
     id

@@ -25,6 +25,7 @@ type TeamOfAgentCardProps = {
   onDeleteClick?: () => void
   onChatClick?: () => void
   onViewClick?: () => void
+  creator?: any
 }
 
 const TeamOfAgentCard = ({
@@ -37,6 +38,7 @@ const TeamOfAgentCard = ({
   onEditClick,
   onChatClick,
   onViewClick,
+  creator,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description
   if (description.length > 40) {
@@ -100,11 +102,12 @@ const TeamOfAgentCard = ({
       </StyledCardBody>
       <StyledCardFooter>
         <StyledCreatorWrapper>
-          <StyledLogo src={l3Logo} />
+          <AvatarGenerator name={creator} size={16} textSizeRatio={1.5} />
+
           <Typography
-            value={'L3'}
+            value={creator}
             type={Typography.types.P}
-            size={Typography.sizes.sm}
+            size={Typography.sizes.xss}
             customColor={'rgba(255,255,255, 0.6)'}
           />
         </StyledCreatorWrapper>
@@ -115,7 +118,7 @@ const TeamOfAgentCard = ({
               icon={() => <Delete />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Delete'
+              // ariaLabel='Delete'
             />
           )}
           {onEditClick && (
@@ -124,7 +127,7 @@ const TeamOfAgentCard = ({
               icon={() => <Edit />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Edit'
+              // ariaLabel='Edit'
             />
           )}
           {onViewClick && (
@@ -137,7 +140,7 @@ const TeamOfAgentCard = ({
               )}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='View'
+              // ariaLabel='View'
             />
           )}
         </StyledButtonsWrapper>
@@ -269,7 +272,7 @@ const StyledLogo = styled.img`
 const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 `
 
 const StyledAgentCards = styled.div`
