@@ -16,18 +16,24 @@ class ChatMessage(BaseModel):
     __tablename__ = 'chat_message'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    parent_id = Column(UUID, ForeignKey('chat_message.id'))
+    parent_id = Column(UUID, ForeignKey('chat_message.id'), index=True)
     session_id = Column(String, nullable=False, index=True)
-    agent_id = Column(UUID, ForeignKey('agent.id'))
-    team_id = Column(UUID, ForeignKey('team.id'))
-    user_id = Column(UUID, nullable=False)
-    account_id = Column(UUID, nullable=False)
+    agent_id = Column(UUID, ForeignKey('agent.id'), index=True)
+    team_id = Column(UUID, ForeignKey('team.id'), index=True)
+    user_id = Column(UUID, nullable=False, index=True)
+    account_id = Column(UUID, nullable=False, index=True)
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
 
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
     agent = relationship("AgentModel", back_populates="chat_messages")
     team = relationship("TeamModel", back_populates="chat_messages")
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
+
 
     def to_dict(self):
         """

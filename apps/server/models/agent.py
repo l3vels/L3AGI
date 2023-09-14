@@ -3,11 +3,15 @@ from typing import List, Optional
 import uuid
 
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
-from sqlalchemy.orm import relationship, joinedload
+from sqlalchemy.orm import relationship, joinedload, foreign
 from models.base_model import BaseModel
 from typings.agent import ConfigInput, AgentInput
 from models.agent_config import AgentConfigModel
 from exceptions import AgentNotFoundException
+from models.user import UserModel
+from sqlalchemy import Column, DateTime, UUID, ForeignKey
+from datetime import datetime
+from models.base_model import RootBaseModel
 
 class AgentModel(BaseModel):
     """
@@ -24,25 +28,30 @@ class AgentModel(BaseModel):
         account_id (UUID): ID of the account associated with the agent.
         is_public (bool): Flag indicating if the agent is a system agent.
         configs: Relationship with agent configurations.
-    """
+    """ 
+    # __abstract__ = True
     __tablename__ = 'agent'
-
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     role = Column(String) 
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
     agent_type = Column(String) # Later add as Enum
     description = Column(String)
-    is_deleted = Column(Boolean, default=False)
-    is_template = Column(Boolean, default=False)
+    is_deleted = Column(Boolean, default=False, index=True)
+    is_template = Column(Boolean, default=False, index=True)
     is_memory = Column(Boolean, default=True)
     avatar = Column(String)
-    account_id = Column(UUID, nullable=True)    
-    is_public = Column(Boolean, default=False)
+    account_id = Column(UUID, nullable=True, index=True)    
+    is_public = Column(Boolean, default=False, index=True)
     
-    configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete")
-    chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete")
-    team_agents = relationship("TeamAgentModel", back_populates="agent")
+    configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete", lazy='noload')
+    chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete", lazy='noload')
+    team_agents = relationship("TeamAgentModel", back_populates="agent", cascade="all, delete", lazy='noload')
+    
+    
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:
         return (
@@ -114,9 +123,13 @@ class AgentModel(BaseModel):
     def get_agents(cls, db, account):
         agents = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
             .filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None))
-            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(UserModel.agents))
             .all()
         )
         return agents
@@ -124,23 +137,25 @@ class AgentModel(BaseModel):
     @classmethod
     def get_template_agents(cls, db):
         agents = (
-            db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            db.session.query(AgentModel) 
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
                     AgentModel.is_template == True)
-            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
             .all()
         )
         return agents  
 
     @classmethod
-    def get_system_agents(cls, db):
+    def get_public_agents(cls, db):
         agents = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
                     AgentModel.is_public == True)
-            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(UserModel.agents))
             .all()
         )
         return agents    
@@ -162,8 +177,12 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
             .filter(AgentModel.id == agent_id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None))
             .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(UserModel.agents))
             .first()
         )
         return agents

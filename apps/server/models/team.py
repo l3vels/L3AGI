@@ -9,6 +9,7 @@ from typings.team import TeamInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
+from models.user import UserModel
 
 class TeamModel(BaseModel):
     """
@@ -25,16 +26,21 @@ class TeamModel(BaseModel):
     name = Column(String)
     team_type = Column(String) #todo replace as enum (Debates, Plan_Execute, Authoritarian_Speaker, Decentralized_speaker)
     description = Column(String, nullable=True) 
-    is_deleted = Column(Boolean, default=False)
-    is_public = Column(Boolean, default=False)
-    is_template = Column(Boolean, default=False)
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
+    is_deleted = Column(Boolean, default=False, index=True)
+    is_public = Column(Boolean, default=False, index=True)
+    is_template = Column(Boolean, default=False, index=True)
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
+    account_id = Column(UUID, ForeignKey('account.id'), nullable=True, index=True)
     
     account = relationship("AccountModel", cascade="all, delete")
     team_agents = relationship("TeamAgentModel", back_populates="team")
     chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete")
     configs = relationship("ConfigModel", cascade="all, delete")
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:
         return (
@@ -155,5 +161,31 @@ class TeamModel(BaseModel):
 
         db_team.is_deleted = True
         db.session.commit()
+        
+    @classmethod        
+    def get_template_agents(cls, db):
+        agents = (
+            db.session.query(TeamModel) 
+            .filter(or_(TeamModel.is_deleted == False, TeamModel.is_deleted.is_(None)),
+                    TeamModel.is_template == True)
+            .options(joinedload(TeamModel.creator))
+            .all()
+        )
+        return agents  
+
+    @classmethod
+    def get_public_agents(cls, db):
+        agents = (
+            db.session.query(TeamModel)
+            # .join(AgentConfigModel, TeamModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, TeamModel.created_by == TeamModel.id)           
+            .filter(or_(TeamModel.is_deleted == False, TeamModel.is_deleted.is_(None)),
+                    TeamModel.is_public == True)
+            .options(joinedload(TeamModel.creator))
+            # .options(joinedload(TeamModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(TeamModel.agents))
+            .all()
+        )
+        return agents  
 
     

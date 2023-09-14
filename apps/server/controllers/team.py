@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import List, Dict
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
 
@@ -13,6 +13,7 @@ from utils.auth import authenticate
 from typings.auth import UserAccount
 from exceptions import TeamNotFoundException
 from agents.team_base import TeamOfAgentsType
+from utils.team import convert_teams_to_team_list, convert_model_to_response
 
 router = APIRouter()
 
@@ -78,6 +79,17 @@ def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
     """
     db_teams = TeamModel.get_teams(db=db, account=auth.account)
     return convert_teams_to_team_list(db_teams)
+
+@router.get("/discover/public", response_model=List[TeamOutput])
+def get_template_and_system_agents() -> List[TeamOutput]:
+    public_agents = TeamModel.get_public_agents(db=db)
+    
+    return  convert_teams_to_team_list(public_agents)
+
+@router.get("/discover/templates", response_model=List[TeamOutput])
+def get_template_and_system_agents() -> List[TeamOutput]:
+    template_agents = TeamModel.get_template_agents(db=db)
+    return convert_teams_to_team_list(template_agents)
 
 @router.get("/types", response_model=List[object])
 def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:

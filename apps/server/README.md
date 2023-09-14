@@ -48,6 +48,12 @@ We use `Alembic` for migrations. To create new migration run:
 alembic revision --autogenerate -m "Migration name"
 ```
 
+Update database manually
+
+```commandline
+alembic upgrade head
+```
+
 This will result in creating new migration file in `migrations/versions` folder.
 
 lt --port 4000 --print-requests

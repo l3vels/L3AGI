@@ -3,6 +3,7 @@ from typing import List, Optional
 import uuid
 
 from sqlalchemy import Column, String, Boolean, UUID, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import and_, or_
 from models.base_model import BaseModel
 from typings.config import ConfigInput, ConfigQueryParams, AccountSettings
@@ -33,19 +34,24 @@ class ConfigModel(BaseModel):
 
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    key = Column(String)
-    agent_id = Column(UUID,ForeignKey('agent.id'), nullable=True)
+    key = Column(String, index=True)
+    agent_id = Column(UUID,ForeignKey('agent.id'), nullable=True, index=True)
     toolkit_id = Column(UUID, nullable=True)
     account_id = Column(UUID, nullable=True)
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True)
-    datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True)
-    team_id = Column(UUID, ForeignKey('team.id'), nullable=True)
-    team_agent_id = Column(UUID, ForeignKey('team_agent.id'), nullable=True)
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True)
+    datasource_id = Column(UUID, ForeignKey('datasource.id'), nullable=True, index=True)
+    team_id = Column(UUID, ForeignKey('team.id'), nullable=True, index=True)
+    team_agent_id = Column(UUID, ForeignKey('team_agent.id'), nullable=True, index=True)
     value = Column(String)
     key_type = Column(String)
     is_secret = Column(Boolean)
     is_required = Column(Boolean)    
-    is_deleted = Column(Boolean, default=False)
+    is_deleted = Column(Boolean, default=False, index=True)
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
 
 
     def __repr__(self) -> str:

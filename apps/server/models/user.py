@@ -20,12 +20,11 @@ class UserModel(RootBaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None)
-    email = Column(String(100), default=None)
+    email = Column(String(100), index=True, default=None)
     password = Column(String, default=None)
     is_active = Column(Boolean, default=True)
-    is_deleted = Column(Boolean, default=False)
-    deleted = Column(Boolean, default=False)
-    
+    is_deleted = Column(Boolean, default=False, index=True)
+
     @classmethod
     def hash_password(cls, password):
         """Hash a password for storing."""

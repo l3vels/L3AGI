@@ -26,8 +26,12 @@ class WorkspaceModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     description = Column(String, nullable=True)
-    is_deleted = Column(Boolean, default=False)
-    is_public = Column(Boolean, default=False)
-    account_id = Column(UUID, nullable=True)
+    is_deleted = Column(Boolean, default=False, index=True)
+    is_public = Column(Boolean, default=False, index=True)
+    account_id = Column(UUID, nullable=True, index=True)    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     

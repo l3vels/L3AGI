@@ -6,7 +6,7 @@ from utils.type import convert_value_to_type
 
 def convert_model_to_response(user_model: UserModel) -> UserOutput:
     user_data = {}
-    
+
     # Extract attributes from UserModel using annotations of User
     for key in UserOutput.__annotations__.keys():
         if hasattr(user_model, key):
