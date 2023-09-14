@@ -9,6 +9,7 @@ from typings.team import TeamInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
+from models.user import UserModel
 
 class TeamModel(BaseModel):
     """
@@ -35,6 +36,11 @@ class TeamModel(BaseModel):
     team_agents = relationship("TeamAgentModel", back_populates="team")
     chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete")
     configs = relationship("ConfigModel", cascade="all, delete")
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='noload')
     
     def __repr__(self) -> str:
         return (
