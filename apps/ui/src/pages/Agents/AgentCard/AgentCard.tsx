@@ -36,7 +36,7 @@ const AgentCard = ({
   onViewClick,
   onChatClick,
   onCreateClick,
-  creator = '',
+  creator,
 }: AgentCardProps) => {
   let shortDescription = description
   if (description.length > 85) {
@@ -94,9 +94,14 @@ const AgentCard = ({
         {creator && (
           <StyledCreatorWrapper>
             {/* <StyledLogo src={l3Logo} /> */}
-            <AvatarGenerator name={creator} size={16} textSizeRatio={1.5} />
+            <AvatarGenerator
+              name={creator.name}
+              size={16}
+              textSizeRatio={1.5}
+              avatar={creator.avatar}
+            />
             <Typography
-              value={creator}
+              value={creator.name}
               type={Typography.types.P}
               size={Typography.sizes.sm}
               customColor={'rgba(255,255,255, 0.6)'}

@@ -104,7 +104,7 @@ const Discover = () => {
                   onViewClick={() => handleViewClick(`/agents/${agent.id}`)}
                   onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
                   headerTag={agent.role}
-                  creator={agent.creator.name}
+                  creator={agent.creator}
                 />
               )
             })}
@@ -138,7 +138,7 @@ const Discover = () => {
                     onViewClick={() => handleViewClick(`/agents/${agent.id}`)}
                     onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
                     headerTag={agent.role}
-                    creator={agent.creator.name}
+                    creator={agent.creator}
                   />
                 )
               })}
