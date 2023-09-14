@@ -6,6 +6,7 @@ type AvatarGeneratorProps = {
   size: number
   isRound?: boolean
   textSizeRatio?: number
+  avatar?: string
 }
 
 const AVATAR_COLORS = [
@@ -19,10 +20,17 @@ const AvatarGenerator = ({
   size,
   isRound = true,
   textSizeRatio = 3,
+  avatar,
 }: AvatarGeneratorProps) => {
   return (
     <ConfigProvider colors={AVATAR_COLORS}>
-      <StyledAvatar name={name} size={`${size}`} textSizeRatio={textSizeRatio} round={isRound} />
+      <StyledAvatar
+        name={name}
+        size={`${size}`}
+        textSizeRatio={textSizeRatio}
+        round={isRound}
+        src={avatar}
+      />
     </ConfigProvider>
   )
 }

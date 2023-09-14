@@ -1,6 +1,7 @@
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 import {
@@ -10,12 +11,12 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
+
 import TeamOfAgentsCard from './TeamOfAgentsCard'
 import { useTeamOfAgents } from './useTeamOfAgents'
 
 const TeamOfAgents = () => {
-  const { teamOfAgents, deleteTeamOfAgentsHandler } = useTeamOfAgents()
+  const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
 
   const navigate = useNavigate()
 
@@ -36,7 +37,7 @@ const TeamOfAgents = () => {
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {teamOfAgents?.map((teamOfAgents: any) => {
+          {teamOfAgentsArray?.map((teamOfAgents: any) => {
             return (
               <TeamOfAgentsCard
                 key={teamOfAgents.id}
@@ -48,6 +49,7 @@ const TeamOfAgents = () => {
                 onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
                 onChatClick={() => navigate(`/copilot?team=${teamOfAgents.id}`)}
+                creator={teamOfAgents.creator.name}
               />
             )
           })}

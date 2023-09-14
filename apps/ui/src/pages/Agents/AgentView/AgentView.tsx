@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -21,19 +21,22 @@ import {
 import BackButton from 'components/BackButton'
 import AgentToolkits from './components/AgentToolkits'
 import AgentDatasources from './components/AgentDatasources'
+import { useModal } from 'hooks'
 
-const AgentView = () => {
+const AgentView = ({ agentData }: { agentData?: any }) => {
   const navigate = useNavigate()
+
+  const { closeModal } = useModal()
 
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
-  if (!agentById) return <div />
+  if (!agentById && !agentData) return <div />
 
-  const { agent, configs } = agentById
+  const { agent, configs } = agentById || agentData
 
-  const { name, description, role } = agent
+  const { name, description, role, creator } = agent
 
   const {
     tools,
@@ -52,19 +55,25 @@ const AgentView = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Agent</StyledSectionTitle>
-          <StyledSectionDescription>
-            Witness the growth of exceptional AI talents, nurtured by collective community
-            contributions.
-          </StyledSectionDescription>
+          {!agentData && (
+            <>
+              <StyledSectionTitle>Agent</StyledSectionTitle>
+              <StyledSectionDescription>
+                Witness the growth of exceptional AI talents, nurtured by collective community
+                contributions.
+              </StyledSectionDescription>
+            </>
+          )}
         </div>
 
         <div>
-          <BackButton />
+          <BackButton
+            customOnClick={agentData ? () => closeModal('agent-view-modal') : undefined}
+          />
         </div>
       </StyledHeaderGroup>
-      <ComponentsWrapper noPadding>
-        <StyledInnerWrapper>
+      <ComponentsWrapper noPadding hideBox={agentData}>
+        <StyledInnerWrapper noPadding={agentData}>
           <StyledLeftColumn>
             <StyledDetailsBox>
               <StyledWrapper>
@@ -74,9 +83,9 @@ const AgentView = () => {
                   size={Typography.sizes.lg}
                   customColor={'#FFF'}
                 />
-                {model_provider && (
+                {creator && (
                   <Typography
-                    value={`By ${model_provider}`}
+                    value={`By ${creator.name}`}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
                     customColor={'rgba(255,255,255,0.6)'}
@@ -85,7 +94,12 @@ const AgentView = () => {
                 <div>
                   <Button
                     size={Button.sizes.SMALL}
-                    onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
+                    onClick={() => {
+                      if (agentData) {
+                        closeModal('agent-view-modal')
+                      }
+                      navigate(`/agents/create-agent?agentId=${agent.id}`)
+                    }}
                   >
                     <StyledInnerButtonWrapper>
                       <Download size={28} />
@@ -113,6 +127,8 @@ const AgentView = () => {
 
               <StyledWrapper>
                 {role && <TagsRow title='Role' items={[role]} />}
+
+                {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
 
                 {model_version && <TagsRow title='Model' items={[model_version]} />}
 
@@ -169,7 +185,7 @@ const AgentView = () => {
 
 export default AgentView
 
-export const StyledInnerWrapper = styled.div`
+export const StyledInnerWrapper = styled.div<{ noPadding?: boolean }>`
   /* background: grey; */
 
   width: 100%;
@@ -179,6 +195,12 @@ export const StyledInnerWrapper = styled.div`
   display: flex;
   padding: 0 20px;
   gap: 10px;
+
+  ${p =>
+    p.noPadding &&
+    css`
+      padding: 0px;
+    `};
 
   @media only screen and (max-width: 800px) {
     flex-direction: column;
@@ -222,7 +244,7 @@ export const StyledDetailsBox = styled.div`
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   padding: 10px 0;
 `
 

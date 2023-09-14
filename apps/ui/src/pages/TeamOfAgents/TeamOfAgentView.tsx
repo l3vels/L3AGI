@@ -27,35 +27,37 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import AgentCard from 'pages/Agents/AgentCard'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
 
-const TeamOfAgentView = () => {
+const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const navigate = useNavigate()
 
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
 
-  if (!data) return <div />
+  if (!data && !teamOfAgentsData) return <div />
 
-  const { name, description, team_type, team_agents } = data
-
-  console.log('data', data)
+  const { name, description, team_type, team_agents } = data || teamOfAgentsData
 
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Agent</StyledSectionTitle>
-          <StyledSectionDescription>
-            Witness the growth of exceptional AI talents, nurtured by collective community
-            contributions.
-          </StyledSectionDescription>
+          {!teamOfAgentsData && (
+            <>
+              <StyledSectionTitle>Agent</StyledSectionTitle>
+              <StyledSectionDescription>
+                Witness the growth of exceptional AI talents, nurtured by collective community
+                contributions.
+              </StyledSectionDescription>
+            </>
+          )}
         </div>
 
         <div>
           <BackButton />
         </div>
       </StyledHeaderGroup>
-      <ComponentsWrapper noPadding>
-        <StyledInnerWrapper>
+      <ComponentsWrapper noPadding hideBox={teamOfAgentsData}>
+        <StyledInnerWrapper noPadding={teamOfAgentsData}>
           <StyledLeftColumn>
             <StyledDetailsBox>
               <StyledWrapper>
@@ -113,7 +115,6 @@ const TeamOfAgentView = () => {
                     name={agent.name}
                     description={role}
                     onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
-                    // onDeleteClick={() => deleteAgentHandler(agent.id)}
                     onViewClick={() => navigate(`/agents/${agent.id}`)}
                     headerTag={agent.role}
                     onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}

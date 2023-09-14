@@ -11,8 +11,6 @@ import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
-import l3Logo from 'assets/images/l3_logo.png'
-
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type AgentCardProps = {
@@ -25,6 +23,7 @@ type AgentCardProps = {
   onViewClick: () => void
   onChatClick?: () => void
   onCreateClick?: () => void
+  creator?: any
 }
 
 const AgentCard = ({
@@ -37,6 +36,7 @@ const AgentCard = ({
   onViewClick,
   onChatClick,
   onCreateClick,
+  creator,
 }: AgentCardProps) => {
   let shortDescription = description
   if (description.length > 85) {
@@ -91,15 +91,23 @@ const AgentCard = ({
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
-        <StyledCreatorWrapper>
-          <StyledLogo src={l3Logo} />
-          <Typography
-            value={'L3'}
-            type={Typography.types.P}
-            size={Typography.sizes.sm}
-            customColor={'rgba(255,255,255, 0.6)'}
-          />
-        </StyledCreatorWrapper>
+        {creator && (
+          <StyledCreatorWrapper>
+            {/* <StyledLogo src={l3Logo} /> */}
+            <AvatarGenerator
+              name={creator.name}
+              size={16}
+              textSizeRatio={1.5}
+              avatar={creator.avatar}
+            />
+            <Typography
+              value={creator.name}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255,255,255, 0.6)'}
+            />
+          </StyledCreatorWrapper>
+        )}
         <StyledButtonsWrapper className='footerButtons'>
           {onDeleteClick && (
             <IconButton
@@ -107,7 +115,7 @@ const AgentCard = ({
               icon={() => <Delete />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Delete'
+              // ariaLabel='Delete'
             />
           )}
           {onEditClick && (
@@ -116,7 +124,7 @@ const AgentCard = ({
               icon={() => <Edit />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Edit'
+              // ariaLabel='Edit'
             />
           )}
           {onViewClick && (
@@ -129,7 +137,7 @@ const AgentCard = ({
               )}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              ariaLabel='View'
+              // ariaLabel='View'
             />
           )}
           {onCreateClick && (
@@ -257,11 +265,9 @@ const StyledInnerButtonWrapper = styled.div`
   color: #fff;
   gap: 5px;
 `
-const StyledLogo = styled.img`
-  width: 20px;
-`
+
 const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 `

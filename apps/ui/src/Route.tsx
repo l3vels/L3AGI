@@ -70,6 +70,8 @@ import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
 import HomeRouteLayout from 'routes/HomeRouteLayout'
 import LoginModal from 'modals/LoginModal'
 import CreateAgentTemplate from 'pages/Agents/AgentForm/CreateAgentTempate'
+import AgentViewModal from 'modals/AgentViewModal'
+import TeamOfAgentViewModal from 'modals/TeamOfAgentViewModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -219,6 +221,8 @@ const Route = () => {
       <CreateDatasourceModal />
       <EditDatasourceModal />
       <LoginModal />
+      <AgentViewModal />
+      <TeamOfAgentViewModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}
