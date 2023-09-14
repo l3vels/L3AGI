@@ -8,7 +8,7 @@ from postgres import PostgresChatMessageHistory
 from agents.plan_and_execute.chat_planner import initialize_chat_planner
 from agents.plan_and_execute.agent_executor import initialize_executor
 from agents.plan_and_execute.plan_and_execute import PlanAndExecute
-from memory.zep import ZepMemory
+from memory.zep.zep_memory import ZepMemory
 from config import Config
 from utils.agent import convert_model_to_response
 from utils.system_message import SystemMessageBuilder

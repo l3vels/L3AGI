@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 openai = "==0.27.9"
-langchain = "==0.0.266"
+langchain = "==0.0.288"
 fastapi = {extras = ["all"], version = "==0.99.1"}
 requests = "==2.31.0"
 pydantic = "==1.10.11"
@@ -28,7 +28,7 @@ psycopg2-binary = "*"
 arxiv = "*"
 duckduckgo-search = "*"
 wikipedia = "*"
-langchain-experimental = "==0.0.9"
+langchain-experimental = "==0.0.17"
 zep-python = "*"
 llama-index = "*"
 sqlalchemy = "*"

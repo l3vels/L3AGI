@@ -10,7 +10,7 @@ from langchain_experimental.plan_and_execute.schema import (
 )
 from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder, PromptTemplate
 from langchain.schema.messages import SystemMessage
-from memory.zep import ZepMemory
+from memory.zep.zep_memory import ZepMemory
 
 
 class PlanningOutputParser(PlanOutputParser):

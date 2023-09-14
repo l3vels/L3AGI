@@ -1,8 +1,8 @@
 from __future__ import annotations
 from typing import Any, Dict, Optional
-from memory.buffer import ConversationBufferMemory
-from langchain.memory.chat_message_histories import ZepChatMessageHistory
 from pydantic import Field
+from memory.buffer import ConversationBufferMemory
+from memory.zep.zep_chat_message_history import ZepChatMessageHistory
 
 
 class ZepMemory(ConversationBufferMemory):
@@ -88,8 +88,6 @@ class ZepMemory(ConversationBufferMemory):
                                         Ensure that this matches the key used in
                                         chain's prompt template.
         """
-
-        # self.metadata
 
         chat_message_history = ZepChatMessageHistory(
             session_id=session_id,
