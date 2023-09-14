@@ -45,6 +45,7 @@ pymysql = "*"
 youtube-search = "*"
 pyowm = "*"
 bs4 = "*"
+twilio = "*"
 
 [dev-packages]
 

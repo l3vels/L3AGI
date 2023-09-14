@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "65dea5ce9069034c3043bd42aff6dcf8b0266a6d81352c285387bb4ad538b046"
+            "sha256": "6754bc6e22114db66e4fc24a5101a2d2f06c40b80e8182c80b3300ba62b6327a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -2597,11 +2597,18 @@
         },
         "traitlets": {
             "hashes": [
-                "sha256:9e6ec080259b9a5940c797d58b613b5e31441c2257b87c2e795c5228ae80d2d8",
-                "sha256:f6cde21a9c68cf756af02035f72d5a723bf607e862e7be33ece505abf4a3bad9"
+                "sha256:417745a96681fbb358e723d5346a547521f36e9bd0d50ba7ab368fff5d67aa54",
+                "sha256:f584ea209240466e66e91f3c81aa7d004ba4cf794990b0c775938a1544217cd1"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==5.9.0"
+            "markers": "python_version >= '3.8'",
+            "version": "==5.10.0"
+        },
+        "twilio": {
+            "hashes": [
+                "sha256:cd1456b5deb82166d5f41d5e5eecd7938e656a626571332b9d9ae8062303fabd"
+            ],
+            "index": "pypi",
+            "version": "==6.63.2"
         },
         "typing-extensions": {
             "hashes": [
