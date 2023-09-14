@@ -29,13 +29,13 @@ class DatasourceModel(BaseModel):
     name = Column(String)
     source_type = Column(String) # Later add as Enum
     description = Column(String, nullable=True)
-    is_deleted = Column(Boolean, default=False)
-    is_public = Column(Boolean, default=False)
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True)
-    account_id = Column(UUID, nullable=True)
+    is_deleted = Column(Boolean, default=False, index=True)
+    is_public = Column(Boolean, default=False, index=True)
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True)
+    account_id = Column(UUID, nullable=True, index=True)
     
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:

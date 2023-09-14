@@ -26,11 +26,11 @@ class TeamModel(BaseModel):
     name = Column(String)
     team_type = Column(String) #todo replace as enum (Debates, Plan_Execute, Authoritarian_Speaker, Decentralized_speaker)
     description = Column(String, nullable=True) 
-    is_deleted = Column(Boolean, default=False)
-    is_public = Column(Boolean, default=False)
-    is_template = Column(Boolean, default=False)
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=True)
+    is_deleted = Column(Boolean, default=False, index=True)
+    is_public = Column(Boolean, default=False, index=True)
+    is_template = Column(Boolean, default=False, index=True)
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
+    account_id = Column(UUID, ForeignKey('account.id'), nullable=True, index=True)
     
     account = relationship("AccountModel", cascade="all, delete")
     team_agents = relationship("TeamAgentModel", back_populates="team")
@@ -38,8 +38,8 @@ class TeamModel(BaseModel):
     configs = relationship("ConfigModel", cascade="all, delete")
     
         
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:

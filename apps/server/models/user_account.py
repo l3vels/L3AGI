@@ -18,8 +18,8 @@ class UserAccountModel(BaseModel):
     __tablename__ = 'user_account'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    user_id = Column(UUID, ForeignKey('user.id'), nullable=False) 
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=False) 
+    user_id = Column(UUID, ForeignKey('user.id'), nullable=False, index=True) 
+    account_id = Column(UUID, ForeignKey('account.id'), nullable=False, index=True) 
     
     
     def __repr__(self) -> str:

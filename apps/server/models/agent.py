@@ -34,23 +34,23 @@ class AgentModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     role = Column(String) 
-    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True) 
+    workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
     agent_type = Column(String) # Later add as Enum
     description = Column(String)
-    is_deleted = Column(Boolean, default=False)
-    is_template = Column(Boolean, default=False)
+    is_deleted = Column(Boolean, default=False, index=True)
+    is_template = Column(Boolean, default=False, index=True)
     is_memory = Column(Boolean, default=True)
     avatar = Column(String)
-    account_id = Column(UUID, nullable=True)    
-    is_public = Column(Boolean, default=False)
+    account_id = Column(UUID, nullable=True, index=True)    
+    is_public = Column(Boolean, default=False, index=True)
     
     configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete", lazy='noload')
     chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete", lazy='noload')
     team_agents = relationship("TeamAgentModel", back_populates="agent", cascade="all, delete", lazy='noload')
     
     
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
     
     def __repr__(self) -> str:
