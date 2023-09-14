@@ -1,15 +1,17 @@
 from models.agent import AgentModel
+from utils.user import convert_model_to_response as user_convert_model_to_response
 from typing import List, Optional
-from typings.agent import AgentResponse, ConfigsOutput, AgentInput, AgentWithConfigsOutput
+from typings.agent import AgentOutput, ConfigsOutput, AgentInput, AgentWithConfigsOutput
 from utils.type import convert_value_to_type
+
 
 def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput:
     agent_data = {}
     
     # Extract attributes from AgentModel using annotations of Agent
-    for key in AgentResponse.__annotations__.keys():
+    for key in AgentOutput.__annotations__.keys():
         if hasattr(agent_model, key):
-            target_type = AgentResponse.__annotations__.get(key)
+            target_type = AgentOutput.__annotations__.get(key)
             agent_data[key] = convert_value_to_type(value=getattr(agent_model, key), target_type=target_type)
     
     # Convert AgentConfigModel instances to Config
@@ -26,7 +28,11 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput
         
         configs[key] = value
     
-    return AgentWithConfigsOutput(agent=AgentResponse(**agent_data), 
+    if agent_model.creator:
+       agent_data['creator'] = user_convert_model_to_response(agent_model.creator)
+
+    
+    return AgentWithConfigsOutput(agent=AgentOutput(**agent_data), 
                                     configs= ConfigsOutput(**configs) if configs else None )
 
 

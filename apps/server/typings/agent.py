@@ -1,5 +1,6 @@
 from pydantic import BaseModel, UUID4
 from typing import List, Optional
+from typings.user import UserOutput
 
 class AgentInput(BaseModel):
     name: str
@@ -43,7 +44,7 @@ class ConfigsOutput(BaseModel):
 
 
 
-class AgentResponse(BaseModel):
+class AgentOutput(BaseModel):
     id: UUID4
     name: str
     description: str
@@ -55,12 +56,13 @@ class AgentResponse(BaseModel):
     is_public: bool
     account_id: UUID4
     created_by: Optional[UUID4]
+    creator: Optional[UserOutput]
     modified_by: Optional[UUID4]
     is_memory: Optional[bool]
     avatar: Optional[str]
     
 class AgentWithConfigsOutput(BaseModel):
-    agent: AgentResponse
+    agent: AgentOutput
     configs: Optional[ConfigsOutput]
  
     
