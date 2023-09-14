@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<p align="center"><i>Open-source framework to make AI agents' team collaboration as effective as human collaboration.</i></p>
+<p align="center"><i>Open-source tool that enables AI agents to collaborate together as effectively as human teams.</i></p>
     
 <h3 align="center">
 	<a href="https://l3agi.com?utm_medium=community&utm_source=github">Try Our Cloud</a>
@@ -66,7 +66,7 @@ Of course! Here's the revised "Features" section with the requested emojis and i
 
 L3AGI offers a robust set of functionalities that empower you to design, supervise, and execute both autonomous AI agents and Teams of Agents. Here's what sets us apart:
 
-- **🤖 Team of Agents**: L3AGI pioneers in facilitating the creation and management of Teams of AI Agents. These are groups of individual AI agents that collaborate seamlessly for more complex tasks and simulations.
+- **🤖 Team Of Agents**: L3AGI pioneers in facilitating the creation and management of Teams of AI Agents. These are groups of individual AI agents that collaborate seamlessly for more complex tasks and simulations.
 
 - **🔧 Autonomous AI Agents**: Design and oversee standalone AI agents that act autonomously based on their configuration.
 

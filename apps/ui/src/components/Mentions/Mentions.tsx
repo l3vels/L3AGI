@@ -57,7 +57,7 @@ const Mentions = ({
     return {
       display: name,
       id: `team__${id}`,
-      type: 'Team of Agents',
+      type: 'Team Of Agents',
       icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
     }
   })

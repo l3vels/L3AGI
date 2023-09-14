@@ -47,7 +47,7 @@ const MainNavigation = () => {
         <StyledIconWrapper>
           <Team size={30} />
         </StyledIconWrapper>
-        <span>Team of AGI</span>
+        <span>Team</span>
       </StyledLi>
       <StyledLi
         isActive={includes(active, 'datasources')}

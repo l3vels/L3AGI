@@ -16,9 +16,9 @@ L3AGI is an innovative open-source platform envisioned for the creation, managem
 
 ---
 
-### **Teams of AI Agents (Team of AGI)** <a name="teams-of-ai-agents"></a>
+### **Teams of AI Agents** <a name="teams-of-ai-agents"></a>
 
-A unique feature of L3AGI, Teams of AI Agents (or Team of AGI) allows for the collaboration of individual agents to achieve more complex tasks or simulations. Here's a deep dive:
+A unique feature of L3AGI, Teams of AI Agents allows for the collaboration of individual agents to achieve more complex tasks or simulations. Here's a deep dive:
 
 - **What is a Team of AI Agents?**
   - A cohesive group of AI agents working together under predefined configurations to achieve a shared goal.

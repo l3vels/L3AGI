@@ -25,7 +25,7 @@ const GetStartedComponent = () => {
       />
       <GetStartedCard
         subTitle={'Learn about'}
-        title={'Team of Agents'}
+        title={'Team Of Agents'}
         image={cardBg3}
         bgColor={'blue'}
         link={import.meta.env.REACT_APP_TEAM_LINK}

@@ -2,7 +2,7 @@
 
 Teams of agents allow for collaboration among different AI agents, each potentially tailored for specific tasks or roles. This document provides a guide on how to create and manage teams of agents and interact with them.
 
-### What is a Team of Agents?
+### What is a Team Of Agents?
 
 A team of agents consists of multiple agents that can work together. Each agent can have a specific role within the team, such as Planner, Executor, or Speaker. Teams can be public or private, active or inactive. They also come with various configuration fields to further customize the behavior and interactions.
 
@@ -34,7 +34,7 @@ There are different types of teams tailored to different collaborative scenarios
     - **Roles**: Varies based on configuration.
 
 
-### Creating a Team of Agents
+### Creating a Team Of Agents
 
 Follow these steps to create a team of agents:
 
@@ -45,7 +45,7 @@ Follow these steps to create a team of agents:
 5. Set visibility settings (public or private).
 6. Activate or deactivate the team based on your requirement.
 
-### Chatting with a Team of Agents
+### Chatting with a Team Of Agents
 
 When you initiate a conversation with a team of agents:
 
