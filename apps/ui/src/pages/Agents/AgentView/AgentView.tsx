@@ -36,7 +36,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
   const { agent, configs } = agentById || agentData
 
-  const { name, description, role } = agent
+  const { name, description, role, creator } = agent
 
   const {
     tools,
@@ -83,9 +83,9 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
                   size={Typography.sizes.lg}
                   customColor={'#FFF'}
                 />
-                {model_provider && (
+                {creator && (
                   <Typography
-                    value={`By ${model_provider}`}
+                    value={`By ${creator.name}`}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
                     customColor={'rgba(255,255,255,0.6)'}
@@ -127,6 +127,8 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
               <StyledWrapper>
                 {role && <TagsRow title='Role' items={[role]} />}
+
+                {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
 
                 {model_version && <TagsRow title='Model' items={[model_version]} />}
 
@@ -242,7 +244,7 @@ export const StyledDetailsBox = styled.div`
 export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   padding: 10px 0;
 `
 
