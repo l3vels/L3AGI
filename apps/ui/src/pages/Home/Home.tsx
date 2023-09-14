@@ -12,7 +12,6 @@ import Discover from 'pages/Discover'
 import GetStartedCard from './GetStarted/GetStartedCard'
 
 import cardBg4 from 'assets/images/whiteBg.png'
-import GetStartedContainer from './GetStarted/GetStartedContainer'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -24,16 +23,14 @@ const Home = () => {
         {user ? (
           <GetStartedComponent />
         ) : (
-          <GetStartedContainer noText>
-            <GetStartedCard
-              fullWidth
-              subTitle={'Learn about'}
-              title={'Empower your tasks with self-sufficient AI agents. Begin chatting today!'}
-              image={cardBg4}
-              bgColor={'red'}
-              link={""}
-            />
-          </GetStartedContainer>
+          <GetStartedCard
+            fullWidth
+            subTitle={'Learn about'}
+            title={'Empower your tasks with self-sufficient AI agents. Begin chatting today!'}
+            image={cardBg4}
+            bgColor={'red'}
+            link={''}
+          />
         )}
         {user ? (
           <>

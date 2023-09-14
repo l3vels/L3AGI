@@ -27,11 +27,13 @@ const CreateTeamOfAgentsForm = () => {
             <div>
               <StyledSectionTitle>Add Team</StyledSectionTitle>
               <StyledSectionDescription>
-              Create and manage your team of AI agents for interactive experiences.
+                Create and manage your team of AI agents for interactive experiences.
               </StyledSectionDescription>
             </div>
 
             <StyledButtonWrapper>
+              <BackButton />
+
               <Button
                 onClick={() => handleSubmit(formik?.values)}
                 size={Button.sizes.SMALL}
@@ -39,8 +41,6 @@ const CreateTeamOfAgentsForm = () => {
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </Button>
-
-              <BackButton />
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 

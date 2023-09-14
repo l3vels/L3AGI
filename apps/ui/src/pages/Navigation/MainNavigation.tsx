@@ -8,7 +8,6 @@ import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 
-
 import { useLocation, useNavigate } from 'react-router-dom'
 import { includes } from 'lodash'
 
@@ -60,16 +59,12 @@ const MainNavigation = () => {
         <Games />
         <span>Toolkits</span>
       </StyledLi>
-      <StyledLi
-        isActive={includes(active, 'discover')}
-        onClick={() => onHandleClick('/discover')}
-      >
+      <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
         <StyledIconWrapper>
           <Launch size={30} />
         </StyledIconWrapper>
         <span>Discover</span>
       </StyledLi>
-
     </StyledUl>
   )
 }
@@ -115,9 +110,11 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
         fill-opacity: 1
       }
     }
-`}
+`}/* background: red; */
 `
 const StyledIconWrapper = styled.div`
   color: #fff;
-  margin-bottom: 10px;
+
+  /* margin-bottom: 10px; */
+  margin-top: 10px;
 `

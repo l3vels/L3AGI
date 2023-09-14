@@ -27,7 +27,7 @@ export const useAgents = () => {
 
   const agentId = urlParams.get('agentId')
 
-  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const { data: agentById, refetch: refetchAgent } = useAgentByIdService({ id: agentId || '' })
 
   let initialValues = {
     agent_name: '',
@@ -154,5 +154,6 @@ export const useAgents = () => {
     deleteAgentHandler,
     refetchAgents,
     isLoading,
+    refetchAgent,
   }
 }
