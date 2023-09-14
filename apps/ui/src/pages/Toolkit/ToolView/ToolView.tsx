@@ -14,7 +14,6 @@ import { toolLogos } from '../constants'
 import FormikTextField from 'components/TextFieldFormik'
 import { useToolView } from './useToolView'
 import { FormikProvider } from 'formik'
-import { useEffect } from 'react'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 
@@ -26,13 +25,6 @@ const ToolView = () => {
   const fields = tool?.fields
 
   const toolLogo = toolLogos.filter((toolLogo: any) => toolLogo.toolName === name)
-
-  useEffect(() => {
-    formik?.setFieldValue('tool_key', fields?.[0]?.key)
-    formik?.setFieldValue('tool_key_type', fields?.[0]?.type)
-    formik?.setFieldValue('tool_is_required', fields?.[0]?.is_required)
-    formik?.setFieldValue('tool_is_secret', fields?.[0]?.is_secret)
-  }, [formik?.values?.tool_value])
 
   return (
     <FormikProvider value={formik}>
@@ -94,10 +86,10 @@ const ToolView = () => {
                 return (
                   <FormikTextField
                     key={index}
-                    name='tool_value'
+                    name={field.key}
                     placeholder=''
                     label={field.label}
-                    field_name={'tool_value'}
+                    field_name={field.key}
                   />
                 )
               })}
@@ -146,4 +138,7 @@ const StyledFieldsWrapper = styled.div`
   margin-top: 20px;
   width: 100%;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `
