@@ -50,11 +50,3 @@ const StyledTabContext = styled(TabsContext)`
     height: 100%;
   }
 `
-const StyledTabList = styled(TabList)`
-  position: fixed;
-  z-index: 12000000;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-`

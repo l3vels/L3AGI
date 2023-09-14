@@ -209,6 +209,7 @@ const Route = () => {
           <Router path='/authentication/:id' element={<TwoFAuthentication />} />
           <Router path='/login/update-password' element={<UpdatePassword />} />
           <Router path='/cheat-code' element={<CheatCode />} />
+          <Router path='/chat/history' element={<AIChat />} />
         </Router>
       </Routes>
 
