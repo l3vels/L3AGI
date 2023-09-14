@@ -15,13 +15,13 @@ class AccountModel(BaseModel):
         id (UUID): Unique identifier of the account.
         user_id (UUID): ID of the user associated with the account.
         name (str): Name of the account.
-        deleted (bool): Flag indicating if the account has been soft-deleted.
+        is_deleted (bool): Flag indicating if the account has been soft-is_deleted.
     """
     __tablename__ = 'account'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None) 
-    deleted = Column(Boolean, default=False)       
+    is_deleted = Column(Boolean, default=False)       
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
@@ -35,7 +35,7 @@ class AccountModel(BaseModel):
         return (
             f"Account(id={self.id}, "
             f"name='{self.name}', "
-            f"deleted={self.deleted})"
+            f"is_deleted={self.is_deleted})"
         )
 
     @classmethod
@@ -73,7 +73,7 @@ class AccountModel(BaseModel):
     def get_accounts(cls, db):
         accounts = (
             db.session.query(AccountModel)
-            .filter(or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            .filter(or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
             .all()
         )
         return accounts
@@ -83,7 +83,7 @@ class AccountModel(BaseModel):
     def get_account_by_id(cls, db, account_id):
         accounts = (
             db.session.query(AccountModel)
-            .filter(AccountModel.id == account_id, or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            .filter(AccountModel.id == account_id, or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
             .first()
         )
         return accounts
@@ -92,7 +92,7 @@ class AccountModel(BaseModel):
     def get_account_created_by(cls, db, user_id):
         accounts = (
             db.session.query(AccountModel)
-            .filter(AccountModel.created_by == user_id, or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            .filter(AccountModel.created_by == user_id, or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
             .first()
         )
         return accounts
@@ -103,7 +103,7 @@ class AccountModel(BaseModel):
         accounts = (
              db.session.query(AccountModel)
             .join(UserAccountModel, AccountModel.id == UserAccountModel.account_id)
-            .filter(UserAccountModel.account_id == account_id, or_(or_(AccountModel.deleted == False, AccountModel.deleted is None), AccountModel.deleted is None))
+            .filter(UserAccountModel.account_id == account_id, or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .first()
         )
@@ -113,8 +113,8 @@ class AccountModel(BaseModel):
     def delete_by_id(cls, db, account_id):
         db_account = db.session.query(AccountModel).filter(AccountModel.id == account_id).first()
 
-        if not db_account or db_account.deleted:
+        if not db_account or db_account.is_deleted:
             raise AccountNotFoundException("Account not found")
 
-        db_account.deleted = True
+        db_account.is_deleted = True
         db.session.commit()

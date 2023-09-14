@@ -24,7 +24,6 @@ class UserModel(RootBaseModel):
     password = Column(String, default=None)
     is_active = Column(Boolean, default=True)
     is_deleted = Column(Boolean, default=False, index=True)
-    deleted = Column(Boolean, default=False, index=True)
 
     @classmethod
     def hash_password(cls, password):
