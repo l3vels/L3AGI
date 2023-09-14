@@ -37,8 +37,6 @@ const TeamOfAgentView = () => {
 
   const { name, description, team_type, team_agents } = data
 
-  console.log('data', data)
-
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
@@ -117,6 +115,7 @@ const TeamOfAgentView = () => {
                     onViewClick={() => navigate(`/agents/${agent.id}`)}
                     headerTag={agent.role}
                     onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
+                    creator={agent.creator.name}
                   />
                 )
               })}
