@@ -169,7 +169,7 @@ const AgentView = () => {
 
 export default AgentView
 
-const StyledInnerWrapper = styled.div`
+export const StyledInnerWrapper = styled.div`
   /* background: grey; */
 
   width: 100%;
@@ -184,7 +184,7 @@ const StyledInnerWrapper = styled.div`
     flex-direction: column;
   }
 `
-const StyledLeftColumn = styled.div`
+export const StyledLeftColumn = styled.div`
   position: sticky;
   top: 0;
 
@@ -198,14 +198,14 @@ const StyledLeftColumn = styled.div`
   }
 `
 
-const StyledRightColumn = styled.div`
+export const StyledRightColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
 
   width: 100%;
 `
-const StyledDetailsBox = styled.div`
+export const StyledDetailsBox = styled.div`
   background: rgba(0, 0, 0, 0.2);
 
   width: 300px;
@@ -219,19 +219,19 @@ const StyledDetailsBox = styled.div`
   flex-direction: column;
   gap: 10px;
 `
-const StyledWrapper = styled.div`
+export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 10px 0;
 `
 
-const StyledDivider = styled.div`
+export const StyledDivider = styled.div`
   width: 100%;
   height: 1px;
   background: rgba(255, 255, 255, 0.4);
 `
-const StyledInnerButtonWrapper = styled.div`
+export const StyledInnerButtonWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;

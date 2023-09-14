@@ -9,6 +9,8 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
+import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import l3Logo from 'assets/images/l3_logo.png'
@@ -22,6 +24,7 @@ type TeamOfAgentCardProps = {
   onEditClick?: () => void
   onDeleteClick?: () => void
   onChatClick?: () => void
+  onViewClick?: () => void
 }
 
 const TeamOfAgentCard = ({
@@ -33,6 +36,7 @@ const TeamOfAgentCard = ({
   onDeleteClick,
   onEditClick,
   onChatClick,
+  onViewClick,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description
   if (description.length > 40) {
@@ -121,6 +125,19 @@ const TeamOfAgentCard = ({
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               ariaLabel='Edit'
+            />
+          )}
+          {onViewClick && (
+            <IconButton
+              onClick={onViewClick}
+              icon={() => (
+                <StyledIconWrapper>
+                  <EyeOpen size={50} />
+                </StyledIconWrapper>
+              )}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              ariaLabel='View'
             />
           )}
         </StyledButtonsWrapper>
