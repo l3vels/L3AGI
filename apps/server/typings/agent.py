@@ -61,7 +61,7 @@ class AgentResponse(BaseModel):
     
 class AgentWithConfigsOutput(BaseModel):
     agent: AgentResponse
-    configs: ConfigsOutput
+    configs: Optional[ConfigsOutput]
  
     
     
