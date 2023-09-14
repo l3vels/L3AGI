@@ -107,7 +107,7 @@ const TeamOfAgentCard = ({
           <Typography
             value={creator}
             type={Typography.types.P}
-            size={Typography.sizes.sm}
+            size={Typography.sizes.xss}
             customColor={'rgba(255,255,255, 0.6)'}
           />
         </StyledCreatorWrapper>
