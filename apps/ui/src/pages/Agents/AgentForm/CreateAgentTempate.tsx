@@ -22,9 +22,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { StyledButtonWrapper } from './CreateAgentForm'
 import CreateAgentButtonCard from './components/CreateAgentButtonCard'
+import { useModal } from 'hooks'
 
 const CreateAgentTemplate = () => {
   const { agentsData, refetchAgent } = useAgents()
+
+  const { openModal } = useModal()
 
   const navigate = useNavigate()
 
@@ -64,7 +67,9 @@ const CreateAgentTemplate = () => {
                   key={index}
                   name={agent.name}
                   description={agent.description}
-                  onViewClick={() => navigate(`/agents/${agent.id}`)}
+                  onViewClick={() =>
+                    openModal({ name: 'agent-view-modal', data: { agent: agentObj } })
+                  }
                   headerTag={agent.role}
                   onCreateClick={async () => {
                     await refetchAgent({ id: agent.id })

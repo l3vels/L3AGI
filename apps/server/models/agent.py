@@ -129,7 +129,7 @@ class AgentModel(BaseModel):
             .filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None))
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .options(joinedload(AgentModel.creator))
-            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             # .options(joinedload(UserModel.agents))
             .all()
         )
@@ -142,6 +142,7 @@ class AgentModel(BaseModel):
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
                     AgentModel.is_template == True)
             .options(joinedload(AgentModel.creator))
+            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .all()
         )
         return agents  

@@ -22,16 +22,16 @@ import BackButton from 'components/BackButton'
 import AgentToolkits from './components/AgentToolkits'
 import AgentDatasources from './components/AgentDatasources'
 
-const AgentView = () => {
+const AgentView = ({ agentData }: { agentData?: any }) => {
   const navigate = useNavigate()
 
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
-  if (!agentById) return <div />
+  if (!agentById && !agentData) return <div />
 
-  const { agent, configs } = agentById
+  const { agent, configs } = agentById || agentData
 
   const { name, description, role } = agent
 
@@ -59,9 +59,11 @@ const AgentView = () => {
           </StyledSectionDescription>
         </div>
 
-        <div>
-          <BackButton />
-        </div>
+        {!agentData && (
+          <div>
+            <BackButton />
+          </div>
+        )}
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
         <StyledInnerWrapper>
@@ -168,6 +170,11 @@ const AgentView = () => {
 }
 
 export default AgentView
+
+const StyledRoot = styled.div`
+  width: 500px;
+  height: 500px;
+`
 
 export const StyledInnerWrapper = styled.div`
   /* background: grey; */
