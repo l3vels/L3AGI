@@ -24,7 +24,7 @@ import { StyledButtonWrapper } from './CreateAgentForm'
 import CreateAgentButtonCard from './components/CreateAgentButtonCard'
 
 const CreateAgentTemplate = () => {
-  const { agentsData } = useAgents()
+  const { agentsData, refetchAgent } = useAgents()
 
   const navigate = useNavigate()
 
@@ -67,7 +67,8 @@ const CreateAgentTemplate = () => {
                   onViewClick={() => navigate(`/agents/${agent.id}`)}
                   headerTag={agent.role}
                   onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
-                  onCreateClick={() => {
+                  onCreateClick={async () => {
+                    await refetchAgent({ id: agent.id })
                     navigate(`/agents/create-agent?agentId=${agent.id}`)
                   }}
                 />
