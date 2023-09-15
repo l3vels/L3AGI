@@ -12,6 +12,7 @@ import InstagramLogo from 'assets/tools/instagram.webp'
 import SlackLogo from 'assets/tools/slack.png'
 import GmailLogo from 'assets/tools/gmail.png'
 import GoogleCalendarLogo from 'assets/tools/googleCalendar.png'
+import ChartLogo from 'assets/tools/chart.png'
 
 export const toolLogos = [
   {
@@ -69,5 +70,9 @@ export const toolLogos = [
   {
     logoSrc: GoogleCalendarLogo,
     toolName: 'Google Calendar Toolkit',
+  },
+  {
+    logoSrc: ChartLogo,
+    toolName: 'Chart Toolkit',
   },
 ]

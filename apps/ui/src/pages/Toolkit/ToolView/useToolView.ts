@@ -27,33 +27,48 @@ export const useToolView = () => {
 
   const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === tool.toolkit_id)
 
-  const initialValues = {
-    tool_key: filteredConfig[0]?.key,
-    tool_value: filteredConfig[0]?.value,
-    tool_key_type: filteredConfig[0]?.key_type,
-    tool_is_secret: filteredConfig[0]?.is_secret,
-    tool_is_required: filteredConfig[0]?.is_required,
-  }
+  const { fields } = tool
+
+  const initialValues: Record<string, string> = {}
+
+  fields?.forEach((field: any) => {
+    initialValues[field.key] = filteredConfig.find((config: any) => config.key === field.key)?.value
+  })
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: async values => handleSubmit(values),
+  })
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
 
-    try {
-      const toolFieldInput = {
-        key: values.tool_key,
-        value: values.tool_value,
-        key_type: values.tool_key_type,
-        is_required: values.tool_is_required,
-        is_secret: values.tool_is_secret,
-        tool_id: tool.toolkit_id,
-      }
+    const configs = []
 
+    for (const key in values) {
+      const value = values[key]
+      const field = fields.find((field: any) => field.key === key)
+
+      configs.push({
+        key,
+        value,
+        key_type: field.type,
+        is_required: field.is_required,
+        is_secret: field.is_secret,
+        tool_id: tool.toolkit_id,
+      })
+    }
+
+    try {
       if (filteredConfig.length === 0) {
-        await createConfig(toolFieldInput)
+        const promises = configs.map((config: any) => createConfig(config))
+        await Promise.all(promises)
       } else {
-        await updateConfig(filteredConfig[0]?.id, {
-          ...toolFieldInput,
-        })
+        const promises = configs.map((config: any) =>
+          updateConfig(filteredConfig.find((cfg: any) => cfg.key === config.key).id, config),
+        )
+
+        await Promise.all(promises)
       }
       await refetchConfigs()
       setToast({
@@ -70,11 +85,6 @@ export const useToolView = () => {
     }
     setIsLoading(false)
   }
-
-  const formik = useFormik({
-    initialValues: initialValues,
-    onSubmit: async values => handleSubmit(values),
-  })
 
   return { tool, formik, handleSubmit, isLoading }
 }

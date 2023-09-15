@@ -4,21 +4,23 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 from tools.base import BaseTool
-
+from langchain.utilities.twilio import TwilioAPIWrapper
+from exceptions import ToolEnvKeyException
 
 class TwilioSendSchema(BaseModel):
     query: str = Field(
         ...,
-        description="The message and number for Twilio send.",
+        description="The message and phone number for Twilio to send to separated by semicolon",
     )
 
 class TwilioSendTool(BaseTool):
-    """Tool that queries Twilio."""
+    """Tool that sends text message using Twilio."""
 
     name = "Twilio Send"
     
     description = (
-        "Send a text message using Twilio."
+        "Send a text message or SMS using Twilio."
+        "Input query is the message and phone number for Twilio to send separated by semicolon"
     )
 
     args_schema: Type[TwilioSendSchema] = TwilioSendSchema
@@ -29,5 +31,30 @@ class TwilioSendTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Send text message and return."""
-        return ""
+        account_sid = self.get_env_key("TWILIO_ACCOUNT_SID")
+        auth_token = self.get_env_key("TWILIO_AUTH_TOKEN")
+        from_number = self.get_env_key("TWILIO_FROM_NUMBER")
 
+        if not account_sid:
+            raise ToolEnvKeyException(f"Please fill Twilio Account SID in the [Twilio Toolkit](/toolkits/{self.toolkit_slug})")
+
+        if not auth_token:
+            raise ToolEnvKeyException(f"Please fill Twilio Auth Token in the [Twilio Toolkit](/toolkits/{self.toolkit_slug})")
+
+        if not from_number:
+            raise ToolEnvKeyException(f"Please fill Twilio From Number in the [Twilio Toolkit](/toolkits/{self.toolkit_slug})")
+
+        
+        twilio = TwilioAPIWrapper(
+            account_sid=account_sid,
+            auth_token=auth_token,
+            from_number=from_number,
+        )
+
+        message, phone = query.split(';')
+
+        try:
+            sid = twilio.run(message.strip(), phone.strip())
+            return "Text message was sent successfully. Message SID: " + sid
+        except Exception as err:
+            return "Error: " + str(err)

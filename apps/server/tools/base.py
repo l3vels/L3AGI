@@ -5,6 +5,7 @@ from langchain.tools import BaseTool as LangchainBaseTool
 from enum import Enum
 from models.config import ConfigModel
 from typings.config import ConfigQueryParams, AccountSettings
+from typings.account import AccountOutput
 
 class ToolEnvKeyType(Enum):
     STRING = 'string'
@@ -46,6 +47,7 @@ class BaseTool(LangchainBaseTool):
     configs: Dict[str, str] = {}
     settings: Optional[AccountSettings] = None
     toolkit_slug: Optional[str] = None
+    account: Optional[AccountOutput] = None
 
     def get_env_key(self, key: str):
         return self.configs.get(key)
@@ -58,7 +60,7 @@ class BaseToolkit(BaseModel):
     slug: str
     is_active: bool = Field(default=True)
 
-    def get_tools_with_configs(self, db, account) -> List[BaseTool]:
+    def get_tools_with_configs(self, db, account, settings) -> List[BaseTool]:
         configs = ConfigModel.get_configs(db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account)
         config_dict = {config.key: config.value for config in configs}
         tools = self.get_tools()
@@ -66,6 +68,8 @@ class BaseToolkit(BaseModel):
         for tool in tools:
             tool.configs = config_dict
             tool.toolkit_slug = self.slug
+            tool.settings = settings
+            tool.account = account
         
         return tools
 
