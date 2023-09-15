@@ -34,7 +34,7 @@ const TeamOfAgentViewModal = ({ data }: TeamOfAgentsViewModalProps) => {
 export default withRenderModal('team-of-agent-view-modal')(TeamOfAgentViewModal)
 
 const StyledModalBody = styled.div`
-  max-width: 650px;
+  max-width: 1000px;
 `
 const StyledModal = styled(Modal)`
   .components-Modal-Modal-module__overlay--OO00T {
