@@ -12,6 +12,15 @@
       "cwd": "${workspaceFolder}/apps/server"
     },
     {
+      "name": "Python: PDF",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/server/pdf/pdf.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/apps/server"
+    },
+    {
       "name": "Python: Test",
       "type": "python",
       "request": "launch",
