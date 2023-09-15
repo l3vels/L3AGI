@@ -56,23 +56,30 @@ class L3AuthoritarianSpeaker(L3Base):
             # here the director chooses the next speaker
             idx = director.select_next_speaker() + 1  # +1 because we excluded the director
         return idx
+    
+    def generate_specified_prompt(self, topic, agent_summary, team):
+        description = """
+        This is a Daily Show episode discussing the following topic: {user_input}.
+        The episode features {agents}.
+        Please elaborate on the topic. 
+        Frame the topic as a single question to be answered.
+        Be creative and imaginative.
+        Please reply with the specified topic in {word_limit} words or less. 
+        Do not add anything else."""
+        
 
-    def generate_specified_prompt(self, topic, conversation_description):
+        if team.description:
+            description = team.description
+        
+        content = description.format(user_input=topic, word_limit=self.word_limit, agents=agent_summary)  
+
         topic_specifier_prompt = [
-            SystemMessage(content="You can make a task more specific."),
-            HumanMessage(
-                content=f"""{conversation_description}
-                
-                Please elaborate on the topic. 
-                Frame the topic as a single question to be answered.
-                Be creative and imaginative.
-                Please reply with the specified topic in {self.word_limit} words or less. 
-                Do not add anything else."""
-            ),
+            SystemMessage(content="You can make a topic more specific."),
+            HumanMessage(content=content),
         ]
-        specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
+        specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
         return specified_topic
-
+    
     def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
         datasource_tools = get_datasource_tools(datasources, settings)
@@ -86,15 +93,13 @@ class L3AuthoritarianSpeaker(L3Base):
             agents_with_configs:List[AgentWithConfigsOutput],   
             history: PostgresChatMessageHistory,
             ):
-        agent_summary_string = "\n- ".join(
+        agent_summary = "\n- ".join(
             [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
         )
 
-        conversation_description = f"""This is a Daily Show episode discussing the following topic: {topic}.
 
-        The episode features {agent_summary_string}."""
 
-        specified_topic = self.generate_specified_prompt(topic, conversation_description)
+        specified_topic = self.generate_specified_prompt(topic, agent_summary, team)
 
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
