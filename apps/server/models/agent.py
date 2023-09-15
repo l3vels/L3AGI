@@ -205,7 +205,7 @@ class AgentModel(BaseModel):
             .filter(or_(AgentModel.is_deleted == False, AgentModel.is_deleted.is_(None)),
                     AgentModel.is_public == True)
             .options(joinedload(AgentModel.creator))
-            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             # .options(joinedload(UserModel.agents))
             .all()
         )
