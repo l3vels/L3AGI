@@ -145,16 +145,22 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
    cd L3AGI
    ```
 
-3. **Setup Git Hooks**
+3. **Create `.env` file from `.env.example` in root directory**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Configure `.env` file with your own values.
+
+4. **Setup Git Hooks**
 
    ```bash
    chmod +x setup.sh
    ./setup.sh
    ```
 
-   This will build and start both the React UI and FastAPI services.
-
-4. 🐳 **Run Docker Compose:**
+5. 🐳 **Run Docker Compose:**
 
    ```bash
    docker-compose up --build
