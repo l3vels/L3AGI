@@ -32,10 +32,10 @@ const MainNavigation = () => {
   return (
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-        {/* <About /> */}
-        <StyledIconWrapper>
+        <About />
+        {/* <StyledIconWrapper>
           <Launch size={30} />
-        </StyledIconWrapper>
+        </StyledIconWrapper> */}
         {/* <span>Home</span> */}
         <span>Discover</span>
       </StyledLi>

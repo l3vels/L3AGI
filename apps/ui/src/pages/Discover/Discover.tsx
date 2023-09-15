@@ -51,7 +51,7 @@ const Discover = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
+            <StyledSectionTitle>Discover Team of Agents</StyledSectionTitle>
 
             <StyledSectionDescription>
               Create and manage your team of AI agents for interactive experiences
@@ -108,7 +108,7 @@ const Discover = () => {
                       data: { agent: agentObj },
                     })
                   }
-                  onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
+                  onChatClick={() => handleChatClick(`/chat/history?agent=${agent.id}`)}
                   headerTag={agent.role}
                   creator={agent.creator}
                 />
@@ -147,7 +147,7 @@ const Discover = () => {
                         data: { agent: agentObj },
                       })
                     }
-                    onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
+                    onChatClick={() => handleChatClick(`/chat/history?agent=${agent.id}`)}
                     headerTag={agent.role}
                     creator={agent.creator}
                   />
