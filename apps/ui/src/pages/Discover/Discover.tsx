@@ -46,41 +46,42 @@ const Discover = () => {
     }
   }
 
-  console.log('publicTeamAgents', publicTeamAgents)
-
   return (
     <StyledRoot>
-      {!user && (
-        <StyledSectionWrapper>
-          <StyledHeaderGroup className='header_group'>
-            <div>
-              <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
+      <StyledSectionWrapper>
+        <StyledHeaderGroup className='header_group'>
+          <div>
+            <StyledSectionTitle>Discover Team of Agents</StyledSectionTitle>
 
-              <StyledSectionDescription>
-                Create and manage your team of AI agents for interactive experiences
-              </StyledSectionDescription>
-            </div>
-          </StyledHeaderGroup>
-          <ComponentsWrapper noPadding>
-            <StyledCardsWrapper>
-              {publicTeamAgents?.map((teamOfAgents: any) => {
-                return (
-                  <TeamOfAgentsCard
-                    key={teamOfAgents.id}
-                    name={teamOfAgents.name}
-                    description={teamOfAgents.description}
-                    headerTag={teamOfAgents.team_type}
-                    teamAgents={teamOfAgents.team_agents}
-                    onViewClick={() => handleChatClick(`/team-of-agents/${teamOfAgents.id}`)}
-                    onChatClick={() => handleViewClick(`/copilot?team=${teamOfAgents.id}`)}
-                    creator={teamOfAgents.creator.name}
-                  />
-                )
-              })}
-            </StyledCardsWrapper>
-          </ComponentsWrapper>
-        </StyledSectionWrapper>
-      )}
+            <StyledSectionDescription>
+              Create and manage your team of AI agents for interactive experiences
+            </StyledSectionDescription>
+          </div>
+        </StyledHeaderGroup>
+        <ComponentsWrapper noPadding>
+          <StyledCardsWrapper>
+            {publicTeamAgents?.map((teamOfAgents: any) => {
+              return (
+                <TeamOfAgentsCard
+                  key={teamOfAgents.id}
+                  name={teamOfAgents.name}
+                  description={teamOfAgents.description}
+                  headerTag={teamOfAgents.team_type}
+                  teamAgents={teamOfAgents.team_agents}
+                  onViewClick={() =>
+                    openModal({
+                      name: 'team-of-agent-view-modal',
+                      data: { teamOfAgents: teamOfAgents },
+                    })
+                  }
+                  onChatClick={() => handleViewClick(`/chat/history?team=${teamOfAgents.id}`)}
+                  creator={teamOfAgents.creator.name}
+                />
+              )
+            })}
+          </StyledCardsWrapper>
+        </ComponentsWrapper>
+      </StyledSectionWrapper>
 
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
@@ -94,15 +95,20 @@ const Discover = () => {
         <ComponentsWrapper noPadding>
           <StyledCardsWrapper>
             {systemAgents?.map((agentObj: any, index: number) => {
-              const { agent, configs } = agentObj
+              const { agent } = agentObj
 
               return (
                 <AgentCard
                   key={index}
                   name={agent.name}
                   description={agent.description}
-                  onViewClick={() => handleViewClick(`/agents/${agent.id}`)}
-                  onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
+                  onViewClick={() =>
+                    openModal({
+                      name: 'agent-view-modal',
+                      data: { agent: agentObj },
+                    })
+                  }
+                  onChatClick={() => handleChatClick(`/chat/history?agent=${agent.id}`)}
                   headerTag={agent.role}
                   creator={agent.creator}
                 />
@@ -128,15 +134,20 @@ const Discover = () => {
           <ComponentsWrapper noPadding>
             <StyledCardsWrapper>
               {templateAgents?.map((agentObj: any, index: number) => {
-                const { agent, configs } = agentObj
+                const { agent } = agentObj
 
                 return (
                   <AgentCard
                     key={index}
                     name={agent.name}
                     description={agent.description}
-                    onViewClick={() => handleViewClick(`/agents/${agent.id}`)}
-                    onChatClick={() => handleChatClick(`/copilot?agent=${agent.id}`)}
+                    onViewClick={() =>
+                      openModal({
+                        name: 'agent-view-modal',
+                        data: { agent: agentObj },
+                      })
+                    }
+                    onChatClick={() => handleChatClick(`/chat/history?agent=${agent.id}`)}
                     headerTag={agent.role}
                     creator={agent.creator}
                   />

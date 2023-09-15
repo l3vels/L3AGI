@@ -26,9 +26,12 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import AgentCard from 'pages/Agents/AgentCard'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
+import { useModal } from 'hooks'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const navigate = useNavigate()
+
+  const { closeModal } = useModal()
 
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
@@ -40,21 +43,23 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
-          {!teamOfAgentsData && (
-            <>
-              <StyledSectionTitle>Agent</StyledSectionTitle>
-              <StyledSectionDescription>
-                Witness the growth of exceptional AI talents, nurtured by collective community
-                contributions.
-              </StyledSectionDescription>
-            </>
-          )}
-        </div>
+        {!teamOfAgentsData && (
+          <>
+            <div>
+              <>
+                <StyledSectionTitle>Agent</StyledSectionTitle>
+                <StyledSectionDescription>
+                  Witness the growth of exceptional AI talents, nurtured by collective community
+                  contributions.
+                </StyledSectionDescription>
+              </>
+            </div>
 
-        <div>
-          <BackButton />
-        </div>
+            <div>
+              <BackButton />
+            </div>
+          </>
+        )}
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding hideBox={teamOfAgentsData}>
         <StyledInnerWrapper noPadding={teamOfAgentsData}>

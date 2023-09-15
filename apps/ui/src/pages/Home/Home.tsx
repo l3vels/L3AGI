@@ -32,7 +32,10 @@ const Home = () => {
             link={''}
           />
         )}
-        {user ? (
+
+        <Discover />
+
+        {/* {user ? (
           <>
             <Agents />
             <StyledDivider />
@@ -40,7 +43,7 @@ const Home = () => {
           </>
         ) : (
           <Discover />
-        )}
+        )} */}
         {/* 
         <TopCharts />
         <Documentation /> */}

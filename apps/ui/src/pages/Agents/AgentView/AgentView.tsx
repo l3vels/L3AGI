@@ -54,23 +54,23 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
-          {!agentData && (
-            <>
-              <StyledSectionTitle>Agent</StyledSectionTitle>
-              <StyledSectionDescription>
-                Witness the growth of exceptional AI talents, nurtured by collective community
-                contributions.
-              </StyledSectionDescription>
-            </>
-          )}
-        </div>
+        {!agentData && (
+          <>
+            <div>
+              <>
+                <StyledSectionTitle>Agent</StyledSectionTitle>
+                <StyledSectionDescription>
+                  Witness the growth of exceptional AI talents, nurtured by collective community
+                  contributions.
+                </StyledSectionDescription>
+              </>
+            </div>
 
-        <div>
-          <BackButton
-            customOnClick={agentData ? () => closeModal('agent-view-modal') : undefined}
-          />
-        </div>
+            <div>
+              <BackButton />
+            </div>
+          </>
+        )}
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding hideBox={agentData}>
         <StyledInnerWrapper noPadding={agentData}>

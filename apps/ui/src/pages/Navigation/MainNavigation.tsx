@@ -33,7 +33,11 @@ const MainNavigation = () => {
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
         <About />
-        <span>Home</span>
+        {/* <StyledIconWrapper>
+          <Launch size={30} />
+        </StyledIconWrapper> */}
+        {/* <span>Home</span> */}
+        <span>Discover</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
         <Players />
@@ -59,12 +63,12 @@ const MainNavigation = () => {
         <Games />
         <span>Toolkits</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
+      {/* <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
         <StyledIconWrapper>
           <Launch size={30} />
         </StyledIconWrapper>
         <span>Discover</span>
-      </StyledLi>
+      </StyledLi> */}
     </StyledUl>
   )
 }

@@ -67,6 +67,8 @@ const routes: any = [
 
   //chat
   { path: '/copilot', breadcrumb: null },
+  { path: '/chat', breadcrumb: null },
+  { path: '/chat/history', breadcrumb: null },
   // { path: '/copilot/game', breadcrumb: null },
   // { path: '/copilot/collection', breadcrumb: null },
   // { path: '/copilot/game/:gameId', breadcrumb: GetGameName },
