@@ -76,7 +76,8 @@ def create_agent_from_template(template_id: str, auth: UserAccount = Depends(aut
         new_agent = AgentModel.create_agent_from_template(db, 
                                            template_id=template_id, 
                                            user=auth.user, 
-                                           account=auth.account)
+                                           account=auth.account,
+                                           check_is_template=True)
         db.session.commit()
         db_agent = AgentModel.get_agent_by_id(db=db, agent_id=new_agent.id, account=auth.account)
         return convert_model_to_response(db_agent)
@@ -124,6 +125,25 @@ def get_public_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
 def get_template_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
     template_agents = AgentModel.get_template_agents(db=db)
     return convert_agents_to_agent_list(template_agents)
+
+@router.get("/from-template/is-created/{parent_id}", response_model=AgentWithConfigsOutput)
+def get_agent_by_id(parent_id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
+    """
+    Get an agent by its ID.
+
+    Args:
+        id (str): ID of the agent.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        AgentWithConfigsOutput: Agent associated with the given ID.
+    """
+    db_agent = AgentModel.get_by_parent_id(db, parent_id=parent_id, account=auth.account)
+    
+    if not db_agent or db_agent.is_deleted:
+        raise HTTPException(status_code=404, detail="Agent not found")  # Ensure consistent case in error messages
+
+    return convert_model_to_response(db_agent)
 
 @router.get("/{id}", response_model=AgentWithConfigsOutput)
 def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:

@@ -238,6 +238,36 @@ class AgentModel(BaseModel):
         return agent
     
     @classmethod
+    def get_by_parent_id(cls, db, parent_id, account):
+        """
+            Get Agent from agent_id
+
+            Args:
+                session: The database session.
+                agent_id(int) : Unique identifier of an Agent.
+
+            Returns:
+                Agent: Agent object is returned.
+        """
+        agent = (
+            db.session.query(AgentModel)
+            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .join(UserModel, AgentModel.created_by == UserModel.id)           
+            .filter(AgentModel.parent_id == parent_id, 
+                    AgentModel.account_id == account.id, 
+                    or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None),
+                    AgentModel.is_deleted is None))
+            .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.creator))
+            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
+            # .options(joinedload(UserModel.agents))
+            .first()
+        )
+        return agent
+    
+    
+    
+    @classmethod
     def get_agent_by_id_with_account(cls, db, agent_id):
         """
             Get Agent from agent_id
