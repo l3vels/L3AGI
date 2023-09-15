@@ -13,6 +13,7 @@ from tools.instagram.instagram_toolkit import InstagramToolkit
 from tools.slack.slack_toolkit import SlackToolkit
 from tools.gmail.gmail_toolkit import GmailToolkit
 from tools.google_calendar.google_calendar_toolkit import GoogleCalendarToolkit
+from tools.chart.chart_toolkit import ChartToolkit
 from tools.base import BaseToolkit, BaseTool
 
 TOOLKITS: List[BaseToolkit] = [
@@ -25,6 +26,7 @@ TOOLKITS: List[BaseToolkit] = [
     OpenWeatherMapToolkit(),
     YoutubeSearchToolkit(),
     TwilioSearchToolkit(),
+    ChartToolkit(),
     TwitterToolkit(),
     InstagramToolkit(),
     SlackToolkit(),
@@ -70,12 +72,12 @@ def get_all_tools():
     return result
 
 
-def get_agent_tools(toolkit_ids: List[str], db, account) ->  List[BaseTool]:
+def get_agent_tools(toolkit_ids: List[str], db, account, settings) ->  List[BaseTool]:
     """Return a list of tools."""
     tools = []
 
     for toolkit in TOOLKITS:
         if toolkit.toolkit_id in toolkit_ids:
-            tools.extend(toolkit.get_tools_with_configs(db, account))
+            tools.extend(toolkit.get_tools_with_configs(db, account, settings))
 
     return tools

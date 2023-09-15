@@ -36,7 +36,7 @@ class OpenWeatherMapTool(BaseTool):
         openweathermap_api_key = self.get_env_key("OPENWEATHERMAP_API_KEY")
 
         if not openweathermap_api_key:
-            raise ToolEnvKeyException(f"OpenWeatherMap API Key in the [OpenWeatherMap Toolkit](/toolkits/{self.toolkit_slug})")
+            raise ToolEnvKeyException(f"Please fill OpenWeatherMap API Key in the [OpenWeatherMap Toolkit](/toolkits/{self.toolkit_slug})")
 
         search = OpenWeatherMapAPIWrapper(openweathermap_api_key=openweathermap_api_key)
 

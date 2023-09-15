@@ -36,6 +36,11 @@ class Config:
     
     GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_REGION = os.environ.get("AWS_REGION")
+    AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET")
+
 
 def get_config(key: str, default: str = None) -> str:
     return  # _config_instance.get_config(key, default)

@@ -56,5 +56,9 @@ module "backend" {
     GITHUB_CLIENT_SECRET           = var.GITHUB_CLIENT_SECRET
     FRONTEND_URL                   = var.FRONTEND_URL
     GOOGLE_API_KEY                 = var.GOOGLE_API_KEY
+    AWS_ACCESS_KEY_ID              = var.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY          = var.AWS_SECRET_ACCESS_KEY
+    AWS_REGION                     = var.AWS_REGION
+    AWS_S3_BUCKET                  = var.AWS_S3_BUCKET
   }
 }

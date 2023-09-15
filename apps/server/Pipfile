@@ -47,6 +47,8 @@ pyowm = "*"
 bs4 = "*"
 llama-hub = "*"
 camelot = "*"
+twilio = "*"
+boto3 = "*"
 
 [dev-packages]
 

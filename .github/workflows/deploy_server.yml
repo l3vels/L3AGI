@@ -89,6 +89,10 @@ jobs:
           echo -e "GITHUB_CLIENT_SECRET = \"${{ secrets.LOGIN_GITHUB_CLIENT_SECRET }}\"\n" >> $TFVARS
           echo -e "FRONTEND_URL = \"${{ vars.FRONTEND_URL }}\"\n" >> $TFVARS
           echo -e "GOOGLE_API_KEY = \"${{ secrets.GOOGLE_API_KEY }}\"\n" >> $TFVARS
+          echo -e "AWS_ACCESS_KEY_ID = \"${{ secrets.AWS_ACCESS_KEY_ID }}\"\n" >> $TFVARS
+          echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
+          echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
+          echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
           
       - name: Display .auto.tfvars file content
         run: |
@@ -197,6 +201,10 @@ jobs:
           echo -e "GITHUB_CLIENT_SECRET = \"${{ secrets.LOGIN_GITHUB_CLIENT_SECRET }}\"\n" >> $TFVARS
           echo -e "FRONTEND_URL = \"${{ vars.FRONTEND_URL }}\"\n" >> $TFVARS
           echo -e "GOOGLE_API_KEY = \"${{ secrets.GOOGLE_API_KEY }}\"\n" >> $TFVARS
+          echo -e "AWS_ACCESS_KEY_ID = \"${{ secrets.AWS_ACCESS_KEY_ID }}\"\n" >> $TFVARS
+          echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
+          echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
+          echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
           
       - name: Display .auto.tfvars file content
         run: |

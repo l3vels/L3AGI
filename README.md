@@ -102,7 +102,8 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
     <td align="center"><img src="./apps/ui/src/assets/tools/openweather.svg" width="35px"><br>OpenWeather</td>
   </tr>
   <tr>
-    <td align="center"><img src="./apps/ui/src/assets/tools/twillio.png" width="35px"><br>Twilio</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/chart.png" width="35px"><br>Charts</td>
+    <td align="center"><img src="./apps/ui/src/assets/tools/twilio.png" width="35px"><br>Twilio</td>
     <td align="center"><img src="./apps/ui/src/assets/tools/twitter.png" width="35px"><br>Twitter</td>
     <td align="center"><img src="./apps/ui/src/assets/tools/instagram.webp" width="35px"><br>Instagram</td>
     <td align="center"><img src="./apps/ui/src/assets/tools/slack.png" width="35px"><br>Slack</td>
