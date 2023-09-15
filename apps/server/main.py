@@ -70,7 +70,7 @@ if Config.NODE_ENV != "local":
 app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 
 # Base.metadata.drop_all(bind=engine)
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 origins = [
     "http://localhost:3000",
