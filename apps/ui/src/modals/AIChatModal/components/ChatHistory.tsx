@@ -95,9 +95,9 @@ const ChatHistory = () => {
       </StyledMessages>
 
       <StyledButtonWrapper>
-        <Button onClick={handleCreate} disabled={isLoading} size={Button.sizes.LARGE}>
+        <StyledButton onClick={handleCreate} disabled={isLoading} size={Button.sizes.MEDIUM}>
           {isLoading ? <Loader size={32} /> : 'Start Your Chat'}
-        </Button>
+        </StyledButton>
       </StyledButtonWrapper>
     </StyledRoot>
   )
@@ -133,4 +133,7 @@ const StyledButtonWrapper = styled.div`
   justify-content: center;
 
   width: 100%;
+`
+const StyledButton = styled(Button)`
+  width: 400px;
 `
