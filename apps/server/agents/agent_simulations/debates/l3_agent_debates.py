@@ -41,22 +41,28 @@ class L3AgentDebates(L3Base):
         idx = (step) % len(agents)
         return idx  
     
-    def generate_specified_prompt(self, topic, names):
+    def generate_specified_prompt(self, topic, agent_summary, team):
+        description = """
+        Here is user request: {user_input}                
+        You are the moderator.
+        Please make the topic more specific.
+        Please reply with the specified quest in {word_limit} words or less. 
+        Speak directly to the participants: {agents}.
+        Focus on your tools, and data which is provided, don't create any temp game
+        Do not add anything else."""
+        
+        if team.description:
+            description = team.description
+        
+        content = description.format(user_input=topic, word_limit=self.word_limit, agents=agent_summary)  
+
         topic_specifier_prompt = [
             SystemMessage(content="You can make a topic more specific."),
-            HumanMessage(
-                content=f"""{topic}
-                
-                You are the moderator.
-                Please make the topic more specific.
-                Please reply with the specified quest in {self.word_limit} words or less. 
-                Speak directly to the participants: {*names,}.
-                Focus on your tools, and data which is provided, don't create any temp game
-                Do not add anything else."""
-            ),
+            HumanMessage(content=content),
         ]
         specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
         return specified_topic
+        
 
     def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
@@ -71,9 +77,12 @@ class L3AgentDebates(L3Base):
             # agent_summaries: List[any],
             history: PostgresChatMessageHistory,
             is_private_chat: bool):
-        names = [agent_with_config.agent.name for agent_with_config in agents_with_configs]
+        agent_summary_string = "\n- ".join(
+            [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
+        )
+
         
-        specified_topic= self.generate_specified_prompt(topic, names)
+        specified_topic= self.generate_specified_prompt(topic, agent_summary_string, team)
 
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")

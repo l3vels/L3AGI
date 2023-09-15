@@ -189,6 +189,8 @@ export const StyledTextareaWrapper = styled.div`
   line-height: 22px;
   font-size: 10px;
 
+  height: 200px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
