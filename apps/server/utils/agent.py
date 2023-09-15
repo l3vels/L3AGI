@@ -16,19 +16,20 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput
     
     # Convert AgentConfigModel instances to Config
     configs = {}
-    for config_model in agent_model.configs:
-        key = getattr(config_model, "key")
-        value = getattr(config_model, "value")
-        
-        # Convert value to the type specified in ConfigsOutput
-        target_type = ConfigsOutput.__annotations__.get(key)
+    if hasattr(agent_model, 'configs'):
+        for config_model in agent_model.configs:
+            key = getattr(config_model, "key")
+            value = getattr(config_model, "value")
+            
+            # Convert value to the type specified in ConfigsOutput
+            target_type = ConfigsOutput.__annotations__.get(key)
 
-        if target_type:
-            value = convert_value_to_type(value, target_type)
-        
-        configs[key] = value
+            if target_type:
+                value = convert_value_to_type(value, target_type)
+            
+            configs[key] = value
     
-    if agent_model.creator:
+    if hasattr(agent_model, 'creator') and agent_model.creator:
        agent_data['creator'] = user_convert_model_to_response(agent_model.creator)
 
     

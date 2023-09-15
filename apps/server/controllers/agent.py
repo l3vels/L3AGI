@@ -53,7 +53,33 @@ def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccoun
                                            configs=agent_with_configs.configs,
                                            user=auth.user, 
                                            account=auth.account)
+        db.session.commit()
         return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id, auth.account))
+    
+    except AgentNotFoundException:
+        raise HTTPException(status_code=404, detail="Agent not found")
+    
+@router.post("/from-template/{template_id}", status_code=201, response_model=AgentWithConfigsOutput)  # Changed status code to 200
+def create_agent_from_template(template_id: str, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
+    """
+    Update an existing agent with configurations.
+
+    Args:
+        id (str): ID of the agent to update.
+        agent_with_configs (AgentConfigInput): Data for updating the agent with configurations.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        AgentWithConfigsOutput: Updated agent object.
+    """
+    try:
+        new_agent = AgentModel.create_agent_from_template(db, 
+                                           template_id=template_id, 
+                                           user=auth.user, 
+                                           account=auth.account)
+        db.session.commit()
+        db_agent = AgentModel.get_agent_by_id(db=db, agent_id=new_agent.id, account=auth.account)
+        return convert_model_to_response(db_agent)
     
     except AgentNotFoundException:
         raise HTTPException(status_code=404, detail="Agent not found")
