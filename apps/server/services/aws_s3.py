@@ -21,7 +21,6 @@ class AWSS3Service:
             ContentType=content_type,
         )
 
-        # Generate the public URL for the uploaded image
         public_url = f"https://{Config.AWS_S3_BUCKET}.s3.amazonaws.com/{key}"
         
         return public_url
