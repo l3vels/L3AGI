@@ -46,6 +46,7 @@ youtube-search = "*"
 pyowm = "*"
 bs4 = "*"
 twilio = "*"
+boto3 = "*"
 
 [dev-packages]
 

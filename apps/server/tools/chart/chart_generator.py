@@ -1,6 +1,10 @@
 from typing import Optional, Type, Dict
 import json
 import re
+import uuid
+import requests
+import io
+import base64
 from pydantic import BaseModel, Field
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
@@ -10,11 +14,16 @@ from tools.chart.chart_generator_runner import chart_generator_runner
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
+from services.aws_s3 import AWSS3Service
 
 
 class ChartGeneratorSchema(BaseModel):
     query: str = Field(
-        description="JSON string containing data, objective and other information. data is used in pandas DataFrame",
+        description=(
+            "Parameter is JSON string representing action input.\n"
+            "\"data\" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n"
+            "\"user_prompt\" str, which is objective in natural language provided by user\n"
+        )
     )
 
 class ChartGeneratorTool(BaseTool):
@@ -23,7 +32,10 @@ class ChartGeneratorTool(BaseTool):
     name = "Chart Generator"
     
     description = (
-        "generates chart and returns image URL"
+        "generates chart and returns image URL\n"
+        "Parameter is JSON string representing action input.\n"
+        "\"data\" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n"
+        "\"user_prompt\" str, which is objective in natural language provided by user\n"
     )
 
     args_schema: Type[ChartGeneratorSchema] = ChartGeneratorSchema
@@ -37,61 +49,50 @@ class ChartGeneratorTool(BaseTool):
         print(query)
 
         try:
-            # action = json.loads(query)
-            # json_data = json.dumps(action["json_data"])
+            action = json.loads(query)
+            data = json.dumps(action["data"])
+            user_prompt = action["user_prompt"]
 
             chain = generate_chart_code_chain(self.settings.openai_api_key)
-            code = chain.run(data=query)
+            code = chain.run(user_prompt=user_prompt, data=data)
             code = extract_code(code)
 
             res = chart_generator_runner(
                 {
 
                     "code": code,
-                    "params": query,
+                    "params": data,
                 },
                 None,
             )
 
-            return "https://mathmonks.com/wp-content/uploads/2023/01/Parts-Bar-Graph.jpg"
+            status_code = res["statusCode"]
 
+            if status_code == 200:
+                body = json.loads(res["body"])
+                base64_image = body["result"]
 
-            # status_code = res["statusCode"]
+                chart_id = uuid.uuid4()
+                
+                key = f"account_{self.account.id}/chat/chart-{chart_id}.png"
+                img_data = io.BytesIO(base64.b64decode(base64_image))
 
-            # if status_code == 200:
-            #     body = json.loads(res["body"])
-            #     base64_image = body["result"]
-
-            #     return "https://mathmonks.com/wp-content/uploads/2023/01/Parts-Bar-Graph.jpg"
-
-            #     # upload file to s3 
-
-            #     # result = self.api.file.generate_upload_url(
-            #     #     file_name="chart.png",
-            #     #     file_type="image/png",
-            #     #     # game_id=game_id,
-            #     #     location_field="chat",
-            #     # )
-
-            #     # img_data = io.BytesIO(base64.b64decode(base64_image))
-            #     # requests.put(result["upload_url"], data=img_data)
-
-            #     # return result["file_location"]
-            # else:
-            #     return "Error generating chart code"
+                url = AWSS3Service.upload(body=img_data, key=key, content_type='image/png')
+                return url
+            else:
+                return "Error generating chart code"
         except Exception as e:
+            print(e)
             # sentry_sdk.capture_exception(e)
             return "Could not generate chart"
 
 
 TEMPLATE = """
-Write Python code in a triple backtick Markdown code block to generate a chart based on the "data":
-
-```
-{data}
-```
+User wants to visualize "{user_prompt}". JSON data is "{data}".
+Based on user prompt and JSON data, write Python code in a triple backtick Markdown code block
 
 Notes:
+- JSON data is string JSON. pandas can read it with pd.read_json
 - First, think step by step what you want to do and write it down in English.
 - Then generate valid Python code in a code block
 - Make sure all code is valid
@@ -113,7 +114,6 @@ Notes:
     - I'll give give you query result as method parameters.
     - Consider query result field types when you are doing data munging.
     - Method name must be "query_runner"
-    - Method will receive parameter "data".
     - Method must return a response Image as base64 encoded string
     - Try background of image as transparent it's possible.
 
@@ -125,7 +125,7 @@ Notes:
 def generate_chart_code_chain(openai_api_key: str) -> LLMChain:
     """Generate code for chart generation."""
     llm = ChatOpenAI(openai_api_key=openai_api_key,temperature=0, model_name="gpt-4")
-    prompt = PromptTemplate(input_variables=["data"], template=TEMPLATE)
+    prompt = PromptTemplate(input_variables=["data", "user_prompt"], template=TEMPLATE)
     return LLMChain(llm=llm, prompt=prompt)
 
 
