@@ -33,7 +33,7 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
 export default withRenderModal('agent-view-modal')(AgentViewModal)
 
 const StyledModalBody = styled.div`
-  max-width: 670px;
+  max-width: 1000px;
 `
 const StyledModal = styled(Modal)`
   .components-Modal-Modal-module__overlay--OO00T {
