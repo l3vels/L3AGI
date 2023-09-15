@@ -22,9 +22,11 @@ const ChatHistory = () => {
   const urlParams = new URLSearchParams(location.search)
 
   const agentId = urlParams.get('agent')
+  const teamId = urlParams.get('team')
 
   const { data: chatHistory } = useChatMessagesHistoryService({
-    agentId: agentId || '',
+    agentId,
+    teamId,
     isPrivateChat: false,
   })
 
@@ -54,14 +56,14 @@ const ChatHistory = () => {
   }
 
   const handleCreate = async () => {
-    setIsLoading(true)
-    try {
-      const res = await createAgentService(values)
-      navigate(`/copilot?agent=${res.agent.id}`)
-    } catch (e) {
-      console.log(e)
-    }
-    setIsLoading(false)
+    // setIsLoading(true)
+    // try {
+    //   const res = await createAgentService(values)
+    //   navigate(`/copilot?agent=${res.agent.id}`)
+    // } catch (e) {
+    //   console.log(e)
+    // }
+    // setIsLoading(false)
   }
 
   return (

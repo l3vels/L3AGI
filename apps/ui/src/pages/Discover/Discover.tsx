@@ -74,7 +74,7 @@ const Discover = () => {
                       data: { teamOfAgents: teamOfAgents },
                     })
                   }
-                  onChatClick={() => handleViewClick(`/copilot?team=${teamOfAgents.id}`)}
+                  onChatClick={() => handleViewClick(`/chat/history?team=${teamOfAgents.id}`)}
                   creator={teamOfAgents.creator.name}
                 />
               )
