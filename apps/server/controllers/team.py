@@ -210,6 +210,25 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "agents": []
     }]
     
+@router.get("/from-template/is-created/{parent_id}", response_model=TeamOutput)
+def get_team_by_id(parent_id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+    """
+    Get a team by its ID.
+
+    Args:
+        parent_id (str): ID of the team.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        TeamOutput: Team associated with the given ID.
+    """
+    db_team = TeamModel.get_team_with_agents_by_parent_id(db, parent_id=parent_id, account=auth.account)
+    
+    if not db_team or db_team.is_deleted:
+        raise HTTPException(status_code=404, detail="Team not found")  # Ensure consistent case in error messages
+
+    return convert_model_to_response(db_team)
+
 @router.get("/{id}", response_model=TeamOutput)
 def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """

@@ -30,6 +30,7 @@ class TeamOutput(BaseModel):
     is_deleted: bool
     is_public: bool
     is_template: bool
+    parent_id: Optional[UUID4]
     account_id: UUID4
     created_by: Optional[UUID4]
     creator: Optional[UserOutput]

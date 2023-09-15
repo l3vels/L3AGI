@@ -203,6 +203,41 @@ class TeamModel(BaseModel):
         )
         return teams
     
+    @classmethod
+    def get_team_with_agents_by_parent_id(cls, db, account, parent_id: str):
+        #todo later need to filter by account_id        
+        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        filter_conditions = [or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+
+        filter_conditions.append(TeamModel.parent_id == parent_id)
+        filter_conditions.append(TeamModel.account_id == account.id)
+                
+        teams = (
+            db.session.query(TeamModel)
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .filter(and_(*filter_conditions))
+            .options(joinedload(TeamModel.creator))
+            .first()
+        )
+        return teams
+    
+    @classmethod
+    def get_team_with_agents(cls, db, account, id: str):
+        #todo later need to filter by account_id        
+        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        filter_conditions = [or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+
+        filter_conditions.append(TeamModel.id == id)
+                
+        teams = (
+            db.session.query(TeamModel)
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .filter(and_(*filter_conditions))
+            .options(joinedload(TeamModel.creator))
+            .first()
+        )
+        return teams
+    
 
     @classmethod
     def get_team_by_id(cls, db, team_id, account):
