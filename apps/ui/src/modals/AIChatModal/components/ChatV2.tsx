@@ -31,6 +31,8 @@ import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -76,6 +78,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const chatSuggestions = agentById?.configs?.suggestions || []
   const chatGreeting = agentById?.configs?.greeting || ''
+
+  const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
 
   const [createChatMessageService] = useCreateChatMessageService()
 
@@ -263,6 +267,30 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   return (
     <StyledWrapper>
+      <StyledAgentsWrapper>
+        <StyledAgentWrapper>
+          <AvatarGenerator name={user.name} size={30} />
+          {user.name}
+        </StyledAgentWrapper>
+        {agentById && (
+          <>
+            <StyledAgentWrapper>
+              <AvatarGenerator name={agentName} size={30} />
+              {agentName}
+            </StyledAgentWrapper>
+          </>
+        )}
+
+        {teamOfAgents &&
+          teamOfAgents.team_agents?.map((agentData: any, index: number) => {
+            return (
+              <StyledAgentWrapper key={index}>
+                <AvatarGenerator name={agentData.agent.name} size={30} />
+                {agentData.agent.name}
+              </StyledAgentWrapper>
+            )
+          })}
+      </StyledAgentsWrapper>
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
@@ -635,4 +663,28 @@ const StyledReplyText = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+const StyledAgentsWrapper = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 5px;
+
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  /* background: rgba(0, 0, 0, 0.3); */
+
+  height: calc(100vh - 240px);
+`
+const StyledAgentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 10px;
+  /* border-radius: 10px;
+  background: rgba(0, 0, 0, 0.4); */
 `
