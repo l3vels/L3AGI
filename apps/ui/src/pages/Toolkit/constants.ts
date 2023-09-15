@@ -70,4 +70,8 @@ export const toolLogos = [
     logoSrc: GoogleCalendarLogo,
     toolName: 'Google Calendar Toolkit',
   },
+  {
+    logoSrc: GoogleLogo,
+    toolName: 'Chart Toolkit',
+  },
 ]
