@@ -1,4 +1,4 @@
 # ----** Task Container Environment Config **----
-NODE_ENV="production"
+ENV="production"
 
 task_desired_count = 2

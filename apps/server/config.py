@@ -4,7 +4,7 @@ import os
 class Config:
     """Config class for the application."""
 
-    NODE_ENV = os.environ.get("NODE_ENV")
+    ENV = os.environ.get("ENV")
 
     OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
