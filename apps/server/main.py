@@ -57,7 +57,7 @@ graphql_app = GraphQLRouter(schema, context_getter=get_context)
 app.include_router(graphql_app, prefix="/graphql")
 
 
-if Config.NODE_ENV != "local":
+if Config.NODE_ENV != "local" and Config.SENTRY_DSN:
     sentry_sdk.init(
         dsn=Config.SENTRY_DSN,
         # Set traces_sample_rate to 1.0 to capture 100%
