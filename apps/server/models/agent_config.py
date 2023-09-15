@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Text, String, UUID, ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.exc import SQLAlchemyError
 from typing import Union
 
 from config import get_config
@@ -31,7 +32,7 @@ class AgentConfigModel(BaseModel):
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
 
     def __repr__(self):
         """
@@ -78,7 +79,35 @@ class AgentConfigModel(BaseModel):
                 changes.append(new_config)
         
         db.session.add_all(changes)
+        db.session.commit()                
         db.session.flush()
+        
+        return changes
+    
+    @classmethod 
+    def create_configs_from_template(cls, db, configs, user, agent_id):  
+        """
+        Create or update agent configurations in the database.
+
+        Args:
+            db (Session): The database session.
+            configs (list): The list of configurations.
+            user (UserModel): The user object.
+            agent_id (UUID): The agent id.
+
+        Returns:
+            List[AgentConfigModel]: The list of created or updated configurations.
+        """
+        changes= []
+        for template_config in configs:
+            new_config = AgentConfigModel(key=template_config.key,
+                                        value=template_config.value,
+                                        agent_id= agent_id,
+                                        created_by=user.id
+                                        )
+            changes.append(new_config)
+            
+        db.session.add_all(changes)
         db.session.commit()
-                
+
         return changes

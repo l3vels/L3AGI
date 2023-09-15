@@ -32,15 +32,15 @@ class TeamModel(BaseModel):
     workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
     account_id = Column(UUID, ForeignKey('account.id'), nullable=True, index=True)
     
-    account = relationship("AccountModel", cascade="all, delete", lazy='noload')
-    team_agents = relationship("TeamAgentModel", back_populates="team", lazy='noload')
-    chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete", lazy='noload')
-    configs = relationship("ConfigModel", cascade="all, delete", lazy='noload')
+    account = relationship("AccountModel", cascade="all, delete", lazy='select')
+    team_agents = relationship("TeamAgentModel", back_populates="team", lazy='select')
+    chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete", lazy='select')
+    configs = relationship("ConfigModel", cascade="all, delete", lazy='select')
     
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
     def __repr__(self) -> str:
         return (

@@ -32,6 +32,6 @@ class WorkspaceModel(BaseModel):
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
     

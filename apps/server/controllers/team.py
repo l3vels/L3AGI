@@ -37,7 +37,37 @@ def create_team(team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticat
 
     return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
 
+
 @router.put("/{id}", status_code=200, response_model=TeamOutput)  # Changed status code to 200
+def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+    """
+    Update an existing team with configurations.
+
+    Args:
+        id (str): ID of the team to update.
+        team (TeamInput): Data for updating the team with configurations.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        TeamOutput: Updated team object.
+    """
+    try:
+        db_team = TeamModel.update_team(db, 
+                                           id=id, 
+                                           team=team, 
+                                           user=auth.user, 
+                                           account=auth.account)
+        
+        team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
+        TeamAgentModel.delete_by_team_id(db, id, auth.account)
+        TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
+
+        return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
+    
+    except TeamNotFoundException:
+        raise HTTPException(status_code=404, detail="Team not found")
+    
+@router.post("/from-template/{template_id}", status_code=201, response_model=TeamOutput)  # Changed status code to 200
 def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Update an existing team with configurations.

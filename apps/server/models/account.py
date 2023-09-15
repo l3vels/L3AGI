@@ -25,7 +25,7 @@ class AccountModel(BaseModel):
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")
@@ -45,8 +45,9 @@ class AccountModel(BaseModel):
                          )
         cls.update_model_from_input(db_account, account)
         db.session.add(db_account)
-        db.session.flush()  # Flush pending changes to generate the account's ID
         db.session.commit()
+        db.session.flush()  # Flush pending changes to generate the account's ID
+
         
         return db_account
        

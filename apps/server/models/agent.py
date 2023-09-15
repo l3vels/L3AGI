@@ -34,6 +34,7 @@ class AgentModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     role = Column(String) 
+    parent_id = Column(UUID, nullable=True, index=True) 
     workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True) 
     agent_type = Column(String) # Later add as Enum
     description = Column(String)
@@ -44,15 +45,15 @@ class AgentModel(BaseModel):
     account_id = Column(UUID, ForeignKey('account.id'), nullable=True, index=True)    
     is_public = Column(Boolean, default=False, index=True)
     
-    configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete", lazy='noload')
-    chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete", lazy='noload')
-    team_agents = relationship("TeamAgentModel", back_populates="agent", cascade="all, delete", lazy='noload')
-    account = relationship("AccountModel", cascade="all, delete", lazy='noload')
+    configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete", lazy='select')
+    chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete", lazy='select')
+    team_agents = relationship("TeamAgentModel", back_populates="agent", cascade="all, delete", lazy='select')
+    account = relationship("AccountModel", cascade="all, delete", lazy='select')
     
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='noload')
+    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
     def __repr__(self) -> str:
         return (
@@ -119,6 +120,53 @@ class AgentModel(BaseModel):
         for field in AgentInput.__annotations__.keys():
             setattr(agent_model, field, getattr(agent_input, field))
         return agent_model  
+    
+    @classmethod
+    def create_agent_from_template(cls, db, template_id, user, account):
+        """
+        Creates a new agent with the provided configuration.
+
+        Args:
+            db: The database object.
+            agent_with_config: The object containing the agent and configuration details.
+
+        Returns:
+            Agent: The crated agent.
+
+        """
+        template_agent = cls.get_agent_by_id(db=db, agent_id=template_id, account=account)
+        if template_agent is None or not (template_agent.is_public or template_agent.is_template):
+            raise AgentNotFoundException("Agent not found")
+
+        new_agent = AgentModel(name=template_agent.name,
+                                role=template_agent.role,
+                                agent_type=template_agent.agent_type,
+                                description=template_agent.description,
+                                is_memory=template_agent.is_memory,
+                                is_public=False,
+                                is_template=False,
+                                created_by=user.id, 
+                                account_id=account.id,
+                                modified_by=None,
+                                parent_id=template_agent.id
+                                )        
+                       
+        db.session.add(new_agent)
+        db.session.commit() 
+        
+        
+        AgentConfigModel.create_configs_from_template(db=db, 
+                                                      configs=template_agent.configs, 
+                                                      user=user, 
+                                                      agent_id=new_agent.id)     
+
+        return new_agent
+     
+    @classmethod
+    def update_model_from_input(cls, agent_model: AgentModel, agent_input: AgentInput):
+        for field in AgentInput.__annotations__.keys():
+            setattr(agent_model, field, getattr(agent_input, field))
+        return agent_model  
 
     @classmethod
     def get_agents(cls, db, account):
@@ -175,8 +223,7 @@ class AgentModel(BaseModel):
             Returns:
                 Agent: Agent object is returned.
         """
-        # return db.session.query(AgentModel).filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None)).all()
-        agents = (
+        agent = (
             db.session.query(AgentModel)
             .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
             .join(UserModel, AgentModel.created_by == UserModel.id)           
@@ -187,7 +234,7 @@ class AgentModel(BaseModel):
             # .options(joinedload(UserModel.agents))
             .first()
         )
-        return agents
+        return agent
     
     @classmethod
     def get_agent_by_id_with_account(cls, db, agent_id):
