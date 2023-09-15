@@ -46,7 +46,6 @@ youtube-search = "*"
 pyowm = "*"
 bs4 = "*"
 llama-hub = "*"
-camelot = "*"
 twilio = "*"
 boto3 = "*"
 
