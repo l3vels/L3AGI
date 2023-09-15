@@ -94,7 +94,7 @@ const ChatHistory = () => {
 
       <StyledButtonWrapper>
         <Button onClick={handleCreate} disabled={isLoading} size={Button.sizes.LARGE}>
-          {isLoading ? <Loader size={32} /> : 'Start your chat'}
+          {isLoading ? <Loader size={32} /> : 'Start Your Chat'}
         </Button>
       </StyledButtonWrapper>
     </StyledRoot>

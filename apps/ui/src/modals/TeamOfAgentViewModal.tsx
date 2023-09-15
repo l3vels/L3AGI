@@ -5,6 +5,11 @@ import { useModal } from 'hooks'
 import styled from 'styled-components'
 
 import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
+import { StyledButtonWrapper } from './AgentViewModal'
+
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
+import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 type TeamOfAgentsViewModalProps = {
   data: {
@@ -27,6 +32,15 @@ const TeamOfAgentViewModal = ({ data }: TeamOfAgentsViewModalProps) => {
       <StyledModalBody>
         <TeamOfAgentView teamOfAgentsData={teamOfAgents} />
       </StyledModalBody>
+
+      <StyledButtonWrapper>
+        <IconButton
+          size={IconButton.sizes.XS}
+          icon={() => <Close />}
+          kind={IconButton.kinds.TERTIARY}
+          onClick={() => closeModal('team-of-agent-view-modal')}
+        />
+      </StyledButtonWrapper>
     </StyledModal>
   )
 }

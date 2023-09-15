@@ -43,25 +43,23 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
-          {!teamOfAgentsData && (
-            <>
-              <StyledSectionTitle>Agent</StyledSectionTitle>
-              <StyledSectionDescription>
-                Witness the growth of exceptional AI talents, nurtured by collective community
-                contributions.
-              </StyledSectionDescription>
-            </>
-          )}
-        </div>
+        {!teamOfAgentsData && (
+          <>
+            <div>
+              <>
+                <StyledSectionTitle>Agent</StyledSectionTitle>
+                <StyledSectionDescription>
+                  Witness the growth of exceptional AI talents, nurtured by collective community
+                  contributions.
+                </StyledSectionDescription>
+              </>
+            </div>
 
-        <div>
-          <BackButton
-            customOnClick={
-              teamOfAgentsData ? () => closeModal('team-of-agent-view-modal') : undefined
-            }
-          />
-        </div>
+            <div>
+              <BackButton />
+            </div>
+          </>
+        )}
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding hideBox={teamOfAgentsData}>
         <StyledInnerWrapper noPadding={teamOfAgentsData}>
