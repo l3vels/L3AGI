@@ -67,35 +67,33 @@ def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(au
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
     
+    
 @router.post("/from-template/{template_id}", status_code=201, response_model=TeamOutput)  # Changed status code to 200
-def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+def create_team_from_template(template_id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
     """
     Update an existing team with configurations.
 
     Args:
         id (str): ID of the team to update.
-        team (TeamInput): Data for updating the team with configurations.
+        team_with_configs (TeamConfigInput): Data for updating the team with configurations.
         auth (UserAccount): Authenticated user account.
 
     Returns:
         TeamOutput: Updated team object.
     """
     try:
-        db_team = TeamModel.update_team(db, 
-                                           id=id, 
-                                           team=team, 
+        new_team = TeamModel.create_team_from_template(db, 
+                                           template_id=template_id, 
                                            user=auth.user, 
                                            account=auth.account)
-        
-        team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
-        TeamAgentModel.delete_by_team_id(db, id, auth.account)
-        TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
-
-        return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
+        db.session.commit()
+        db_team = TeamModel.get_team_with_agents(db=db, id=new_team.id, account=auth.account)
+        return convert_model_to_response(db_team)
     
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
-
+    
+    
 @router.get("", response_model=List[TeamOutput])
 def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
     """

@@ -181,3 +181,31 @@ class TeamAgentModel(BaseModel):
             db.session.delete(team_agent)
 
         db.session.commit()
+        
+    @classmethod 
+    def create_configs_from_template(cls, db, team_agents, user, team_id):  
+        """
+        Create or update agent configurations in the database.
+
+        Args:
+            db (Session): The database session.
+            configs (list): The list of configurations.
+            user (UserModel): The user object.
+            agent_id (UUID): The agent id.
+
+        Returns:
+            List[AgentConfigModel]: The list of created or updated configurations.
+        """
+        changes= []
+        for template_team_agent in team_agents:
+            new_config = TeamAgentModel(team_id=team_id,
+                                        value=template_team_agent.value,
+                                        agent_id= agent_id,
+                                        created_by=user.id
+                                        )
+            changes.append(new_config)
+            
+        db.session.add_all(changes)
+        db.session.commit()
+
+        return changes

@@ -43,13 +43,13 @@ class ConfigsOutput(BaseModel):
     greeting: Optional[str]
 
 
-
 class AgentOutput(BaseModel):
     id: UUID4
     name: str
     description: str
     agent_type: Optional[str]
     workspace_id: Optional[UUID4]
+    parent_id: Optional[UUID4]
     role: str
     is_template: bool
     is_deleted: bool

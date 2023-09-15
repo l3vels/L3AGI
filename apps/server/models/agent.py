@@ -122,7 +122,7 @@ class AgentModel(BaseModel):
         return agent_model  
     
     @classmethod
-    def create_agent_from_template(cls, db, template_id, user, account):
+    def create_agent_from_template(cls, db, template_id, user, account, check_is_template: True):
         """
         Creates a new agent with the provided configuration.
 
@@ -135,8 +135,9 @@ class AgentModel(BaseModel):
 
         """
         template_agent = cls.get_agent_by_id(db=db, agent_id=template_id, account=account)
-        if template_agent is None or not (template_agent.is_public or template_agent.is_template):
-            raise AgentNotFoundException("Agent not found")
+        if check_is_template:
+            if template_agent is None or not (template_agent.is_public or template_agent.is_template):
+                raise AgentNotFoundException("Agent not found")
 
         new_agent = AgentModel(name=template_agent.name,
                                 role=template_agent.role,
