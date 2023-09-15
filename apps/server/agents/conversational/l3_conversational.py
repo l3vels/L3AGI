@@ -60,6 +60,13 @@ class L3Conversational(L3Base):
             res = agent.run(prompt)
         except Exception as err:
             res = handle_agent_error(err)
+            
+            memory.save_context({
+                'input': prompt,
+                'chat_history': memory.load_memory_variables({})['chat_history'],
+            }, {
+                'output': res,
+            })
         
         ai_message = history.create_ai_message(res, human_message_id)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
