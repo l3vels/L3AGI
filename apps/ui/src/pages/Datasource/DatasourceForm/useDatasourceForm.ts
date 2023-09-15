@@ -7,8 +7,10 @@ import { useDataLoadersService } from 'services/datasource/useDataLoadersService
 export const useDatasourceForm = (formik: any) => {
   const { data: dataLoaders } = useDataLoadersService()
 
+  const { setFieldValue, values } = formik
+
   const pickedLoaderFields = dataLoaders
-    ?.filter((loader: any) => loader.source_type === formik?.values?.datasource_source_type)
+    ?.filter((loader: any) => loader.source_type === values?.datasource_source_type)
     .map((loader: any) => {
       return { fields: loader.fields, category: loader.category }
     })[0] || { category: '', fields: [] }
@@ -18,7 +20,7 @@ export const useDatasourceForm = (formik: any) => {
   const [fileLoading, setFileLoading] = useState(false)
 
   const handleUploadFile = async (event: any) => {
-    formik.setFieldValue('config_value', null)
+    setFieldValue('config_value', null)
 
     setFileLoading(true)
     const { files }: any = event.target
@@ -39,7 +41,10 @@ export const useDatasourceForm = (formik: any) => {
         files[0],
       )
 
-      formik.setFieldValue('config_value', url)
+      setFieldValue('configs.file', {
+        ...values.configs.file,
+        value: url,
+      })
     }
 
     setFileLoading(false)

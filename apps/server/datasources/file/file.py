@@ -15,5 +15,5 @@ class FileDatasource(BaseDatasource):
     
     def get_env_keys(self) -> List[DatasourceEnvKey]:
         return [
-            DatasourceEnvKey(label="Database Name", key="name", key_type=DatasourceEnvKeyType.STRING, is_required=True, is_secret=True),
+            DatasourceEnvKey(label="File", key="file", key_type=DatasourceEnvKeyType.FILE, is_required=True, is_secret=True),
         ]
