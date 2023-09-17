@@ -10,6 +10,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import { useNavigate } from 'react-router-dom'
 import { useCreateAgentFromTemplateService } from 'services/agent/useCreateAgentFromTemplateService'
+import { useCheckAgentIsCreatedService } from 'services/agent/useCheckAgentIsCreatedService'
 
 const ChatHistory = () => {
   const navigate = useNavigate()
@@ -33,8 +34,13 @@ const ChatHistory = () => {
   const chatGreeting = agentById?.configs?.greeting || ''
 
   const [createAgentFromTemplate] = useCreateAgentFromTemplateService()
+  const { data: agentFromTemplate } = useCheckAgentIsCreatedService({ id: agentId || '' })
 
   const handleCreate = async () => {
+    if (agentFromTemplate) {
+      return navigate(`/copilot?agent=${agentFromTemplate.agent.id}`)
+    }
+
     setIsLoading(true)
     try {
       if (agentId) {
