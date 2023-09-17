@@ -11,6 +11,8 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import { useNavigate } from 'react-router-dom'
 import { useCreateAgentFromTemplateService } from 'services/agent/useCreateAgentFromTemplateService'
 import { useCheckAgentIsCreatedService } from 'services/agent/useCheckAgentIsCreatedService'
+import { useCreateTeamOfAgentsFromTemplateService } from 'services/team/useCreateTeamOfAgentsFromTemplateService'
+import { useCheckTeamIsCreatedService } from 'services/team/useCheckTeamIsCreatedService'
 
 const ChatHistory = () => {
   const navigate = useNavigate()
@@ -34,18 +36,24 @@ const ChatHistory = () => {
   const chatGreeting = agentById?.configs?.greeting || ''
 
   const [createAgentFromTemplate] = useCreateAgentFromTemplateService()
+  const [createTeamOfAgentsFromTemplate] = useCreateTeamOfAgentsFromTemplateService()
+
   const { data: agentFromTemplate } = useCheckAgentIsCreatedService({ id: agentId || '' })
+  const { data: teamFromTemplate } = useCheckTeamIsCreatedService({ id: teamId || '' })
 
   const handleCreate = async () => {
-    if (agentFromTemplate) {
-      return navigate(`/copilot?agent=${agentFromTemplate.agent.id}`)
-    }
+    if (agentFromTemplate) return navigate(`/copilot?agent=${agentFromTemplate.agent.id}`)
+
+    if (teamFromTemplate) return navigate(`/copilot?team=${teamFromTemplate.id}`)
 
     setIsLoading(true)
     try {
       if (agentId) {
         const res = await createAgentFromTemplate({ id: agentId })
         navigate(`/copilot?agent=${res.agent.id}`)
+      } else if (teamId) {
+        const res = await createTeamOfAgentsFromTemplate({ id: teamId })
+        navigate(`/copilot?team=${res.id}`)
       }
     } catch (e) {
       console.log(e)
