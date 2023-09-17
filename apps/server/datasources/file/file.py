@@ -1,8 +1,6 @@
 from typing import List
 from datasources.base import BaseDatasource, DatasourceEnvKey, DatasourceEnvKeyType, DatasourceCategory, DatasourceType
 from tools.base import BaseTool
-# from tools.datasources.postgres.postgres import PostgresDatabaseTool
-
 
 class FileDatasource(BaseDatasource):
     name: str = "File"
