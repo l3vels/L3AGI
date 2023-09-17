@@ -11,9 +11,6 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { useState } from 'react'
-import ChatMessageListV2 from './components/ChatMessageList/ChatMessageListV2'
-import { ReplyStateProps } from './components/ReplyBox'
-import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
 
 const AIChat = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -53,3 +50,11 @@ const StyledTabContext = styled(TabsContext)`
     height: 100%;
   }
 `
+// const StyledTabList = styled(TabList)`
+//   position: fixed;
+//   z-index: 12000000;
+
+//   left: 50%;
+
+//   transform: translateX(-50%);
+// `
