@@ -1,21 +1,15 @@
 from datasources.postgres.postgres import PostgresDatasource
 from datasources.mysql.mysql import MySQLDatasource
+from datasources.file.file import FileDatasource
 from datasources.base import DatasourceType, DatasourceCategory
 
 DATASOURCES = [
     PostgresDatasource(),
     MySQLDatasource(),
+    FileDatasource(),
 ]
 
 COMING_SOON = [
-    {
-        "is_public": True,
-        "is_active": False,
-        "name": "File",
-        "description": "Upload a file",
-        "category": DatasourceCategory.FILE,
-        "source_type": DatasourceType.UPLOAD_FILE,
-    },
     {
         "is_public": True,
         "is_active": False,

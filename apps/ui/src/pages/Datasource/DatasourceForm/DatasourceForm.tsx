@@ -48,11 +48,13 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     source_type: datasource_source_type,
   })
 
+  const isDatabase = datasource_source_type === 'Postgres' || datasource_source_type === 'MySQL'
+
   useEffect(() => {
-    if (isEdit) {
+    if (isEdit && isDatabase) {
       fetchSqlTables()
     }
-  }, [isEdit])
+  }, [isEdit, isDatabase])
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('datasource_description', value)
@@ -127,10 +129,15 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                     hasValue={config_value}
                   />
 
-                  {config_value && (
+                  {configs.file?.value && (
                     <UploadedFile
-                      onClick={() => setFieldValue('config_value', null)}
-                      name={'file'}
+                      onClick={() =>
+                        setFieldValue('configs.file', {
+                          ...configs.file,
+                          value: '',
+                        })
+                      }
+                      name={'File'}
                     />
                   )}
                 </StyledUploadFileWrapper>
@@ -168,35 +175,39 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
           )}
         </StyledSourceTypeWrapper>
 
-        {!isEdit && (
-          <div>
-            <Button
-              onClick={() => {
-                fetchSqlTables()
-              }}
-              disabled={loading || data}
-              size={Button.sizes.SMALL}
-            >
-              {loading ? <Loader size={32} /> : 'Connect'}
-            </Button>
-          </div>
-        )}
+        {isDatabase && (
+          <>
+            {!isEdit && (
+              <div>
+                <Button
+                  onClick={() => {
+                    fetchSqlTables()
+                  }}
+                  disabled={loading || data}
+                  size={Button.sizes.SMALL}
+                >
+                  {loading ? <Loader size={32} /> : 'Connect'}
+                </Button>
+              </div>
+            )}
 
-        {data && (
-          <DatasourceSqlTables
-            data={data}
-            tables={tables && JSON.parse(tables.value)}
-            onTablesSelected={(selectedTables: string[]) => {
-              formik.setFieldValue('configs.tables', {
-                ...(tables || {}),
-                key: 'tables',
-                key_type: 'string',
-                value: JSON.stringify(selectedTables),
-                is_secret: false,
-                is_required: true,
-              })
-            }}
-          />
+            {data && (
+              <DatasourceSqlTables
+                data={data}
+                tables={tables && JSON.parse(tables.value)}
+                onTablesSelected={(selectedTables: string[]) => {
+                  formik.setFieldValue('configs.tables', {
+                    ...(tables || {}),
+                    key: 'tables',
+                    key_type: 'string',
+                    value: JSON.stringify(selectedTables),
+                    is_secret: false,
+                    is_required: true,
+                  })
+                }}
+              />
+            )}
+          </>
         )}
       </StyledInputWrapper>
     </StyledFormContainer>

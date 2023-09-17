@@ -6,10 +6,9 @@ const useUploadFile = () => {
   const { generateUploadUrlService, loading } = useGenerateUploadUrlService()
 
   const uploadFile = async (fileObj: any, file: File) => {
-    const res = await generateUploadUrlService(fileObj)
-    await uploadFileService(res.upload_url, file)
-
-    return res.file_location
+    const { signed_url, file_url } = await generateUploadUrlService(fileObj)
+    await uploadFileService(signed_url, file)
+    return file_url
   }
 
   return {

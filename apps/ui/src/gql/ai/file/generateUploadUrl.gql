@@ -1,0 +1,7 @@
+mutation generateUploadUrl($input: input!) @api(name: ai) {
+  generateUploadUrl(input: $input)
+    @rest(type: "UploadFile", path: "/file", method: "POST", bodyKey: "input", endpoint: "ai") {
+    signed_url
+    file_url
+  }
+}

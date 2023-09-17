@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client'
 // import { loader } from 'graphql.macro'
 import axios from 'axios'
 
-import generateUploadUrlServiceGql from '../gql/file/generateUploadUrl.gql'
+import generateUploadUrlServiceGql from '../gql/ai/file/generateUploadUrl.gql'
 import parseCsvToJsonGql from '../gql/file/parseCsvToJson.gql'
 import getDownloadUrlGql from '../gql/file/getDownloadUrl.gql'
 
