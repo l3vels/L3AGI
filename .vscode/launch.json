@@ -21,6 +21,15 @@
       "cwd": "${workspaceFolder}/apps/server"
     },
     {
+      "name": "Python: PDF Async",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/server/pdf/pdf_async.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/apps/server"
+    },
+    {
       "name": "Python: Test",
       "type": "python",
       "request": "launch",
