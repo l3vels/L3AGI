@@ -72,6 +72,8 @@ import LoginModal from 'modals/LoginModal'
 import CreateAgentTemplate from 'pages/Agents/AgentForm/CreateAgentTempate'
 import AgentViewModal from 'modals/AgentViewModal'
 import TeamOfAgentViewModal from 'modals/TeamOfAgentViewModal'
+import ChatHistory from 'modals/AIChatModal/components/ChatHistory'
+import ChatHistoryRouteLayout from 'routes/ChatHistoryRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -213,8 +215,12 @@ const Route = () => {
           <Router path='/cheat-code' element={<CheatCode />} />
           {/* <Router path='/chat/history' element={<AIChat isHistory />} /> */}
 
-          <Router path={'/chat/history'} element={<ChatRouteLayout />} key={document.location.href}>
-            <Router index element={<AIChat isHistory />} key={document.location.href} />
+          <Router
+            path={'/chat/history'}
+            element={<ChatHistoryRouteLayout />}
+            key={document.location.href}
+          >
+            <Router index element={<ChatHistory />} key={document.location.href} />
           </Router>
         </Router>
       </Routes>

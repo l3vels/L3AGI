@@ -8,6 +8,8 @@ type useHumanMessageProps = {
 }
 
 const getAuthorName = (userId: string, assignedUserList: any, user: any) => {
+  if (!user) return ''
+
   if (userId === user.id) {
     return user.name
   }
@@ -30,7 +32,9 @@ export const useHumanMessage = ({ userId, messageText }: useHumanMessageProps) =
   const { data: assignedUserList } = useAssignedUserListService()
   const { user } = useContext(AuthContext)
 
-  const authorName = useMemo(
+  let authorName = ''
+
+  authorName = useMemo(
     () => getAuthorName(userId, assignedUserList, user),
     [userId, assignedUserList, user],
   )

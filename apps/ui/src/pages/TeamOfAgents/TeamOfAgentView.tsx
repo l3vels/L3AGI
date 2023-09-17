@@ -15,24 +15,22 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Tags from '@l3-lib/ui-core/dist/Tags'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
-import AgentCard from 'pages/Agents/AgentCard'
+
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
-import { useModal } from 'hooks'
+
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
-  const navigate = useNavigate()
-
-  const { closeModal } = useModal()
-
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
 
@@ -111,19 +109,37 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
           <StyledRightColumn>
             <StyledAgentsWrapper>
+              <Typography
+                value={'Agents'}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.lg}
+                customColor={'#FFF'}
+              />
+
               {team_agents?.map((agentObj: any, index: number) => {
                 const { agent, role } = agentObj
 
                 return (
-                  <AgentCard
-                    key={index}
-                    name={agent.name}
-                    description={role}
-                    onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
-                    onViewClick={() => navigate(`/agents/${agent.id}`)}
-                    headerTag={agent.role}
-                    onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
-                  />
+                  <StyledAgent key={index}>
+                    <AvatarGenerator name={agent.name} size={40} />
+
+                    <StyledMainTextWrapper>
+                      <Typography
+                        value={agent.name}
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.sm}
+                        customColor={'#FFF'}
+                      />
+                      <Typography
+                        value={agent.role}
+                        type={Typography.types.LABEL}
+                        size={Typography.sizes.xss}
+                        customColor={'rgba(255,255,255,0.8'}
+                      />
+                    </StyledMainTextWrapper>
+
+                    <Tags label={role} readOnly size='small' outlined />
+                  </StyledAgent>
                 )
               })}
             </StyledAgentsWrapper>
@@ -137,7 +153,33 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 export default TeamOfAgentView
 
 const StyledAgentsWrapper = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+
+  width: 100%;
+  max-width: 1440px;
+  /* min-height: 400px; */
+
+  border-radius: 10px;
+  padding: 30px 20px;
+
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  flex-wrap: wrap;
+`
+const StyledAgent = styled.div`
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+`
+const StyledMainTextWrapper = styled.div`
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* gap: 10px; */
+  margin-right: auto;
+  /* width: 100%; */
+  /* max-width: 400px; */
 `

@@ -3,17 +3,23 @@ import styled from 'styled-components'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
-import { useCreateAgentService } from 'services/agent/useCreateAgentService'
-import { ToastContext } from 'contexts'
 
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import { useNavigate } from 'react-router-dom'
+import { useCreateAgentFromTemplateService } from 'services/agent/useCreateAgentFromTemplateService'
+import { useCheckAgentIsCreatedService } from 'services/agent/useCheckAgentIsCreatedService'
+import { useCreateTeamOfAgentsFromTemplateService } from 'services/team/useCreateTeamOfAgentsFromTemplateService'
+import { useCheckTeamIsCreatedService } from 'services/team/useCheckTeamIsCreatedService'
+import { AuthContext } from 'contexts'
+import { useModal } from 'hooks'
 
 const ChatHistory = () => {
-  const { setToast } = useContext(ToastContext)
+  const { user } = useContext(AuthContext)
+
+  const { openModal } = useModal()
 
   const navigate = useNavigate()
 
@@ -35,35 +41,32 @@ const ChatHistory = () => {
 
   const chatGreeting = agentById?.configs?.greeting || ''
 
-  const [createAgentService] = useCreateAgentService()
+  const [createAgentFromTemplate] = useCreateAgentFromTemplateService()
+  const [createTeamOfAgentsFromTemplate] = useCreateTeamOfAgentsFromTemplateService()
 
-  const values = {
-    name: agentById?.agent?.name,
-    role: agentById?.agent?.role,
-    description: agentById?.agent?.description,
-    is_template: agentById?.agent?.is_template,
-    is_memory: agentById?.agent?.is_memory,
-    temperature: agentById?.configs?.temperature,
-    goals: agentById?.configs?.goals,
-    constraints: agentById?.configs?.constraints,
-    tools: agentById?.configs?.tools,
-    instructions: agentById?.configs?.instructions,
-    datasources: agentById?.configs?.datasources,
-    model_version: agentById?.configs?.model_version,
-    model_provider: agentById?.configs?.model_provider,
-    suggestions: agentById?.configs?.suggestions,
-    greeting: agentById?.configs?.greeting,
-  }
+  const { data: agentFromTemplate } = useCheckAgentIsCreatedService({ id: agentId || '' })
+  const { data: teamFromTemplate } = useCheckTeamIsCreatedService({ id: teamId || '' })
 
   const handleCreate = async () => {
-    // setIsLoading(true)
-    // try {
-    //   const res = await createAgentService(values)
-    //   navigate(`/copilot?agent=${res.agent.id}`)
-    // } catch (e) {
-    //   console.log(e)
-    // }
-    // setIsLoading(false)
+    if (!user) return openModal({ name: 'login-modal' })
+
+    if (agentFromTemplate) return navigate(`/copilot?agent=${agentFromTemplate.agent.id}`)
+
+    if (teamFromTemplate) return navigate(`/copilot?team=${teamFromTemplate.id}`)
+
+    setIsLoading(true)
+    try {
+      if (agentId) {
+        const res = await createAgentFromTemplate({ id: agentId })
+        navigate(`/copilot?agent=${res.agent.id}`)
+      } else if (teamId) {
+        const res = await createTeamOfAgentsFromTemplate({ id: teamId })
+        navigate(`/copilot?team=${res.id}`)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    setIsLoading(false)
   }
 
   return (
@@ -108,6 +111,9 @@ export default ChatHistory
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
+
+  width: 100%;
+  height: 100%;
 `
 
 const StyledMessages = styled.main`
@@ -125,7 +131,7 @@ const StyledButtonWrapper = styled.div`
   position: fixed;
   left: 50%;
   z-index: 100001;
-  bottom: -120px;
+  bottom: 20px;
   transform: translateX(-50%);
 
   display: flex;

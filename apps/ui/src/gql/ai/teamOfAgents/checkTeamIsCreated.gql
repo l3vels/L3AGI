@@ -1,0 +1,21 @@
+query checkTeamIsCreated($id: id!) @api(name: "ai") {
+  checkTeamIsCreated(id: $id)
+    @rest(
+      type: "TeamOfAgents"
+      path: "/team/from-template/is-created/{args.id}"
+      method: "GET"
+      endpoint: "ai"
+    ) {
+    id
+    name
+    description
+    team_type
+    workspace_id
+    is_deleted
+    is_template
+    is_public
+    account_id
+    created_by
+    modified_by
+  }
+}

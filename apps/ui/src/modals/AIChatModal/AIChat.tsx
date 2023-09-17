@@ -11,12 +11,8 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { useState } from 'react'
-import ChatMessageListV2 from './components/ChatMessageList/ChatMessageListV2'
-import { ReplyStateProps } from './components/ReplyBox'
-import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
-import ChatHistory from './components/ChatHistory'
 
-const AIChat = ({ isHistory }: { isHistory?: boolean }) => {
+const AIChat = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   const location = useLocation()
@@ -33,7 +29,7 @@ const AIChat = ({ isHistory }: { isHistory?: boolean }) => {
       <StyledTabContext activeTabId={activeTab}>
         <TabPanels noAnimation className='TabsContextClass'>
           <TabPanel className='TabsContextClass'>
-            {isHistory ? <ChatHistory /> : <ChatV2 />}
+            <ChatV2 />
           </TabPanel>
 
           <TabPanel>
@@ -54,3 +50,11 @@ const StyledTabContext = styled(TabsContext)`
     height: 100%;
   }
 `
+// const StyledTabList = styled(TabList)`
+//   position: fixed;
+//   z-index: 12000000;
+
+//   left: 50%;
+
+//   transform: translateX(-50%);
+// `

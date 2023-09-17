@@ -1,0 +1,22 @@
+mutation createTeamOfAgentsFromTemplate($id: id!) @api(name: ai) {
+  createTeamOfAgentsFromTemplate(id: $id)
+    @rest(
+      type: "TeamOfAgents"
+      path: "/team/from-template/{args.id}"
+      method: "POST"
+      bodyKey: "id"
+      endpoint: "ai"
+    ) {
+    id
+    name
+    description
+    team_type
+    workspace_id
+    is_deleted
+    is_template
+    is_public
+    account_id
+    created_by
+    modified_by
+  }
+}

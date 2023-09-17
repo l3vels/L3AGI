@@ -31,8 +31,10 @@ import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
-import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+
+import ChatMembers from './ChatMessageList/components/ChatMembers'
 
 type ChatV2Props = {
   isPrivate?: boolean
@@ -267,30 +269,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   return (
     <StyledWrapper>
-      <StyledAgentsWrapper>
-        <StyledAgentWrapper>
-          <AvatarGenerator name={user.name} size={30} />
-          {user.name}
-        </StyledAgentWrapper>
-        {agentById && (
-          <>
-            <StyledAgentWrapper>
-              <AvatarGenerator name={agentName} size={30} />
-              {agentName}
-            </StyledAgentWrapper>
-          </>
-        )}
+      <StyledMembersWrapper>
+        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} user={user} />
+      </StyledMembersWrapper>
 
-        {teamOfAgents &&
-          teamOfAgents.team_agents?.map((agentData: any, index: number) => {
-            return (
-              <StyledAgentWrapper key={index}>
-                <AvatarGenerator name={agentData.agent.name} size={30} />
-                {agentData.agent.name}
-              </StyledAgentWrapper>
-            )
-          })}
-      </StyledAgentsWrapper>
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
@@ -311,7 +293,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
           />
         </StyledChatWrapper>
       </StyledMessages>
-
       <StyledChatFooter>
         <StyledChatInputWrapper>
           <StyledButtonGroup>
@@ -545,6 +526,8 @@ const StyledTextareaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px 0px;
+  padding-left: 20px;
 `
 
 const StyledButton = styled.div<{ disabled: boolean }>`
@@ -664,10 +647,12 @@ const StyledReplyText = styled.div`
   align-items: center;
   gap: 5px;
 `
-const StyledAgentsWrapper = styled.div`
+const StyledMembersWrapper = styled.div`
   position: absolute;
   top: 20px;
   right: 5px;
+
+  z-index: 12000000;
 
   padding: 10px;
 
@@ -678,13 +663,8 @@ const StyledAgentsWrapper = styled.div`
   /* background: rgba(0, 0, 0, 0.3); */
 
   height: calc(100vh - 240px);
-`
-const StyledAgentWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
 
-  padding: 10px;
-  /* border-radius: 10px;
-  background: rgba(0, 0, 0, 0.4); */
+  @media only screen and (max-width: 1400px) {
+    display: none;
+  }
 `

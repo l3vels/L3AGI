@@ -1,0 +1,12 @@
+query checkAgentIsCreated($id: id!) @api(name: "ai") {
+  checkAgentIsCreated(id: $id)
+    @rest(
+      type: "Agent"
+      path: "/agent/from-template/is-created/{args.id}"
+      method: "GET"
+      endpoint: "ai"
+    ) {
+    agent
+    configs
+  }
+}
