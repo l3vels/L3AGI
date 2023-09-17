@@ -1,20 +1,17 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
-import { useCreateAgentService } from 'services/agent/useCreateAgentService'
-import { ToastContext } from 'contexts'
 
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import { useNavigate } from 'react-router-dom'
+import { useCreateAgentFromTemplateService } from 'services/agent/useCreateAgentFromTemplateService'
 
 const ChatHistory = () => {
-  const { setToast } = useContext(ToastContext)
-
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -35,35 +32,19 @@ const ChatHistory = () => {
 
   const chatGreeting = agentById?.configs?.greeting || ''
 
-  const [createAgentService] = useCreateAgentService()
-
-  const values = {
-    name: agentById?.agent?.name,
-    role: agentById?.agent?.role,
-    description: agentById?.agent?.description,
-    is_template: agentById?.agent?.is_template,
-    is_memory: agentById?.agent?.is_memory,
-    temperature: agentById?.configs?.temperature,
-    goals: agentById?.configs?.goals,
-    constraints: agentById?.configs?.constraints,
-    tools: agentById?.configs?.tools,
-    instructions: agentById?.configs?.instructions,
-    datasources: agentById?.configs?.datasources,
-    model_version: agentById?.configs?.model_version,
-    model_provider: agentById?.configs?.model_provider,
-    suggestions: agentById?.configs?.suggestions,
-    greeting: agentById?.configs?.greeting,
-  }
+  const [createAgentFromTemplate] = useCreateAgentFromTemplateService()
 
   const handleCreate = async () => {
-    // setIsLoading(true)
-    // try {
-    //   const res = await createAgentService(values)
-    //   navigate(`/copilot?agent=${res.agent.id}`)
-    // } catch (e) {
-    //   console.log(e)
-    // }
-    // setIsLoading(false)
+    setIsLoading(true)
+    try {
+      if (agentId) {
+        const res = await createAgentFromTemplate({ id: agentId })
+        navigate(`/copilot?agent=${res.agent.id}`)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    setIsLoading(false)
   }
 
   return (

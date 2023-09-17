@@ -1,0 +1,13 @@
+mutation createAgentFromTemplate($id: id!) @api(name: ai) {
+  createAgentFromTemplate(id: $id)
+    @rest(
+      type: "Agent"
+      path: "/agent/from-template/{args.id}"
+      method: "POST"
+      bodyKey: "id"
+      endpoint: "ai"
+    ) {
+    agent
+    configs
+  }
+}
