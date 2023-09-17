@@ -3,6 +3,7 @@ from models.datasource import DatasourceModel
 from datasources.base import DatasourceType
 from tools.datasources.postgres.postgres import PostgresDatabaseTool
 from tools.datasources.mysql.mysql import MySQLDatabaseTool
+from tools.datasources.file.file import FileDatasourceTool
 from tools.base import BaseTool
 from typings.config import AccountSettings
 
@@ -19,6 +20,8 @@ def get_datasource_tools(datasources: List[DatasourceModel], settings: AccountSe
             tools.append(PostgresDatabaseTool())
         if datasource_type == DatasourceType.MYSQL.value:
             tools.append(MySQLDatabaseTool())
+        if datasource_type == DatasourceType.FILE.value:
+            tools.append(FileDatasourceTool())
 
     for tool in tools:
         tool.settings = settings

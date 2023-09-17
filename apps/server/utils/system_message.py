@@ -65,7 +65,7 @@ class SystemMessageBuilder:
 
 
         result = (
-            "Data sources can be: SQL databases, CSV, JSON, Excel files. You can use tool to get data from them.\n"
+            "Data sources can be: SQL databases and files. You can use tools to get data from them.\n"
             "You can use the following data sources:\n"
         )
 

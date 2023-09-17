@@ -30,11 +30,17 @@ export const useEditDatasource = () => {
   const filteredConfig = configsData?.filter((config: any) => config.datasource_id === datasourceId) // TODO: filter in backend
 
   const configs = filteredConfig?.reduce((prev: any, config: any) => {
+    let value = config.value
+
+    if (config.key_type === 'files') {
+      value = JSON.parse(config.value)
+    }
+
     prev[config.key] = {
       id: config.id,
       key: config.key,
       key_type: config.key_type,
-      value: config.value,
+      value,
       is_secret: config.is_secret,
       is_required: config.is_required,
     }
@@ -69,7 +75,13 @@ export const useEditDatasource = () => {
     for (const key in values.configs) {
       const cfg = values.configs[key]
 
-      const value = cfg.key_type === 'int' ? parseInt(cfg.value) : cfg.value
+      let value = cfg.value
+
+      if (cfg.key_type === 'int') {
+        value = parseInt(cfg.value)
+      } else if (cfg.key_type === 'files') {
+        value = JSON.stringify(cfg.value)
+      }
 
       const promise = updateConfig(cfg.id, {
         key: cfg.key,

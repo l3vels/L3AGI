@@ -9,17 +9,23 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   isLoading: boolean
-  hasValue: boolean
+  multiple?: boolean
 }
 
-const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
+const UploadButton = ({ onChange, isLoading, multiple = false }: UploadButtonProps) => {
   const uploadRef = useRef(null as any)
   const handleUploadButton = async () => {
     uploadRef.current.click()
   }
   return (
     <>
-      <input type='file' ref={uploadRef} style={{ display: 'none' }} onChange={onChange} />
+      <input
+        type='file'
+        ref={uploadRef}
+        style={{ display: 'none' }}
+        onChange={onChange}
+        multiple={multiple}
+      />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>
         {isLoading ? (

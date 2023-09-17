@@ -61,6 +61,8 @@ export const useCreateDatasource = () => {
     setFieldValue('configs', configs)
   }, [setFieldValue, source_type, dataLoaders])
 
+  console.log(formik.values.configs)
+
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
     try {
@@ -77,7 +79,13 @@ export const useCreateDatasource = () => {
       for (const key in values.configs) {
         const cfg = values.configs[key]
 
-        const value = cfg.value && cfg.key_type === 'int' ? parseInt(cfg.value) : cfg.value
+        let value = cfg.value
+
+        if (cfg.key_type === 'int') {
+          value = parseInt(cfg.value)
+        } else if (cfg.key_type === 'files') {
+          value = JSON.stringify(cfg.value)
+        }
 
         const promise = createConfig({
           key: cfg.key,

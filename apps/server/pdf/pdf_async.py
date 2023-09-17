@@ -16,9 +16,14 @@ import asyncio
 class L3FileRetriever:
     query_engine = None
     index = None
+    directory: str
+
+    def __init__(self, directory: str) -> None:
+        self.directory = directory
+        self.load_documents()
+
     def load_documents(self):
-        # load documents
-        documents = SimpleDirectoryReader("/Users/giga/projects/l3vels/L3AGI/apps/server/pdf/files").load_data()
+        documents = SimpleDirectoryReader(self.directory).load_data()
         self.index = SummaryIndex.from_documents(documents)
         
     def query(self, query_str):
@@ -37,10 +42,6 @@ class L3FileRetriever:
     
 
 
-l3 = L3FileRetriever()
-l3.load_documents()
+# l3 = L3FileRetriever()
 
-l3.query("What is Paul Graham's biggest achievement?")
-l3.query("Tell me about systemic and toxic effects.")
-l3.query("Give me a summary of local anesthetics.")
-l3.query("Give me summary of Paul Graham document.")
+# l3.query("What is the documents about?")
