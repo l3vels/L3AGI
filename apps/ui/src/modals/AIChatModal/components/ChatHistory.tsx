@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import styled from 'styled-components'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
@@ -13,8 +13,14 @@ import { useCreateAgentFromTemplateService } from 'services/agent/useCreateAgent
 import { useCheckAgentIsCreatedService } from 'services/agent/useCheckAgentIsCreatedService'
 import { useCreateTeamOfAgentsFromTemplateService } from 'services/team/useCreateTeamOfAgentsFromTemplateService'
 import { useCheckTeamIsCreatedService } from 'services/team/useCheckTeamIsCreatedService'
+import { AuthContext } from 'contexts'
+import { useModal } from 'hooks'
 
 const ChatHistory = () => {
+  const { user } = useContext(AuthContext)
+
+  const { openModal } = useModal()
+
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -42,6 +48,8 @@ const ChatHistory = () => {
   const { data: teamFromTemplate } = useCheckTeamIsCreatedService({ id: teamId || '' })
 
   const handleCreate = async () => {
+    if (!user) return openModal({ name: 'login-modal' })
+
     if (agentFromTemplate) return navigate(`/copilot?agent=${agentFromTemplate.agent.id}`)
 
     if (teamFromTemplate) return navigate(`/copilot?team=${teamFromTemplate.id}`)
@@ -103,6 +111,9 @@ export default ChatHistory
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
+
+  width: 100%;
+  height: 100%;
 `
 
 const StyledMessages = styled.main`
@@ -120,7 +131,7 @@ const StyledButtonWrapper = styled.div`
   position: fixed;
   left: 50%;
   z-index: 100001;
-  bottom: -120px;
+  bottom: 20px;
   transform: translateX(-50%);
 
   display: flex;

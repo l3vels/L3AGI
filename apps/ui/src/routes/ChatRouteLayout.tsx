@@ -18,9 +18,7 @@ const ChatRouteLayout = () => {
     <StyledAppContainer className='app_container'>
       <Header />
       <StyledBodyContainer>{outlet}</StyledBodyContainer>
-      <StyledFooterWrapper>
-        <Footer />
-      </StyledFooterWrapper>
+      <StyledFooterWrapper>{<Footer />}</StyledFooterWrapper>
     </StyledAppContainer>
   )
 }

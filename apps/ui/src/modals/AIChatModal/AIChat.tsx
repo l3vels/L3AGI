@@ -14,9 +14,8 @@ import { useState } from 'react'
 import ChatMessageListV2 from './components/ChatMessageList/ChatMessageListV2'
 import { ReplyStateProps } from './components/ReplyBox'
 import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
-import ChatHistory from './components/ChatHistory'
 
-const AIChat = ({ isHistory }: { isHistory?: boolean }) => {
+const AIChat = () => {
   const [activeTab, setActiveTab] = useState(0)
 
   const location = useLocation()
@@ -33,7 +32,7 @@ const AIChat = ({ isHistory }: { isHistory?: boolean }) => {
       <StyledTabContext activeTabId={activeTab}>
         <TabPanels noAnimation className='TabsContextClass'>
           <TabPanel className='TabsContextClass'>
-            {isHistory ? <ChatHistory /> : <ChatV2 />}
+            <ChatV2 />
           </TabPanel>
 
           <TabPanel>

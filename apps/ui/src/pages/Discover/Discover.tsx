@@ -30,22 +30,6 @@ const Discover = () => {
 
   const { data: publicTeamAgents } = useTeamOfAgentsPublicService()
 
-  const handleChatClick = (url: string) => {
-    if (!user) {
-      openModal({ name: 'login-modal' })
-    } else {
-      navigate(url)
-    }
-  }
-
-  const handleViewClick = (url: string) => {
-    if (!user) {
-      openModal({ name: 'login-modal' })
-    } else {
-      navigate(url)
-    }
-  }
-
   return (
     <StyledRoot>
       <StyledSectionWrapper>
@@ -74,7 +58,7 @@ const Discover = () => {
                       data: { teamOfAgents: teamOfAgents },
                     })
                   }
-                  onChatClick={() => handleViewClick(`/chat/history?team=${teamOfAgents.id}`)}
+                  onChatClick={() => navigate(`/chat/history?team=${teamOfAgents.id}`)}
                   creator={teamOfAgents.creator.name}
                 />
               )
@@ -108,7 +92,7 @@ const Discover = () => {
                       data: { agent: agentObj },
                     })
                   }
-                  onChatClick={() => handleChatClick(`/chat/history?agent=${agent.id}`)}
+                  onChatClick={() => navigate(`/chat/history?agent=${agent.id}`)}
                   headerTag={agent.role}
                   creator={agent.creator}
                 />
@@ -147,7 +131,7 @@ const Discover = () => {
                         data: { agent: agentObj },
                       })
                     }
-                    onChatClick={() => handleChatClick(`/chat/history?agent=${agent.id}`)}
+                    onChatClick={() => navigate(`/chat/history?agent=${agent.id}`)}
                     headerTag={agent.role}
                     creator={agent.creator}
                   />
