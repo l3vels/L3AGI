@@ -29,7 +29,8 @@ class FileDatasourceRetriever:
 
         for file_url in file_urls:
             key = AWSS3Service.get_key_from_public_url(file_url)
-            name = f"{uuid4()}.pdf"
+            _, ext = key.rsplit('.', 1)
+            name = f"{uuid4()}.{ext}"
             absolute_path = self.datasource_path.joinpath(name).resolve()
             AWSS3Service.download_file(key, absolute_path)
 

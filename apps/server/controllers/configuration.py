@@ -1,3 +1,4 @@
+import sentry_sdk
 from typing import List
 import json
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
@@ -21,12 +22,17 @@ def index_documents(urls: str, datasource_id: UUID, account):
     settings = ConfigModel.get_account_settings(db, account)
     datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
 
-    file_urls = json.loads(urls)
-    retriever = FileDatasourceRetriever(settings, str(datasource_id))
-    retriever.save_documents(file_urls)
-    retriever.load_documents()
+    try:
+        file_urls = json.loads(urls)
+        retriever = FileDatasourceRetriever(settings, str(datasource_id))
+        retriever.save_documents(file_urls)
+        retriever.load_documents()
     
-    datasource.status = DatasourceStatus.READY.value
+        datasource.status = DatasourceStatus.READY.value
+    except Exception as err:
+        sentry_sdk.capture_exception(err)
+        datasource.status = DatasourceStatus.FAILED.value
+
     db.session.add(datasource)
     db.session.commit()
 
