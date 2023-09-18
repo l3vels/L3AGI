@@ -1,13 +1,10 @@
 import BackButton from 'components/BackButton'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
-  StyledDetailsBox,
-  StyledDivider,
   StyledInnerButtonWrapper,
   StyledInnerWrapper,
   StyledLeftColumn,
   StyledRightColumn,
-  StyledWrapper,
 } from 'pages/Agents/AgentView/AgentView'
 import {
   StyledHeaderGroup,
@@ -29,6 +26,11 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import {
+  StyledDetailsBox,
+  StyledDivider,
+  StyledWrapper,
+} from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()

@@ -22,6 +22,7 @@ import BackButton from 'components/BackButton'
 import AgentToolkits from './components/AgentToolkits'
 import AgentDatasources from './components/AgentDatasources'
 import { useModal } from 'hooks'
+import AgentVIewDetailBox from './components/AgentViewDetailBox'
 
 const AgentView = ({ agentData }: { agentData?: any }) => {
   const navigate = useNavigate()
@@ -36,20 +37,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
   const { agent, configs } = agentById || agentData
 
-  const { name, description, role, creator } = agent
-
-  const {
-    tools,
-    model_version,
-    model_provider,
-    goals,
-    constraints,
-    instructions,
-    temperature,
-    datasources,
-    suggestions,
-    greeting,
-  } = configs
+  const { tools, goals, constraints, instructions, datasources, suggestions, greeting } = configs
 
   return (
     <StyledSectionWrapper>
@@ -75,66 +63,25 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
       <ComponentsWrapper noPadding hideBox={agentData}>
         <StyledInnerWrapper noPadding={agentData}>
           <StyledLeftColumn>
-            <StyledDetailsBox>
-              <StyledWrapper>
-                <Typography
-                  value={name}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.lg}
-                  customColor={'#FFF'}
-                />
-                {creator && (
-                  <Typography
-                    value={`By ${creator.name}`}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    customColor={'rgba(255,255,255,0.6)'}
-                  />
-                )}
-                <div>
-                  <Button
-                    size={Button.sizes.SMALL}
-                    onClick={() => {
-                      if (agentData) {
-                        closeModal('agent-view-modal')
-                      }
-                      navigate(`/agents/create-agent?agentId=${agent.id}`)
-                    }}
-                  >
-                    <StyledInnerButtonWrapper>
-                      <Download size={28} />
-                      Add
-                    </StyledInnerButtonWrapper>
-                  </Button>
-                </div>
-              </StyledWrapper>
-
-              {description && (
-                <>
-                  <StyledDivider />
-                  <StyledWrapper>
-                    <Typography
-                      value={description}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.sm}
-                      customColor={'rgba(255,255,255,0.9)'}
-                    />
-                  </StyledWrapper>
-                </>
-              )}
-
-              <StyledDivider />
-
-              <StyledWrapper>
-                {role && <TagsRow title='Role' items={[role]} />}
-
-                {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
-
-                {model_version && <TagsRow title='Model' items={[model_version]} />}
-
-                {temperature && <TagsRow title='Temperature' items={[temperature]} />}
-              </StyledWrapper>
-            </StyledDetailsBox>
+            <AgentVIewDetailBox
+              agentData={agentById || agentData}
+              customButton={
+                <Button
+                  size={Button.sizes.SMALL}
+                  onClick={() => {
+                    if (agentData) {
+                      closeModal('agent-view-modal')
+                    }
+                    navigate(`/agents/create-agent?agentId=${agent.id}`)
+                  }}
+                >
+                  <StyledInnerButtonWrapper>
+                    <Download size={28} />
+                    Add
+                  </StyledInnerButtonWrapper>
+                </Button>
+              }
+            />
           </StyledLeftColumn>
 
           <StyledRightColumn>
@@ -226,32 +173,6 @@ export const StyledRightColumn = styled.div`
   gap: 10px;
 
   width: 100%;
-`
-export const StyledDetailsBox = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-
-  width: 300px;
-  height: fit-content;
-  /* min-height: 400px; */
-
-  border-radius: 10px;
-  padding: 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`
-export const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px 0;
-`
-
-export const StyledDivider = styled.div`
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.4);
 `
 export const StyledInnerButtonWrapper = styled.div`
   display: flex;
