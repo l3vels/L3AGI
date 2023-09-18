@@ -1,13 +1,10 @@
 import BackButton from 'components/BackButton'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
-  StyledDetailsBox,
-  StyledDivider,
   StyledInnerButtonWrapper,
   StyledInnerWrapper,
   StyledLeftColumn,
   StyledRightColumn,
-  StyledWrapper,
 } from 'pages/Agents/AgentView/AgentView'
 import {
   StyledHeaderGroup,
@@ -26,9 +23,9 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
-import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
-
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+
+import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()
@@ -36,7 +33,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
   if (!data && !teamOfAgentsData) return <div />
 
-  const { name, description, team_type, team_agents } = data || teamOfAgentsData
+  const { team_agents } = data || teamOfAgentsData
 
   return (
     <StyledSectionWrapper>
@@ -62,49 +59,20 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
       <ComponentsWrapper noPadding hideBox={teamOfAgentsData}>
         <StyledInnerWrapper noPadding={teamOfAgentsData}>
           <StyledLeftColumn>
-            <StyledDetailsBox>
-              <StyledWrapper>
-                <Typography
-                  value={name}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.lg}
-                  customColor={'#FFF'}
-                />
-
-                <div>
-                  <Button
-                    size={Button.sizes.SMALL}
-                    // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
-                  >
-                    <StyledInnerButtonWrapper>
-                      <Download size={28} />
-                      Add
-                    </StyledInnerButtonWrapper>
-                  </Button>
-                </div>
-              </StyledWrapper>
-
-              {description && (
-                <>
-                  <StyledDivider />
-
-                  <StyledWrapper>
-                    <Typography
-                      value={description}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.sm}
-                      customColor={'rgba(255,255,255,0.9)'}
-                    />
-                  </StyledWrapper>
-                </>
-              )}
-
-              <StyledDivider />
-
-              <StyledWrapper>
-                {team_type && <TagsRow title='Team Type' items={[team_type]} />}
-              </StyledWrapper>
-            </StyledDetailsBox>
+            <TeamOfAgentsDetailsBox
+              teamData={data || teamOfAgentsData}
+              customButton={
+                <Button
+                  size={Button.sizes.SMALL}
+                  // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
+                >
+                  <StyledInnerButtonWrapper>
+                    <Download size={28} />
+                    Add
+                  </StyledInnerButtonWrapper>
+                </Button>
+              }
+            />
           </StyledLeftColumn>
 
           <StyledRightColumn>

@@ -164,6 +164,25 @@ def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> Agent
 
     return convert_model_to_response(db_agent)
 
+@router.get("/discover/{id}", response_model=AgentWithConfigsOutput)
+def get_discover_agent_by_id(id: str) -> AgentWithConfigsOutput:
+    """
+    Get an agent by its ID.
+
+    Args:
+        id (str): ID of the agent.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        AgentWithConfigsOutput: Agent associated with the given ID.
+    """
+    db_agent = AgentModel.get_agent_by_id(db, agent_id=id, account=None)
+    
+    if not db_agent or db_agent.is_deleted:
+        raise HTTPException(status_code=404, detail="Agent not found")  # Ensure consistent case in error messages
+
+    return convert_model_to_response(db_agent)
+
 @router.delete("/{agent_id}", status_code=200)
 def delete_agent(agent_id: str, auth: UserAccount = Depends(authenticate)) -> dict:
     """

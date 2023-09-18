@@ -1,0 +1,7 @@
+query discoverAgentById($id: id!) @api(name: "ai") {
+  discoverAgentById(id: $id)
+    @rest(type: "Agent", path: "/agent/discover/{args.id}", method: "GET", endpoint: "ai") {
+    agent
+    configs
+  }
+}

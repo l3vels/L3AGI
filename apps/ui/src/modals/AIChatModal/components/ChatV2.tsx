@@ -41,7 +41,7 @@ type ChatV2Props = {
 }
 
 const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
-  const isProduction = import.meta.env.REACT_APP_ENV === 'production'
+  // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
 
   const navigate = useNavigate()
 
@@ -270,7 +270,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   return (
     <StyledWrapper>
       <StyledMembersWrapper>
-        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} user={user} />
+        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} userName={user.name} />
       </StyledMembersWrapper>
 
       <StyledMessages>

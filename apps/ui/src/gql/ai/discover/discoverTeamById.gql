@@ -1,0 +1,8 @@
+#import "../teamOfAgents/teamOfAgentFragment.gql"
+
+query discoverTeamById($id: id!) @api(name: "ai") {
+  discoverTeamById(id: $id)
+    @rest(type: "TeamOfAgents", path: "/team/discover/{args.id}", method: "GET", endpoint: "ai") {
+    ...TeamOfAgentFragment
+  }
+}
