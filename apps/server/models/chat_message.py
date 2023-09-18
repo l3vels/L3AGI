@@ -16,12 +16,12 @@ class ChatMessage(BaseModel):
     __tablename__ = 'chat_message'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    parent_id = Column(UUID, ForeignKey('chat_message.id'), index=True)
+    parent_id = Column(UUID, ForeignKey('chat_message.id', ondelete='CASCADE'), index=True)
     session_id = Column(String, nullable=False, index=True)
-    agent_id = Column(UUID, ForeignKey('agent.id'), index=True)
-    team_id = Column(UUID, ForeignKey('team.id'), index=True)
-    user_id = Column(UUID, nullable=False, index=True)
-    account_id = Column(UUID, nullable=False, index=True)
+    agent_id = Column(UUID, ForeignKey('agent.id', ondelete='CASCADE'), index=True)
+    team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), index=True)
+    user_id = Column(UUID,  ForeignKey('user.id', ondelete='CASCADE'), nullable=False, index=True)
+    account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=False, index=True)
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
 
@@ -30,8 +30,8 @@ class ChatMessage(BaseModel):
     team = relationship("TeamModel", back_populates="chat_messages")
     
         
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
 
 
