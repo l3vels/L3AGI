@@ -125,7 +125,7 @@ const StyledAgentWrapper = styled.div`
   padding: 10px;
   width: 300px;
 
-  padding-left: 30px;
+  padding-left: 15px;
   /* border-radius: 10px;
   background: rgba(0, 0, 0, 0.4); */
 `
