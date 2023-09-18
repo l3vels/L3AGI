@@ -99,6 +99,8 @@ export const useCreateDatasource = () => {
         promises.push(promise)
       }
 
+      await Promise.all(promises)
+
       await refetchDatasources()
       setToast({
         message: 'New Datasource was Created!',

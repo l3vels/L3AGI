@@ -94,6 +94,14 @@ class DatasourceModel(BaseModel):
         old_datasource = cls.get_datasource_by_id(db=db, datasource_id=id, account=account)
         if not old_datasource:
             raise DatasourceNotFoundException("Datasource not found")
+        
+        status: str = DatasourceStatus.READY.value
+
+        if datasource.source_type == DatasourceType.FILE.value:
+            status = DatasourceStatus.INDEXING.value
+
+        old_datasource.status = status
+
         db_datasource = cls.update_model_from_input(datasource_model=old_datasource, datasource_input=datasource)
         db_datasource.modified_by = user.id
         

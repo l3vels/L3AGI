@@ -5,22 +5,30 @@ from fastapi_sqlalchemy import db
 from uuid import UUID
 
 from models.config import ConfigModel
+from models.datasource import DatasourceModel
 from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.configuration import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
 from datasources.base import DatasourceEnvKeyType
+from typings.datasource import DatasourceStatus
 from datasources.file.file_retriever import FileDatasourceRetriever
 router = APIRouter()
 
-def index_documents(urls: str, datasource_id: UUID):
-    print("STARTED INDEXING")
+# TODO: refactor update method in models to be flexible.
+def index_documents(urls: str, datasource_id: UUID, account):
+
+    datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
+    
     file_urls = json.loads(urls)
     retriever = FileDatasourceRetriever(str(datasource_id))
     retriever.save_documents(file_urls)
     retriever.load_documents()
-    print("FINISHED")
+    
+    datasource.status = DatasourceStatus.READY.value
+    db.session.add(datasource)
+    db.session.commit()
 
 @router.post("", status_code=201, response_model=ConfigOutput)
 def create_config(
@@ -43,7 +51,7 @@ def create_config(
 
     # Save index to storage
     if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
-        background_tasks.add_task(index_documents, config.value, config.datasource_id)    
+        background_tasks.add_task(index_documents, config.value, config.datasource_id, auth.account)    
 
     return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
 
@@ -74,7 +82,8 @@ def update_config(
         
         # Save index to storage
         if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
-            background_tasks.add_task(index_documents, config.value, config.datasource_id)
+            background_tasks.add_task(index_documents, config.value, config.datasource_id, auth.account)
+
 
         return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
     except ConfigNotFoundException:

@@ -19,9 +19,9 @@ type DatasourceCardProps = {
 
 const getStatusIcon = (status: string) => {
   if (status === 'Ready') {
-    return <CheckIcon iconSize={120} customColor={'rgb(115, 250, 253)'} />
+    return <CheckIcon />
   } else if (status === 'Indexing') {
-    return <Bullet customColor={'#73FAFD'} />
+    return <Bullet />
   }
 }
 
