@@ -15,7 +15,7 @@ export const DATA_LOADER_IMAGES = [
     imageSrc: mySqlImg,
   },
   {
-    sourceName: 'Upload File',
+    sourceName: 'File',
     imageSrc: fileImg,
   },
   {

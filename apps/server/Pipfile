@@ -45,8 +45,10 @@ pymysql = "*"
 youtube-search = "*"
 pyowm = "*"
 bs4 = "*"
+llama-hub = "*"
 twilio = "*"
 boto3 = "*"
+llama-cpp-python = "*"
 
 [dev-packages]
 

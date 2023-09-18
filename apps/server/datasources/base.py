@@ -7,6 +7,7 @@ from enum import Enum
 class DatasourceEnvKeyType(Enum):
     STRING = 'string'
     FILE = 'file'
+    FILES = 'files'
     INT = 'int'
 
     def __str__(self):
@@ -52,7 +53,7 @@ class DatasourceCategory(Enum):
 class DatasourceType(Enum):
     POSTGRES = 'Postgres'
     MYSQL = 'MySQL'
-    UPLOAD_FILE = 'Upload File'
+    FILE = 'File'
     WEB_PAGE = 'Web Page'
     NOTION = 'Notion'
     SHOPIFY = 'Shopify'

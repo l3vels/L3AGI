@@ -5,8 +5,9 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from typings.datasource import DatasourceInput
+from typings.datasource import DatasourceInput, DatasourceStatus
 from exceptions import DatasourceNotFoundException
+from datasources.base import DatasourceType
 
 class DatasourceModel(BaseModel):
     """
@@ -30,6 +31,7 @@ class DatasourceModel(BaseModel):
     source_type = Column(String) # Later add as Enum
     status = Column(String) # Later add as Enum
     description = Column(String, nullable=True)
+    status = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
     workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True)
@@ -59,10 +61,17 @@ class DatasourceModel(BaseModel):
             Datasource: The created datasource.
 
         """
+        status: str = DatasourceStatus.READY.value
+
+        if datasource.source_type == DatasourceType.FILE.value:
+            status = DatasourceStatus.INDEXING.value
+
         db_datasource = DatasourceModel(
-                         created_by=user.id, 
-                         account_id=account.id,
-                         )
+            status=status,
+            created_by=user.id, 
+            account_id=account.id,
+        )
+
         cls.update_model_from_input(db_datasource, datasource)
         db.session.add(db_datasource)
         db.session.flush()  # Flush pending changes to generate the datasource's ID
@@ -86,6 +95,14 @@ class DatasourceModel(BaseModel):
         old_datasource = cls.get_datasource_by_id(db=db, datasource_id=id, account=account)
         if not old_datasource:
             raise DatasourceNotFoundException("Datasource not found")
+        
+        status: str = DatasourceStatus.READY.value
+
+        if datasource.source_type == DatasourceType.FILE.value:
+            status = DatasourceStatus.INDEXING.value
+
+        old_datasource.status = status
+
         db_datasource = cls.update_model_from_input(datasource_model=old_datasource, datasource_input=datasource)
         db_datasource.modified_by = user.id
         

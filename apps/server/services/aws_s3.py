@@ -21,12 +21,11 @@ class AWSS3Service:
             ContentType=content_type,
         )
 
-        public_url = f"https://{Config.AWS_S3_BUCKET}.s3.amazonaws.com/{key}"
-        
+        public_url = AWSS3Service.get_public_url(key)
         return public_url
     
     @staticmethod
-    def get_presigned_url(key: str, content_type: str):
+    def generate_presigned_url(key: str, content_type: str):
         """Generate a presigned URL for S3 upload"""
 
         return s3_client.generate_presigned_url(
@@ -38,3 +37,25 @@ class AWSS3Service:
             },
             ExpiresIn=3600
         )
+    
+    @staticmethod
+    def download_file(key: str, filename: str):
+        """Download file from S3 to local directory"""
+
+        s3_client.download_file(
+            Bucket=Config.AWS_S3_BUCKET,
+            Key=key,
+            Filename=filename
+        )
+
+    @staticmethod
+    def get_public_url(key: str) -> str:
+        """Get public url for S3 object"""
+
+        return f"https://{Config.AWS_S3_BUCKET}.s3.amazonaws.com/{key}"
+    
+    @staticmethod
+    def get_key_from_public_url(url: str) -> str:
+        """Get key from public url"""
+
+        return url.replace(f"https://{Config.AWS_S3_BUCKET}.s3.amazonaws.com/", "")

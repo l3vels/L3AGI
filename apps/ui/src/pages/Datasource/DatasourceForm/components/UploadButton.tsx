@@ -8,18 +8,20 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
+  multiple?: boolean
   isLoading: boolean
-  hasValue: boolean
 }
 
-const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
-  const uploadRef = useRef(null as any)
+const UploadButton = ({ onChange, multiple = false, isLoading }: UploadButtonProps) => {
+  const uploadRef = useRef<HTMLInputElement>(null)
+
   const handleUploadButton = async () => {
-    uploadRef.current.click()
+    uploadRef.current?.click()
   }
+
   return (
     <>
-      <input type='file' ref={uploadRef} style={{ display: 'none' }} onChange={onChange} />
+      <StyledInput type='file' ref={uploadRef} onChange={onChange} multiple={multiple} />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>
         {isLoading ? (
@@ -28,7 +30,7 @@ const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
           <>
             <StyledFileIcon />
             <Typography
-              value='csv, pdf, txt, ms-excel, etc.'
+              value='pdf, csv, docx, pptx, md, jpg, png, jpeg, epub, mbox, ipynb, mp3, mp4'
               type={Typography.types.LABEL}
               size={Typography.sizes.xss}
               customColor={'rgba(255, 255, 255, 0.8)'}
@@ -43,8 +45,8 @@ const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
 export default UploadButton
 
 const StyledUploadButton = styled.div<{ disabled?: boolean }>`
-  width: 220px;
-  height: 100px;
+  width: 100%;
+  height: 120px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   display: flex;
@@ -55,6 +57,10 @@ const StyledUploadButton = styled.div<{ disabled?: boolean }>`
   cursor: pointer;
   // Use the default value for disabled if it's not provided
   pointer-events: ${props => (props.disabled === true ? 'none' : 'auto')};
+`
+
+const StyledInput = styled.input`
+  display: none;
 `
 
 const StyledFileIcon = styled(File)`

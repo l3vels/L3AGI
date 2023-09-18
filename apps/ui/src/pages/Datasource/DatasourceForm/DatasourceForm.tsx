@@ -48,11 +48,13 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     source_type: datasource_source_type,
   })
 
+  const isDatabase = datasource_source_type === 'Postgres' || datasource_source_type === 'MySQL'
+
   useEffect(() => {
-    if (isEdit) {
+    if (isEdit && isDatabase) {
       fetchSqlTables()
     }
-  }, [isEdit])
+  }, [isEdit, isDatabase])
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('datasource_description', value)
@@ -121,18 +123,23 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
             <>
               {category === 'File' && (
                 <StyledUploadFileWrapper>
-                  <UploadButton
-                    onChange={handleUploadFile}
-                    isLoading={fileLoading}
-                    hasValue={config_value}
-                  />
+                  <UploadButton onChange={handleUploadFile} isLoading={fileLoading} multiple />
 
-                  {config_value && (
-                    <UploadedFile
-                      onClick={() => setFieldValue('config_value', null)}
-                      name={'file'}
-                    />
-                  )}
+                  <StyledUploadedFiles>
+                    {configs.files?.value?.length > 0 &&
+                      configs.files.value.map((url: string) => (
+                        <UploadedFile
+                          key={url}
+                          onClick={() =>
+                            setFieldValue('configs.file', {
+                              ...configs.file,
+                              value: '',
+                            })
+                          }
+                          name={'File'}
+                        />
+                      ))}
+                  </StyledUploadedFiles>
                 </StyledUploadFileWrapper>
               )}
 
@@ -168,35 +175,39 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
           )}
         </StyledSourceTypeWrapper>
 
-        {!isEdit && (
-          <div>
-            <Button
-              onClick={() => {
-                fetchSqlTables()
-              }}
-              disabled={loading || data}
-              size={Button.sizes.SMALL}
-            >
-              {loading ? <Loader size={32} /> : 'Connect'}
-            </Button>
-          </div>
-        )}
+        {isDatabase && (
+          <>
+            {!isEdit && (
+              <div>
+                <Button
+                  onClick={() => {
+                    fetchSqlTables()
+                  }}
+                  disabled={loading || data}
+                  size={Button.sizes.SMALL}
+                >
+                  {loading ? <Loader size={32} /> : 'Connect'}
+                </Button>
+              </div>
+            )}
 
-        {data && (
-          <DatasourceSqlTables
-            data={data}
-            tables={tables && JSON.parse(tables.value)}
-            onTablesSelected={(selectedTables: string[]) => {
-              formik.setFieldValue('configs.tables', {
-                ...(tables || {}),
-                key: 'tables',
-                key_type: 'string',
-                value: JSON.stringify(selectedTables),
-                is_secret: false,
-                is_required: true,
-              })
-            }}
-          />
+            {data && (
+              <DatasourceSqlTables
+                data={data}
+                tables={tables && JSON.parse(tables.value)}
+                onTablesSelected={(selectedTables: string[]) => {
+                  formik.setFieldValue('configs.tables', {
+                    ...(tables || {}),
+                    key: 'tables',
+                    key_type: 'string',
+                    value: JSON.stringify(selectedTables),
+                    is_secret: false,
+                    is_required: true,
+                  })
+                }}
+              />
+            )}
+          </>
         )}
       </StyledInputWrapper>
     </StyledFormContainer>
@@ -254,5 +265,12 @@ const StyledText = styled.span`
 `
 const StyledUploadFileWrapper = styled.div`
   display: flex;
+  gap: 20px;
+  flex-direction: column;
+`
+
+const StyledUploadedFiles = styled.div`
+  display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 `
