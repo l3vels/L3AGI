@@ -16,6 +16,9 @@ import { useCheckTeamIsCreatedService } from 'services/team/useCheckTeamIsCreate
 import { AuthContext } from 'contexts'
 import { useModal } from 'hooks'
 
+import ChatMembers from './ChatMessageList/components/ChatMembers'
+import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+
 const ChatHistory = () => {
   const { user } = useContext(AuthContext)
 
@@ -38,6 +41,8 @@ const ChatHistory = () => {
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const agentName = agentById?.agent?.name
+
+  const { data: teamById } = useTeamOfAgentsByIdService({ id: teamId || '' })
 
   const chatGreeting = agentById?.configs?.greeting || ''
 
@@ -71,6 +76,12 @@ const ChatHistory = () => {
 
   return (
     <StyledRoot>
+      {(agentById || teamById) && (
+        <StyledMembersWrapper>
+          <ChatMembers agentById={agentById} teamOfAgents={teamById} />
+        </StyledMembersWrapper>
+      )}
+
       <StyledMessages>
         <ChatMessageListV2
           data={chatHistory}
@@ -93,7 +104,7 @@ const ChatHistory = () => {
               ? `Hello, you can chat with agents and teams on your dashboard.`
               : chatGreeting)
           }
-          agentName={agentName}
+          agentName={agentName || 'Agent'}
         />
       </StyledMessages>
 
@@ -142,4 +153,25 @@ const StyledButtonWrapper = styled.div`
 `
 const StyledButton = styled(Button)`
   width: 400px;
+`
+const StyledMembersWrapper = styled.div`
+  position: absolute;
+  top: 80px;
+  right: 5px;
+
+  z-index: 12000000;
+
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  /* background: rgba(0, 0, 0, 0.3); */
+
+  height: calc(100vh - 240px);
+
+  @media only screen and (max-width: 1400px) {
+    display: none;
+  }
 `

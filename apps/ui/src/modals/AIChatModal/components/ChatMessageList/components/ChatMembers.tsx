@@ -11,11 +11,11 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 const ChatMembers = ({
   agentById,
   teamOfAgents,
-  user,
+  userName,
 }: {
-  agentById: any
-  teamOfAgents: any
-  user: any
+  agentById?: any
+  teamOfAgents?: any
+  userName?: string
 }) => {
   const [activeTab, setActiveTab] = useState(0)
 
@@ -29,10 +29,12 @@ const ChatMembers = ({
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
           <TabPanel>
-            <StyledAgentWrapper>
-              <AvatarGenerator name={user.name} size={30} />
-              {user.name}
-            </StyledAgentWrapper>
+            {userName && (
+              <StyledAgentWrapper>
+                <AvatarGenerator name={userName} size={30} />
+                {userName}
+              </StyledAgentWrapper>
+            )}
             {agentById && (
               <>
                 <StyledAgentWrapper>
