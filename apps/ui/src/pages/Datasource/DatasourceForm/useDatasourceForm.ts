@@ -9,8 +9,6 @@ export const useDatasourceForm = (formik: any) => {
 
   const { setFieldValue, values } = formik
 
-  console.log(values.configs)
-
   const pickedLoaderFields = dataLoaders
     ?.filter((loader: any) => loader.source_type === values?.datasource_source_type)
     .map((loader: any) => {

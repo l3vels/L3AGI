@@ -8,6 +8,7 @@ from llama_index import load_index_from_storage, StorageContext
 from llama_index.llms import LangChainLLM
 from langchain.chat_models import ChatOpenAI
 from services.aws_s3 import AWSS3Service
+from typings.config import AccountSettings
 
 class FileDatasourceRetriever:
     datasource_id = None
@@ -16,11 +17,11 @@ class FileDatasourceRetriever:
     datasource_path: Path
     service_context: ServiceContext
 
-    def __init__(self, datasource_id: str) -> None:
+    def __init__(self, settings: AccountSettings, datasource_id: str) -> None:
         self.datasource_id = datasource_id
         self.datasource_path = Path(f"tmp/datasources/{self.datasource_id}")
 
-        llm = LangChainLLM(llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0))
+        llm = LangChainLLM(llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=settings.openai_api_key))
         self.service_context = ServiceContext.from_defaults(llm=llm)
 
     def save_documents(self, file_urls: List[str]):
@@ -42,27 +43,9 @@ class FileDatasourceRetriever:
             self.index = SummaryIndex.from_documents(documents, service_context=self.service_context)
             self.index.set_index_id(self.datasource_id)
             self.index.storage_context.persist(persist_dir=self.index_path)
-
-    # def get_documents(self):
-    #     try:
-    #         return SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
-    #     except ValueError:
-    #         self.
-
         
     def query(self, query_str):
-        start_time = time.perf_counter()
-
         query_engine = self.index.as_query_engine(response_mode="tree_summarize", service_context=self.service_context)
         result = query_engine.query(query_str)
-        
-        elapsed_time = time.perf_counter() - start_time
-
-        print(f"\nTime: {elapsed_time:0.3f}s")
-        print("-----------------------")
-        print("Question::::::::::::/n", query_str)
-        print("-----------------------")
-        print("Answer::::::::::::/n", result)
-        print("-----------------------")
         return result
     

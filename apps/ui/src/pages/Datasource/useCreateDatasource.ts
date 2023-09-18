@@ -61,8 +61,6 @@ export const useCreateDatasource = () => {
     setFieldValue('configs', configs)
   }, [setFieldValue, source_type, dataLoaders])
 
-  console.log(formik.values.configs)
-
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
     try {

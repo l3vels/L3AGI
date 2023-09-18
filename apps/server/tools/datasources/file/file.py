@@ -21,7 +21,7 @@ class FileDatasourceTool(BaseTool):
 
     args_schema: Type[FileDatasourceSchema] = FileDatasourceSchema
 
-    tool_id = "f5a8fec0-7399-42f5-a076-be3a8c85b689"
+    tool_id = "0bc35905-738c-4777-915d-6f5e0f24d887"
 
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
@@ -30,7 +30,7 @@ class FileDatasourceTool(BaseTool):
 
         question, datasource_id = query.split(';')
 
-        retriever = FileDatasourceRetriever(datasource_id)
+        retriever = FileDatasourceRetriever(self.settings, datasource_id)
         retriever.load_documents()
         result = retriever.query(question)
         return result

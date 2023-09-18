@@ -21,13 +21,7 @@ const UploadButton = ({ onChange, multiple = false, isLoading }: UploadButtonPro
 
   return (
     <>
-      <StyledInput
-        type='file'
-        ref={uploadRef}
-        style={{ display: 'none' }}
-        onChange={onChange}
-        multiple={multiple}
-      />
+      <StyledInput type='file' ref={uploadRef} onChange={onChange} multiple={multiple} />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>
         {isLoading ? (
