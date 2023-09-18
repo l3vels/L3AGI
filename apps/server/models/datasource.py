@@ -5,8 +5,9 @@ import uuid
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from typings.datasource import DatasourceInput
+from typings.datasource import DatasourceInput, DatasourceStatus
 from exceptions import DatasourceNotFoundException
+from datasources.base import DatasourceType
 
 class DatasourceModel(BaseModel):
     """
@@ -29,6 +30,7 @@ class DatasourceModel(BaseModel):
     name = Column(String)
     source_type = Column(String) # Later add as Enum
     description = Column(String, nullable=True)
+    status = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
     workspace_id = Column(UUID, ForeignKey('workspace.id'), nullable=True, index=True)
@@ -58,10 +60,17 @@ class DatasourceModel(BaseModel):
             Datasource: The created datasource.
 
         """
+        status: str = DatasourceStatus.READY.value
+
+        if datasource.source_type == DatasourceType.FILE.value:
+            status = DatasourceStatus.INDEXING.value
+
         db_datasource = DatasourceModel(
-                         created_by=user.id, 
-                         account_id=account.id,
-                         )
+            status=status,
+            created_by=user.id, 
+            account_id=account.id,
+        )
+
         cls.update_model_from_input(db_datasource, datasource)
         db.session.add(db_datasource)
         db.session.flush()  # Flush pending changes to generate the datasource's ID

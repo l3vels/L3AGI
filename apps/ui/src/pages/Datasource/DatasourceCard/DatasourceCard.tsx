@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import CheckIcon from '@l3-lib/ui-core/dist/icons/Check'
+import Bullet from '@l3-lib/ui-core/dist/icons/Bullet'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
@@ -9,14 +11,24 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 type DatasourceCardProps = {
   name: string
   description: string
+  status: string
   onEditClick: () => void
   onDeleteClick: () => void
   imageSrc: string
 }
 
+const getStatusIcon = (status: string) => {
+  if (status === 'Ready') {
+    return <CheckIcon iconSize={120} customColor={'rgb(115, 250, 253)'} />
+  } else if (status === 'Indexing') {
+    return <Bullet customColor={'#73FAFD'} />
+  }
+}
+
 const DatasourceCard = ({
   name,
   description,
+  status,
   onEditClick,
   onDeleteClick,
   imageSrc,
@@ -25,6 +37,8 @@ const DatasourceCard = ({
   if (shortDescription.length > 45) {
     shortDescription = `${description.slice(0, 45)}...`
   }
+
+  const statusIcon = getStatusIcon(status)
 
   return (
     <StyledCard>
@@ -47,22 +61,36 @@ const DatasourceCard = ({
           />
         </StyledDescriptionWrapper>
       </StyledBodyWrapper>
-      <StyledButtonsWrapper>
-        <IconButton
-          onClick={onDeleteClick}
-          icon={() => <Delete />}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
-          ariaLabel='Delete'
-        />
-        <IconButton
-          onClick={onEditClick}
-          icon={() => <Edit />}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
-          ariaLabel='Edit'
-        />
-      </StyledButtonsWrapper>
+
+      <StyledCardFooter>
+        <StyledStatus>
+          {statusIcon}
+
+          <Typography
+            value={status}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+        </StyledStatus>
+
+        <StyledButtonsWrapper>
+          <IconButton
+            onClick={onDeleteClick}
+            icon={() => <Delete />}
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            ariaLabel='Delete'
+          />
+          <IconButton
+            onClick={onEditClick}
+            icon={() => <Edit />}
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            ariaLabel='Edit'
+          />
+        </StyledButtonsWrapper>
+      </StyledCardFooter>
     </StyledCard>
   )
 }
@@ -94,16 +122,9 @@ const StyledButtonsWrapper = styled.div`
   align-items: flex-end;
   justify-content: flex-end;
   gap: 2px;
-
   margin-top: auto;
-  /* width: 100%; */
-  /* padding: 5px; */
-  /* margin-left: auto; */
-
-  position: absolute;
-  bottom: 3px;
-  right: 10px;
 `
+
 const StyledBodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -129,4 +150,20 @@ const StyledDescriptionWrapper = styled.div`
 const StyledNameWrapper = styled.div`
   margin-top: auto;
   text-align: center;
+`
+
+const StyledCardFooter = styled.div`
+  margin-top: auto;
+  width: 100%;
+  /* padding-top: 5px; */
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const StyledStatus = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `

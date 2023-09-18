@@ -1,7 +1,8 @@
 from typing import List
 import json
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from fastapi_sqlalchemy import db
+from uuid import UUID
 
 from models.config import ConfigModel
 from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
@@ -13,8 +14,20 @@ from datasources.base import DatasourceEnvKeyType
 from datasources.file.file_retriever import FileDatasourceRetriever
 router = APIRouter()
 
+def index_documents(urls: str, datasource_id: UUID):
+    print("STARTED INDEXING")
+    file_urls = json.loads(urls)
+    retriever = FileDatasourceRetriever(str(datasource_id))
+    retriever.save_documents(file_urls)
+    retriever.load_documents()
+    print("FINISHED")
+
 @router.post("", status_code=201, response_model=ConfigOutput)
-def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
+def create_config(
+    config: ConfigInput,
+    background_tasks: BackgroundTasks,
+    auth: UserAccount = Depends(authenticate),
+) -> ConfigOutput:
     """
     Create a new config with configurations.
 
@@ -30,15 +43,17 @@ def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)
 
     # Save index to storage
     if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
-        file_urls = json.loads(config.value)
-        retriever = FileDatasourceRetriever(str(config.datasource_id))
-        retriever.save_documents(file_urls)
-        retriever.load_documents()
+        background_tasks.add_task(index_documents, config.value, config.datasource_id)    
 
     return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
 
 @router.put("/{id}", status_code=200, response_model=ConfigOutput)  # Changed status code to 200
-def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
+def update_config(
+    id: str,
+    config: ConfigInput,
+    background_tasks: BackgroundTasks,
+    auth: UserAccount = Depends(authenticate),
+) -> ConfigOutput:
     """
     Update an existing config with configurations.
 
@@ -59,13 +74,9 @@ def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(auth
         
         # Save index to storage
         if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
-            file_urls = json.loads(config.value)
-            retriever = FileDatasourceRetriever(str(config.datasource_id))
-            retriever.save_documents(file_urls)
-            retriever.load_documents()
+            background_tasks.add_task(index_documents, config.value, config.datasource_id)
 
         return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
-    
     except ConfigNotFoundException:
         raise HTTPException(status_code=404, detail="Config not found")
 
