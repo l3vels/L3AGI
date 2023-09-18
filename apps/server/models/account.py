@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
 from sqlalchemy.dialects.postgresql import JSONB
@@ -30,7 +30,11 @@ class AccountModel(BaseModel):
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")
     # projects = relationship("WorkspaceModel", back_populates="account")
-    
+    # Define indexes
+    __table_args__ = (
+        Index('ix_account_model_created_by_is_deleted', 'created_by', 'is_deleted'),
+        Index('ix_account_model_id_is_deleted', 'id', 'is_deleted'),
+    )
     def __repr__(self) -> str:
         return (
             f"Account(id={self.id}, "

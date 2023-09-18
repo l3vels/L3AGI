@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List, Optional
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from typings.datasource import DatasourceInput, DatasourceStatus
@@ -40,6 +40,10 @@ class DatasourceModel(BaseModel):
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    
+    # Define indexes
+    Index('ix_datasource_model_workspace_id_is_deleted', 'workspace_id', 'is_deleted')
+    Index('ix_datasource_model_account_id_is_deleted', 'account_id', 'is_deleted')
     
     def __repr__(self) -> str:
         return (

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Boolean, UUID, func, or_
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, Index
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
 from sqlalchemy.dialects.postgresql import JSONB
@@ -21,6 +21,10 @@ class UserAccountModel(BaseModel):
     user_id = Column(UUID, ForeignKey('user.id', ondelete='CASCADE'), nullable=False, index=True) 
     account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=False, index=True) 
     
+    # Define indexes
+    __table_args__ = (
+        Index('ix_user_account_model_user_id_account_id', 'user_id', 'account_id'),
+    )
     
     def __repr__(self) -> str:
         return (
