@@ -16,6 +16,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTeamOfAgentsPublicService } from 'services/team/useTeamOfAgentsPublicService'
 import styled from 'styled-components'
+import DiscoverSystemAgents from './components/DiscoverSystemAgents'
+import DiscoverTeamAgents from './components/DiscoverTeamAgents'
 
 import { useDiscover } from './useDiscover'
 
@@ -26,81 +28,13 @@ const Discover = () => {
 
   const { openModal } = useModal()
 
-  const { systemAgents, templateAgents } = useDiscover()
-
-  const { data: publicTeamAgents } = useTeamOfAgentsPublicService()
+  const { templateAgents } = useDiscover()
 
   return (
     <StyledRoot>
-      <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledSectionTitle>Discover Team of Agents</StyledSectionTitle>
+      <DiscoverTeamAgents />
 
-            <StyledSectionDescription>
-              Create and manage your team of AI agents for interactive experiences
-            </StyledSectionDescription>
-          </div>
-        </StyledHeaderGroup>
-        <ComponentsWrapper noPadding>
-          <StyledCardsWrapper>
-            {publicTeamAgents?.map((teamOfAgents: any) => {
-              return (
-                <TeamOfAgentsCard
-                  key={teamOfAgents.id}
-                  name={teamOfAgents.name}
-                  description={teamOfAgents.description}
-                  headerTag={teamOfAgents.team_type}
-                  teamAgents={teamOfAgents.team_agents}
-                  onViewClick={() =>
-                    openModal({
-                      name: 'team-of-agent-view-modal',
-                      data: { teamOfAgents: teamOfAgents },
-                    })
-                  }
-                  onChatClick={() => navigate(`/chat/history?team=${teamOfAgents.id}`)}
-                  creator={teamOfAgents.creator.name}
-                />
-              )
-            })}
-          </StyledCardsWrapper>
-        </ComponentsWrapper>
-      </StyledSectionWrapper>
-
-      <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledSectionTitle>Discover AI Agents built with L3</StyledSectionTitle>
-            <StyledSectionDescription>
-              Chat with the foremost minds shaping AI's future or create your own innovative ideas
-            </StyledSectionDescription>
-          </div>
-        </StyledHeaderGroup>
-        <ComponentsWrapper noPadding>
-          <StyledCardsWrapper>
-            {systemAgents?.map((agentObj: any, index: number) => {
-              const { agent } = agentObj
-
-              return (
-                <AgentCard
-                  key={index}
-                  name={agent.name}
-                  description={agent.description}
-                  onViewClick={() =>
-                    openModal({
-                      name: 'agent-view-modal',
-                      data: { agent: agentObj },
-                    })
-                  }
-                  onChatClick={() => navigate(`/chat/history?agent=${agent.id}`)}
-                  headerTag={agent.role}
-                  creator={agent.creator}
-                />
-              )
-            })}
-          </StyledCardsWrapper>
-        </ComponentsWrapper>
-      </StyledSectionWrapper>
+      <DiscoverSystemAgents />
 
       {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
