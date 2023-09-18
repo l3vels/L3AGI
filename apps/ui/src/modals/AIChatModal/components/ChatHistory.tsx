@@ -16,8 +16,9 @@ import { AuthContext } from 'contexts'
 import { useModal } from 'hooks'
 
 import ChatMembers from './ChatMessageList/components/ChatMembers'
-import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+
 import { useDiscoverAgentByIdService } from 'services/discover/useDiscoverAgentById'
+import { useDiscoverTeamByIdService } from 'services/discover/useDiscoverTeamById'
 
 const ChatHistory = () => {
   const { user } = useContext(AuthContext)
@@ -42,7 +43,7 @@ const ChatHistory = () => {
   const { data: agentById } = useDiscoverAgentByIdService({ id: agentId || '' })
   const agentName = agentById?.agent?.name
 
-  const { data: teamById } = useTeamOfAgentsByIdService({ id: teamId || '' })
+  const { data: teamById } = useDiscoverTeamByIdService({ id: teamId || '' })
 
   const chatGreeting = agentById?.configs?.greeting || ''
 

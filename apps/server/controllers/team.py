@@ -248,6 +248,25 @@ def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOu
 
     return convert_model_to_response(db_team)
 
+@router.get("/discover/{id}", response_model=TeamOutput)
+def get_discover_team_by_id(id: str) -> TeamOutput:
+    """
+    Get a team by its ID.
+
+    Args:
+        id (str): ID of the team.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        TeamOutput: Team associated with the given ID.
+    """
+    db_team = TeamModel.get_team_by_id(db, team_id=id, account=None)
+    
+    if not db_team or db_team.is_deleted:
+        raise HTTPException(status_code=404, detail="Team not found")  # Ensure consistent case in error messages
+
+    return convert_model_to_response(db_team)
+
 @router.delete("/{team_id}", status_code=200)  # Changed status code to 204
 def delete_team(team_id: str, auth: UserAccount = Depends(authenticate)):
     """
