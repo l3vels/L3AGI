@@ -23,8 +23,8 @@ class AccountModel(BaseModel):
     name = Column(String(100), default=None) 
     is_deleted = Column(Boolean, default=False)       
     
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
     
