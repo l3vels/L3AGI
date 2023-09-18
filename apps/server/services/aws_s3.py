@@ -39,7 +39,23 @@ class AWSS3Service:
         )
     
     @staticmethod
-    def get_public_url(key: str):
+    def download_file(key: str, filename: str):
+        """Download file from S3 to local directory"""
+
+        s3_client.download_file(
+            Bucket=Config.AWS_S3_BUCKET,
+            Key=key,
+            Filename=filename
+        )
+
+    @staticmethod
+    def get_public_url(key: str) -> str:
         """Get public url for S3 object"""
 
         return f"https://{Config.AWS_S3_BUCKET}.s3.amazonaws.com/{key}"
+    
+    @staticmethod
+    def get_key_from_public_url(url: str) -> str:
+        """Get key from public url"""
+
+        return url.replace(f"https://{Config.AWS_S3_BUCKET}.s3.amazonaws.com/", "")

@@ -1,19 +1,41 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends
+import json
+from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel
+from uuid import UUID
 
 from models.config import ConfigModel
+from models.datasource import DatasourceModel
 from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.configuration import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
-
+from datasources.base import DatasourceEnvKeyType
+from typings.datasource import DatasourceStatus
+from datasources.file.file_retriever import FileDatasourceRetriever
 router = APIRouter()
 
+# TODO: refactor update method in models to be flexible.
+def index_documents(urls: str, datasource_id: UUID, account):
+
+    datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
+    
+    file_urls = json.loads(urls)
+    retriever = FileDatasourceRetriever(str(datasource_id))
+    retriever.save_documents(file_urls)
+    retriever.load_documents()
+    
+    datasource.status = DatasourceStatus.READY.value
+    db.session.add(datasource)
+    db.session.commit()
+
 @router.post("", status_code=201, response_model=ConfigOutput)
-def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
+def create_config(
+    config: ConfigInput,
+    background_tasks: BackgroundTasks,
+    auth: UserAccount = Depends(authenticate),
+) -> ConfigOutput:
     """
     Create a new config with configurations.
 
@@ -26,10 +48,20 @@ def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)
     """
     # Consider adding try-except for error handling during creation if needed
     db_config = ConfigModel.create_config(db, config=config, user=auth.user, account=auth.account)
+
+    # Save index to storage
+    if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
+        background_tasks.add_task(index_documents, config.value, config.datasource_id, auth.account)    
+
     return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
 
 @router.put("/{id}", status_code=200, response_model=ConfigOutput)  # Changed status code to 200
-def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(authenticate)) -> ConfigOutput:
+def update_config(
+    id: str,
+    config: ConfigInput,
+    background_tasks: BackgroundTasks,
+    auth: UserAccount = Depends(authenticate),
+) -> ConfigOutput:
     """
     Update an existing config with configurations.
 
@@ -47,8 +79,13 @@ def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(auth
                                            config=config, 
                                            user=auth.user, 
                                            account=auth.account)
+        
+        # Save index to storage
+        if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
+            background_tasks.add_task(index_documents, config.value, config.datasource_id, auth.account)
+
+
         return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
-    
     except ConfigNotFoundException:
         raise HTTPException(status_code=404, detail="Config not found")
 

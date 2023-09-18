@@ -14,3 +14,5 @@ terraform/example.auto.tfvars
 terraform/.terraform.lock.hcl
 
 app.log
+
+/tmp

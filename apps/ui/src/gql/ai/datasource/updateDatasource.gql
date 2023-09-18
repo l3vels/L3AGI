@@ -5,6 +5,7 @@ mutation updateDatasource($id: id!, $input: input!) @api(name: "ai") {
     name
     description
     source_type
+    status
     workspace_id
     is_deleted
     is_public
