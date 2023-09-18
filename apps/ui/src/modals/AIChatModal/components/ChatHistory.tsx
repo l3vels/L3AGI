@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 
-import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
 
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
@@ -18,6 +17,7 @@ import { useModal } from 'hooks'
 
 import ChatMembers from './ChatMessageList/components/ChatMembers'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+import { useDiscoverAgentByIdService } from 'services/discover/useDiscoverAgentById'
 
 const ChatHistory = () => {
   const { user } = useContext(AuthContext)
@@ -39,7 +39,7 @@ const ChatHistory = () => {
     isPrivateChat: false,
   })
 
-  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const { data: agentById } = useDiscoverAgentByIdService({ id: agentId || '' })
   const agentName = agentById?.agent?.name
 
   const { data: teamById } = useTeamOfAgentsByIdService({ id: teamId || '' })
