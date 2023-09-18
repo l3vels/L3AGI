@@ -49,6 +49,7 @@ llama-hub = "*"
 twilio = "*"
 boto3 = "*"
 llama-cpp-python = "*"
+pypdf = "*"
 
 [dev-packages]
 
