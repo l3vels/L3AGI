@@ -1,17 +1,20 @@
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import Doc from '@l3-lib/ui-core/dist/icons/Doc'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 type UploadedFileProps = {
-  onClick: () => void
+  onClick: (id?: string) => void
+  id?: string
   name: string
+  hasDeleteIcon?: boolean
 }
 
-const UploadedFile = ({ name, onClick }: UploadedFileProps) => {
+const UploadedFile = ({ id, name, onClick, hasDeleteIcon = false }: UploadedFileProps) => {
   return (
-    <StyledUploadedFile onClick={onClick}>
+    <StyledUploadedFile onClick={() => onClick(id)}>
       <StyledIconWrapper>
         <Doc />
       </StyledIconWrapper>
@@ -23,6 +26,14 @@ const UploadedFile = ({ name, onClick }: UploadedFileProps) => {
           customColor={'#000'}
         />
       </StyledTextWrapper>
+      {hasDeleteIcon && (
+        <IconButton
+          size={IconButton.sizes.XS}
+          icon={() => <Close />}
+          kind={IconButton.kinds.TERTIARY}
+          ariaLabel='Delete'
+        />
+      )}
     </StyledUploadedFile>
   )
 }

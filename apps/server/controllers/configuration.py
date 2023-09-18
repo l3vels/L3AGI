@@ -23,7 +23,8 @@ def index_documents(urls: str, datasource_id: UUID, account):
     datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
 
     try:
-        file_urls = json.loads(urls)
+        files = json.loads(urls)
+        file_urls = [file['url'] for file in files]
         retriever = FileDatasourceRetriever(settings, str(datasource_id))
         retriever.save_documents(file_urls)
         retriever.load_documents()
