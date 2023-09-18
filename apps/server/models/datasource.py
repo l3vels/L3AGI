@@ -28,6 +28,7 @@ class DatasourceModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     source_type = Column(String) # Later add as Enum
+    status = Column(String) # Later add as Enum
     description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
