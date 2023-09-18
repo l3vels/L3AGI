@@ -123,7 +123,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
             <>
               {category === 'File' && (
                 <StyledUploadFileWrapper>
-                  <UploadButton onChange={handleUploadFile} isLoading={fileLoading} multiple />
+                  <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
 
                   <StyledUploadedFiles>
                     {configs.files?.value?.length > 0 &&
