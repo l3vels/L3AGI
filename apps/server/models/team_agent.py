@@ -20,17 +20,17 @@ class TeamAgentModel(BaseModel):
     __tablename__ = 'team_agent'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    team_id = Column(UUID, ForeignKey('team.id'), nullable=True, index=True) 
-    agent_id = Column(UUID, ForeignKey('agent.id'), nullable=False, index=True)
+    team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True) 
+    agent_id = Column(UUID, ForeignKey('agent.id', ondelete='CASCADE'), nullable=False, index=True)
     role = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False, index=True)
-    account_id = Column(UUID, ForeignKey('account.id'), nullable=True, index=True)
+    account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True, index=True)
 
     team = relationship("TeamModel", back_populates="team_agents")
     agent = relationship("AgentModel", back_populates="team_agents")   
         
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
     def __repr__(self) -> str:
