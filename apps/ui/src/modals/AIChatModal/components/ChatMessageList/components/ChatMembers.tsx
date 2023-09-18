@@ -10,6 +10,7 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import AgentVIewDetailBox from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDetailsBox'
 
 const ChatMembers = ({
   agentById,
@@ -89,7 +90,9 @@ const ChatMembers = ({
                   })}
               </TabPanel>
 
-              <TabPanel></TabPanel>
+              <TabPanel>
+                <TeamOfAgentsDetailsBox teamData={teamOfAgents} />
+              </TabPanel>
             </TabPanels>
           </TabsContext>
         </StyledContainer>
