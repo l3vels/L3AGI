@@ -24,14 +24,14 @@ class AgentConfigModel(BaseModel):
     __tablename__ = 'agent_config'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    agent_id = Column(UUID(as_uuid=True), ForeignKey('agent.id'), index=True)
+    agent_id = Column(UUID(as_uuid=True), ForeignKey('agent.id', ondelete='CASCADE'), index=True)
     key = Column(String, index=True)
     value = Column(Text)
     
     agent = relationship("AgentModel", back_populates="configs", cascade="all, delete")
     
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by'), nullable=True, index=True)
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
 
     def __repr__(self):
