@@ -1,12 +1,11 @@
 from typing import Optional, Type
-from pathlib import Path
 from pydantic import BaseModel, Field
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 
 from tools.base import BaseTool
-from pdf.pdf_async import L3FileRetriever
+from datasources.file.file_retriever import FileDatasourceRetriever
 
 class FileDatasourceSchema(BaseModel):
     query: str = Field(description="Containing Datasource Id and question in English natural language, separated by semicolon")
@@ -31,7 +30,8 @@ class FileDatasourceTool(BaseTool):
 
         question, datasource_id = query.split(';')
 
-        retriever = L3FileRetriever(Path(f"pdf/tmp/{datasource_id}").resolve())
+        retriever = FileDatasourceRetriever(datasource_id)
+        retriever.load_documents()
         result = retriever.query(question)
         return result
 

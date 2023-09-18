@@ -125,19 +125,21 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                 <StyledUploadFileWrapper>
                   <UploadButton onChange={handleUploadFile} isLoading={fileLoading} multiple />
 
-                  {configs.files?.value?.length > 0 &&
-                    configs.files.value.map((url: string) => (
-                      <UploadedFile
-                        key={url}
-                        onClick={() =>
-                          setFieldValue('configs.file', {
-                            ...configs.file,
-                            value: '',
-                          })
-                        }
-                        name={'File'}
-                      />
-                    ))}
+                  <StyledUploadedFiles>
+                    {configs.files?.value?.length > 0 &&
+                      configs.files.value.map((url: string) => (
+                        <UploadedFile
+                          key={url}
+                          onClick={() =>
+                            setFieldValue('configs.file', {
+                              ...configs.file,
+                              value: '',
+                            })
+                          }
+                          name={'File'}
+                        />
+                      ))}
+                  </StyledUploadedFiles>
                 </StyledUploadFileWrapper>
               )}
 
@@ -263,5 +265,12 @@ const StyledText = styled.span`
 `
 const StyledUploadFileWrapper = styled.div`
   display: flex;
+  gap: 20px;
+  flex-direction: column;
+`
+
+const StyledUploadedFiles = styled.div`
+  display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 `

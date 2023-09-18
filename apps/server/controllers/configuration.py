@@ -2,9 +2,6 @@ from typing import List
 import json
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
-from uuid import uuid4
-import os
-from pathlib import Path
 
 from models.config import ConfigModel
 from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
@@ -13,8 +10,7 @@ from typings.auth import UserAccount
 from utils.configuration import convert_configs_to_config_list, convert_model_to_response
 from exceptions import ConfigNotFoundException
 from datasources.base import DatasourceEnvKeyType
-from services.aws_s3 import AWSS3Service
-from pdf.pdf_async import L3FileRetriever
+from datasources.file.file_retriever import FileDatasourceRetriever
 router = APIRouter()
 
 @router.post("", status_code=201, response_model=ConfigOutput)
@@ -32,22 +28,12 @@ def create_config(config: ConfigInput, auth: UserAccount = Depends(authenticate)
     # Consider adding try-except for error handling during creation if needed
     db_config = ConfigModel.create_config(db, config=config, user=auth.user, account=auth.account)
 
-    # Index the file documents
+    # Save index to storage
     if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
         file_urls = json.loads(config.value)
-
-        tmp_dir = f"pdf/tmp/{config.datasource_id}"
-        Path(tmp_dir).mkdir(parents=True, exist_ok=True)
-
-        for file_url in file_urls:
-            key = AWSS3Service.get_key_from_public_url(file_url)
-            file_path = f"{tmp_dir}/{uuid4()}.pdf"
-            absolute_path = Path(file_path).resolve()
-            AWSS3Service.download_file(key, absolute_path)
-
-        retriever = L3FileRetriever(Path(tmp_dir).resolve())
-        retriever.query("summarize the documents")
-
+        retriever = FileDatasourceRetriever(str(config.datasource_id))
+        retriever.save_documents(file_urls)
+        retriever.load_documents()
 
     return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
 
@@ -70,6 +56,14 @@ def update_config(id: str, config: ConfigInput, auth: UserAccount = Depends(auth
                                            config=config, 
                                            user=auth.user, 
                                            account=auth.account)
+        
+        # Save index to storage
+        if config.datasource_id and config.key_type == DatasourceEnvKeyType.FILES.value:
+            file_urls = json.loads(config.value)
+            retriever = FileDatasourceRetriever(str(config.datasource_id))
+            retriever.save_documents(file_urls)
+            retriever.load_documents()
+
         return convert_model_to_response(ConfigModel.get_config_by_id(db, db_config.id, auth.account))
     
     except ConfigNotFoundException:
