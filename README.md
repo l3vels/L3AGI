@@ -210,6 +210,9 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 - If you encounter issues when starting the services, ensure Docker and Docker Compose are installed and up to date.
 - Check the logs for any service-specific errors.
 
+## 🚧 In Progress!
+This initiative is currently in its developmental phase and might have some inconsistencies. We value your patience and comprehension. Should you face any challenges, kindly consult our list of existing issues first. If you can't find a relevant one, please open a new issue explaining the concern you faced. Your backing means a lot to us! Thank you!
+
 ## Contributors
 
 [![Chkhikvadze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/10281306?v=4&w=50&h=50&mask=circle)](https://github.com/Chkhikvadze)
