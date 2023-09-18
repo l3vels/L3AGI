@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import CheckIcon from '@l3-lib/ui-core/dist/icons/Check'
-import Bullet from '@l3-lib/ui-core/dist/icons/Bullet'
+import BulletIcon from '@l3-lib/ui-core/dist/icons/Bullet'
+import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
@@ -21,7 +22,9 @@ const getStatusIcon = (status: string) => {
   if (status === 'Ready') {
     return <CheckIcon />
   } else if (status === 'Indexing') {
-    return <Bullet />
+    return <BulletIcon />
+  } else if (status === 'Failed') {
+    return <CloseIcon />
   }
 }
 
