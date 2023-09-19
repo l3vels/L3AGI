@@ -1,6 +1,6 @@
 import { FormikProvider } from 'formik'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
@@ -18,32 +18,33 @@ import BackButton from 'components/BackButton'
 import FormikTextField from 'components/TextFieldFormik'
 
 import { useSettings } from './useSettings'
+import { useModal } from 'hooks'
 
-const Settings = () => {
-  const { formik, handleSubmit, isLoading } = useSettings()
+const Settings = ({ isModal = false }: { isModal?: boolean }) => {
+  const { formik, isLoading, handleSubmit } = useSettings()
+
+  const { closeModal } = useModal()
 
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledSectionTitle>Company Settings</StyledSectionTitle>
-          </div>
+        {!isModal && (
+          <StyledHeaderGroup className='header_group'>
+            <div>
+              <StyledSectionTitle>Company Settings</StyledSectionTitle>
+            </div>
 
-          <StyledButtonWrapper>
-            <BackButton />
-            <Button
-              onClick={() => handleSubmit(formik?.values)}
-              disabled={isLoading}
-              size={Button.sizes.SMALL}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </Button>
-          </StyledButtonWrapper>
-        </StyledHeaderGroup>
-        <ComponentsWrapper noPadding>
-          <StyledForm>
-            <StyledWrapper>
+            <StyledButtonWrapper>
+              <BackButton />
+              <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
+                {isLoading ? <Loader size={32} /> : 'Save'}
+              </Button>
+            </StyledButtonWrapper>
+          </StyledHeaderGroup>
+        )}
+        <ComponentsWrapper noPadding hideBox={isModal}>
+          <StyledForm isModal={isModal}>
+            <StyledWrapper isModal={isModal}>
               <FormikTextField name='open_api_key' placeholder='' label='Open AI API key' />
               {/* <FormikTextField
                 name='hugging_face_token'
@@ -53,6 +54,20 @@ const Settings = () => {
             </StyledWrapper>
           </StyledForm>
         </ComponentsWrapper>
+        {isModal && (
+          <StyledModalButton>
+            <Button
+              onClick={async () => {
+                await handleSubmit(formik?.values)
+                closeModal('settings-modal')
+              }}
+              disabled={isLoading}
+              size={Button.sizes.SMALL}
+            >
+              {isLoading ? <Loader size={32} /> : 'Save'}
+            </Button>
+          </StyledModalButton>
+        )}
       </StyledSectionWrapper>
     </FormikProvider>
   )
@@ -60,14 +75,20 @@ const Settings = () => {
 
 export default Settings
 
-const StyledForm = styled.div`
+const StyledForm = styled.div<{ isModal: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   padding: 30px 20px;
-  /* padding-top: 30px; */
+
+  ${props =>
+    props.isModal &&
+    css`
+      padding: 0;
+    `}
 `
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ isModal: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -77,4 +98,20 @@ const StyledWrapper = styled.div`
 
   height: 100vh;
   max-height: calc(100vh - 370px);
+
+  ${props =>
+    props.isModal &&
+    css`
+      height: 100%;
+      padding-top: 30px;
+      justify-content: center;
+    `}
+`
+const StyledModalButton = styled.div`
+  position: absolute;
+
+  bottom: 0px;
+  right: 0px;
+
+  padding: 8px;
 `
