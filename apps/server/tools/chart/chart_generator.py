@@ -33,7 +33,8 @@ class ChartGeneratorTool(BaseTool):
         "generates chart and returns image URL\n"
         "Parameter is JSON string representing action input.\n"
         "\"data\" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n"
-        "\"user_prompt\" str, which is objective in natural language provided by user\n"
+        "\"user_prompt\" str, objective in English natural language provided by user\n"
+        "Make sure to include `data` and `user_prompt` in your JSON string and nothing else\n"
     )
 
     args_schema: Type[ChartGeneratorSchema] = ChartGeneratorSchema
