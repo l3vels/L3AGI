@@ -38,7 +38,6 @@ const DiscoverTeamAgents = () => {
                 key={teamOfAgents.id}
                 name={teamOfAgents.name}
                 description={teamOfAgents.description}
-                headerTag={teamOfAgents.team_type}
                 teamAgents={teamOfAgents.team_agents}
                 onViewClick={() =>
                   openModal({
@@ -47,7 +46,6 @@ const DiscoverTeamAgents = () => {
                   })
                 }
                 onChatClick={() => navigate(`/chat/history?team=${teamOfAgents.id}`)}
-                creator={teamOfAgents.creator.name}
               />
             )
           })}

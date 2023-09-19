@@ -10,11 +10,11 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import TeamOfAgentsCard from 'pages/TeamOfAgents/TeamOfAgentsCard'
+
 import Toolkit from 'pages/Toolkit'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTeamOfAgentsPublicService } from 'services/team/useTeamOfAgentsPublicService'
+
 import styled from 'styled-components'
 import DiscoverSystemAgents from './components/DiscoverSystemAgents'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'

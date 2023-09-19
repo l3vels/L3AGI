@@ -2,13 +2,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import styled, { css } from 'styled-components'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
-import TagsRow from './components/TagsRow'
+
 import AdditionalInfoBox from './components/AdditionalInfoBox'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
@@ -66,20 +65,22 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
             <AgentVIewDetailBox
               agentData={agentById || agentData}
               customButton={
-                <Button
-                  size={Button.sizes.SMALL}
-                  onClick={() => {
-                    if (agentData) {
-                      closeModal('agent-view-modal')
-                    }
-                    navigate(`/agents/create-agent?agentId=${agent.id}`)
-                  }}
-                >
-                  <StyledInnerButtonWrapper>
-                    <Download size={28} />
-                    Add
-                  </StyledInnerButtonWrapper>
-                </Button>
+                !agentById && (
+                  <Button
+                    size={Button.sizes.SMALL}
+                    onClick={() => {
+                      if (agentData) {
+                        closeModal('agent-view-modal')
+                      }
+                      navigate(`/agents/create-agent?agentId=${agent.id}`)
+                    }}
+                  >
+                    <StyledInnerButtonWrapper>
+                      <Download size={28} />
+                      Add
+                    </StyledInnerButtonWrapper>
+                  </Button>
+                )
               }
             />
           </StyledLeftColumn>

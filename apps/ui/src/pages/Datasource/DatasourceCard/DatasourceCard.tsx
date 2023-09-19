@@ -47,7 +47,7 @@ const DatasourceCard = ({
     <StyledCard>
       <StyledBodyWrapper>
         <StyledImg src={imageSrc} />
-        <StyledDescriptionWrapper>
+        <StyledTextWrapper>
           <StyledNameWrapper>
             <Typography
               value={name}
@@ -62,7 +62,7 @@ const DatasourceCard = ({
             size={Typography.sizes.sm}
             customColor={'rgba(255,255,255, 0.7)'}
           />
-        </StyledDescriptionWrapper>
+        </StyledTextWrapper>
       </StyledBodyWrapper>
 
       <StyledCardFooter>
@@ -147,8 +147,10 @@ const StyledImg = styled.img`
   height: 48px;
   object-fit: contain;
 `
-const StyledDescriptionWrapper = styled.div`
-  overflow: hidden;
+const StyledTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 const StyledNameWrapper = styled.div`
   margin-top: auto;

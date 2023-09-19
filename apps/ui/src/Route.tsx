@@ -74,6 +74,8 @@ import AgentViewModal from 'modals/AgentViewModal'
 import TeamOfAgentViewModal from 'modals/TeamOfAgentViewModal'
 import ChatHistory from 'modals/AIChatModal/components/ChatHistory'
 import ChatHistoryRouteLayout from 'routes/ChatHistoryRouteLayout'
+import SettingsModal from 'modals/SettingsModal'
+import ToolkitModal from 'modals/ToolkitModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -233,6 +235,8 @@ const Route = () => {
       <LoginModal />
       <AgentViewModal />
       <TeamOfAgentViewModal />
+      <SettingsModal />
+      <ToolkitModal />
       <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
 
       {/* <NotificationsModal /> */}

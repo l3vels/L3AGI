@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import Tags from '@l3-lib/ui-core/dist/Tags'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -15,133 +14,136 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import l3Logo from 'assets/images/l3_logo.png'
 
+import Heading from '@l3-lib/ui-core/dist/Heading'
+
 type TeamOfAgentCardProps = {
   name: string
   description: string
-  headerText?: string
-  headerTag?: string
   teamAgents: any[]
   onEditClick?: () => void
   onDeleteClick?: () => void
   onChatClick?: () => void
   onViewClick?: () => void
-  creator?: any
 }
 
 const TeamOfAgentCard = ({
   name,
   description,
-  headerText,
-  headerTag,
   teamAgents,
   onDeleteClick,
   onEditClick,
   onChatClick,
   onViewClick,
-  creator,
 }: TeamOfAgentCardProps) => {
-  let shortDescription = description
-  if (description.length > 40) {
-    shortDescription = `${description.slice(0, 40)}...`
+  let shortDescription = description || ''
+  if (description.length > 150) {
+    shortDescription = `${description.slice(0, 150)}...`
   }
 
   return (
     <StyledCard>
-      <StyledCardHeader>
-        <div>
-          {headerText && (
-            <Typography
-              value={headerText}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255, 0.8)'}
-            />
-          )}
-        </div>
+      <StyledMainAvatarWrapper>
+        <AvatarGenerator name={name} size={28} isRound={false} />
+      </StyledMainAvatarWrapper>
 
-        <div>{headerTag && <Tags label={headerTag} readOnly size='small' outlined />}</div>
-      </StyledCardHeader>
-      <StyledCardBody>
-        <StyledAvatarWrapper>
-          {/* <AvatarGenerator name={name} size={50} /> */}
-          {onChatClick && (
-            <StyledChatButton className='chatButton'>
-              <Button
-                size={Button.sizes.SMALL}
-                kind={Button.kinds.PRIMARY}
-                onClick={onChatClick}
-                rightIcon={() => <MoveArrowRight size={14} />}
-              >
-                <StyledInnerButtonWrapper>Chat</StyledInnerButtonWrapper>
-              </Button>
-            </StyledChatButton>
-          )}
-        </StyledAvatarWrapper>
-        <StyledBodyTextWrapper>
+      <StyledBody>
+        <Heading type={Heading.types.h1} value={name} customColor={'#FFF'} size='medium' />
+        <Typography
+          value={shortDescription}
+          type={Typography.types.P}
+          size={Typography.sizes.sm}
+          customColor={'rgba(255,255,255, 0.8)'}
+        />
+
+        {teamAgents?.length > 0 && (
+          <StyledRowWrapper>
+            <Typography
+              value={'Agents'}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
+            <StyledAvatarsContainer>
+              {teamAgents?.map((teamAgents: any) => {
+                const { id, agent } = teamAgents
+
+                return (
+                  <StyledAvatarWrapper key={id}>
+                    <AvatarGenerator name={agent.name} size={25} />
+                  </StyledAvatarWrapper>
+                )
+              })}
+            </StyledAvatarsContainer>
+          </StyledRowWrapper>
+        )}
+
+        {/* <StyledRowWrapper>
           <Typography
-            value={name}
+            value={'Model'}
             type={Typography.types.P}
-            size={Typography.sizes.lg}
+            size={Typography.sizes.md}
             customColor={'#FFF'}
           />
           <Typography
-            value={shortDescription}
-            type={Typography.types.P}
-            size={Typography.sizes.sm}
-            customColor={'rgba(255,255,255, 0.8)'}
-          />
-
-          <StyledAgentCards>
-            {teamAgents?.map((teamAgents: any) => {
-              const { id, agent } = teamAgents
-
-              return <AvatarGenerator key={id} name={agent.name} size={30} />
-            })}
-          </StyledAgentCards>
-        </StyledBodyTextWrapper>
-      </StyledCardBody>
-      <StyledCardFooter>
-        <StyledCreatorWrapper>
-          <AvatarGenerator name={creator} size={16} textSizeRatio={1.5} />
-
-          <Typography
-            value={creator}
+            value={'GPT-4 OpenAI'}
             type={Typography.types.P}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255, 0.6)'}
+            customColor={'rgba(255,255,255,0.8)'}
           />
-        </StyledCreatorWrapper>
-        <StyledButtonsWrapper className='footerButtons'>
+        </StyledRowWrapper> */}
+      </StyledBody>
+
+      <StyledCardFooter>
+        <StyledButtonsWrapper>
           {onDeleteClick && (
-            <IconButton
-              onClick={onDeleteClick}
-              icon={() => <Delete />}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='Delete'
-            />
+            <StyledButtonWrapper className='footerButtons'>
+              <IconButton
+                onClick={onDeleteClick}
+                icon={() => <Delete />}
+                size={Button.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='Delete'
+              />{' '}
+            </StyledButtonWrapper>
           )}
+
           {onEditClick && (
-            <IconButton
-              onClick={onEditClick}
-              icon={() => <Edit />}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='Edit'
-            />
+            <StyledButtonWrapper className='footerButtons'>
+              <IconButton
+                onClick={onEditClick}
+                icon={() => <Edit />}
+                size={Button.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='Edit'
+              />
+            </StyledButtonWrapper>
           )}
+
           {onViewClick && (
-            <IconButton
-              onClick={onViewClick}
-              icon={() => (
-                <StyledIconWrapper>
-                  <EyeOpen size={50} />
-                </StyledIconWrapper>
-              )}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='View'
-            />
+            <StyledButtonWrapper className='footerButtons'>
+              <IconButton
+                onClick={onViewClick}
+                icon={() => (
+                  <StyledIconWrapper>
+                    <EyeOpen size={50} />
+                  </StyledIconWrapper>
+                )}
+                size={Button.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='View'
+              />
+            </StyledButtonWrapper>
+          )}
+
+          {onChatClick && (
+            <StyledChatButtonWrapper>
+              <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onChatClick}>
+                <StyledInnerButtonWrapper>
+                  Chat
+                  <MoveArrowRight size={14} />
+                </StyledInnerButtonWrapper>
+              </Button>
+            </StyledChatButtonWrapper>
           )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
@@ -153,13 +155,13 @@ export default TeamOfAgentCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 335px;
-  min-width: 335px;
-  height: 185px;
-  min-height: 185px;
+  width: 320px;
+  min-width: 320px;
+  height: 340px;
+  min-height: 340px;
 
-  padding: 15px;
-  padding-bottom: 10px;
+  padding: 20px 25px;
+  padding-top: 30px;
 
   border-radius: 10px;
   /* background: rgba(0, 0, 0, 0.5); */
@@ -170,45 +172,19 @@ const StyledCard = styled.div`
   align-items: center;
   justify-content: center;
 
+  gap: 5px;
+
   :hover {
-    .chatButton {
+    .footerButtons {
       opacity: 1;
     }
   }
-`
-const StyledCardHeader = styled.div`
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: auto;
-  padding-bottom: 5px;
-
-  min-height: 20px;
-  /* margin-bottom: 10px; */
-`
-
-const StyledCardBody = styled.div`
-  width: 100%;
-  height: 100%;
-
-  margin-top: auto;
-
-  display: flex;
-
-  gap: 15px;
-
-  /* padding: 0 15px; */
-
-  overflow: hidden;
 `
 
 const StyledCardFooter = styled.div`
   margin-top: auto;
   width: 100%;
-  padding-top: 5px;
+  padding-top: 15px;
 
   display: flex;
   align-items: center;
@@ -219,41 +195,19 @@ const StyledButtonsWrapper = styled.div`
   align-items: center;
   /* justify-content: space-between; */
   gap: 4px;
-
-  margin-left: auto;
+  width: 100%;
 `
-const StyledBodyTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* gap: 5px; */
-
-  overflow: hidden;
-
-  /* padding-top: 5px; */
+const StyledMainAvatarWrapper = styled.div`
+  margin-right: auto;
 `
+
 const StyledAvatarWrapper = styled.div`
-  /* position: relative; */
-  text-align: center;
-  height: fit-content;
-
-  .sb-avatar {
-    font-family: unset !important;
-  }
-  :hover {
-    .chatButton {
-      opacity: 1;
-    }
-  }
-`
-const StyledChatButton = styled.div`
+  margin-right: -5px;
   width: fit-content;
-  height: fit-content;
-  position: absolute;
-  top: 75px;
-  left: 10px;
-  /* transform: translateX(-50%); */
-
+`
+const StyledButtonWrapper = styled.div`
   opacity: 0;
+
   transition: opacity 300ms;
 `
 const StyledIconWrapper = styled.div`
@@ -262,21 +216,40 @@ const StyledIconWrapper = styled.div`
 `
 const StyledInnerButtonWrapper = styled.div`
   display: flex;
-  /* align-items: flex-end; */
-  color: #fff;
-  gap: 5px;
-`
-const StyledLogo = styled.img`
-  width: 20px;
-`
-const StyledCreatorWrapper = styled.div`
-  display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  color: #fff;
+  gap: 10px;
+  padding: 10px 18px;
 `
 
-const StyledAgentCards = styled.div`
+const StyledRowWrapper = styled.div`
   display: flex;
-  gap: 5px;
-  margin-top: 10px;
+  flex-direction: column;
+  /* gap: 5px; */
+  margin-top: auto;
+`
+const StyledBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  gap: 8px;
+`
+
+const StyledImg = styled.img`
+  height: 28px;
+  width: 28px;
+
+  object-fit: cover;
+
+  margin-right: auto;
+`
+const StyledAvatarsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+const StyledChatButtonWrapper = styled.div`
+  margin-left: auto;
 `

@@ -7,7 +7,7 @@ import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
 import { useToolsService } from 'services/tool/useToolsService'
 
-export const useToolView = () => {
+export const useToolView = ({ toolSlug }: { toolSlug?: string }) => {
   const { setToast } = useContext(ToastContext)
 
   const params = useParams()
@@ -23,7 +23,7 @@ export const useToolView = () => {
   const [createConfig] = useCreateConfigService()
   const [updateConfig] = useUpdateConfigService()
 
-  const tool = toolkits?.find((toolkit: any) => slug === toolkit.slug)
+  const tool = toolkits?.find((toolkit: any) => slug === toolkit.slug || toolSlug === toolkit.slug)
 
   const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === tool.toolkit_id)
 

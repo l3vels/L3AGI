@@ -71,6 +71,7 @@ export const StyledDetailsBox = styled.div`
 
   width: 100%;
   max-width: 300px;
+  min-width: 300px;
   height: fit-content;
   /* min-height: 400px; */
 

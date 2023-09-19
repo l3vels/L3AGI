@@ -6,11 +6,15 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
-import AgentVIewDetailBox from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import AgentViewDetailBox from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDetailsBox'
+
+import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+import { useModal } from 'hooks'
 
 const ChatMembers = ({
   agentById,
@@ -22,6 +26,8 @@ const ChatMembers = ({
   userName?: string
 }) => {
   const [activeTab, setActiveTab] = useState(0)
+
+  const { openModal } = useModal()
 
   if (agentById) {
     return (
@@ -46,12 +52,33 @@ const ChatMembers = ({
                   <StyledAgentWrapper>
                     <AvatarGenerator name={agentById?.agent?.name} size={30} />
                     {agentById?.agent?.name}
+
+                    <StyledIconButtonWrapper className='hiddenButton'>
+                      <IconButton
+                        onClick={() =>
+                          openModal({
+                            name: 'agent-view-modal',
+                            data: {
+                              agent: agentById,
+                            },
+                          })
+                        }
+                        icon={() => (
+                          <StyledIconWrapper>
+                            <EyeOpen size={50} />
+                          </StyledIconWrapper>
+                        )}
+                        size={IconButton.sizes.SMALL}
+                        kind={IconButton.kinds.TERTIARY}
+                        // ariaLabel='View'
+                      />
+                    </StyledIconButtonWrapper>
                   </StyledAgentWrapper>
                 </>
               </TabPanel>
 
               <TabPanel>
-                <AgentVIewDetailBox agentData={agentById} />
+                <AgentViewDetailBox agentData={agentById} />
               </TabPanel>
             </TabPanels>
           </TabsContext>
@@ -85,6 +112,38 @@ const ChatMembers = ({
                       <StyledAgentWrapper key={index}>
                         <AvatarGenerator name={agentData.agent.name} size={30} />
                         {agentData.agent.name}
+
+                        <StyledIconButtonWrapper className='hiddenButton'>
+                          <IconButton
+                            onClick={() =>
+                              openModal({
+                                name: 'agent-view-modal',
+                                data: {
+                                  agent: {
+                                    agent: agentData.agent,
+                                    configs: {
+                                      tools: [],
+                                      goals: [],
+                                      constraints: [],
+                                      instructions: [],
+                                      datasources: [],
+                                      suggestions: [],
+                                      greeting: [],
+                                    },
+                                  },
+                                },
+                              })
+                            }
+                            icon={() => (
+                              <StyledIconWrapper>
+                                <EyeOpen size={50} />
+                              </StyledIconWrapper>
+                            )}
+                            size={IconButton.sizes.SMALL}
+                            kind={IconButton.kinds.TERTIARY}
+                            // ariaLabel='View'
+                          />
+                        </StyledIconButtonWrapper>
                       </StyledAgentWrapper>
                     )
                   })}
@@ -126,6 +185,21 @@ const StyledAgentWrapper = styled.div`
   width: 300px;
 
   padding-left: 15px;
-  /* border-radius: 10px;
-  background: rgba(0, 0, 0, 0.4); */
+  border-radius: 10px;
+
+  :hover {
+    background: rgba(0, 0, 0, 0.1);
+    .hiddenButton {
+      opacity: 1;
+    }
+  }
+`
+const StyledIconWrapper = styled.div`
+  color: transparent;
+`
+const StyledIconButtonWrapper = styled.div`
+  margin-left: auto;
+
+  opacity: 0;
+  /* transition: opacity 300ms; */
 `

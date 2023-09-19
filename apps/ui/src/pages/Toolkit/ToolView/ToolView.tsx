@@ -16,9 +16,12 @@ import { useToolView } from './useToolView'
 import { FormikProvider } from 'formik'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
+import { useModal } from 'hooks'
 
-const ToolView = () => {
-  const { tool, formik, handleSubmit, isLoading } = useToolView()
+const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
+  const { tool, formik, handleSubmit, isLoading } = useToolView({ toolSlug: toolSlug })
+
+  const { closeModal } = useModal()
 
   const name = tool?.name
   const description = tool?.description || ''
@@ -29,25 +32,27 @@ const ToolView = () => {
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledSectionTitle>Toolkit</StyledSectionTitle>
-            {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
-          </div>
-          <StyledButtonWrapper>
-            <BackButton />
-            {fields?.length > 0 && (
-              <Button
-                onClick={() => handleSubmit(formik?.values)}
-                disabled={isLoading}
-                size={Button.sizes.SMALL}
-              >
-                {isLoading ? <Loader size={22} /> : 'Save'}
-              </Button>
-            )}
-          </StyledButtonWrapper>
-        </StyledHeaderGroup>
-        <ComponentsWrapper>
+        {!toolSlug && (
+          <StyledHeaderGroup className='header_group'>
+            <div>
+              <StyledSectionTitle>Toolkit</StyledSectionTitle>
+              {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
+            </div>
+            <StyledButtonWrapper>
+              <BackButton />
+              {fields?.length > 0 && (
+                <Button
+                  onClick={() => handleSubmit(formik?.values)}
+                  disabled={isLoading}
+                  size={Button.sizes.SMALL}
+                >
+                  {isLoading ? <Loader size={22} /> : 'Save'}
+                </Button>
+              )}
+            </StyledButtonWrapper>
+          </StyledHeaderGroup>
+        )}
+        <ComponentsWrapper hideBox={toolSlug ? true : false}>
           <StyledInnerWrapper>
             <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
             <StyledTextWrapper>
@@ -94,6 +99,21 @@ const ToolView = () => {
                 )
               })}
             </StyledFieldsWrapper>
+
+            {toolSlug && fields?.length > 0 && (
+              <StyledModalButton>
+                <Button
+                  onClick={async () => {
+                    await handleSubmit(formik?.values)
+                    closeModal('toolkit-modal')
+                  }}
+                  disabled={isLoading}
+                  size={Button.sizes.SMALL}
+                >
+                  {isLoading ? <Loader size={22} /> : 'Save'}
+                </Button>
+              </StyledModalButton>
+            )}
           </StyledInnerWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
@@ -110,6 +130,8 @@ const StyledInnerWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  gap: 20px;
 `
 const StyledImg = styled.img`
   width: 48px;
@@ -141,4 +163,7 @@ const StyledFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+`
+const StyledModalButton = styled.div`
+  margin-left: auto;
 `
