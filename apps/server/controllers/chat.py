@@ -107,7 +107,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     if agent:
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
 
-        datasource_tools = get_datasource_tools(datasources, settings)
+        datasource_tools = get_datasource_tools(datasources, settings, auth.account)
         agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, auth.account, settings)
         tools = datasource_tools + agent_tools
 
