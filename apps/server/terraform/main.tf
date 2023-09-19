@@ -30,7 +30,7 @@ module "backend" {
   environment = var.environment
   tags = {}
   kubernetes_secret_config_map_data = {
-    NODE_ENV                 = var.NODE_ENV
+    ENV                 = var.ENV
   } 
   kubernetes_secret_name_data = {
     OPENAI_API_KEY                 = var.OPENAI_API_KEY
