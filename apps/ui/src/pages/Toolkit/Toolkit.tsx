@@ -12,11 +12,14 @@ import ToolCard from './components/ToolCard'
 
 import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
+import { useModal } from 'hooks'
 
 const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: tools } = useToolsService()
 
   const navigate = useNavigate()
+
+  const { openModal } = useModal()
 
   return (
     <StyledSectionWrapper>
@@ -48,6 +51,7 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
                 onClick={() => {
                   if (isPublic) return
                   navigate(`/toolkits/${tool.slug}`)
+                  // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
                 }}
                 logoSrc={logoSrc}
               />
