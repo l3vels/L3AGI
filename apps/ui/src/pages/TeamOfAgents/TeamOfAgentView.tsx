@@ -42,7 +42,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
           <>
             <div>
               <>
-                <StyledSectionTitle>Agent</StyledSectionTitle>
+                <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
                 <StyledSectionDescription>
                   Witness the growth of exceptional AI talents, nurtured by collective community
                   contributions.
@@ -62,15 +62,17 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
             <TeamOfAgentsDetailsBox
               teamData={data || teamOfAgentsData}
               customButton={
-                <Button
-                  size={Button.sizes.SMALL}
-                  // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
-                >
-                  <StyledInnerButtonWrapper>
-                    <Download size={28} />
-                    Add
-                  </StyledInnerButtonWrapper>
-                </Button>
+                !data && (
+                  <Button
+                    size={Button.sizes.SMALL}
+                    // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
+                  >
+                    <StyledInnerButtonWrapper>
+                      <Download size={28} />
+                      Add
+                    </StyledInnerButtonWrapper>
+                  </Button>
+                )
               }
             />
           </StyledLeftColumn>
