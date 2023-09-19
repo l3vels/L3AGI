@@ -33,6 +33,7 @@ class AgentModel(BaseModel):
     __tablename__ = 'agent'
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
+    avatar = Column(String(300), default=None)
     role = Column(String) 
     parent_id = Column(UUID, ForeignKey('agent.id', ondelete='CASCADE'), nullable=True, index=True) 
     workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True) 

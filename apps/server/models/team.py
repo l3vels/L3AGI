@@ -25,6 +25,7 @@ class TeamModel(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
+    avatar = Column(String(300), default=None)
     team_type = Column(String) #todo replace as enum (Debates, Plan_Execute, Authoritarian_Speaker, Decentralized_speaker)
     description = Column(String, nullable=True) 
     is_deleted = Column(Boolean, default=False, index=True)

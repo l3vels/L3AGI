@@ -36,6 +36,7 @@ class TeamOutput(BaseModel):
     creator: Optional[UserOutput]
     modified_by: Optional[UUID4]
     team_agents: Optional[List[TeamAgentOutput]]
+    avatar: Optional[str]
 
 class QueryParams(BaseModel):
     id: Optional[str]
