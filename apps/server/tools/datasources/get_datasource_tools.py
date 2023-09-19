@@ -6,8 +6,9 @@ from tools.datasources.mysql.mysql import MySQLDatabaseTool
 from tools.datasources.file.file import FileDatasourceTool
 from tools.base import BaseTool
 from typings.config import AccountSettings
+from typings.account import AccountOutput
 
-def get_datasource_tools(datasources: List[DatasourceModel], settings: AccountSettings) -> List[BaseTool]:
+def get_datasource_tools(datasources: List[DatasourceModel], settings: AccountSettings, account: AccountOutput) -> List[BaseTool]:
     """Get tools needed for datasources. For example Postgres datasource needs SQL tool to execute queries."""
 
     tools: List[BaseTool] = []
@@ -25,5 +26,6 @@ def get_datasource_tools(datasources: List[DatasourceModel], settings: AccountSe
 
     for tool in tools:
         tool.settings = settings
+        tool.account = account
 
     return tools

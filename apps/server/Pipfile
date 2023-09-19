@@ -59,6 +59,7 @@ ebooklib = "*"
 html2text = "*"
 nbconvert = "*"
 protobuf = "*"
+s3fs = "*"
 
 [dev-packages]
 
