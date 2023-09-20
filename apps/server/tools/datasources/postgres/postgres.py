@@ -19,7 +19,8 @@ class PostgresDatabaseTool(BaseTool):
     
     description = (
         "useful for when you need to answer questions over Postgres datasource.\n"
-        "Input is string. String is separated by semicolon. First is database question in English natural language. Second is datasource ID."
+        "Input is string. String is separated by semicolon. First is database question in English natural language. Second is datasource ID.\n"
+        "First part of input is English question and it is not SQL script!\n"
     )
 
     args_schema: Type[PostgresDatabaseSchema] = PostgresDatabaseSchema

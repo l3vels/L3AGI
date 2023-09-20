@@ -1,5 +1,5 @@
 # DB Config
-variable "NODE_ENV" {
+variable "ENV" {
   type = string
 }
 variable "OPENAI_API_KEY" {

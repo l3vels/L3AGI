@@ -82,7 +82,7 @@ class L3AuthoritarianSpeaker(L3Base):
     
     def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-        datasource_tools = get_datasource_tools(datasources, settings)
+        datasource_tools = get_datasource_tools(datasources, settings, self.account)
         agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account, settings)
         return datasource_tools + agent_tools
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Boolean, UUID, func, or_
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, Index
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel, RootBaseModel
 from sqlalchemy.dialects.postgresql import JSONB
@@ -26,6 +26,10 @@ class UserModel(RootBaseModel):
     is_active = Column(Boolean, default=True)
     is_deleted = Column(Boolean, default=False, index=True)
 
+    __table_args__ = (
+        Index('ix_user_model_email_is_deleted_index', 'email', 'is_deleted'),
+    )
+    
     @classmethod
     def hash_password(cls, password):
         """Hash a password for storing."""
@@ -152,4 +156,3 @@ class UserModel(RootBaseModel):
         db_user.is_deleted = True
         db.session.commit()
 
-    

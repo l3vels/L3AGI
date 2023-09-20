@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List, Optional
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, ForeignKey
+from sqlalchemy import Column, String, Boolean, UUID, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import and_, or_
 from models.base_model import BaseModel
@@ -53,7 +53,10 @@ class ConfigModel(BaseModel):
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
 
-
+    # Define indexes
+    Index('ix_config_model_created_by_is_deleted', 'created_by', 'is_deleted')
+    Index('ix_config_model_id_is_deleted', 'id', 'is_deleted')
+    
     def __repr__(self) -> str:
         return (
             f"Config(id={self.id}, "

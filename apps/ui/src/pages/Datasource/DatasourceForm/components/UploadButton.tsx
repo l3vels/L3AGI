@@ -5,14 +5,14 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import File from '@l3-lib/ui-core/dist/icons/File'
 import Loader from '@l3-lib/ui-core/dist/Loader'
+import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
 
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
-  multiple?: boolean
   isLoading: boolean
 }
 
-const UploadButton = ({ onChange, multiple = false, isLoading }: UploadButtonProps) => {
+const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
   const uploadRef = useRef<HTMLInputElement>(null)
 
   const handleUploadButton = async () => {
@@ -21,7 +21,13 @@ const UploadButton = ({ onChange, multiple = false, isLoading }: UploadButtonPro
 
   return (
     <>
-      <StyledInput type='file' ref={uploadRef} onChange={onChange} multiple={multiple} />
+      <StyledInput
+        type='file'
+        ref={uploadRef}
+        onChange={onChange}
+        multiple
+        accept='.pdf, .csv, .docx, .pptx, .md, .jpg, .png, .jpeg, .epub, .mbox, .ipynb, .mp3, .mp4'
+      />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>
         {isLoading ? (

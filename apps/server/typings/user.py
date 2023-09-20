@@ -10,7 +10,8 @@ class UserOutput(BaseModel):
     id: UUID4
     name: str
     email: str
-    avatar: str
+    avatar: Optional[str]
+    
 @strawberry.type
 class User:
     id: strawberry.ID

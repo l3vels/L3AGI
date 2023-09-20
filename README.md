@@ -152,9 +152,16 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
    ./setup.sh
    ```
 
-   This will build and start both the React UI and FastAPI services.
+4. **Create `.env` file from `.env.example` in root directory**
 
-4. 🐳 **Run Docker Compose:**
+   ```bash
+   cp .env.example .env
+   ```
+
+   - **Configure `Azure Web PubSub` using [our guide here](docs/azure.md)**
+   - **To configure `Zep Memory`, please see [quick start on Zep](https://docs.getzep.com/deployment/quickstart/)**
+
+5. 🐳 **Run Docker Compose:**
 
    ```bash
    docker-compose up --build

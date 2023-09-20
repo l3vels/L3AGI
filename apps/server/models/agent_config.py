@@ -1,9 +1,8 @@
-from sqlalchemy import Column, Text, String, UUID, ForeignKey
+from sqlalchemy import Column, Text, String, UUID, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.exc import SQLAlchemyError
 from typing import Union
 
-from config import get_config
 from utils.encyption import decrypt_data
 from models.base_model import BaseModel
 import uuid
@@ -33,6 +32,8 @@ class AgentConfigModel(BaseModel):
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    
+    __table_args__ = (Index('ix_agent_config_model_agent_id_key', 'agent_id', 'key'),)
 
     def __repr__(self):
         """

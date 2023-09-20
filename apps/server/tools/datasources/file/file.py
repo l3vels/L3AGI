@@ -30,8 +30,8 @@ class FileDatasourceTool(BaseTool):
 
         question, datasource_id = query.split(';')
 
-        retriever = FileDatasourceRetriever(self.settings, datasource_id)
-        retriever.load_documents()
+        retriever = FileDatasourceRetriever(self.settings, str(self.account.id), datasource_id)
+        retriever.load_index()
         result = retriever.query(question)
         return result
 

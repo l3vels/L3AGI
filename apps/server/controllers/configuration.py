@@ -1,3 +1,4 @@
+import sentry_sdk
 from typing import List
 import json
 from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
@@ -13,20 +14,27 @@ from utils.configuration import convert_configs_to_config_list, convert_model_to
 from exceptions import ConfigNotFoundException
 from datasources.base import DatasourceEnvKeyType
 from typings.datasource import DatasourceStatus
+from typings.account import AccountOutput
 from datasources.file.file_retriever import FileDatasourceRetriever
+
 router = APIRouter()
 
 # TODO: refactor update method in models to be flexible.
-def index_documents(urls: str, datasource_id: UUID, account):
-
+def index_documents(urls: str, datasource_id: UUID, account: AccountOutput):
+    settings = ConfigModel.get_account_settings(db, account)
     datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
-    
-    file_urls = json.loads(urls)
-    retriever = FileDatasourceRetriever(str(datasource_id))
-    retriever.save_documents(file_urls)
-    retriever.load_documents()
-    
-    datasource.status = DatasourceStatus.READY.value
+
+    try:
+        files = json.loads(urls)
+        file_urls = [file['url'] for file in files]
+        retriever = FileDatasourceRetriever(settings, str(account.id), str(datasource_id))
+        retriever.index_documents(file_urls)
+
+        datasource.status = DatasourceStatus.READY.value
+    except Exception as err:
+        sentry_sdk.capture_exception(err)
+        datasource.status = DatasourceStatus.FAILED.value
+
     db.session.add(datasource)
     db.session.commit()
 

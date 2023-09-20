@@ -123,20 +123,26 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
             <>
               {category === 'File' && (
                 <StyledUploadFileWrapper>
-                  <UploadButton onChange={handleUploadFile} isLoading={fileLoading} multiple />
+                  <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
 
                   <StyledUploadedFiles>
                     {configs.files?.value?.length > 0 &&
-                      configs.files.value.map((url: string) => (
+                      configs.files.value.map((file: any) => (
                         <UploadedFile
-                          key={url}
-                          onClick={() =>
-                            setFieldValue('configs.file', {
-                              ...configs.file,
-                              value: '',
+                          key={file.url}
+                          id={file.url}
+                          hasDeleteIcon
+                          onClick={id => {
+                            const filteredFiles = configs.files.value.filter(
+                              (file: any) => file.url !== id,
+                            )
+
+                            setFieldValue('configs.files', {
+                              ...configs.files,
+                              value: filteredFiles,
                             })
-                          }
-                          name={'File'}
+                          }}
+                          name={file.name}
                         />
                       ))}
                   </StyledUploadedFiles>

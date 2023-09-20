@@ -8,7 +8,11 @@ const useUploadFile = () => {
   const uploadFile = async (fileObj: any, file: File) => {
     const { signed_url, file_url } = await generateUploadUrlService(fileObj)
     await uploadFileService(signed_url, file)
-    return file_url
+    return {
+      name: fileObj.name,
+      type: fileObj.type,
+      url: file_url,
+    }
   }
 
   return {

@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List, Optional
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey
+from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 from typings.team_agent import TeamAgentInput, QueryParams
@@ -33,6 +33,13 @@ class TeamAgentModel(BaseModel):
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
     
+    # Define indexes
+    __table_args__ = ( 
+        Index('ix_team_agent_model_team_id_agent_id', 'team_id', 'agent_id'), 
+        Index('ix_team_agent_model_account_id_is_deleted', 'account_id', 'is_deleted')
+    )
+    
+
     def __repr__(self) -> str:
         return (
             f"TeamAgent(id={self.id}, "
@@ -209,3 +216,4 @@ class TeamAgentModel(BaseModel):
         db.session.commit()
 
         return changes
+    

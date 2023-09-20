@@ -19,7 +19,7 @@ class SystemMessageBuilder:
         datasources = self.build_datasources(self.configs.datasources)
         tools = self.build_tools(self.configs.tools)
 
-        result = f"{role}\n{description}\n{goals}\n{instructions}\n{constraints}\n{datasources}\n{tools}"
+        result = f"{role}{description}{goals}{instructions}{constraints}{datasources}{tools}"
         return result
 
 
