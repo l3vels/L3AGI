@@ -25,13 +25,13 @@ export const useToolView = ({ toolSlug }: { toolSlug?: string }) => {
 
   const tool = toolkits?.find((toolkit: any) => slug === toolkit.slug || toolSlug === toolkit.slug)
 
-  const filteredConfig = configsData?.filter((config: any) => config.toolkit_id === tool.toolkit_id)
-
-  const { fields } = tool
+  const filteredConfig = configsData?.filter(
+    (config: any) => config.toolkit_id === tool?.toolkit_id,
+  )
 
   const initialValues: Record<string, string> = {}
 
-  fields?.forEach((field: any) => {
+  tool?.fields?.forEach((field: any) => {
     initialValues[field.key] = filteredConfig.find((config: any) => config.key === field.key)?.value
   })
 
@@ -47,7 +47,7 @@ export const useToolView = ({ toolSlug }: { toolSlug?: string }) => {
 
     for (const key in values) {
       const value = values[key]
-      const field = fields.find((field: any) => field.key === key)
+      const field = tool?.fields.find((field: any) => field.key === key)
 
       configs.push({
         key,
@@ -86,5 +86,5 @@ export const useToolView = ({ toolSlug }: { toolSlug?: string }) => {
     setIsLoading(false)
   }
 
-  return { tool, formik, handleSubmit, isLoading }
+  return { tool, formik, handleSubmit, isLoading, refetchConfigs, configsData }
 }

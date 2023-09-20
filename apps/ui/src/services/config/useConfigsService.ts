@@ -5,7 +5,7 @@ export const useConfigsService = () => {
   const { data, error, loading, refetch } = useQuery(configsGql)
 
   return {
-    data: data?.getConfigs || [],
+    data: data?.getConfigs || null,
     error,
     loading,
     refetch,

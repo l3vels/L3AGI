@@ -19,7 +19,9 @@ import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
-  const { tool, formik, handleSubmit, isLoading } = useToolView({ toolSlug: toolSlug })
+  const { tool, formik, handleSubmit, isLoading } = useToolView({
+    toolSlug: toolSlug,
+  })
 
   const { closeModal } = useModal()
 

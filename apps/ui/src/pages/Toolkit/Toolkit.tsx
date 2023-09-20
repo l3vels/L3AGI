@@ -12,14 +12,30 @@ import ToolCard from './components/ToolCard'
 
 import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
-import { useModal } from 'hooks'
+import { useToolView } from './ToolView/useToolView'
+import { useEffect, useState } from 'react'
 
 const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: tools } = useToolsService()
 
+  const { refetchConfigs, configsData } = useToolView({})
+
+  const [show, setShow] = useState(false)
+
   const navigate = useNavigate()
 
-  const { openModal } = useModal()
+  const handleShow = async () => {
+    if (configsData) {
+      setShow(true)
+    } else {
+      await refetchConfigs()
+      setShow(true)
+    }
+  }
+
+  useEffect(() => {
+    handleShow()
+  }, [])
 
   return (
     <StyledSectionWrapper>
@@ -33,31 +49,33 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <StyledCardsWrapper>
-          {tools?.map((tool: any, index: number) => {
-            const filteredLogos = toolLogos.filter(
-              (toolLogo: any) => toolLogo.toolName === tool.name,
-            )
+        {show && (
+          <StyledCardsWrapper>
+            {tools?.map((tool: any, index: number) => {
+              const filteredLogos = toolLogos.filter(
+                (toolLogo: any) => toolLogo.toolName === tool.name,
+              )
 
-            const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+              const logoSrc = filteredLogos?.[0]?.logoSrc || ''
 
-            return (
-              <ToolCard
-                key={index}
-                isReadOnly={isPublic}
-                isDisabled={!tool.is_active && !isPublic}
-                title={tool.name}
-                subTitle={!tool.is_active && !isPublic ? 'Coming Soon' : ''}
-                onClick={() => {
-                  if (isPublic) return
-                  navigate(`/toolkits/${tool.slug}`)
-                  // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
-                }}
-                logoSrc={logoSrc}
-              />
-            )
-          })}
-        </StyledCardsWrapper>
+              return (
+                <ToolCard
+                  key={index}
+                  isReadOnly={isPublic}
+                  isDisabled={!tool.is_active && !isPublic}
+                  title={tool.name}
+                  subTitle={!tool.is_active && !isPublic ? 'Coming Soon' : ''}
+                  onClick={() => {
+                    if (isPublic) return
+                    navigate(`/toolkits/${tool.slug}`)
+                    // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
+                  }}
+                  logoSrc={logoSrc}
+                />
+              )
+            })}
+          </StyledCardsWrapper>
+        )}
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
