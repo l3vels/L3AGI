@@ -50,7 +50,7 @@ const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
 `
 const StyledFirstName = styled.span`
   color: #fff;
-  @media (max-width: 1000px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `
@@ -63,7 +63,7 @@ const StyledAvatarContainer = styled.div`
   left: 40px;
   bottom: 24px;
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     display: none;
   }
 
