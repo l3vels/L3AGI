@@ -5,8 +5,6 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { useModal } from 'hooks'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-
 const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
 const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/

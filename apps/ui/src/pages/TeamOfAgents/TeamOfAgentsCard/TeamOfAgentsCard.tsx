@@ -44,23 +44,23 @@ const TeamOfAgentCard = ({
 
   return (
     <StyledCard>
-      <StyledCreatorWrapper>
-        <AvatarGenerator
-          name={creator.name}
-          size={16}
-          textSizeRatio={1.5}
-          avatar={creator.avatar}
-        />
-
-        <Typography
-          value={creator.name}
-          type={Typography.types.P}
-          size={Typography.sizes.xss}
-          customColor={'rgba(255,255,255, 0.6)'}
-        />
-      </StyledCreatorWrapper>
       <StyledMainAvatarWrapper>
         <AvatarGenerator name={name} size={28} isRound={false} />
+        <StyledCreatorWrapper>
+          <AvatarGenerator
+            name={creator.name}
+            size={16}
+            textSizeRatio={1.5}
+            avatar={creator.avatar}
+          />
+
+          <Typography
+            value={creator.name}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+        </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
         <Heading type={Heading.types.h1} value={name} customColor={'#FFF'} size='medium' />
@@ -267,8 +267,4 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-
-  margin-left: auto;
-
-  height: 20px;
 `
