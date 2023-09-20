@@ -24,6 +24,7 @@ type TeamOfAgentCardProps = {
   onDeleteClick?: () => void
   onChatClick?: () => void
   onViewClick?: () => void
+  creator?: any
 }
 
 const TeamOfAgentCard = ({
@@ -34,6 +35,7 @@ const TeamOfAgentCard = ({
   onEditClick,
   onChatClick,
   onViewClick,
+  creator,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description || ''
   if (description.length > 150) {
@@ -94,6 +96,21 @@ const TeamOfAgentCard = ({
       </StyledBody>
 
       <StyledCardFooter>
+        <StyledCreatorWrapper>
+          <AvatarGenerator
+            name={creator.name}
+            size={16}
+            textSizeRatio={1.5}
+            avatar={creator.avatar}
+          />
+
+          <Typography
+            value={creator.name}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+        </StyledCreatorWrapper>
         <StyledButtonsWrapper>
           {onDeleteClick && (
             <StyledButtonWrapper className='footerButtons'>
@@ -238,18 +255,15 @@ const StyledBody = styled.div`
   gap: 8px;
 `
 
-const StyledImg = styled.img`
-  height: 28px;
-  width: 28px;
-
-  object-fit: cover;
-
-  margin-right: auto;
-`
 const StyledAvatarsContainer = styled.div`
   display: flex;
   align-items: center;
 `
 const StyledChatButtonWrapper = styled.div`
   margin-left: auto;
+`
+const StyledCreatorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `
