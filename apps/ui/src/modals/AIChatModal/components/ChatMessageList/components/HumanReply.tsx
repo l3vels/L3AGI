@@ -51,11 +51,11 @@ export const StyledReplyWrapper = styled.div`
   /* padding-left: 50px; */
   font-size: 14px;
 
-  width: 100%;
+  width: calc(100vw - 100px);
 
-  width: 850px;
+  max-width: 850px;
   height: 30px;
-
+  /* background: red; */
   gap: 10px;
 `
 

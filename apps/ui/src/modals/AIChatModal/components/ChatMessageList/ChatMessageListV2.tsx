@@ -290,9 +290,11 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
 `
 
 const StyledLoaderWrapper = styled.div`
-  width: 850px;
   display: flex;
   margin-top: 30px;
+
+  width: calc(100% - 50px);
+  max-width: 850px;
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
