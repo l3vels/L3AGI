@@ -48,21 +48,12 @@ class ChartGeneratorTool(BaseTool):
 
         try:
             action = json.loads(query)
-            data = json.dumps(action["data"])
-            user_prompt = action["user_prompt"]
 
             chain = generate_chart_code_chain(self.settings.openai_api_key)
-            code = chain.run(user_prompt=user_prompt, data=data)
+            code = chain.run(data=action)
             code = extract_code(code)
 
-            res = chart_generator_runner(
-                {
-
-                    "code": code,
-                    "params": data,
-                },
-                None,
-            )
+            res = chart_generator_runner(code)
 
             status_code = res["statusCode"]
 
