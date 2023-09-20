@@ -10,12 +10,8 @@ import base64
 import io
 from io import BytesIO
 
-def chart_generator_runner(event: Dict, context) -> Dict:
+def chart_generator_runner(code: str) -> Dict:
     try:
-        # Extract code and JSON params from the event
-        code = event.get('code', '')
-        params = event.get('params', [])
-
         # Compile the received Python code
         compiled_code = compile(code, '<string>', 'exec')
 
@@ -30,7 +26,7 @@ def chart_generator_runner(event: Dict, context) -> Dict:
 
         # If a function was found, call it with the JSON params
         if func is not None:
-            result = func(params)
+            result = func()
             return {'statusCode': 200, 'body': json.dumps({'result': result})}
         else:
             return {'statusCode': 400, 'body': json.dumps({'error': 'No function found in code'})}
