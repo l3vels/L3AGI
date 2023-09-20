@@ -29,7 +29,7 @@ const AvatarDropDown = () => {
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
-  const userAccounts = null
+
   // const { data: userAccounts } = useUserAccountsService()
 
   const handleLogout = async () => {
@@ -55,27 +55,27 @@ const AvatarDropDown = () => {
           <img src={profileIcon} alt='profile' />
           {t('profile')}
         </StyledDropDownMenuItem> */}
-        {userAccounts && userAccounts.length > 0 && (
+        {/* {userAccounts && userAccounts.length > 0 && (
           <></>
-          // <Sub>
-          //   <DropdownMenuSubTrigger>
-          //     <DropdownMenuSubTriggerGroup>
-          //       <img src={teamIcon} alt='switch account' />
-          //       Switch account
-          //     </DropdownMenuSubTriggerGroup>
-          //     <ArrowRightSvg />
-          //   </DropdownMenuSubTrigger>
-          //   <Portal>
-          //     <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
-          //       {userList}
-          //       {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
-          //     <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
-          //     <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
-          //     <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
-          //     </DropdownMenuDropdownMenuSubContent>
-          //   </Portal>
-          // </Sub>
-        )}
+          <Sub>
+            <DropdownMenuSubTrigger>
+              <DropdownMenuSubTriggerGroup>
+                <img src={teamIcon} alt='switch account' />
+                Switch account
+              </DropdownMenuSubTriggerGroup>
+              <ArrowRightSvg />
+            </DropdownMenuSubTrigger>
+            <Portal>
+              <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
+                {userList}
+                <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem>
+              </DropdownMenuDropdownMenuSubContent>
+            </Portal>
+          </Sub>
+        )} */}
         {/* <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
           <img src={teamIcon} alt='team' />
           {t('Team')}
