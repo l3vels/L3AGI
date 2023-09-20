@@ -23,12 +23,17 @@ import defaultAvatar from '../assets/images/defaultAvatar.png'
 
 import Settings from '@l3-lib/ui-core/dist/icons/Settings'
 import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
+import AvatarGenerator from './AvatarGenerator/AvatarGenerator'
+import React from 'react'
+import { AuthContext } from 'contexts'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
+
+  const { user } = React.useContext(AuthContext)
 
   // const { data: userAccounts } = useUserAccountsService()
 
@@ -48,7 +53,8 @@ const AvatarDropDown = () => {
   return (
     <StyledDropDownMenuRoot>
       <StyledDropDownMenuTrigger>
-        <Avatar size={Avatar.sizes.SMALL} src={defaultAvatar} type={Avatar.types.IMG} rectangle />
+        {/* <Avatar size={Avatar.sizes.SMALL} src={defaultAvatar} type={Avatar.types.IMG} rectangle /> */}
+        <AvatarGenerator name={user.name} size={40} />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
         {/* <StyledDropDownMenuItem onClick={() => navigate('/account')}>
@@ -280,6 +286,7 @@ const DropdownMenuSubTriggerGroup = styled.div`
 
 const StyledDropDownMenuTrigger = styled(Trigger)`
   all: unset;
+  cursor: pointer;
   /* display: flex;
   align-items: center;
   gap: 10px;
