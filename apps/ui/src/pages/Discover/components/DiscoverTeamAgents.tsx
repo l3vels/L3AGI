@@ -46,6 +46,7 @@ const DiscoverTeamAgents = () => {
                   })
                 }
                 onChatClick={() => navigate(`/chat/history?team=${teamOfAgents.id}`)}
+                creator={teamOfAgents.creator}
               />
             )
           })}

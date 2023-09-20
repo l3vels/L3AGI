@@ -574,6 +574,8 @@ const StyledChatWrapper = styled.div`
 
 const StyledSuggestionsContainer = styled.div`
   display: flex;
+  width: calc(100vw - 50px);
+
   max-width: 800px;
   align-items: center;
   gap: 12px;
@@ -595,8 +597,8 @@ const StyledFileWrapper = styled.div`
 `
 
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
-  width: 600px;
-
+  width: calc(100vw - 200px);
+  max-width: 600px;
   padding-bottom: 2px;
 
   ${p =>
@@ -606,9 +608,9 @@ const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
       padding-bottom: 0;
     `};
 
-  @media (max-width: 1200px) {
+  /* @media (max-width: 1200px) {
     width: 400px;
-  }
+  } */
 `
 const StyledChatInputWrapper = styled.div`
   display: flex;

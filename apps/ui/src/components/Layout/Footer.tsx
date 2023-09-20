@@ -7,13 +7,13 @@ import styled from 'styled-components'
 
 const Footer = () => {
   const { user } = useContext(AuthContext)
-  const { first_name } = user
+  // const { first_name } = user
   return (
     <StyledFooter id='main_footer'>
-      <StyledAvatarContainer>
+      {/* <StyledAvatarContainer>
         <AvatarDropDown />
         <StyledFirstName>{first_name}</StyledFirstName>
-      </StyledAvatarContainer>
+      </StyledAvatarContainer> */}
     </StyledFooter>
   )
 }

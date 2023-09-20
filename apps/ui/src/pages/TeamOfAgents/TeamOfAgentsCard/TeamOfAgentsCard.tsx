@@ -24,6 +24,7 @@ type TeamOfAgentCardProps = {
   onDeleteClick?: () => void
   onChatClick?: () => void
   onViewClick?: () => void
+  creator?: any
 }
 
 const TeamOfAgentCard = ({
@@ -34,6 +35,7 @@ const TeamOfAgentCard = ({
   onEditClick,
   onChatClick,
   onViewClick,
+  creator,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description || ''
   if (description.length > 150) {
@@ -44,8 +46,22 @@ const TeamOfAgentCard = ({
     <StyledCard>
       <StyledMainAvatarWrapper>
         <AvatarGenerator name={name} size={28} isRound={false} />
-      </StyledMainAvatarWrapper>
+        <StyledCreatorWrapper>
+          <AvatarGenerator
+            name={creator.name}
+            size={16}
+            textSizeRatio={1.5}
+            avatar={creator.avatar}
+          />
 
+          <Typography
+            value={creator.name}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
+        </StyledCreatorWrapper>
+      </StyledMainAvatarWrapper>
       <StyledBody>
         <Heading type={Heading.types.h1} value={name} customColor={'#FFF'} size='medium' />
         <Typography
@@ -92,7 +108,6 @@ const TeamOfAgentCard = ({
           />
         </StyledRowWrapper> */}
       </StyledBody>
-
       <StyledCardFooter>
         <StyledButtonsWrapper>
           {onDeleteClick && (
@@ -103,7 +118,7 @@ const TeamOfAgentCard = ({
                 size={Button.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Delete'
-              />{' '}
+              />
             </StyledButtonWrapper>
           )}
 
@@ -161,7 +176,7 @@ const StyledCard = styled.div`
   min-height: 340px;
 
   padding: 20px 25px;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 
   border-radius: 10px;
   /* background: rgba(0, 0, 0, 0.5); */
@@ -198,7 +213,10 @@ const StyledButtonsWrapper = styled.div`
   width: 100%;
 `
 const StyledMainAvatarWrapper = styled.div`
-  margin-right: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const StyledAvatarWrapper = styled.div`
@@ -238,18 +256,15 @@ const StyledBody = styled.div`
   gap: 8px;
 `
 
-const StyledImg = styled.img`
-  height: 28px;
-  width: 28px;
-
-  object-fit: cover;
-
-  margin-right: auto;
-`
 const StyledAvatarsContainer = styled.div`
   display: flex;
   align-items: center;
 `
 const StyledChatButtonWrapper = styled.div`
   margin-left: auto;
+`
+const StyledCreatorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `

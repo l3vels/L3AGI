@@ -19,15 +19,16 @@ export const useSettings = () => {
   const [updateConfig] = useUpdateConfigService()
 
   const openApiKeyConfig = configsData?.filter(
-    (config: any) => config.account_id === currentAccount.id && config.key === 'open_api_key',
+    (config: any) => config.account_id === currentAccount?.id && config.key === 'open_api_key',
   )
   const huggingFaceConfig = configsData?.filter(
-    (config: any) => config.account_id === currentAccount.id && config.key === 'hugging_face_token',
+    (config: any) =>
+      config.account_id === currentAccount?.id && config.key === 'hugging_face_token',
   )
 
   const initialValues = {
-    open_api_key: openApiKeyConfig[0]?.value || '',
-    hugging_face_token: huggingFaceConfig[0]?.value || '',
+    open_api_key: openApiKeyConfig?.[0]?.value || '',
+    hugging_face_token: huggingFaceConfig?.[0]?.value || '',
   }
 
   const handleSubmit = async (values: any) => {

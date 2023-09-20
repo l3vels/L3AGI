@@ -3,11 +3,17 @@ import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
+import { useModal } from 'hooks'
 
 const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
+const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
 
 const AiMessageMarkdown = ({ children }: { children: any }) => {
+  // console.log('AIMESSEGE', children)
+
+  const { openModal } = useModal()
+
   return (
     <StyledReactMarkdown
       children={children}
@@ -33,6 +39,14 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
           if (IMAGE_REGEX.test(href as string)) {
             const imageUrl = href as string
             return <img src={imageUrl} alt={children as string} />
+          }
+
+          if (SETTINGS_REGEX) {
+            return (
+              <button onClick={() => openModal({ name: 'settings-modal' })}>
+                <StyledText>Settings</StyledText>
+              </button>
+            )
           }
 
           return <a href={href as string}>{children}</a>
@@ -76,4 +90,7 @@ const StyledTable = styled.table`
     padding: 5px 30px;
     text-align: center;
   }
+`
+const StyledText = styled.span`
+  text-decoration: underline;
 `
