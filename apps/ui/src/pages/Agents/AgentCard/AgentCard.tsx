@@ -43,6 +43,11 @@ const AgentCard = ({
     shortDescription = `${description.slice(0, 85)}...`
   }
 
+  let shortHeaderTag = headerTag
+  if (headerTag && headerTag?.length > 40) {
+    shortHeaderTag = `${headerTag.slice(0, 40)}...`
+  }
+
   return (
     <StyledAgentCard>
       <StyledCardHeader>
@@ -57,7 +62,7 @@ const AgentCard = ({
           )}
         </div>
 
-        <div>{headerTag && <Tags label={headerTag} readOnly size='small' outlined />}</div>
+        <div>{headerTag && <Tags label={shortHeaderTag} readOnly size='small' outlined />}</div>
       </StyledCardHeader>
       <StyledCardBody>
         <StyledAvatarWrapper>
