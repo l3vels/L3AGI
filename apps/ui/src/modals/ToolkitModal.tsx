@@ -8,6 +8,7 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import ToolView from 'pages/Toolkit/ToolView'
+import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
 
 type ToolkitModalProps = {
   data: {
@@ -17,6 +18,10 @@ type ToolkitModalProps = {
 
 const ToolkitModal = ({ data }: ToolkitModalProps) => {
   const { closeModal } = useModal()
+
+  const { configsData } = useToolView({})
+
+  if (!configsData) return <div />
 
   return (
     <>

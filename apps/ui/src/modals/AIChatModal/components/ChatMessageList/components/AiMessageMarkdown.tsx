@@ -7,11 +7,11 @@ import { useModal } from 'hooks'
 
 const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
-const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
+const SETTINGS_REGEX = /\/setting/
+const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
+// const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
 
 const AiMessageMarkdown = ({ children }: { children: any }) => {
-  // console.log('AIMESSEGE', children)
-
   const { openModal } = useModal()
 
   return (
@@ -21,6 +21,8 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
       components={{
         table: ({ node, ...props }) => <StyledTable {...props} />,
         a: ({ href, children }) => {
+          // console.log('href', href)
+          // console.log('children', children)
           if (YOUTUBE_REGEX.test(href as string)) {
             const videoId = (href as string).match(YOUTUBE_REGEX)?.[1]
             return (
@@ -41,10 +43,25 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
             return <img src={imageUrl} alt={children as string} />
           }
 
-          if (SETTINGS_REGEX) {
+          if (SETTINGS_REGEX.test(href as string)) {
             return (
               <button onClick={() => openModal({ name: 'settings-modal' })}>
                 <StyledText>Settings</StyledText>
+              </button>
+            )
+          }
+          if (TOOLKIT_REGEX.test(href as string)) {
+            const inputString = href
+            const staticPart = '/toolkits/'
+            const extractedPart = inputString?.replace(staticPart, '')
+
+            return (
+              <button
+                onClick={() => {
+                  openModal({ name: 'toolkit-modal', data: { toolSlug: extractedPart } })
+                }}
+              >
+                <StyledText>{children}</StyledText>
               </button>
             )
           }

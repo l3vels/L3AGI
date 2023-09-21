@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import About from '@l3-lib/ui-core/dist/icons/About'
-import Games from '@l3-lib/ui-core/dist/icons/Games'
-import Players from '@l3-lib/ui-core/dist/icons/Players'
+import Add from '@l3-lib/ui-core/dist/icons/Add'
+import ValueOutline from '@l3-lib/ui-core/dist/icons/ValueOutline'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
@@ -37,7 +37,7 @@ const MainNavigation = () => {
         <span>Home</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
-        <Players />
+        <Collection />
         <span>Agents</span>
       </StyledLi>
       <StyledLi
@@ -53,11 +53,13 @@ const MainNavigation = () => {
         isActive={includes(active, 'datasources')}
         onClick={() => onHandleClick('/datasources')}
       >
-        <Collection />
+        <StyledValueIcon>
+          <ValueOutline size={38} />
+        </StyledValueIcon>
         <span>Data sources</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
-        <Games />
+        <Add size={40} />
         <span>Toolkits</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
@@ -115,7 +117,11 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
 `
 const StyledIconWrapper = styled.div`
   color: #fff;
-
+  background: transparent;
   /* margin-bottom: 10px; */
   margin-top: 10px;
+`
+export const StyledValueIcon = styled.div`
+  color: transparent;
+  background: transparent;
 `
