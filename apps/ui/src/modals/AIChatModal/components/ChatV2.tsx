@@ -253,7 +253,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     ]
 
     if (!versions.includes(apiVersion)) {
-      navigate('copilot')
+      navigate('chat')
     }
   }, [apiVersion])
 

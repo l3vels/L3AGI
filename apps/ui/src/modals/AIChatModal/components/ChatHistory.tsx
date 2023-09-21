@@ -56,18 +56,18 @@ const ChatHistory = () => {
   const handleCreate = async () => {
     if (!user) return openModal({ name: 'login-modal' })
 
-    if (agentFromTemplate) return navigate(`/copilot?agent=${agentFromTemplate.agent.id}`)
+    if (agentFromTemplate) return navigate(`/chat?agent=${agentFromTemplate.agent.id}`)
 
-    if (teamFromTemplate) return navigate(`/copilot?team=${teamFromTemplate.id}`)
+    if (teamFromTemplate) return navigate(`/chat?team=${teamFromTemplate.id}`)
 
     setIsLoading(true)
     try {
       if (agentId) {
         const res = await createAgentFromTemplate({ id: agentId })
-        navigate(`/copilot?agent=${res.agent.id}`)
+        navigate(`/chat?agent=${res.agent.id}`)
       } else if (teamId) {
         const res = await createTeamOfAgentsFromTemplate({ id: teamId })
-        navigate(`/copilot?team=${res.id}`)
+        navigate(`/chat?team=${res.id}`)
       }
     } catch (e) {
       console.log(e)

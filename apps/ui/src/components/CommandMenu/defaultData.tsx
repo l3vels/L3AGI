@@ -97,9 +97,9 @@ export const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'General',
-      url: '/copilot',
+      url: '/chat',
       option: 'open-chat',
-      group_name: 'copilot',
+      group_name: 'chat',
       icon: <Home />,
     },
 

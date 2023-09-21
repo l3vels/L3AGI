@@ -53,7 +53,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
                 onDeleteClick={() => deleteAgentHandler(agent.id)}
                 onViewClick={() => navigate(`/agents/${agent.id}`)}
                 headerTag={agent.role}
-                onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
+                onChatClick={() => navigate(`/chat?agent=${agent.id}`)}
                 creator={agent.creator}
               />
             )

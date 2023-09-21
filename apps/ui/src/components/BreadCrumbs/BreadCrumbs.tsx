@@ -66,13 +66,8 @@ const routes: any = [
   { path: '/team-of-agents/:teamId', breadcrumb: GetTeamOfAgentsName },
 
   //chat
-  { path: '/copilot', breadcrumb: null },
   { path: '/chat', breadcrumb: null },
   { path: '/chat/history', breadcrumb: null },
-  // { path: '/copilot/game', breadcrumb: null },
-  // { path: '/copilot/collection', breadcrumb: null },
-  // { path: '/copilot/game/:gameId', breadcrumb: GetGameName },
-  // { path: '/copilot/collection/:collectionId', breadcrumb: GetCollectionName },
 ]
 
 type BreadcrumbsProps = {

@@ -284,23 +284,16 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                 </Command.Group>
               )}
 
-              {has(groupedItems, 'copilot') && (
+              {has(groupedItems, 'chat') && (
                 <Command.Group>
-                  {/* <StyledCommandItemHeader marginTop={32}>
-                    <StyledSvgContainer type='ai'>
-                      <StarsVector />
-                    </StyledSvgContainer>
-                    <h2>Copilot</h2>
-                  </StyledCommandItemHeader> */}
-
                   <>
-                    {groupedItems?.['copilot'].map((item, index) => (
+                    {groupedItems?.['chat'].map((item, index) => (
                       <>
                         <CommandItem
                           index={index}
                           name={item.name}
                           handleSelect={() => onHandleSelect(item)}
-                          groupName={'Copilot'}
+                          groupName={'chat'}
                           itemIcon={item.icon}
                         />
                       </>
@@ -308,59 +301,6 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   </>
                 </Command.Group>
               )}
-
-              {/* {has(groupedItems, 'go_to,ai') && (
-                <Command.Group>
-                  <StyledCommandItemHeader marginTop={32}>
-                    <StyledSvgContainer type='ai'>
-                      <StarsVector />
-                    </StyledSvgContainer>
-                    <h2>AI Generate</h2>
-                  </StyledCommandItemHeader>
-                  {search ? (
-                    <>
-                      {groupedItems?.['go_to,ai'].map((item, index) => (
-                        <>
-                          <StyledCommandItem
-                            key={item.id + item.modal_name}
-                            onSelect={() => onHandleSelect(item)}
-                            value={`ai ${item.name}`}
-                          >
-                            <CommandItemName index={index}>
-                              {item.icon ? item.icon : <API />}
-                              {item.name}
-                            </CommandItemName>
-                            <StyleEnterGroup>
-                              <span>Enter</span>
-                              <img src={enterIcon} alt='click enter' />
-                            </StyleEnterGroup>
-                          </StyledCommandItem>
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {slice(groupedItems?.['go_to,ai'], 1, 6)?.map((item, index) => (
-                        <>
-                          <StyledCommandItem
-                            key={`'ai' + ${item.id}`}
-                            onSelect={() => onHandleSelect(item)}
-                          >
-                            <CommandItemName index={index}>
-                              {item.icon ? item.icon : <API />}
-                              {item.name}
-                            </CommandItemName>
-                            <StyleEnterGroup>
-                              <span>Enter</span>
-                              <img src={enterIcon} alt='click enter' />
-                            </StyleEnterGroup>
-                          </StyledCommandItem>
-                        </>
-                      ))}
-                    </>
-                  )}
-                </Command.Group>
-              )} */}
             </>
           )}
 

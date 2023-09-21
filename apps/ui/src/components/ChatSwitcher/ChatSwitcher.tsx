@@ -20,10 +20,10 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
   const params = useParams()
   const { agentId } = params
 
-  let route = '/copilot'
+  let route = '/chat'
 
   if (agentId) {
-    route = `/copilot?agent=${agentId}`
+    route = `/chat?agent=${agentId}`
   }
 
   const handleChatButton = () => {
@@ -55,7 +55,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             <Collection />
           </StyledIcon>
         </Tooltip>
-        <Tooltip content={() => <span>Copilot</span>} position={Tooltip.positions.BOTTOM}>
+        <Tooltip content={() => <span>Chat</span>} position={Tooltip.positions.BOTTOM}>
           <StyledIcon picked={isChatOpen} onClick={handleChatButton}>
             <Mention size='46' />
           </StyledIcon>
