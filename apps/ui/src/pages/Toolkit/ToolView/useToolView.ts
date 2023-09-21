@@ -32,7 +32,9 @@ export const useToolView = ({ toolSlug }: { toolSlug?: string }) => {
   const initialValues: Record<string, string> = {}
 
   tool?.fields?.forEach((field: any) => {
-    initialValues[field.key] = filteredConfig.find((config: any) => config.key === field.key)?.value
+    initialValues[field.key] = filteredConfig?.find(
+      (config: any) => config.key === field.key,
+    )?.value
   })
 
   const formik = useFormik({
