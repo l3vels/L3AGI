@@ -41,7 +41,7 @@
 <a href="https://discord.gg/hQ9ZWabm" target="blank">
 <img src="https://img.shields.io/discord/1085735429426401340?label=Join%20L3AGI&logo=discord&style=social" alt="Join L3AGI Discord Community"/>
 </a>
-<a href="https://www.youtube.com/@gigachkhikvadze7497" target="_blank"><img src="https://img.shields.io/twitter/url?label=Youtube&logo=youtube&style=social&url=https://github.com/l3vels/L3AGI"/></a>
+<a href="https://www.youtube.com/@L3AGI" target="_blank"><img src="https://img.shields.io/twitter/url?label=Youtube&logo=youtube&style=social&url=https://github.com/l3vels/L3AGI"/></a>
 </p>
 
 <p align="center"><b>Connect with the Creators </b></p>
