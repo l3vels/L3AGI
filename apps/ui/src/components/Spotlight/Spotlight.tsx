@@ -4,6 +4,8 @@ import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
+import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
+
 import SendIconSvg from 'assets/icons/send_icon.svg'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
@@ -189,22 +191,25 @@ const Spotlight = () => {
             </>
           ) : (
             <>
-              <div>
+              <StyledIconWrapper>
                 {/* <StyledPluginButton
                 src={pluginsIcon}
                 active={showPlugins}
                 onClick={() => setShowPlugins(!showPlugins)}
               /> */}
-              </div>
+                <Search size={28} />
+              </StyledIconWrapper>
 
               <StyledInputWrapper onClick={handleChatClick}>
                 {!expanded && (
-                  <Typography
-                    value={'Ask anything to your agents and teams'}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
-                    customColor={'rgba(255, 255, 255, 0.4)'}
-                  />
+                  <>
+                    <Typography
+                      value={'Search'}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                      customColor={'rgba(255, 255, 255, 0.4)'}
+                    />
+                  </>
                 )}
                 {
                   <>
@@ -376,20 +381,14 @@ const StyledBanner = styled.div`
   color: rgba(255, 255, 255, 0.8);
 `
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
-  position: fixed;
-  left: 50%;
-  z-index: 120;
-  bottom: 20px;
-  transform: translateX(-50%);
-
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
   padding: 0px 23px 0px 16px;
-  gap: 12px;
+  gap: 8px;
 
-  min-width: 360px;
-  width: 360px;
+  min-width: 180px;
+  width: 180px;
   height: 48px;
 
   background: rgba(0, 0, 0, 0.1);
@@ -479,7 +478,7 @@ export const StyledInput = styled.textarea<{ expanded: boolean }>`
 `
 const StyledInputCover = styled.div<{ expanded: boolean }>`
   display: none;
-  width: 600px;
+  width: 250px;
 
   ${props =>
     props.expanded &&
@@ -570,4 +569,7 @@ const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
 const StyledTypewriterWrapper = styled.div`
   width: 600px;
   padding-left: 2px;
+`
+const StyledIconWrapper = styled.div`
+  opacity: 0.6;
 `

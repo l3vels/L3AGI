@@ -23,13 +23,18 @@ import defaultAvatar from '../assets/images/defaultAvatar.png'
 
 import Settings from '@l3-lib/ui-core/dist/icons/Settings'
 import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
+import AvatarGenerator from './AvatarGenerator/AvatarGenerator'
+import React from 'react'
+import { AuthContext } from 'contexts'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
 
   const [logout] = useLogoutService()
   const navigate = useNavigate()
-  const userAccounts = null
+
+  const { user } = React.useContext(AuthContext)
+
   // const { data: userAccounts } = useUserAccountsService()
 
   const handleLogout = async () => {
@@ -48,34 +53,35 @@ const AvatarDropDown = () => {
   return (
     <StyledDropDownMenuRoot>
       <StyledDropDownMenuTrigger>
-        <Avatar size={Avatar.sizes.SMALL} src={defaultAvatar} type={Avatar.types.IMG} rectangle />
+        {/* <Avatar size={Avatar.sizes.SMALL} src={defaultAvatar} type={Avatar.types.IMG} rectangle /> */}
+        <AvatarGenerator name={user.name} size={40} />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
         {/* <StyledDropDownMenuItem onClick={() => navigate('/account')}>
           <img src={profileIcon} alt='profile' />
           {t('profile')}
         </StyledDropDownMenuItem> */}
-        {userAccounts && userAccounts.length > 0 && (
+        {/* {userAccounts && userAccounts.length > 0 && (
           <></>
-          // <Sub>
-          //   <DropdownMenuSubTrigger>
-          //     <DropdownMenuSubTriggerGroup>
-          //       <img src={teamIcon} alt='switch account' />
-          //       Switch account
-          //     </DropdownMenuSubTriggerGroup>
-          //     <ArrowRightSvg />
-          //   </DropdownMenuSubTrigger>
-          //   <Portal>
-          //     <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
-          //       {userList}
-          //       {/* <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
-          //     <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
-          //     <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
-          //     <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem> */}
-          //     </DropdownMenuDropdownMenuSubContent>
-          //   </Portal>
-          // </Sub>
-        )}
+          <Sub>
+            <DropdownMenuSubTrigger>
+              <DropdownMenuSubTriggerGroup>
+                <img src={teamIcon} alt='switch account' />
+                Switch account
+              </DropdownMenuSubTriggerGroup>
+              <ArrowRightSvg />
+            </DropdownMenuSubTrigger>
+            <Portal>
+              <DropdownMenuDropdownMenuSubContent sideOffset={2} alignOffset={-5}>
+                {userList}
+                <StyledDropDownMenuItem>Account +1</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +2</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +3</StyledDropDownMenuItem>
+              <StyledDropDownMenuItem>Account +4</StyledDropDownMenuItem>
+              </DropdownMenuDropdownMenuSubContent>
+            </Portal>
+          </Sub>
+        )} */}
         {/* <StyledDropDownMenuItem onClick={() => navigate('/teams')}>
           <img src={teamIcon} alt='team' />
           {t('Team')}
@@ -280,6 +286,7 @@ const DropdownMenuSubTriggerGroup = styled.div`
 
 const StyledDropDownMenuTrigger = styled(Trigger)`
   all: unset;
+  cursor: pointer;
   /* display: flex;
   align-items: center;
   gap: 10px;

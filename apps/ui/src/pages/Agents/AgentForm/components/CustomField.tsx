@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
@@ -27,16 +27,19 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
             customColor={'#FFF'}
           />
           {formik?.values[formikField]?.map((item: any, index: number) => (
-            <StyledCustomFieldWrapper key={index}>
-              <FormikTextField name={`${formikField}.${index}`} />
+            <>
+              <StyledCustomFieldWrapper key={index}>
+                <FormikTextField name={`${formikField}.${index}`} />
 
-              <IconButton
-                onClick={() => remove(index)}
-                icon={() => <Delete />}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-              />
-            </StyledCustomFieldWrapper>
+                <StyledButton
+                  onClick={() => remove(index)}
+                  kind={Button.kinds.TERTIARY}
+                  size={Button.sizes.SMALL}
+                >
+                  <Delete siz={50} />
+                </StyledButton>
+              </StyledCustomFieldWrapper>
+            </>
           ))}
 
           <StyledButtonWrapper>
@@ -69,4 +72,7 @@ const StyledCustomFieldWrapper = styled.div`
 `
 const StyledButtonWrapper = styled.div`
   width: fit-content;
+`
+const StyledButton = styled(Button)`
+  padding: 0 4px;
 `

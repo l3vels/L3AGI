@@ -48,6 +48,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
           <StyledIcon
             picked={!isChatOpen}
             onClick={() => {
+              if (!isChatOpen) return
               navigate(-1)
             }}
           >

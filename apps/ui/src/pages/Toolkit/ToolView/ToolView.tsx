@@ -19,7 +19,9 @@ import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
-  const { tool, formik, handleSubmit, isLoading } = useToolView({ toolSlug: toolSlug })
+  const { tool, formik, handleSubmit, isLoading } = useToolView({
+    toolSlug: toolSlug,
+  })
 
   const { closeModal } = useModal()
 
@@ -131,7 +133,7 @@ const StyledInnerWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  gap: 20px;
+  gap: 5px;
 `
 const StyledImg = styled.img`
   width: 48px;
@@ -150,6 +152,7 @@ const StyledMainTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 10px;
 
   width: 100%;

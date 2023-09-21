@@ -10,10 +10,11 @@ import Teams from '@l3-lib/ui-core/dist/icons/Teams'
 import Players from '@l3-lib/ui-core/dist/icons/Players'
 import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-import Logs from '@l3-lib/ui-core/dist/icons/Logs'
-import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
+import Value from '@l3-lib/ui-core/dist/icons/Value'
+import Add from '@l3-lib/ui-core/dist/icons/Add'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 import StarVector from 'assets/svgComponents/StarVector'
+import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
 
 export const defaultData = (path_id?: any) => {
   return [
@@ -32,7 +33,7 @@ export const defaultData = (path_id?: any) => {
       url: '/agents',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Players />,
+      icon: <Collection />,
     },
     {
       id: uuidv4(),
@@ -40,7 +41,11 @@ export const defaultData = (path_id?: any) => {
       url: '/datasources',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Collection />,
+      icon: (
+        <StyledValueIcon>
+          <Value />
+        </StyledValueIcon>
+      ),
     },
     {
       id: uuidv4(),
@@ -56,7 +61,7 @@ export const defaultData = (path_id?: any) => {
       url: '/toolkits',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Games />,
+      icon: <Add />,
     },
     // {
     //   id: uuidv4(),
@@ -73,7 +78,7 @@ export const defaultData = (path_id?: any) => {
       url: '/agents/create-agent',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Players />,
+      icon: <Collection />,
     },
 
     {
@@ -82,7 +87,11 @@ export const defaultData = (path_id?: any) => {
       url: '/datasources/create-datasource',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Collection />,
+      icon: (
+        <StyledValueIcon>
+          <Value />
+        </StyledValueIcon>
+      ),
     },
 
     {

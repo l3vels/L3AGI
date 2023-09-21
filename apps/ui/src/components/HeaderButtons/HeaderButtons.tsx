@@ -5,6 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
+import TwitterLogo from 'assets/tools/twitter.png'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -13,6 +14,19 @@ export const openLinkTab = (url: string) => {
 const HeaderButtons = () => {
   return (
     <StyledButtonsWrapper>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
+      >
+        <StyledInnerButtonWrapper>
+          <StyledImageWrapper>
+            <StyledImg src={TwitterLogo} customScale={1} />
+          </StyledImageWrapper>
+          <Typography value='Twitter' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+        </StyledInnerButtonWrapper>
+      </Button>
+
       <Button
         kind={Button.kinds.TERTIARY}
         size={Button.sizes.SMALL}
@@ -48,11 +62,17 @@ const StyledButtonsWrapper = styled.div`
 
   gap: 5px;
 `
-export const StyledImg = styled.img`
+export const StyledImg = styled.img<{ customScale?: number }>`
   width: 16px;
   height: 16px;
   object-fit: cover;
   transform: scale(1.4);
+
+  ${p =>
+    p.customScale &&
+    css`
+      transform: scale(${p.customScale});
+    `};
 `
 export const StyledImageWrapper = styled.div<{ secondary?: boolean }>`
   max-width: 20px;

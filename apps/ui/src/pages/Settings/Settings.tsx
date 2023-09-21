@@ -21,9 +21,11 @@ import { useSettings } from './useSettings'
 import { useModal } from 'hooks'
 
 const Settings = ({ isModal = false }: { isModal?: boolean }) => {
-  const { formik, isLoading, handleSubmit } = useSettings()
+  const { formik, isLoading, handleSubmit, configsData } = useSettings()
 
   const { closeModal } = useModal()
+
+  if (!configsData) return <div />
 
   return (
     <FormikProvider value={formik}>
