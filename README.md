@@ -152,16 +152,21 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
    ./setup.sh
    ```
 
-4. **Create `.env` file from `.env.example` in root directory**
+4. **Create `.env` file from `.env.example` in `apps/server` directory**
 
    ```bash
-   cp .env.example .env
+   cp apps/server/.env.example apps/server/.env
    ```
 
    - **Configure `Azure Web PubSub` using [our guide here](docs/azure.md)**
-   - **To configure `Zep Memory`, please see [quick start on Zep](https://docs.getzep.com/deployment/quickstart/)**
 
-5. 🐳 **Run Docker Compose:**
+5. **Create `.env` file from `.env.example` in `zep` directory**
+
+   ```bash
+    cp zep/.env.example zep/.env
+   ```
+
+6. 🐳 **Run Docker Compose:**
 
    ```bash
    docker-compose up --build
@@ -190,6 +195,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-6f7f6f?style=for-the-badge&logo=SQLAlchemy&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-b7d019?style=for-the-badge&logo=LangChain&logoColor=white)
+![Zep](https://img.shields.io/badge/Zep-7e56c2?style=for-the-badge&logo=zep&logoColor=white)
 ![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -218,6 +224,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 - Check the logs for any service-specific errors.
 
 ## 🚧 In Progress!
+
 This initiative is currently in its developmental phase and might have some inconsistencies. We value your patience and comprehension. Should you face any challenges, kindly consult our list of existing issues first. If you can't find a relevant one, please open a new issue explaining the concern you faced. Your backing means a lot to us! Thank you!
 
 ## Contributors
