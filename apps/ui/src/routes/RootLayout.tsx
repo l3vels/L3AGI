@@ -41,6 +41,13 @@ const RootLayout = () => {
 export default RootLayout
 
 const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
+  position: fixed;
+  /* left: 50%; */
+  z-index: 120;
+  bottom: 20px;
+  right: 30px;
+  /* transform: translateX(-50%); */
+
   ${p =>
     p.isHidden &&
     css`
