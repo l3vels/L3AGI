@@ -121,7 +121,7 @@ const StyledIconWrapper = styled.div`
   /* margin-bottom: 10px; */
   margin-top: 10px;
 `
-const StyledValueIcon = styled.div`
+export const StyledValueIcon = styled.div`
   color: transparent;
   background: transparent;
 `
