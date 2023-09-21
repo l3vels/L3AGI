@@ -152,19 +152,9 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
    ./setup.sh
    ```
 
-4. **Create `.env` file from `.env.example` in `apps/server` directory**
-
-   ```bash
-   cp apps/server/.env.example apps/server/.env
-   ```
-
+4. **Create `.env` file from `.env.example` in `apps/server` directory and configure**
    - **Configure `Azure Web PubSub` using [our guide here](docs/azure.md)**
-
-5. **Create `.env` file from `.env.example` in `zep` directory**
-
-   ```bash
-    cp zep/.env.example zep/.env
-   ```
+5. **Create `.env` file from `.env.example` in `zep` directory and configure**
 
 6. 🐳 **Run Docker Compose:**
 
