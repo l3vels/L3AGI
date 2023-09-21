@@ -29,10 +29,69 @@ services:
       POSTGRES_DB: l3-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      PGPORT: 5434
     ports:
-      - "5434:5432"
+      - "5434:5434"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - l3_db_data:/var/lib/postgresql/data
+
+  zep_db:
+    image: ghcr.io/getzep/postgres:latest
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - zep_db_data:/var/lib/postgresql/data
+  zep_nlp:
+    image: ghcr.io/getzep/zep-nlp-server:latest
+    env_file:
+      - ./zep/.env
+    restart: on-failure
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/5557' || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+    ports:
+      - "5557:5557"
+  zep:
+    image: ghcr.io/getzep/zep:latest
+    restart: on-failure
+    depends_on:
+      zep_db:
+        condition: service_healthy
+      zep_nlp:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./zep/.env:/app/.env
+      - ./zep/config.yaml:/app/config.yaml
+    environment:
+      - ZEP_STORE_POSTGRES_DSN=postgres://postgres:postgres@zep_db:5432/postgres?sslmode=disable
+      - ZEP_NLP_SERVER_URL=http://zep_nlp:5557
+      - ZEP_EXTRACTORS_DOCUMENTS_EMBEDDINGS_SERVICE=openai
+      - ZEP_EXTRACTORS_DOCUMENTS_EMBEDDINGS_DIMENSIONS=1536
+      - ZEP_EXTRACTORS_MESSAGES_EMBEDDINGS_SERVICE=openai
+      - ZEP_EXTRACTORS_MESSAGES_EMBEDDINGS_DIMENSIONS=1536
+    env_file:
+      - ./zep/.env
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/8000' || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 volumes:
-  postgres_data:
+  l3_db_data:
+  zep_db_data:

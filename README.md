@@ -152,10 +152,10 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
    ./setup.sh
    ```
 
-4. **Create `.env` file from `.env.example` in root directory**
+4. **Create `.env` file from `.env.example` in `apps/server` directory**
 
    ```bash
-   cp .env.example .env
+   cp apps/server/.env.example apps/server/.env
    ```
 
    - **Configure `Azure Web PubSub` using [our guide here](docs/azure.md)**
@@ -218,6 +218,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 - Check the logs for any service-specific errors.
 
 ## 🚧 In Progress!
+
 This initiative is currently in its developmental phase and might have some inconsistencies. We value your patience and comprehension. Should you face any challenges, kindly consult our list of existing issues first. If you can't find a relevant one, please open a new issue explaining the concern you faced. Your backing means a lot to us! Thank you!
 
 ## Contributors

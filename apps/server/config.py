@@ -19,7 +19,7 @@ class Config:
     AZURE_PUBSUB_HUB_NAME = os.environ.get("AZURE_PUBSUB_HUB_NAME")
 
     ZEP_API_URL = os.environ.get("ZEP_API_URL")
-    ZEP_API_KEY = os.environ.get("ZEP_API_KEY")
+    ZEP_API_KEY = os.environ.get("ZEP_API_KEY") or None
 
     JWT_EXPIRY = os.environ.get("JWT_EXPIRY")
     JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
