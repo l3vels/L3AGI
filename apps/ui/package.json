@@ -9,7 +9,7 @@
     "@emotion/styled": "^11.10.4",
     "@habx/apollo-multi-endpoint-link": "^2.4.0",
     "@hookform/resolvers": "^3.0.0",
-    "@l3-lib/ui-core": "^0.0.57",
+    "@l3-lib/ui-core": "^0.0.58",
     "@mui/material": "^5.10.7",
     "@originjs/vite-plugin-federation": "^1.2.3",
     "@radix-ui/react-dropdown-menu": "^1.0.0",
