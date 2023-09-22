@@ -127,6 +127,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 <br>
 
 ## ⚡ Quick Start
+[![Watch the video](https://img.youtube.com/vi/-dFJiypmCJA/maxresdefault.jpg)](https://youtu.be/-dFJiypmCJA)
 
 ### Pre-requisites
 
