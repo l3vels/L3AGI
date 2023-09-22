@@ -131,18 +131,31 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         List[Object]: List of tools associated with the account.
     """
 
-    return [{
+    return [
+            {
         "is_public": True,
         "is_active": True,
-        "name": "Plan and Execute",
-        "description": "Plan and Execute",
-        "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE,
-        "fields": [],
+        "name": "Debates",
+        "description": "This example shows how to simulate multi-agent dialogues where agents have access to tools.",
+        "team_type": TeamOfAgentsType.DEBATES,
+        "fields": [
+            {
+                "label": "Word limit",
+                "key": "word_limit",
+                "type": "int",
+                "is_required": True,
+                "is_s=ecret": False,
+                "default": 30,
+            }
+        ],
         "agents": [
-            {"id": 1, "role": "Planner"},
-            {"id": 2, "role": "Executor"}
+            {"id": 1, "role": "Debater"},
+            {"id": 2, "role": "Debater"},
+            {"id": 3, "role": "Debater"},
+            {"id": 4, "role": "Debater"},
+            {"id": 5, "role": "Debater"},
         ]
-    },
+    },        
     {
         "is_public": True,
         "is_active": True,
@@ -179,27 +192,16 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
     {
         "is_public": True,
         "is_active": True,
-        "name": "Debates",
-        "description": "This example shows how to simulate multi-agent dialogues where agents have access to tools.",
-        "team_type": TeamOfAgentsType.DEBATES,
-        "fields": [
-            {
-                "label": "Word limit",
-                "key": "word_limit",
-                "type": "int",
-                "is_required": True,
-                "is_s=ecret": False,
-                "default": 30,
-            }
-        ],
+        "name": "Plan and Execute",
+        "description": "Plan and Execute",
+        "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE,
+        "fields": [],
         "agents": [
-            {"id": 1, "role": "Debater"},
-            {"id": 2, "role": "Debater"},
-            {"id": 3, "role": "Debater"},
-            {"id": 4, "role": "Debater"},
-            {"id": 5, "role": "Debater"},
+            {"id": 1, "role": "Planner"},
+            {"id": 2, "role": "Executor"}
         ]
     },
+
     {
         "is_public": True,
         "is_active": False,
