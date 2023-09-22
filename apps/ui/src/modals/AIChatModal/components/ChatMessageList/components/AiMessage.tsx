@@ -62,7 +62,7 @@ const AiMessage = ({
           <StyledMessageTop>
             <StyledMessageInfo>
               <Typography
-                value={agentName && teamName ? `${agentName} (${teamName})` : name}
+                value={agentName && teamName ? agentName : name}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 customColor={'#FFF'}
