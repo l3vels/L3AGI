@@ -1,7 +1,6 @@
 import BackButton from 'components/BackButton'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
-  StyledInnerButtonWrapper,
   StyledInnerWrapper,
   StyledLeftColumn,
   StyledRightColumn,
@@ -12,28 +11,37 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import Button from '@l3-lib/ui-core/dist/Button'
-
-import Download from '@l3-lib/ui-core/dist/icons/Download'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
+import React from 'react'
+import { AuthContext } from 'contexts'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
+  const { user } = React.useContext(AuthContext)
+
+  const navigate = useNavigate()
+
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
 
   if (!data && !teamOfAgentsData) return <div />
 
-  const { team_agents } = data || teamOfAgentsData
+  const { team_agents, created_by, id } = data || teamOfAgentsData
+
+  const isCreator = user?.id === created_by
+
+  const handleEdit = () => {
+    navigate(`/team-of-agents/${id}/edit-team`)
+  }
 
   return (
     <StyledSectionWrapper>
@@ -59,22 +67,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
       <ComponentsWrapper noPadding hideBox={teamOfAgentsData}>
         <StyledInnerWrapper noPadding={teamOfAgentsData}>
           <StyledLeftColumn>
-            <TeamOfAgentsDetailsBox
-              teamData={data || teamOfAgentsData}
-              customButton={
-                !data && (
-                  <Button
-                    size={Button.sizes.SMALL}
-                    // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
-                  >
-                    <StyledInnerButtonWrapper>
-                      <Download size={28} />
-                      Add
-                    </StyledInnerButtonWrapper>
-                  </Button>
-                )
-              }
-            />
+            <TeamOfAgentsDetailsBox teamData={data || teamOfAgentsData} />
           </StyledLeftColumn>
 
           <StyledRightColumn>
