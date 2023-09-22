@@ -1,10 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import styled, { css } from 'styled-components'
-
-import Button from '@l3-lib/ui-core/dist/Button'
-
-import Download from '@l3-lib/ui-core/dist/icons/Download'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
@@ -20,21 +16,17 @@ import {
 import BackButton from 'components/BackButton'
 import AgentToolkits from './components/AgentToolkits'
 import AgentDatasources from './components/AgentDatasources'
-import { useModal } from 'hooks'
+
 import AgentVIewDetailBox from './components/AgentViewDetailBox'
 
 const AgentView = ({ agentData }: { agentData?: any }) => {
-  const navigate = useNavigate()
-
-  const { closeModal } = useModal()
-
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
   if (!agentById && !agentData) return <div />
 
-  const { agent, configs } = agentById || agentData
+  const { configs } = agentById || agentData
 
   const { tools, goals, constraints, instructions, datasources, suggestions, greeting } = configs
 
@@ -62,27 +54,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
       <ComponentsWrapper noPadding hideBox={agentData}>
         <StyledInnerWrapper noPadding={agentData}>
           <StyledLeftColumn>
-            <AgentVIewDetailBox
-              agentData={agentById || agentData}
-              customButton={
-                !agentById && (
-                  <Button
-                    size={Button.sizes.SMALL}
-                    onClick={() => {
-                      if (agentData) {
-                        closeModal('agent-view-modal')
-                      }
-                      navigate(`/agents/create-agent?agentId=${agent.id}`)
-                    }}
-                  >
-                    <StyledInnerButtonWrapper>
-                      <Download size={28} />
-                      Add
-                    </StyledInnerButtonWrapper>
-                  </Button>
-                )
-              }
-            />
+            <AgentVIewDetailBox agentData={agentById || agentData} />
           </StyledLeftColumn>
 
           <StyledRightColumn>
