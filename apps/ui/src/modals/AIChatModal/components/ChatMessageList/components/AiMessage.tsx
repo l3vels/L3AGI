@@ -56,7 +56,7 @@ const AiMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={name} size={50} />
+          <AvatarGenerator name={name} size={50} avatar={avatarImg} />
         </StyledAvatarWrapper>
         <StyledMainContent>
           <StyledMessageTop>
