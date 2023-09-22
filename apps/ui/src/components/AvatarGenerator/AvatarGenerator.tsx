@@ -39,4 +39,6 @@ export default AvatarGenerator
 
 const StyledAvatar = styled(Avatar)`
   font-family: unset !important;
+
+  object-fit: cover !important;
 `
