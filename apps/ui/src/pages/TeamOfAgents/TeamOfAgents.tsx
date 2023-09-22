@@ -55,6 +55,7 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
                 onChatClick={() => navigate(`/copilot?team=${teamOfAgents.id}`)}
                 creator={teamOfAgents.creator}
                 avatar={teamOfAgents.avatar}
+                teamType={teamOfAgents.team_type}
               />
             )
           })}
