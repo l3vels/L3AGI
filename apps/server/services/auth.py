@@ -34,7 +34,7 @@ def register(input: RegisterInput):
         raise UserException("User already exists!")
     
     # Create a new user
-    user_input = UserInput(name=input.name, email=input.email, password=input.password)
+    user_input = UserInput(name=input.name, email=input.email, password=input.password, avatar=input.avatar)
     user = UserModel.create_user(db=db, user=user_input)
     
     # Create a new account

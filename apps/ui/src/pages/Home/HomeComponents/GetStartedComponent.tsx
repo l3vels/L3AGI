@@ -32,7 +32,7 @@ const GetStartedComponent = () => {
       />
       <GetStartedCard
         subTitle={'Learn about'}
-        title={'Datasources'}
+        title={'Data sources'}
         image={cardBg4}
         bgColor={'red'}
         link={import.meta.env.REACT_APP_DATASOURCES_LINK}

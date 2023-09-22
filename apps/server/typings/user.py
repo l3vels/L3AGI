@@ -5,6 +5,7 @@ class UserInput(BaseModel):
     name: Optional[str]
     email: Optional[str]
     password: Optional[str]
+    avatar: Optional[str]
 
 class UserOutput(BaseModel):
     id: UUID4
