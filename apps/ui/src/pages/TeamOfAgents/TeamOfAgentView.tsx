@@ -11,7 +11,7 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 import styled from 'styled-components'
@@ -22,26 +22,14 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
-import React from 'react'
-import { AuthContext } from 'contexts'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
-  const { user } = React.useContext(AuthContext)
-
-  const navigate = useNavigate()
-
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
 
   if (!data && !teamOfAgentsData) return <div />
 
-  const { team_agents, created_by, id } = data || teamOfAgentsData
-
-  const isCreator = user?.id === created_by
-
-  const handleEdit = () => {
-    navigate(`/team-of-agents/${id}/edit-team`)
-  }
+  const { team_agents } = data || teamOfAgentsData
 
   return (
     <StyledSectionWrapper>

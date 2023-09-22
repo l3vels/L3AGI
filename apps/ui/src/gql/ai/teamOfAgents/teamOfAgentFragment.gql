@@ -19,10 +19,6 @@ fragment TeamOfAgentFragment on TeamOfAgents {
   team_agents {
     id
     role
-    agent {
-      id
-      name
-      role
-    }
+    agent
   }
 }
