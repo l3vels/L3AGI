@@ -31,7 +31,7 @@ class AgentConfigModel(BaseModel):
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
     
     __table_args__ = (Index('ix_agent_config_model_agent_id_key', 'agent_id', 'key'),)
 

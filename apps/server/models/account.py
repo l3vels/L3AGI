@@ -25,7 +25,7 @@ class AccountModel(BaseModel):
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
     
     
     # user_accounts = relationship("UserAccountModel", back_populates="account")

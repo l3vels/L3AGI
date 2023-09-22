@@ -46,15 +46,15 @@ class AgentModel(BaseModel):
     account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True, index=True)    
     is_public = Column(Boolean, default=False, index=True)
     
-    configs = relationship("AgentConfigModel", back_populates="agent", cascade="all, delete", lazy='select')
-    chat_messages = relationship("ChatMessage", back_populates="agent", cascade="all, delete", lazy='select')
-    team_agents = relationship("TeamAgentModel", back_populates="agent", cascade="all, delete", lazy='select')
-    account = relationship("AccountModel", cascade="all, delete", lazy='select')
+    configs = relationship("AgentConfigModel", back_populates="agent", lazy='select')
+    chat_messages = relationship("ChatMessage", back_populates="agent", lazy='select')
+    team_agents = relationship("TeamAgentModel", back_populates="agent", lazy='select')
+    account = relationship("AccountModel", lazy='select')
     
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
     
     # Define indexes
     __table_args__ = (
