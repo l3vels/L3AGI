@@ -66,7 +66,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <StyledSourceTypeWrapper>
           <Typography
-            value='Team Type'
+            value='Type'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
             customColor={'#FFF'}

@@ -98,7 +98,7 @@ const TeamOfAgentCard = ({
         {teamType && (
           <StyledRowWrapper>
             <Typography
-              value={'Team Type'}
+              value={'Type'}
               type={Typography.types.P}
               size={Typography.sizes.md}
               customColor={'#FFF'}
