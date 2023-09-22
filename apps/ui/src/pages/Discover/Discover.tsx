@@ -68,6 +68,7 @@ const Discover = () => {
                     onChatClick={() => navigate(`/chat/history?agent=${agent.id}`)}
                     headerTag={agent.role}
                     creator={agent.creator}
+                    avatar={agent.avatar}
                   />
                 )
               })}

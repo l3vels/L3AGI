@@ -55,6 +55,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
                 headerTag={agent.role}
                 onChatClick={() => navigate(`/copilot?agent=${agent.id}`)}
                 creator={agent.creator}
+                avatar={agent.avatar}
               />
             )
           })}

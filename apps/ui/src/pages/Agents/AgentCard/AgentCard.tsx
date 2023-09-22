@@ -24,6 +24,7 @@ type AgentCardProps = {
   onChatClick?: () => void
   onCreateClick?: () => void
   creator?: any
+  avatar?: string
 }
 
 const AgentCard = ({
@@ -37,6 +38,7 @@ const AgentCard = ({
   onChatClick,
   onCreateClick,
   creator,
+  avatar,
 }: AgentCardProps) => {
   let shortDescription = description
   if (description.length > 85) {
@@ -66,7 +68,7 @@ const AgentCard = ({
       </StyledCardHeader>
       <StyledCardBody>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={name} size={50} />
+          <AvatarGenerator name={name} size={50} avatar={avatar} />
           {onChatClick && (
             <StyledChatButton className='chatButton'>
               <Button

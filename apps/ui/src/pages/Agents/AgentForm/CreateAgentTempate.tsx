@@ -79,6 +79,7 @@ const CreateAgentTemplate = () => {
                     navigate(`/agents/create-agent?agentId=${agent.id}`)
                   }}
                   creator={agent.creator}
+                  avatar={agent.avatar}
                 />
               )
             })}
