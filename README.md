@@ -64,6 +64,10 @@ Of course! Here's the revised "Features" section with the requested emojis and i
 
 ## ✨ Features
 
+<a href="https://youtu.be/-dFJiypmCJA" target="_blank">
+    <img src="docs/assets/playYTFeatures.png" alt="Watch the video">
+</a>
+
 L3AGI offers a robust set of functionalities that empower you to design, supervise, and execute both autonomous AI agents and Teams of Agents. Here's what sets us apart:
 
 - **🤖 Team Of Agents**: L3AGI pioneers in facilitating the creation and management of Teams of AI Agents. These are groups of individual AI agents that collaborate seamlessly for more complex tasks and simulations.
@@ -128,7 +132,9 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 
 ## ⚡ Quick Start
 
-[![Watch the video](docs/assets/quickstart.jpg)](https://youtu.be/-dFJiypmCJA)
+<a href="https://youtu.be/-dFJiypmCJA" target="_blank">
+    <img src="docs/assets/quickstart.png" alt="Watch the video">
+</a>
 
 ### Pre-requisites
 
