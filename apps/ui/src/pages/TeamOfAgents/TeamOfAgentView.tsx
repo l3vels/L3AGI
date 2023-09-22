@@ -72,7 +72,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
                 return (
                   <StyledAgent key={index}>
-                    <AvatarGenerator name={agent.name} size={40} />
+                    <AvatarGenerator name={agent.name} size={40} avatar={agent.avatar} />
 
                     <StyledMainTextWrapper>
                       <Typography

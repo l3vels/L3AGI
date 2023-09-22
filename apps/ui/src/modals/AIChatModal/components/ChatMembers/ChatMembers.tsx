@@ -66,7 +66,11 @@ const ChatMembers = ({
 
                 <>
                   <StyledAgentWrapper>
-                    <AvatarGenerator name={agentById?.agent?.name} size={30} />
+                    <AvatarGenerator
+                      name={agentById?.agent?.name}
+                      size={30}
+                      avatar={agentById?.agent.avatar}
+                    />
                     <MemberText name={agentById?.agent?.name} role={agentById?.agent?.role} />
 
                     <StyledIconButtonWrapper className='hiddenButton'>
@@ -142,7 +146,11 @@ const ChatMembers = ({
 
                     return (
                       <StyledAgentWrapper key={index}>
-                        <AvatarGenerator name={agentData.agent.name} size={30} />
+                        <AvatarGenerator
+                          name={agentData.agent.name}
+                          size={30}
+                          avatar={agentData.agent.avatar}
+                        />
 
                         <MemberText name={agentData.agent.name} role={agentData?.agent?.role} />
 

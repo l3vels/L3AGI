@@ -12,8 +12,6 @@ import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
-import l3Logo from 'assets/images/l3_logo.png'
-
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 type TeamOfAgentCardProps = {
@@ -89,7 +87,7 @@ const TeamOfAgentCard = ({
 
                 return (
                   <StyledAvatarWrapper key={id}>
-                    <AvatarGenerator name={agent.name} size={25} />
+                    <AvatarGenerator name={agent.name} size={25} avatar={agent.avatar} />
                   </StyledAvatarWrapper>
                 )
               })}
