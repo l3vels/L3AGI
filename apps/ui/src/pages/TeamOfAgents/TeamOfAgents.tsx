@@ -54,6 +54,8 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
                 onChatClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                 creator={teamOfAgents.creator}
+                avatar={teamOfAgents.avatar}
+                teamType={teamOfAgents.team_type}
               />
             )
           })}

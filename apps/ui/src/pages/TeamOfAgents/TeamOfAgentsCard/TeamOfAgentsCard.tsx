@@ -25,6 +25,8 @@ type TeamOfAgentCardProps = {
   onChatClick?: () => void
   onViewClick?: () => void
   creator?: any
+  avatar?: string
+  teamType?: string
 }
 
 const TeamOfAgentCard = ({
@@ -36,6 +38,8 @@ const TeamOfAgentCard = ({
   onChatClick,
   onViewClick,
   creator,
+  avatar,
+  teamType,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description || ''
   if (description.length > 150) {
@@ -45,7 +49,7 @@ const TeamOfAgentCard = ({
   return (
     <StyledCard>
       <StyledMainAvatarWrapper>
-        <AvatarGenerator name={name} size={28} isRound={false} />
+        <AvatarGenerator name={name} size={28} isRound={false} avatar={avatar} />
         <StyledCreatorWrapper>
           <AvatarGenerator
             name={creator.name}
@@ -93,20 +97,22 @@ const TeamOfAgentCard = ({
           </StyledRowWrapper>
         )}
 
-        {/* <StyledRowWrapper>
-          <Typography
-            value={'Model'}
-            type={Typography.types.P}
-            size={Typography.sizes.md}
-            customColor={'#FFF'}
-          />
-          <Typography
-            value={'GPT-4 OpenAI'}
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255,0.8)'}
-          />
-        </StyledRowWrapper> */}
+        {teamType && (
+          <StyledRowWrapper>
+            <Typography
+              value={'Team Type'}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
+            <Typography
+              value={teamType}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255,255,255,0.8)'}
+            />
+          </StyledRowWrapper>
+        )}
       </StyledBody>
       <StyledCardFooter>
         <StyledButtonsWrapper>
@@ -172,8 +178,8 @@ const StyledCard = styled.div`
   position: relative;
   width: 320px;
   min-width: 320px;
-  height: 340px;
-  min-height: 340px;
+  height: 370px;
+  min-height: 370px;
 
   padding: 20px 25px;
   /* padding-top: 30px; */
