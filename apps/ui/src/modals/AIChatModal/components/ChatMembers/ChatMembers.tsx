@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
@@ -8,13 +9,18 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
+import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import AgentViewDetailBox from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDetailsBox'
 
+import { AuthContext } from 'contexts'
+
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import { useModal } from 'hooks'
+import MemberText from './components/MemberText'
 
 const ChatMembers = ({
   agentById,
@@ -25,11 +31,21 @@ const ChatMembers = ({
   teamOfAgents?: any
   userName?: string
 }) => {
+  const { user } = React.useContext(AuthContext)
+
   const [activeTab, setActiveTab] = useState(0)
+
+  const navigate = useNavigate()
 
   const { openModal } = useModal()
 
   if (agentById) {
+    const isCreator = user?.id === agentById.agent?.created_by
+
+    const handleEdit = () => {
+      navigate(`/agents/${agentById.agent?.id}/edit-agent`)
+    }
+
     return (
       <StyledRoot>
         <TabList size='small'>
@@ -44,14 +60,18 @@ const ChatMembers = ({
                 {userName && (
                   <StyledAgentWrapper>
                     <AvatarGenerator name={userName} size={30} />
-                    {userName}
+                    <MemberText name={userName} />
                   </StyledAgentWrapper>
                 )}
 
                 <>
                   <StyledAgentWrapper>
-                    <AvatarGenerator name={agentById?.agent?.name} size={30} />
-                    {agentById?.agent?.name}
+                    <AvatarGenerator
+                      name={agentById?.agent?.name}
+                      size={30}
+                      avatar={agentById?.agent.avatar}
+                    />
+                    <MemberText name={agentById?.agent?.name} role={agentById?.agent?.role} />
 
                     <StyledIconButtonWrapper className='hiddenButton'>
                       <IconButton
@@ -72,6 +92,16 @@ const ChatMembers = ({
                         kind={IconButton.kinds.TERTIARY}
                         // ariaLabel='View'
                       />
+
+                      {isCreator && (
+                        <IconButton
+                          onClick={handleEdit}
+                          icon={() => <Edit />}
+                          size={IconButton.sizes.SMALL}
+                          kind={IconButton.kinds.TERTIARY}
+                          // ariaLabel='Edit'
+                        />
+                      )}
                     </StyledIconButtonWrapper>
                   </StyledAgentWrapper>
                 </>
@@ -102,16 +132,27 @@ const ChatMembers = ({
                 {userName && (
                   <StyledAgentWrapper>
                     <AvatarGenerator name={userName} size={30} />
-                    {userName}
+                    <MemberText name={userName} />
                   </StyledAgentWrapper>
                 )}
 
                 {teamOfAgents &&
                   teamOfAgents.team_agents?.map((agentData: any, index: number) => {
+                    const handleEdit = () => {
+                      navigate(`/agents/${agentData.agent?.id}/edit-agent`)
+                    }
+
+                    const isCreator = user?.id === agentData.agent?.created_by
+
                     return (
                       <StyledAgentWrapper key={index}>
-                        <AvatarGenerator name={agentData.agent.name} size={30} />
-                        {agentData.agent.name}
+                        <AvatarGenerator
+                          name={agentData.agent.name}
+                          size={30}
+                          avatar={agentData.agent.avatar}
+                        />
+
+                        <MemberText name={agentData.agent.name} role={agentData?.agent?.role} />
 
                         <StyledIconButtonWrapper className='hiddenButton'>
                           <IconButton
@@ -143,6 +184,16 @@ const ChatMembers = ({
                             kind={IconButton.kinds.TERTIARY}
                             // ariaLabel='View'
                           />
+
+                          {isCreator && (
+                            <IconButton
+                              onClick={handleEdit}
+                              icon={() => <Edit />}
+                              size={IconButton.sizes.SMALL}
+                              kind={IconButton.kinds.TERTIARY}
+                              // ariaLabel='Edit'
+                            />
+                          )}
                         </StyledIconButtonWrapper>
                       </StyledAgentWrapper>
                     )
@@ -202,4 +253,7 @@ const StyledIconButtonWrapper = styled.div`
 
   opacity: 0;
   /* transition: opacity 300ms; */
+
+  display: flex;
+  align-items: center;
 `

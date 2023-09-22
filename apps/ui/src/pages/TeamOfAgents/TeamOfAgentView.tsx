@@ -1,7 +1,6 @@
 import BackButton from 'components/BackButton'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
-  StyledInnerButtonWrapper,
   StyledInnerWrapper,
   StyledLeftColumn,
   StyledRightColumn,
@@ -19,9 +18,6 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import Button from '@l3-lib/ui-core/dist/Button'
-
-import Download from '@l3-lib/ui-core/dist/icons/Download'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
@@ -59,22 +55,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
       <ComponentsWrapper noPadding hideBox={teamOfAgentsData}>
         <StyledInnerWrapper noPadding={teamOfAgentsData}>
           <StyledLeftColumn>
-            <TeamOfAgentsDetailsBox
-              teamData={data || teamOfAgentsData}
-              customButton={
-                !data && (
-                  <Button
-                    size={Button.sizes.SMALL}
-                    // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
-                  >
-                    <StyledInnerButtonWrapper>
-                      <Download size={28} />
-                      Add
-                    </StyledInnerButtonWrapper>
-                  </Button>
-                )
-              }
-            />
+            <TeamOfAgentsDetailsBox teamData={data || teamOfAgentsData} />
           </StyledLeftColumn>
 
           <StyledRightColumn>
@@ -91,7 +72,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
                 return (
                   <StyledAgent key={index}>
-                    <AvatarGenerator name={agent.name} size={40} />
+                    <AvatarGenerator name={agent.name} size={40} avatar={agent.avatar} />
 
                     <StyledMainTextWrapper>
                       <Typography

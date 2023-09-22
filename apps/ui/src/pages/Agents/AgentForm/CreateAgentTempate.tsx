@@ -1,10 +1,5 @@
-import { FormikProvider } from 'formik'
-
 import { useAgents } from '../useAgents'
-import AgentForm from './AgentForm'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import {

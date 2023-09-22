@@ -71,5 +71,5 @@ const StyledLoginWrapper = styled.div`
   gap: 20px;
 `
 const StyledSpace = styled.div`
-  height: 200px;
+  height: 50px;
 `

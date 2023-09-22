@@ -1,29 +1,62 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TagsRow from './TagsRow'
 
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+
+import Download from '@l3-lib/ui-core/dist/icons/Download'
+
+import { useNavigate } from 'react-router-dom'
+import { useModal } from 'hooks'
+import { AuthContext } from 'contexts'
+
 type AgentViewDetailBoxProps = {
   agentData: any
-  customButton?: any
 }
 
-const AgentVIewDetailBox = ({ agentData, customButton }: AgentViewDetailBoxProps) => {
+const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
+  const { user } = React.useContext(AuthContext)
+
+  const navigate = useNavigate()
+  const { closeModal } = useModal()
+
   const { agent, configs } = agentData
 
   const { name, description, role, creator } = agent
 
   const { model_version, model_provider, temperature } = configs
 
+  const isCreator = user?.id === agent?.created_by
+
+  const handleEdit = () => {
+    closeModal('agent-view-modal')
+    navigate(`/agents/${agent?.id}/edit-agent`)
+  }
+
   return (
     <StyledDetailsBox>
       <StyledWrapper>
-        <Typography
-          value={name}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-          customColor={'#FFF'}
-        />
+        <StyledNameWrapper>
+          <Typography
+            value={name}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+          {isCreator && (
+            <IconButton
+              onClick={handleEdit}
+              icon={() => <Edit />}
+              size={IconButton.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              ariaLabel='Edit'
+            />
+          )}
+        </StyledNameWrapper>
         {creator && (
           <Typography
             value={`By ${creator.name}`}
@@ -32,7 +65,22 @@ const AgentVIewDetailBox = ({ agentData, customButton }: AgentViewDetailBoxProps
             customColor={'rgba(255,255,255,0.6)'}
           />
         )}
-        <div>{customButton}</div>
+        {!isCreator && (
+          <div>
+            <Button
+              size={Button.sizes.SMALL}
+              onClick={() => {
+                closeModal('agent-view-modal')
+                navigate(`/agents/create-agent?agentId=${agent.id}`)
+              }}
+            >
+              <StyledInnerButtonWrapper>
+                <Download size={28} />
+                Add
+              </StyledInnerButtonWrapper>
+            </Button>
+          </div>
+        )}
       </StyledWrapper>
 
       {description && (
@@ -100,4 +148,11 @@ export const StyledInnerButtonWrapper = styled.div`
   align-items: flex-end;
   justify-content: center;
   padding-right: 5px;
+`
+export const StyledNameWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  gap: 5px;
 `
