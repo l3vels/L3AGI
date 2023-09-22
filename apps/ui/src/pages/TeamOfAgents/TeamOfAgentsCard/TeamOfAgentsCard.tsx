@@ -25,6 +25,7 @@ type TeamOfAgentCardProps = {
   onChatClick?: () => void
   onViewClick?: () => void
   creator?: any
+  avatar?: string
 }
 
 const TeamOfAgentCard = ({
@@ -36,6 +37,7 @@ const TeamOfAgentCard = ({
   onChatClick,
   onViewClick,
   creator,
+  avatar,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description || ''
   if (description.length > 150) {
@@ -45,7 +47,7 @@ const TeamOfAgentCard = ({
   return (
     <StyledCard>
       <StyledMainAvatarWrapper>
-        <AvatarGenerator name={name} size={28} isRound={false} />
+        <AvatarGenerator name={name} size={28} isRound={false} avatar={avatar} />
         <StyledCreatorWrapper>
           <AvatarGenerator
             name={creator.name}
