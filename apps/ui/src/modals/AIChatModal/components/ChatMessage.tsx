@@ -138,11 +138,11 @@ const StyledInnerGroupHeader = styled.div`
 `
 
 const StyledVideo = styled.video`
-  -webkit-clip-path: url(#my-clip-path);
-  clip-path: url(#my-clip-path);
-
-  width: 48px;
-  height: 48px;
+  /* -webkit-clip-path: url(#my-clip-path);
+  clip-path: url(#my-clip-path); */
+  border-radius: 100px;
+  width: 50px;
+  height: 50px;
   margin-left: -6px;
   background: #000;
 `

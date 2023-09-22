@@ -57,6 +57,7 @@ const ChatMessageListV2 = ({
       username: chat.message.data.additional_kwargs.name,
       agentName: chat.agent?.name,
       teamName: chat.team?.name,
+      avatar: chat?.agent?.avatar,
     }
   })
 
@@ -211,12 +212,13 @@ const ChatMessageListV2 = ({
                 <AiMessage
                   agentName={chat.agentName}
                   teamName={chat.teamName}
-                  avatarImg={l3}
+                  avatarImg={chat.avatar}
                   messageDate={chat.date}
                   messageText={chat.message}
                   thoughts={chat.thoughts}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
+
                   // onReplyClick={
                   //   chat.isGreeting
                   //     ? undefined
