@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
@@ -7,6 +8,8 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
+import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
@@ -27,9 +30,15 @@ const ChatMembers = ({
 }) => {
   const [activeTab, setActiveTab] = useState(0)
 
+  const navigate = useNavigate()
+
   const { openModal } = useModal()
 
   if (agentById) {
+    const handleEdit = () => {
+      navigate(`/agents/${agentById.agent?.id}/edit-agent`)
+    }
+
     return (
       <StyledRoot>
         <TabList size='small'>
@@ -72,6 +81,14 @@ const ChatMembers = ({
                         kind={IconButton.kinds.TERTIARY}
                         // ariaLabel='View'
                       />
+
+                      <IconButton
+                        onClick={handleEdit}
+                        icon={() => <Edit />}
+                        size={IconButton.sizes.SMALL}
+                        kind={IconButton.kinds.TERTIARY}
+                        // ariaLabel='Edit'
+                      />
                     </StyledIconButtonWrapper>
                   </StyledAgentWrapper>
                 </>
@@ -108,6 +125,10 @@ const ChatMembers = ({
 
                 {teamOfAgents &&
                   teamOfAgents.team_agents?.map((agentData: any, index: number) => {
+                    const handleEdit = () => {
+                      navigate(`/agents/${agentData.agent?.id}/edit-agent`)
+                    }
+
                     return (
                       <StyledAgentWrapper key={index}>
                         <AvatarGenerator name={agentData.agent.name} size={30} />
@@ -142,6 +163,14 @@ const ChatMembers = ({
                             size={IconButton.sizes.SMALL}
                             kind={IconButton.kinds.TERTIARY}
                             // ariaLabel='View'
+                          />
+
+                          <IconButton
+                            onClick={handleEdit}
+                            icon={() => <Edit />}
+                            size={IconButton.sizes.SMALL}
+                            kind={IconButton.kinds.TERTIARY}
+                            // ariaLabel='Edit'
                           />
                         </StyledIconButtonWrapper>
                       </StyledAgentWrapper>
@@ -202,4 +231,7 @@ const StyledIconButtonWrapper = styled.div`
 
   opacity: 0;
   /* transition: opacity 300ms; */
+
+  display: flex;
+  align-items: center;
 `
