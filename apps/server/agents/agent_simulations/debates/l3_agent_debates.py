@@ -82,13 +82,13 @@ class L3AgentDebates(L3Base):
         )
 
         
-        specified_topic= self.generate_specified_prompt(topic, agent_summary_string, team)
+        specified_topic= topic #self.generate_specified_prompt(topic, agent_summary_string, team)
 
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
-        specified_topic_ai_message = history.create_ai_message(specified_topic)
-        self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
+        # specified_topic_ai_message = history.create_ai_message(specified_topic)
+        # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
 
         dialogue_agents = [
             DialogueAgentWithTools(

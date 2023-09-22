@@ -99,13 +99,13 @@ class L3AuthoritarianSpeaker(L3Base):
 
 
 
-        specified_topic = self.generate_specified_prompt(topic, agent_summary, team)
+        specified_topic = topic #self.generate_specified_prompt(topic, agent_summary, team)
 
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
-        specified_topic_ai_message = history.create_ai_message(specified_topic)
-        self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
+        # specified_topic_ai_message = history.create_ai_message(specified_topic)
+        # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
 
         directors = [convert_model_to_response(team_agent.agent) for team_agent in team.team_agents if team_agent.role == TeamAgentRole.DIRECTOR.value]
 
