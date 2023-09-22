@@ -41,8 +41,8 @@ const AgentCard = ({
   avatar,
 }: AgentCardProps) => {
   let shortDescription = description
-  if (description.length > 85) {
-    shortDescription = `${description.slice(0, 85)}...`
+  if (description.length > 75) {
+    shortDescription = `${description.slice(0, 75)}...`
   }
 
   let shortHeaderTag = headerTag
@@ -129,7 +129,7 @@ const AgentCard = ({
             <IconButton
               onClick={onEditClick}
               icon={() => <Edit />}
-              size={Button.sizes.SMALL}
+              size={IconButton.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               // ariaLabel='Edit'
             />
