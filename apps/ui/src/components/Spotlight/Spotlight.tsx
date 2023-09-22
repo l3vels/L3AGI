@@ -35,12 +35,12 @@ const Spotlight = () => {
 
   const { agentId, teamId } = useParams()
 
-  let route = '/copilot'
+  let route = '/chat'
 
   if (agentId) {
-    route = `/copilot?agent=${agentId}`
+    route = `/chat?agent=${agentId}`
   } else if (teamId) {
-    route = `/copilot?team=${teamId}`
+    route = `/chat?team=${teamId}`
   }
 
   // Prefetch messages

@@ -39,7 +39,7 @@ class DatasourceModel(BaseModel):
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
     
     # Define indexes
     Index('ix_datasource_model_workspace_id_is_deleted', 'workspace_id', 'is_deleted')

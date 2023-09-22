@@ -36,7 +36,7 @@ const Discover = () => {
 
       <DiscoverSystemAgents />
 
-      {templateAgents?.length > 0 && (
+      {/* {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
@@ -75,7 +75,7 @@ const Discover = () => {
             </StyledCardsWrapper>
           </ComponentsWrapper>
         </StyledSectionWrapper>
-      )}
+      )} */}
 
       {!user && <Toolkit isPublic />}
     </StyledRoot>

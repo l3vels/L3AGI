@@ -35,15 +35,15 @@ class TeamModel(BaseModel):
     account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True, index=True)
     parent_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True) 
     
-    account = relationship("AccountModel", cascade="all, delete", lazy='select')
+    account = relationship("AccountModel", lazy='select')
     team_agents = relationship("TeamAgentModel", back_populates="team", lazy='select')
-    chat_messages = relationship("ChatMessage", back_populates="team", cascade="all, delete", lazy='select')
-    configs = relationship("ConfigModel", cascade="all, delete", lazy='select')
+    chat_messages = relationship("ChatMessage", back_populates="team", lazy='select')
+    configs = relationship("ConfigModel", lazy='select')
     
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], cascade="all, delete", lazy='select')
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
     
     # Define indexes
     __table_args__ = (

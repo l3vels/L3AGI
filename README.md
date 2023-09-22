@@ -41,7 +41,7 @@
 <a href="https://discord.gg/hQ9ZWabm" target="blank">
 <img src="https://img.shields.io/discord/1085735429426401340?label=Join%20L3AGI&logo=discord&style=social" alt="Join L3AGI Discord Community"/>
 </a>
-<a href="https://www.youtube.com/@gigachkhikvadze7497" target="_blank"><img src="https://img.shields.io/twitter/url?label=Youtube&logo=youtube&style=social&url=https://github.com/l3vels/L3AGI"/></a>
+<a href="https://www.youtube.com/@L3AGI" target="_blank"><img src="https://img.shields.io/twitter/url?label=Youtube&logo=youtube&style=social&url=https://github.com/l3vels/L3AGI"/></a>
 </p>
 
 <p align="center"><b>Connect with the Creators </b></p>
@@ -152,16 +152,11 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
    ./setup.sh
    ```
 
-4. **Create `.env` file from `.env.example` in root directory**
-
-   ```bash
-   cp .env.example .env
-   ```
-
+4. **Create `.env` file from `.env.example` in `apps/server` directory and configure**
    - **Configure `Azure Web PubSub` using [our guide here](docs/azure.md)**
-   - **To configure `Zep Memory`, please see [quick start on Zep](https://docs.getzep.com/deployment/quickstart/)**
+5. **Create `.env` file from `.env.example` in `zep` directory and configure**
 
-5. 🐳 **Run Docker Compose:**
+6. 🐳 **Run Docker Compose:**
 
    ```bash
    docker-compose up --build
@@ -190,6 +185,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-6f7f6f?style=for-the-badge&logo=SQLAlchemy&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-b7d019?style=for-the-badge&logo=LangChain&logoColor=white)
+![Zep](https://img.shields.io/badge/Zep-7e56c2?style=for-the-badge&logo=zep&logoColor=white)
 ![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -218,6 +214,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 - Check the logs for any service-specific errors.
 
 ## 🚧 In Progress!
+
 This initiative is currently in its developmental phase and might have some inconsistencies. We value your patience and comprehension. Should you face any challenges, kindly consult our list of existing issues first. If you can't find a relevant one, please open a new issue explaining the concern you faced. Your backing means a lot to us! Thank you!
 
 ## Contributors

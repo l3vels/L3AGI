@@ -52,7 +52,7 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
                 onViewClick={() => navigate(`/team-of-agents/${teamOfAgents.id}`)}
                 onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
                 onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
-                onChatClick={() => navigate(`/copilot?team=${teamOfAgents.id}`)}
+                onChatClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                 creator={teamOfAgents.creator}
                 avatar={teamOfAgents.avatar}
                 teamType={teamOfAgents.team_type}

@@ -12,7 +12,7 @@ import AvatarDropDown from 'components/AvatarDropDown'
 
 const RootLayout = () => {
   const { user } = React.useContext(AuthContext)
-  const { isCheckedRoute } = useCheckRoute('copilot')
+  const { isCheckedRoute } = useCheckRoute('chat')
 
   const outlet = useOutlet()
 
