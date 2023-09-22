@@ -54,12 +54,14 @@ const CreateAgentTemplate = () => {
           <StyledTemplateHeader>
             <CreateAgentButtonCard onClick={() => navigate('/agents/create-agent')} />
 
-            <Typography
-              value='Choose Template'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-              customColor={'#FFF'}
-            />
+            {agentsData?.length > 0 && (
+              <Typography
+                value='Choose Template'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.lg}
+                customColor={'#FFF'}
+              />
+            )}
           </StyledTemplateHeader>
           <StyledCardsWrapper>
             {agentsData?.map((agentObj: any, index: number) => {
@@ -79,6 +81,7 @@ const CreateAgentTemplate = () => {
                     navigate(`/agents/create-agent?agentId=${agent.id}`)
                   }}
                   creator={agent.creator}
+                  avatar={agent.avatar}
                 />
               )
             })}

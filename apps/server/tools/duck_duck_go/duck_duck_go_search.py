@@ -1,6 +1,6 @@
 from typing import Optional, Type
 from pydantic import BaseModel, Field
-from langchain.tools import DuckDuckGoSearchRun
+from langchain.tools import DuckDuckGoSearchResults
 from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
@@ -18,7 +18,7 @@ class DuckDuckGoSearchTool(BaseTool):
     name = "DuckDuckGo Search"
     
     description = (
-        "A tool for performing a DuckDuckGo search and extracting snippets and webpages."
+        "A tool for performing a DuckDuckGo search."
         "useful for when you need to answer questions about current events"
     )
 
@@ -30,6 +30,6 @@ class DuckDuckGoSearchTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Search DuckDuckGo and return the results."""
-        search = DuckDuckGoSearchRun()
+        search = DuckDuckGoSearchResults(num_results=5)
         return search.run(query)
 

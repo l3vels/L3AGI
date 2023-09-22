@@ -8,6 +8,7 @@ fragment TeamOfAgentFragment on TeamOfAgents {
   is_public
   account_id
   created_by
+  avatar
   creator {
     id
     name
