@@ -18,7 +18,7 @@ import { AuthContext, ToastContext } from 'contexts'
 
 import useUploadFile from 'hooks/useUploadFile'
 import UploadedFile from 'components/UploadedFile'
-import UploadButton from 'components/UploadButton'
+
 import { FILE_TYPES } from '../fileTypes'
 import Mentions from 'components/Mentions'
 import CommandIcon from 'components/Spotlight/CommandIcon'
@@ -34,7 +34,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
-import ChatMembers from './ChatMessageList/components/ChatMembers'
+import ChatMembers from './ChatMembers'
 
 type ChatV2Props = {
   isPrivate?: boolean

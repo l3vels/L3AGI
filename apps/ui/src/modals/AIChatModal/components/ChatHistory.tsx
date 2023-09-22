@@ -15,7 +15,7 @@ import { useCheckTeamIsCreatedService } from 'services/team/useCheckTeamIsCreate
 import { AuthContext } from 'contexts'
 import { useModal } from 'hooks'
 
-import ChatMembers from './ChatMessageList/components/ChatMembers'
+import ChatMembers from './ChatMembers'
 
 import { useDiscoverAgentByIdService } from 'services/discover/useDiscoverAgentById'
 import { useDiscoverTeamByIdService } from 'services/discover/useDiscoverTeamById'

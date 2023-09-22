@@ -20,6 +20,7 @@ import { AuthContext } from 'contexts'
 
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import { useModal } from 'hooks'
+import MemberText from './components/MemberText'
 
 const ChatMembers = ({
   agentById,
@@ -59,14 +60,14 @@ const ChatMembers = ({
                 {userName && (
                   <StyledAgentWrapper>
                     <AvatarGenerator name={userName} size={30} />
-                    {userName}
+                    <MemberText name={userName} />
                   </StyledAgentWrapper>
                 )}
 
                 <>
                   <StyledAgentWrapper>
                     <AvatarGenerator name={agentById?.agent?.name} size={30} />
-                    {agentById?.agent?.name}
+                    <MemberText name={agentById?.agent?.name} role={agentById?.agent?.role} />
 
                     <StyledIconButtonWrapper className='hiddenButton'>
                       <IconButton
@@ -127,7 +128,7 @@ const ChatMembers = ({
                 {userName && (
                   <StyledAgentWrapper>
                     <AvatarGenerator name={userName} size={30} />
-                    {userName}
+                    <MemberText name={userName} />
                   </StyledAgentWrapper>
                 )}
 
@@ -142,7 +143,8 @@ const ChatMembers = ({
                     return (
                       <StyledAgentWrapper key={index}>
                         <AvatarGenerator name={agentData.agent.name} size={30} />
-                        {agentData.agent.name}
+
+                        <MemberText name={agentData.agent.name} role={agentData?.agent?.role} />
 
                         <StyledIconButtonWrapper className='hiddenButton'>
                           <IconButton
