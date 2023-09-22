@@ -77,7 +77,7 @@ const Discover = () => {
         </StyledSectionWrapper>
       )} */}
 
-      {!user && <Toolkit isPublic />}
+      {/* {!user && <Toolkit isPublic />} */}
     </StyledRoot>
   )
 }

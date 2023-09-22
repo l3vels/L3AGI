@@ -264,6 +264,7 @@ class TeamModel(BaseModel):
             db.session.query(TeamModel)
             .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .first()
         )
         return team

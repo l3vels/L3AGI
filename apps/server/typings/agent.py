@@ -9,7 +9,7 @@ class AgentInput(BaseModel):
     workspace_id: Optional[UUID4]
     role: Optional[str]
     is_memory: Optional[bool]
-    avatar: Optional[str]
+    # avatar: Optional[str]
     is_template: bool
 
 class ConfigInput(BaseModel):
