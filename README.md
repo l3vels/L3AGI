@@ -64,7 +64,7 @@ Of course! Here's the revised "Features" section with the requested emojis and i
 
 ## ✨ Features
 
-<a href="https://youtu.be/i84RodECglM" target="_blank">
+<a href="https://youtu.be/i84RodECglM" target="_blank" rel="noopener noreferrer">
     <img src="docs/assets/playYTFeatures.png" alt="Watch the video">
 </a>
 
@@ -132,7 +132,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 
 ## ⚡ Quick Start
 
-<a href="https://youtu.be/-dFJiypmCJA" target="_blank">
+<a href="https://youtu.be/-dFJiypmCJA" target="_blank" rel="noopener noreferrer">
     <img src="docs/assets/quickstart.png" alt="Watch the video">
 </a>
 
