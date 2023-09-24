@@ -64,7 +64,7 @@ Of course! Here's the revised "Features" section with the requested emojis and i
 
 ## ✨ Features
 
-<a href="https://youtu.be/-dFJiypmCJA" target="_blank">
+<a href="https://youtu.be/i84RodECglM" target="_blank">
     <img src="docs/assets/playYTFeatures.png" alt="Watch the video">
 </a>
 
