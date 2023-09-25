@@ -42,7 +42,6 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
         resizable: true,
         editable: true,
         enableRowGroup: false,
-        cellEditorPopup: true,
         cellRenderer: (params: any) => <AgentRenderer params={params} options={agents} />,
         cellEditor: MultiselectEditor,
         cellEditorParams: {

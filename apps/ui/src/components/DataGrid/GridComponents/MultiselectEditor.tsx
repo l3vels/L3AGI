@@ -109,8 +109,11 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         multi={props.isMulti}
         multiline={props.isMultiLine}
         size={Dropdown.size.SMALL}
-        insideOverflowContainer
+        // insideOverflowContainer
+        insideOverflowWithTransformContainer
         optionRenderer={OptionRenderer}
+        menuPortalTarget={document.body} // Render the dropdown outside the grid
+        menuPosition={'fixed'}
       />
     </StyledDiv>
   )
@@ -119,10 +122,11 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 export default MultiselectEditor
 
 const StyledDiv = styled.div`
-  min-width: 350px;
-  max-width: 400px;
+  width: 100%;
 `
+
 const StyledDropDown = styled(Dropdown)`
   /* background: #5d6a7d !important; */
   /* backdrop-filter: blur(5px) !important; */
+  width: 100%;
 `
