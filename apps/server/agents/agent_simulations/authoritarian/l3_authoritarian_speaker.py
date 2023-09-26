@@ -123,6 +123,9 @@ class L3AuthoritarianSpeaker(L3Base):
                         if director_agent.configs.model_version else "gpt-4"),
                     speakers=[agent_with_config.agent.name for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
                     stopping_probability=self.stopping_probability,
+                    session_id=self.session_id,
+                    user=self.user,
+                    is_memory=team.is_memory
                     )
         
         agents = [director]
@@ -135,12 +138,16 @@ class L3AuthoritarianSpeaker(L3Base):
                     tools=self.get_tools(agent_with_configs, self.settings),
                     system_message=SystemMessage(content=SystemMessageBuilder(agent_with_configs).build()),
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
+                    session_id=self.session_id,
+                    user=self.user,
+                    is_memory=team.is_memory
                 )
             )
-                
+
         simulator = DialogueSimulator(
             agents=agents,
             selection_function=functools.partial(self.select_next_speaker, director=director),
+            is_memory=team.is_memory
         )
         simulator.reset()
         simulator.inject("Audience member", specified_topic)

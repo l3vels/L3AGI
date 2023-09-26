@@ -144,7 +144,7 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
                 "key": "word_limit",
                 "type": "int",
                 "is_required": True,
-                "is_s=ecret": False,
+                "is_secret": False,
                 "default": 30,
             }
         ],

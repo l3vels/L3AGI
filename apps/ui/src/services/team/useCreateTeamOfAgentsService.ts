@@ -7,13 +7,14 @@ export type TeamOfAgentsInput = {
   description: string
   team_type: string
   team_agents: { role: string; agent_id: string }[]
+  is_memory: boolean
 }
 
 export const useCreateTeamOfAgentsService = () => {
   const [mutation] = useMutation(createTeamOfAgentsGql)
 
   const createTeamOfAgentsService = async (input: TeamOfAgentsInput) => {
-    const { name, description, team_type, team_agents } = input
+    const { name, description, team_type, team_agents, is_memory } = input
 
     const {
       data: { createTeamOfAgents },
@@ -24,6 +25,7 @@ export const useCreateTeamOfAgentsService = () => {
           description,
           team_type,
           team_agents,
+          is_memory,
         },
       },
     })

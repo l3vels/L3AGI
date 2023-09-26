@@ -19,6 +19,7 @@ class TeamOfAgentsInput(BaseModel):
     team_type: str
     workspace_id: Optional[UUID4]
     team_agents: List[TeamAgentInput]
+    is_memory: Optional[bool]
 
 
 class TeamOutput(BaseModel):
@@ -37,6 +38,7 @@ class TeamOutput(BaseModel):
     modified_by: Optional[UUID4]
     team_agents: Optional[List[TeamAgentOutput]]
     avatar: Optional[str]
+    is_memory: Optional[bool]
 
 class QueryParams(BaseModel):
     id: Optional[str]
