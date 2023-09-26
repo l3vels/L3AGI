@@ -38,7 +38,7 @@ const ChatMessageListV2 = ({
   greeting,
   agentName,
 }: ChatMessageListV2Props) => {
-  const [listIsReady, setListIsReady] = useState(true)
+  const [listIsReady, setListIsReady] = useState(false)
 
   const virtuoso = useRef<VirtuosoHandle>(null)
 
@@ -100,54 +100,41 @@ const ChatMessageListV2 = ({
     if (thinking) {
       setTimeout(() => {
         virtuoso.current?.scrollToIndex({
-          index: initialChat.length + 1,
+          index: initialChat.length + 2,
           align: 'end',
         })
       }, 100)
-      setListIsReady(true)
 
       return
     }
 
-    if (!data.length) return
+    // eslint-disable-next-line
+  }, [thinking])
 
-    // TODO: why do we need to scroll three times?
-    // setTimeout(() => {
-    //   virtuoso.current?.scrollToIndex({
-    //     index: data.length,
-    //     align: 'end',
-    //   })
+  useEffect(() => {
+    if (listIsReady) return
 
-    setTimeout(() => {
-      virtuoso.current?.scrollToIndex({
-        index: initialChat.length,
-        align: 'end',
-      })
-
-      if (!listIsReady) {
-        setTimeout(() => {
-          setListIsReady(true)
-
-          virtuoso.current?.scrollToIndex({
-            index: initialChat.length,
-            align: 'end',
-          })
-        }, 1000)
-      }
-    }, 100)
-    // }, 100)
+    if (data.length > 0) {
+      setTimeout(() => {
+        virtuoso.current?.scrollToIndex({
+          index: initialChat.length + 1,
+          align: 'end',
+        })
+        setListIsReady(true)
+      }, 100)
+    }
 
     // eslint-disable-next-line
-  }, [thinking, data])
+  }, [data])
 
   return (
-    <StyledRoot show={listIsReady}>
+    <StyledRoot show={true}>
       <Virtuoso
         ref={virtuoso}
         style={{ height: '100%' }}
         data={initialChat}
         totalCount={data.length}
-        overscan={20}
+        overscan={2500}
         components={{
           Footer: () => {
             return (
@@ -262,8 +249,8 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
   align-items: center;
   gap: 5px;
 
-  margin-top: 10px;
-  margin-right: 50px;
+  padding-top: 10px;
+  /* margin-right: 50px; */
 
   .visible-reply {
     opacity: 1;
