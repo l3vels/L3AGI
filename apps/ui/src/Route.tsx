@@ -30,7 +30,7 @@ import { PublicRoute } from 'routes'
 import UpdatePassword from 'pages/UpdatePassword'
 
 import { ThemeProvider } from 'styled-components'
-import { defaultTheme } from 'styles/theme'
+import { defaultTheme, lightTheme } from 'styles/theme'
 import { WelcomeLoader } from 'components/Loader/WelcomeLoader'
 import { CheatCode } from 'pages/Auth/Register/CheatCode'
 
@@ -79,7 +79,7 @@ import ToolkitModal from 'modals/ToolkitModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
-  const [theme] = useState(defaultTheme)
+  const [theme, setTheme] = useState<any>(defaultTheme)
   const [cmdkOpen, setCmdkOpen] = useState(false)
 
   useHotkeys('ctrl+enter, meta+k', event => {
@@ -88,10 +88,18 @@ const Route = () => {
     return false
   })
 
+  // const handleChangeTheme = (theme: any) => {
+  //   setTheme(theme)
+  // }
+
   if (loading) return <WelcomeLoader />
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <div>
+        <button onClick={() => handleChangeTheme(defaultTheme)}>default Theme</button>
+        <button onClick={() => handleChangeTheme(lightTheme)}>light Theme</button>
+      </div> */}
       <Routes>
         <>
           <Router element={<RootLayout />}>

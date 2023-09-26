@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
+  /* background: ${({ theme }) => theme.body.testVariableColor}; */
   background: linear-gradient(265.15deg, rgba(76, 166, 248, 1) -32.37%, rgba(33, 82, 243, 1) 100%);
   height: 100vh;
   display: flex;
@@ -116,8 +117,10 @@ const StyledNavigationColumn = styled.div`
 `
 
 const StyledLogoWrapper = styled(Link)`
-  width: 48px;
-  height: 48px;
+  display: flex;
+  /* align-items: center; */
+
+  text-decoration: none;
 `
 
 export {

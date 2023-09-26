@@ -89,15 +89,15 @@
     "start:local": "rm -rf ./node_modules/.cache/babel-loader && GENERATE_SOURCEMAP=false NODE_ENV=local vite --open",
     "start:dev": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true vite --mode develop --open",
     "build": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true tsc && vite build",
-    "build:dev": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true vite build --mode develop",
+    "build:dev": "NODE_OPTIONS=--max_old_space_size=8192 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true vite build --mode develop",
     "build:staging": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true vite build --mode staging",
-    "build:prod": "NODE_OPTIONS=--max_old_space_size=4096 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true vite build --mode production",
+    "build:prod": "NODE_OPTIONS=--max_old_space_size=8192 GENERATE_SOURCEMAP=true DISABLE_ESLINT_PLUGIN=true vite build --mode production",
     "test": "vite test",
     "eject": "vite eject",
     "lint": "eslint --ext .ts,.tsx src",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "postbuild": "rimraf ./build/**/*.js.map",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer --no-border-checks dist/assets/*.js"
   },
   "browserslist": {
     "production": [
