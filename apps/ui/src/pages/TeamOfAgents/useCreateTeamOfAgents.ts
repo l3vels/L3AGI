@@ -26,6 +26,7 @@ export const useCreateTeamOfAgents = () => {
     teamOfAgents_team_type: 'Plan and Execute',
     configs: {},
     agents: [],
+    is_memory: true,
     // TODO: add agents selected in form
   }
 
@@ -69,6 +70,7 @@ export const useCreateTeamOfAgents = () => {
         description: values.teamOfAgents_description,
         team_type: values.teamOfAgents_team_type,
         team_agents: values.agents.filter((agent: any) => agent?.agent_id),
+        is_memory: values.is_memory,
       }
 
       const teamOfAgents = await createTeamOfAgents(teamOfAgentsInput)

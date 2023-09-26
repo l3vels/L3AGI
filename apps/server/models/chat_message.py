@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 import uuid
-
+from typings.account import AccountOutput
 
 class ChatMessage(BaseModel):
     """
@@ -34,6 +34,25 @@ class ChatMessage(BaseModel):
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
 
+    @classmethod
+    def get_chat_message_by_id(cls, db, chat_message_id: UUID, account: AccountOutput):
+        """
+            Get Chat message from chat_message_id
+
+            Args:
+                session: The database session.
+                chat_message_id(UUID) : Unique identifier of an Chat message.
+
+            Returns:
+                Chat message: Chat message object is returned.
+        """
+        chat_message = (
+            db.session.query(ChatMessage)
+            .filter(ChatMessage.id == chat_message_id, ChatMessage.account_id == account.id)
+            .first()
+        )
+
+        return chat_message
 
     def to_dict(self):
         """

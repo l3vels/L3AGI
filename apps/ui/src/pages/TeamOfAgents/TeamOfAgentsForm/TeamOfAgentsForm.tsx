@@ -3,12 +3,12 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
-
-import UploadedFile from 'components/UploadedFile'
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
 import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import { useTeamOfAgentsForm } from './useTeamOfAgentsForm'
 import UploadButton from './components/UploadButton'
+import UploadedFile from 'components/UploadedFile'
 
 import DataLoaderCard from './components/DataLoaderCard'
 import FormikTextField from 'components/TextFieldFormik'
@@ -28,7 +28,8 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { teamOfAgents_team_type, config_value, teamOfAgents_description, configs, agents } = values
+  const { teamOfAgents_team_type, config_value, teamOfAgents_description, configs, is_memory } =
+    values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('teamOfAgents_description', value)
@@ -155,6 +156,14 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             )
           })}
         </StyledFields>
+
+        <Checkbox
+          label='Memory'
+          kind='secondary'
+          name='is_memory'
+          checked={is_memory}
+          onChange={() => setFieldValue('is_memory', !is_memory)}
+        />
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
       </StyledInputWrapper>

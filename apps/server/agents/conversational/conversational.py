@@ -3,7 +3,7 @@ from langchain.chat_models import ChatOpenAI
 from postgres import PostgresChatMessageHistory
 from memory.zep.zep_memory import ZepMemory
 from services.pubsub import ChatPubSubService
-from l3_base import L3Base
+from agents.base_agent import BaseAgent
 from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
 from utils.system_message import SystemMessageBuilder
@@ -11,7 +11,7 @@ from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from agents.handle_agent_errors import handle_agent_error
 
-class L3Conversational(L3Base):
+class ConversationalAgent(BaseAgent):
     def run(
         self,
         settings: AccountSettings,

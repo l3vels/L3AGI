@@ -11,7 +11,7 @@ from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import DirectorDialogueAgentWithTools
 from services.pubsub import ChatPubSubService
-from l3_base import L3Base
+from agents.base_agent import BaseAgent
 from postgres import PostgresChatMessageHistory
 from models.team import TeamModel
 from utils.system_message import SystemMessageBuilder
@@ -23,9 +23,10 @@ from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
 from typings.team_agent import TeamAgentRole
 from utils.agent import convert_model_to_response
+from config import Config
+from memory.zep.zep_memory import ZepMemory
 
-
-class L3AuthoritarianSpeaker(L3Base):
+class AuthoritarianSpeaker(BaseAgent):
     def __init__(
         self,
         settings: AccountSettings,
@@ -97,12 +98,21 @@ class L3AuthoritarianSpeaker(L3Base):
             [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
         )
 
-
-
         specified_topic = topic #self.generate_specified_prompt(topic, agent_summary, team)
 
-        print(f"Original topic:\n{topic}\n")
-        print(f"Detailed topic:\n{specified_topic}\n")
+        memory = ZepMemory(
+            session_id=self.session_id,
+            url=Config.ZEP_API_URL,
+            api_key=Config.ZEP_API_KEY,
+            memory_key="chat_history",
+            return_messages=True,
+        )
+
+        memory.human_name = self.user.name
+        memory.save_human_message(specified_topic)
+
+        # print(f"Original topic:\n{topic}\n")
+        # print(f"Detailed topic:\n{specified_topic}\n")
 
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
         # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
@@ -123,6 +133,9 @@ class L3AuthoritarianSpeaker(L3Base):
                         if director_agent.configs.model_version else "gpt-4"),
                     speakers=[agent_with_config for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
                     stopping_probability=self.stopping_probability,
+                    session_id=self.session_id,
+                    user=self.user,
+                    is_memory=team.is_memory
                     )
         
         agents = [director]
@@ -135,19 +148,28 @@ class L3AuthoritarianSpeaker(L3Base):
                     tools=self.get_tools(agent_with_configs, self.settings),
                     system_message=SystemMessage(content=SystemMessageBuilder(agent_with_configs).build()),
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
+                    session_id=self.session_id,
+                    user=self.user,
+                    is_memory=team.is_memory
                 )
             )
-                
+
         simulator = DialogueSimulator(
             agents=agents,
             selection_function=functools.partial(self.select_next_speaker, director=director),
+            is_memory=team.is_memory
         )
         simulator.reset()
         simulator.inject("Audience member", specified_topic)
 
         while True:
-            agent_id, message = simulator.step()
+            agent_id, agent_name, message = simulator.step()
             ai_message = history.create_ai_message(message, None, agent_id)
+            
+            if team.is_memory:
+                memory.ai_name = agent_name
+                memory.save_ai_message(message)
+
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
             if director.stop:

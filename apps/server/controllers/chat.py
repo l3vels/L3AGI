@@ -1,4 +1,3 @@
-import re
 from typing import Optional, List
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,10 +6,10 @@ from sqlalchemy.orm import joinedload
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
-from agents.conversational.l3_conversational import L3Conversational
-from agents.plan_and_execute.l3_plan_and_execute import L3PlanAndExecute
-from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3AuthoritarianSpeaker
-from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
+from agents.conversational.conversational import ConversationalAgent
+from agents.plan_and_execute.plan_and_execute import PlanAndExecute
+from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
+from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention
@@ -18,13 +17,14 @@ from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
-# from utils.team import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from typings.chat import ChatMessageOutput
 from models.team import TeamModel
 from models.config import ConfigModel
 from agents.team_base import TeamOfAgentsType
 from services.pubsub import ChatPubSubService, AzurePubSubService
+from memory.zep.zep_memory import ZepMemory
+from config import Config
 
 router = APIRouter()
 
@@ -44,6 +44,14 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     agent_with_configs = None
     team: TeamModel = None
     team_configs = None
+    parent: ChatMessageModel = None
+
+    if body.parent_id:
+        parent = ChatMessageModel.get_chat_message_by_id(db, body.parent_id, auth.account)
+
+        if not parent:
+            raise HTTPException(status_code=404, detail="Parent message not found")
+
 
     if agent_id:
         agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
@@ -65,7 +73,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         for config in team.configs:
             team_configs[config.key] = config.value
 
-
     history = PostgresChatMessageHistory(
         session_id=session_id,
         account_id=auth.account.id,
@@ -79,6 +86,16 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     human_message = history.create_human_message(body.prompt)
 
     human_message_id = UUID(human_message['id'])
+
+    memory = ZepMemory(
+        session_id=session_id,
+        url=Config.ZEP_API_URL,
+        api_key=Config.ZEP_API_KEY,
+        memory_key="chat_history",
+        return_messages=True,
+    )
+
+    memory.human_name = auth.user.name
 
     chat_pubsub_service = ChatPubSubService(
         session_id=session_id,
@@ -99,10 +116,19 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     if not settings.openai_api_key:
         message_text = f"Please add OpenAI API key in [Settings](/settings)"
         ai_message = history.create_ai_message(message_text, human_message_id)
-
+        memory.save_human_message(body.prompt)
+        memory.save_ai_message(message_text)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return message_text
+    
+    if parent:
+        reply_content = parent.message['data']['content']
+
+        prompt = (
+            f"Replying to {parent.agent.name}: \"{reply_content}\"\n"
+            f"{prompt}"
+        )
 
     if agent:
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
@@ -111,12 +137,12 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, auth.account, settings)
         tools = datasource_tools + agent_tools
 
-        conversational = L3Conversational(auth.user, auth.account, session_id)
+        conversational = ConversationalAgent(auth.user, auth.account, session_id)
         return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)
 
     if team:
         if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
-            plan_and_execute = L3PlanAndExecute(
+            plan_and_execute = PlanAndExecute(
                 user=auth.user,
                 account=auth.account,
                 session_id=session_id,
@@ -130,7 +156,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             stopping_probability = team_configs.get("stopping_probability", 0.2)
             word_limit = team_configs.get("word_limit", 30)
 
-            l3_authoritarian_speaker = L3AuthoritarianSpeaker(
+            authoritarian_speaker = AuthoritarianSpeaker(
                 settings=settings,
                 chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
@@ -140,7 +166,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 word_limit=int(word_limit)
             )
 
-            result = l3_authoritarian_speaker.run(
+            result = authoritarian_speaker.run(
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,
@@ -154,7 +180,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
             word_limit = team_configs.get("word_limit", 30)
 
-            l3_agent_debates = L3AgentDebates(
+            agent_debates = AgentDebates(
                 settings=settings,
                 chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
@@ -163,7 +189,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 word_limit=int(word_limit)
             )
 
-            result = l3_agent_debates.run(
+            result = agent_debates.run(
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,

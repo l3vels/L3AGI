@@ -86,7 +86,6 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         return self.create_message(AIMessage(content=message), parent_id, agent_id)
 
     def create_human_message(self, message: str):
-        print("human parent id", self.parent_id)
         return self.create_message(HumanMessage(content=message, additional_kwargs={
             "name": self.user.name,
         }), parent_id=self.parent_id)

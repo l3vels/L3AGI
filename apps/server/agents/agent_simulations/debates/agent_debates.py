@@ -10,7 +10,7 @@ from services.pubsub import ChatPubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent, DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 
-from l3_base import L3Base
+from agents.base_agent import BaseAgent
 from postgres import PostgresChatMessageHistory
 from typings.agent import AgentWithConfigsOutput
 from models.team import TeamModel
@@ -21,8 +21,10 @@ from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
 from agents.handle_agent_errors import handle_agent_error
+from config import Config
+from memory.zep.zep_memory import ZepMemory
 
-class L3AgentDebates(L3Base):
+class AgentDebates(BaseAgent):
     def __init__(
         self,
         settings: AccountSettings,
@@ -87,6 +89,17 @@ class L3AgentDebates(L3Base):
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
 
+        memory = ZepMemory(
+            session_id=self.session_id,
+            url=Config.ZEP_API_URL,
+            api_key=Config.ZEP_API_KEY,
+            memory_key="chat_history",
+            return_messages=True,
+        )
+
+        memory.human_name = self.user.name
+        memory.save_human_message(specified_topic)
+
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
         # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
 
@@ -101,6 +114,9 @@ class L3AgentDebates(L3Base):
                                  if agent_with_config.configs.model_version else "gpt-4"),
                 tools=self.get_tools(agent_with_config, self.settings),
                 top_k_results=2,
+                session_id=self.session_id,
+                user=self.user,
+                is_memory=team.is_memory,
             )
             for agent_with_config in agents_with_configs
         ]
@@ -108,13 +124,19 @@ class L3AgentDebates(L3Base):
         max_iters = 6
         n = 0
 
-        simulator = DialogueSimulator(agents=dialogue_agents, selection_function=self.select_next_speaker)
+        simulator = DialogueSimulator(agents=dialogue_agents, selection_function=self.select_next_speaker, is_memory=team.is_memory)
         simulator.reset()
         simulator.inject("Moderator", specified_topic)
 
         while n < max_iters:
-            agent_id, message = simulator.step()
+            agent_id, agent_name, message = simulator.step()
             ai_message = history.create_ai_message(message, None, agent_id)
+            
+            if team.is_memory:
+                memory.ai_name = agent_name
+                memory.save_ai_message(message)
+            
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+
             n += 1
  

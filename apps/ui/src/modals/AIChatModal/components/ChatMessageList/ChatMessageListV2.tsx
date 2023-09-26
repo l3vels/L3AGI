@@ -186,15 +186,15 @@ const ChatMessageListV2 = ({
                   userId={chat.user_id}
                   messageDate={chat.date}
                   messageText={chat.message}
-                  // onReplyClick={() => {
-                  //   setReply({
-                  //     isReply: true,
-                  //     messageId: chat.id,
-                  //     userId: chat.user_id,
-                  //     messageText: chat.message,
-                  //     isHuman: true,
-                  //   })
-                  // }}
+                  onReplyClick={() => {
+                    setReply({
+                      isReply: true,
+                      messageId: chat.id,
+                      userId: chat.user_id,
+                      messageText: chat.message,
+                      isHuman: true,
+                    })
+                  }}
                 />
               </StyledWrapper>
             )}
@@ -218,19 +218,18 @@ const ChatMessageListV2 = ({
                   thoughts={chat.thoughts}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
-
-                  // onReplyClick={
-                  //   chat.isGreeting
-                  //     ? undefined
-                  //     : () => {
-                  //         setReply({
-                  //           isReply: true,
-                  //           messageId: chat.id,
-                  //           version: chat.version,
-                  //           messageText: chat.message,
-                  //         })
-                  //       }
-                  // }
+                  onReplyClick={
+                    chat.isGreeting
+                      ? undefined
+                      : () => {
+                          setReply({
+                            isReply: true,
+                            messageId: chat.id,
+                            version: chat.version,
+                            messageText: chat.message,
+                          })
+                        }
+                  }
                 />
               </StyledWrapper>
             )}

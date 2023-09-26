@@ -9,7 +9,7 @@ class ChatMessageInput(BaseModel):
     local_chat_message_ref_id: Optional[str] = None
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
-    parent_id: Optional[str] = None
+    parent_id: Optional[UUID] = None
 
 
 class ChatMessageOutput(BaseModel):

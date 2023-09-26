@@ -1,79 +1,101 @@
-from typing import Any, Dict, List, Optional, Callable
-from pydantic import Field
-from langchain.callbacks.manager import CallbackManagerForChainRun
-from langchain.chains.base import Chain
+from langchain.chat_models import ChatOpenAI
+from typing import Dict, List
+from fastapi_sqlalchemy import db
+from uuid import UUID
 
-from langchain_experimental.plan_and_execute.executors.base import BaseExecutor
-from langchain_experimental.plan_and_execute.planners.base import BasePlanner
-from langchain_experimental.plan_and_execute.schema import (
-    BaseStepContainer,
-    ListStepContainer,
-)
+from postgres import PostgresChatMessageHistory
+from agents.base_agent import BaseAgent
+from agents.plan_and_execute.chat_planner import initialize_chat_planner
+from agents.plan_and_execute.agent_executor import initialize_executor
+from agents.plan_and_execute.plan_and_execute_chain import PlanAndExecuteChain
+from memory.zep.zep_memory import ZepMemory
+from config import Config
+from utils.agent import convert_model_to_response
+from utils.system_message import SystemMessageBuilder
+from models.datasource import DatasourceModel
+from models.agent import AgentModel
+from models.team import TeamModel
+from models.team import TeamAgentModel
+from typings.team_agent import TeamAgentRole
+from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings
+from tools.get_tools import get_agent_tools
+from tools.datasources.get_datasource_tools import get_datasource_tools
+from services.pubsub import ChatPubSubService
+from agents.handle_agent_errors import handle_agent_error
+from exceptions import PlannerEmptyTasksException
 
-
-class PlanAndExecute(Chain):
-    planner: BasePlanner
-    executor: BaseExecutor
-    on_thoughts: Callable[[List[Dict]], None] = lambda x: None
-    step_container: BaseStepContainer = Field(default_factory=ListStepContainer)
-    input_key: str = "input"
-    output_key: str = "output"
+class PlanAndExecute(BaseAgent):
     thoughts: List[Dict] = []
+    ai_message_id: str
 
-    @property
-    def input_keys(self) -> List[str]:
-        return [self.input_key, "chat_history"]
+    def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
+        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+        datasource_tools = get_datasource_tools(datasources, settings, self.account)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account, settings)
+        return datasource_tools + agent_tools
 
-    @property
-    def output_keys(self) -> List[str]:
-        return [self.output_key]
+    def run(self, settings: AccountSettings, chat_pubsub_service: ChatPubSubService, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, human_message_id: UUID):
+        agents: List[TeamAgentModel] = team.team_agents
+        
+        planner_agent_with_configs: AgentWithConfigsOutput = None
+        executor_agent_with_configs: AgentWithConfigsOutput = None
 
-    def _call(
-            self,
-            inputs: Dict[str, Any],
-            run_manager: Optional[CallbackManagerForChainRun] = None,
-    ) -> Dict[str, Any]:
-        plan, user_steps = self.planner.plan(
-            inputs,
-            callbacks=run_manager.get_child() if run_manager else None,
+        for agent in agents:
+            if agent.role == TeamAgentRole.PLANNER.value:
+                planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.account))
+            if agent.role == TeamAgentRole.EXECUTOR.value:
+                executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.account))
+
+        ai_message = history.create_ai_message("", human_message_id)
+        ai_message_id = ai_message['id']
+
+        def on_thoughts(thoughts: List[Dict]):
+            if len(thoughts) == 0:
+                raise PlannerEmptyTasksException()
+
+            updated_message = history.update_thoughts(ai_message_id, thoughts)
+            chat_pubsub_service.send_chat_message(chat_message=updated_message)
+
+        memory = ZepMemory(
+            session_id=self.session_id,
+            url=Config.ZEP_API_URL,
+            api_key=Config.ZEP_API_KEY,
+            memory_key="chat_history",
+            return_messages=True
         )
 
-        self.thoughts = [{
-            "id": index + 1,
-            "title": step,
-            "result": None,
-            "loading": True,
-        } for index, step in enumerate(user_steps)]
+        memory.human_name = self.user.name
+        memory.ai_name = team.name
 
-        self.on_thoughts(self.thoughts)
+        planner_llm = ChatOpenAI(openai_api_key=settings.openai_api_key, temperature=planner_agent_with_configs.configs.temperature, model_name=planner_agent_with_configs.configs.model_version)
+        planner_system_message = SystemMessageBuilder(planner_agent_with_configs).build()
+        
+        planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
 
-        if run_manager:
-            run_manager.on_text(str(plan), verbose=self.verbose)
+        executor_llm = ChatOpenAI(openai_api_key=settings.openai_api_key, temperature=executor_agent_with_configs.configs.temperature, model_name=executor_agent_with_configs.configs.model_version)
+        executor_system_message = SystemMessageBuilder(executor_agent_with_configs).build()
+        executor_tools = self.get_tools(executor_agent_with_configs, settings)
 
-        for index, step in enumerate(plan.steps):
-            _new_inputs = {
-                "previous_steps": self.step_container,
-                "current_step": step,
-                "objective": inputs[self.input_key],
-            }
-            new_inputs = {**_new_inputs, **inputs}
+        executor = initialize_executor(
+            executor_llm,
+            executor_tools,
+            executor_system_message,
+        )
 
-            response = self.executor.step(
-                new_inputs,
-                callbacks=run_manager.get_child() if run_manager else None,
-            )
+        agent = PlanAndExecuteChain(planner=planner, executor=executor, on_thoughts=on_thoughts)
 
-            self.thoughts[index]["result"] = response.response
-            self.thoughts[index]["loading"] = False
+        res: str
 
-            self.on_thoughts(self.thoughts)
-
-            if run_manager:
-                run_manager.on_text(
-                    f"*****\n\nStep: {step.value}", verbose=self.verbose
-                )
-                run_manager.on_text(
-                    f"\n\nResponse: {response.response}", verbose=self.verbose
-                )
-            self.step_container.add_step(step, response)
-        return {self.output_key: self.step_container.get_final_response()}
+        try:
+            res = agent.run({
+                "input": prompt,
+                "chat_history": memory.load_memory_variables({})['chat_history'],
+            })
+        except Exception as err:
+            res = handle_agent_error(err)
+            history.delete_message(ai_message_id)
+            ai_message = history.create_ai_message(res)
+            chat_pubsub_service.send_chat_message(chat_message=ai_message)
+        
+        return res

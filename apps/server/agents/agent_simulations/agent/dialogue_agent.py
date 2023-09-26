@@ -14,7 +14,7 @@ class DialogueAgent:
         name: str,
         agent_with_configs: AgentWithConfigsOutput,
         system_message: SystemMessage,
-        model: ChatOpenAI
+        model: ChatOpenAI,
     ) -> None:
         self.name = name
         self.agent_with_configs = agent_with_configs
@@ -52,10 +52,12 @@ class DialogueSimulator:
         self,
         agents: List[DialogueAgent],
         selection_function: Callable[[int, List[DialogueAgent]], int],
+        is_memory: bool,
     ) -> None:
         self.agents = agents
         self._step = 0
         self.select_next_speaker = selection_function
+        self.is_memory = is_memory
 
     def reset(self):
         for agent in self.agents:
@@ -71,7 +73,7 @@ class DialogueSimulator:
         # increment time
         self._step += 1
 
-    def step(self) -> tuple[UUID, str]:
+    def step(self) -> tuple[UUID, str, str]:
         message: str
 
         # 1. choose next speaker
@@ -83,8 +85,10 @@ class DialogueSimulator:
             message = speaker.send()
 
             # 3. everyone receives message
-            for receiver in self.agents:
-                receiver.receive(speaker.name, message)
+            # For short memory
+            if not self.is_memory:
+                for receiver in self.agents:
+                    receiver.receive(speaker.name, message)
 
             # 4. increment time
             self._step += 1
@@ -92,4 +96,4 @@ class DialogueSimulator:
             message = handle_agent_error(err)
             self._step += 1
 
-        return speaker.agent_with_configs.agent.id, message
+        return speaker.agent_with_configs.agent.id, speaker.agent_with_configs.agent.name, message 

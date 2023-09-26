@@ -13,6 +13,8 @@ import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import l3Icon from 'assets/avatars/l3.png'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
+import { Nullable } from 'types'
+import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
@@ -22,7 +24,8 @@ type MentionsProps = {
   onChange: OnChangeHandlerType
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
   setValue: any
-  isGeneralChat: boolean
+  agentId: Nullable<string>
+  teamId: Nullable<string>
 }
 
 const Mentions = ({
@@ -31,14 +34,19 @@ const Mentions = ({
   onKeyDown,
   value,
   setValue,
-  isGeneralChat,
+  agentId,
+  teamId,
 }: MentionsProps) => {
   const [focusAfterAdd, setFocusAfterAdd] = useState(false)
 
   const { data: users } = useAssignedUserListService()
 
   const { data: agents } = useAgentsService()
-  const { data: teamOfAgents } = useTeamOfAgentsService()
+  const { data: teamsOfAgents } = useTeamOfAgentsService()
+
+  const { data: teamOfAgentsById } = useTeamOfAgentsByIdService({ id: teamId })
+
+  const chatType = agentId ? 'agent' : teamId ? 'team' : 'general'
 
   const agentMentions = agents.map((agent: any) => {
     const { id, name } = agent.agent
@@ -51,7 +59,7 @@ const Mentions = ({
     }
   })
 
-  const teamOfAgentsMentions = teamOfAgents.map((team: any) => {
+  const teamsOfAgentsMentions = teamsOfAgents.map((team: any) => {
     const { id, name } = team
 
     return {
@@ -70,9 +78,24 @@ const Mentions = ({
     }
   })
 
-  const mentions = isGeneralChat
-    ? [...agentMentions, ...teamOfAgentsMentions, ...usersMentions]
-    : usersMentions
+  const teamOfAgentMemberMentions =
+    teamOfAgentsById?.team_agents.map((teamAgent: any) => {
+      return {
+        display: teamAgent.agent.name,
+        id: `agent__${teamAgent.agent.id}`,
+        type: 'Agent',
+        icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+      }
+    }) || []
+
+  // const teamOfAgentMembersMentions = teamOfAgentsById
+
+  const mentions =
+    chatType === 'general'
+      ? [...agentMentions, ...teamsOfAgentsMentions, ...usersMentions]
+      : chatType === 'team'
+      ? [...teamOfAgentMemberMentions, ...usersMentions]
+      : usersMentions
 
   const displayTransform = (id: string) => {
     const display = mentions.find((item: any) => item.id.includes(id))?.display
