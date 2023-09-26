@@ -1,4 +1,3 @@
-import re
 from typing import Optional, List
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,10 +6,10 @@ from sqlalchemy.orm import joinedload
 from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
-from agents.conversational.l3_conversational import L3Conversational
-from agents.plan_and_execute.l3_plan_and_execute import L3PlanAndExecute
-from agents.agent_simulations.authoritarian.l3_authoritarian_speaker import L3AuthoritarianSpeaker
-from agents.agent_simulations.debates.l3_agent_debates import L3AgentDebates
+from agents.conversational.conversational import ConversationalAgent
+from apps.server.agents.plan_and_execute.plan_and_execute import PlanAndExecute
+from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
+from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention
@@ -18,7 +17,6 @@ from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
-# from utils.team import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from typings.chat import ChatMessageOutput
 from models.team import TeamModel
@@ -126,12 +124,12 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, auth.account, settings)
         tools = datasource_tools + agent_tools
 
-        conversational = L3Conversational(auth.user, auth.account, session_id)
+        conversational = ConversationalAgent(auth.user, auth.account, session_id)
         return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)
 
     if team:
         if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
-            plan_and_execute = L3PlanAndExecute(
+            plan_and_execute = PlanAndExecute(
                 user=auth.user,
                 account=auth.account,
                 session_id=session_id,
@@ -145,7 +143,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             stopping_probability = team_configs.get("stopping_probability", 0.2)
             word_limit = team_configs.get("word_limit", 30)
 
-            authoritarian_speaker = L3AuthoritarianSpeaker(
+            authoritarian_speaker = AuthoritarianSpeaker(
                 settings=settings,
                 chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
@@ -169,7 +167,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
             word_limit = team_configs.get("word_limit", 30)
 
-            agent_debates = L3AgentDebates(
+            agent_debates = AgentDebates(
                 settings=settings,
                 chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,

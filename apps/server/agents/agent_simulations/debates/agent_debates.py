@@ -10,7 +10,7 @@ from services.pubsub import ChatPubSubService
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent, DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 
-from l3_base import L3Base
+from agents.base_agent import BaseAgent
 from postgres import PostgresChatMessageHistory
 from typings.agent import AgentWithConfigsOutput
 from models.team import TeamModel
@@ -24,7 +24,7 @@ from agents.handle_agent_errors import handle_agent_error
 from config import Config
 from memory.zep.zep_memory import ZepMemory
 
-class L3AgentDebates(L3Base):
+class AgentDebates(BaseAgent):
     def __init__(
         self,
         settings: AccountSettings,

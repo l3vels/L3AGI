@@ -26,7 +26,7 @@ from utils.agent import convert_model_to_response
 from config import Config
 from memory.zep.zep_memory import ZepMemory
 
-class L3AuthoritarianSpeaker(BaseAgent):
+class AuthoritarianSpeaker(BaseAgent):
     def __init__(
         self,
         settings: AccountSettings,
@@ -131,7 +131,7 @@ class L3AuthoritarianSpeaker(BaseAgent):
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=director_agent.configs.temperature, 
                         model_name=director_agent.configs.model_version 
                         if director_agent.configs.model_version else "gpt-4"),
-                    speakers=[agent_with_config for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
+                    speakers=[agent_with_config.agent.name for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
                     stopping_probability=self.stopping_probability,
                     session_id=self.session_id,
                     user=self.user,
