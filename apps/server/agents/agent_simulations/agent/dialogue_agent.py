@@ -73,7 +73,7 @@ class DialogueSimulator:
         # increment time
         self._step += 1
 
-    def step(self) -> tuple[UUID, str]:
+    def step(self) -> tuple[UUID, str, str]:
         message: str
 
         # 1. choose next speaker
@@ -96,4 +96,4 @@ class DialogueSimulator:
             message = handle_agent_error(err)
             self._step += 1
 
-        return speaker.agent_with_configs.agent.id, message 
+        return speaker.agent_with_configs.agent.id, speaker.agent_with_configs.agent.name, message 

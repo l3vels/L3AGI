@@ -44,6 +44,14 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     agent_with_configs = None
     team: TeamModel = None
     team_configs = None
+    parent: ChatMessageModel = None
+
+    if body.parent_id:
+        parent = ChatMessageModel.get_chat_message_by_id(db, body.parent_id, auth.account)
+
+        if not parent:
+            raise HTTPException(status_code=404, detail="Parent message not found")
+
 
     if agent_id:
         agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
@@ -64,7 +72,6 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
         for config in team.configs:
             team_configs[config.key] = config.value
-
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
@@ -103,6 +110,14 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return message_text
+    
+    if parent:
+        reply_content = parent.message['data']['content']
+
+        prompt = (
+            f"Replying to {parent.agent.name}: \"{reply_content}\"\n"
+            f"{prompt}"
+        )
 
     if agent:
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
@@ -130,7 +145,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             stopping_probability = team_configs.get("stopping_probability", 0.2)
             word_limit = team_configs.get("word_limit", 30)
 
-            l3_authoritarian_speaker = L3AuthoritarianSpeaker(
+            authoritarian_speaker = L3AuthoritarianSpeaker(
                 settings=settings,
                 chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
@@ -140,7 +155,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 word_limit=int(word_limit)
             )
 
-            result = l3_authoritarian_speaker.run(
+            result = authoritarian_speaker.run(
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,
@@ -154,7 +169,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             agents = [convert_model_to_response(item.agent) for item in team.team_agents if item.agent is not None]
             word_limit = team_configs.get("word_limit", 30)
 
-            l3_agent_debates = L3AgentDebates(
+            agent_debates = L3AgentDebates(
                 settings=settings,
                 chat_pubsub_service=chat_pubsub_service,
                 user=auth.user,
@@ -163,7 +178,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 word_limit=int(word_limit)
             )
 
-            result = l3_agent_debates.run(
+            result = agent_debates.run(
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,

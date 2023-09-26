@@ -365,7 +365,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                     value={formValue}
                     onKeyDown={handleKeyDown}
                     setValue={setFormValue}
-                    isGeneralChat={!agentId && !teamId}
+                    agentId={agentId}
+                    teamId={teamId}
                   />
                 </StyledInputWrapper>
               )}

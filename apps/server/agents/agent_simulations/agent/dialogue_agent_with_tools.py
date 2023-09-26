@@ -80,9 +80,6 @@ class DialogueAgentWithTools(DialogueAgent):
             input=prompt
         )
 
-        if self.is_memory:
-            memory.save_ai_message(res)
-
         message = AIMessage(
             content=res
         )

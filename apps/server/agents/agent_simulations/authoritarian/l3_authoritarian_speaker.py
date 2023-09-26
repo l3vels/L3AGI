@@ -23,7 +23,8 @@ from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
 from typings.team_agent import TeamAgentRole
 from utils.agent import convert_model_to_response
-
+from config import Config
+from memory.zep.zep_memory import ZepMemory
 
 class L3AuthoritarianSpeaker(L3Base):
     def __init__(
@@ -97,12 +98,21 @@ class L3AuthoritarianSpeaker(L3Base):
             [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
         )
 
-
-
         specified_topic = topic #self.generate_specified_prompt(topic, agent_summary, team)
 
-        print(f"Original topic:\n{topic}\n")
-        print(f"Detailed topic:\n{specified_topic}\n")
+        memory = ZepMemory(
+            session_id=self.session_id,
+            url=Config.ZEP_API_URL,
+            api_key=Config.ZEP_API_KEY,
+            memory_key="chat_history",
+            return_messages=True,
+        )
+
+        memory.human_name = self.user.name
+        memory.save_human_message(specified_topic)
+
+        # print(f"Original topic:\n{topic}\n")
+        # print(f"Detailed topic:\n{specified_topic}\n")
 
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
         # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
@@ -153,8 +163,13 @@ class L3AuthoritarianSpeaker(L3Base):
         simulator.inject("Audience member", specified_topic)
 
         while True:
-            agent_id, message = simulator.step()
+            agent_id, agent_name, message = simulator.step()
             ai_message = history.create_ai_message(message, None, agent_id)
+            
+            if team.is_memory:
+                memory.ai_name = agent_name
+                memory.save_ai_message(message)
+
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
             if director.stop:

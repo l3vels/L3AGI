@@ -129,8 +129,14 @@ class L3AgentDebates(L3Base):
         simulator.inject("Moderator", specified_topic)
 
         while n < max_iters:
-            agent_id, message = simulator.step()
+            agent_id, agent_name, message = simulator.step()
             ai_message = history.create_ai_message(message, None, agent_id)
+            
+            if team.is_memory:
+                memory.ai_name = agent_name
+                memory.save_ai_message(message)
+            
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+
             n += 1
  

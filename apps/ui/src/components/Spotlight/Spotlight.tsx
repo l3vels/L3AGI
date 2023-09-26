@@ -241,6 +241,7 @@ const Spotlight = () => {
                           onKeyDown={handleKeyDown}
                           setValue={setFormValue}
                           isGeneralChat={!agentId && !teamId}
+                          chatType={agentId ? 'agent' : teamId ? 'team' : 'general'}
                         />
                       </StyledInputCover>
 

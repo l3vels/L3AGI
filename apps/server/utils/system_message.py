@@ -17,9 +17,8 @@ class SystemMessageBuilder:
         instructions = self.build_instructions(self.configs.instructions)
         constraints = self.build_constraints(self.configs.constraints)
         datasources = self.build_datasources(self.configs.datasources)
-        tools = self.build_tools(self.configs.tools)
 
-        result = f"{role}{description}{goals}{instructions}{constraints}{datasources}{tools}"
+        result = f"{role}{description}{goals}{instructions}{constraints}{datasources}"
         return result
 
 
@@ -75,18 +74,3 @@ class SystemMessageBuilder:
         result += "\n"
 
         return result
-    
-    def build_tools(self, tools: List[str]):
-        # if len(tools) == 0:
-        #     return ""
-        
-        # tools = "TOOLS: \n" + "\n".join(f"- {tool}" for tool in tools) + "\n"
-        tools = (
-            # "{current_chat_data}\n"
-            "TOOLS:"
-            "------"
-            "Assistant has access to the following tools:"
-        )
-
-        return tools
-
