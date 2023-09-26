@@ -7,7 +7,7 @@ from utils.auth import authenticate
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
 from agents.conversational.conversational import ConversationalAgent
-from apps.server.agents.plan_and_execute.plan_and_execute import PlanAndExecute
+from agents.plan_and_execute.plan_and_execute import PlanAndExecute
 from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
 from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
@@ -23,6 +23,8 @@ from models.team import TeamModel
 from models.config import ConfigModel
 from agents.team_base import TeamOfAgentsType
 from services.pubsub import ChatPubSubService, AzurePubSubService
+from memory.zep.zep_memory import ZepMemory
+from config import Config
 
 router = APIRouter()
 
@@ -85,6 +87,16 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
     human_message_id = UUID(human_message['id'])
 
+    memory = ZepMemory(
+        session_id=session_id,
+        url=Config.ZEP_API_URL,
+        api_key=Config.ZEP_API_KEY,
+        memory_key="chat_history",
+        return_messages=True,
+    )
+
+    memory.human_name = auth.user.name
+
     chat_pubsub_service = ChatPubSubService(
         session_id=session_id,
         user=auth.user,
@@ -104,7 +116,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     if not settings.openai_api_key:
         message_text = f"Please add OpenAI API key in [Settings](/settings)"
         ai_message = history.create_ai_message(message_text, human_message_id)
-
+        memory.save_human_message(body.prompt)
+        memory.save_ai_message(message_text)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return message_text
