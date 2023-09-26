@@ -37,7 +37,6 @@ class DirectorDialogueAgentWithTools(DialogueAgentWithTools):
         self.stop = False
         self.stopping_probability = stopping_probability
         self.termination_clause = "Finish the conversation by stating a concluding message and thanking everyone."
-        self.continuation_clause = "Do not end the conversation. Keep the conversation going by adding your own ideas."
 
         # 1. have a prompt for generating a response to the previous speaker
         self.response_prompt_template = PromptTemplate(
@@ -110,7 +109,7 @@ Prompt the next speaker to speak with an insightful question.
     )  # Default value when all retries are exhausted
     def _choose_next_speaker(self) -> str:
         speaker_names = "\n".join(
-            [f"{idx}: {name}" for idx, name in enumerate(self.speakers)]
+            [f"{idx}: (Name:{agent_with_config.agent.name} - Role:{agent_with_config.agent.role}) - Description:{agent_with_config.agent.description}" for idx, agent_with_config in enumerate(self.speakers)]
         )
         choice_prompt = self.choose_next_speaker_prompt_template.format(
             message_history="\n".join(
