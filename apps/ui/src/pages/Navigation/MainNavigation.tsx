@@ -9,7 +9,7 @@ import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 
 import { useLocation, useNavigate } from 'react-router-dom'
-import { includes } from 'lodash'
+import includes from 'lodash/includes'
 
 const MainNavigation = () => {
   const navigate = useNavigate()

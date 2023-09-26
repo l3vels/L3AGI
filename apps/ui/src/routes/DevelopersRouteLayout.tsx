@@ -1,5 +1,5 @@
 import { Link, useLocation, useOutlet } from 'react-router-dom'
-import { includes } from 'lodash'
+import includes from 'lodash/includes'
 
 import {
   StyledAppContainer,

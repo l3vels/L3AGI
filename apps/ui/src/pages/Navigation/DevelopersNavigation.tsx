@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { includes } from 'lodash'
+import includes from 'lodash/includes'
 
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Logs from '@l3-lib/ui-core/dist/icons/Logs'
