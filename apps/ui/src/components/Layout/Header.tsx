@@ -7,6 +7,8 @@ import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
 import HeaderShare from 'components/HeaderShare/HeaderShare'
 import HeaderButtons from 'components/HeaderButtons'
+import Tags from '@l3-lib/ui-core/dist/Tags'
+
 import styled from 'styled-components'
 
 interface HeaderTypes {
@@ -27,7 +29,8 @@ const Header = ({ expandMode = false, isPublicRoute }: HeaderTypes) => {
       </StyledNavigationColumn>
       {!expandMode && (
         <StyledLogoWrapper to='/'>
-          <img src={logo} alt='Logo' />
+          <StyledLogo src={logo} alt='Logo' />
+          <StyledTags label='BETA' readOnly color={'gradient_yellow'} size={'small'} noAnimation />
         </StyledLogoWrapper>
       )}
       {!expandMode && (
@@ -45,4 +48,15 @@ export default Header
 
 const StyledHeaderButtonWrapper = styled.div`
   margin-left: auto;
+`
+const StyledLogo = styled.img`
+  width: 48px;
+  height: 48px;
+`
+
+const StyledTags = styled(Tags)`
+  div {
+    font-size: x-small !important;
+    padding: 0px 2px !important;
+  }
 `
