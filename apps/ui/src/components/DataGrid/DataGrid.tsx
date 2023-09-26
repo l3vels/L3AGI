@@ -25,7 +25,7 @@ import processDataFromClipboard from './helpers/processDataFromClipboard'
 import styled from 'styled-components'
 import { LayoutContext } from 'contexts'
 import { useLocation } from 'react-router-dom'
-import { includes } from 'lodash'
+import includes from 'lodash/includes'
 import { GridReadyEvent } from 'ag-grid-community'
 
 interface IProps {

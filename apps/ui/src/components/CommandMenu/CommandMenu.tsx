@@ -5,7 +5,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 
 import { Command } from 'cmdk'
-import { get, groupBy, has, slice } from 'lodash'
+import get from 'lodash/get'
+import groupBy from 'lodash/groupBy'
+import has from 'lodash/has'
+import slice from 'lodash/slice'
 
 import StarVector from 'assets/svgComponents/StarVector'
 import StarsVector from 'assets/svgComponents/StartsVector'
