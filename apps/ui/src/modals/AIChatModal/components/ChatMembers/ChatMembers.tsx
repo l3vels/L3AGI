@@ -160,18 +160,7 @@ const ChatMembers = ({
                               openModal({
                                 name: 'agent-view-modal',
                                 data: {
-                                  agent: {
-                                    agent: agentData.agent,
-                                    configs: {
-                                      tools: [],
-                                      goals: [],
-                                      constraints: [],
-                                      instructions: [],
-                                      datasources: [],
-                                      suggestions: [],
-                                      greeting: [],
-                                    },
-                                  },
+                                  id: agentData.agent.id,
                                 },
                               })
                             }

@@ -18,14 +18,20 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
+import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
+import { useModal } from 'hooks'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()
   const { data } = useTeamOfAgentsByIdService({ id: teamId })
+
+  const { openModal } = useModal()
 
   if (!data && !teamOfAgentsData) return <div />
 
@@ -89,7 +95,27 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                       />
                     </StyledMainTextWrapper>
 
-                    <Tags label={role} readOnly size='small' outlined />
+                    <StyledSecondInfoWrapper>
+                      <IconButton
+                        onClick={() =>
+                          openModal({
+                            name: 'agent-view-modal',
+                            data: {
+                              id: agent.id,
+                            },
+                          })
+                        }
+                        icon={() => (
+                          <StyledIconWrapper className='hiddenButton'>
+                            <EyeOpen size={50} />
+                          </StyledIconWrapper>
+                        )}
+                        size={IconButton.sizes.SMALL}
+                        kind={IconButton.kinds.TERTIARY}
+                        // ariaLabel='View'
+                      />
+                      <Tags label={role} readOnly size='small' outlined />
+                    </StyledSecondInfoWrapper>
                   </StyledAgent>
                 )
               })}
@@ -115,7 +141,7 @@ const StyledAgentsWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 6px;
 `
 const StyledAgent = styled.div`
   display: flex;
@@ -123,6 +149,16 @@ const StyledAgent = styled.div`
   align-items: center;
 
   gap: 6px;
+
+  padding: 5px 10px;
+  border-radius: 8px;
+  :hover {
+    background: rgba(0, 0, 0, 0.1);
+
+    .hiddenButton {
+      opacity: 1;
+    }
+  }
 `
 const StyledMainTextWrapper = styled.div`
   /* text-align: center; */
@@ -133,4 +169,17 @@ const StyledMainTextWrapper = styled.div`
   margin-right: auto;
   /* width: 100%; */
   /* max-width: 400px; */
+`
+const StyledSecondInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+`
+
+const StyledIconWrapper = styled.div`
+  /* color: #000; */
+  color: transparent;
+
+  opacity: 0;
 `
