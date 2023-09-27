@@ -23,7 +23,7 @@ import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { PublicRoute } from 'routes'
 
@@ -88,15 +88,26 @@ const Route = () => {
     return false
   })
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === darkTheme ? lightTheme : darkTheme))
+  const themes = {
+    dark: darkTheme,
+    light: lightTheme,
   }
+
+  const toggleTheme = () => {
+    const currentTheme = localStorage.getItem('theme')
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+    if (newTheme !== currentTheme) {
+      localStorage.setItem('theme', newTheme)
+      setTheme(themes[newTheme])
+    }
+  }
+
+  const initialTheme = localStorage.getItem('theme') || 'dark'
 
   if (loading) return <WelcomeLoader />
 
   return (
-    <ThemeProvider theme={theme}>
-      <button onClick={toggleTheme}>theme</button>
+    <ThemeProvider theme={initialTheme === 'dark' ? darkTheme : lightTheme}>
       <Routes>
         <>
           <Router element={<RootLayout />}>
@@ -242,7 +253,12 @@ const Route = () => {
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
-      <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
+      <CommandMenu
+        open={cmdkOpen}
+        setCmdkOpen={setCmdkOpen}
+        theme={theme}
+        toggleTheme={toggleTheme}
+      />
 
       {/* <NotificationsModal /> */}
     </ThemeProvider>

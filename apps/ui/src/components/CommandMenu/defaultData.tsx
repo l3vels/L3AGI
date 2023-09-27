@@ -148,18 +148,16 @@ export const defaultData = (path_id?: any) => {
     {
       id: uuidv4(),
       name: 'Dark',
-      url: 'create',
-      option: 'modal',
+      option: 'theme',
       group_name: 'go_to',
-      icon: <About />,
+      icon: <Add />,
     },
     {
       id: uuidv4(),
       name: 'Light',
-      url: 'create',
-      option: 'modal',
+      option: 'theme',
       group_name: 'go_to',
-      icon: <About />,
+      icon: <Add />,
     },
   ]
 }
