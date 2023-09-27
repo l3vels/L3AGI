@@ -32,7 +32,7 @@ class ChatMessage(BaseModel):
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
+    creator = relationship("UserModel", foreign_keys=[user_id], lazy='select')
 
     @classmethod
     def get_chat_message_by_id(cls, db, chat_message_id: UUID, account: AccountOutput):
@@ -71,5 +71,8 @@ class ChatMessage(BaseModel):
 
         if self.parent:
             data['parent'] = self.parent.to_dict()
+
+        if self.creator:
+            data['creator'] = self.creator.to_dict()
 
         return data
