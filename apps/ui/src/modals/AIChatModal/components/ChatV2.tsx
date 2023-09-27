@@ -27,6 +27,7 @@ import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
+import Button from '@l3-lib/ui-core/dist/Button'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
@@ -35,14 +36,16 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 import ChatMembers from './ChatMembers'
+import { TeamOfAgentsType } from 'types'
+import useStopChatService from 'services/chat/useStopChatService'
+import { useConfigsService } from 'services/config/useConfigsService'
+import getSessionId from '../utils/getSessionId'
 
 type ChatV2Props = {
   isPrivate?: boolean
 }
 
 const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
-  // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
-
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -75,6 +78,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     teamId,
   })
 
+  const { data: configs } = useConfigsService()
+
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const agentName = agentById?.agent?.name
 
@@ -84,6 +89,25 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
 
   const [createChatMessageService] = useCreateChatMessageService()
+  const { stopChatService, loading: stopChatLoading } = useStopChatService()
+
+  const sessionId = getSessionId({
+    user,
+    account,
+    isPrivateChat: isPrivate,
+    agentId,
+    teamId,
+  })
+
+  const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
+
+  const status = chatStatusConfig?.value
+
+  useEffect(() => {
+    if (!status) return
+
+    setThinking(status === 'Running')
+  }, [status])
 
   const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
     // Add message to cache immediately after user sends it. This message will be updated with sockets
@@ -161,18 +185,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
       const { id: localChatMessageRefId } = addMessagesToCache(message, 'human')
 
-      // if (apiVersion === ApiVersionEnum.L3_Conversational) {
-      //   // setNewMessage(message)
-      //   addMessagesToCache(message, 'human')
-      // }
-
-      // if (
-      //   // apiVersion === ApiVersionEnum.L3_PlanAndExecute ||
-      //   apiVersion === ApiVersionEnum.L3_PlanAndExecuteWithTools
-      // ) {
-      //   addMessagesToCache(message, 'human')
-      // }
-
       setThinking(true)
       setFormValue('')
       setUploadedFileObject(null)
@@ -195,10 +207,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         localChatMessageRefId, // Used to update the message with socket
         parentId: parentMessageId,
       })
-
-      // setChatResponse(res)
-      // await messageRefetch()
-      // setNewMessage(null)
 
       setThinking(false)
     } catch (e) {
@@ -223,7 +231,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   useEffect(() => {
     setAPIVersion(ApiVersionEnum.L3_Conversational)
-    // createMessage()
 
     setTimeout(() => {
       setFormValue('')
@@ -266,6 +273,21 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const filteredTypingUsers = socket?.typingUsersData?.filter(
     (data: any) => user.id !== data.userId,
   )
+
+  const canStopGenerating =
+    (teamOfAgents?.team_type === TeamOfAgentsType.Debates ||
+      teamOfAgents?.team_type === TeamOfAgentsType.AuthoritarianSpeaker) &&
+    status === 'Running'
+
+  const handleStopGenerating = async () => {
+    await stopChatService({
+      input: {
+        is_private_chat: isPrivate,
+        agent_id: agentId,
+        team_id: teamId,
+      },
+    })
+  }
 
   return (
     <StyledWrapper>
@@ -310,6 +332,19 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                 )
               })}
             </StyledSuggestionsContainer>
+
+            {canStopGenerating && (
+              <StyledStopGeneratingButton>
+                <Button
+                  onClick={handleStopGenerating}
+                  size={Button.sizes.SMALL}
+                  kind={Button.kinds.SECONDARY}
+                  disabled={stopChatLoading}
+                >
+                  Stop Generating
+                </Button>
+              </StyledStopGeneratingButton>
+            )}
           </StyledButtonGroup>
 
           <StyledForm>
@@ -588,6 +623,10 @@ const StyledSuggestionsContainer = styled.div`
   }
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+`
+
+const StyledStopGeneratingButton = styled.div`
+  margin-right: 94px;
 `
 
 const StyledFileWrapper = styled.div`

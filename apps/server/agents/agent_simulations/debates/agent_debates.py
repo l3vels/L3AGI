@@ -23,6 +23,8 @@ from models.datasource import DatasourceModel
 from agents.handle_agent_errors import handle_agent_error
 from config import Config
 from memory.zep.zep_memory import ZepMemory
+from models.config import ConfigModel
+from typings.chat import ChatStatus
 
 class AgentDebates(BaseAgent):
     def __init__(
@@ -129,7 +131,18 @@ class AgentDebates(BaseAgent):
         simulator.inject("Moderator", specified_topic)
 
         while n < max_iters:
+            status_config = ConfigModel.get_config_by_session_id(db, self.session_id, self.account)
+            
+            if status_config.value == ChatStatus.STOPPED.value:
+                break
+
             agent_id, agent_name, message = simulator.step()
+            
+            db.session.refresh(status_config)
+
+            if status_config.value == ChatStatus.STOPPED.value:
+                break
+
             ai_message = history.create_ai_message(message, None, agent_id)
             
             if team.is_memory:

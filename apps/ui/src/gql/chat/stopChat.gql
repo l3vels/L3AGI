@@ -1,5 +1,6 @@
-query configs @api(name: "ai") {
-  configs @rest(type: "Config", path: "/config", method: "GET", endpoint: "ai") {
+mutation stopChat($input: input!) @api(name: ai) {
+  stopChat: publish(input: $input)
+    @rest(type: "Config", path: "/chat/stop", method: "POST", bodyKey: "input", endpoint: "ai") {
     id
     key
     value
@@ -12,7 +13,6 @@ query configs @api(name: "ai") {
     team_id
     account_id
     workspace_id
-    session_id
     is_deleted
     created_by
     modified_by

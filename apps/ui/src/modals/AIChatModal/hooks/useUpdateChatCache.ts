@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import isNil from 'lodash/fp/isNil'
 import omitBy from 'lodash/omitBy'
 import CHAT_MESSAGES_GQL from '../../../gql/chat/chatMessages.gql'
+import CONFIGS_GQL from '../../../gql/ai/config/configs.gql'
 import { AuthContext } from 'contexts'
 import { Nullable } from 'types'
 
@@ -80,8 +81,44 @@ const useUpdateChatCache = () => {
     )
   }
 
+  const upsertChatStatusConfig = (
+    config: Record<string, unknown>,
+    {
+      is_private_chat,
+      agentId,
+      teamId,
+    }: {
+      is_private_chat?: boolean
+      agentId?: Nullable<string>
+      teamId?: Nullable<string>
+    } = {},
+  ) => {
+    apolloClient.cache.updateQuery({ query: CONFIGS_GQL }, data => {
+      const configs = data?.configs || []
+      const newConfigs = [...configs]
+
+      const newConfig = {
+        __typename: 'Config',
+        ...config,
+      }
+
+      const configIndex = newConfigs.findIndex((config: any) => config.id === newConfig.id)
+
+      if (configIndex !== -1) {
+        newConfigs[configIndex] = newConfig
+      } else {
+        newConfigs.push(newConfig)
+      }
+
+      return {
+        configs: newConfigs,
+      }
+    })
+  }
+
   return {
     upsertChatMessageInCache,
+    upsertChatStatusConfig,
   }
 }
 
