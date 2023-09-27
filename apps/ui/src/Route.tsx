@@ -79,8 +79,11 @@ import ToolkitModal from 'modals/ToolkitModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
-  const [theme, setTheme] = useState(darkTheme)
   const [cmdkOpen, setCmdkOpen] = useState(false)
+  const [theme, setTheme] = useState<string>(() => {
+    const storedTheme = localStorage.getItem('theme')
+    return storedTheme || 'dark'
+  })
 
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
@@ -88,26 +91,26 @@ const Route = () => {
     return false
   })
 
-  const themes = {
-    dark: darkTheme,
-    light: lightTheme,
-  }
+  useEffect(() => {
+    const currentThemeName = localStorage.getItem('theme')
+
+    if (currentThemeName && currentThemeName !== theme) {
+      setTheme(currentThemeName)
+    } else {
+      localStorage.setItem('theme', theme)
+    }
+  }, [theme])
 
   const toggleTheme = () => {
-    const currentTheme = localStorage.getItem('theme')
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light'
-    if (newTheme !== currentTheme) {
-      localStorage.setItem('theme', newTheme)
-      setTheme(themes[newTheme])
-    }
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('theme', newTheme)
+    setTheme(newTheme)
   }
-
-  const initialTheme = localStorage.getItem('theme') || 'dark'
 
   if (loading) return <WelcomeLoader />
 
   return (
-    <ThemeProvider theme={initialTheme === 'dark' ? darkTheme : lightTheme}>
+    <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Routes>
         <>
           <Router element={<RootLayout />}>
