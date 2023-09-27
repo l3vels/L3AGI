@@ -250,7 +250,7 @@ def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, te
                  .filter(ChatMessageModel.session_id == session_id)
                  .order_by(ChatMessageModel.created_on.desc())
                  .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent))
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.creator))
                  .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
@@ -286,7 +286,7 @@ def get_chat_messages(agent_id: Optional[UUID] = None, team_id: Optional[UUID] =
                  .filter(ChatMessageModel.session_id == session_id)
                  .order_by(ChatMessageModel.created_on.desc())
                  .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent))
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.creator))
                  .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]

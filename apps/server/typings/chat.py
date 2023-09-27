@@ -28,6 +28,7 @@ class ChatMessageOutput(BaseModel):
     team_id: Optional[UUID] = None
     team: Optional[Dict] = None
     user_id: UUID
+    creator: Optional[Dict] = None
     account_id: UUID
     message: Dict
     thoughts: Optional[List[Dict]] = None

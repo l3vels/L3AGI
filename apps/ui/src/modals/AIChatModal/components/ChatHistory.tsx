@@ -79,7 +79,7 @@ const ChatHistory = () => {
     <StyledRoot>
       {(agentById || teamById) && (
         <StyledMembersWrapper>
-          <ChatMembers agentById={agentById} teamOfAgents={teamById} />
+          <ChatMembers agentById={agentById} teamOfAgents={teamById} isHistory />
         </StyledMembersWrapper>
       )}
 
