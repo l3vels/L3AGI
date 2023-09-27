@@ -145,5 +145,21 @@ export const defaultData = (path_id?: any) => {
       group_name: 'go_to',
       icon: <About />,
     },
+    {
+      id: uuidv4(),
+      name: 'Dark',
+      url: 'create',
+      option: 'modal',
+      group_name: 'go_to',
+      icon: <About />,
+    },
+    {
+      id: uuidv4(),
+      name: 'Light',
+      url: 'create',
+      option: 'modal',
+      group_name: 'go_to',
+      icon: <About />,
+    },
   ]
 }
