@@ -28,30 +28,27 @@ const GetStartedContainer = ({
       <StyledHeader>
         <StyledColumn>
           <StyledCloseButton onClick={() => setShow(false)}>
-            <StyledCloseIcon />
+            <Close />
           </StyledCloseButton>
           {!noText && (
-            <StyledHeading
+            <Heading
               type={Heading.types.h1}
               value='Get Started'
               size='medium'
-              // customColor={'#fff'}
+              customColor={'#fff'}
             />
           )}
         </StyledColumn>
         {!noText && (
           <StyledColumn>
-            <StyledTypographyWrapper>
-              <Typography
-                value='Learn'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-                // customColor={'rgba(255, 255, 255, 0.6)'}
-              />
-            </StyledTypographyWrapper>
-
+            <Typography
+              value='Learn'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'rgba(255, 255, 255, 0.6)'}
+            />
             <StyledIconWrapper>
-              <StyledConnectIcon />
+              <Connect />
             </StyledIconWrapper>
           </StyledColumn>
         )}
@@ -111,33 +108,4 @@ const StyledDragScroll = styled(ScrollContainer)`
 `
 const StyledCloseButton = styled.div`
   cursor: pointer;
-`
-
-const StyledHeading = styled(Heading)`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#fff'};
-`
-const StyledTypographyWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(193,193,193)'
-      : 'rgba(255, 255, 255, 0.6)'};
-`
-
-const StyledCloseIcon = styled(Close)`
-  path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
-  }
-`
-
-const StyledConnectIcon = styled(Connect)`
-  path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgba(255,255,255,0.6)'};
-  }
 `

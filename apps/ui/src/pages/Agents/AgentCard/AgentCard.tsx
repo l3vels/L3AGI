@@ -83,22 +83,18 @@ const AgentCard = ({
           )}
         </StyledAvatarWrapper>
         <StyledBodyTextWrapper>
-          <StyledTypography>
-            <Typography
-              value={name}
-              type={Typography.types.P}
-              size={Typography.sizes.lg}
-              // customColor={'#FFF'}
-            />
-          </StyledTypography>
-          <StyledShortDescription>
-            <Typography
-              value={shortDescription}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              // customColor={'rgba(255,255,255, 0.8)'}
-            />
-          </StyledShortDescription>
+          <Typography
+            value={name}
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+            customColor={'#FFF'}
+          />
+          <Typography
+            value={shortDescription}
+            type={Typography.types.P}
+            size={Typography.sizes.sm}
+            customColor={'rgba(255,255,255, 0.8)'}
+          />
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
@@ -111,14 +107,12 @@ const AgentCard = ({
               textSizeRatio={1.5}
               avatar={creator.avatar}
             />
-            <StyledCreatorNameWrapper>
-              <Typography
-                value={creator.name}
-                type={Typography.types.P}
-                size={Typography.sizes.xss}
-                // customColor={'rgba(255,255,255, 0.6)'}
-              />
-            </StyledCreatorNameWrapper>
+            <Typography
+              value={creator.name}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255,255,255, 0.6)'}
+            />
           </StyledCreatorWrapper>
         )}
         <StyledButtonsWrapper className='footerButtons'>
@@ -145,7 +139,7 @@ const AgentCard = ({
               onClick={onViewClick}
               icon={() => (
                 <StyledIconWrapper>
-                  <StyledEyeOpenIcon size={50} />
+                  <EyeOpen size={50} />
                 </StyledIconWrapper>
               )}
               size={Button.sizes.SMALL}
@@ -178,13 +172,8 @@ export const StyledAgentCard = styled.div`
 
   border-radius: 10px;
   /* background: rgba(0, 0, 0, 0.5); */
-  // background: rgba(0, 0, 0, 0.2);
-  background: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(255, 255, 255)'
-      : 'rgba(0, 0, 0, 0.2)'};
-  border: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? '1px solid #D2D2D2' : null};
+  background: rgba(0, 0, 0, 0.2);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,6 +194,7 @@ const StyledCardHeader = styled.div`
 
   margin-bottom: auto;
   padding-bottom: 5px;
+
   min-height: 20px;
   /* margin-bottom: 10px; */
 `
@@ -245,6 +235,7 @@ const StyledBodyTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* gap: 5px; */
+
   overflow: hidden;
 
   /* padding-top: 5px; */
@@ -286,30 +277,4 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-`
-const StyledTypography = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#FFF'};
-`
-
-const StyledShortDescription = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(110,110,110)'
-      : 'rgba(255,255,255, 0.8)'};
-`
-const StyledCreatorNameWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(193,193,193)'
-      : 'rgba(255,255,255, 0.6)'};
-`
-
-const StyledEyeOpenIcon = styled(EyeOpen)`
-  path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
-  }
 `

@@ -13,6 +13,7 @@ type ArrowNavigationProps = {
 
 const ArrowNavigation = ({ onClick }: ArrowNavigationProps) => {
   const navigate = useNavigate()
+
   const handleLeftNavigation = () => {
     if (onClick) {
       onClick()
@@ -29,7 +30,7 @@ const ArrowNavigation = ({ onClick }: ArrowNavigationProps) => {
     <StyledColumnContainer>
       <IconButton
         size={IconButton.sizes.SMALL}
-        icon={() => <StyledNavigationChevronLeft size='16' />}
+        icon={() => <NavigationChevronLeft size='16' />}
         kind={IconButton.kinds.TERTIARY}
         onClick={handleLeftNavigation}
       />
@@ -37,7 +38,7 @@ const ArrowNavigation = ({ onClick }: ArrowNavigationProps) => {
       <StyledButtonWrapper isDisabled={onClick ? true : false}>
         <IconButton
           size={IconButton.sizes.SMALL}
-          icon={() => <StyledNavigationChevronRight size='16' />}
+          icon={() => <NavigationChevronRight size='16' />}
           kind={IconButton.kinds.TERTIARY}
           onClick={handleRightNavigation}
         />
@@ -60,22 +61,4 @@ const StyledButtonWrapper = styled.div<{ isDisabled: boolean }>`
       opacity: 0.5;
       pointer-events: none;
     `}
-`
-
-const StyledNavigationChevronLeft = styled(NavigationChevronLeft)`
-  path {
-    color: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
-  }
-`
-
-const StyledNavigationChevronRight = styled(NavigationChevronRight)`
-  path {
-    color: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
-  }
 `

@@ -55,41 +55,32 @@ const TeamOfAgentCard = ({
             textSizeRatio={1.5}
             avatar={creator.avatar}
           />
-          <StyledCreatorNameWrapper>
-            <Typography
-              value={creator.name}
-              type={Typography.types.P}
-              size={Typography.sizes.xss}
-              // customColor={'rgba(255,255,255, 0.6)'}
-            />
-          </StyledCreatorNameWrapper>
+
+          <Typography
+            value={creator.name}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            customColor={'rgba(255,255,255, 0.6)'}
+          />
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
-        <StyledTextWrapper>
-          <Heading type={Heading.types.h1} value={name} size='medium' />
-        </StyledTextWrapper>
-
-        <StyledShortDescription>
-          <Typography
-            value={shortDescription}
-            type={Typography.types.P}
-            size={Typography.sizes.sm}
-            // customColor={'rgba(255,255,255, 0.8)'}
-          />
-        </StyledShortDescription>
+        <Heading type={Heading.types.h1} value={name} customColor={'#FFF'} size='medium' />
+        <Typography
+          value={shortDescription}
+          type={Typography.types.P}
+          size={Typography.sizes.sm}
+          customColor={'rgba(255,255,255, 0.8)'}
+        />
 
         {teamAgents?.length > 0 && (
           <StyledRowWrapper>
-            <StyledTextWrapper>
-              <Typography
-                value={'Agents'}
-                type={Typography.types.P}
-                size={Typography.sizes.md}
-                // customColor={'#FFF'}
-              />
-            </StyledTextWrapper>
-
+            <Typography
+              value={'Agents'}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
             <StyledAvatarsContainer>
               {teamAgents?.map((teamAgents: any) => {
                 const { id, agent } = teamAgents
@@ -106,22 +97,18 @@ const TeamOfAgentCard = ({
 
         {teamType && (
           <StyledRowWrapper>
-            <StyledTextWrapper>
-              <Typography
-                value={'Type'}
-                type={Typography.types.P}
-                size={Typography.sizes.md}
-                // customColor={'#FFF'}
-              />
-            </StyledTextWrapper>
-            <StyledShortDescription>
-              <Typography
-                value={teamType}
-                type={Typography.types.P}
-                size={Typography.sizes.xss}
-                // customColor={'rgba(255,255,255,0.8)'}
-              />
-            </StyledShortDescription>
+            <Typography
+              value={'Type'}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+              customColor={'#FFF'}
+            />
+            <Typography
+              value={teamType}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+              customColor={'rgba(255,255,255,0.8)'}
+            />
           </StyledRowWrapper>
         )}
       </StyledBody>
@@ -157,7 +144,7 @@ const TeamOfAgentCard = ({
                 onClick={onViewClick}
                 icon={() => (
                   <StyledIconWrapper>
-                    <StyledEyeOpenIcon size={50} />
+                    <EyeOpen size={50} />
                   </StyledIconWrapper>
                 )}
                 size={Button.sizes.SMALL}
@@ -196,12 +183,9 @@ const StyledCard = styled.div`
   /* padding-top: 30px; */
 
   border-radius: 10px;
-  border: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? '1px solid #D2D2D2' : null};
-  background: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(255, 255, 255)'
-      : 'rgba(0, 0, 0, 0.2)'};
+  /* background: rgba(0, 0, 0, 0.5); */
+  background: rgba(0, 0, 0, 0.2);
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -272,6 +256,7 @@ const StyledBody = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
+
   gap: 8px;
 `
 
@@ -286,34 +271,4 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(255, 255, 255)'
-      : 'rgba(0, 0, 0, 0.2)'};
-`
-
-const StyledTextWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#fff'};
-`
-const StyledShortDescription = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(110,110,110)'
-      : 'rgba(255,255,255, 0.8)'};
-`
-const StyledCreatorNameWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(193,193,193)'
-      : 'rgba(255,255,255, 0.6)'};
-`
-
-const StyledEyeOpenIcon = styled(EyeOpen)`
-  path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
-  }
 `
