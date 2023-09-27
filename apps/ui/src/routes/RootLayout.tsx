@@ -56,7 +56,8 @@ const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
     `};
 `
 const StyledFirstName = styled.span`
-  color: #fff;
+  color: ${({ theme }) =>
+    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(110,110,110)' : ' #fff'};
   @media (max-width: 1100px) {
     display: none;
   }
