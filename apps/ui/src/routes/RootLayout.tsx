@@ -33,7 +33,7 @@ const RootLayout = () => {
         {user && <Spotlight />}
       </StyledChatInputWrapper>
 
-      {user && <ChatSwitcher isChatOpen={isCheckedRoute} />}
+      {/* {user && <ChatSwitcher isChatOpen={isCheckedRoute} />} */}
     </>
   )
 }

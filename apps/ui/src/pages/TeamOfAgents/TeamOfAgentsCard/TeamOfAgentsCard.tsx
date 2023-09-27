@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -236,13 +236,19 @@ const StyledIconWrapper = styled.div`
   /* color: #000; */
   color: transparent;
 `
-const StyledInnerButtonWrapper = styled.div`
+export const StyledInnerButtonWrapper = styled.div<{ secondary?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   gap: 10px;
   padding: 10px 18px;
+
+  ${p =>
+    p.secondary &&
+    css`
+      padding: 5px;
+    `};
 `
 
 const StyledRowWrapper = styled.div`
@@ -264,7 +270,7 @@ const StyledAvatarsContainer = styled.div`
   display: flex;
   align-items: center;
 `
-const StyledChatButtonWrapper = styled.div`
+export const StyledChatButtonWrapper = styled.div`
   margin-left: auto;
 `
 const StyledCreatorWrapper = styled.div`
