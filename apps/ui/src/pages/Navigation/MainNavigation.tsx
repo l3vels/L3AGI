@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { DefaultTheme } from 'styled-components'
 
 import About from '@l3-lib/ui-core/dist/icons/About'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
@@ -32,12 +32,12 @@ const MainNavigation = () => {
   return (
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-        <About />
+        <StyledAboutIcon />
 
         <span>Home</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
-        <Collection />
+        <StyledCollectionIcon />
         <span>Agents</span>
       </StyledLi>
       <StyledLi
@@ -45,7 +45,7 @@ const MainNavigation = () => {
         onClick={() => onHandleClick('/team-of-agents')}
       >
         <StyledIconWrapper>
-          <Team size={30} />
+          <StyledTeamIcon size={30} />
         </StyledIconWrapper>
         <span>Team</span>
       </StyledLi>
@@ -54,17 +54,17 @@ const MainNavigation = () => {
         onClick={() => onHandleClick('/datasources')}
       >
         <StyledValueIcon>
-          <ValueOutline size={38} />
+          <StyledValueOutLineIcon size={38} />
         </StyledValueIcon>
         <span>Data sources</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
-        <Add size={40} />
+        <StyledAddIcon size={40} />
         <span>Toolkits</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
         <StyledIconWrapper>
-          <Launch size={30} />
+          <StyledLaunchIcon size={30} />
         </StyledIconWrapper>
         <span>Discover</span>
       </StyledLi>
@@ -96,18 +96,24 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
-    color: var(--content-content-tertiary, rgba(255, 255, 255, 0.6));
+    color: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(206,206,206)'
+        : 'var(--content-content-tertiary, rgba(255, 255, 255, 0.6))'};
   }
   opacity: 0.8;
-  ${({ isActive }) =>
+  ${({ isActive, theme }) =>
     isActive &&
     `
     opacity: 1;
     border-radius: 6px;
     background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.10));
     span{
-      color: var(--content-content-primary, #FFF);
-    }
+      color: ${
+        theme.body.backgroundColor === 'rgb(255, 255, 255)'
+          ? 'rgb(77, 77, 77)'
+          : 'var(--content-content-primary, #FFF)'
+      };
     svg{
       path{
         fill-opacity: 1
@@ -121,6 +127,60 @@ const StyledIconWrapper = styled.div`
   /* margin-bottom: 10px; */
   margin-top: 10px;
 `
+const StyledAboutIcon = styled(About)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255, 255, 255)'};
+  }
+`
+
+const StyledCollectionIcon = styled(Collection)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255, 255, 255)'};
+  }
+`
+
+const StyledTeamIcon = styled(Team)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255, 255, 255)'};
+  }
+`
+
+const StyledValueOutLineIcon = styled(ValueOutline)`
+  path {
+    stroke: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255, 255, 255)'};
+  }
+`
+
+const StyledAddIcon = styled(Add)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255, 255, 255)'};
+  }
+`
+
+const StyledLaunchIcon = styled(Launch)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255, 255, 255)'};
+  }
+`
+
 export const StyledValueIcon = styled.div`
   color: transparent;
   background: transparent;
