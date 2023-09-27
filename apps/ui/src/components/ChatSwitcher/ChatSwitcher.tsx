@@ -52,12 +52,12 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
               navigate(-1)
             }}
           >
-            <Collection />
+            <StyledCollectionIcon />
           </StyledIcon>
         </Tooltip>
         <Tooltip content={() => <span>Chat</span>} position={Tooltip.positions.BOTTOM}>
           <StyledIcon picked={isChatOpen} onClick={handleChatButton}>
-            <Mention size='46' />
+            <StyledMentionIcon size='46' />
           </StyledIcon>
         </Tooltip>
       </StyledChatSwitcher>
@@ -67,7 +67,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
 
 export default ChatSwitcher
 
-const StyledRoot = styled.div<{ collapsed: boolean }>`
+const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   position: absolute;
   top: 50%;
   left: 0;
@@ -114,11 +114,13 @@ const StyledChatSwitcher = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.1);
-  /* background: var(--gradient-blue, linear-gradient(180deg, #4f71e0 0%, #5370d1 100%)); */
-
+  border: ${({ theme }) =>
+    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? '1px solid #D2D2D2' : null};
+  background: ${({ theme }) =>
+    theme.body.backgroundColor === 'rgb(255, 255, 255)'
+      ? 'rgb(246,246,248)'
+      : 'rgba(255, 255, 255, 0.1)'};
   /* Style */
   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
@@ -142,7 +144,11 @@ const StyledIcon = styled.div<{ picked: boolean }>`
   justify-content: center;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    // background: rgba(255, 255, 255, 0.1);
+    background: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(229,229,229)'
+        : 'rgba(255, 255, 255, 0.1)'};
     cursor: pointer;
   }
 
@@ -152,7 +158,30 @@ const StyledIcon = styled.div<{ picked: boolean }>`
       background: rgba(255, 255, 255, 0.3);
       &:hover {
         background: rgba(255, 255, 255, 0.3);
+        background: ${({ theme }) =>
+          theme.body.backgroundColor === 'rgb(255, 255, 255)'
+            ? 'rgb(255,255,255)'
+            : 'rgba(255, 255, 255, 0.1)'};
+    }
         cursor: auto;
       }
     `};
+`
+
+const StyledCollectionIcon = styled(Collection)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255,255,255)'};
+  }
+`
+
+const StyledMentionIcon = styled(Mention)`
+  path {
+    stroke: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255,255,255)'};
+  }
 `
