@@ -152,7 +152,9 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   </StyledUploadedFiles>
 
                   <DataSourceDropdown
-                    onHelpClick={() => window.open('', '_blank')}
+                    onHelpClick={() =>
+                      window.open(import.meta.env.REACT_APP_INDEX_TYPES_LINK, '_blank')
+                    }
                     label={'Index Type'}
                     fieldName={'index_type'}
                     fieldValue={index_type}
@@ -165,7 +167,9 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   />
 
                   <DataSourceDropdown
-                    onHelpClick={() => window.open('', '_blank')}
+                    onHelpClick={() =>
+                      window.open(import.meta.env.REACT_APP_RESPONSE_MODES_LINK, '_blank')
+                    }
                     label={'Response Mode'}
                     fieldName={'response_mode'}
                     fieldValue={response_mode}
