@@ -34,7 +34,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const [connectedUsers, setConnectedUsers] = useState<string[]>([])
   const [typingUsersData, setTypingUsersData] = useState<any>([])
 
-  const { upsertChatMessageInCache } = useUpdateChatCache()
+  const { upsertChatMessageInCache, upsertChatStatusConfig } = useUpdateChatCache()
 
   const getClientAccessUrl = useCallback(async () => {
     const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${user.id}`
@@ -70,6 +70,16 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         })
 
         setIsNewMessage(true)
+      }
+
+      if (data.type === 'CHAT_STATUS') {
+        console.log('CHAT_STATUS', data)
+
+        upsertChatStatusConfig(data.config, {
+          is_private_chat: data.is_private_chat,
+          agentId: data.agent_id,
+          teamId: data.team_id,
+        })
       }
     })
 
@@ -170,7 +180,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         noEcho: true,
         fireAndForget: false,
       })
-      // console.log(response, 'sendToGroup response')
+
       await mainClient?.sendEvent(eventName, chat, 'json')
     } catch (error) {
       // console.error(error)

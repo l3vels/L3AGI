@@ -1,0 +1,8 @@
+#import "../ai/config/configFragment.gql"
+
+mutation stopChat($input: input!) @api(name: ai) {
+  stopChat: publish(input: $input)
+    @rest(type: "Config", path: "/chat/stop", method: "POST", bodyKey: "input", endpoint: "ai") {
+    ...ConfigFragment
+  }
+}

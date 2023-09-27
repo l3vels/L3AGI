@@ -1,11 +1,13 @@
-import sentry_sdk
+import json
 from typing import Dict, Optional, Any
+import sentry_sdk
 from azure.messaging.webpubsubservice import WebPubSubServiceClient
 from azure.core.exceptions import AzureError
 from azure.identity import DefaultAzureCredential
 from config import Config
 from typings.user import UserOutput
-
+from datetime import datetime
+from uuid import UUID
 
 class AzurePubSubService:
     def __init__(self):
@@ -33,7 +35,6 @@ class AzurePubSubService:
             sentry_sdk.capture_exception(err)
 
 
-
 class ChatPubSubService:
     def __init__(self, session_id: str, user: UserOutput, is_private_chat: bool, team_id: Optional[str] = None, agent_id: Optional[str] = None):
         self.session_id = session_id
@@ -56,3 +57,27 @@ class ChatPubSubService:
             'agent_id': self.agent_id,
             'team_id': self.team_id,
         })
+
+    def send_chat_status(self, config: Dict):
+        """Sends chat status object"""
+        data = json.loads(json.dumps(config, cls=PubSubJSONEncoder))
+
+        self.azure_pubsub_service.send_to_group(self.session_id, message={
+            'type': 'CHAT_STATUS',
+            'from': str(self.user.id),
+            'config': data,
+            'is_private_chat': self.is_private_chat,
+            'agent_id': self.agent_id,
+            'team_id': self.team_id,
+        })
+
+
+class PubSubJSONEncoder(json.JSONEncoder):
+    def default(self, obj: object):
+        if isinstance(obj, UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return str(obj)
+        if isinstance(obj, datetime):
+            # for datetime objects, convert to string in your preferred format
+            return obj.isoformat()
+        return super().default(obj)

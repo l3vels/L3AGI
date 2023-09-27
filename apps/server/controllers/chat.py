@@ -11,20 +11,22 @@ from agents.plan_and_execute.plan_and_execute import PlanAndExecute
 from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
 from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
-from typings.chat import ChatMessageInput, NegotiateOutput
+from typings.chat import ChatMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention
 from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
 from utils.agent import convert_model_to_response
 from tools.datasources.get_datasource_tools import get_datasource_tools
-from typings.chat import ChatMessageOutput
+from typings.config import ConfigInput, ConfigOutput
 from models.team import TeamModel
 from models.config import ConfigModel
 from agents.team_base import TeamOfAgentsType
 from services.pubsub import ChatPubSubService, AzurePubSubService
 from memory.zep.zep_memory import ZepMemory
+from typings.chat import ChatStatus
 from config import Config
+from utils.configuration import convert_model_to_response as convert_config_model_to_response
 
 router = APIRouter()
 
@@ -45,6 +47,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     team: TeamModel = None
     team_configs = None
     parent: ChatMessageModel = None
+    
+    team_status_config: Optional[ConfigModel] = None
 
     if body.parent_id:
         parent = ChatMessageModel.get_chat_message_by_id(db, body.parent_id, auth.account)
@@ -149,6 +153,22 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             )
 
             return plan_and_execute.run(settings, chat_pubsub_service, team, prompt, history, human_message_id)
+        
+        team_status_config = ConfigModel.get_config_by_session_id(db, session_id, auth.account)
+        
+        if team_status_config:
+            team_status_config.value = ChatStatus.RUNNING.value
+            db.session.add(team_status_config)
+            db.session.commit()
+        if not team_status_config:
+            team_status_config = ConfigModel.create_config(
+                db,
+                ConfigInput(key="status", value=ChatStatus.RUNNING.value, key_type="string", is_secret=False, is_required=False, session_id=session_id),
+                auth.user,
+                auth.account,
+            )
+
+        chat_pubsub_service.send_chat_status(config=convert_config_model_to_response(team_status_config).dict())
 
         if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
             topic = prompt
@@ -166,14 +186,12 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 word_limit=int(word_limit)
             )
 
-            result = authoritarian_speaker.run(
+            authoritarian_speaker.run(
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,
                 history=history,
             )
-
-            return result
 
         if team.team_type == TeamOfAgentsType.DEBATES.value:
             topic = prompt
@@ -189,7 +207,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 word_limit=int(word_limit)
             )
 
-            result = agent_debates.run(
+            agent_debates.run(
                 topic=topic,
                 team=team,
                 agents_with_configs=agents,
@@ -197,11 +215,23 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
                 is_private_chat=body.is_private_chat
             )
 
-            return result            
+        team_status_config.value = ChatStatus.IDLE.value
+        db.session.add(team_status_config)
+        db.session.commit()
 
-        if team.team_type == TeamOfAgentsType.DECENTRALIZED_SPEAKERS.value:
-            pass
+        chat_pubsub_service.send_chat_status(config=convert_config_model_to_response(team_status_config).dict())
 
+        return ""
+
+
+@router.post("/stop", status_code=201, response_model=ConfigOutput)
+def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
+    team_status_config = ConfigModel.get_config_by_session_id(db, session_id, auth.account)
+    team_status_config.value = ChatStatus.STOPPED.value
+    db.session.add(team_status_config)
+    db.session.commit()
+    return convert_config_model_to_response(team_status_config)
 
 
 @router.get("", status_code=200, response_model=List[ChatMessageOutput])

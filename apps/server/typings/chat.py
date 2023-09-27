@@ -2,6 +2,12 @@ from typing import Optional, List, Dict
 from uuid import UUID
 from pydantic import BaseModel
 from datetime import datetime
+from enum import Enum
+
+class ChatStatus(Enum):
+    IDLE = 'Idle'
+    RUNNING = 'Running'
+    STOPPED = 'Stopped'
 
 class ChatMessageInput(BaseModel):
     prompt: str
@@ -30,3 +36,8 @@ class ChatMessageOutput(BaseModel):
 
 class NegotiateOutput(BaseModel):
     url: str
+
+class ChatStopInput(BaseModel):
+    is_private_chat: bool
+    agent_id: Optional[UUID] = None
+    team_id: Optional[UUID] = None

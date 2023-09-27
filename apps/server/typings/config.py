@@ -12,6 +12,7 @@ class ConfigInput(BaseModel):
     datasource_id: Optional[UUID4]
     workspace_id: Optional[UUID4]
     team_id: Optional[UUID4]
+    session_id: Optional[UUID4]
 
 
 class ConfigOutput(BaseModel):
@@ -30,6 +31,7 @@ class ConfigOutput(BaseModel):
     is_deleted: bool
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]
+    session_id: Optional[UUID4]
     
 class ConfigQueryParams(BaseModel):
     id: Optional[str]
@@ -39,6 +41,7 @@ class ConfigQueryParams(BaseModel):
     toolkit_id: Optional[UUID4]
     datasource_id: Optional[UUID4]
     workspace_id: Optional[UUID4]
+    session_id: Optional[UUID4]
 
 
 class AccountSettings(BaseModel):

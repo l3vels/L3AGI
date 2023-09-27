@@ -1,0 +1,18 @@
+fragment ConfigFragment on Config {
+  id
+  key
+  value
+  key_type
+  is_secret
+  is_required
+  agent_id
+  toolkit_id
+  datasource_id
+  team_id
+  account_id
+  workspace_id
+  session_id
+  is_deleted
+  created_by
+  modified_by
+}
