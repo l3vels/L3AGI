@@ -18,7 +18,7 @@ const darkTheme: DefaultTheme = {
 const lightTheme: DefaultTheme = {
   body: {
     backgroundImage: defaultBgImage,
-    backgroundColor: 'rgb(252,252,252)',
+    backgroundColor: 'rgb(255, 255, 255)',
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(50px);',
     textColor: 'rgba(255, 255, 255)',
