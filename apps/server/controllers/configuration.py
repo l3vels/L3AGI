@@ -20,14 +20,18 @@ from datasources.file.file_retriever import FileDatasourceRetriever
 router = APIRouter()
 
 # TODO: refactor update method in models to be flexible.
-def index_documents(urls: str, datasource_id: UUID, account: AccountOutput):
+def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
     settings = ConfigModel.get_account_settings(db, account)
     datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
 
     try:
-        files = json.loads(urls)
+        value = json.loads(value)
+        files = value['files']
+        index_type = value['index_type']
+        response_mode = value['response_mode']
+
         file_urls = [file['url'] for file in files]
-        retriever = FileDatasourceRetriever(settings, str(account.id), str(datasource_id))
+        retriever = FileDatasourceRetriever(settings, index_type, response_mode, str(account.id), str(datasource_id))
         retriever.index_documents(file_urls)
 
         datasource.status = DatasourceStatus.READY.value
