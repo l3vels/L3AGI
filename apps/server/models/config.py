@@ -174,11 +174,12 @@ class ConfigModel(BaseModel):
     @classmethod
     def get_config_by_session_id(cls, db: DBSessionMeta, session_id: str, account: AccountOutput):
         """
-            Get Config from config_id
+            Get Config from session_id
 
             Args:
-                session: The database session.
-                config_id(int) : Unique identifier of an Config.
+                db: The database session.
+                session_id(str): Unique identifier of an Config.
+                account(AccountOutput): Account
 
             Returns:
                 Config: Config object is returned.

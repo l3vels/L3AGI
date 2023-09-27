@@ -36,7 +36,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
 import ChatMembers from './ChatMembers'
-import { TeamOfAgentsType } from 'types'
+import { ChatStatus, TeamOfAgentsType } from 'types'
 import useStopChatService from 'services/chat/useStopChatService'
 import { useConfigsService } from 'services/config/useConfigsService'
 import getSessionId from '../utils/getSessionId'
@@ -106,7 +106,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   useEffect(() => {
     if (!status) return
 
-    setThinking(status === 'Running')
+    setThinking(status === ChatStatus.Running)
   }, [status])
 
   const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
@@ -275,9 +275,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   )
 
   const canStopGenerating =
+    status === ChatStatus.Running &&
     (teamOfAgents?.team_type === TeamOfAgentsType.Debates ||
-      teamOfAgents?.team_type === TeamOfAgentsType.AuthoritarianSpeaker) &&
-    status === 'Running'
+      teamOfAgents?.team_type === TeamOfAgentsType.AuthoritarianSpeaker)
 
   const handleStopGenerating = async () => {
     await stopChatService({

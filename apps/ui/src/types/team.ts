@@ -4,3 +4,9 @@ export enum TeamOfAgentsType {
   PlanAndExecute = 'Plan and Execute',
   DecentralizedSpeakers = 'Decentralized Speakers',
 }
+
+export enum ChatStatus {
+  Idle = 'Idle',
+  Running = 'Running',
+  Stopped = 'Stopped',
+}
