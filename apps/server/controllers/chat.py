@@ -42,10 +42,10 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     agent_id = body.agent_id or mentioned_agent_id
     team_id = body.team_id or mentioned_team_id
 
-    agent = None
     agent_with_configs = None
     team: TeamModel = None
     team_configs = None
+    
     parent: ChatMessageModel = None
     
     team_status_config: Optional[ConfigModel] = None
@@ -55,6 +55,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
         if not parent:
             raise HTTPException(status_code=404, detail="Parent message not found")
+        
+        agent_with_configs = convert_model_to_response(parent.agent)
 
 
     if agent_id:
@@ -134,7 +136,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             f"{prompt}"
         )
 
-    if agent:
+    if agent_with_configs:
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
 
         datasource_tools = get_datasource_tools(datasources, settings, auth.account)
