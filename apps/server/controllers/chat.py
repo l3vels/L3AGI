@@ -12,7 +12,7 @@ from agents.agent_simulations.authoritarian.authoritarian_speaker import Authori
 from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput
-from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention
+from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention, MentionModule
 from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
 from models.datasource import DatasourceModel
@@ -27,8 +27,30 @@ from memory.zep.zep_memory import ZepMemory
 from typings.chat import ChatStatus
 from config import Config
 from utils.configuration import convert_model_to_response as convert_config_model_to_response
+from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings
 
 router = APIRouter()
+
+def run_conversational_agent(agent_with_configs: AgentWithConfigsOutput, auth: UserAccount, session_id: str, prompt: str, human_message_id: UUID, chat_pubsub_service: ChatPubSubService, settings: AccountSettings, team_id: Optional[UUID] = None, parent_id: Optional[UUID] = None):
+    history = PostgresChatMessageHistory(
+        session_id=session_id,
+        account_id=auth.account.id,
+        user_id=auth.user.id,
+        user=auth.user,
+        parent_id=parent_id,
+        team_id=team_id,
+        agent_id=agent_with_configs.agent.id
+    )
+
+    datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
+
+    datasource_tools = get_datasource_tools(datasources, settings, auth.account)
+    agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, auth.account, settings)
+    tools = datasource_tools + agent_tools
+
+    conversational = ConversationalAgent(auth.user, auth.account, session_id)
+    return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)  
 
 @router.post("", status_code=201)
 def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
@@ -37,17 +59,24 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     """
 
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
-    mentioned_agent_id, mentioned_team_id, prompt = parse_agent_mention(body.prompt)
+    mentions = parse_agent_mention(body.prompt)
 
-    agent_id = body.agent_id or mentioned_agent_id
-    team_id = body.team_id or mentioned_team_id
+    agents: List[AgentWithConfigsOutput] = []
+    prompt = body.prompt
 
-    agent = None
-    agent_with_configs = None
-    team: TeamModel = None
-    team_configs = None
+    # Multiple mentioned agents
+    for agent_id, cleaned_prompt in mentions:
+        agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
+
+        if not agent:
+            raise HTTPException(status_code=404, detail="Agent not found")
+        
+        agents.append(convert_model_to_response(agent))
+        prompt = cleaned_prompt
+
     parent: ChatMessageModel = None
-    
+    team: TeamModel = None
+    team_configs = {}
     team_status_config: Optional[ConfigModel] = None
 
     if body.parent_id:
@@ -55,27 +84,33 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
 
         if not parent:
             raise HTTPException(status_code=404, detail="Parent message not found")
+        
+        # If there are no mentions, use agent, which user replies to
+        if len(agents) == 0:
+            agents.append(convert_model_to_response(parent.agent))
 
-
-    if agent_id:
-        agent = AgentModel.get_agent_by_id(db, agent_id, auth.account)
+    if body.agent_id:
+        agent = AgentModel.get_agent_by_id(db, body.agent_id, auth.account)
 
         if not agent:
             raise HTTPException(status_code=404, detail="Agent not found")
 
-        agent_with_configs = convert_model_to_response(agent)
+        # If there are no mentions or user is not replying, use default agent from chat
+        if len(agents) == 0:
+            agents.append(convert_model_to_response(agent))
 
 
-    if team_id:
-        team = TeamModel.get_team_with_agents(db, auth.account, team_id)
+    if body.team_id:
+        team = TeamModel.get_team_with_agents(db, auth.account, body.team_id)
         
         if not team:
-            raise HTTPException(status_code=404, detail="Team of agents not found")
+            raise HTTPException(status_code=404, detail="Team of Agents not found")
         
-        team_configs = {}
-
         for config in team.configs:
             team_configs[config.key] = config.value
+
+
+    current_agent_id = agents[0].agent.id if len(agents) == 1 else None
 
     history = PostgresChatMessageHistory(
         session_id=session_id,
@@ -83,12 +118,11 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         user_id=auth.user.id,
         user=auth.user,
         parent_id=body.parent_id,
-        team_id=team_id,
-        agent_id=agent_id
+        team_id=body.team_id,
+        agent_id=current_agent_id
     )
 
     human_message = history.create_human_message(body.prompt)
-
     human_message_id = UUID(human_message['id'])
 
     memory = ZepMemory(
@@ -105,15 +139,15 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
         session_id=session_id,
         user=auth.user,
         is_private_chat=body.is_private_chat,
-        agent_id=str(body.agent_id) if body.agent_id else body.agent_id,
-        team_id=str(body.team_id) if body.team_id else body.team_id,
+        agent_id=str(body.agent_id) if body.agent_id else None,
+        team_id=str(body.team_id) if body.team_id else None,
     )
 
     chat_pubsub_service.send_chat_message(chat_message=human_message, local_chat_message_ref_id=body.local_chat_message_ref_id)
 
     # If team member is tagged and no agent or team of agents is tagged, this means user sends a message to team member
-    if has_team_member_mention(body.prompt) and not mentioned_agent_id and not mentioned_team_id:
-        return ""
+    # if has_team_member_mention(body.prompt) and not mentioned_agent_id and not mentioned_team_id:
+    #     return ""
     
     settings = ConfigModel.get_account_settings(db, auth.account)
 
@@ -134,17 +168,10 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
             f"{prompt}"
         )
 
-    if agent:
-        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-
-        datasource_tools = get_datasource_tools(datasources, settings, auth.account)
-        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, auth.account, settings)
-        tools = datasource_tools + agent_tools
-
-        conversational = ConversationalAgent(auth.user, auth.account, session_id)
-        return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)
-
-    if team:
+    if len(agents) > 0:
+        for agent_with_configs in agents:
+            run_conversational_agent(agent_with_configs, auth, session_id, prompt, human_message_id, chat_pubsub_service, settings, body.team_id, body.parent_id)
+    elif team:
         if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
             plan_and_execute = PlanAndExecute(
                 user=auth.user,

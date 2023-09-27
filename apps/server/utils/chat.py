@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 from uuid import UUID
 import json
 import re
@@ -31,8 +31,8 @@ def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, 
         return f"{account_id}"
 
 
-def parse_agent_mention(text: str) -> Tuple[str, str, str]:
-    """Finds agent mentions and returns id of the first agent found"""
+def parse_agent_mention(text: str) -> List[Tuple[str, str, str]]:
+    """Finds agent mentions and returns a list of all agents found"""
 
     pattern = r'@\[(?P<name>[^\]]+)\]\((?P<module>[^_]+)__' \
               r'(?P<id>[^\)]+)\)__mention__'
@@ -43,19 +43,15 @@ def parse_agent_mention(text: str) -> Tuple[str, str, str]:
     
     for match in mentions:
         module = match.group("module")
-        
+        cleaned_string = re.sub(pattern, '', text).strip()
+
         if module == MentionModule.AGENT.value:
             agent_id = match.group("id")
-            cleaned_string = re.sub(pattern, '', text).strip()
-            return agent_id, None, cleaned_string
-        if module == MentionModule.TEAM.value:
-            team_id = match.group("id")
-            cleaned_string = re.sub(pattern, '', text).strip()
-            return None, team_id, cleaned_string
+            results.append((agent_id, cleaned_string))
+        # elif module == MentionModule.TEAM.value:
+        #     team_id = match.group("id")
+        #     results.append((team_id, MentionModule.TEAM, cleaned_string))
 
-    if not results:
-        return (None, None, text)
-    
     return results
 
 def has_team_member_mention(text: str) -> bool:
