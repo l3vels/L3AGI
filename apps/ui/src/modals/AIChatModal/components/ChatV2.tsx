@@ -270,7 +270,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   return (
     <StyledWrapper>
       <StyledMembersWrapper>
-        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} userName={user.name} />
+        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} />
       </StyledMembersWrapper>
 
       <StyledMessages>
