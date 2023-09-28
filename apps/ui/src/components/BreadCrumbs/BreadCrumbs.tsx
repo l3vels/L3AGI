@@ -151,16 +151,10 @@ const StyledBreadcrumbLi = styled.li`
     height: 50%;
     width: 1px;
     // background: rgba(255, 255, 255, 0.1);
-    background: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(217,217,217)'
-        : 'rgba(255, 255, 255, 0.1)'};
+    background: ${({ theme }) => theme.body.breadCrumbsBg};
   }
 `
 
 const StyledButton = styled(Button)`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(57,57,57)'
-      : 'rgba(255, 255, 255, 0.80)'};
+  color: ${({ theme }) => theme.body.breadCrumbsColor};
 `

@@ -92,15 +92,11 @@ export const StyledInnerButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(57,57,57)' : '#FFFFFF'};
+  color: ${({ theme }) => theme.body.textColorPrimary};
 `
 
 const StyledDiscordIcon = styled(Discord)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `

@@ -8,22 +8,15 @@ const StyledSectionTitle = styled.h2`
   font-weight: 500;
   font-size: 24px;
   font-size: 18px;
-  // color: #ffffff;
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#ffffff'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 
 const StyledSectionDescription = styled.h2`
   font-style: normal;
   font-weight: 450;
   font-size: 12px;
-
   line-height: 24px;
-  // color: rgba(255, 255, 255, 0.8);
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(110,110,110)'
-      : 'rgba(255, 255, 255, 0.8)'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`

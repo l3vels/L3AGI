@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
-  background: ${({ theme }) => theme.body.backgroundColor};
+  background: ${({ theme }) => theme.body.backgroundColorPrimary};
   height: 100vh;
   display: flex;
   flex-direction: column;

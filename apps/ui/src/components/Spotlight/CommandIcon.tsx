@@ -37,16 +37,10 @@ const StyledKeyIcon = styled.span<{ active?: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   border-radius: 4px;
-  border: 1px solid var(--basic-foreground-white-2, rgba(255, 255, 255, 0.2));
-  border: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? '1px solid rgb(126,126,126)'
-      : ' 1px solid var(--basic-foreground-white-2, rgba(255, 255, 255, 0.2))'};
+  border: ${({ theme }) => theme.body.commandBorderColor};
   background: var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(126,126,126)' : '#fff'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 
   ${props =>
     !props.active &&

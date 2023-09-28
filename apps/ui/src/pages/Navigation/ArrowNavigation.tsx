@@ -64,18 +64,12 @@ const StyledButtonWrapper = styled.div<{ isDisabled: boolean }>`
 
 const StyledNavigationChevronLeft = styled(NavigationChevronLeft)`
   path {
-    color: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    color: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledNavigationChevronRight = styled(NavigationChevronRight)`
   path {
-    color: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    color: ${({ theme }) => theme.body.iconColor};
   }
 `
