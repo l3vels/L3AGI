@@ -56,6 +56,9 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
   flex-grow: 1;
   height: 50px;
   min-height: 50px;
+  min-width: fit-content;
+
+  padding: 0 5px;
 
   border-radius: 8px;
   border: 2px solid transparent;

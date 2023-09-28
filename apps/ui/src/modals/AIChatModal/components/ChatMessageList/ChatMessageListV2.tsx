@@ -247,7 +247,7 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   gap: 5px;
 
   padding-top: 10px;

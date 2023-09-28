@@ -34,13 +34,13 @@ const CreateAgentTemplate = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Create Agent</StyledSectionTitle>
-          <StyledSectionDescription>
+          {/* <StyledSectionDescription>
             Here are all your agents, managing tasks and operations.
-          </StyledSectionDescription>
+          </StyledSectionDescription> */}
         </div>
 
         <StyledButtonWrapper>
-          <BackButton />
+          <BackButton customOnClick={() => navigate('/agents')} />
         </StyledButtonWrapper>
       </StyledHeaderGroup>
 
@@ -94,10 +94,13 @@ const StyledTemplatesWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
 
-  max-height: calc(100vh - 325px);
-  height: 100%;
+  height: calc(100vh - 225px);
+
+  max-height: 1000px;
   overflow-y: auto;
   padding: 0 20px;
+
+  /* max-width: 600px; */
 `
 const StyledTemplateHeader = styled.div`
   display: flex;
