@@ -15,6 +15,7 @@ declare module 'styled-components' {
       backgroundImageSecondary: string
       testVariableColor: string
       border: string
+      secondaryBorder: string
       iconColor: string
       mainNavColor: string
       mainNavColorActive: string
@@ -23,6 +24,9 @@ declare module 'styled-components' {
       commandBorderColor: string
       placeHolderColor: string
       cardBgColor: string
+      humanMessageBgColor: string
+      replyBoxBgColor: string
+      secondaryIconColor: string
     }
   }
 }

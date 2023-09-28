@@ -10,18 +10,12 @@ type MemberTextProps = {
 const MemberText = ({ name, role }: MemberTextProps) => {
   return (
     <StyledNameWrapper>
-      <Typography
-        value={name}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
-        customColor={'#FFF'}
-      />
-      <Typography
-        value={role}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.xss}
-        customColor={'rgba(255,255,255,0.6)'}
-      />
+      <StyledTypographyNameWrapper>
+        <Typography value={name} type={Typography.types.LABEL} size={Typography.sizes.sm} />
+      </StyledTypographyNameWrapper>
+      <StyledTypographyRole>
+        <Typography value={role} type={Typography.types.LABEL} size={Typography.sizes.xss} />
+      </StyledTypographyRole>
     </StyledNameWrapper>
   )
 }
@@ -31,4 +25,10 @@ export default MemberText
 const StyledNameWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`
+export const StyledTypographyNameWrapper = styled.div`
+  color: ${({ theme }) => theme.body.textColorPrimary};
+`
+const StyledTypographyRole = styled.div`
+  color: ${({ theme }) => theme.body.mainNavColor};
 `

@@ -66,7 +66,7 @@ const ReplyBox = ({ onClose, reply }: ReplyBoxProps) => {
       </StyledReplyText>
       <IconButton
         size={IconButton.sizes.SMALL}
-        icon={() => <Close size='22' />}
+        icon={() => <StyledCloseIcon size='22' />}
         kind={IconButton.kinds.TERTIARY}
         onClick={onClose}
       />
@@ -87,7 +87,7 @@ const StyledReplyBox = styled.div`
 
   /* overflow: hidden; */
 
-  background: rgba(0, 0, 0, 0.4);
+  background: ${({ theme }) => theme.body.replyBoxBgColor};
   backdrop-filter: blur(100px);
   /* box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
     inset 0px 1px 1px rgba(255, 255, 255, 0.25); */
@@ -115,4 +115,10 @@ const StyledTextWrapper = styled.div`
 const StyledWidth = styled.div`
   min-width: fit-content;
   margin-top: 1px;
+`
+
+const StyledCloseIcon = styled(Close)`
+  path {
+    stroke: ${({ theme }) => theme.body.secondaryIconColor};
+  }
 `

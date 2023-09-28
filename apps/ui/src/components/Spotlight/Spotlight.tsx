@@ -522,7 +522,7 @@ export const StyledOption = styled.div`
   backdrop-filter: blur(100px);
   border-radius: 60px;
 
-  color: rgba(255, 255, 255, 0.8);
+  color: ${({ theme }) => theme.body.textColorSecondary};
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
