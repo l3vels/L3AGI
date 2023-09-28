@@ -6,6 +6,7 @@ import TextCellRenderer from './TextCellRenderer'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import AgentRenderer from './AgentRenderer'
+import Table from 'components/Table'
 
 type TeamOfAgentsTableProps = {
   selectedTeamType?: any
@@ -80,6 +81,17 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
       agent_id: selectedAgents[agent.id - 1]?.agent_id,
     })) || []
 
+  const columns = [
+    {
+      Header: 'Role',
+      accessor: 'role', // 'id' should match the key in your data
+    },
+    {
+      Header: 'Agent',
+      accessor: 'agent_id', // 'name' should match the key in your data
+    },
+  ]
+
   return (
     <div>
       <DataGrid
@@ -89,6 +101,8 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
         headerHeight={130}
         maxHeight={310}
       />
+
+      <Table columns={columns} data={gridData} />
     </div>
   )
 }
