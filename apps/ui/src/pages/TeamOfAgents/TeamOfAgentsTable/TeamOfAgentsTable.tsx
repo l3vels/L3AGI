@@ -8,6 +8,9 @@ import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEdi
 import AgentRenderer from './AgentRenderer'
 import Table from 'components/Table'
 
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import styled from 'styled-components'
+
 type TeamOfAgentsTableProps = {
   selectedTeamType?: any
   formik: any
@@ -85,11 +88,28 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
     {
       Header: 'Role',
       accessor: 'role', // 'id' should match the key in your data
+      Cell: ({ cell }: any) => {
+        // Custom cell renderer for the 'age' column
+        return (
+          <StyledTextWrapper>
+            <Typography
+              value={cell.value}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+              customColor={'#FFF'}
+            />
+          </StyledTextWrapper>
+        )
+      },
     },
     {
       Header: 'Agent',
       accessor: 'agent_id', // 'name' should match the key in your data
       isEdit: true,
+      Cell: ({ cell }: any) => {
+        // Custom cell renderer for the 'age' column
+        return <AgentRenderer params={cell} options={agents} />
+      },
       cellEditor: MultiselectEditor,
       cellEditorParams: {
         optionsArr: agents.map((agent: any) => ({
@@ -115,13 +135,13 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 
   return (
     <div>
-      <DataGrid
+      {/* <DataGrid
         ref={gridRef}
         data={gridData}
         columnConfig={config}
         headerHeight={130}
         maxHeight={310}
-      />
+      /> */}
 
       <Table columns={columns} data={gridData} />
     </div>
@@ -129,3 +149,7 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 }
 
 export default TeamOfAgentsTable
+
+const StyledTextWrapper = styled.div`
+  padding: 5px 10px;
+`

@@ -1,4 +1,3 @@
-import outsideClick from 'helpers/outsideClick'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
@@ -7,19 +6,12 @@ type TableCellProps = {
 }
 
 const TableCell = ({ cell }: TableCellProps) => {
-  const ref = useRef(null)
   const [isEditing, setIsEditing] = useState(false)
 
+  const tableCellRef = useRef<HTMLTableCellElement>(null)
   const multiselectEditorRef = useRef<any>()
 
-  outsideClick(ref, () => {
-    if (isEditing) {
-      setIsEditing(false)
-      getMultiselectEditorValues()
-    }
-  })
-
-  const { column, row } = cell
+  const { column, row, value: cellValue } = cell
   const { original: data } = row
   const { isEdit, cellEditor: Editor, cellEditorParams, valueSetter } = column
 
@@ -35,6 +27,8 @@ const TableCell = ({ cell }: TableCellProps) => {
     // Access the values through the ref
     const values = multiselectEditorRef.current?.getValue()
 
+    if (values === undefined) return
+
     valueSetter({ newValue: values, data: data })
   }
 
@@ -45,19 +39,41 @@ const TableCell = ({ cell }: TableCellProps) => {
         setIsEditing(false)
         // Add your logic here to handle the Enter key press
       }
+      if (isEditing && event.key === 'Escape') {
+        // Do whatever when Esc is pressed
+        setIsEditing(false)
+      }
     }
 
-    document.addEventListener('keydown', handleKeyDown)
+    const handleClickOutside = (event: MouseEvent) => {
+      if (tableCellRef.current && !tableCellRef.current.contains(event.target as Node)) {
+        // Clicked outside the component, close editing mode
+
+        getMultiselectEditorValues()
+
+        setIsEditing(false)
+      }
+    }
+
+    if (isEditing) {
+      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleKeyDown)
+    }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('mousedown', handleClickOutside)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing])
 
   return (
-    <StyledTd {...cell.getCellProps()} onClick={handleEditMode}>
+    <StyledTd ref={tableCellRef} {...cell.getCellProps()} onClick={handleEditMode}>
       {isEditing ? (
-        <Editor {...cellEditorParams} ref={multiselectEditorRef} />
+        <>
+          {/* tst */}
+          <Editor {...cellEditorParams} value={cellValue} ref={multiselectEditorRef} />
+        </>
       ) : (
         cell.render('Cell')
       )}
@@ -79,10 +95,4 @@ const StyledTd = styled.td`
   :hover {
     background-color: rgba(0, 0, 0, 0.2);
   }
-`
-const StyledDiv = styled.div`
-  background: red;
-
-  width: 100%;
-  height: 100%;
 `
