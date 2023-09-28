@@ -1,7 +1,23 @@
+import { useState } from 'react'
 import { useTable } from 'react-table'
 import styled, { css } from 'styled-components'
+import TableCell from './components/TableCell'
 
-const Table = ({ columns, data }: any) => {
+type ColumnProps = {
+  Header: string
+  accessor: string
+  isEdit?: boolean
+  cellEditor?: any
+  cellEditorParams?: any
+  valueSetter?: any
+}
+
+type TableProps = {
+  columns: ColumnProps[]
+  data: any
+}
+
+const Table = ({ columns, data }: TableProps) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data,
@@ -26,11 +42,10 @@ const Table = ({ columns, data }: any) => {
           return (
             <StyledTr {...row.getRowProps()} key={index} bodyRow>
               {row.cells.map((cell: any, index: number) => {
-                return (
-                  <StyledTd key={index} {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </StyledTd>
-                )
+                const { column } = cell
+                const { isEdit, cellEditor } = column
+
+                return <TableCell key={index} cell={cell} />
               })}
             </StyledTr>
           )
@@ -100,7 +115,7 @@ const StyledTh = styled.th`
 const StyledTd = styled.td`
   width: 100%;
 
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
 
   /* text-align: center; */
 

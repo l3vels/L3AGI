@@ -89,6 +89,27 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
     {
       Header: 'Agent',
       accessor: 'agent_id', // 'name' should match the key in your data
+      isEdit: true,
+      cellEditor: MultiselectEditor,
+      cellEditorParams: {
+        optionsArr: agents.map((agent: any) => ({
+          label:
+            agent.agent.role.length > 0
+              ? `${agent.agent.name} - ${agent.agent.role}`
+              : agent.agent.name,
+          value: agent.agent.id,
+        })),
+      },
+      valueSetter: (params: any) => {
+        const { newValue: newAgentId, data } = params
+
+        setFieldValue(`agents[${params.data.id - 1}]`, {
+          role: data.role,
+          agent_id: newAgentId,
+        })
+
+        return true
+      },
     },
   ]
 
