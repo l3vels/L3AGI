@@ -31,6 +31,7 @@ class TeamModel(BaseModel):
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
     is_template = Column(Boolean, default=False, index=True)
+    is_memory = Column(Boolean, default=False)
     workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True) 
     account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True, index=True)
     parent_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True) 

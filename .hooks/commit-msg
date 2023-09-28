@@ -1,8 +1,15 @@
 #!/bin/bash
 
 commit_message=$(cat "$1")
-regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|merge)(\([a-zA-Z0-9_-]+\))?: .+'
+regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\([a-zA-Z0-9_-]+\))?: .+'
 
+# Check if the commit message starts with "Merge branch"
+if [[ $commit_message =~ ^"Merge branch" ]]; then
+  # Exit successfully without doing anything
+  exit 0
+fi
+
+# Check for semantic commit message format
 if [[ ! $commit_message =~ $regex ]]; then
   echo "Commit message failed semantic commit message style."
   echo "Please follow the pattern: <type>(<scope>): <message>"

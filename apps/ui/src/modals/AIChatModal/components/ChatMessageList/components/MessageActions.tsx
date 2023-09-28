@@ -1,12 +1,42 @@
-import styled from 'styled-components'
-import ReplyIcon from '@l3-lib/ui-core/dist/icons/Replay'
+import { useState } from 'react'
 
-const MessageActions = ({ onReplyClick }: { onReplyClick: () => void }) => {
+import styled from 'styled-components'
+
+import ReplyIcon from '@l3-lib/ui-core/dist/icons/Replay'
+import Copy from '@l3-lib/ui-core/dist/icons/Copy'
+import Check from '@l3-lib/ui-core/dist/icons/Check'
+
+type MessageActionsProps = {
+  onReplyClick?: () => void
+  onCopyClick?: () => void
+}
+
+const MessageActions = ({ onReplyClick, onCopyClick }: MessageActionsProps) => {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyClick = () => {
+    if (onCopyClick) {
+      onCopyClick()
+      setCopied(true)
+
+      setTimeout(() => {
+        setCopied(false)
+      }, 2000)
+    }
+  }
+
   return (
     <StyledWrapper>
-      <StyledReplyButton onClick={onReplyClick}>
-        <ReplyIcon />
-      </StyledReplyButton>
+      {onCopyClick && (
+        <StyledActionButton onClick={handleCopyClick}>
+          {copied ? <Check size={20} /> : <Copy size={20} />}
+        </StyledActionButton>
+      )}
+      {onReplyClick && (
+        <StyledActionButton onClick={onReplyClick}>
+          <ReplyIcon />
+        </StyledActionButton>
+      )}
     </StyledWrapper>
   )
 }
@@ -19,7 +49,7 @@ const StyledWrapper = styled.div`
   gap: 5px;
   padding: 0 10px;
 `
-const StyledReplyButton = styled.div`
+const StyledActionButton = styled.div`
   opacity: 0.5;
   :hover {
     opacity: 1;

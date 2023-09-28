@@ -51,14 +51,9 @@ export const useDatasourceForm = (formik: any) => {
       )
     }
 
-    const { configs } = values
-
     const uploadedFiles = await Promise.all(promises)
 
-    setFieldValue('configs.files', {
-      ...configs.files,
-      value: [...configs.files.value, ...uploadedFiles],
-    })
+    setFieldValue('files', [...values.files, ...uploadedFiles])
 
     event.target.value = ''
 

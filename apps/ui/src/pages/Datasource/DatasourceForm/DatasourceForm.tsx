@@ -18,6 +18,8 @@ import { DATA_LOADER_IMAGES } from '../constants'
 import { useDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
 import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlTables'
 import { useParams } from 'react-router-dom'
+import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
+import DataSourceDropdown from './components/DataSourceDropdown'
 
 type DatasourceFormProps = {
   formik: any
@@ -34,7 +36,15 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { datasource_source_type, config_value, datasource_description, configs } = values
+  const {
+    datasource_source_type,
+    config_value,
+    datasource_description,
+    configs,
+    index_type,
+    response_mode,
+    files,
+  } = values
 
   const { host, port, user, pass, name, tables } = values.configs
 
@@ -126,26 +136,50 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
 
                   <StyledUploadedFiles>
-                    {configs.files?.value?.length > 0 &&
-                      configs.files.value.map((file: any) => (
+                    {files.length > 0 &&
+                      files.map((file: any) => (
                         <UploadedFile
                           key={file.url}
                           id={file.url}
                           hasDeleteIcon
                           onClick={id => {
-                            const filteredFiles = configs.files.value.filter(
-                              (file: any) => file.url !== id,
-                            )
-
-                            setFieldValue('configs.files', {
-                              ...configs.files,
-                              value: filteredFiles,
-                            })
+                            const filteredFiles = files.filter((file: any) => file.url !== id)
+                            setFieldValue('configs.files', filteredFiles)
                           }}
                           name={file.name}
                         />
                       ))}
                   </StyledUploadedFiles>
+
+                  <DataSourceDropdown
+                    onHelpClick={() =>
+                      window.open(import.meta.env.REACT_APP_INDEX_TYPES_LINK, '_blank')
+                    }
+                    label={'Index Type'}
+                    fieldName={'index_type'}
+                    fieldValue={index_type}
+                    setFieldValue={setFieldValue}
+                    options={[
+                      { label: 'Summarize Index', value: 'summary' },
+                      { label: 'Vector Store Index', value: 'vector_store' },
+                      { label: 'Tree Index', value: 'tree' },
+                    ]}
+                  />
+
+                  <DataSourceDropdown
+                    onHelpClick={() =>
+                      window.open(import.meta.env.REACT_APP_RESPONSE_MODES_LINK, '_blank')
+                    }
+                    label={'Response Mode'}
+                    fieldName={'response_mode'}
+                    fieldValue={response_mode}
+                    setFieldValue={setFieldValue}
+                    options={[
+                      { label: 'Tree Summarize', value: 'tree_summarize' },
+                      { label: 'Refine', value: 'refine' },
+                      { label: 'Simple Summarize', value: 'simple_summarize' },
+                    ]}
+                  />
                 </StyledUploadFileWrapper>
               )}
 

@@ -26,6 +26,9 @@ export const useCreateDatasource = () => {
     datasource_description: '',
     datasource_source_type: 'Postgres',
     configs: {},
+    files: [],
+    index_type: 'summary',
+    response_mode: 'tree_summarize',
   }
 
   const formik = useFormik({
@@ -82,7 +85,12 @@ export const useCreateDatasource = () => {
         if (cfg.key_type === 'int') {
           value = parseInt(cfg.value)
         } else if (cfg.key_type === 'files') {
-          value = JSON.stringify(cfg.value)
+          const { index_type, response_mode, files } = values
+          value = JSON.stringify({
+            index_type,
+            response_mode,
+            files,
+          })
         }
 
         const promise = createConfig({

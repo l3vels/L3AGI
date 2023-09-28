@@ -12,6 +12,10 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import {
+  StyledChatButtonWrapper,
+  StyledInnerButtonWrapper,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type AgentCardProps = {
   name: string
@@ -69,18 +73,6 @@ const AgentCard = ({
       <StyledCardBody>
         <StyledAvatarWrapper>
           <AvatarGenerator name={name} size={50} avatar={avatar} />
-          {onChatClick && (
-            <StyledChatButton className='chatButton'>
-              <Button
-                size={Button.sizes.SMALL}
-                kind={Button.kinds.PRIMARY}
-                onClick={onChatClick}
-                rightIcon={() => <MoveArrowRight size={14} />}
-              >
-                <StyledInnerButtonWrapper>Chat</StyledInnerButtonWrapper>
-              </Button>
-            </StyledChatButton>
-          )}
         </StyledAvatarWrapper>
         <StyledBodyTextWrapper>
           <StyledTypography>
@@ -123,22 +115,26 @@ const AgentCard = ({
         )}
         <StyledButtonsWrapper className='footerButtons'>
           {onDeleteClick && (
-            <IconButton
-              onClick={onDeleteClick}
-              icon={() => <Delete />}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='Delete'
-            />
+            <StyledHiddenButton className='hiddenButton'>
+              <IconButton
+                onClick={onDeleteClick}
+                icon={() => <Delete />}
+                size={Button.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='Delete'
+              />
+            </StyledHiddenButton>
           )}
           {onEditClick && (
-            <IconButton
-              onClick={onEditClick}
-              icon={() => <Edit />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='Edit'
-            />
+            <StyledHiddenButton className='hiddenButton'>
+              <IconButton
+                onClick={onEditClick}
+                icon={() => <Edit />}
+                size={IconButton.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='Edit'
+              />
+            </StyledHiddenButton>
           )}
           {onViewClick && (
             <IconButton
@@ -157,6 +153,16 @@ const AgentCard = ({
             <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onCreateClick}>
               Create
             </Button>
+          )}
+          {onChatClick && (
+            <StyledChatButtonWrapper>
+              <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onChatClick}>
+                <StyledInnerButtonWrapper secondary>
+                  Chat
+                  <MoveArrowRight size={14} />
+                </StyledInnerButtonWrapper>
+              </Button>
+            </StyledChatButtonWrapper>
           )}
         </StyledButtonsWrapper>
       </StyledCardFooter>
@@ -191,7 +197,7 @@ export const StyledAgentCard = styled.div`
   justify-content: center;
 
   :hover {
-    .chatButton {
+    .hiddenButton {
       opacity: 1;
     }
   }
@@ -253,20 +259,10 @@ const StyledAvatarWrapper = styled.div`
   /* position: relative; */
   text-align: center;
   height: fit-content;
-
-  :hover {
-    .chatButton {
-      opacity: 1;
-    }
-  }
 `
-const StyledChatButton = styled.div`
+const StyledHiddenButton = styled.div`
   width: fit-content;
   height: fit-content;
-  position: absolute;
-  top: 75px;
-  left: 10px;
-  /* transform: translateX(-50%); */
 
   opacity: 0;
   transition: opacity 300ms;
@@ -274,12 +270,6 @@ const StyledChatButton = styled.div`
 const StyledIconWrapper = styled.div`
   /* color: #000; */
   color: transparent;
-`
-const StyledInnerButtonWrapper = styled.div`
-  display: flex;
-  /* align-items: flex-end; */
-  color: #fff;
-  gap: 5px;
 `
 
 const StyledCreatorWrapper = styled.div`

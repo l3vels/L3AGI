@@ -52,6 +52,7 @@ class ZepMemory(ConversationBufferMemory):
     chat_memory: ZepChatMessageHistory
     human_name: str = Field(default="Human")
     ai_name: str = Field(default="AI")
+    auto_save: bool = Field(default=True)
 
     def __init__(
         self,
@@ -105,6 +106,16 @@ class ZepMemory(ConversationBufferMemory):
             memory_key=memory_key,
         )
 
+    def save_human_message(self, content: str):
+        self.chat_memory.add_user_message(content, metadata={
+            "author": self.human_name,
+        })
+
+    def save_ai_message(self, content: str):
+        self.chat_memory.add_ai_message(content, metadata={
+            "author": self.ai_name,
+        })
+
     def save_context(
         self,
         inputs: Dict[str, Any],
@@ -122,6 +133,9 @@ class ZepMemory(ConversationBufferMemory):
         Returns:
             None
         """
+        if self.auto_save is False:
+            return
+
         input_str, output_str = self._get_input_output(inputs, outputs)
         self.chat_memory.add_user_message(input_str, metadata={
             "author": self.human_name,

@@ -94,14 +94,14 @@ export const defaultData = (path_id?: any) => {
       ),
     },
 
-    {
-      id: uuidv4(),
-      name: 'General',
-      url: '/chat',
-      option: 'open-chat',
-      group_name: 'chat',
-      icon: <Home />,
-    },
+    // {
+    //   id: uuidv4(),
+    //   name: 'General',
+    //   url: '/chat',
+    //   option: 'open-chat',
+    //   group_name: 'chat',
+    //   icon: <Home />,
+    // },
 
     // {
     //   id: uuidv4(),

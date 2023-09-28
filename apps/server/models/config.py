@@ -1,12 +1,14 @@
 from __future__ import annotations
 from typing import List, Optional
 import uuid
+from fastapi_sqlalchemy.middleware import DBSessionMeta
 
 from sqlalchemy import Column, String, Boolean, UUID, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import and_, or_
 from models.base_model import BaseModel
 from typings.config import ConfigInput, ConfigQueryParams, AccountSettings
+from typings.account import AccountOutput
 from exceptions import ConfigNotFoundException
 from utils.encyption import encrypt_data, decrypt_data, is_encrypted
 
@@ -42,6 +44,7 @@ class ConfigModel(BaseModel):
     datasource_id = Column(UUID, ForeignKey('datasource.id', ondelete='CASCADE'), nullable=True, index=True)
     team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True)
     team_agent_id = Column(UUID, ForeignKey('team_agent.id', ondelete='CASCADE'), nullable=True, index=True)
+    session_id = Column(String, nullable=True, index=True)
     value = Column(String)
     key_type = Column(String)
     is_secret = Column(Boolean)
@@ -166,6 +169,27 @@ class ConfigModel(BaseModel):
         if config and config.is_secret and is_encrypted(config.value):
             config.value = decrypt_data(config.value)
             
+        return config
+    
+    @classmethod
+    def get_config_by_session_id(cls, db: DBSessionMeta, session_id: str, account: AccountOutput):
+        """
+            Get Config from session_id
+
+            Args:
+                db: The database session.
+                session_id(str): Unique identifier of an Config.
+                account(AccountOutput): Account
+
+            Returns:
+                Config: Config object is returned.
+        """
+        config = (
+            db.session.query(ConfigModel)
+            .filter(ConfigModel.session_id == session_id, ConfigModel.account_id == account.id, or_(or_(ConfigModel.is_deleted == False, ConfigModel.is_deleted is None), ConfigModel.is_deleted is None))
+            .first()
+        )
+   
         return config
     
     @classmethod

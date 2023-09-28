@@ -1,19 +1,7 @@
-query getConfigs @api(name: "ai") {
-  getConfigs @rest(type: "Config", path: "/config", method: "GET", endpoint: "ai") {
-    id
-    key
-    value
-    key_type
-    is_secret
-    is_required
-    agent_id
-    toolkit_id
-    datasource_id
-    team_id
-    account_id
-    workspace_id
-    is_deleted
-    created_by
-    modified_by
+#import "./configFragment.gql"
+
+query configs @api(name: "ai") {
+  configs @rest(type: "Config", path: "/config", method: "GET", endpoint: "ai") {
+    ...ConfigFragment
   }
 }

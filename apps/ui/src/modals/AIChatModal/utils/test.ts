@@ -1,4 +1,4 @@
-import { random } from 'lodash'
+import random from 'lodash/random'
 
 export const collection1 = {
   id: 1,

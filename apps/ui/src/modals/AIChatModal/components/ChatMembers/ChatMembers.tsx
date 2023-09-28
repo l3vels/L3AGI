@@ -25,11 +25,11 @@ import MemberText from './components/MemberText'
 const ChatMembers = ({
   agentById,
   teamOfAgents,
-  userName,
+  isHistory,
 }: {
   agentById?: any
   teamOfAgents?: any
-  userName?: string
+  isHistory?: boolean
 }) => {
   const { user } = React.useContext(AuthContext)
 
@@ -57,10 +57,10 @@ const ChatMembers = ({
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
               <TabPanel>
-                {userName && (
+                {!isHistory && user?.name && (
                   <StyledAgentWrapper>
-                    <AvatarGenerator name={userName} size={30} />
-                    <MemberText name={userName} />
+                    <AvatarGenerator name={user.name} size={30} avatar={user.avatar} />
+                    <MemberText name={user.name} />
                   </StyledAgentWrapper>
                 )}
 
@@ -129,10 +129,10 @@ const ChatMembers = ({
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
               <TabPanel>
-                {userName && (
+                {!isHistory && user?.name && (
                   <StyledAgentWrapper>
-                    <AvatarGenerator name={userName} size={30} />
-                    <MemberText name={userName} />
+                    <AvatarGenerator name={user.name} size={30} avatar={user.avatar} />
+                    <MemberText name={user.name} />
                   </StyledAgentWrapper>
                 )}
 
@@ -160,18 +160,7 @@ const ChatMembers = ({
                               openModal({
                                 name: 'agent-view-modal',
                                 data: {
-                                  agent: {
-                                    agent: agentData.agent,
-                                    configs: {
-                                      tools: [],
-                                      goals: [],
-                                      constraints: [],
-                                      instructions: [],
-                                      datasources: [],
-                                      suggestions: [],
-                                      greeting: [],
-                                    },
-                                  },
+                                  id: agentData.agent.id,
                                 },
                               })
                             }

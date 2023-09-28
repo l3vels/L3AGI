@@ -29,10 +29,26 @@ export const useEditDatasource = () => {
 
   const filteredConfig = configsData?.filter((config: any) => config.datasource_id === datasourceId) // TODO: filter in backend
 
+  const defaultValues = {
+    datasource_name: datasourceById?.name,
+    datasource_description: datasourceById?.description,
+    datasource_source_type: datasourceById?.source_type,
+    configs: {},
+    index_type: '',
+    response_mode: '',
+    files: [],
+  }
+
   const configs = filteredConfig?.reduce((prev: any, config: any) => {
     let value = config.value
 
     if (config.key_type === 'files') {
+      const { index_type, response_mode, files } = JSON.parse(config.value)
+
+      defaultValues.index_type = index_type
+      defaultValues.response_mode = response_mode
+      defaultValues.files = files
+
       value = JSON.parse(config.value)
     }
 
@@ -48,12 +64,7 @@ export const useEditDatasource = () => {
     return prev
   }, {})
 
-  const defaultValues = {
-    datasource_name: datasourceById?.name,
-    datasource_description: datasourceById?.description,
-    datasource_source_type: datasourceById?.source_type,
-    configs: configs || {},
-  }
+  defaultValues.configs = configs || {}
 
   const handleSubmit = async (values: any) => {
     if (!datasourceId) return
@@ -80,7 +91,12 @@ export const useEditDatasource = () => {
       if (cfg.key_type === 'int') {
         value = parseInt(cfg.value)
       } else if (cfg.key_type === 'files') {
-        value = JSON.stringify(cfg.value)
+        const { index_type, response_mode, files } = values
+        value = JSON.stringify({
+          index_type,
+          response_mode,
+          files,
+        })
       }
 
       const promise = updateConfig(cfg.id, {

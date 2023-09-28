@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
 
-import { includes } from 'lodash'
+import includes from 'lodash/includes'
 
 import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'

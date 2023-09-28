@@ -51,6 +51,7 @@ export const useEditTeamOfAgents = () => {
         agent_id: team_agent.agent.id,
         role: team_agent.role,
       })) || [],
+    is_memory: teamOfAgentsById?.is_memory,
   }
 
   const handleSubmit = async (values: any) => {
@@ -63,6 +64,7 @@ export const useEditTeamOfAgents = () => {
       description: values.teamOfAgents_description,
       team_type: values.teamOfAgents_team_type,
       team_agents: values.agents.filter((agent: any) => agent?.agent_id),
+      is_memory: values.is_memory,
     }
 
     const promises = [

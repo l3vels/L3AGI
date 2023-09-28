@@ -12,6 +12,7 @@ const darkTheme: DefaultTheme = {
     backdropFilter: 'blur(50px)',
     textColor: 'rgba(255, 255, 255)',
     backgroundImageSecondary: defaultBgImageSecondary,
+    testVariableColor: 'var(--color-brand-blue)',
   },
 }
 
@@ -23,6 +24,7 @@ const lightTheme: DefaultTheme = {
     backdropFilter: 'blur(50px);',
     textColor: 'rgba(255, 255, 255)',
     backgroundImageSecondary: defaultBgImageSecondary,
+    testVariableColor: 'var(--color-highlight_blue)',
   },
 }
 

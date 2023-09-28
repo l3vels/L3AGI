@@ -8,9 +8,11 @@ import AgentView from 'pages/Agents/AgentView'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
+import { useDiscoverAgentByIdService } from 'services/discover/useDiscoverAgentById'
 
 type AgentViewModalProps = {
   data: {
+    id: string
     agent: any
   }
 }
@@ -18,7 +20,9 @@ type AgentViewModalProps = {
 const AgentViewModal = ({ data }: AgentViewModalProps) => {
   const { closeModal } = useModal()
 
-  const { agent } = data
+  const { id, agent } = data
+
+  const { data: agentById } = useDiscoverAgentByIdService({ id: id })
 
   return (
     <>
@@ -29,7 +33,7 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
         hideCloseButton
       >
         <StyledModalBody>
-          <AgentView agentData={agent} />
+          <AgentView agentData={agentById || agent} />
         </StyledModalBody>
 
         <StyledButtonWrapper>

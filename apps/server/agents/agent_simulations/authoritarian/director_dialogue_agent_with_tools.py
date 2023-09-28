@@ -13,6 +13,7 @@ from langchain.schema import (
 )
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 from typings.agent import AgentWithConfigsOutput
+from typings.user import UserOutput
 
 class IntegerOutputParser(RegexParser):
     def get_format_instructions(self) -> str:
@@ -29,15 +30,17 @@ class DirectorDialogueAgentWithTools(DialogueAgentWithTools):
         speakers: List[DialogueAgentWithTools],
         stopping_probability: float,
         tools: List[any],
+        session_id: str,
+        user: UserOutput,
+        is_memory: bool,
     ) -> None:
-        super().__init__(name=name, agent_with_configs=agent_with_configs,  system_message=system_message, model=model, tools=tools)
+        super().__init__(name=name, agent_with_configs=agent_with_configs,  system_message=system_message, model=model, tools=tools, session_id=session_id, user=user, is_memory=is_memory)
         self.speakers = speakers
         self.next_speaker = ""
 
         self.stop = False
         self.stopping_probability = stopping_probability
         self.termination_clause = "Finish the conversation by stating a concluding message and thanking everyone."
-        self.continuation_clause = "Do not end the conversation. Keep the conversation going by adding your own ideas."
 
         # 1. have a prompt for generating a response to the previous speaker
         self.response_prompt_template = PromptTemplate(
@@ -110,7 +113,7 @@ Prompt the next speaker to speak with an insightful question.
     )  # Default value when all retries are exhausted
     def _choose_next_speaker(self) -> str:
         speaker_names = "\n".join(
-            [f"{idx}: {name}" for idx, name in enumerate(self.speakers)]
+            [f"{idx}: (Name:{agent_with_config.agent.name} - Role:{agent_with_config.agent.role}) - Description:{agent_with_config.agent.description}" for idx, agent_with_config in enumerate(self.speakers)]
         )
         choice_prompt = self.choose_next_speaker_prompt_template.format(
             message_history="\n".join(

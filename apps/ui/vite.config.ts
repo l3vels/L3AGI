@@ -39,5 +39,6 @@ export default defineConfig({
     // minify: false,
     // minify: 'terser',
     cssCodeSplit: false,
+    sourcemap: true,
   },
 })

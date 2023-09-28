@@ -1,7 +1,8 @@
 query user @api(name: account) {
-    user {
-        id
-        email
-        name
-    }
+  user {
+    id
+    email
+    name
+    avatar
+  }
 }

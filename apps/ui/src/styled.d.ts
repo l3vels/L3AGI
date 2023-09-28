@@ -11,6 +11,7 @@ declare module 'styled-components' {
       textColor: string
       backgroundImage: string
       backgroundImageSecondary: string
+      testVariableColor: string
     }
   }
 }

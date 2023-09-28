@@ -9,6 +9,7 @@ import HumanMessageText from './HumanMessageText'
 import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -36,7 +37,7 @@ const HumanMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={authorName} size={50} />
+          <AvatarGenerator name={authorName} size={50} avatar={avatarImg} />
         </StyledAvatarWrapper>
 
         <StyledMainContent>
@@ -57,7 +58,10 @@ const HumanMessage = ({
             </StyledMessageInfo>
 
             <StyledMessageActionsWrapper className='actions'>
-              {onReplyClick && <MessageActions onReplyClick={onReplyClick} />}
+              <MessageActions
+                onReplyClick={onReplyClick}
+                onCopyClick={() => copyMessageText(messageText)}
+              />
             </StyledMessageActionsWrapper>
           </StyledMessageTop>
           <StyledMessageText>

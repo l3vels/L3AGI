@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { FieldValues, UseFormReturn, useWatch } from 'react-hook-form'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 import { useUpdateEffect } from 'usehooks-ts'
 
 type UseFormAutoSaveProps<T extends FieldValues> = {
