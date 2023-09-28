@@ -25,6 +25,7 @@ const darkTheme: DefaultTheme = {
     placeHolderColor: 'rgba(255, 255, 255, 0.4)',
     cardBgColor: 'rgba(0, 0, 0, 0.2)',
     secondaryBorder: 'none',
+    humanMessageBgColor: 'var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1))',
   },
 }
 
@@ -49,6 +50,7 @@ const lightTheme: DefaultTheme = {
     placeHolderColor: 'rgb(187,187,187)',
     cardBgColor: 'rgb(255,255,255)',
     secondaryBorder: '1px solid lightGray',
+    humanMessageBgColor: 'rgb(240,240,240)',
   },
 }
 

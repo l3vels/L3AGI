@@ -175,7 +175,7 @@ export const StyledNameWrapper = styled.div`
   gap: 5px;
 `
 
-const StyledNameTypographyWrapper = styled.div`
+export const StyledNameTypographyWrapper = styled.div`
   color: ${({ theme }) => theme.body.textColorPrimary};
 `
 

@@ -24,6 +24,7 @@ declare module 'styled-components' {
       commandBorderColor: string
       placeHolderColor: string
       cardBgColor: string
+      humanMessageBgColor: string
     }
   }
 }
