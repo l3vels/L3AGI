@@ -576,16 +576,10 @@ const StyledIconWrapper = styled.div`
 
 const StyledSearchIcon = styled(Search)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgba(255,255,255,0.6)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledText = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(187,187,187)'
-      : 'rgba(255, 255, 255, 0.4)'};
+  color: ${({ theme }) => theme.body.placeHolderColor};
 `

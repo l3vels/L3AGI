@@ -114,30 +114,20 @@ const StyledCloseButton = styled.div`
 `
 
 const StyledHeading = styled(Heading)`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#fff'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 const StyledTypographyWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(193,193,193)'
-      : 'rgba(255, 255, 255, 0.6)'};
+  color: ${({ theme }) => theme.body.mainNavColor};
 `
 
 const StyledCloseIcon = styled(Close)`
   path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledConnectIcon = styled(Connect)`
   path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgba(255,255,255,0.6)'};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `

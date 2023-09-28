@@ -184,13 +184,8 @@ export const StyledAgentCard = styled.div`
 
   border-radius: 10px;
   /* background: rgba(0, 0, 0, 0.5); */
-  // background: rgba(0, 0, 0, 0.2);
-  background: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(255, 255, 255)'
-      : 'rgba(0, 0, 0, 0.2)'};
-  border: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? '1px solid #D2D2D2' : null};
+  background: ${({ theme }) => theme.body.cardBgColor};
+  border: ${({ theme }) => theme.body.border};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -278,28 +273,18 @@ const StyledCreatorWrapper = styled.div`
   gap: 4px;
 `
 const StyledTypography = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#FFF'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 
 const StyledShortDescription = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(110,110,110)'
-      : 'rgba(255,255,255, 0.8)'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 const StyledCreatorNameWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(193,193,193)'
-      : 'rgba(255,255,255, 0.6)'};
+  color: ${({ theme }) => theme.body.mainNavColor};
 `
 
 const StyledEyeOpenIcon = styled(EyeOpen)`
   path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `

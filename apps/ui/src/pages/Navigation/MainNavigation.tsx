@@ -96,10 +96,7 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
-    color: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(206,206,206)'
-        : 'var(--content-content-tertiary, rgba(255, 255, 255, 0.6))'};
+    color: ${({ theme }) => theme.body.mainNavColor};
   }
   opacity: 0.8;
   ${({ isActive, theme }) =>
@@ -109,11 +106,7 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     border-radius: 6px;
     background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.10));
     span{
-      color: ${
-        theme.body.backgroundColor === 'rgb(255, 255, 255)'
-          ? 'rgb(77, 77, 77)'
-          : 'var(--content-content-primary, #FFF)'
-      };
+      color: ${theme.body.mainNavColorActive};
     svg{
       path{
         fill-opacity: 1
@@ -129,55 +122,37 @@ const StyledIconWrapper = styled.div`
 `
 const StyledAboutIcon = styled(About)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255, 255, 255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledCollectionIcon = styled(Collection)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255, 255, 255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledTeamIcon = styled(Team)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255, 255, 255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledValueOutLineIcon = styled(ValueOutline)`
   path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255, 255, 255)'};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledAddIcon = styled(Add)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255, 255, 255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledLaunchIcon = styled(Launch)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255, 255, 255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 

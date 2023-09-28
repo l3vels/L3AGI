@@ -19,10 +19,7 @@ const ComponentsWrapper = ({
 export default ComponentsWrapper
 
 const StyledMainWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
-  background: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(246, 246, 248)'
-      : 'rgba(255, 255, 255, 0.1)'};
+  background: ${({ theme }) => theme.body.breadCrumbsBg};
   box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
     inset 0px 1px 1px rgba(255, 255, 255, 0.25);
   border-radius: 27.5px;

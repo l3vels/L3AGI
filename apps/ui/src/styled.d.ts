@@ -5,13 +5,24 @@ import 'styled-components'
 declare module 'styled-components' {
   export interface DefaultTheme {
     body: {
-      backgroundColor: string
+      backgroundColorPrimary: string
+      backgroundColorSecondary: string
       boxShadow: string
       backdropFilter: string
-      textColor: string
+      textColorPrimary: string
+      textColorSecondary: string
       backgroundImage: string
       backgroundImageSecondary: string
       testVariableColor: string
+      border: string
+      iconColor: string
+      mainNavColor: string
+      mainNavColorActive: string
+      breadCrumbsColor: string
+      breadCrumbsBg: string
+      commandBorderColor: string
+      placeHolderColor: string
+      cardBgColor: string
     }
   }
 }

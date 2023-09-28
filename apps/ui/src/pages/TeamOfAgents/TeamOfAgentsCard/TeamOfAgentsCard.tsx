@@ -196,12 +196,8 @@ const StyledCard = styled.div`
   /* padding-top: 30px; */
 
   border-radius: 10px;
-  border: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? '1px solid #D2D2D2' : null};
-  background: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(255, 255, 255)'
-      : 'rgba(0, 0, 0, 0.2)'};
+  border: ${({ theme }) => theme.body.border};
+  background: ${({ theme }) => theme.body.backgroundColorSecondary};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -293,33 +289,19 @@ const StyledCreatorWrapper = styled.div`
   align-items: center;
   gap: 4px;
   color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(255, 255, 255)'
-      : 'rgba(0, 0, 0, 0.2)'};
+    theme.body.backgroundColorPrimary === 'rgb(255, 255, 255)' ? 'red' : 'rgba(0, 0, 0, 0.2)'};
 `
-
 const StyledTextWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#fff'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 const StyledShortDescription = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(110,110,110)'
-      : 'rgba(255,255,255, 0.8)'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 const StyledCreatorNameWrapper = styled.div`
-  color: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(193,193,193)'
-      : 'rgba(255,255,255, 0.6)'};
+  color: ${({ theme }) => theme.body.textColorSecondary};
 `
-
 const StyledEyeOpenIcon = styled(EyeOpen)`
   path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `

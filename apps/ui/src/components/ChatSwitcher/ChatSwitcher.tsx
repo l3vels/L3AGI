@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import styled, { css } from 'styled-components'
+import styled, { DefaultTheme, css } from 'styled-components'
 
 import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 
@@ -115,12 +115,8 @@ const StyledChatSwitcher = styled.div`
   align-items: center;
   gap: 10px;
   border-radius: 100px;
-  border: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? '1px solid #D2D2D2' : null};
-  background: ${({ theme }) =>
-    theme.body.backgroundColor === 'rgb(255, 255, 255)'
-      ? 'rgb(246,246,248)'
-      : 'rgba(255, 255, 255, 0.1)'};
+  border: ${({ theme }) => theme.body.border};
+  background: ${({ theme }) => theme.body.breadCrumbsBg};
   /* Style */
   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
@@ -144,11 +140,7 @@ const StyledIcon = styled.div<{ picked: boolean }>`
   justify-content: center;
 
   &:hover {
-    // background: rgba(255, 255, 255, 0.1);
-    background: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(229,229,229)'
-        : 'rgba(255, 255, 255, 0.1)'};
+    background: ${({ theme }) => theme.body.breadCrumbsBg};
     cursor: pointer;
   }
 
@@ -158,10 +150,7 @@ const StyledIcon = styled.div<{ picked: boolean }>`
       background: rgba(255, 255, 255, 0.3);
       &:hover {
         background: rgba(255, 255, 255, 0.3);
-        background: ${({ theme }) =>
-          theme.body.backgroundColor === 'rgb(255, 255, 255)'
-            ? 'rgb(255,255,255)'
-            : 'rgba(255, 255, 255, 0.1)'};
+        background: ${({ theme }) => theme.body.breadCrumbsBg};
     }
         cursor: auto;
       }
@@ -170,18 +159,12 @@ const StyledIcon = styled.div<{ picked: boolean }>`
 
 const StyledCollectionIcon = styled(Collection)`
   path {
-    fill: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
 const StyledMentionIcon = styled(Mention)`
   path {
-    stroke: ${({ theme }) =>
-      theme.body.backgroundColor === 'rgb(255, 255, 255)'
-        ? 'rgb(187,187,187)'
-        : 'rgb(255,255,255)'};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
