@@ -15,6 +15,7 @@ declare module 'styled-components' {
       backgroundImageSecondary: string
       testVariableColor: string
       border: string
+      secondaryBorder: string
       iconColor: string
       mainNavColor: string
       mainNavColorActive: string

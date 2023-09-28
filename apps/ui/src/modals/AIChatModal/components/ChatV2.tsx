@@ -491,6 +491,7 @@ const StyledWrapper = styled.div`
   transition: background-color 300ms ease-in-out;
   position: relative;
   margin: 0 auto;
+  // border: 1px solid red;
   /* padding-bottom: 50px; */
   /* height: calc(100% - 80px); */
   /* margin-bottom: 100px; */
@@ -528,7 +529,6 @@ const StyledForm = styled.form`
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 100px;
-
   /* cursor: pointer; */
 
   width: fit-content;
@@ -694,9 +694,10 @@ const StyledMembersWrapper = styled.div`
   position: absolute;
   top: 20px;
   right: 5px;
-
+  border-radius: 23px;
+  // border: ${({ theme }) => theme.body.border};
+  // background: ${({ theme }) => theme.body.backgroundColorSecondary};
   z-index: 12000000;
-
   padding: 10px;
 
   display: flex;

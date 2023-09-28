@@ -24,6 +24,7 @@ const darkTheme: DefaultTheme = {
     commandBorderColor: ' 1px solid var(--basic-foreground-white-2, rgba(255, 255, 255, 0.2))',
     placeHolderColor: 'rgba(255, 255, 255, 0.4)',
     cardBgColor: 'rgba(0, 0, 0, 0.2)',
+    secondaryBorder: 'none',
   },
 }
 
@@ -47,6 +48,7 @@ const lightTheme: DefaultTheme = {
     commandBorderColor: '1px solid rgb(126,126,126)',
     placeHolderColor: 'rgb(187,187,187)',
     cardBgColor: 'rgb(255,255,255)',
+    secondaryBorder: '1px solid lightGray',
   },
 }
 

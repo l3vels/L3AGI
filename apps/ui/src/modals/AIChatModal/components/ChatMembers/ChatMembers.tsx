@@ -21,6 +21,7 @@ import { AuthContext } from 'contexts'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import { useModal } from 'hooks'
 import MemberText from './components/MemberText'
+import { StyledEyeOpenIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 const ChatMembers = ({
   agentById,
@@ -48,10 +49,16 @@ const ChatMembers = ({
 
     return (
       <StyledRoot>
-        <TabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>Members</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Info</Tab>
-        </TabList>
+        <StyledDiv>
+          <TabList size='small'>
+            <Tab onClick={() => setActiveTab(0)}>
+              <StyledSpan>Members</StyledSpan>
+            </Tab>
+            <Tab onClick={() => setActiveTab(1)}>
+              <StyledSpan>Info</StyledSpan>
+            </Tab>
+          </TabList>
+        </StyledDiv>
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
@@ -85,7 +92,7 @@ const ChatMembers = ({
                         }
                         icon={() => (
                           <StyledIconWrapper>
-                            <EyeOpen size={50} />
+                            <StyledEyeOpenIcon size={50} />
                           </StyledIconWrapper>
                         )}
                         size={IconButton.sizes.SMALL}
@@ -96,7 +103,7 @@ const ChatMembers = ({
                       {isCreator && (
                         <IconButton
                           onClick={handleEdit}
-                          icon={() => <Edit />}
+                          icon={() => <StyledEyeEditIcon />}
                           size={IconButton.sizes.SMALL}
                           kind={IconButton.kinds.TERTIARY}
                           // ariaLabel='Edit'
@@ -245,4 +252,17 @@ const StyledIconButtonWrapper = styled.div`
 
   display: flex;
   align-items: center;
+`
+const StyledDiv = styled.div`
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  border-radius: 20px;
+`
+const StyledSpan = styled.span`
+  color: ${({ theme }) => theme.body.textColorPrimary};
+`
+
+export const StyledEyeEditIcon = styled(Edit)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
 `
