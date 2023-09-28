@@ -10,6 +10,10 @@ import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
+import {
+  StyledNameTypographyWrapper,
+  StyledTypographyWrapper,
+} from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -43,18 +47,20 @@ const HumanMessage = ({
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
-              <Typography
-                value={authorName}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-                customColor={'#FFF'}
-              />
-              <Typography
-                value={messageDate}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                customColor={'rgba(255, 255, 255, 0.60)'}
-              />
+              <StyledNameTypographyWrapper>
+                <Typography
+                  value={authorName}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                />
+              </StyledNameTypographyWrapper>
+              <StyledTypographyWrapper>
+                <Typography
+                  value={messageDate}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                />
+              </StyledTypographyWrapper>
             </StyledMessageInfo>
 
             <StyledMessageActionsWrapper className='actions'>
@@ -117,7 +123,7 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   width: 100%;
 
   border-radius: 4px 18px 18px 18px;
-  background: var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
+  background: ${({ theme }) => theme.body.humanMessageBgColor};
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
 
   ${props =>

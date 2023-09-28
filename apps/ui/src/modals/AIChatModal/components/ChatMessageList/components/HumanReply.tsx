@@ -5,6 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import { StyledTypographyNameWrapper } from '../../ChatMembers/components/MemberText'
 
 const HumanReply = ({
   messageText,
@@ -29,12 +30,14 @@ const HumanReply = ({
         <StyledSmallAvatarWrapper>
           <AvatarGenerator name={authorName} size={16} textSizeRatio={1.5} />
         </StyledSmallAvatarWrapper>
-        <Typography
-          value={`@${authorName}`}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor={'#FFF'}
-        />
+        <StyledTypographyNameWrapper>
+          <Typography
+            value={`@${authorName}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+            // customColor={'#FFF'}
+          />
+        </StyledTypographyNameWrapper>
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
         <HumanMessageText textArray={wordArray} />

@@ -233,6 +233,7 @@ export default memo(ChatMessageListV2)
 const StyledRoot = styled.div<{ show: boolean }>`
   opacity: 0;
   width: 100%;
+
   height: 100%;
   ${p =>
     p.show &&
@@ -249,7 +250,6 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
   justify-content: center;
   /* align-items: center; */
   gap: 5px;
-
   padding-top: 10px;
   /* margin-right: 50px; */
 

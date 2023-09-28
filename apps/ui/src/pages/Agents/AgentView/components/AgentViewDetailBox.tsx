@@ -13,6 +13,8 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
+import { StyledEyeEditIcon } from 'modals/AIChatModal/components/ChatMembers/ChatMembers'
+import { StyledShortDescription } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -41,16 +43,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     <StyledDetailsBox>
       <StyledWrapper>
         <StyledNameWrapper>
-          <Typography
-            value={name}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-            customColor={'#FFF'}
-          />
+          <StyledNameTypographyWrapper>
+            <Typography value={name} type={Typography.types.LABEL} size={Typography.sizes.lg} />
+          </StyledNameTypographyWrapper>
+
           {isCreator && (
             <IconButton
               onClick={handleEdit}
-              icon={() => <Edit />}
+              icon={() => <StyledEyeEditIcon />}
               size={IconButton.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               ariaLabel='Edit'
@@ -58,12 +58,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
           )}
         </StyledNameWrapper>
         {creator && (
-          <Typography
-            value={`By ${creator.name}`}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255,0.6)'}
-          />
+          <StyledTypographyWrapper>
+            <Typography
+              value={`By ${creator.name}`}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+            />
+          </StyledTypographyWrapper>
         )}
         {!isCreator && (
           <div>
@@ -87,12 +88,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         <>
           <StyledDivider />
           <StyledWrapper>
-            <Typography
-              value={description}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255,0.9)'}
-            />
+            <StyledShortDescription>
+              <Typography
+                value={description}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            </StyledShortDescription>
           </StyledWrapper>
         </>
       )}
@@ -100,13 +102,29 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
-        {role && <TagsRow title='Role' items={[role]} />}
+        {role && (
+          <StyledTypographyWrapper>
+            <TagsRow title='Role' items={[role]} />
+          </StyledTypographyWrapper>
+        )}
 
-        {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
+        {model_provider && (
+          <StyledTypographyWrapper>
+            <TagsRow title='Provider' items={[model_provider]} />
+          </StyledTypographyWrapper>
+        )}
 
-        {model_version && <TagsRow title='Model' items={[model_version]} />}
+        {model_version && (
+          <StyledTypographyWrapper>
+            <TagsRow title='Model' items={[model_version]} />
+          </StyledTypographyWrapper>
+        )}
 
-        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
+        {temperature && (
+          <StyledTypographyWrapper>
+            <TagsRow title='Temperature' items={[temperature]} />
+          </StyledTypographyWrapper>
+        )}
       </StyledWrapper>
     </StyledDetailsBox>
   )
@@ -115,8 +133,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 export default AgentVIewDetailBox
 
 export const StyledDetailsBox = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-
+  background: ${({ theme }) => theme.body.backgroundColorSecondary};
+  border: ${({ theme }) => theme.body.secondaryBorder};
   width: 100%;
   max-width: 300px;
   min-width: 300px;
@@ -141,7 +159,7 @@ export const StyledWrapper = styled.div`
 export const StyledDivider = styled.div`
   width: 100%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.4);
+  background: ${({ theme }) => theme.body.placeHolderColor};
 `
 export const StyledInnerButtonWrapper = styled.div`
   display: flex;
@@ -155,4 +173,12 @@ export const StyledNameWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 5px;
+`
+
+export const StyledNameTypographyWrapper = styled.div`
+  color: ${({ theme }) => theme.body.textColorPrimary};
+`
+
+export const StyledTypographyWrapper = styled.div`
+  color: ${({ theme }) => theme.body.mainNavColor};
 `

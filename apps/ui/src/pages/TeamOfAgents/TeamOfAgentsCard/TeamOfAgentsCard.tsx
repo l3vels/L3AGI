@@ -294,13 +294,13 @@ const StyledCreatorWrapper = styled.div`
 const StyledTextWrapper = styled.div`
   color: ${({ theme }) => theme.body.textColorSecondary};
 `
-const StyledShortDescription = styled.div`
+export const StyledShortDescription = styled.div`
   color: ${({ theme }) => theme.body.textColorSecondary};
 `
 const StyledCreatorNameWrapper = styled.div`
   color: ${({ theme }) => theme.body.textColorSecondary};
 `
-const StyledEyeOpenIcon = styled(EyeOpen)`
+export const StyledEyeOpenIcon = styled(EyeOpen)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
