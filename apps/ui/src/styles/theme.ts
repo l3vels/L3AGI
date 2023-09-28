@@ -10,7 +10,7 @@ const darkTheme: DefaultTheme = {
       'linear-gradient(265.15deg, rgba(76, 166, 248, 1) -32.37%, rgba(33, 82, 243, 1) 100%)',
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backgroundColorSecondary: 'rgba(0, 0, 0, 0.2)',
-    backdropFilter: 'blur(50px)',
+    backdropFilter: 'blur(100px)',
     textColorPrimary: 'rgba(255, 255, 255)',
     textColorSecondary: 'rgba(255,255,255, 0.8)',
     border: 'none',
@@ -26,6 +26,8 @@ const darkTheme: DefaultTheme = {
     cardBgColor: 'rgba(0, 0, 0, 0.2)',
     secondaryBorder: 'none',
     humanMessageBgColor: 'var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1))',
+    replyBoxBgColor: 'rgba(0, 0, 0, 0.4)',
+    secondaryIconColor: 'rgb(255, 255, 255)',
   },
 }
 
@@ -51,6 +53,8 @@ const lightTheme: DefaultTheme = {
     cardBgColor: 'rgb(255,255,255)',
     secondaryBorder: '1px solid lightGray',
     humanMessageBgColor: 'rgb(240,240,240)',
+    replyBoxBgColor: 'rgb(194,194,194)',
+    secondaryIconColor: 'rgb(255, 255, 255)',
   },
 }
 

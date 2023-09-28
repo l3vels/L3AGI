@@ -25,6 +25,8 @@ declare module 'styled-components' {
       placeHolderColor: string
       cardBgColor: string
       humanMessageBgColor: string
+      replyBoxBgColor: string
+      secondaryIconColor: string
     }
   }
 }
