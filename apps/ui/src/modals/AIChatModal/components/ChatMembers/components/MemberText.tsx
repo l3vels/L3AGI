@@ -26,7 +26,7 @@ const StyledNameWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
-const StyledTypographyNameWrapper = styled.div`
+export const StyledTypographyNameWrapper = styled.div`
   color: ${({ theme }) => theme.body.textColorPrimary};
 `
 const StyledTypographyRole = styled.div`
