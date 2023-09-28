@@ -23,14 +23,14 @@ import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { PublicRoute } from 'routes'
 
 import UpdatePassword from 'pages/UpdatePassword'
 
 import { ThemeProvider } from 'styled-components'
-import { defaultTheme, lightTheme } from 'styles/theme'
+import { darkTheme, lightTheme } from 'styles/theme'
 import { WelcomeLoader } from 'components/Loader/WelcomeLoader'
 import { CheatCode } from 'pages/Auth/Register/CheatCode'
 
@@ -79,8 +79,11 @@ import ToolkitModal from 'modals/ToolkitModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
-  const [theme, setTheme] = useState<any>(defaultTheme)
   const [cmdkOpen, setCmdkOpen] = useState(false)
+  const [theme, setTheme] = useState<string>(() => {
+    const storedTheme = localStorage.getItem('theme')
+    return storedTheme || 'dark'
+  })
 
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
@@ -88,18 +91,26 @@ const Route = () => {
     return false
   })
 
-  // const handleChangeTheme = (theme: any) => {
-  //   setTheme(theme)
-  // }
+  useEffect(() => {
+    const currentThemeName = localStorage.getItem('theme')
+
+    if (currentThemeName && currentThemeName !== theme) {
+      setTheme(currentThemeName)
+    } else {
+      localStorage.setItem('theme', theme)
+    }
+  }, [theme])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('theme', newTheme)
+    setTheme(newTheme)
+  }
 
   if (loading) return <WelcomeLoader />
 
   return (
-    <ThemeProvider theme={theme}>
-      {/* <div>
-        <button onClick={() => handleChangeTheme(defaultTheme)}>default Theme</button>
-        <button onClick={() => handleChangeTheme(lightTheme)}>light Theme</button>
-      </div> */}
+    <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Routes>
         <>
           <Router element={<RootLayout />}>
@@ -245,7 +256,12 @@ const Route = () => {
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
-      <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
+      <CommandMenu
+        open={cmdkOpen}
+        setCmdkOpen={setCmdkOpen}
+        theme={theme}
+        toggleTheme={toggleTheme}
+      />
 
       {/* <NotificationsModal /> */}
     </ThemeProvider>

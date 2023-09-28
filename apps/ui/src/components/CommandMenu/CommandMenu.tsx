@@ -5,11 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 
 import { Command } from 'cmdk'
-import get from 'lodash/get'
-import groupBy from 'lodash/groupBy'
-import has from 'lodash/has'
-import slice from 'lodash/slice'
-
+import { get, groupBy, has, slice } from 'lodash'
+import { darkTheme, lightTheme } from 'styles/theme'
 import StarVector from 'assets/svgComponents/StarVector'
 import StarsVector from 'assets/svgComponents/StartsVector'
 import { enterIcon } from 'assets/icons'
@@ -43,10 +40,10 @@ import { ApiVersionEnum } from 'modals/AIChatModal/types'
 import { defaultData } from './defaultData'
 
 import CommandItemName from './components/ItemName'
-import styled from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import CommandItem from './components/CommandItem'
 
-const CommandMenu = ({ open, setCmdkOpen }: any) => {
+const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   const { openModal, closeModal } = useModal()
   const componentRef = useRef<HTMLDivElement>(null)
 
@@ -70,6 +67,20 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
       await navigate(item.url)
       // closeModal('spotlight-modal')
       setCmdkOpen(false)
+    }
+    if (item.option === 'theme') {
+      if (theme === 'dark' && item.name === 'Dark') {
+        setCmdkOpen(false)
+        return
+      }
+      if (theme === 'light' && item.name === 'Light') {
+        setCmdkOpen(false)
+        return
+      }
+
+      toggleTheme()
+      setCmdkOpen(false)
+      return
     }
     if (item.option === 'open-modal') {
       openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
@@ -218,7 +229,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   {search ? (
                     <>
                       {groupedItems?.go_to.map((item, index) => (
-                        <>
+                        <div key={item.id}>
                           <CommandItem
                             index={index}
                             name={item.name}
@@ -226,12 +237,12 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                             groupName={'Go To'}
                             itemIcon={item.icon}
                           />
-                        </>
+                        </div>
                       ))}
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems.go_to, 1, 8)?.map((item, index) => (
+                      {slice(groupedItems.go_to, 1, 11)?.map((item, index) => (
                         <>
                           <CommandItem
                             index={index}

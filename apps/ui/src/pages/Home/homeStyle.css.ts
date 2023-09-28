@@ -8,7 +8,9 @@ const StyledSectionTitle = styled.h2`
   font-weight: 500;
   font-size: 24px;
   font-size: 18px;
-  color: #ffffff;
+  // color: #ffffff;
+  color: ${({ theme }) =>
+    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(61,61,61)' : '#ffffff'};
 `
 
 const StyledSectionDescription = styled.h2`
@@ -17,7 +19,11 @@ const StyledSectionDescription = styled.h2`
   font-size: 12px;
 
   line-height: 24px;
-  color: rgba(255, 255, 255, 0.8);
+  // color: rgba(255, 255, 255, 0.8);
+  color: ${({ theme }) =>
+    theme.body.backgroundColor === 'rgb(255, 255, 255)'
+      ? 'rgb(110,110,110)'
+      : 'rgba(255, 255, 255, 0.8)'};
 `
 
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`

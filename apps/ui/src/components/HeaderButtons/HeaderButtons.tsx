@@ -33,7 +33,7 @@ const HeaderButtons = () => {
         onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
       >
         <StyledInnerButtonWrapper>
-          <Discord size='20' />
+          <StyledDiscordIcon size='20' />
           <Typography value='Discord' type={Typography.types.LABEL} size={Typography.sizes.sm} />
         </StyledInnerButtonWrapper>
       </Button>
@@ -59,7 +59,6 @@ export default HeaderButtons
 const StyledButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
-
   gap: 5px;
 `
 export const StyledImg = styled.img<{ customScale?: number }>`
@@ -93,4 +92,15 @@ export const StyledInnerButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+  color: ${({ theme }) =>
+    theme.body.backgroundColor === 'rgb(255, 255, 255)' ? 'rgb(57,57,57)' : '#FFFFFF'};
+`
+
+const StyledDiscordIcon = styled(Discord)`
+  path {
+    fill: ${({ theme }) =>
+      theme.body.backgroundColor === 'rgb(255, 255, 255)'
+        ? 'rgb(187,187,187)'
+        : 'rgb(255,255,255)'};
+  }
 `
