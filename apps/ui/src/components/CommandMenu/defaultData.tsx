@@ -12,6 +12,7 @@ import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Value from '@l3-lib/ui-core/dist/icons/Value'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Sun from '@l3-lib/ui-core/dist/icons/Sun'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 import StarVector from 'assets/svgComponents/StarVector'
 import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
@@ -147,17 +148,17 @@ export const defaultData = (path_id?: any) => {
     },
     {
       id: uuidv4(),
-      name: 'Dark',
+      name: 'Set blue theme',
       option: 'theme',
       group_name: 'go_to',
-      icon: <Add />,
+      icon: <Sun />,
     },
     {
       id: uuidv4(),
-      name: 'Light',
+      name: 'Set light theme',
       option: 'theme',
       group_name: 'go_to',
-      icon: <Add />,
+      icon: <Sun />,
     },
   ]
 }
