@@ -156,18 +156,6 @@ const AgentRouteLayout = () => {
 
             return (
               <>
-                {/* <AgentCard
-                  key={index}
-                  name={agent.name}
-                  description={agent.description}
-                  onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
-                  onDeleteClick={() => deleteAgentHandler(agent.id)}
-                  onViewClick={() => navigate(`/agents/${agent.id}`)}
-                  headerTag={agent.role}
-                  onChatClick={() => navigate(`/chat?agent=${agent.id}`)}
-                  creator={agent.creator}
-                  avatar={agent.avatar}
-                /> */}
                 <StyledAgentWrapper
                   onClick={() => navigate(`/chat?agent=${agent.id}`)}
                   picked={agentId === agent.id}
@@ -242,7 +230,7 @@ const StyledList = styled.div`
 
   height: 100%;
   width: 100%;
-  max-width: 350px;
+  max-width: 400px;
 
   max-height: calc(100vh - 260px);
 
@@ -256,7 +244,7 @@ const StyledAgentWrapper = styled.div<{ picked: boolean }>`
   gap: 5px;
 
   padding: 10px;
-  width: 300px;
+  width: 350px;
 
   /* background: rgba(255, 255, 255, 0.1); */
 
