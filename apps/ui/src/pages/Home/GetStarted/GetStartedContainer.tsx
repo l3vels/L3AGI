@@ -38,7 +38,7 @@ const GetStartedContainer = ({
           <StyledColumn>
             <StyledTypographyWrapper>
               <TypographyTertiary
-                value='Learn'
+                value='Learns'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />

@@ -15,6 +15,9 @@ import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 import { StyledEyeEditIcon } from 'modals/AIChatModal/components/ChatMembers/ChatMembers'
 import { StyledShortDescription } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographyTertiary from 'components/Typography/TypographyTertiary'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -43,9 +46,11 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     <StyledDetailsBox>
       <StyledWrapper>
         <StyledNameWrapper>
-          <StyledNameTypographyWrapper>
-            <Typography value={name} type={Typography.types.LABEL} size={Typography.sizes.lg} />
-          </StyledNameTypographyWrapper>
+          <TypographyPrimary
+            value={name}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+          />
 
           {isCreator && (
             <IconButton
@@ -58,13 +63,11 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
           )}
         </StyledNameWrapper>
         {creator && (
-          <StyledTypographyWrapper>
-            <Typography
-              value={`By ${creator.name}`}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-            />
-          </StyledTypographyWrapper>
+          <TypographySecondary
+            value={`By ${creator.name}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.xss}
+          />
         )}
         {!isCreator && (
           <div>
@@ -88,13 +91,11 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         <>
           <StyledDivider />
           <StyledWrapper>
-            <StyledShortDescription>
-              <Typography
-                value={description}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-              />
-            </StyledShortDescription>
+            <TypographyTertiary
+              value={description}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
           </StyledWrapper>
         </>
       )}
@@ -102,29 +103,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
-        {role && (
-          <StyledTypographyWrapper>
-            <TagsRow title='Role' items={[role]} />
-          </StyledTypographyWrapper>
-        )}
+        {role && <TagsRow title='Role' items={[role]} />}
 
-        {model_provider && (
-          <StyledTypographyWrapper>
-            <TagsRow title='Provider' items={[model_provider]} />
-          </StyledTypographyWrapper>
-        )}
+        {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
 
-        {model_version && (
-          <StyledTypographyWrapper>
-            <TagsRow title='Model' items={[model_version]} />
-          </StyledTypographyWrapper>
-        )}
+        {model_version && <TagsRow title='Model' items={[model_version]} />}
 
-        {temperature && (
-          <StyledTypographyWrapper>
-            <TagsRow title='Temperature' items={[temperature]} />
-          </StyledTypographyWrapper>
-        )}
+        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
       </StyledWrapper>
     </StyledDetailsBox>
   )
@@ -173,12 +158,4 @@ export const StyledNameWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 5px;
-`
-
-export const StyledNameTypographyWrapper = styled.div`
-  color: ${({ theme }) => theme.body.textColorPrimary};
-`
-
-export const StyledTypographyWrapper = styled.div`
-  color: ${({ theme }) => theme.body.mainNavColor};
 `

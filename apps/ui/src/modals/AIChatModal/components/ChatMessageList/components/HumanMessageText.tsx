@@ -2,6 +2,7 @@ import { StyledNameTypographyWrapper } from 'pages/Agents/AgentView/components/A
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 const HumanMessageText = ({ textArray }: { textArray: any }) => {
   const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
@@ -15,17 +16,24 @@ const HumanMessageText = ({ textArray }: { textArray: any }) => {
             const mention = mentionMatch[1]
             return (
               <React.Fragment key={index}>
-                <StyledNameTypographyWrapper>
-                  <StyledMentionText>@{mention}</StyledMentionText>
-                </StyledNameTypographyWrapper>
+                <StyledMentionText>
+                  <TypographyPrimary
+                    value={`@${mention}`}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                  />
+                </StyledMentionText>
               </React.Fragment>
             )
           }
         }
         return (
           <React.Fragment key={index}>
-            <StyledNameTypographyWrapper>{word}</StyledNameTypographyWrapper>
-            {/* Add a space before each word */}
+            <TypographyPrimary
+              value={word}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
           </React.Fragment>
         )
       })}
@@ -42,7 +50,7 @@ const StyledTextWrapper = styled.div`
 `
 
 const StyledMentionText = styled.div`
-  color: red;
+  color: #fff;
   background: #4ca6f8;
   margin: 0 5px;
 `

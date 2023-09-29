@@ -6,6 +6,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
 import TwitterLogo from 'assets/tools/twitter.png'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -23,7 +24,11 @@ const HeaderButtons = () => {
           <StyledImageWrapper>
             <StyledImg src={TwitterLogo} customScale={1} />
           </StyledImageWrapper>
-          {/* <Typography value='Twitter' type={Typography.types.LABEL} size={Typography.sizes.sm} /> */}
+          <TypographyPrimary
+            value='Twitter'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledInnerButtonWrapper>
       </Button>
 
@@ -34,7 +39,11 @@ const HeaderButtons = () => {
       >
         <StyledInnerButtonWrapper>
           <StyledDiscordIcon size='20' />
-          {/* <Typography value='Discord' type={Typography.types.LABEL} size={Typography.sizes.sm} /> */}
+          <TypographyPrimary
+            value='Discord'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledInnerButtonWrapper>
       </Button>
 
@@ -47,7 +56,11 @@ const HeaderButtons = () => {
           <StyledImageWrapper>
             <StyledImg src={githubIcon} />
           </StyledImageWrapper>
-          <Typography value='Github' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+          <TypographyPrimary
+            value='Github'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledInnerButtonWrapper>
       </Button>
     </StyledButtonsWrapper>
@@ -92,7 +105,6 @@ export const StyledInnerButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  color: ${({ theme }) => theme.body.textColorPrimary};
 `
 
 const StyledDiscordIcon = styled(Discord)`

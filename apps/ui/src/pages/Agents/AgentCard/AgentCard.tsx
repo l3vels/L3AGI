@@ -16,6 +16,9 @@ import {
   StyledChatButtonWrapper,
   StyledInnerButtonWrapper,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyTertiary from 'components/Typography/TypographyTertiary'
 
 type AgentCardProps = {
   name: string
@@ -59,11 +62,10 @@ const AgentCard = ({
       <StyledCardHeader>
         <div>
           {headerText && (
-            <Typography
+            <TypographySecondary
               value={headerText}
               type={Typography.types.P}
               size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255, 0.8)'}
             />
           )}
         </div>
@@ -75,22 +77,13 @@ const AgentCard = ({
           <AvatarGenerator name={name} size={50} avatar={avatar} />
         </StyledAvatarWrapper>
         <StyledBodyTextWrapper>
-          <StyledTypography>
-            <Typography
-              value={name}
-              type={Typography.types.P}
-              size={Typography.sizes.lg}
-              // customColor={'#FFF'}
-            />
-          </StyledTypography>
-          <StyledShortDescription>
-            <Typography
-              value={shortDescription}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              // customColor={'rgba(255,255,255, 0.8)'}
-            />
-          </StyledShortDescription>
+          <TypographyPrimary value={name} type={Typography.types.P} size={Typography.sizes.lg} />
+
+          <TypographySecondary
+            value={shortDescription}
+            type={Typography.types.P}
+            size={Typography.sizes.sm}
+          />
         </StyledBodyTextWrapper>
       </StyledCardBody>
       <StyledCardFooter>
@@ -103,14 +96,12 @@ const AgentCard = ({
               textSizeRatio={1.5}
               avatar={creator.avatar}
             />
-            <StyledCreatorNameWrapper>
-              <Typography
-                value={creator.name}
-                type={Typography.types.P}
-                size={Typography.sizes.xss}
-                // customColor={'rgba(255,255,255, 0.6)'}
-              />
-            </StyledCreatorNameWrapper>
+
+            <TypographyTertiary
+              value={creator.name}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+            />
           </StyledCreatorWrapper>
         )}
         <StyledButtonsWrapper className='footerButtons'>
@@ -271,16 +262,6 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-`
-const StyledTypography = styled.div`
-  color: ${({ theme }) => theme.body.textColorSecondary};
-`
-
-const StyledShortDescription = styled.div`
-  color: ${({ theme }) => theme.body.textColorSecondary};
-`
-const StyledCreatorNameWrapper = styled.div`
-  color: ${({ theme }) => theme.body.mainNavColor};
 `
 
 const StyledEyeOpenIcon = styled(EyeOpen)`

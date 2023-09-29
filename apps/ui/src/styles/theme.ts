@@ -75,7 +75,7 @@ const lightTheme: DefaultTheme = {
     contentPrimary: 'rgb(0,0,0)',
     contentSecondary: 'rgb(49,49,49)',
     contentTertiary: 'rgb(172,172, 173)',
-    contentQuaternary: 'rgb(255,255,255)',
+    contentQuaternary: 'rgb(189,189,189)',
   },
   heading: {
     contentPrimary: 'rgb(0,0,0)',
