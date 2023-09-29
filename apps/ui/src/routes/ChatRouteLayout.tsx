@@ -160,9 +160,10 @@ const StyledMainWrapper = styled.div`
 `
 const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
   /* max-width: 1400px; */
-  margin-left: 100px;
+  margin-left: 50px;
+
+  /* width: calc(100% - 450px;); */
   height: 100%;
-  width: calc(100% - 100px);
 
   ${props =>
     props.isHidden &&

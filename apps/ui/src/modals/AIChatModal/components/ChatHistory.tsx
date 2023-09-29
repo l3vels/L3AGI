@@ -123,6 +123,7 @@ export default ChatHistory
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   width: 100%;
   height: 100%;
@@ -131,6 +132,9 @@ const StyledRoot = styled.div`
 const StyledMessages = styled.main`
   // flex-grow: 1;
   width: 100%;
+  max-width: 900px;
+  margin-left: 100px;
+
   display: flex;
   /* overflow-y: auto; */
   flex-direction: column;
@@ -140,12 +144,12 @@ const StyledMessages = styled.main`
   margin-top: 30px;
 `
 const StyledButtonWrapper = styled.div`
-  position: fixed;
+  /* position: fixed;
   left: 50%;
   z-index: 100001;
   bottom: 20px;
-  transform: translateX(-50%);
-
+  transform: translateX(-50%); */
+  margin-top: 70px;
   display: flex;
   /* flex-direction: column; */
   justify-content: center;

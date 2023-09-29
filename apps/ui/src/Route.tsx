@@ -153,6 +153,14 @@ const Route = () => {
             {/* <Router index element={<AIChat />} key={document.location.href} />
             </Router> */}
 
+            <Router
+              path={'/chatHistory'}
+              element={<ChatHistoryRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<ChatHistory />} key={document.location.href} />
+            </Router>
+
             <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
               {/* <Router index element={<div />} key={document.location.href} /> */}
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
@@ -235,14 +243,6 @@ const Route = () => {
           <Router path='/login/update-password' element={<UpdatePassword />} />
           <Router path='/cheat-code' element={<CheatCode />} />
           {/* <Router path='/chat/history' element={<AIChat isHistory />} /> */}
-
-          <Router
-            path={'/chat/history'}
-            element={<ChatHistoryRouteLayout />}
-            key={document.location.href}
-          >
-            <Router index element={<ChatHistory />} key={document.location.href} />
-          </Router>
         </Router>
       </Routes>
 
