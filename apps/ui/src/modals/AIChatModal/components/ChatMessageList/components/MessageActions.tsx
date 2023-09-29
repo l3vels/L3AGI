@@ -29,12 +29,12 @@ const MessageActions = ({ onReplyClick, onCopyClick }: MessageActionsProps) => {
     <StyledWrapper>
       {onCopyClick && (
         <StyledActionButton onClick={handleCopyClick}>
-          {copied ? <Check size={20} /> : <Copy size={20} />}
+          {copied ? <StyledCheckIcon size={20} /> : <StyledCopyIcon size={20} />}
         </StyledActionButton>
       )}
       {onReplyClick && (
         <StyledActionButton onClick={onReplyClick}>
-          <ReplyIcon />
+          <StyledReplyIcon />
         </StyledActionButton>
       )}
     </StyledWrapper>
@@ -54,5 +54,22 @@ const StyledActionButton = styled.div`
   :hover {
     opacity: 1;
     cursor: pointer;
+  }
+`
+
+const StyledReplyIcon = styled(ReplyIcon)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledCopyIcon = styled(Copy)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledCheckIcon = styled(Check)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
