@@ -67,7 +67,7 @@ export const useEditAgent = () => {
     })
     await refetchAgents()
 
-    navigate(`/agents`)
+    navigate(`/chat?agent=${agentId}`)
 
     setToast({
       message: 'Agent was updated!',
