@@ -99,11 +99,11 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
         </Tooltip>
 
         <Tooltip
-          content={() => <span>Agents</span>}
+          content={() => <span>Chat</span>}
           position={Tooltip.positions.RIGHT}
           tooltipSize='large'
         >
-          <StyledIcon picked={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
+          <StyledIcon picked={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
             <Mention size={46} />
           </StyledIcon>
         </Tooltip>

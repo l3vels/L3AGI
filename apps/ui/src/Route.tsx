@@ -150,12 +150,12 @@ const Route = () => {
               {/* <Router path='webhook' element={<Webhook />} key={document.location.href} /> */}
             </Router>
 
-            <Router path={'chat'} element={<ChatRouteLayout />} key={document.location.href}>
-              <Router index element={<AIChat />} key={document.location.href} />
-            </Router>
+            <Router path={'chat'} element={<AgentRouteLayout />} key={document.location.href} />
+            {/* <Router index element={<AIChat />} key={document.location.href} />
+            </Router> */}
 
             <Router path={'agents'} element={<AgentRouteLayout />} key={document.location.href}>
-              <Router index element={<div />} key={document.location.href} />
+              {/* <Router index element={<div />} key={document.location.href} /> */}
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
               <Router
                 path={'create-agent-template'}

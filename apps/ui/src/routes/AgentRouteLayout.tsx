@@ -72,7 +72,7 @@ const AgentRouteLayout = () => {
             return (
               <StyledAgentWrapper
                 key={index}
-                onClick={() => navigate(`/agents?team=${teamOfAgents.id}`)}
+                onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                 picked={teamId === teamOfAgents.id}
               >
                 <AvatarGenerator name={teamOfAgents?.name} size={30} avatar={teamOfAgents.avatar} />
@@ -169,7 +169,7 @@ const AgentRouteLayout = () => {
                   avatar={agent.avatar}
                 /> */}
                 <StyledAgentWrapper
-                  onClick={() => navigate(`/agents?agent=${agent.id}`)}
+                  onClick={() => navigate(`/chat?agent=${agent.id}`)}
                   picked={agentId === agent.id}
                 >
                   <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
@@ -212,7 +212,7 @@ const AgentRouteLayout = () => {
         </StyledList>
         <StyledMainWrapper>
           <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
-          <StyledChatWrapper isHidden={location.pathname !== ('/agents' || '/team-of-agents')}>
+          <StyledChatWrapper isHidden={location.pathname !== '/chat'}>
             <AIChat />
           </StyledChatWrapper>
         </StyledMainWrapper>
