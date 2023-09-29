@@ -69,6 +69,24 @@ const AgentRouteLayout = () => {
 
           {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
             const { team_agents } = teamOfAgents
+
+            const isCreator = user?.id === teamOfAgents?.created_by
+
+            const handleView = (event: any) => {
+              event.stopPropagation()
+
+              openModal({
+                name: 'team-of-agent-view-modal',
+                data: { teamOfAgents: teamOfAgents },
+              })
+            }
+
+            const handleEdit = (event: any) => {
+              event.stopPropagation()
+
+              navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
+            }
+
             return (
               <StyledAgentWrapper
                 key={index}
@@ -93,14 +111,7 @@ const AgentRouteLayout = () => {
 
                 <StyledIconButtonWrapper className='hiddenButton'>
                   <IconButton
-                    // onClick={() =>
-                    //   openModal({
-                    //     name: 'agent-view-modal',
-                    //     data: {
-                    //       agent: agentObj,
-                    //     },
-                    //   })
-                    // }
+                    onClick={handleView}
                     icon={() => (
                       <StyledIconWrapper>
                         <EyeOpen size={50} />
@@ -111,7 +122,7 @@ const AgentRouteLayout = () => {
                     // ariaLabel='View'
                   />
 
-                  {/* {isCreator && (
+                  {isCreator && (
                     <IconButton
                       onClick={handleEdit}
                       icon={() => <Edit />}
@@ -119,7 +130,7 @@ const AgentRouteLayout = () => {
                       kind={IconButton.kinds.TERTIARY}
                       // ariaLabel='Edit'
                     />
-                  )} */}
+                  )}
                 </StyledIconButtonWrapper>
               </StyledAgentWrapper>
             )
@@ -150,8 +161,20 @@ const AgentRouteLayout = () => {
 
             const isCreator = user?.id === agent?.created_by
 
-            const handleEdit = () => {
+            const handleEdit = (event: any) => {
+              event.stopPropagation()
               navigate(`/agents/${agent?.id}/edit-agent`)
+            }
+
+            const handleView = (event: any) => {
+              event.stopPropagation()
+
+              openModal({
+                name: 'agent-view-modal',
+                data: {
+                  agent: agentObj,
+                },
+              })
             }
 
             return (
@@ -165,14 +188,7 @@ const AgentRouteLayout = () => {
 
                   <StyledIconButtonWrapper className='hiddenButton'>
                     <IconButton
-                      onClick={() =>
-                        openModal({
-                          name: 'agent-view-modal',
-                          data: {
-                            agent: agentObj,
-                          },
-                        })
-                      }
+                      onClick={handleView}
                       icon={() => (
                         <StyledIconWrapper>
                           <EyeOpen size={50} />
