@@ -93,7 +93,7 @@ const AgentCard = ({
           </StyledShortDescription>
         </StyledBodyTextWrapper>
       </StyledCardBody>
-      <StyledCardFooter>
+      <StyledCardFooter className='cardFooter'>
         {creator && (
           <StyledCreatorWrapper>
             {/* <StyledLogo src={l3Logo} /> */}
@@ -113,28 +113,24 @@ const AgentCard = ({
             </StyledCreatorNameWrapper>
           </StyledCreatorWrapper>
         )}
-        <StyledButtonsWrapper className='footerButtons'>
+        <StyledButtonsWrapper>
           {onDeleteClick && (
-            <StyledHiddenButton className='hiddenButton'>
-              <IconButton
-                onClick={onDeleteClick}
-                icon={() => <Delete />}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='Delete'
-              />
-            </StyledHiddenButton>
+            <IconButton
+              onClick={onDeleteClick}
+              icon={() => <Delete />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              // ariaLabel='Delete'
+            />
           )}
           {onEditClick && (
-            <StyledHiddenButton className='hiddenButton'>
-              <IconButton
-                onClick={onEditClick}
-                icon={() => <Edit />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='Edit'
-              />
-            </StyledHiddenButton>
+            <IconButton
+              onClick={onEditClick}
+              icon={() => <Edit />}
+              size={IconButton.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              // ariaLabel='Edit'
+            />
           )}
           {onViewClick && (
             <IconButton
@@ -192,7 +188,7 @@ export const StyledAgentCard = styled.div`
   justify-content: center;
 
   :hover {
-    .hiddenButton {
+    .cardFooter {
       opacity: 1;
     }
   }
@@ -233,6 +229,8 @@ const StyledCardFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  opacity: 0;
+  transition: opacity 800ms;
 `
 const StyledButtonsWrapper = styled.div`
   display: flex;
@@ -255,13 +253,7 @@ const StyledAvatarWrapper = styled.div`
   text-align: center;
   height: fit-content;
 `
-const StyledHiddenButton = styled.div`
-  width: fit-content;
-  height: fit-content;
 
-  opacity: 0;
-  transition: opacity 300ms;
-`
 const StyledIconWrapper = styled.div`
   /* color: #000; */
   color: transparent;
