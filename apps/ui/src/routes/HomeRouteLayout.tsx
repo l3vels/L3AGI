@@ -24,11 +24,11 @@ const HomeRouteLayout = () => {
   return (
     <StyledAppContainer className='app_container'>
       <Header isPublicRoute={!user} />
-      {user && (
+      {/* {user && (
         <StyledNavigationWrapper>
           <MainNavigation />
         </StyledNavigationWrapper>
-      )}
+      )} */}
       <StyledMainContainer>{outlet}</StyledMainContainer>
       {user && <Footer />}
 

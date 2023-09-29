@@ -15,9 +15,12 @@ import {
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import styled from 'styled-components'
 import BackButton from 'components/BackButton'
+import { useNavigate } from 'react-router-dom'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useAgents()
+
+  const navigate = useNavigate()
 
   return (
     <FormikProvider value={formik}>
@@ -25,13 +28,13 @@ const CreateAgentForm = () => {
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle>Create Agent</StyledSectionTitle>
-            <StyledSectionDescription>
+            {/* <StyledSectionDescription>
               Here are all your agents, managing tasks and operations.
-            </StyledSectionDescription>
+            </StyledSectionDescription> */}
           </div>
 
           <StyledButtonWrapper>
-            <BackButton />
+            <BackButton customOnClick={() => navigate('/agents/create-agent-template')} />
 
             <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
               {isLoading ? <Loader size={32} /> : 'Save'}
@@ -54,7 +57,9 @@ export default CreateAgentForm
 export const StyledFormWrapper = styled.div`
   width: 100%;
 
-  height: calc(100vh - 325px);
+  height: calc(100vh - 225px);
+
+  max-height: 1000px;
 `
 export const StyledButtonWrapper = styled.div`
   display: flex;

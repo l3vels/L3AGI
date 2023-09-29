@@ -79,6 +79,7 @@ const StyledUl = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
   gap: 16px;
   /* margin-bottom: 25px; */
   padding-bottom: 10px;

@@ -76,6 +76,7 @@ import ChatHistory from 'modals/AIChatModal/components/ChatHistory'
 import ChatHistoryRouteLayout from 'routes/ChatHistoryRouteLayout'
 import SettingsModal from 'modals/SettingsModal'
 import ToolkitModal from 'modals/ToolkitModal'
+import AgentRouteLayout from 'routes/AgentRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -153,8 +154,8 @@ const Route = () => {
               <Router index element={<AIChat />} key={document.location.href} />
             </Router>
 
-            <Router path={'agents'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Agents />} key={document.location.href} />
+            <Router path={'agents'} element={<AgentRouteLayout />} key={document.location.href}>
+              <Router index element={<div />} key={document.location.href} />
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
               <Router
                 path={'create-agent-template'}
@@ -189,7 +190,7 @@ const Route = () => {
             </Router>
             <Router
               path={'team-of-agents'}
-              element={<MainRouteLayout />}
+              element={<AgentRouteLayout />}
               key={document.location.href}
             >
               <Router index element={<TeamOfAgents />} key={document.location.href} />

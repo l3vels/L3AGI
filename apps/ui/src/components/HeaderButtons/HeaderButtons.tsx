@@ -23,7 +23,7 @@ const HeaderButtons = () => {
           <StyledImageWrapper>
             <StyledImg src={TwitterLogo} customScale={1} />
           </StyledImageWrapper>
-          <Typography value='Twitter' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+          {/* <Typography value='Twitter' type={Typography.types.LABEL} size={Typography.sizes.sm} /> */}
         </StyledInnerButtonWrapper>
       </Button>
 
@@ -34,7 +34,7 @@ const HeaderButtons = () => {
       >
         <StyledInnerButtonWrapper>
           <StyledDiscordIcon size='20' />
-          <Typography value='Discord' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+          {/* <Typography value='Discord' type={Typography.types.LABEL} size={Typography.sizes.sm} /> */}
         </StyledInnerButtonWrapper>
       </Button>
 

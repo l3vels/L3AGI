@@ -15,9 +15,12 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateTeamOfAgents } from '../useCreateTeamOfAgents'
 import BackButton from 'components/BackButton'
+import { useNavigate } from 'react-router-dom'
 
 const CreateTeamOfAgentsForm = () => {
   const { formik, handleSubmit, isLoading } = useCreateTeamOfAgents()
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -26,13 +29,13 @@ const CreateTeamOfAgentsForm = () => {
           <StyledHeaderGroup className='header_group'>
             <div>
               <StyledSectionTitle>Add Team</StyledSectionTitle>
-              <StyledSectionDescription>
+              {/* <StyledSectionDescription>
                 Create and manage your team of AI agents for interactive experiences.
-              </StyledSectionDescription>
+              </StyledSectionDescription> */}
             </div>
 
             <StyledButtonWrapper>
-              <BackButton />
+              <BackButton customOnClick={() => navigate('/agents')} />
 
               <Button
                 onClick={() => handleSubmit(formik?.values)}
