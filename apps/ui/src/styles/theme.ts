@@ -30,7 +30,15 @@ const darkTheme: DefaultTheme = {
     secondaryIconColor: 'rgb(255, 255, 255)',
   },
   typography: {
-    primaryColor: 'var(--color-transparent-white-08)',
+    contentPrimary: 'var(--color-primitive-white)',
+    contentSecondary: 'var(--color-transparent-white-08)',
+    contentTertiary: 'var(--color-transparent-white-06',
+    contentQuaternary: 'var(--color-transparent-white-04)',
+  },
+  heading: {
+    contentPrimary: 'var(--color-snow_white)',
+    contentSecondary: 'var(--color-transparent-white-09)',
+    contentTertiary: 'var(--color-transparent-white-04)',
   },
   button: {
     kind: 'PRIMARY',
@@ -64,7 +72,15 @@ const lightTheme: DefaultTheme = {
     secondaryIconColor: 'rgb(255, 255, 255)',
   },
   typography: {
-    primaryColor: 'rgb(58,58,58)',
+    contentPrimary: 'rgb(0,0,0)',
+    contentSecondary: 'rgb(49,49,49)',
+    contentTertiary: 'rgb(172,172, 173)',
+    contentQuaternary: 'rgb(255,255,255)',
+  },
+  heading: {
+    contentPrimary: 'rgb(0,0,0)',
+    contentSecondary: 'rgb(49,49,49)',
+    contentTertiary: 'rgb(172,172, 173)',
   },
   button: {
     kind: 'PRIMARY',

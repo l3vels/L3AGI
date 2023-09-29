@@ -29,7 +29,15 @@ declare module 'styled-components' {
       secondaryIconColor: string
     }
     typography: {
-      primaryColor: string
+      contentPrimary: string
+      contentSecondary: string
+      contentTertiary: string
+      contentQuaternary: string
+    }
+    heading: {
+      contentPrimary: string
+      contentSecondary: string
+      contentTertiary: string
     }
     button: {
       kind: string
