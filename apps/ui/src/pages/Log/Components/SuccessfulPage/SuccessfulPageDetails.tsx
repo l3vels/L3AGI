@@ -15,6 +15,9 @@ import { AuthContext } from 'contexts'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 const Details = ({ log }: any) => {
   const [currentLogId, setCurrentLogId] = useState<any>()
@@ -86,11 +89,10 @@ const Details = ({ log }: any) => {
       <StyledDetails>
         <StyledDetailsItem>
           <StyledLabel>
-            <Typography
+            <TypographySecondary
               value='Status'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
           <StyledStatusContainer>
@@ -101,17 +103,15 @@ const Details = ({ log }: any) => {
                   readOnly
                   label={
                     <>
-                      <Typography
+                      <TypographyTertiary
                         value={filteredLogId[0]?.status}
                         type={Typography.types.LABEL}
                         size={Typography.sizes.xss}
-                        customColor='rgba(0, 0, 0, 0.7)'
                       />
-                      <Typography
+                      <TypographyTertiary
                         value={parseInt(filteredLogId[0]?.status) === 200 && ' OK'}
                         type={Typography.types.LABEL}
                         size={Typography.sizes.xss}
-                        customColor='rgba(0, 0, 0, 0.7)'
                       />
                     </>
                   }
@@ -122,87 +122,77 @@ const Details = ({ log }: any) => {
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>
-            <Typography
+            <TypographySecondary
               value='ID'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
           {filteredLogId[0]?.asset_id !== null ? (
             <StyledLabel>
-              <Typography
+              <TypographyPrimary
                 value={filteredLogId[0]?.asset_id}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
           ) : filteredLogId[0]?.collection_id !== null ? (
             <StyledLabel>
-              <Typography
+              <TypographyPrimary
                 value={filteredLogId[0]?.collection_id}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
           ) : filteredLogId[0]?.contract_id !== null ? (
             <StyledLabel>
-              <Typography
+              <TypographyPrimary
                 value={filteredLogId[0]?.contract_id}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
           ) : filteredLogId[0]?.player_id !== null ? (
             <StyledLabel>
-              <Typography
+              <TypographyPrimary
                 value={filteredLogId[0]?.player_id}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
           ) : filteredLogId[0]?.game_id !== null ? (
             <StyledLabel>
-              <Typography
+              <TypographyPrimary
                 value={filteredLogId[0]?.game_id}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
           ) : null}
         </StyledDetailsItem>
         <StyledDetailsItem>
           <StyledLabel>
-            <Typography
+            <TypographySecondary
               value='Time'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
           <StyledLabel>
-            <Typography
+            <TypographyPrimary
               value={moment(filteredLogId[0]?.request_date).format('L')}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
             />
-            <Typography
+            <TypographyPrimary
               value=', '
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
             />
-            <Typography
+            <TypographyPrimary
               value={moment(filteredLogId[0]?.request_date).format('HH:mm:ss')}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
             />
           </StyledLabel>
         </StyledDetailsItem>
@@ -210,19 +200,17 @@ const Details = ({ log }: any) => {
         {filteredLogId[0]?.ip ? (
           <StyledDetailsItem>
             <StyledLabel>
-              <Typography
+              <TypographySecondary
                 value='IP address'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 0.8)'
               />
             </StyledLabel>
             <StyledLabel>
-              <Typography
+              <TypographyPrimary
                 value={filteredLogId[0]?.ip}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor='rgba(255, 255, 255, 1)'
               />
             </StyledLabel>
           </StyledDetailsItem>
@@ -248,19 +236,17 @@ const Details = ({ log }: any) => {
         </StyledDetailsItem> */}
         <StyledDetailsItem>
           <StyledLabel>
-            <Typography
+            <TypographySecondary
               value='Source'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 0.8)'
             />
           </StyledLabel>
           <StyledSource>
-            <Typography
+            <TypographyPrimary
               value={filteredLogId[0]?.source_type}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='rgba(255, 255, 255, 1)'
             />
           </StyledSource>
         </StyledDetailsItem>
@@ -270,11 +256,10 @@ const Details = ({ log }: any) => {
       <StyledLine />
 
       <StyledSubTitle>
-        <Typography
+        <TypographyPrimary
           value={filteredLogId[0]?.changes.length > 0 ? 'Changes' : null}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='#FFFFFF'
         />
       </StyledSubTitle>
 
@@ -306,11 +291,10 @@ const Details = ({ log }: any) => {
       {filteredLogId[0]?.is_gql === true ? (
         <>
           <StyledSubTitle>
-            <Typography
+            <TypographyPrimary
               value='Response'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='#FFFFFF'
             />
           </StyledSubTitle>
 
@@ -337,11 +321,10 @@ const Details = ({ log }: any) => {
           </StyledCodeContainer>
 
           <StyledSubTitle>
-            <Typography
+            <TypographyPrimary
               value='Graphql variables'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='#FFFFFF'
             />
           </StyledSubTitle>
           <StyledCodeContainer>
@@ -371,11 +354,10 @@ const Details = ({ log }: any) => {
           {filteredLogId[0]?.query_params !== null ? (
             <>
               <StyledSubTitle>
-                <Typography
+                <TypographyPrimary
                   value='Query parameters'
                   type={Typography.types.LABEL}
                   size={Typography.sizes.sm}
-                  customColor='#FFFFFF'
                 />
               </StyledSubTitle>
               <StyledCodeContainer>
@@ -403,11 +385,10 @@ const Details = ({ log }: any) => {
           ) : null}
 
           <StyledSubTitle>
-            <Typography
+            <TypographyPrimary
               value='Response'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor='#FFFFFF'
             />
           </StyledSubTitle>
 
@@ -436,11 +417,10 @@ const Details = ({ log }: any) => {
           {filteredLogId[0]?.body !== null ? (
             <>
               <StyledSubTitle>
-                <Typography
+                <TypographyPrimary
                   value='Body'
                   type={Typography.types.LABEL}
                   size={Typography.sizes.sm}
-                  customColor='#FFFFFF'
                 />
               </StyledSubTitle>
               <StyledCodeContainer>
@@ -498,18 +478,6 @@ const StyledDetailsItem = styled.div`
 `
 
 const StyledLabel = styled.div``
-const StyledWrapper = styled.div`
-  display: flex;
-`
-
-const StyledAPIVersion = styled.div`
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  height: 16px;
-  margin-top: 5px;
-  border-bottom: 1px solid white;
-`
 
 const StyledSource = styled.div`
   display: flex;
@@ -517,14 +485,6 @@ const StyledSource = styled.div`
   width: fit-content;
   height: 19px;
   //   margin-top: 2px;
-  border-bottom: 1px solid white;
-`
-const StyledKey = styled.div`
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  height: 16px;
-  margin-top: 5px;
   border-bottom: 1px solid white;
 `
 
@@ -547,25 +507,7 @@ const StyledCodeContainer = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 `
-// const StyledStatusContainer = styled.div<{ is_error: boolean }>`
-//   width: 75px;
-//   background: ${({ is_error }) =>
-//     is_error
-//       ? 'linear-gradient(180deg, #D14485 0%, #E23248 100%)'
-//       : 'linear-gradient(180deg, #CEFB53 0%, #7AF94B 100%)'};
-//   border: 1px solid rgba(255, 255, 255, 0.2);
-//   backdrop-filter: blur(100px);
-//   border-radius: 4px;
-//   font-style: normal;
-//   font-weight: 500;
-//   font-size: 12px;
-//   line-height: 16px;
-//   padding: 2px 4px;
-//   color: ${({ is_error }) => (is_error ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.7)')};
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `
+
 const StyledStatusContainer = styled.div`
   display: flex;
   align-items: center;

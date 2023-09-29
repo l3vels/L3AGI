@@ -18,6 +18,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import CreateApiKeysForm from './CreateApikeysForm'
 import { StyledRoot } from '../EditApiKey/EditApiModal'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 type CreateApiModalProps = {
   closeModal: () => void
@@ -60,7 +61,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
             <StyledModalFooter>
               <StyledActionsContainer>
                 <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
-                  <Typography
+                  <TypographyPrimary
                     value='Cancel'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}

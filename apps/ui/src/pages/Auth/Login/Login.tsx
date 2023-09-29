@@ -21,6 +21,8 @@ import {
   StyledInnerButtonWrapper,
 } from 'components/HeaderButtons/HeaderButtons'
 import OrDivider from 'components/OrDivider/OrDivider'
+import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -49,11 +51,10 @@ const Login = () => {
           customColor='rgba(255, 255, 255, 0.9)'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
-        <Typography
+        <TypographyTertiary
           value={`AI agents' team collaboration as effective as human collaboration.`}
           type={Typography.types.label}
           size={Typography.sizes.sm}
-          customColor={'rgba(255,255,255, 0.6)'}
         />
       </StyledHeaderWrapper>
 
@@ -119,23 +120,21 @@ const Login = () => {
         </Button>
 
         <StyledSignUpWrapper>
-          <Typography
+          <TypographyTertiary
             value={`Don't have an account?`}
             type={Typography.types.label}
             size={Typography.sizes.md}
-            customColor={'rgba(255,255,255, 0.6)'}
           />
           <button
             onClick={() => {
               openModal({ name: 'login-modal', data: { isRegister: true } })
             }}
           >
-            <Typography
+            <TypographyPrimary
               value='Sign up'
               type={Typography.types.label}
               size={Typography.sizes.md}
               as={'a'}
-              customColor='#FFFFFF'
               style={{
                 textDecorationLine: 'underline',
                 cursor: 'pointer',

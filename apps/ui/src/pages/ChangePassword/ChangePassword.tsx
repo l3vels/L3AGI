@@ -14,6 +14,7 @@ import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Modal from '@l3-lib/ui-core/dist/Modal'
+import TypographySecondary from 'components/Typography/TypographySecondary'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void
@@ -52,45 +53,40 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
           </StyledTextWrapper>
           <StyledPasswordDetailsWrapper>
             <StyledPassword>
-              <Typography
+              <TypographySecondary
                 value='Password must contain:'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
-                customColor={'rgba(255, 255, 255, 0.8)'}
               />
             </StyledPassword>
             <StyledPasswordDetails>
               <StyledPasswordRequirementsList>
                 <StyledPasswordRequirement>
-                  <Typography
+                  <TypographySecondary
                     value='At least 6 characters'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
                   />
                 </StyledPasswordRequirement>
                 <StyledPasswordRequirement>
-                  <Typography
+                  <TypographySecondary
                     value='At least 1 upper case letter ( A-Z ) '
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
                   />
                 </StyledPasswordRequirement>
                 <StyledPasswordRequirement>
-                  <Typography
+                  <TypographySecondary
                     value='At least 1 lower case letter ( a-z )'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
                   />
                 </StyledPasswordRequirement>
                 <StyledPasswordRequirement>
-                  <Typography
+                  <TypographySecondary
                     value='At least 1 number ( 0..9 )'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
                   />
                 </StyledPasswordRequirement>
               </StyledPasswordRequirementsList>
@@ -127,11 +123,10 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
                   kind={Button.kinds.PRIMARY}
                   size={Button.sizes.MEDIUM}
                 >
-                  <Typography
+                  <TypographySecondary
                     value='Update Password'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.sm}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
                   />
                 </Button>
               </StyledButtonWrapper>
@@ -153,11 +148,7 @@ const StyledContainer = styled.div`
   margin-top: 95px;
   width: 376px;
 `
-const StyledModalWrapper = styled.div`
-  height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-`
+
 const StyledCloseButton = styled.div`
   position: absolute;
   top: 10px;
@@ -232,11 +223,6 @@ const StyledButtonWrapper = styled.div`
   align-items: center;
   width: 375px;
   height: 56px;
-`
-
-const StyledFormikTextField = styled.div`
-  width: 375px;
-  height: 44px;
 `
 
 const StyledPasswordRequirementsList = styled.ul`

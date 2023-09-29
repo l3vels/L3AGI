@@ -17,6 +17,8 @@ import { FormikProvider } from 'formik'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
+import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
   const { tool, formik, handleSubmit, isLoading } = useToolView({
@@ -58,33 +60,29 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
           <StyledInnerWrapper>
             <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
             <StyledTextWrapper>
-              <Typography
+              <TypographySecondary
                 value={`By`}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
-                customColor={'rgba(255,255,255,0.8'}
               />
 
-              <Typography
+              <TypographySecondary
                 value={`L3`}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
-                customColor={'rgba(255,255,255,0.8'}
                 style={{ textDecoration: 'underline' }}
               />
             </StyledTextWrapper>
             <StyledMainTextWrapper>
-              <Typography
+              <TypographyPrimary
                 value={name}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
-                customColor={'#FFF'}
               />
-              <Typography
+              <TypographySecondary
                 value={description}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor={'rgba(255,255,255,0.8'}
               />
             </StyledMainTextWrapper>
 

@@ -13,6 +13,9 @@ import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
+import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 type TeamOfAgentCardProps = {
   name: string
@@ -55,14 +58,12 @@ const TeamOfAgentCard = ({
             textSizeRatio={1.5}
             avatar={creator.avatar}
           />
-          <StyledCreatorNameWrapper>
-            <Typography
-              value={creator.name}
-              type={Typography.types.P}
-              size={Typography.sizes.xss}
-              // customColor={'rgba(255,255,255, 0.6)'}
-            />
-          </StyledCreatorNameWrapper>
+
+          <TypographyTertiary
+            value={creator.name}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+          />
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
@@ -70,25 +71,19 @@ const TeamOfAgentCard = ({
           <Heading type={Heading.types.h1} value={name} size='medium' />
         </StyledTextWrapper>
 
-        <StyledShortDescription>
-          <Typography
-            value={shortDescription}
-            type={Typography.types.P}
-            size={Typography.sizes.sm}
-            // customColor={'rgba(255,255,255, 0.8)'}
-          />
-        </StyledShortDescription>
+        <TypographySecondary
+          value={shortDescription}
+          type={Typography.types.P}
+          size={Typography.sizes.sm}
+        />
 
         {teamAgents?.length > 0 && (
           <StyledRowWrapper>
-            <StyledTextWrapper>
-              <Typography
-                value={'Agents'}
-                type={Typography.types.P}
-                size={Typography.sizes.md}
-                // customColor={'#FFF'}
-              />
-            </StyledTextWrapper>
+            <TypographyPrimary
+              value={'Agents'}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+            />
 
             <StyledAvatarsContainer>
               {teamAgents?.map((teamAgents: any) => {
@@ -106,22 +101,17 @@ const TeamOfAgentCard = ({
 
         {teamType && (
           <StyledRowWrapper>
-            <StyledTextWrapper>
-              <Typography
-                value={'Type'}
-                type={Typography.types.P}
-                size={Typography.sizes.md}
-                // customColor={'#FFF'}
-              />
-            </StyledTextWrapper>
-            <StyledShortDescription>
-              <Typography
-                value={teamType}
-                type={Typography.types.P}
-                size={Typography.sizes.xss}
-                // customColor={'rgba(255,255,255,0.8)'}
-              />
-            </StyledShortDescription>
+            <TypographyPrimary
+              value={'Type'}
+              type={Typography.types.P}
+              size={Typography.sizes.md}
+            />
+
+            <TypographySecondary
+              value={teamType}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+            />
           </StyledRowWrapper>
         )}
       </StyledBody>
@@ -294,12 +284,7 @@ const StyledCreatorWrapper = styled.div`
 const StyledTextWrapper = styled.div`
   color: ${({ theme }) => theme.body.textColorSecondary};
 `
-export const StyledShortDescription = styled.div`
-  color: ${({ theme }) => theme.body.textColorSecondary};
-`
-const StyledCreatorNameWrapper = styled.div`
-  color: ${({ theme }) => theme.body.textColorSecondary};
-`
+
 export const StyledEyeOpenIcon = styled(EyeOpen)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};

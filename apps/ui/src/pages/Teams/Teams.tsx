@@ -25,6 +25,7 @@ import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 // import useTeams from './useTeams'
 
@@ -107,7 +108,7 @@ const Teams = () => {
               // leftIcon={Add}
               onClick={openCreateTeamsModal}
             >
-              <StyledLabelTypography
+              <TypographyPrimary
                 value='Add member'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
@@ -144,9 +145,6 @@ const Teams = () => {
 
 export default Teams
 
-const StyledLabelTypography = styled(Typography)`
-  color: #ffffff;
-`
 const StyledHeadingWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -165,10 +163,7 @@ const StyledHeaderGroup = styled.div`
   display: flex;
   justify-content: space-between;
 `
-const StyledAddMemberPopupWrapper = styled.div`
-  display: grid;
-  grid-template: 'b b a' auto 'b b c' 2ch 'b b c' 1em / 20% 20px;
-`
+
 export const StyledGridWrapper = styled.div`
   // display: flex;
   // position: relative;
@@ -176,24 +171,7 @@ export const StyledGridWrapper = styled.div`
   // width: 100%;
   height: 1000px;
 `
-const StyledButtonsWrapper = styled.div`
-  margin-top: 15px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  gap: 4px;
-
-  background: rgba(0, 0, 0, 0.2);
-
-  padding: 16px;
-
-  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(50px);
-
-  border-radius: 6px;
-`
 export const StyledClickableDiv = styled.div`
   cursor: pointer;
 `

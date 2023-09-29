@@ -20,6 +20,8 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import OrDivider from 'components/OrDivider/OrDivider'
 import useGithubLogin from '../Login/useGithubLogin'
+import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
@@ -39,11 +41,10 @@ const Register = () => {
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
 
-        <Typography
+        <TypographyTertiary
           value={`AI agents' team collaboration as effective as human collaboration.`}
           type={Typography.types.label}
           size={Typography.sizes.sm}
-          customColor={'rgba(255,255,255, 0.6)'}
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
@@ -86,23 +87,21 @@ const Register = () => {
         <Button onClick={formik.handleSubmit}>Sign up</Button>
 
         <StyledLoginWrapper>
-          <Typography
+          <TypographyTertiary
             value={`Already have an account?`}
             type={Typography.types.label}
             size={Typography.sizes.md}
-            customColor={'rgba(255,255,255, 0.6)'}
           />
           <button
             onClick={() => {
               openModal({ name: 'login-modal', data: { isRegister: false } })
             }}
           >
-            <Typography
+            <TypographyPrimary
               value='Login'
               type={Typography.types.label}
               size={Typography.sizes.md}
               as={'a'}
-              customColor='#FFFFFF'
               style={{
                 textDecorationLine: 'underline',
                 cursor: 'pointer',

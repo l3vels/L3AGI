@@ -20,6 +20,7 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { StyledSectionTitle } from 'pages/Home/homeStyle.css'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/TypographySecondary'
 
 const AgentRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -48,11 +49,10 @@ const AgentRouteLayout = () => {
       <StyledContainer>
         <StyledList>
           <StyledListHeader>
-            <Typography
+            <TypographySecondary
               value={'Teams'}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
-              customColor={'rgba(255, 255, 255, 0.8)'}
             />
             <IconButton
               icon={() => (
@@ -126,11 +126,10 @@ const AgentRouteLayout = () => {
           })}
 
           <StyledListHeader>
-            <Typography
+            <TypographySecondary
               value={'Agents'}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
-              customColor={'rgba(255, 255, 255, 0.8)'}
             />
             <IconButton
               icon={() => (

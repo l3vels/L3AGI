@@ -7,6 +7,8 @@ import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
 import LogList from '../LogList'
 
+import TypographyPrimary from 'components/Typography/TypographyPrimary'
+
 const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
   const { log_list } = useLog()
   const [is_open, setIsOpen] = React.useState(false)
@@ -43,7 +45,11 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
           size={Button.sizes.SMALL}
           onClick={onClose}
         >
-          <Typography value='Clear' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+          <TypographyPrimary
+            value='Clear'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledTertiaryButton>
 
         <StyledPrimaryButton
@@ -51,7 +57,11 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
           size={Button.sizes.SMALL}
           onClick={handleFilter}
         >
-          <Typography value='Apply' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+          <TypographyPrimary
+            value='Apply'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledPrimaryButton>
       </StyledButtonContainer>
     </StyledEndPointContainer>
