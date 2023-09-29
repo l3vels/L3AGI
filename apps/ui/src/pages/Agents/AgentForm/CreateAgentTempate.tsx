@@ -75,7 +75,7 @@ const CreateAgentTemplate = () => {
                     await refetchAgent({ id: agent.id })
                     navigate(`/agents/create-agent?agentId=${agent.id}`)
                   }}
-                  creator={agent.creator}
+                  // creator={agent.creator}
                   avatar={agent.avatar}
                 />
               )
