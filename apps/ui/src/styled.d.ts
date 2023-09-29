@@ -28,5 +28,12 @@ declare module 'styled-components' {
       replyBoxBgColor: string
       secondaryIconColor: string
     }
+    typography: {
+      primaryColor: string
+    }
+    button: {
+      kind: string
+      tertiary: string
+    }
   }
 }

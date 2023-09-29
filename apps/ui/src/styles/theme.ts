@@ -29,6 +29,13 @@ const darkTheme: DefaultTheme = {
     replyBoxBgColor: 'rgba(0, 0, 0, 0.4)',
     secondaryIconColor: 'rgb(255, 255, 255)',
   },
+  typography: {
+    primaryColor: 'var(--color-transparent-white-08)',
+  },
+  button: {
+    kind: 'PRIMARY',
+    tertiary: 'TERTIARY',
+  },
 }
 
 const lightTheme: DefaultTheme = {
@@ -55,6 +62,13 @@ const lightTheme: DefaultTheme = {
     humanMessageBgColor: 'rgb(240,240,240)',
     replyBoxBgColor: 'rgb(194,194,194)',
     secondaryIconColor: 'rgb(255, 255, 255)',
+  },
+  typography: {
+    primaryColor: 'rgb(58,58,58)',
+  },
+  button: {
+    kind: 'PRIMARY',
+    tertiary: 'PRIMARY',
   },
 }
 
