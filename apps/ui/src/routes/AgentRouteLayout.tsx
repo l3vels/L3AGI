@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate, useLocation, useNavigate, useOutlet } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 
@@ -36,9 +36,10 @@ const AgentRouteLayout = () => {
   const location = useLocation()
 
   const urlParams = new URLSearchParams(location.search)
+  const params = useParams()
 
-  const agentId = urlParams.get('agent')
-  const teamId = urlParams.get('team')
+  const agentId = urlParams.get('agent') || params.agentId
+  const teamId = urlParams.get('team') || params.teamId
 
   if (!user) return <Navigate to='/' />
 
