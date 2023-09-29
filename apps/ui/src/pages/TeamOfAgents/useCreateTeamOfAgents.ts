@@ -100,7 +100,7 @@ export const useCreateTeamOfAgents = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/team-of-agents')
+      navigate(`/chat?team=${teamOfAgents.id}`)
     } catch (e) {
       setToast({
         message: 'Failed To Add Team!',
