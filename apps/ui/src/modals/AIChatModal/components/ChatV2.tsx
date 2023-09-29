@@ -697,8 +697,6 @@ const StyledMembersWrapper = styled.div`
   top: 20px;
   right: 5px;
   border-radius: 23px;
-  // border: ${({ theme }) => theme.body.border};
-  // background: ${({ theme }) => theme.body.backgroundColorSecondary};
   z-index: 12000000;
   padding: 10px;
 
