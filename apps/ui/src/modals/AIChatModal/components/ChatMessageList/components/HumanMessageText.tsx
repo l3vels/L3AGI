@@ -24,7 +24,8 @@ const HumanMessageText = ({ textArray }: { textArray: any }) => {
         }
         return (
           <React.Fragment key={index}>
-            <StyledNameTypographyWrapper>{word}</StyledNameTypographyWrapper>
+            {/* <StyledNameTypographyWrapper>{word}</StyledNameTypographyWrapper> */}
+            {word} {/* Add a space before each word */}
             {/* Add a space before each word */}
           </React.Fragment>
         )
@@ -42,7 +43,6 @@ const StyledTextWrapper = styled.div`
 `
 
 const StyledMentionText = styled.div`
-  color: red;
   background: #4ca6f8;
   margin: 0 5px;
 `

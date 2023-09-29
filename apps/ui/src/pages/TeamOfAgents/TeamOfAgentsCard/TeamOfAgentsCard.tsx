@@ -40,8 +40,8 @@ const TeamOfAgentCard = ({
   teamType,
 }: TeamOfAgentCardProps) => {
   let shortDescription = description || ''
-  if (description.length > 150) {
-    shortDescription = `${description.slice(0, 150)}...`
+  if (description.length > 120) {
+    shortDescription = `${description.slice(0, 120)}...`
   }
 
   return (
@@ -195,7 +195,7 @@ const StyledCard = styled.div`
   padding: 20px 25px;
   /* padding-top: 30px; */
 
-  border-radius: 10px;
+  border-radius: 22px;
   border: ${({ theme }) => theme.body.border};
   background: ${({ theme }) => theme.body.backgroundColorSecondary};
   display: flex;

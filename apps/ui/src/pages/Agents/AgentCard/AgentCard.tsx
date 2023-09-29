@@ -178,7 +178,8 @@ export const StyledAgentCard = styled.div`
   padding: 15px;
   padding-bottom: 10px;
 
-  border-radius: 10px;
+  border-radius: 22px;
+
   /* background: rgba(0, 0, 0, 0.5); */
   background: ${({ theme }) => theme.body.cardBgColor};
   border: ${({ theme }) => theme.body.border};

@@ -87,14 +87,14 @@ export const useAgents = () => {
         suggestions: values.agent_suggestions,
         greeting: values.agent_greeting,
       }
-      await createAgentService(agentInput)
+      const newAgent = await createAgentService(agentInput)
       await refetchAgents()
       setToast({
         message: 'New Agent was Created!',
         type: 'positive',
         open: true,
       })
-      navigate('/agents')
+      navigate(`/chat?agent=${newAgent.agent.id}`)
     } catch (e) {
       console.log('rrorr', e)
       // navigate('/agents')

@@ -47,7 +47,7 @@ const DiscoverSystemAgents = () => {
                     data: { agent: agentObj },
                   })
                 }
-                onChatClick={() => navigate(`/chat/history?agent=${agent.id}`)}
+                onChatClick={() => navigate(`/chatHistory?agent=${agent.id}`)}
                 headerTag={agent.role}
                 creator={agent.creator}
                 avatar={agent.avatar}

@@ -46,15 +46,14 @@ import MainRouteLayout from 'routes/MainRouteLayout'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 import RootLayout from 'routes/RootLayout'
-import AIChat from 'modals/AIChatModal/AIChat'
-import ChatRouteLayout from 'routes/ChatRouteLayout'
+
 import CreateAgentModal from 'modals/CreateAgentModal'
 import EditAgentModal from 'modals/EditAgentModal'
 import CreateDatasourceModal from 'modals/CreateDatasourceModal'
 import EditDatasourceModal from 'modals/EditDatasourceModal'
 import Datasource from 'pages/Datasource'
 import TeamOfAgents from 'pages/TeamOfAgents'
-import Agents from 'pages/Agents'
+
 import Discover from 'pages/Discover'
 import AgentView from 'pages/Agents/AgentView'
 
@@ -76,7 +75,7 @@ import ChatHistory from 'modals/AIChatModal/components/ChatHistory'
 import ChatHistoryRouteLayout from 'routes/ChatHistoryRouteLayout'
 import SettingsModal from 'modals/SettingsModal'
 import ToolkitModal from 'modals/ToolkitModal'
-import AgentRouteLayout from 'routes/AgentRouteLayout'
+import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -150,11 +149,19 @@ const Route = () => {
               {/* <Router path='webhook' element={<Webhook />} key={document.location.href} /> */}
             </Router>
 
-            <Router path={'chat'} element={<AgentRouteLayout />} key={document.location.href} />
+            <Router path={'chat'} element={<ChatRouteLayout />} key={document.location.href} />
             {/* <Router index element={<AIChat />} key={document.location.href} />
             </Router> */}
 
-            <Router path={'agents'} element={<AgentRouteLayout />} key={document.location.href}>
+            <Router
+              path={'/chatHistory'}
+              element={<ChatHistoryRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<ChatHistory />} key={document.location.href} />
+            </Router>
+
+            <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
               {/* <Router index element={<div />} key={document.location.href} /> */}
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
               <Router
@@ -190,7 +197,7 @@ const Route = () => {
             </Router>
             <Router
               path={'team-of-agents'}
-              element={<AgentRouteLayout />}
+              element={<ChatRouteLayout />}
               key={document.location.href}
             >
               <Router index element={<TeamOfAgents />} key={document.location.href} />
@@ -236,14 +243,6 @@ const Route = () => {
           <Router path='/login/update-password' element={<UpdatePassword />} />
           <Router path='/cheat-code' element={<CheatCode />} />
           {/* <Router path='/chat/history' element={<AIChat isHistory />} /> */}
-
-          <Router
-            path={'/chat/history'}
-            element={<ChatHistoryRouteLayout />}
-            key={document.location.href}
-          >
-            <Router index element={<ChatHistory />} key={document.location.href} />
-          </Router>
         </Router>
       </Routes>
 
