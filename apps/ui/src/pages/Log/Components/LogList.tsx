@@ -4,6 +4,9 @@ import moment from 'moment'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import { useEffect, useState } from 'react'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const ListItem = ({ is_active, item, navigate }: any) => {
   return (
@@ -20,17 +23,15 @@ const ListItem = ({ is_active, item, navigate }: any) => {
               readOnly
               label={
                 <>
-                  <Typography
+                  <TypographyTertiary
                     value={item.status}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
-                    customColor='rgba(0, 0, 0, 0.7)'
                   />
-                  <Typography
+                  <TypographyTertiary
                     value={parseInt(item.status) === 200 && ' OK'}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
-                    customColor='rgba(0, 0, 0, 0.7)'
                   />
                 </>
               }
@@ -44,17 +45,15 @@ const ListItem = ({ is_active, item, navigate }: any) => {
               readOnly
               label={
                 <>
-                  <Typography
+                  <TypographySecondary
                     value={item.status}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
-                    customColor='rgba(255, 255, 255, 0.8)'
                   />
-                  <Typography
+                  <TypographySecondary
                     value={parseInt(item.status) === 400 && ' ERR'}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.xss}
-                    customColor='rgba(255, 255, 255, 0.8)'
                   />
                 </>
               }
@@ -66,11 +65,10 @@ const ListItem = ({ is_active, item, navigate }: any) => {
           <>
             <StyledUrlContainer>
               <StyledGqlNameWrapper>
-                <Typography
+                <TypographyPrimary
                   value={item.gql_name}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
-                  customColor='#FFFFFF'
                 />
               </StyledGqlNameWrapper>
 
@@ -81,19 +79,17 @@ const ListItem = ({ is_active, item, navigate }: any) => {
                 customColor='#FFFFFF'
               /> */}
               <StyledEndpointNameWrapper>
-                <Typography
+                <TypographyPrimary
                   value={item.endpoint}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
-                  customColor='#FFFFFF'
                 />
               </StyledEndpointNameWrapper>
               <StyledTimeNameWrapper>
-                <Typography
+                <TypographySecondary
                   value={moment(item.request_date).format('h:mm:ss A')}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.xss}
-                  customColor='rgba(255, 255, 255, 0.8)'
                 />
               </StyledTimeNameWrapper>
             </StyledUrlContainer>
@@ -101,23 +97,20 @@ const ListItem = ({ is_active, item, navigate }: any) => {
         ) : (
           <>
             <StyledUrlContainer>
-              <Typography
+              <TypographyPrimary
                 value={item.method}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor='#FFFFFF'
               />
-              <Typography
+              <TypographyPrimary
                 value='&ensp; &ensp;'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor='#FFFFFF'
               />
-              <Typography
+              <TypographyPrimary
                 value={item.endpoint}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor='#FFFFFF'
               />
             </StyledUrlContainer>
           </>
@@ -142,11 +135,10 @@ const LogList = ({ items }: { items: any[] }) => {
   return (
     <StyledContainer>
       <StyledTitle>
-        <Typography
+        <TypographyPrimary
           value='Yesterday'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='#FFFFFF'
         />
       </StyledTitle>
       {items.map((item: any, index: number) => (
@@ -178,22 +170,6 @@ const StyledListItemBlock = styled.div`
   grid-template-columns: auto 1fr;
   grid-gap: 5px;
 `
-
-const StyledStatusContainer = styled.div`
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(100px);
-  border-radius: 4px;
-  font-style: normal;
-  font-weight: 500;
-  padding: 2px 4px;
-  color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  justify-content: center;
-`
-
 const StyledUrlContainer = styled.div`
   display: flex;
   align-items: center;
@@ -202,12 +178,6 @@ const StyledUrlContainer = styled.div`
   width: fit-content;
   gap: 20px;
   margin-left: 20px;
-`
-const StyledTimeContainer = styled.div`
-  display: flex;
-  align-items: center;
-  // justify-content: flex-end;
-  font-size: 12px;
 `
 const StyledGqlNameWrapper = styled.div`
   display: flex;

@@ -2,6 +2,7 @@ import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 're
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type OptionRendererProps = {
   label: string
@@ -86,12 +87,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 
   const OptionRenderer = ({ label }: OptionRendererProps) => {
     return (
-      <Typography
-        value={label}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
     )
   }
 

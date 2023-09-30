@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import { useRef, useState } from 'react'
+import TypographySecondary from 'components/Typography/Secondary'
 // import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 const MediasRenderer = (p: any) => {
@@ -39,11 +40,10 @@ const MediasRenderer = (p: any) => {
             <StyledImgCount onClick={onButtonClick} transparent={p.value.length < 4}>
               <div className='countText'>
                 {p.value.length > 3 && (
-                  <Typography
+                  <TypographySecondary
                     value={`+${p.value.length - 3}`}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
-                    customColor={'rgba(255, 255, 255, 0.8)'}
                   />
                 )}
               </div>
@@ -62,11 +62,10 @@ const MediasRenderer = (p: any) => {
               <Attach />
             </StyledOutlineIcon>
 
-            <Typography
+            <TypographySecondary
               value={'Upload'}
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
-              customColor={'rgba(255, 255, 255, 0.8)'}
             />
           </StyledWrapper>
         </StyledUploadDiv>

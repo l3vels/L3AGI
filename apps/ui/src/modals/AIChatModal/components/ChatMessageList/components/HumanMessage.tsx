@@ -10,10 +10,8 @@ import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
-import {
-  StyledNameTypographyWrapper,
-  StyledTypographyWrapper,
-} from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -47,20 +45,17 @@ const HumanMessage = ({
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
-              <StyledNameTypographyWrapper>
-                <Typography
-                  value={authorName}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                />
-              </StyledNameTypographyWrapper>
-              <StyledTypographyWrapper>
-                <Typography
-                  value={messageDate}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                />
-              </StyledTypographyWrapper>
+              <TypographyPrimary
+                value={authorName}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+
+              <TypographyTertiary
+                value={messageDate}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+              />
             </StyledMessageInfo>
 
             <StyledMessageActionsWrapper className='actions'>

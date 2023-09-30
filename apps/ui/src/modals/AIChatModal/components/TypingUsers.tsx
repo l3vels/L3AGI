@@ -1,4 +1,5 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 import styled from 'styled-components'
 
 type TypingUsersProps = {
@@ -11,21 +12,37 @@ const TypingUsers = ({ usersData }: TypingUsersProps) => {
       {usersData?.map((data: any, index: number) => {
         return (
           <>
-            <Typography value={data.text} type={Typography.types.P} size={Typography.sizes.sm} />
+            <TypographyPrimary
+              value={data.text}
+              type={Typography.types.P}
+              size={Typography.sizes.sm}
+            />
 
             {usersData.length > 1 &&
               index !== usersData.length - 1 &&
               index === usersData.length - 2 && (
-                <Typography value='and' type={Typography.types.P} size={Typography.sizes.sm} />
+                <TypographyPrimary
+                  value='and'
+                  type={Typography.types.P}
+                  size={Typography.sizes.sm}
+                />
               )}
           </>
         )
       })}
       {usersData.length > 1 && (
-        <Typography value='are typing...' type={Typography.types.P} size={Typography.sizes.sm} />
+        <TypographyPrimary
+          value='are typing...'
+          type={Typography.types.P}
+          size={Typography.sizes.sm}
+        />
       )}
       {usersData.length === 1 && (
-        <Typography value='is typing...' type={Typography.types.P} size={Typography.sizes.sm} />
+        <TypographyPrimary
+          value='is typing...'
+          type={Typography.types.P}
+          size={Typography.sizes.sm}
+        />
       )}
     </StyledTypingUsersWrapper>
   )
@@ -37,8 +54,6 @@ const StyledTypingUsersWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-  color: #fff;
-
   height: 20px;
   width: 100%;
 `

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type AgentDropdownProps = {
   label: string
@@ -54,24 +55,12 @@ const AgentDropdown = ({
   }
 
   const OptionRenderer = ({ label }: { label: string }) => {
-    return (
-      <Typography
-        value={label}
-        type={Typography.types.LABEL}
-        size={optionSize}
-        customColor={'#FFF'}
-      />
-    )
+    return <TypographyPrimary value={label} type={Typography.types.LABEL} size={optionSize} />
   }
 
   return (
     <StyledWrapper>
-      <Typography
-        value={label}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
       <Dropdown
         multi={isMulti}
         menuPlacement={'top'}

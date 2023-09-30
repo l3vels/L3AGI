@@ -9,6 +9,8 @@ import FormikTextField from 'components/TextFieldFormik'
 import info from '../../../assets/images/info.png'
 import TextareaFormik from 'components/TextareaFormik'
 import useCreateApiKey from './useCreateApiKey'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type CreateApiKeysFormProps = {
   closeModal: () => void
@@ -59,11 +61,10 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
     return (
       <StyledNewCategory>
         {text && (
-          <Typography
+          <TypographyPrimary
             value={text}
             type={Typography.types.LABEL}
             size={Typography.sizes.lg}
-            customColor={'#FFF'}
           />
         )}
         <Tags
@@ -81,18 +82,30 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
   return (
     <StyledCreateModalForm>
       <StyledNameTextWrapper>
-        <Typography value='Name' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+        <TypographySecondary
+          value='Name'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+        />
       </StyledNameTextWrapper>
       <FormikTextField field_name='name' type={Typography.types.LABEL} size={Typography.sizes.md} />
       <StyledTextFieldDate>
         <StyledExpirationTextWrapper>
-          <Typography value='Expiration' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+          <TypographySecondary
+            value='Expiration'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+          />
         </StyledExpirationTextWrapper>
         <FormikTextField type='date' field_name='expiration' />
       </StyledTextFieldDate>
 
       <StyledTextWrapper>
-        <Typography value='Choose games' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+        <TypographySecondary
+          value='Choose games'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+        />
         <StyledImgWrapper>
           <img src={info} alt='info' />
         </StyledImgWrapper>
@@ -100,7 +113,11 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
       {/* <Dropdown placeholder='Select' options={gamesOptions || []} multi multiLine /> */}
 
       <StyledTextWrapper>
-        <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+        <TypographySecondary
+          value='Note'
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+        />
       </StyledTextWrapper>
       <StyledTextAreaWrapper>
         <TextareaFormik
@@ -140,7 +157,6 @@ export const StyledTextWrapper = styled.div`
   height: 24px;
   margin-top: 24px;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.8);
 `
 export const StyledImgWrapper = styled.div`
   margin-top: -20px;
@@ -151,13 +167,11 @@ export const StyledNameTextWrapper = styled.div`
   width: 296px;
   height: 24px;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.8);
 `
 export const StyledExpirationTextWrapper = styled.div`
   width: 296px;
   height: 24px;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.8);
 `
 
 export const StyledTextAreaWrapper = styled.div`

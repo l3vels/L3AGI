@@ -9,6 +9,8 @@ import HumanMessageText from './ChatMessageList/components/HumanMessageText'
 import { useAiMessage } from './ChatMessageList/components/useAiMessage'
 import { ChatMessageVersionEnum } from 'services'
 import AiMessageMarkdown from './ChatMessageList/components/AiMessageMarkdown'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type ReplyBoxProps = {
   reply: ReplyStateProps
@@ -39,19 +41,17 @@ const ReplyBox = ({ onClose, reply }: ReplyBoxProps) => {
     <StyledReplyBox>
       <StyledReplyText>
         <StyledWidth>
-          <Typography
+          <TypographyTertiary
             value={'Replying to'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-            customColor={'rgba(255, 255, 255, 0.6)'}
           />
         </StyledWidth>
         <StyledWidth>
-          <Typography
+          <TypographySecondary
             value={reply.isHuman ? `@${authorName}:` : `@${name}:`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-            customColor={'rgba(255, 255, 255, 1)'}
           />
         </StyledWidth>
         {reply.isHuman ? (

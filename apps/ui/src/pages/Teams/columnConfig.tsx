@@ -3,7 +3,6 @@ import { useContext } from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
@@ -20,6 +19,8 @@ import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxR
 import useTeams from './useTeams'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 export default () => {
   type RendererProps = {
@@ -34,11 +35,10 @@ export default () => {
 
   const TextCellRenderer = (props: RendererProps) => (
     <StyledContainer>
-      <Typography
+      <TypographySecondary
         value={props.value}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor='rgba(255, 255, 255, 0.8)'
       />
     </StyledContainer>
   )
@@ -47,12 +47,7 @@ export default () => {
     const value = props.value
     return (
       <StyledContainer>
-        <Typography
-          value={value}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor='#FFFFFF'
-        />
+        <TypographyPrimary value={value} type={Typography.types.LABEL} size={Typography.sizes.sm} />
       </StyledContainer>
     )
   }
@@ -107,21 +102,19 @@ export default () => {
           <MenuButton component={menuDots}>
             <StyledButtonsWrapper>
               <StyledClickableDiv onClick={handleDelete}>
-                <Typography
+                <TypographySecondary
                   value={'Delete row'}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
                 />
               </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
         </div>
-        <Typography
+        <TypographySecondary
           value={values}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='rgba(255, 255, 255, 0.8)'
         />
       </div>
     )
@@ -208,14 +201,6 @@ export default () => {
   ]
 }
 
-const StyledHeading = styled(Heading)`
-  font-family: 'Circular Std';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
-  color: #ffffff;
-`
 const StyledButtonsWrapper = styled.div`
   margin-top: 15px;
 

@@ -15,6 +15,7 @@ import { useAgentsService } from 'services/agent/useAgentsService'
 import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
 import { Nullable } from 'types'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
@@ -143,11 +144,10 @@ const Mentions = ({
                       <div>{suggestion.display}</div>
                     </StyledNameWrapper>
 
-                    <Typography
+                    <TypographyQuaternary
                       value={type}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.xss}
-                      customColor={'rgba(255, 255, 255, 0.4)'}
                     />
                   </StyledSuggestionsWrapper>
                 )

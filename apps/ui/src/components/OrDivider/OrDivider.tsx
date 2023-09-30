@@ -1,17 +1,13 @@
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 const OrDivider = () => {
   return (
     <StyledOrDivider>
       <StyledLine />
-      <Typography
-        value={'OR'}
-        type={Typography.types.label}
-        size={Typography.sizes.md}
-        customColor={'rgba(255,255,255, 0.6)'}
-      />
+      <TypographyTertiary value={'OR'} type={Typography.types.label} size={Typography.sizes.md} />
       <StyledLine />
     </StyledOrDivider>
   )

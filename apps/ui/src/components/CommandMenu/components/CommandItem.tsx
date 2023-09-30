@@ -7,6 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledCommandItem, StyleEnterGroup } from '../CommandMenuStyles'
 import { enterIcon } from 'assets/icons'
 import API from '@l3-lib/ui-core/dist/icons/API'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 
 type CommandItemProps = {
   index: number
@@ -32,22 +33,20 @@ const CommandItem = ({
           {itemIcon}
           {name}
         </CommandItemName>
-        <Typography
+        <TypographyQuaternary
           value={subTitle}
           type={Typography.types.LABEL}
           size={Typography.sizes.xss}
-          customColor={'rgba(255, 255, 255, 0.4)'}
         />
       </StyledTextWrapper>
       <StyledTextWrapper>
         {/* <StyleEnterGroup>
           <img src={enterIcon} alt='click enter' />
         </StyleEnterGroup> */}
-        <Typography
+        <TypographyQuaternary
           value={groupName}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor={'rgba(255, 255, 255, 0.4)'}
         />
       </StyledTextWrapper>
     </StyledCommandItem>

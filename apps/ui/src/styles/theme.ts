@@ -29,6 +29,21 @@ const darkTheme: DefaultTheme = {
     replyBoxBgColor: 'rgba(0, 0, 0, 0.4)',
     secondaryIconColor: 'rgb(255, 255, 255)',
   },
+  typography: {
+    contentPrimary: 'var(--color-primitive-white)',
+    contentSecondary: 'var(--color-transparent-white-08)',
+    contentTertiary: 'var(--color-transparent-white-06',
+    contentQuaternary: 'var(--color-transparent-white-04)',
+  },
+  heading: {
+    contentPrimary: 'var(--color-snow_white)',
+    contentSecondary: 'var(--color-transparent-white-09)',
+    contentTertiary: 'var(--color-transparent-white-04)',
+  },
+  button: {
+    kind: 'PRIMARY',
+    tertiary: 'TERTIARY',
+  },
 }
 
 const lightTheme: DefaultTheme = {
@@ -55,6 +70,21 @@ const lightTheme: DefaultTheme = {
     humanMessageBgColor: 'rgb(240,240,240)',
     replyBoxBgColor: 'rgb(194,194,194)',
     secondaryIconColor: 'rgb(255, 255, 255)',
+  },
+  typography: {
+    contentPrimary: 'rgb(0,0,0)',
+    contentSecondary: 'rgb(49,49,49)',
+    contentTertiary: 'rgb(172,172, 173)',
+    contentQuaternary: 'rgb(189,189,189)',
+  },
+  heading: {
+    contentPrimary: 'rgb(0,0,0)',
+    contentSecondary: 'rgb(49,49,49)',
+    contentTertiary: 'rgb(172,172, 173)',
+  },
+  button: {
+    kind: 'PRIMARY',
+    tertiary: 'PRIMARY',
   },
 }
 

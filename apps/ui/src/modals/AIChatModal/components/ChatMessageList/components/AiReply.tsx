@@ -13,6 +13,7 @@ import AiMessageMarkdown from './AiMessageMarkdown'
 import { ChatMessageVersionEnum } from 'services'
 import { useAiMessage } from './useAiMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const AiReply = ({
   avatarImg,
@@ -38,11 +39,10 @@ const AiReply = ({
         <StyledSmallAvatarWrapper>
           <AvatarGenerator name={author} size={16} textSizeRatio={1.5} />
         </StyledSmallAvatarWrapper>
-        <Typography
+        <TypographyPrimary
           value={`@${author}`}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor={'#FFF'}
         />
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>

@@ -6,6 +6,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import File from '@l3-lib/ui-core/dist/icons/File'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -35,11 +36,10 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
         ) : (
           <>
             <StyledFileIcon />
-            <Typography
+            <TypographySecondary
               value='pdf, csv, docx, pptx, md, jpg, png, jpeg, epub, mbox, ipynb, mp3, mp4'
               type={Typography.types.LABEL}
               size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.8)'}
             />
           </>
         )}

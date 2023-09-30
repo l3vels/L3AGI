@@ -1,20 +1,20 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { MetadataDescriptionProps } from './UpdateMetadataDescription'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 export const SizeNotEqualDescription = ({ collectionName }: MetadataDescriptionProps) => {
   return (
     <>
-      <Typography
+      <TypographyTertiary
         value='Collection and contract size not equal in'
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor={'rgba(255, 255, 255, 0.6)'}
       />
-      <Typography
+      <TypographyPrimary
         value={collectionName}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor={'#FFF'}
       />
     </>
   )

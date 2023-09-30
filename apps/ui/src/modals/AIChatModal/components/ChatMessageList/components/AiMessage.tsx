@@ -19,10 +19,8 @@ import AiMessageMarkdown from './AiMessageMarkdown'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
-import {
-  StyledNameTypographyWrapper,
-  StyledTypographyWrapper,
-} from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type AiMessageProps = {
   agentName?: string
@@ -66,20 +64,17 @@ const AiMessage = ({
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
-              <StyledNameTypographyWrapper>
-                <Typography
-                  value={agentName && teamName ? agentName : name}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.sm}
-                />
-              </StyledNameTypographyWrapper>
-              <StyledTypographyWrapper>
-                <Typography
-                  value={messageDate}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                />
-              </StyledTypographyWrapper>
+              <TypographyPrimary
+                value={agentName && teamName ? agentName : name}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+
+              <TypographyTertiary
+                value={messageDate}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+              />
             </StyledMessageInfo>
 
             <StyledMessageActionsWrapper className='actions'>

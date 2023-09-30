@@ -2,6 +2,7 @@ import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
+import TypographyPrimary from 'components/Typography/Primary'
 
 // TODO: fix after services types
 
@@ -21,11 +22,10 @@ const AgentRenderer = ({ params, options }: AgentRendererProps) => {
   return (
     <StyledAgents>
       <Tooltip content={agent.name}>
-        <Typography
+        <TypographyPrimary
           value={agent.role.length > 0 ? `${agent.name} - ${agent.role}` : agent.name}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor={'#FFF'}
         />
       </Tooltip>
     </StyledAgents>

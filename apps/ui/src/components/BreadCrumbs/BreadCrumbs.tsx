@@ -9,6 +9,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useToolsService } from 'services/tool/useToolsService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const GetAgentName = () => {
   const params = useParams()
@@ -84,13 +85,13 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <StyledButton size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
-                    <Typography
+                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
+                    <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.sm}
                     />
-                  </StyledButton>
+                  </Button>
                 </StyledNavLink>
                 <div className='line' />
               </StyledBreadcrumbLi>
@@ -101,11 +102,10 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
                   <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
-                    <Typography
+                    <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.80)'}
                     />
                   </Button>
                 </StyledNavLink>
@@ -153,8 +153,4 @@ const StyledBreadcrumbLi = styled.li`
     // background: rgba(255, 255, 255, 0.1);
     background: ${({ theme }) => theme.body.breadCrumbsBg};
   }
-`
-
-const StyledButton = styled(Button)`
-  color: ${({ theme }) => theme.body.breadCrumbsColor};
 `

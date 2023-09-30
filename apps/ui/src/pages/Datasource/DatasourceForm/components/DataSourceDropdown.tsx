@@ -3,6 +3,7 @@ import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import HelpIcon from '@l3-lib/ui-core/dist/icons/Help'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DataSourceDropdownProps = {
   label: string
@@ -60,25 +61,13 @@ const DataSourceDropdown = ({
   }
 
   const OptionRenderer = ({ label }: { label: string }) => {
-    return (
-      <Typography
-        value={label}
-        type={Typography.types.LABEL}
-        size={optionSize}
-        customColor={'#FFF'}
-      />
-    )
+    return <TypographyPrimary value={label} type={Typography.types.LABEL} size={optionSize} />
   }
 
   return (
     <StyledWrapper>
       <StyledHeader>
-        <Typography
-          value={label}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.md}
-          customColor={'#FFF'}
-        />
+        <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
         {onHelpClick && (
           <IconButton
             onClick={onHelpClick}

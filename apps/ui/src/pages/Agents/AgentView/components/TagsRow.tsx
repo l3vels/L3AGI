@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
-import { StyledTypographyWrapper } from './AgentViewDetailBox'
+
+import TypographySecondary from 'components/Typography/Secondary'
 
 type TagsRowProps = {
   items: string[]
@@ -12,9 +13,7 @@ type TagsRowProps = {
 const TagsRow = ({ items, title }: TagsRowProps) => {
   return (
     <StyledRow>
-      <StyledTypographyWrapper>
-        <Typography value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
-      </StyledTypographyWrapper>
+      <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
 
       <StyledContainer>
         {items.map((item: string, index: number) => {

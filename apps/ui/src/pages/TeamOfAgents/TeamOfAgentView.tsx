@@ -26,6 +26,8 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
 import { useModal } from 'hooks'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()
@@ -66,11 +68,10 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
           <StyledRightColumn>
             <StyledAgentsWrapper>
-              <Typography
+              <TypographyPrimary
                 value={'Agents'}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
-                customColor={'#FFF'}
               />
 
               {team_agents?.map((agentObj: any, index: number) => {
@@ -81,17 +82,15 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                     <AvatarGenerator name={agent.name} size={40} avatar={agent.avatar} />
 
                     <StyledMainTextWrapper>
-                      <Typography
+                      <TypographyPrimary
                         value={agent.name}
                         type={Typography.types.LABEL}
                         size={Typography.sizes.sm}
-                        customColor={'#FFF'}
                       />
-                      <Typography
+                      <TypographySecondary
                         value={agent.role}
                         type={Typography.types.LABEL}
                         size={Typography.sizes.xss}
-                        customColor={'rgba(255,255,255,0.8'}
                       />
                     </StyledMainTextWrapper>
 
