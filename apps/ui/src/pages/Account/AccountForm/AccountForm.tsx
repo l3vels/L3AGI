@@ -9,7 +9,7 @@ import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
 import { useLogoutService } from 'services'
 import { logout as logOutCookies } from 'helpers/authHelper'
 import useAccount from 'pages/Account/useAccount'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
 
 const AccountForm = () => {

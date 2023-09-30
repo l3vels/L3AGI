@@ -18,7 +18,7 @@ import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import { StyledGroupContainer, StyledTableValue } from 'components/Layout/LayoutStyle'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()

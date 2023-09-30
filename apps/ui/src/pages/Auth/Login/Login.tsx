@@ -21,7 +21,7 @@ import {
   StyledInnerButtonWrapper,
 } from 'components/HeaderButtons/HeaderButtons'
 import OrDivider from 'components/OrDivider/OrDivider'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (

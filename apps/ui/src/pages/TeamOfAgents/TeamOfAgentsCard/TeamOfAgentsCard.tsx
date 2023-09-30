@@ -13,7 +13,7 @@ import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 

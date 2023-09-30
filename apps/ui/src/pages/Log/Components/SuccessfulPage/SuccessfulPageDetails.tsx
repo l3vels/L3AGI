@@ -16,7 +16,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import TypographySecondary from 'components/Typography/Secondary'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const Details = ({ log }: any) => {

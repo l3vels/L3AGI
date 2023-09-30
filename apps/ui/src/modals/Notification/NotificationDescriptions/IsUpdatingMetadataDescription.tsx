@@ -1,7 +1,7 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { MetadataDescriptionProps } from './UpdateMetadataDescription'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 export const IsUpdatingMetadataDescription = ({ collectionName }: MetadataDescriptionProps) => {
   return (

@@ -17,7 +17,7 @@ import { StyledEyeEditIcon } from 'modals/AIChatModal/components/ChatMembers/Cha
 import { StyledShortDescription } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type AgentViewDetailBoxProps = {
   agentData: any

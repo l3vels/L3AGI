@@ -9,7 +9,7 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Connect from '@l3-lib/ui-core/dist/icons/Connect'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { SectionDivider } from 'styles/globalStyle.css'
-import TypographyTertiary from 'components/Typography/TypographyTertiary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 import HeadingPrimary from 'components/Heading/HeadingPrimary'
 
 type GetStartedContainerProps = {
