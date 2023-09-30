@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 // import useTeams from './useTeams'
 
@@ -80,7 +81,7 @@ const Teams = () => {
       <div id='header_group'>
         <StyledHeaderGroup>
           <StyledHeadingWrapper>
-            <Heading
+            <HeadingPrimary
               type={Heading.types.h1}
               size={Heading.sizes.lg}
               value={`${assignedUserList.length} Members`}
@@ -149,7 +150,6 @@ const StyledHeadingWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #ffffff;
   width: 180px;
   height: 70px;
 `

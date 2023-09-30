@@ -16,6 +16,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
+import HeadingSecondary from 'components/Heading/Secondary'
 
 type TeamOfAgentCardProps = {
   name: string
@@ -67,9 +68,7 @@ const TeamOfAgentCard = ({
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
-        <StyledTextWrapper>
-          <Heading type={Heading.types.h1} value={name} size='medium' />
-        </StyledTextWrapper>
+        <HeadingSecondary type={Heading.types.h1} value={name} size='medium' />
 
         <TypographySecondary
           value={shortDescription}
@@ -280,9 +279,6 @@ const StyledCreatorWrapper = styled.div`
   gap: 4px;
   color: ${({ theme }) =>
     theme.body.backgroundColorPrimary === 'rgb(255, 255, 255)' ? 'red' : 'rgba(0, 0, 0, 0.2)'};
-`
-const StyledTextWrapper = styled.div`
-  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 
 export const StyledEyeOpenIcon = styled(EyeOpen)`
