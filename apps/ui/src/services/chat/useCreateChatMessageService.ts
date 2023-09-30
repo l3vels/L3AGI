@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 
 import { Nullable } from 'types'
-import CREATE_CHAT_MESSAGE_GQL from '../../gql/chat/createChatMessage.gql'
+import CREATE_CHAT_MESSAGE_GQL from '../../gql/chat/createUserChatMessage.gql'
 
 interface CreateMessageInput {
   message: string
