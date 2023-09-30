@@ -13,7 +13,6 @@ import moment from 'moment'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import { useTranslation } from 'react-i18next'
-import { StyledOutlineIcon } from 'pages/Webhook/columnConfig'
 import TypographyPrimary from 'components/Typography/TypographyPrimary'
 import TypographySecondary from 'components/Typography/TypographySecondary'
 
@@ -213,4 +212,9 @@ const StyledButtonsWrapper = styled.div`
 `
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+`
+
+export const StyledOutlineIcon = styled.div`
+  color: transparent;
+  /* width: 40px; */
 `
