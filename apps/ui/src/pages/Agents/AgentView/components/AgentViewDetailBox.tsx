@@ -15,7 +15,7 @@ import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 import { StyledEyeEditIcon } from 'modals/AIChatModal/components/ChatMembers/ChatMembers'
 import { StyledShortDescription } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/TypographySecondary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 

@@ -3,7 +3,7 @@ import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import HelpIcon from '@l3-lib/ui-core/dist/icons/Help'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DataSourceDropdownProps = {
   label: string

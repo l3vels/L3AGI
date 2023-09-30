@@ -5,7 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import useLog from 'pages/Log/useLog'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/TypographySecondary'
 
 const ListLog = ({ is_active, item, navigate }: any) => {

@@ -25,7 +25,7 @@ import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 // import useTeams from './useTeams'
 

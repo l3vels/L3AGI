@@ -15,7 +15,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import TeamOfAgentsTable from '../TeamOfAgentsTable'
 import { teamTypeDocs } from './constants'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type TeamOfAgentsFormProps = {
   formik: any

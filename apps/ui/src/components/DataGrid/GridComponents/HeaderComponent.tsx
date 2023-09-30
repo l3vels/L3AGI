@@ -6,7 +6,7 @@ import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
 import MenuOutline from '@l3-lib/ui-core/dist/icons/MenuOutline'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const HeaderComponent = (props: any) => {
   const { icon, displayName, noText } = props

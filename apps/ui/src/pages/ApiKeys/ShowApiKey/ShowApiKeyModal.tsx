@@ -15,7 +15,7 @@ import Icon from '@l3-lib/ui-core/dist/Icon'
 import Warning from '@l3-lib/ui-core/dist/icons/Warning'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Done from '@l3-lib/ui-core/dist/icons/Check'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/TypographySecondary'
 
 type ShowApiKeyModalProps = {

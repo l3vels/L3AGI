@@ -6,7 +6,7 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import { useEffect, useState } from 'react'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 import TypographySecondary from 'components/Typography/TypographySecondary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const ListItem = ({ is_active, item, navigate }: any) => {
   return (

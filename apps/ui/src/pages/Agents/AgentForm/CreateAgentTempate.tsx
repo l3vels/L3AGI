@@ -19,7 +19,7 @@ import { StyledButtonWrapper } from './CreateAgentForm'
 import CreateAgentButtonCard from './components/CreateAgentButtonCard'
 import { useModal } from 'hooks'
 import { useAgentTemplatesService } from 'services/discover/useAgentTemplatesService'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const CreateAgentTemplate = () => {
   const { refetchAgent } = useAgents()

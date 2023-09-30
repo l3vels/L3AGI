@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import Slider from '@l3-lib/ui-core/dist/Slider'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const AgentSlider = ({ formik }: { formik: any }) => {
   return (

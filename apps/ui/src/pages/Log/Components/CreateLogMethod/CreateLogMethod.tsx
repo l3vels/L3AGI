@@ -7,7 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import useLog from 'pages/Log/useLog'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
   const { log_list, filter } = useLog()

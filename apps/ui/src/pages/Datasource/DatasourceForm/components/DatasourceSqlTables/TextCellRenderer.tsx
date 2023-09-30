@@ -1,5 +1,5 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type RendererProps = {
   webhooks(data: string): string

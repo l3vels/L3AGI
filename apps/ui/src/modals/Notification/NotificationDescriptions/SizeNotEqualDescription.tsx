@@ -1,7 +1,7 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { MetadataDescriptionProps } from './UpdateMetadataDescription'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 export const SizeNotEqualDescription = ({ collectionName }: MetadataDescriptionProps) => {
   return (

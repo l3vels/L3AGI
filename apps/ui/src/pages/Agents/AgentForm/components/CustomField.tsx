@@ -8,7 +8,7 @@ import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 
 import FormikTextField from 'components/TextFieldFormik'
 import { FieldArray } from 'formik'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type CustomFieldProps = {
   formik: any

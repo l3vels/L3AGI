@@ -5,7 +5,7 @@ import { useDatasourcesService } from 'services/datasource/useDatasourcesService
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledWrapper } from './AgentToolkits'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const AgentDatasources = ({ datasources }: any) => {
   const { data: datasourcesData } = useDatasourcesService()

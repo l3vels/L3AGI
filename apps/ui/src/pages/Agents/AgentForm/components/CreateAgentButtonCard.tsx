@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type CreateAgentButtonCardProps = {
   onClick: () => void

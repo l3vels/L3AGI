@@ -2,7 +2,7 @@ import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 're
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type OptionRendererProps = {
   label: string

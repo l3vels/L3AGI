@@ -16,7 +16,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import TypographySecondary from 'components/Typography/TypographySecondary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Details = ({ log }: any) => {
   const [currentLogId, setCurrentLogId] = useState<any>()

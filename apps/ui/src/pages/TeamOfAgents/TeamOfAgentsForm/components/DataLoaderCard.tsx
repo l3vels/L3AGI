@@ -4,7 +4,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import Help from '@l3-lib/ui-core/dist/icons/Help'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DataLoaderCardProps = {
   title: string

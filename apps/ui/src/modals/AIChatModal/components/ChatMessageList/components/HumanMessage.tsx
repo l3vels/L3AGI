@@ -10,7 +10,7 @@ import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 
 type HumanMessageProps = {

@@ -15,7 +15,7 @@ import ChangePassword from 'pages/ChangePassword'
 import AccountForm from './AccountForm/AccountForm'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Account = () => {
   const { openCreateChangePasswordModal } = useChangePassword()

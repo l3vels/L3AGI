@@ -18,7 +18,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import CreateApiKeysForm from './CreateApikeysForm'
 import { StyledRoot } from '../EditApiKey/EditApiModal'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type CreateApiModalProps = {
   closeModal: () => void

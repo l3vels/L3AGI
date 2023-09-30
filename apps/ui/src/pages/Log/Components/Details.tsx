@@ -13,7 +13,7 @@ import Tags from '@l3-lib/ui-core/dist/Tags'
 import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import TypographySecondary from 'components/Typography/TypographySecondary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 export const CODE_HIGHLIGHTER_STYLE = {
   ...tomorrowNightBlue,

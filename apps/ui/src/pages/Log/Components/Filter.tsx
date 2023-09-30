@@ -15,7 +15,7 @@ import CreateLogMethod from './CreateLogMethod/CreateLogMethod'
 import FilterLogDate from './FilterLogDate/FilterLogDate'
 import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Filter = ({ filter }: any) => {
   const [showDate, setShowDate] = useState<any>(false)

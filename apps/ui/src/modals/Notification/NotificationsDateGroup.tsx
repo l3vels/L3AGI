@@ -19,7 +19,7 @@ import { IsUpdatingMetadataDescription } from './NotificationDescriptions/IsUpda
 import { MetadataUpdatedDescription } from './NotificationDescriptions/MetadataUpdatedDescription'
 import { SizeNotEqualDescription } from './NotificationDescriptions/SizeNotEqualDescription'
 import { ContractImportedDescription } from './NotificationDescriptions/ContractImportedDescription'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type NotificationsDateGroupProps = {
   notifications: any

@@ -13,7 +13,7 @@ import moment from 'moment'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import { useTranslation } from 'react-i18next'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/TypographySecondary'
 
 type configTypes = {

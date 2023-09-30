@@ -7,7 +7,7 @@ import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
 import LogList from '../LogList'
 
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
   const { log_list } = useLog()

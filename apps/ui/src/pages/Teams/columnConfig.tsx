@@ -20,7 +20,7 @@ import useTeams from './useTeams'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import TypographySecondary from 'components/Typography/TypographySecondary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 export default () => {
   type RendererProps = {

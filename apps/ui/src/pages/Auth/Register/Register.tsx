@@ -21,7 +21,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import OrDivider from 'components/OrDivider/OrDivider'
 import useGithubLogin from '../Login/useGithubLogin'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()

@@ -20,7 +20,7 @@ import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlT
 import { useParams } from 'react-router-dom'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import DataSourceDropdown from './components/DataSourceDropdown'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DatasourceFormProps = {
   formik: any

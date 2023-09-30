@@ -18,7 +18,7 @@ import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
 import TypographySecondary from 'components/Typography/TypographySecondary'
-import TypographyPrimary from 'components/Typography/TypographyPrimary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
   const { tool, formik, handleSubmit, isLoading } = useToolView({
