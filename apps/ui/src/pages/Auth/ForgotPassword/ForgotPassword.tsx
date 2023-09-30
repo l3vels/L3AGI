@@ -6,15 +6,15 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+import HeadingTertiary from 'components/Heading/Tertiary'
 
 const ForgotPassword = () => {
   const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
   return (
     <StyledCenterFormContainer>
-      <Heading
+      <HeadingTertiary
         value={'Add email'}
         type={Heading.types.h1}
-        customColor='rgba(255, 255, 255, 0.4)'
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
