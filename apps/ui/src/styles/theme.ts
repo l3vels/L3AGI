@@ -84,7 +84,7 @@ const lightTheme: DefaultTheme = {
   },
   button: {
     kind: 'PRIMARY',
-    tertiary: 'PRIMARY',
+    tertiary: 'SECONDARY',
   },
 }
 
