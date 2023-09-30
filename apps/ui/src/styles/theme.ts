@@ -41,7 +41,8 @@ const darkTheme: DefaultTheme = {
     contentTertiary: 'var(--color-transparent-white-04)',
   },
   button: {
-    kind: 'PRIMARY',
+    primary: 'PRIMARY',
+    secondary: 'SECONDARY',
     tertiary: 'TERTIARY',
   },
 }
@@ -83,7 +84,8 @@ const lightTheme: DefaultTheme = {
     contentTertiary: 'rgb(172,172, 173)',
   },
   button: {
-    kind: 'PRIMARY',
+    primary: 'PRIMARY',
+    secondary: 'SECONDARY',
     tertiary: 'SECONDARY',
   },
 }
