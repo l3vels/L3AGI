@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
-import TypographyQuaternary from 'components/Typography/TypographyQuaternary'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 
 const TermsAndPrivacyButtons = () => {
   return (

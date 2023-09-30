@@ -15,7 +15,7 @@ import { useAgentsService } from 'services/agent/useAgentsService'
 import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
 import { Nullable } from 'types'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
-import TypographyQuaternary from 'components/Typography/TypographyQuaternary'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 

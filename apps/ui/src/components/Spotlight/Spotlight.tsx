@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographyQuaternary from 'components/Typography/TypographyQuaternary'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import SendIconSvg from 'assets/icons/send_icon.svg'

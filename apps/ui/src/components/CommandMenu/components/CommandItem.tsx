@@ -7,7 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledCommandItem, StyleEnterGroup } from '../CommandMenuStyles'
 import { enterIcon } from 'assets/icons'
 import API from '@l3-lib/ui-core/dist/icons/API'
-import TypographyQuaternary from 'components/Typography/TypographyQuaternary'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 
 type CommandItemProps = {
   index: number
