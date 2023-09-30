@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type AdditionalInfoBoxProps = {
   items: string[]
@@ -10,21 +12,15 @@ type AdditionalInfoBoxProps = {
 const AdditionalInfoBox = ({ items, title }: AdditionalInfoBoxProps) => {
   return (
     <StyledAdditionalInfo>
-      <Typography
-        value={title}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.lg}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.lg} />
 
       {items.map((item: string, index: number) => {
         return (
-          <Typography
+          <TypographySecondary
             key={index}
             value={items.length === 1 ? item : `${index + 1}. ${item}`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-            customColor={'rgba(255,255,255,0.9)'}
           />
         )
       })}

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { toolLogos } from 'pages/Toolkit/constants'
 import { useToolsService } from 'services/tool/useToolsService'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const AgentToolkits = ({ tools }: { tools: string[] }) => {
   const { data: toolsData } = useToolsService()
@@ -17,11 +19,10 @@ const AgentToolkits = ({ tools }: { tools: string[] }) => {
 
   return (
     <StyledWrapper>
-      <Typography
+      <TypographyPrimary
         value={'Toolkits'}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
-        customColor={'#FFF'}
       />
 
       {filteredTools?.map((tool: any, index: number) => {
@@ -34,17 +35,15 @@ const AgentToolkits = ({ tools }: { tools: string[] }) => {
             <StyledImg src={logoSrc} alt='' />
 
             <StyledMainTextWrapper>
-              <Typography
+              <TypographyPrimary
                 value={tool.name}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'#FFF'}
               />
-              <Typography
+              <TypographySecondary
                 value={tool.description}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
-                customColor={'rgba(255,255,255,0.8'}
               />
             </StyledMainTextWrapper>
           </StyledToolkit>

@@ -20,6 +20,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -56,11 +57,10 @@ const Home = () => {
                 value='BUILD TEAMS OF AI AGENTS'
                 customColor={'#FFF'}
               />
-              <Typography
+              <TypographySecondary
                 value='Open-source tool that enables AI agents to collaborate as effectively as human teams'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'rgba(255,255,255,0.8)'}
               />
             </StyledHeadingWrapper>
 
@@ -92,10 +92,7 @@ const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   grid-auto-rows: max-content;
   gap: 20px;
 `
-const StyledDivider = styled.div`
-  height: 20px;
-  width: 100%;
-`
+
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;

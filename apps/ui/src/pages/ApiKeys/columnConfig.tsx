@@ -13,7 +13,8 @@ import moment from 'moment'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import { useTranslation } from 'react-i18next'
-import { StyledOutlineIcon } from 'pages/Webhook/columnConfig'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type configTypes = {
   handleEditApiKey: (apiKey: any) => void
@@ -29,11 +30,10 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
   }
   const TextCellRenderer = (props: RendererProps) => (
     <div>
-      <Typography
+      <TypographyPrimary
         value={props.value}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor='rgba(255, 255, 255, 1)'
       />
     </div>
   )
@@ -42,12 +42,7 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
     const value = props.value === null ? '-' : moment(props.value).fromNow()
 
     return (
-      <Typography
-        value={value}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
-        customColor='rgba(255, 255, 255, 1)'
-      />
+      <TypographyPrimary value={value} type={Typography.types.LABEL} size={Typography.sizes.sm} />
     )
   }
 
@@ -88,29 +83,26 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
           <MenuButton component={menuDots}>
             <StyledButtonsWrapper>
               <StyledClickableDiv onClick={handleClickEdit}>
-                <Typography
+                <TypographySecondary
                   value={'Edit'}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
                 />
               </StyledClickableDiv>
               <StyledClickableDiv onClick={handleClickDelete}>
-                <Typography
+                <TypographySecondary
                   value={'Delete API key'}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
                 />
               </StyledClickableDiv>
             </StyledButtonsWrapper>
           </MenuButton>
         </div>
-        <Typography
+        <TypographyPrimary
           value={value === null ? '-' : moment(value).fromNow()}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='rgba(255, 255, 255, 1)'
         />
       </div>
     )
@@ -119,12 +111,7 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
   return [
     {
       headerName: (
-        <Typography
-          value='Name'
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor='rgba(255, 255, 255, 1)'
-        />
+        <TypographyPrimary value='Name' type={Typography.types.LABEL} size={Typography.sizes.sm} />
       ),
       headerComponent: HeaderComponent,
       field: 'name',
@@ -142,12 +129,7 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
     },
     {
       headerName: (
-        <Typography
-          value='Token'
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor='rgba(255, 255, 255, 1)'
-        />
+        <TypographyPrimary value='Token' type={Typography.types.LABEL} size={Typography.sizes.sm} />
       ),
       headerComponent: HeaderComponent,
       field: 'token',
@@ -165,11 +147,10 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
     },
     {
       headerName: (
-        <Typography
+        <TypographyPrimary
           value='Last used'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='rgba(255, 255, 255, 1)'
         />
       ),
       headerComponent: HeaderComponent,
@@ -188,11 +169,10 @@ export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
     },
     {
       headerName: (
-        <Typography
+        <TypographyPrimary
           value='Created'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='rgba(255, 255, 255, 1)'
         />
       ),
       headerComponent: HeaderComponent,
@@ -232,4 +212,9 @@ const StyledButtonsWrapper = styled.div`
 `
 const StyledClickableDiv = styled.div`
   cursor: pointer;
+`
+
+export const StyledOutlineIcon = styled.div`
+  color: transparent;
+  /* width: 40px; */
 `

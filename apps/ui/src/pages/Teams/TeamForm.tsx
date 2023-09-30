@@ -9,6 +9,8 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikTextField from 'components/TextFieldFormik'
 import useTeams from './useTeams'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type TeamFormProps = {
   formik: any
@@ -68,7 +70,11 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
           <StyledHeading type={Heading.types.h1} size={Heading.sizes.sm} value='Add member' />
         </StyledHeaderWrapper>
         <StyledEmailWrapper>
-          <Typography value='Email' type={Typography.types.LABEL} size={Typography.sizes.md} />
+          <TypographyPrimary
+            value='Email'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+          />
         </StyledEmailWrapper>
         <StyledEmailFieldWrapper>
           <FormikTextField
@@ -86,7 +92,11 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
             kind={Button.kinds.TERTIARY}
             size={Button.sizes.LARGE}
           >
-            <Typography value='Cancel' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            <TypographySecondary
+              value='Cancel'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
           </Button>
 
           <Button
@@ -95,7 +105,11 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
             kind={Button.kinds.PRIMARY}
             size={Button.sizes.LARGE}
           >
-            <Typography value='Add' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            <TypographyPrimary
+              value='Add'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
           </Button>
         </StyledButtonsWrapper>
       </FormikProvider>
@@ -111,10 +125,6 @@ const StyledHeading = styled(Heading)`
   font-weight: 500 !important;
   color: #ffffff;
 `
-// const StyledHeading = styled(Heading)`
-//   font-size: 24px !important;
-//   line-height: ;
-// `
 const StyledHeaderWrapper = styled.div`
   display: flex;
   position: Relative;
@@ -127,7 +137,7 @@ const StyledEmailWrapper = styled.div`
   position: Relative;
   width: 41px;
   height: 20px;
-  color: #ffffff;
+
   margin-top: 34px;
 `
 const StyledEmailFieldWrapper = styled.div`
@@ -136,16 +146,6 @@ const StyledEmailFieldWrapper = styled.div`
   width: 436px;
   height: 56px;
   margin-top: 12px;
-`
-
-const StyledRoleWrapper = styled.div`
-  display: flex;
-  position: Relative;
-  width: 41px;
-  height: 20px;
-  color: #ffffff;
-  margin-top: 16px;
-  margin-bottom: 12px;
 `
 const StyledButtonsWrapper = styled.div`
   display: flex;

@@ -10,6 +10,7 @@ import CustomField from './components/CustomField'
 import AgentSlider from './components/AgentSlider'
 import { useAgentForm } from './useAgentForm'
 import AgentDropdown from './components/AgentDropdown'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type AgentFormProps = {
   formik: any
@@ -42,11 +43,10 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           <FormikTextField name='agent_role' placeholder='Role' label='Role' />
 
           <StyledTextareaWrapper>
-            <Typography
+            <TypographyPrimary
               value='Description'
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
-              customColor={'#FFF'}
             />
             <Textarea
               hint=''
@@ -82,11 +82,10 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           />
 
           <StyledTextareaWrapper>
-            <Typography
+            <TypographyPrimary
               value='Greeting'
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
-              customColor={'#FFF'}
             />
             <Textarea
               hint=''

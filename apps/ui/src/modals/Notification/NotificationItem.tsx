@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import moment from 'moment'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type NotificationItemProps = {
   onClick: () => void
@@ -32,18 +33,16 @@ const NotificationItem = ({
         <StyledText>{description}</StyledText>
 
         <StyledText>
-          <Typography
+          <TypographyTertiary
             value={moment(create_date).fromNow()}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-            customColor={'rgba(255, 255, 255, 0.6)'}
           />
           <StyledDot />
-          <Typography
+          <TypographyTertiary
             value={typename}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-            customColor={'rgba(255, 255, 255, 0.6)'}
           />
         </StyledText>
       </StyledTextWrapper>

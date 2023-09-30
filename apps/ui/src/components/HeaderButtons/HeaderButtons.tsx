@@ -7,6 +7,7 @@ import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
 import TwitterLogo from 'assets/tools/twitter.png'
+import TypographyPrimary from 'components/Typography/Primary'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -15,48 +16,54 @@ export const openLinkTab = (url: string) => {
 const HeaderButtons = () => {
   return (
     <StyledButtonsWrapper>
-      <Tooltip content={() => <span>Twitter</span>} position={Tooltip.positions.BOTTOM}>
-        <Button
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
-          onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
-        >
-          <StyledInnerButtonWrapper>
-            <StyledImageWrapper>
-              <StyledImg src={TwitterLogo} customScale={1} />
-            </StyledImageWrapper>
-            {/* <Typography value='Twitter' type={Typography.types.LABEL} size={Typography.sizes.sm} /> */}
-          </StyledInnerButtonWrapper>
-        </Button>
-      </Tooltip>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
+      >
+        <StyledInnerButtonWrapper>
+          <StyledImageWrapper>
+            <StyledImg src={TwitterLogo} customScale={1} />
+          </StyledImageWrapper>
+          <TypographyPrimary
+            value='Twitter'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledInnerButtonWrapper>
+      </Button>
 
-      <Tooltip content={() => <span>Discord</span>} position={Tooltip.positions.BOTTOM}>
-        <Button
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
-          onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
-        >
-          <StyledInnerButtonWrapper>
-            <StyledDiscordIcon size='20' />
-            {/* <Typography value='Discord' type={Typography.types.LABEL} size={Typography.sizes.sm} /> */}
-          </StyledInnerButtonWrapper>
-        </Button>
-      </Tooltip>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
+      >
+        <StyledInnerButtonWrapper>
+          <StyledDiscordIcon size='20' />
+          <TypographyPrimary
+            value='Discord'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledInnerButtonWrapper>
+      </Button>
 
-      <Tooltip content={() => <span>Github</span>} position={Tooltip.positions.BOTTOM}>
-        <Button
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
-          onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
-        >
-          <StyledInnerButtonWrapper>
-            <StyledImageWrapper>
-              <StyledImg src={githubIcon} />
-            </StyledImageWrapper>
-            <Typography value='Github' type={Typography.types.LABEL} size={Typography.sizes.sm} />
-          </StyledInnerButtonWrapper>
-        </Button>
-      </Tooltip>
+      <Button
+        kind={Button.kinds.TERTIARY}
+        size={Button.sizes.SMALL}
+        onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
+      >
+        <StyledInnerButtonWrapper>
+          <StyledImageWrapper>
+            <StyledImg src={githubIcon} />
+          </StyledImageWrapper>
+          <TypographyPrimary
+            value='Github'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledInnerButtonWrapper>
+      </Button>
     </StyledButtonsWrapper>
   )
 }
@@ -99,7 +106,6 @@ export const StyledInnerButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
-  color: ${({ theme }) => theme.body.textColorPrimary};
 `
 
 const StyledDiscordIcon = styled(Discord)`

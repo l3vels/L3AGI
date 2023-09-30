@@ -18,6 +18,7 @@ import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
 import CreateApiModal from './CreateApiKey/CreateApiModal'
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import { StyledGroupContainer, StyledTableValue } from 'components/Layout/LayoutStyle'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
@@ -43,7 +44,7 @@ const ApiKeys = () => {
               </StyledHeaderGroup>
               <StyledGroupContainer mt='20'>
                 <StyledTypography>
-                  <Typography
+                  <TypographyTertiary
                     value='These keys will allow you to authenticate API request. '
                     type={Typography.types.P}
                     size={Typography.sizes.lg}
@@ -54,7 +55,7 @@ const ApiKeys = () => {
                       kind={Button.kinds.TERTIARY}
                       size={Button.sizes.SMALL}
                     >
-                      <Typography
+                      <TypographyTertiary
                         value=' Learn more'
                         type={Typography.types.P}
                         size={Typography.sizes.lg}
@@ -163,7 +164,7 @@ export const StyledTypography = styled.div`
   align-items: center;
   height: 28px;
   margin-top: 20px;
-  color: rgba(255, 255, 255, 0.6);
+  // color: rgba(255, 255, 255, 0.6);
   @media (max-width: 1209px) {
     margin-left: auto;
     margin-top: auto;
@@ -181,7 +182,7 @@ export const StyledTypographyWrapper = styled.div`
   min-width: 30px;
   height: 20px;
   margin-left: 10px;
-  color: #ffffff;
+  // color: #ffffff;
   @media (max-width: 320px) {
     margin-left: auto;
     margin-top: auto;

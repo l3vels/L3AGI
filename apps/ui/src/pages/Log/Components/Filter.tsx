@@ -15,6 +15,7 @@ import CreateLogMethod from './CreateLogMethod/CreateLogMethod'
 import FilterLogDate from './FilterLogDate/FilterLogDate'
 import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Filter = ({ filter }: any) => {
   const [showDate, setShowDate] = useState<any>(false)
@@ -99,23 +100,17 @@ const Filter = ({ filter }: any) => {
         size={Button.sizes.SMALL}
         onClick={() => setShowDate(true)}
       >
-        <Typography
-          value='Date'
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor='#FFFFFF'
-        />
+        <TypographyPrimary value='Date' type={Typography.types.LABEL} size={Typography.sizes.sm} />
       </Button>
       <Button
         kind={Button.kinds.TERTIARY}
         size={Button.sizes.SMALL}
         onClick={() => setShowMethod(true)}
       >
-        <Typography
+        <TypographyPrimary
           value='Method'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='#FFFFFF'
         />
       </Button>
       <Button
@@ -123,11 +118,10 @@ const Filter = ({ filter }: any) => {
         size={Button.sizes.SMALL}
         onClick={() => setShowEndpoint(true)}
       >
-        <Typography
+        <TypographyPrimary
           value='API endpoints'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='#FFFFFF'
         />
       </Button>
       {/* <StyledAdditionalFilterContainer>
@@ -171,9 +165,6 @@ const StyledContainer = styled.div`
   margin-top: 25px;
 `
 
-const StyledAdditionalFilterContainer = styled.div`
-  position: relative;
-`
 const StyledEndPointContainer = styled.div`
   display: flex;
   position: relative;

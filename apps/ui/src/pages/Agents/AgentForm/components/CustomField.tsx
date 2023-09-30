@@ -8,6 +8,7 @@ import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 
 import FormikTextField from 'components/TextFieldFormik'
 import { FieldArray } from 'formik'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type CustomFieldProps = {
   formik: any
@@ -20,11 +21,10 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
     <FieldArray name={formikField}>
       {({ insert, remove }) => (
         <StyledFieldsWrapper>
-          <Typography
+          <TypographyPrimary
             value={`${placeholder}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           {formik?.values[formikField]?.map((item: any, index: number) => (
             <>

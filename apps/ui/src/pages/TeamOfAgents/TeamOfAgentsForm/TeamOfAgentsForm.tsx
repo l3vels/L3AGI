@@ -15,6 +15,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import TeamOfAgentsTable from '../TeamOfAgentsTable'
 import { teamTypeDocs } from './constants'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type TeamOfAgentsFormProps = {
   formik: any
@@ -50,11 +51,10 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
         <FormikTextField name='teamOfAgents_name' placeholder='Name' label='Name' />
 
         <StyledTextareaWrapper>
-          <Typography
+          <TypographyPrimary
             value='Description'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           <Textarea
             hint=''
@@ -66,11 +66,10 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
         </StyledTextareaWrapper>
 
         <StyledSourceTypeWrapper>
-          <Typography
+          <TypographyPrimary
             value='Type'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           <StyledCardWrapper>
             {teamTypes?.map((teamType: any) => {

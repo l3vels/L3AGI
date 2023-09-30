@@ -9,6 +9,8 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Connect from '@l3-lib/ui-core/dist/icons/Connect'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { SectionDivider } from 'styles/globalStyle.css'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import HeadingPrimary from 'components/Heading/HeadingPrimary'
 
 type GetStartedContainerProps = {
   children: ReactNode
@@ -30,23 +32,15 @@ const GetStartedContainer = ({
           <StyledCloseButton onClick={() => setShow(false)}>
             <StyledCloseIcon />
           </StyledCloseButton>
-          {!noText && (
-            <StyledHeading
-              type={Heading.types.h1}
-              value='Get Started'
-              size='medium'
-              // customColor={'#fff'}
-            />
-          )}
+          {!noText && <HeadingPrimary type={Heading.types.h1} value='Get Started' size='medium' />}
         </StyledColumn>
         {!noText && (
           <StyledColumn>
             <StyledTypographyWrapper>
-              <Typography
-                value='Learn'
+              <TypographyTertiary
+                value='Learns'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                // customColor={'rgba(255, 255, 255, 0.6)'}
               />
             </StyledTypographyWrapper>
 
@@ -111,10 +105,6 @@ const StyledDragScroll = styled(ScrollContainer)`
 `
 const StyledCloseButton = styled.div`
   cursor: pointer;
-`
-
-const StyledHeading = styled(Heading)`
-  color: ${({ theme }) => theme.body.textColorSecondary};
 `
 const StyledTypographyWrapper = styled.div`
   color: ${({ theme }) => theme.body.mainNavColor};

@@ -15,6 +15,7 @@ import ChangePassword from 'pages/ChangePassword'
 import AccountForm from './AccountForm/AccountForm'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Account = () => {
   const { openCreateChangePasswordModal } = useChangePassword()
@@ -32,11 +33,10 @@ const Account = () => {
               kind={Button.kinds.PRIMARY}
               size={Button.sizes.MEDIUM}
             >
-              <Typography
+              <TypographyPrimary
                 value='Change password'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'#FFFFFF'}
               />
             </StyledChangePasswordButton>
           </StyledButtonsContainer>
@@ -90,10 +90,3 @@ const StyledButtonsContainer = styled.div`
   align-items: center;
   gap: 5px;
 `
-// const StyledContainer = styled.div`
-//   display: grid;
-//   justify-content: center;
-//   align-items: Center;
-//   width: 200px;
-//   height: 100px;
-// `

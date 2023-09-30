@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type MemberTextProps = {
   name: string
@@ -10,12 +12,9 @@ type MemberTextProps = {
 const MemberText = ({ name, role }: MemberTextProps) => {
   return (
     <StyledNameWrapper>
-      <StyledTypographyNameWrapper>
-        <Typography value={name} type={Typography.types.LABEL} size={Typography.sizes.sm} />
-      </StyledTypographyNameWrapper>
-      <StyledTypographyRole>
-        <Typography value={role} type={Typography.types.LABEL} size={Typography.sizes.xss} />
-      </StyledTypographyRole>
+      <TypographyPrimary value={name} type={Typography.types.LABEL} size={Typography.sizes.sm} />
+
+      <TypographySecondary value={role} type={Typography.types.LABEL} size={Typography.sizes.xss} />
     </StyledNameWrapper>
   )
 }
@@ -25,10 +24,4 @@ export default MemberText
 const StyledNameWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
-export const StyledTypographyNameWrapper = styled.div`
-  color: ${({ theme }) => theme.body.textColorPrimary};
-`
-const StyledTypographyRole = styled.div`
-  color: ${({ theme }) => theme.body.mainNavColor};
 `

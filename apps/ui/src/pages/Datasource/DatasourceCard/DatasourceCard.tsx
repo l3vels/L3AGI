@@ -8,6 +8,9 @@ import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type DatasourceCardProps = {
   name: string
@@ -49,18 +52,12 @@ const DatasourceCard = ({
         <StyledImg src={imageSrc} />
         <StyledTextWrapper>
           <StyledNameWrapper>
-            <Typography
-              value={name}
-              type={Typography.types.P}
-              size={Typography.sizes.md}
-              customColor={'#FFF'}
-            />
+            <TypographyPrimary value={name} type={Typography.types.P} size={Typography.sizes.md} />
           </StyledNameWrapper>
-          <Typography
+          <TypographySecondary
             value={shortDescription}
             type={Typography.types.P}
             size={Typography.sizes.sm}
-            customColor={'rgba(255,255,255, 0.7)'}
           />
         </StyledTextWrapper>
       </StyledBodyWrapper>
@@ -69,11 +66,10 @@ const DatasourceCard = ({
         <StyledStatus>
           {statusIcon}
 
-          <Typography
+          <TypographyTertiary
             value={status}
             type={Typography.types.P}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255, 0.6)'}
           />
         </StyledStatus>
 

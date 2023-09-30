@@ -19,6 +19,8 @@ import { AuthContext } from 'contexts'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -44,11 +46,10 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
     <StyledDetailsBox>
       <StyledWrapper>
         <StyledNameWrapper>
-          <Typography
+          <TypographyPrimary
             value={name}
             type={Typography.types.LABEL}
             size={Typography.sizes.lg}
-            customColor={'#FFF'}
           />
           {isCreator && (
             <IconButton
@@ -81,11 +82,10 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
           <StyledDivider />
 
           <StyledWrapper>
-            <Typography
+            <TypographySecondary
               value={description}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255,0.9)'}
             />
           </StyledWrapper>
         </>

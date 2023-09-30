@@ -20,6 +20,7 @@ import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlT
 import { useParams } from 'react-router-dom'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import DataSourceDropdown from './components/DataSourceDropdown'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DatasourceFormProps = {
   formik: any
@@ -83,11 +84,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
         <FormikTextField name='datasource_name' placeholder='Name' label='Name' />
 
         <StyledTextareaWrapper>
-          <Typography
+          <TypographyPrimary
             value='Description'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           <Textarea
             hint=''
@@ -99,11 +99,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
         </StyledTextareaWrapper>
 
         <StyledSourceTypeWrapper>
-          <Typography
+          <TypographyPrimary
             value='Source Type'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           <StyledCardWrapper>
             {dataLoaders?.map((dataLoader: any) => {

@@ -15,6 +15,8 @@ import Icon from '@l3-lib/ui-core/dist/Icon'
 import Warning from '@l3-lib/ui-core/dist/icons/Warning'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Done from '@l3-lib/ui-core/dist/icons/Check'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void
@@ -32,7 +34,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
         show
         title={
           <StyledTextContainer>
-            <Typography
+            <TypographyPrimary
               value='Your new API token is displayed below. Treat this token like a password, as it can be used to access your account without a username, password, or two-factor authentication.'
               type={Typography.types.Paragraph}
               size={Typography.sizes.md}
@@ -44,7 +46,11 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
       >
         <StyledTokenContainer>
           <StyledTokenTypography>
-            <Typography value={data.token} type={Typography.types.L} size={Typography.sizes.md} />
+            <TypographyPrimary
+              value={data.token}
+              type={Typography.types.L}
+              size={Typography.sizes.md}
+            />
           </StyledTokenTypography>
           <StyledTokenIcon>
             {isCopied ? (
@@ -67,12 +73,16 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           type={Toast.types.WARNING_LOW_INFORMATIONAL}
           label={
             <StyledToastLabel>
-              <Typography value='Note' type={Typography.types.LABEL} size={Typography.sizes.md} />
+              <TypographySecondary
+                value='Note'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
             </StyledToastLabel>
           }
           paragraph={
             <StyledToastParagraph>
-              <Typography
+              <TypographySecondary
                 value='This token will not be displayed again, so make sure to save it to a safe place.'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
@@ -153,7 +163,6 @@ export const StyledTextContainer = styled.div`
   width: 632px;
   height: 75px;
   margin-top: 16px;
-  color: #ffffff;
 `
 export const StyledTokenContainer = styled.div`
   width: 662px;
@@ -161,7 +170,6 @@ export const StyledTokenContainer = styled.div`
   background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   margin-top: 34px;
-  color: #ffffff;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -171,7 +179,7 @@ export const StyledTokenTypography = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: #ffffff;
+
   margin-left: 15px;
   overflow-x: auto;
   text-overflow: ellipsis;

@@ -35,7 +35,6 @@ import { WelcomeLoader } from 'components/Loader/WelcomeLoader'
 import { CheatCode } from 'pages/Auth/Register/CheatCode'
 
 import Log from 'pages/Log/Log'
-import Webhook from 'pages/Webhook/Webhook'
 
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -221,7 +220,6 @@ const Route = () => {
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
               <Router index element={<ApiKeys />} key={document.location.href} />
-              <Router path={'webhook'} element={<Webhook />} key={document.location.href} />
               <Router path={'logs'} element={<Log />} key={document.location.href} />
               <Router path={'log/:id'} element={<Log />} key={document.location.href} />
               <Router path={'successful/:id'} element={<Log />} key={document.location.href} />

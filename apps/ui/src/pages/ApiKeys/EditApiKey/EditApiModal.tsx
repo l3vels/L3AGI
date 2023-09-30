@@ -23,6 +23,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 
 import styled from 'styled-components'
+import TypographySecondary from 'components/Typography/Secondary'
 
 // import { StyledFormSection } from '../ApiKeysStyle'
 
@@ -128,12 +129,16 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
             <ModalContent>
               <StyledCreateModalForm>
                 <StyledNameTextWrapper>
-                  <Typography value='Name' type={Typography.types.P} size={Typography.sizes.md} />
+                  <TypographySecondary
+                    value='Name'
+                    type={Typography.types.P}
+                    size={Typography.sizes.md}
+                  />
                 </StyledNameTextWrapper>
                 <FormikTextField field_name='name' />
                 <StyledTextFieldDate>
                   <StyledExpirationTextWrapper>
-                    <Typography
+                    <TypographySecondary
                       value='Expiration'
                       type={Typography.types.LABEL}
                       size={Typography.sizes.lg}
@@ -143,7 +148,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                 </StyledTextFieldDate>
 
                 <StyledTextWrapper>
-                  <Typography
+                  <TypographySecondary
                     value='Choose games'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
@@ -166,7 +171,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                   // )}
                 />
                 <StyledTextWrapper>
-                  <Typography
+                  <TypographySecondary
                     value='Note'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
@@ -251,7 +256,6 @@ export const StyledTextWrapper = styled.div`
   height: 24px;
   margin-top: 24px;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.8);
 `
 export const StyledImgWrapper = styled.div`
   margin-top: -20px;
@@ -262,13 +266,11 @@ export const StyledNameTextWrapper = styled.div`
   width: 296px;
   height: 24px;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.8);
 `
 export const StyledExpirationTextWrapper = styled.div`
   width: 296px;
   height: 24px;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.8);
 `
 
 export const StyledTextAreaWrapper = styled.div`

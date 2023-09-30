@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type ToolCardProps = {
   title: string
@@ -24,34 +26,26 @@ const ToolCard = ({
       <StyledWrapper>
         <StyledImg src={logoSrc} />
         <StyledTextWrapper>
-          <Typography
+          <TypographySecondary
             value={`By`}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255,0.8'}
           />
 
-          <Typography
+          <TypographySecondary
             value={`L3`}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255,0.8'}
             style={{ textDecoration: 'underline' }}
           />
         </StyledTextWrapper>
       </StyledWrapper>
       <StyledMainTextWrapper>
-        <Typography
-          value={title}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.md}
-          customColor={'#FFF'}
-        />
-        <Typography
+        <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        <TypographyPrimary
           value={subTitle}
           type={Typography.types.LABEL}
           size={Typography.sizes.xss}
-          customColor={'#FFF'}
         />
       </StyledMainTextWrapper>
     </StyledRoot>
