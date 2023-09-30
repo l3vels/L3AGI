@@ -17,6 +17,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 const Details = ({ log }: any) => {
   const [currentLogId, setCurrentLogId] = useState<any>()
@@ -52,35 +53,19 @@ const Details = ({ log }: any) => {
     <StyledContainer>
       {filteredLogId[0]?.is_gql === true ? (
         <StyledTitle>
-          <Heading
-            type={Heading.types.h1}
-            value={filteredLogId[0]?.gql_type}
-            size='small'
-            customColor={'#FFFFFF'}
-          />
-          <Heading type={Heading.types.h1} value='&ensp;' size='small' customColor={'#FFFFFF'} />
-          <Heading
+          <HeadingPrimary type={Heading.types.h1} value={filteredLogId[0]?.gql_type} size='small' />
+          <HeadingPrimary type={Heading.types.h1} value='&ensp;' size='small' />
+          <HeadingPrimary
             type={Heading.types.h1}
             value={filteredLogId[0]?.gql_source}
             size='small'
-            customColor={'#FFFFFF'}
           />
         </StyledTitle>
       ) : (
         <StyledTitle>
-          <Heading
-            type={Heading.types.h1}
-            value={filteredLogId[0]?.method}
-            size='small'
-            customColor={'#FFFFFF'}
-          />
-          <Heading type={Heading.types.h1} value='&ensp;' size='small' customColor={'#FFFFFF'} />
-          <Heading
-            type={Heading.types.h1}
-            value={filteredLogId[0]?.endpoint}
-            size='small'
-            customColor={'#FFFFFF'}
-          />
+          <HeadingPrimary type={Heading.types.h1} value={filteredLogId[0]?.method} size='small' />
+          <HeadingPrimary type={Heading.types.h1} value='&ensp;' size='small' />
+          <HeadingPrimary type={Heading.types.h1} value={filteredLogId[0]?.endpoint} size='small' />
         </StyledTitle>
       )}
 
