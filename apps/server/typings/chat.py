@@ -16,6 +16,12 @@ class ChatMessageInput(BaseModel):
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
     parent_id: Optional[UUID] = None
+    
+
+class ChatInput(BaseModel):
+    name: str
+    agent_id: Optional[UUID] = None
+    team_id: Optional[UUID] = None
 
 
 class ChatMessageOutput(BaseModel):

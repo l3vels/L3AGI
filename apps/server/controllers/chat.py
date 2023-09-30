@@ -11,7 +11,7 @@ from agents.plan_and_execute.plan_and_execute import PlanAndExecute
 from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
 from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
-from typings.chat import ChatMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput
+from typings.chat import ChatMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput, ChatInput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention, MentionModule
 from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
@@ -52,7 +52,7 @@ def run_conversational_agent(agent_with_configs: AgentWithConfigsOutput, auth: U
     conversational = ConversationalAgent(auth.user, auth.account, session_id)
     return conversational.run(settings, chat_pubsub_service, agent_with_configs, tools, prompt, history, human_message_id)  
 
-@router.post("", status_code=201)
+@router.post("messages", status_code=201)
 def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
     """
     Create new chat message
@@ -261,7 +261,7 @@ def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
     return convert_config_model_to_response(team_status_config)
 
 
-@router.get("", status_code=200, response_model=List[ChatMessageOutput])
+@router.get("/messages", status_code=200, response_model=List[ChatMessageOutput])
 def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
     """
     Get chat messages
@@ -335,3 +335,31 @@ def negotiate(id: str):
 
     token = AzurePubSubService().get_client_access_token(user_id=id)
     return NegotiateOutput(url=token['url'])
+
+@router.post("", status_code=201)
+def create_chat(body: ChatInput):
+    
+    return 1
+
+@router.get("/{chat_id}/messages", status_code=200, response_model=List[ChatMessageOutput])
+def get_chat_messages(chat_id: UUID, auth: UserAccount = Depends(authenticate)):
+    """
+    Get chat messages
+
+    Args:
+        is_private_chat (bool): Is private or team chat
+        agent_id (Optional[UUID]): Agent id
+        team_id (Optional[UUID]): Team of agents id
+    """
+
+    chat_messages = (db.session.query(ChatMessageModel)
+                 .filter(ChatMessageModel.chat_id == chat_id)
+                 .order_by(ChatMessageModel.created_on.desc())
+                 .limit(50)
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.creator))
+                 .all())
+    
+    chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
+    chat_messages.reverse()
+
+    return chat_messages
