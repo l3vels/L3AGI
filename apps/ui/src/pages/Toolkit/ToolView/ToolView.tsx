@@ -17,7 +17,7 @@ import { FormikProvider } from 'formik'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {

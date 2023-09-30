@@ -10,7 +10,7 @@ import { useAiMessage } from './ChatMessageList/components/useAiMessage'
 import { ChatMessageVersionEnum } from 'services'
 import AiMessageMarkdown from './ChatMessageList/components/AiMessageMarkdown'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type ReplyBoxProps = {
   reply: ReplyStateProps

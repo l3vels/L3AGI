@@ -11,7 +11,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 

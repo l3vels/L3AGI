@@ -16,7 +16,7 @@ import { AuthContext } from 'contexts'
 import { StyledEyeEditIcon } from 'modals/AIChatModal/components/ChatMembers/ChatMembers'
 import { StyledShortDescription } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 
 type AgentViewDetailBoxProps = {

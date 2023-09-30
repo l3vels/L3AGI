@@ -19,7 +19,7 @@ import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxR
 import useTeams from './useTeams'
 import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 
 export default () => {

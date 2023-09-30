@@ -27,7 +27,7 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
 import { useModal } from 'hooks'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()

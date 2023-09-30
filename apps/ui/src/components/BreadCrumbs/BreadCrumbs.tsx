@@ -9,7 +9,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useToolsService } from 'services/tool/useToolsService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const GetAgentName = () => {
   const params = useParams()

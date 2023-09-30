@@ -16,7 +16,7 @@ import Warning from '@l3-lib/ui-core/dist/icons/Warning'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Done from '@l3-lib/ui-core/dist/icons/Check'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void

@@ -9,7 +9,7 @@ import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 
 type DatasourceCardProps = {

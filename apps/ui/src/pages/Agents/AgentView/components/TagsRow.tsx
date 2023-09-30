@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type TagsRowProps = {
   items: string[]

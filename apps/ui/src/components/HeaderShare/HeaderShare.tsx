@@ -6,7 +6,7 @@ import { RandomAvatar } from 'helpers/RandomImage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Share from '@l3-lib/ui-core/dist/icons/Share'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 // import { avatarsArray } from 'assets/avatars'
 

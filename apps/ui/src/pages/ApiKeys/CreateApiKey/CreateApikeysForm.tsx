@@ -10,7 +10,7 @@ import info from '../../../assets/images/info.png'
 import TextareaFormik from 'components/TextareaFormik'
 import useCreateApiKey from './useCreateApiKey'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type CreateApiKeysFormProps = {
   closeModal: () => void

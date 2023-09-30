@@ -14,7 +14,7 @@ import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Modal from '@l3-lib/ui-core/dist/Modal'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void

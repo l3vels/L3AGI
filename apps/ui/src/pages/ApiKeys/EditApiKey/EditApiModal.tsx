@@ -23,7 +23,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import TextareaFormik from 'components/TextareaFormik'
 
 import styled from 'styled-components'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 // import { StyledFormSection } from '../ApiKeysStyle'
 

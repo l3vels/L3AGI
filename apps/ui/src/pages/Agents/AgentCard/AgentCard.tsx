@@ -16,7 +16,7 @@ import {
   StyledChatButtonWrapper,
   StyledInnerButtonWrapper,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 

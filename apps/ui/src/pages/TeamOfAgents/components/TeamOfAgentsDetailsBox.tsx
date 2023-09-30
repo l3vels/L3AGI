@@ -20,7 +20,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any

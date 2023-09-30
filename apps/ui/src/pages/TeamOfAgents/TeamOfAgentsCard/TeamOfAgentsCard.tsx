@@ -14,7 +14,7 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 
 type TeamOfAgentCardProps = {

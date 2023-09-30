@@ -14,7 +14,7 @@ import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import { useTranslation } from 'react-i18next'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type configTypes = {
   handleEditApiKey: (apiKey: any) => void

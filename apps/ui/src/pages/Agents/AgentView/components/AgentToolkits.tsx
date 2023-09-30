@@ -4,7 +4,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { toolLogos } from 'pages/Toolkit/constants'
 import { useToolsService } from 'services/tool/useToolsService'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const AgentToolkits = ({ tools }: { tools: string[] }) => {
   const { data: toolsData } = useToolsService()

@@ -15,7 +15,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import withRenderModal from 'hocs/withRenderModal'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
 
 type CreateLogModalProps = {

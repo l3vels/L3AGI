@@ -10,7 +10,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikTextField from 'components/TextFieldFormik'
 import useTeams from './useTeams'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type TeamFormProps = {
   formik: any

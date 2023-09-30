@@ -20,7 +20,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'

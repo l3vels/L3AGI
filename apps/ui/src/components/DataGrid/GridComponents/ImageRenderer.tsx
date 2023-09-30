@@ -9,7 +9,7 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const ImageRenderer = (p: any) => {
   const [item, setItem] = useState<string | null>(null)

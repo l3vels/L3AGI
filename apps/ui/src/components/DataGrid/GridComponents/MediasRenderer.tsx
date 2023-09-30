@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import { useRef, useState } from 'react'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 // import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 const MediasRenderer = (p: any) => {

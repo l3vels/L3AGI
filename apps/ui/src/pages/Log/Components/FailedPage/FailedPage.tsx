@@ -4,7 +4,7 @@ import moment from 'moment'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 import useLog from 'pages/Log/useLog'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const ListLog = ({ is_active, item, navigate }: any) => {

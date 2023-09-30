@@ -10,7 +10,7 @@ import { useLogoutService } from 'services'
 import { logout as logOutCookies } from 'helpers/authHelper'
 import useAccount from 'pages/Account/useAccount'
 import TypographyTertiary from 'components/Typography/TypographyTertiary'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const AccountForm = () => {
   const { formik } = useAccount()

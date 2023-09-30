@@ -20,7 +20,7 @@ import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { StyledSectionTitle } from 'pages/Home/homeStyle.css'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographySecondary from 'components/Typography/TypographySecondary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const AgentRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
