@@ -21,9 +21,7 @@ from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.account import convert_model_to_response as convert_model_to_response_account
 from utils.user import convert_model_to_response as convert_model_to_response_user
-
-router = APIRouter()
-
+\
 
 def register(input: RegisterInput):
     """

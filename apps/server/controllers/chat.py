@@ -31,7 +31,7 @@ from utils.configuration import convert_model_to_response as convert_config_mode
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from exceptions import ChatNotFoundException
-from services.chat import create_user_chat_message
+from services.chat import create_user_message
 
 router = APIRouter()
 
@@ -63,7 +63,7 @@ def create_user_chat_message(body: ChatMessageInput, auth: UserAccount = Depends
     Create new user chat message
     """
     
-    create_user_chat_message(body, auth)
+    create_user_message(body, auth)
     return ""
 
 @router.post("/stop", status_code=201, response_model=ConfigOutput)

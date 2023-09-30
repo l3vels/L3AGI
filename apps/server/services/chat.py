@@ -42,7 +42,7 @@ from models.account import AccountModel
 
 
 
-def create_user_chat_message(body: ChatMessageInput, auth: UserAccount):
+def create_user_message(body: ChatMessageInput, auth: UserAccount):
     """
     Create new user chat message
     """
@@ -54,8 +54,8 @@ def create_user_chat_message(body: ChatMessageInput, auth: UserAccount):
     agents: List[AgentWithConfigsOutput] = []    
     prompt = body.prompt    
     agents, prompt = handle_agent_mentions(prompt, auth, agents)
-    agents = retrieve_agent_configs(body.agent_id, account, agents)
-    agents, prompt = retrieve_parent_configs(body.parent_id, account, agents, prompt)
+    agents = append_agent_to_list(body.agent_id, account, agents)
+    agents, prompt = retrieve_parent_message_and_agent(body.parent_id, account, agents, prompt)
     
     team_configs = {}  
     team_configs, team = retrieve_team_configs(body.team_id, account, team_configs)
@@ -124,8 +124,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount):
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
     
 
-def retrieve_agent_configs(agent_id, account):
-    agents: List[AgentWithConfigsOutput] = []
+def append_agent_to_list(agent_id, account, agents):
     if agent_id:
         agent = AgentModel.get_agent_by_id(db, agent_id, account)
 
@@ -135,8 +134,9 @@ def retrieve_agent_configs(agent_id, account):
         # If there are no mentions or user is not replying, use default agent from chat
         if len(agents) == 0:
             agents.append(convert_model_to_response(agent))
+    return agents
             
-def retrieve_parent_configs(parent_id, account, agents, prompt):
+def retrieve_parent_message_and_agent(parent_id, account, agents, prompt):
     if parent_id:
         parent = ChatMessageModel.get_chat_message_by_id(db, parent_id, account)
 
@@ -156,6 +156,7 @@ def retrieve_parent_configs(parent_id, account, agents, prompt):
     return agents, prompt
 
 def retrieve_team_configs(team_id, account, team_configs):
+    team = None  # Initialize team to None
     if team_id:
         team = TeamModel.get_team_with_agents(db, account, team_id)
         

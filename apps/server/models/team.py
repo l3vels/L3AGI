@@ -40,7 +40,7 @@ class TeamModel(BaseModel):
     team_agents = relationship("TeamAgentModel", back_populates="team", lazy='select')
     chat_messages = relationship("ChatMessage", back_populates="team", lazy='select')
     configs = relationship("ConfigModel", lazy='select')
-    chat = relationship("ChatModel", back_populates="chat", lazy='select')
+    chat = relationship("ChatModel", back_populates="team", lazy='select')
     
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)

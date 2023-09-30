@@ -25,7 +25,7 @@ class AgentModel(BaseModel):
         is_deleted (bool): Flag indicating if the agent has been soft-deleted.
         is_template (bool): Flag indicating if the agent is a template.
         user_id (UUID): ID of the user associated with the agent.
-        account_id (UUID): ID of the account associated with the agent.
+    account_id (UUID): ID of the account associated with the agent.
         is_public (bool): Flag indicating if the agent is a system agent.
         configs: Relationship with agent configurations.
     """ 
@@ -49,7 +49,7 @@ class AgentModel(BaseModel):
     configs = relationship("AgentConfigModel", back_populates="agent", lazy='select')
     chat_messages = relationship("ChatMessage", back_populates="agent", lazy='select')
     team_agents = relationship("TeamAgentModel", back_populates="agent", lazy='select')
-    chat = relationship("ChatModel", back_populates="chat", lazy='select')
+    chat = relationship("ChatModel", back_populates="agent", lazy='select')
     account = relationship("AccountModel", lazy='select')
     
     
