@@ -22,6 +22,7 @@ import OrDivider from 'components/OrDivider/OrDivider'
 import useGithubLogin from '../Login/useGithubLogin'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
+import HeadingSecondary from 'components/Heading/Secondary'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
@@ -34,7 +35,7 @@ const Register = () => {
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
 
       <StyledHeaderWrapper>
-        <Heading
+        <HeadingSecondary
           value={'Join our community today! Sign up'}
           type={Heading.types.h2}
           customColor='rgba(255, 255, 255, 0.9)'
