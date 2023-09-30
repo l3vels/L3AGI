@@ -18,6 +18,7 @@ import { StyledShortDescription } from 'pages/TeamOfAgents/TeamOfAgentsCard/Team
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -71,7 +72,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         )}
         {!isCreator && (
           <div>
-            <Button
+            <ButtonPrimary
               size={Button.sizes.SMALL}
               onClick={() => {
                 closeModal('agent-view-modal')
@@ -82,7 +83,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                 <Download size={28} />
                 Add
               </StyledInnerButtonWrapper>
-            </Button>
+            </ButtonPrimary>
           </div>
         )}
       </StyledWrapper>
