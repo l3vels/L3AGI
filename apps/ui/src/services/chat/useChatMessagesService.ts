@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import omitBy from 'lodash/omitBy'
 import isNil from 'lodash/fp/isNil'
 import { Nullable } from 'types'
-import CHAT_MESSAGES_GQL from '../../gql/chat/chatMessages.gql'
+import CHAT_MESSAGES_GQL from '../../gql/chat/userChatMessages.gql'
 import CHAT_MESSAGES_HISTORY_GQL from '../../gql/chat/chatMessagesHistory.gql'
 
 type UseChatMessagesService = {
