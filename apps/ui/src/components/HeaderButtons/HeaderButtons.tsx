@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'

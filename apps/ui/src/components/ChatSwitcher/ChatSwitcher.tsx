@@ -16,6 +16,8 @@ import ValueOutline from '@l3-lib/ui-core/dist/icons/ValueOutline'
 
 import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
+import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+
 import { useEffect, useState } from 'react'
 
 import includes from 'lodash/includes'
@@ -99,11 +101,11 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
         </Tooltip>
 
         <Tooltip
-          content={() => <span>Agents</span>}
+          content={() => <span>Chat</span>}
           position={Tooltip.positions.RIGHT}
           tooltipSize='large'
         >
-          <StyledIcon picked={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
+          <StyledIcon picked={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
             <Mention size={46} />
           </StyledIcon>
         </Tooltip>
@@ -131,6 +133,19 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             onClick={() => onHandleClick('/toolkits')}
           >
             <Games />
+          </StyledIcon>
+        </Tooltip>
+
+        <Tooltip
+          content={() => <span>Discover</span>}
+          position={Tooltip.positions.RIGHT}
+          tooltipSize='large'
+        >
+          <StyledIcon
+            picked={includes(active, 'discover')}
+            onClick={() => onHandleClick('/discover')}
+          >
+            <SearchOutline />
           </StyledIcon>
         </Tooltip>
       </StyledChatSwitcher>

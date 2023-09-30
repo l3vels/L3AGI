@@ -1,4 +1,3 @@
-import { StyledNameTypographyWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import React from 'react'
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'

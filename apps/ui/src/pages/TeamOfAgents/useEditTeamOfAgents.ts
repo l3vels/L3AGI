@@ -93,7 +93,7 @@ export const useEditTeamOfAgents = () => {
     await Promise.all(promises)
     await Promise.all([refetchTeamOfAgents(), refetchConfigs()])
 
-    navigate('/team-of-agents')
+    navigate(`/chat?team=${teamId}`)
 
     setToast({
       message: 'Team was updated!',
