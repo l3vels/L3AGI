@@ -99,22 +99,6 @@ def get_agents(auth: UserAccount = Depends(authenticate)) -> List[AgentWithConfi
     db_agents = AgentModel.get_agents(db=db, account=auth.account)
     return convert_agents_to_agent_list(db_agents)
 
-#todo need remove, is depricated
-@router.get("/discover", response_model=Dict[str, List[AgentWithConfigsOutput]])
-def get_template_and_system_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
-    template_agents = AgentModel.get_template_agents(db=db)
-    system_agents = AgentModel.get_public_agents(db=db)
-    
-    template_agents_list = convert_agents_to_agent_list(template_agents)
-    system_agents_list = convert_agents_to_agent_list(system_agents)
-    
-    result = {
-        "templateAgents": template_agents_list,
-        "systemAgents": system_agents_list
-    }
-    
-    return result
-
 @router.get("/discover/public", response_model=List[AgentWithConfigsOutput])
 def get_public_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
     public_agents = AgentModel.get_public_agents(db=db)
