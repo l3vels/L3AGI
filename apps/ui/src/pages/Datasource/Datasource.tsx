@@ -14,6 +14,7 @@ import { DATA_LOADER_IMAGES } from './constants'
 
 import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Datasource = () => {
   const { datasources, deleteDatasourceHandler } = useDatasource()
@@ -30,12 +31,12 @@ const Datasource = () => {
           </StyledSectionDescription>
         </div>
         <div>
-          <Button
+          <ButtonPrimary
             onClick={() => navigate('/datasources/create-datasource')}
             size={Button.sizes.SMALL}
           >
             Add Datasource
-          </Button>
+          </ButtonPrimary>
         </div>
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>

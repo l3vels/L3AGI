@@ -16,6 +16,7 @@ import {
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const EditTeamOfAgentsForm = () => {
   const { formik, handleSubmit, isLoading } = useEditTeamOfAgents()
@@ -33,13 +34,13 @@ const EditTeamOfAgentsForm = () => {
             </div>
 
             <StyledButtonWrapper>
-              <Button
+              <ButtonPrimary
                 onClick={() => handleSubmit(formik?.values)}
                 size={Button.sizes.SMALL}
                 disabled={isLoading}
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
-              </Button>
+              </ButtonPrimary>
 
               <BackButton />
             </StyledButtonWrapper>
