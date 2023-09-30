@@ -4,6 +4,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import styled from 'styled-components'
 import outsideClick from 'helpers/outsideClick'
 import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
+import { ButtonSecondary } from 'components/Button/Button'
 
 const DatePickerField = ({ start_date, end_date, onChange }: any) => {
   const [is_open, setIsOpen] = React.useState(false)
@@ -16,13 +17,9 @@ const DatePickerField = ({ start_date, end_date, onChange }: any) => {
 
   return (
     <StyledContainer ref={ref}>
-      <Button
-        kind={Button.kinds.SECONDARY}
-        leftIcon={() => <Calendar />}
-        onClick={() => setIsOpen(true)}
-      >
+      <ButtonSecondary leftIcon={() => <Calendar />} onClick={() => setIsOpen(true)}>
         Date
-      </Button>
+      </ButtonSecondary>
       {is_open && (
         <StyledPickerContainer>
           <DatePicker
