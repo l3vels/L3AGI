@@ -8,6 +8,7 @@ import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
 import TwitterLogo from 'assets/tools/twitter.png'
 import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonTertiary } from 'components/Button/Button'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -16,8 +17,7 @@ export const openLinkTab = (url: string) => {
 const HeaderButtons = () => {
   return (
     <StyledButtonsWrapper>
-      <Button
-        kind={Button.kinds.TERTIARY}
+      <ButtonTertiary
         size={Button.sizes.SMALL}
         onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
       >
@@ -31,10 +31,9 @@ const HeaderButtons = () => {
             size={Typography.sizes.sm}
           />
         </StyledInnerButtonWrapper>
-      </Button>
+      </ButtonTertiary>
 
-      <Button
-        kind={Button.kinds.TERTIARY}
+      <ButtonTertiary
         size={Button.sizes.SMALL}
         onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
       >
@@ -46,10 +45,9 @@ const HeaderButtons = () => {
             size={Typography.sizes.sm}
           />
         </StyledInnerButtonWrapper>
-      </Button>
+      </ButtonTertiary>
 
-      <Button
-        kind={Button.kinds.TERTIARY}
+      <ButtonTertiary
         size={Button.sizes.SMALL}
         onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
       >
@@ -63,7 +61,7 @@ const HeaderButtons = () => {
             size={Typography.sizes.sm}
           />
         </StyledInnerButtonWrapper>
-      </Button>
+      </ButtonTertiary>
     </StyledButtonsWrapper>
   )
 }

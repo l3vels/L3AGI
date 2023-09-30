@@ -40,7 +40,8 @@ declare module 'styled-components' {
       contentTertiary: string
     }
     button: {
-      kind: string
+      primary: string
+      secondary: string
       tertiary: string
     }
   }

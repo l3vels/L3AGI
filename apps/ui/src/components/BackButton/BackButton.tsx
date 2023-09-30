@@ -1,4 +1,5 @@
 import Button from '@l3-lib/ui-core/dist/Button'
+import { ButtonTertiary } from 'components/Button/Button'
 import { useNavigate } from 'react-router-dom'
 
 type BackButtonProps = {
@@ -17,9 +18,9 @@ const BackButton = ({ customOnClick }: BackButtonProps) => {
   }
 
   return (
-    <Button onClick={ClickHandler} kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL}>
+    <ButtonTertiary onClick={ClickHandler} size={Button.sizes.SMALL}>
       Back
-    </Button>
+    </ButtonTertiary>
   )
 }
 
