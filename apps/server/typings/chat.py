@@ -22,6 +22,18 @@ class ChatInput(BaseModel):
     name: str
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
+    
+class ChatOutput(BaseModel):
+    name: str
+    agent_id: Optional[UUID] = None
+    team_id: Optional[UUID] = None
+    agent_id: Optional[UUID] = None
+    agent: Optional[Dict] = None
+    team_id: Optional[UUID] = None
+    team: Optional[Dict] = None
+    user_id: UUID
+    creator: Optional[Dict] = None
+    account_id: UUID
 
 
 class ChatMessageOutput(BaseModel):

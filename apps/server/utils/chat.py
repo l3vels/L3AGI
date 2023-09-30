@@ -3,6 +3,10 @@ from uuid import UUID
 import json
 import re
 from enum import Enum
+from typings.chat import ChatOutput
+from utils.type import convert_value_to_type
+from models.chat import ChatModel
+from utils.user import convert_model_to_response as user_convert_model_to_response
 
 class MentionModule(Enum):
     AGENT = 'agent'
@@ -85,3 +89,39 @@ def get_agents_from_json(data_string: str):
     else:
         return []
 
+
+
+
+def convert_model_to_response(chat_model: ChatModel) -> ChatOutput:
+    chat_data = {}
+    
+    # Extract attributes from ChatModel using annotations of Chat
+    for key in ChatOutput.__annotations__.keys():
+        if hasattr(chat_model, key):
+            target_type = ChatOutput.__annotations__.get(key)
+            chat_data[key] = convert_value_to_type(value=getattr(chat_model, key), target_type=target_type)
+    
+    # Convert ChatConfigModel instances to Config
+    configs = {}
+    # if hasattr(chat_model, 'configs'):
+    #     for config_model in chat_model.configs:
+    #         key = getattr(config_model, "key")
+    #         value = getattr(config_model, "value")
+            
+    #         # Convert value to the type specified in ConfigsOutput
+    #         target_type = ConfigsOutput.__annotations__.get(key)
+
+    #         if target_type:
+    #             value = convert_value_to_type(value, target_type)
+            
+    #         configs[key] = value
+    
+    if hasattr(chat_model, 'creator') and chat_model.creator:
+       chat_data['creator'] = user_convert_model_to_response(chat_model.creator)
+
+    
+    return ChatOutput(chat=ChatOutput(**chat_data))
+
+
+def convert_chats_to_chat_list(chats: List[ChatModel]) -> List[ChatOutput]:
+    return [convert_model_to_response(chat_model) for chat_model in chats]
