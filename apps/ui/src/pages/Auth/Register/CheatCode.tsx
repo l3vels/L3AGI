@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import { useEffect } from 'react'
+import HeadingTertiary from 'components/Heading/Tertiary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 type commandInputs = {
   command_first: string
@@ -31,10 +33,9 @@ export const CheatCode = () => {
 
   return (
     <StyledCenterFormContainer>
-      <Heading
+      <HeadingTertiary
         value={'Cheat Code'}
         type={Heading.types.h1}
-        customColor='rgba(255, 255, 255, 0.4)'
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
@@ -52,10 +53,9 @@ export const CheatCode = () => {
               // {...register('command_first', { required: true })}
             />
           </StyledInputContainer>
-          <Heading
+          <HeadingPrimary
             value={'+'}
             type={Heading.types.h1}
-            customColor='#ffffff'
             style={{ fontSize: 52, lineHeight: 'normal' }}
           />
           <StyledInputContainer>
