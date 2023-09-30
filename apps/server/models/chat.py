@@ -1,11 +1,11 @@
-from sqlalchemy import Column, UUID, String, ForeignKey
+from sqlalchemy import Column, UUID, String, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 import uuid
 from typings.account import AccountOutput
 
-class ChatMessage(BaseModel):
+class Chat(BaseModel):
     """
     Model representing a chat message.
 
@@ -13,48 +13,45 @@ class ChatMessage(BaseModel):
         parent_id: The ID of the human message which AI message answers to.
     """
 
-    __tablename__ = 'chat_message'
+    __tablename__ = 'chat'
 
-    id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    parent_id = Column(UUID, ForeignKey('chat_message.id', ondelete='CASCADE'), index=True)
+    id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)    
     session_id = Column(String, nullable=False, index=True)
+    name = Column(String)
     agent_id = Column(UUID, ForeignKey('agent.id', ondelete='CASCADE'), index=True)
     team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), index=True)
     user_id = Column(UUID,  ForeignKey('user.id', ondelete='CASCADE'), nullable=True, index=True)
     account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True, index=True)
-    chat_id = Column(UUID, ForeignKey('chat.id', ondelete='CASCADE'), nullable=True, index=True)
-    message = Column(JSONB, nullable=False)
-    thoughts = Column(JSONB)
-
-    parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
-    agent = relationship("AgentModel", back_populates="chat_messages")
-    team = relationship("TeamModel", back_populates="chat_messages")
-    chat = relationship("ChatModel", back_populates="chat_messages")
+    max_chat_messages = Column(Integer, nullable=True)
     
+    
+    agent = relationship("AgentModel", back_populates="chat")
+    team = relationship("TeamModel", back_populates="chat")
+    configs = relationship("ConfigModel", lazy='select')
         
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
     creator = relationship("UserModel", foreign_keys=[user_id], lazy='select')
 
     @classmethod
-    def get_chat_message_by_id(cls, db, chat_message_id: UUID, account: AccountOutput):
+    def get_chat_by_id(cls, db, chat_id: UUID, account: AccountOutput):
         """
-            Get Chat message from chat_message_id
+            Get Chat message from chat_id
 
             Args:
                 session: The database session.
-                chat_message_id(UUID) : Unique identifier of an Chat message.
+                chat_id(UUID) : Unique identifier of an Chat message.
 
             Returns:
                 Chat message: Chat message object is returned.
         """
-        chat_message = (
-            db.session.query(ChatMessage)
-            .filter(ChatMessage.id == chat_message_id, ChatMessage.account_id == account.id)
+        chat = (
+            db.session.query(Chat)
+            .filter(Chat.id == chat_id, Chat.account_id == account.id)
             .first()
         )
 
-        return chat_message
+        return chat
 
     def to_dict(self):
         """

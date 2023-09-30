@@ -44,6 +44,7 @@ class ConfigModel(BaseModel):
     datasource_id = Column(UUID, ForeignKey('datasource.id', ondelete='CASCADE'), nullable=True, index=True)
     team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True)
     team_agent_id = Column(UUID, ForeignKey('team_agent.id', ondelete='CASCADE'), nullable=True, index=True)
+    chat_id = Column(UUID, ForeignKey('chat.id', ondelete='CASCADE'), nullable=True, index=True)
     session_id = Column(String, nullable=True, index=True)
     value = Column(String)
     key_type = Column(String)

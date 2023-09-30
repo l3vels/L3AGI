@@ -49,6 +49,7 @@ class AgentModel(BaseModel):
     configs = relationship("AgentConfigModel", back_populates="agent", lazy='select')
     chat_messages = relationship("ChatMessage", back_populates="agent", lazy='select')
     team_agents = relationship("TeamAgentModel", back_populates="agent", lazy='select')
+    chat = relationship("ChatModel", back_populates="chat", lazy='select')
     account = relationship("AccountModel", lazy='select')
     
     
