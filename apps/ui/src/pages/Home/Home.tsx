@@ -21,6 +21,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -52,11 +53,7 @@ const Home = () => {
               link={''}
             /> */}
             <StyledHeadingWrapper>
-              <Heading
-                type={Heading.types.h1}
-                value='BUILD TEAMS OF AI AGENTS'
-                customColor={'#FFF'}
-              />
+              <HeadingPrimary type={Heading.types.h1} value='BUILD TEAMS OF AI AGENTS' />
               <TypographySecondary
                 value='Open-source tool that enables AI agents to collaborate as effectively as human teams'
                 type={Typography.types.LABEL}

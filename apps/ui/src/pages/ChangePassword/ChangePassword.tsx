@@ -15,6 +15,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import TypographySecondary from 'components/Typography/Secondary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void
@@ -44,11 +45,10 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
                 size={Typography.sizes.lg}
                 customColor={'#FFFFFF'}
               /> */}
-            <Heading
+            <HeadingPrimary
               type={Heading.types.h1}
               size={Heading.sizes.lg}
               value='Change password'
-              customColor={'#FFFFFF'}
             />
           </StyledTextWrapper>
           <StyledPasswordDetailsWrapper>

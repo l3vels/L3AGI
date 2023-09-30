@@ -17,6 +17,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 type CreateLogModalProps = {
   closeModal: () => void
@@ -29,7 +30,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
         onClose={closeModal}
         show
         backgroundColor='dark'
-        title={<Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Filer' />}
+        title={<HeadingPrimary type={Heading.types.h1} size={Heading.sizes.sm} value='Filer' />}
       >
         <StyledApiAddressContainerWrapper>
           <StyledIPAddressContainer>

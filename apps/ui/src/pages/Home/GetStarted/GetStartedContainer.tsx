@@ -10,7 +10,7 @@ import Connect from '@l3-lib/ui-core/dist/icons/Connect'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { SectionDivider } from 'styles/globalStyle.css'
 import TypographyTertiary from 'components/Typography/Tertiary'
-import HeadingPrimary from 'components/Heading/HeadingPrimary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 type GetStartedContainerProps = {
   children: ReactNode

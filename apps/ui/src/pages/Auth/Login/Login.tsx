@@ -23,6 +23,7 @@ import {
 import OrDivider from 'components/OrDivider/OrDivider'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
+import HeadingSecondary from 'components/Heading/Secondary'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -45,10 +46,9 @@ const Login = () => {
       {showResendAlert && <ErrorResendVerification resendVerifyEmail={resendVerifyEmailHandle} />}
 
       <StyledHeaderWrapper>
-        <Heading
+        <HeadingSecondary
           value={'Complete your mission'}
           type={Heading.types.h2}
-          customColor='rgba(255, 255, 255, 0.9)'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
         <TypographyTertiary
