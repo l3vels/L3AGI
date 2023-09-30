@@ -229,3 +229,4 @@ This initiative is currently in its developmental phase and might have some inco
 [![MOkradze](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/22216909?v=4&w=50&h=50&mask=circle)](https://github.com/MOkradze)
 [![edufaraday](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/56274334?v=4&w=50&h=50&mask=circle)](https://github.com/edufaraday)
 [![Levanion](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/91427080?v=4&w=50&h=50&mask=circle)](https://github.com/levanion)
+[![Bakhutashvili](https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/85249145?v=4&w=50&h=50&mask=circle)](https://github.com/DavitBakhutashvili)
