@@ -10,6 +10,7 @@ import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdS
 import { useToolsService } from 'services/tool/useToolsService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonTertiary } from 'components/Button/Button'
 
 const GetAgentName = () => {
   const params = useParams()
@@ -85,13 +86,13 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
+                  <ButtonTertiary size={Button.sizes.SMALL}>
                     <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.sm}
                     />
-                  </Button>
+                  </ButtonTertiary>
                 </StyledNavLink>
                 <div className='line' />
               </StyledBreadcrumbLi>
@@ -101,13 +102,13 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
+                  <ButtonTertiary size={Button.sizes.SMALL}>
                     <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.sm}
                     />
-                  </Button>
+                  </ButtonTertiary>
                 </StyledNavLink>
               </StyledBreadcrumbLi>
             )
