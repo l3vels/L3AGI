@@ -69,6 +69,7 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
+  border: ${({ theme }) => theme.body.border};
   border-radius: 16px;
   background-image: ${p =>
     p.bgImg &&
