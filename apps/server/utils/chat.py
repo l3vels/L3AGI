@@ -116,8 +116,8 @@ def convert_model_to_response(chat_model: ChatModel) -> ChatOutput:
             
     #         configs[key] = value
     
-    if hasattr(chat_model, 'creator') and chat_model.creator:
-       chat_data['creator'] = user_convert_model_to_response(chat_model.creator)
+    if hasattr(chat_model, 'sender_user') and chat_model.sender_user:
+       chat_data['sender_user'] = user_convert_model_to_response(chat_model.sender_user)
 
     
     return ChatOutput(chat=ChatOutput(**chat_data))

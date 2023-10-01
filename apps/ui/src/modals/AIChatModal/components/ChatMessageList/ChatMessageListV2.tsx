@@ -58,7 +58,7 @@ const ChatMessageListV2 = ({
       agentName: chat.agent?.name,
       teamName: chat.team?.name,
       avatar: chat?.agent?.avatar,
-      creator: chat?.creator,
+      sender_user: chat?.sender_user,
     }
   })
 
@@ -170,7 +170,7 @@ const ChatMessageListV2 = ({
                     ))}
                 </StyledReplyMessageContainer>
                 <HumanMessage
-                  avatarImg={chat.creator?.avatar}
+                  avatarImg={chat.sender_user?.avatar}
                   userId={chat.user_id}
                   messageDate={chat.date}
                   messageText={chat.message}

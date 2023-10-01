@@ -11,7 +11,7 @@ from agents.plan_and_execute.plan_and_execute import PlanAndExecute
 from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
 from agents.agent_simulations.debates.agent_debates import AgentDebates
 from postgres import PostgresChatMessageHistory
-from typings.chat import ChatMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput, ChatInput, ChatOutput
+from typings.chat import ChatMessageInput, ChatUserMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput, ChatInput, ChatOutput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention, MentionModule, convert_chats_to_chat_list
 from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
@@ -58,7 +58,7 @@ def get_chats(auth: UserAccount = Depends(authenticate)) -> List[ChatOutput]:
 
 
 @router.post("/messages", status_code=201)
-def create_user_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
+def create_user_chat_message(body: ChatUserMessageInput, auth: UserAccount = Depends(authenticate)):
     """
     Create new user chat message
     """
@@ -92,7 +92,7 @@ def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, te
                  .filter(ChatMessageModel.session_id == session_id)
                  .order_by(ChatMessageModel.created_on.desc())
                  .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.creator))
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.sender_user))
                  .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
@@ -128,7 +128,7 @@ def get_chat_messages(agent_id: Optional[UUID] = None, team_id: Optional[UUID] =
                  .filter(ChatMessageModel.session_id == session_id)
                  .order_by(ChatMessageModel.created_on.desc())
                  .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.creator))
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.sender_user))
                  .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
@@ -158,6 +158,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     """
     session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
     mentions = parse_agent_mention(body.prompt)
+    
 
 @router.get("/{chat_id}/messages", status_code=200, response_model=List[ChatMessageOutput])
 def get_chat_messages(chat_id: UUID):
@@ -175,7 +176,7 @@ def get_chat_messages(chat_id: UUID):
                  .filter(ChatMessageModel.chat_id == chat_id)
                  .order_by(ChatMessageModel.created_on.desc())
                  .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.creator))
+                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.sender_user))
                  .all())
     
     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]

@@ -9,7 +9,7 @@ class ChatStatus(Enum):
     RUNNING = 'Running'
     STOPPED = 'Stopped'
 
-class ChatMessageInput(BaseModel):
+class ChatUserMessageInput(BaseModel):
     prompt: str
     is_private_chat: bool
     local_chat_message_ref_id: Optional[str] = None
@@ -17,7 +17,13 @@ class ChatMessageInput(BaseModel):
     team_id: Optional[UUID] = None
     parent_id: Optional[UUID] = None
     
-
+class ChatMessageInput(BaseModel):
+    prompt: str
+    chat_id: Optional[UUID] = None
+    #todo what it is?
+    local_chat_message_ref_id: Optional[str] = None
+    parent_id: Optional[UUID] = None
+    
 class ChatInput(BaseModel):
     name: str
     agent_id: Optional[UUID] = None
@@ -31,8 +37,8 @@ class ChatOutput(BaseModel):
     agent: Optional[Dict] = None
     team_id: Optional[UUID] = None
     team: Optional[Dict] = None
-    user_id: UUID
-    creator: Optional[Dict] = None
+    sender_user_id: UUID
+    sender_user: Optional[Dict] = None
     account_id: UUID
 
 
@@ -45,9 +51,9 @@ class ChatMessageOutput(BaseModel):
     agent: Optional[Dict] = None
     team_id: Optional[UUID] = None
     team: Optional[Dict] = None
-    user_id: UUID
-    creator: Optional[Dict] = None
-    account_id: UUID
+    sender_user_id: UUID
+    sender_user: Optional[Dict] = None
+    sender_account_id: UUID
     message: Dict
     thoughts: Optional[List[Dict]] = None
     created_on: datetime

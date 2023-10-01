@@ -297,8 +297,6 @@ class AgentModel(BaseModel):
             .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .options(joinedload(AgentModel.creator))
             .options(joinedload(AgentModel.account))
-            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
-            # .options(joinedload(UserModel.agents))
             .first()
         )
         return agents

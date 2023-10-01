@@ -128,7 +128,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
         type: message_type || 'human',
       },
       created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
-      creator: user,
+      sender_user: user,
     }
 
     upsertChatMessageInCache(message, isPrivate, {

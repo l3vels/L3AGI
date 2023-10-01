@@ -6,6 +6,7 @@ import uuid
 from typings.account import AccountOutput
 from typings.chat import ChatInput
 from models.user import UserModel
+from models.account import AccountModel
 from exceptions import ChatNotFoundException
 
 class ChatModel(BaseModel):
@@ -23,8 +24,12 @@ class ChatModel(BaseModel):
     name = Column(String)
     agent_id = Column(UUID, ForeignKey('agent.id', ondelete='CASCADE'), index=True)
     team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), index=True)
-    user_id = Column(UUID,  ForeignKey('user.id', ondelete='CASCADE'), nullable=True, index=True)
-    account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=False, index=True)
+    
+    creator_user_id = Column(UUID,  ForeignKey('user.id', name='fk_creator_user_id', ondelete='CASCADE'), nullable=True, index=True)
+    creator_account_id = Column(UUID, ForeignKey('account.id', name='fk_creator_account_id', ondelete='CASCADE'), nullable=False, index=True)
+    provider_user_id = Column(UUID,  ForeignKey('user.id', name='fk_provider_user_id', ondelete='CASCADE'), nullable=True, index=True)
+    provider_account_id = Column(UUID, ForeignKey('account.id', name='fk_provider_account_id', ondelete='CASCADE'), nullable=False, index=True)
+    
     max_chat_messages = Column(Integer, nullable=True)
     
     
@@ -33,10 +38,42 @@ class ChatModel(BaseModel):
     configs = relationship("ConfigModel", lazy='select')
     chat_messages = relationship("ChatMessage", back_populates="chat", lazy='select')
         
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[user_id], lazy='select')
+    # created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
+    # modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
+    # creator = relationship("UserModel", foreign_keys=[user_id], lazy='select')
+    creator_user = relationship("UserModel", foreign_keys=[creator_user_id], lazy='select')
+    creator_account = relationship("AccountModel", foreign_keys=[creator_account_id], lazy='select')
+    provider_user = relationship("UserModel", foreign_keys=[provider_user_id], lazy='select')
+    provider_account = relationship("AccountModel", foreign_keys=[provider_account_id], lazy='select')
 
+    @classmethod
+    def get_chat_by_id_and_account(cls, db, chat_id: UUID, account: AccountOutput):
+        """
+            Get Chat message from chat_id
+
+            Args:
+                session: The database session.
+                chat_id(UUID) : Unique identifier of an Chat message.
+
+            Returns:
+                Chat message: Chat message object is returned.
+        """
+        chat = (
+            db.session.query(ChatModel)
+            .leftJoin(UserModel, ChatModel.creator_user_id == UserModel.id)           
+            .leftJoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)           
+            .leftJoin(UserModel, ChatModel.creator_user == UserModel.id)           
+            .leftJoin(AccountModel, ChatModel.provider_user_id == AccountModel.id)           
+            .filter(ChatModel.id == chat_id, ChatModel.provider_account_id == account.id)
+            .options(joinedload(ChatModel.creator_user))
+            .options(joinedload(ChatModel.creator_account))
+            .options(joinedload(ChatModel.provider_user))
+            .options(joinedload(ChatModel.provider_account))
+            .first()
+        )
+
+        return chat
+    
     @classmethod
     def get_chat_by_id(cls, db, chat_id: UUID, account: AccountOutput):
         """
@@ -51,7 +88,7 @@ class ChatModel(BaseModel):
         """
         chat = (
             db.session.query(ChatModel)
-            .filter(ChatModel.id == chat_id, ChatModel.account_id == account.id)
+            .filter(ChatModel.id == chat_id)
             .first()
         )
 
