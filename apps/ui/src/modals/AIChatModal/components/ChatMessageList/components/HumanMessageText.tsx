@@ -47,7 +47,7 @@ const StyledTextWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   & > * {
-    margin-right: 5px;
+    margin-right: 3px;
   }
 `
 
