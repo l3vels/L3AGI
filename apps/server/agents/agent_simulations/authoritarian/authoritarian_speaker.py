@@ -33,13 +33,12 @@ class AuthoritarianSpeaker(BaseAgent):
         self,
         settings: AccountSettings,
         chat_pubsub_service: ChatPubSubService,
-        user,
-        account,
+        sender_name,
         session_id,
         stopping_probability: int,
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(user=user, account=account, session_id=session_id)
+        super().__init__(sender_name=sender_name, session_id=session_id)
         self.word_limit = word_limit    
         self.stopping_probability = stopping_probability
         self.settings = settings
@@ -110,7 +109,7 @@ class AuthoritarianSpeaker(BaseAgent):
             return_messages=True,
         )
 
-        memory.human_name = self.user.name
+        memory.human_name = self.sender_name
         memory.save_human_message(specified_topic)
 
         # print(f"Original topic:\n{topic}\n")
@@ -136,7 +135,7 @@ class AuthoritarianSpeaker(BaseAgent):
                     speakers=[agent_with_config for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
                     stopping_probability=self.stopping_probability,
                     session_id=self.session_id,
-                    user=self.user,
+                    sender_name=self.sender_name,
                     is_memory=team.is_memory
                     )
         
@@ -151,7 +150,7 @@ class AuthoritarianSpeaker(BaseAgent):
                     system_message=SystemMessage(content=SystemMessageBuilder(agent_with_configs).build()),
                     model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
                     session_id=self.session_id,
-                    user=self.user,
+                    sender_name=self.sender_name,
                     is_memory=team.is_memory
                 )
             )

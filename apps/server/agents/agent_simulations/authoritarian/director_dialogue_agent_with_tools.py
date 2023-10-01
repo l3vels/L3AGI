@@ -13,7 +13,6 @@ from langchain.schema import (
 )
 from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
 from typings.agent import AgentWithConfigsOutput
-from typings.user import UserOutput
 
 class IntegerOutputParser(RegexParser):
     def get_format_instructions(self) -> str:
@@ -31,10 +30,10 @@ class DirectorDialogueAgentWithTools(DialogueAgentWithTools):
         stopping_probability: float,
         tools: List[any],
         session_id: str,
-        user: UserOutput,
+        sender_name: str,
         is_memory: bool,
     ) -> None:
-        super().__init__(name=name, agent_with_configs=agent_with_configs,  system_message=system_message, model=model, tools=tools, session_id=session_id, user=user, is_memory=is_memory)
+        super().__init__(name=name, agent_with_configs=agent_with_configs,  system_message=system_message, model=model, tools=tools, session_id=session_id, sender_name=sender_name, is_memory=is_memory)
         self.speakers = speakers
         self.next_speaker = ""
 
