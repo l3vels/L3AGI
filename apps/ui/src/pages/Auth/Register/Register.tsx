@@ -23,6 +23,7 @@ import useGithubLogin from '../Login/useGithubLogin'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
@@ -49,7 +50,7 @@ const Register = () => {
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
-        <Button
+        <ButtonPrimary
           onClick={async () => {
             const res = await githubLogin()
             window.location.href = res.auth_url
@@ -61,7 +62,7 @@ const Register = () => {
             </StyledImageWrapper>
             Sign up with Github
           </StyledInnerButtonWrapper>
-        </Button>
+        </ButtonPrimary>
 
         <OrDivider />
 
@@ -85,7 +86,7 @@ const Register = () => {
           </StyledInputWrapper>
         </FormikProvider>
 
-        <Button onClick={formik.handleSubmit}>Sign up</Button>
+        <ButtonPrimary onClick={formik.handleSubmit}>Sign up</ButtonPrimary>
 
         <StyledLoginWrapper>
           <TypographyTertiary

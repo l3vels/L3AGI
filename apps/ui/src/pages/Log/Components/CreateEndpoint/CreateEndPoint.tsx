@@ -8,6 +8,7 @@ import useLog from 'pages/Log/useLog'
 import LogList from '../LogList'
 
 import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
   const { log_list } = useLog()
@@ -40,11 +41,7 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
         />
       </StyledFieldWrapper>
       <StyledButtonContainer>
-        <StyledTertiaryButton
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
-          onClick={onClose}
-        >
+        <StyledTertiaryButton size={Button.sizes.SMALL} onClick={onClose}>
           <TypographyPrimary
             value='Clear'
             type={Typography.types.LABEL}
@@ -52,11 +49,7 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
           />
         </StyledTertiaryButton>
 
-        <StyledPrimaryButton
-          kind={Button.kinds.PRIMARY}
-          size={Button.sizes.SMALL}
-          onClick={handleFilter}
-        >
+        <StyledPrimaryButton size={Button.sizes.SMALL} onClick={handleFilter}>
           <TypographyPrimary
             value='Apply'
             type={Typography.types.LABEL}
@@ -111,9 +104,9 @@ const StyledButtonContainer = styled.div`
   color: #ffffff;
   //   gap: 90px;
 `
-const StyledPrimaryButton = styled(Button)`
+const StyledPrimaryButton = styled(ButtonPrimary)`
   padding: 10px 26px;
 `
-const StyledTertiaryButton = styled(Button)`
+const StyledTertiaryButton = styled(ButtonPrimary)`
   padding: 10px 26px;
 `

@@ -19,6 +19,7 @@ import FormikTextField from 'components/TextFieldFormik'
 
 import { useSettings } from './useSettings'
 import { useModal } from 'hooks'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Settings = ({ isModal = false }: { isModal?: boolean }) => {
   const { formik, isLoading, handleSubmit, configsData } = useSettings()
@@ -38,9 +39,13 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
 
             <StyledButtonWrapper>
               <BackButton />
-              <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
+              <ButtonPrimary
+                onClick={formik?.handleSubmit}
+                disabled={isLoading}
+                size={Button.sizes.SMALL}
+              >
                 {isLoading ? <Loader size={32} /> : 'Save'}
-              </Button>
+              </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>
         )}
@@ -58,7 +63,7 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
         </ComponentsWrapper>
         {isModal && (
           <StyledModalButton>
-            <Button
+            <ButtonPrimary
               onClick={async () => {
                 await handleSubmit(formik?.values)
                 closeModal('settings-modal')
@@ -67,7 +72,7 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
               size={Button.sizes.SMALL}
             >
               {isLoading ? <Loader size={32} /> : 'Save'}
-            </Button>
+            </ButtonPrimary>
           </StyledModalButton>
         )}
       </StyledSectionWrapper>

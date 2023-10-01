@@ -19,6 +19,7 @@ import CreateApiModal from './CreateApiKey/CreateApiModal'
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import { StyledGroupContainer, StyledTableValue } from 'components/Layout/LayoutStyle'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 const ApiKeys = () => {
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
@@ -50,9 +51,8 @@ const ApiKeys = () => {
                     size={Typography.sizes.lg}
                   />
                   <StyledTypographyWrapper>
-                    <Button
+                    <ButtonTertiary
                       onClick={() => window.open('https://docs.l3agi.com', '_blank')}
-                      kind={Button.kinds.TERTIARY}
                       size={Button.sizes.SMALL}
                     >
                       <TypographyTertiary
@@ -60,19 +60,14 @@ const ApiKeys = () => {
                         type={Typography.types.P}
                         size={Typography.sizes.lg}
                       />
-                    </Button>
+                    </ButtonTertiary>
                   </StyledTypographyWrapper>
                 </StyledTypography>
               </StyledGroupContainer>
             </div>
-            <Button
-              onClick={openCreateAPIModal}
-              leftIcon={Add}
-              kind={Button.kinds.PRIMARY}
-              size={Button.sizes.LARGE}
-            >
+            <ButtonPrimary onClick={openCreateAPIModal} leftIcon={Add} size={Button.sizes.LARGE}>
               Create secret key
-            </Button>
+            </ButtonPrimary>
           </StyledColumnContainer>
         </div>
       </div>

@@ -17,6 +17,7 @@ import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Account = () => {
   const { openCreateChangePasswordModal } = useChangePassword()
@@ -31,7 +32,6 @@ const Account = () => {
           <StyledButtonsContainer>
             <StyledChangePasswordButton
               onClick={openCreateChangePasswordModal}
-              kind={Button.kinds.PRIMARY}
               size={Button.sizes.MEDIUM}
             >
               <TypographyPrimary
@@ -80,7 +80,7 @@ const StyledTextHeaderWrapper = styled.div`
   height: 40px;
   flex: 1;
 `
-const StyledChangePasswordButton = styled(Button)`
+const StyledChangePasswordButton = styled(ButtonPrimary)`
   padding: 10px 26px;
 `
 

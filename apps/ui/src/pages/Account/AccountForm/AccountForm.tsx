@@ -11,6 +11,7 @@ import { logout as logOutCookies } from 'helpers/authHelper'
 import useAccount from 'pages/Account/useAccount'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonTertiary } from 'components/Button/Button'
 
 const AccountForm = () => {
   const { formik } = useAccount()
@@ -81,18 +82,13 @@ const AccountForm = () => {
           </StyledCustomTextField>
 
           <StyledButton>
-            <Button
-              onClick={handleLogout}
-              leftIcon={LogOut}
-              kind={Button.kinds.TERTIARY}
-              size={Button.sizes.SMALL}
-            >
+            <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes.SMALL}>
               <TypographySecondary
                 value='Log out'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />
-            </Button>
+            </ButtonTertiary>
           </StyledButton>
         </StyledFormContainer>
       </FormikProvider>

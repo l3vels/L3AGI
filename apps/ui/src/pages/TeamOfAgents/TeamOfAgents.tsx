@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 
 import TeamOfAgentsCard from './TeamOfAgentsCard'
 import { useTeamOfAgents } from './useTeamOfAgents'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
   const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
@@ -31,12 +32,12 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
         </div>
         <div>
           {!isHome && (
-            <Button
+            <ButtonPrimary
               onClick={() => navigate('/team-of-agents/create-team')}
               size={Button.sizes.SMALL}
             >
               Add Team
-            </Button>
+            </ButtonPrimary>
           )}
         </div>
       </StyledHeaderGroup>

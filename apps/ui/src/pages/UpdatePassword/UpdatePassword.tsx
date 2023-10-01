@@ -8,6 +8,7 @@ import useUpdatePassword from './useUpdatePassword'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const UpdatePassword = () => {
   const { formik } = useUpdatePassword()
@@ -23,7 +24,7 @@ const UpdatePassword = () => {
           <TextField name='confirm_password' placeholder='Confirm password*' />
         </FormikProvider>
         <ButtonContainer>
-          <Button onClick={formik.handleSubmit}>Submit</Button>
+          <ButtonPrimary onClick={formik.handleSubmit}>Submit</ButtonPrimary>
         </ButtonContainer>
       </StyledFormContainer>
     </StyledContainer>

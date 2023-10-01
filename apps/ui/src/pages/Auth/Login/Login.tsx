@@ -24,6 +24,7 @@ import OrDivider from 'components/OrDivider/OrDivider'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -81,7 +82,7 @@ const Login = () => {
             marginTop: 18,
           }}
         /> */}
-        <Button
+        <ButtonPrimary
           onClick={async () => {
             const res = await githubLogin()
             window.location.href = res.auth_url
@@ -93,7 +94,7 @@ const Login = () => {
             </StyledImageWrapper>
             Login with Github
           </StyledInnerButtonWrapper>
-        </Button>
+        </ButtonPrimary>
 
         <OrDivider />
 
@@ -115,9 +116,9 @@ const Login = () => {
           </StyledInputWrapper>
         </FormikProvider>
 
-        <Button onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
+        <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
           Start
-        </Button>
+        </ButtonPrimary>
 
         <StyledSignUpWrapper>
           <TypographyTertiary

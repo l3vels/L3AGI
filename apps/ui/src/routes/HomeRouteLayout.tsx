@@ -13,6 +13,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import { useModal } from 'hooks'
 import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const HomeRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -34,9 +35,9 @@ const HomeRouteLayout = () => {
 
       {!user && (
         <StyledLoginWrapper>
-          <Button kind={Button.kinds.PRIMARY} onClick={() => openModal({ name: 'login-modal' })}>
+          <ButtonPrimary onClick={() => openModal({ name: 'login-modal' })}>
             Login / Sign Up
-          </Button>
+          </ButtonPrimary>
 
           <TermsAndPrivacyButtons />
         </StyledLoginWrapper>

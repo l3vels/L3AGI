@@ -21,6 +21,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -64,7 +65,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
 
         {!isCreator && (
           <div>
-            <Button
+            <ButtonPrimary
               size={Button.sizes.SMALL}
               // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
             >
@@ -72,7 +73,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                 <Download size={28} />
                 Add
               </StyledInnerButtonWrapper>
-            </Button>
+            </ButtonPrimary>
           </div>
         )}
       </StyledWrapper>

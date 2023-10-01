@@ -19,6 +19,7 @@ import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
   const { tool, formik, handleSubmit, isLoading } = useToolView({
@@ -45,13 +46,13 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
             <StyledButtonWrapper>
               <BackButton />
               {fields?.length > 0 && (
-                <Button
+                <ButtonPrimary
                   onClick={() => handleSubmit(formik?.values)}
                   disabled={isLoading}
                   size={Button.sizes.SMALL}
                 >
                   {isLoading ? <Loader size={22} /> : 'Save'}
-                </Button>
+                </ButtonPrimary>
               )}
             </StyledButtonWrapper>
           </StyledHeaderGroup>
@@ -102,7 +103,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
 
             {toolSlug && fields?.length > 0 && (
               <StyledModalButton>
-                <Button
+                <ButtonPrimary
                   onClick={async () => {
                     await handleSubmit(formik?.values)
                     closeModal('toolkit-modal')
@@ -111,7 +112,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                   size={Button.sizes.SMALL}
                 >
                   {isLoading ? <Loader size={22} /> : 'Save'}
-                </Button>
+                </ButtonPrimary>
               </StyledModalButton>
             )}
           </StyledInnerWrapper>

@@ -11,6 +11,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import useTeams from './useTeams'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 type TeamFormProps = {
   formik: any
@@ -87,22 +88,17 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
         </StyledEmailFieldWrapper>
         {error && <StyledError>{error}</StyledError>}
         <StyledButtonsWrapper>
-          <Button
-            onClick={() => closeModal('create-team-modal')}
-            kind={Button.kinds.TERTIARY}
-            size={Button.sizes.LARGE}
-          >
+          <ButtonTertiary onClick={() => closeModal('create-team-modal')} size={Button.sizes.LARGE}>
             <TypographySecondary
               value='Cancel'
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />
-          </Button>
+          </ButtonTertiary>
 
-          <Button
+          <ButtonPrimary
             type={Button.types.SUBMIT}
             onClick={handleSubmit}
-            kind={Button.kinds.PRIMARY}
             size={Button.sizes.LARGE}
           >
             <TypographyPrimary
@@ -110,7 +106,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />
-          </Button>
+          </ButtonPrimary>
         </StyledButtonsWrapper>
       </FormikProvider>
     </StyledContainer>

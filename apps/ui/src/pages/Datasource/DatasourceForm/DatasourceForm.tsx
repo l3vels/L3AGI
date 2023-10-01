@@ -21,6 +21,7 @@ import { useParams } from 'react-router-dom'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import DataSourceDropdown from './components/DataSourceDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type DatasourceFormProps = {
   formik: any
@@ -218,7 +219,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
           <>
             {!isEdit && (
               <div>
-                <Button
+                <ButtonPrimary
                   onClick={() => {
                     fetchSqlTables()
                   }}
@@ -226,7 +227,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   size={Button.sizes.SMALL}
                 >
                   {loading ? <Loader size={32} /> : 'Connect'}
-                </Button>
+                </ButtonPrimary>
               </div>
             )}
 

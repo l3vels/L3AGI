@@ -13,6 +13,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from './CreateAgentForm'
 import AgentForm from './AgentForm'
 import BackButton from 'components/BackButton'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const EditAgentForm = () => {
   const { formik, handleSubmit, isLoading } = useEditAgent()
@@ -30,9 +31,13 @@ const EditAgentForm = () => {
 
           <StyledButtonWrapper>
             <BackButton />
-            <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
+            <ButtonPrimary
+              onClick={formik?.handleSubmit}
+              disabled={isLoading}
+              size={Button.sizes.SMALL}
+            >
               {isLoading ? <Loader size={32} /> : 'Save'}
-            </Button>
+            </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>
 

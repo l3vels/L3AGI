@@ -19,6 +19,7 @@ import {
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type AgentCardProps = {
   name: string
@@ -137,18 +138,18 @@ const AgentCard = ({
             />
           )}
           {onCreateClick && (
-            <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onCreateClick}>
+            <ButtonPrimary size={Button.sizes.SMALL} onClick={onCreateClick}>
               Create
-            </Button>
+            </ButtonPrimary>
           )}
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper secondary>
                   Chat
                   <MoveArrowRight size={14} />
                 </StyledInnerButtonWrapper>
-              </Button>
+              </ButtonPrimary>
             </StyledChatButtonWrapper>
           )}
         </StyledButtonsWrapper>
