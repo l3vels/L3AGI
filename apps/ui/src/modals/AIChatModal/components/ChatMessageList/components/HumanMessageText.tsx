@@ -46,6 +46,9 @@ const StyledTextWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  & > * {
+    margin-right: 5px;
+  }
 `
 
 const StyledMentionText = styled.div`
