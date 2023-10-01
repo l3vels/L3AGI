@@ -156,8 +156,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     """
     Create new chat message
     """
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
-    mentions = parse_agent_mention(body.prompt)
+    create_user_message(body, auth)
+    return ""
     
 
 @router.get("/{chat_id}/messages", status_code=200, response_model=List[ChatMessageOutput])
