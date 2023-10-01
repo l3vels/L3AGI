@@ -4,9 +4,9 @@ from datasources.file.file import FileDatasource
 from datasources.base import DatasourceType, DatasourceCategory
 
 DATASOURCES = [
+    FileDatasource(),
     PostgresDatasource(),
     MySQLDatasource(),
-    FileDatasource(),
 ]
 
 COMING_SOON = [
