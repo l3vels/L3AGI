@@ -56,7 +56,7 @@ const lightTheme: DefaultTheme = {
     backdropFilter: 'blur(50px);',
     textColorPrimary: 'rgb(59, 59, 59)',
     textColorSecondary: 'rgb(110,110,110)',
-    border: '1px solid #D2D2D2',
+    border: '1px solid #acacad',
     backgroundImageSecondary: defaultBgImageSecondary,
     testVariableColor: 'var(--color-highlight_blue)',
     iconColor: 'rgb(187,187,187)',
