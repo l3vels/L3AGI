@@ -30,7 +30,7 @@ class ConversationalAgent(BaseAgent):
             return_messages=True,
         )
 
-        memory.human_name = self.user.name
+        memory.human_name = self.sender_name
         memory.ai_name = agent_with_configs.agent.name
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
