@@ -49,6 +49,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     account = auth.account
     provider_account = auth.account
     user = auth.user
+    provider_user = auth.user
     
     sender_name = user.name    
     sender_user_id = user.id
@@ -127,8 +128,8 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
             history=history, 
             human_message_id=human_message_id, 
             team_configs=team_configs, 
-            body=body,
-            provider_account=provider_account
+            provider_account=provider_account,
+            provider_user=provider_user
         )
 
     return ""
@@ -213,8 +214,8 @@ def handle_team_types(
     history, 
     human_message_id, 
     team_configs, 
-    body,
-    provider_account
+    provider_account,
+    provider_user
 ):
     team_status_config: Optional[ConfigModel] = None
     if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
@@ -227,6 +228,21 @@ def handle_team_types(
             prompt=prompt, 
             history=history, 
             human_message_id=human_message_id
+        )
+    
+    team_status_config = ConfigModel.get_config_by_session_id(db, session_id, provider_account)
+    
+    if team_status_config:
+        team_status_config.value = ChatStatus.RUNNING.value
+        db.session.add(team_status_config)
+        db.session.commit()
+        
+    if not team_status_config:
+        team_status_config = ConfigModel.create_config(
+            db,
+            ConfigInput(key="status", value=ChatStatus.RUNNING.value, key_type="string", is_secret=False, is_required=False, session_id=session_id),
+            provider_user,
+            provider_account,
         )
 
     if team.team_type == TeamOfAgentsType.AUTHORITARIAN_SPEAKER.value:
@@ -252,7 +268,6 @@ def handle_team_types(
             prompt=prompt, 
             history=history, 
             team_configs=team_configs, 
-            body=body,
             provider_account=provider_account
         )                    
 
@@ -320,7 +335,6 @@ def handle_debates(
     prompt: str, 
     history: ZepMemory, 
     team_configs: Dict[str, Union[str, int, float]], 
-    body: ChatMessageInput,
     provider_account: AccountModel,
 ):
     topic = prompt
@@ -341,7 +355,6 @@ def handle_debates(
         team=team,
         agents_with_configs=agents,
         history=history,
-        is_private_chat=body.is_private_chat
     )
 
 def run_conversational_agent(

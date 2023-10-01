@@ -36,7 +36,7 @@ class AgentDebates(BaseAgent):
         session_id,     
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(sender_name=sender_name, session_id=session_id)
+        super().__init__(sender_name=sender_name, provider_account=provider_account, session_id=session_id)
         self.word_limit = word_limit
         self.settings = settings
         self.chat_pubsub_service = chat_pubsub_service
@@ -92,7 +92,7 @@ class AgentDebates(BaseAgent):
             return_messages=True,
         )
 
-        memory.human_name = self.user.name
+        memory.human_name = self.sender_name
         memory.save_human_message(specified_topic)
 
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
