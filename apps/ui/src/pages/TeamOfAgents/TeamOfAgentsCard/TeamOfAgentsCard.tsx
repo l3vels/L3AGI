@@ -17,6 +17,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type TeamOfAgentCardProps = {
   name: string
@@ -158,12 +159,12 @@ const TeamOfAgentCard = ({
 
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper>
                   Chat
                   <MoveArrowRight size={14} />
                 </StyledInnerButtonWrapper>
-              </Button>
+              </ButtonPrimary>
             </StyledChatButtonWrapper>
           )}
         </StyledButtonsWrapper>

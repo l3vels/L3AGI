@@ -16,6 +16,7 @@ import {
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const EditDatasourceForm = () => {
   const { formik, isLoading } = useEditDatasource()
@@ -34,9 +35,13 @@ const EditDatasourceForm = () => {
 
             <StyledButtonWrapper>
               <BackButton />
-              <Button onClick={formik?.handleSubmit} size={Button.sizes.SMALL} disabled={isLoading}>
+              <ButtonPrimary
+                onClick={formik?.handleSubmit}
+                size={Button.sizes.SMALL}
+                disabled={isLoading}
+              >
                 {isLoading ? <Loader size={32} /> : 'Save'}
-              </Button>
+              </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 

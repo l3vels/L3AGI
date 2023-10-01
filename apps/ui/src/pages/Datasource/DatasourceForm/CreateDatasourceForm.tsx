@@ -15,6 +15,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateDatasource } from '../useCreateDatasource'
 import BackButton from 'components/BackButton'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()
@@ -33,9 +34,13 @@ const CreateDatasourceForm = () => {
 
             <StyledButtonWrapper>
               <BackButton />
-              <Button onClick={formik?.handleSubmit} size={Button.sizes.SMALL} disabled={isLoading}>
+              <ButtonPrimary
+                onClick={formik?.handleSubmit}
+                size={Button.sizes.SMALL}
+                disabled={isLoading}
+              >
                 {isLoading ? <Loader size={32} /> : 'Save'}
-              </Button>
+              </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 

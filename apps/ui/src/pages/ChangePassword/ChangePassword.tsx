@@ -16,6 +16,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import TypographySecondary from 'components/Typography/Secondary'
 import HeadingPrimary from 'components/Heading/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type CreateChangePasswordModalProps = {
   closeModal: () => void
@@ -118,17 +119,13 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
               />
 
               <StyledButtonWrapper>
-                <Button
-                  onClick={() => formik.handleSubmit()}
-                  kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.MEDIUM}
-                >
+                <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
                   <TypographySecondary
                     value='Update Password'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.sm}
                   />
-                </Button>
+                </ButtonPrimary>
               </StyledButtonWrapper>
             </StyledContainer>
           </FormikProvider>

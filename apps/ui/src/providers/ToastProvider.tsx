@@ -4,6 +4,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import { ToastContext } from 'contexts'
 import styled from 'styled-components'
+import { ButtonPrimary } from 'components/Button/Button'
 
 export interface ToastProps {
   message?: string
@@ -35,7 +36,9 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
         open={toast.open}
         action={
           toast.url && (
-            <Button onClick={() => window.open(toast.url, '_blank')}>See Transaction</Button>
+            <ButtonPrimary onClick={() => window.open(toast.url, '_blank')}>
+              See Transaction
+            </ButtonPrimary>
           )
         }
         onClose={() => setToast({ open: false })}

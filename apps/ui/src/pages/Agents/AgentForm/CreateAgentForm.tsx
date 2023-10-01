@@ -16,6 +16,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import styled from 'styled-components'
 import BackButton from 'components/BackButton'
 import { useNavigate } from 'react-router-dom'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useAgents()
@@ -36,9 +37,13 @@ const CreateAgentForm = () => {
           <StyledButtonWrapper>
             <BackButton customOnClick={() => navigate('/agents/create-agent-template')} />
 
-            <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
+            <ButtonPrimary
+              onClick={formik?.handleSubmit}
+              disabled={isLoading}
+              size={Button.sizes.SMALL}
+            >
               {isLoading ? <Loader size={32} /> : 'Save'}
-            </Button>
+            </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>
 

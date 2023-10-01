@@ -8,6 +8,7 @@ import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import HeadingTertiary from 'components/Heading/Tertiary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const ResetPassword = () => {
   const { formik, alertMessage } = useResetPassword()
@@ -37,13 +38,13 @@ const ResetPassword = () => {
             />
           </StyledColumnContainer>
         </FormikProvider>
-        <Button
+        <ButtonPrimary
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
           onClick={() => formik.handleSubmit()}
           size={Button.sizes.LARGE}
         >
           Update
-        </Button>
+        </ButtonPrimary>
       </StyledFormContainer>
     </StyledCenterFormContainer>
   )
