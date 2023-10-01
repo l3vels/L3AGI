@@ -102,7 +102,7 @@ const StyledCard = styled.div`
   min-width: 250px;
   height: 170px;
   min-height: 170px;
-
+  border: ${({ theme }) => theme.body.border};
   background: rgba(0, 0, 0, 0.2);
   /* background: rgba(0, 0, 0, 0.4); */
 
