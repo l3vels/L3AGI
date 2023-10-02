@@ -186,6 +186,7 @@ const Spotlight = () => {
                 value={'Thinking...'}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
+                style={{ color: 'red' }}
               />
             </>
           ) : (
