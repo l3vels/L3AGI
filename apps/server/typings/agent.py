@@ -23,6 +23,7 @@ class ConfigInput(BaseModel):
     instructions: List[str]
     suggestions: Optional[List[str]]
     greeting: Optional[str]
+    text: Optional[str]
 
     
 class AgentConfigInput(BaseModel):
@@ -41,6 +42,7 @@ class ConfigsOutput(BaseModel):
     instructions: List[str]
     suggestions: Optional[List[str]]
     greeting: Optional[str]
+    text: Optional[str]
 
 
 class AgentOutput(BaseModel):
