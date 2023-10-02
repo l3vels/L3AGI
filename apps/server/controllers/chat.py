@@ -65,7 +65,7 @@ def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
 
 
 @router.get("/messages", status_code=200, response_model=List[ChatMessageOutput])
-def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, chat_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
+def get_chat_messages(is_private_chat: bool, request: Request, response: Response, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, chat_id: Optional[UUID] = None):
     """
     Get chat messages
 
@@ -74,6 +74,10 @@ def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, te
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
+    auth = try_auth_user(request, response)
+    if not chat_id and not auth:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    
     session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id, team_id, chat_id)
 
     chat_messages = (db.session.query(ChatMessageModel)
@@ -150,29 +154,29 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     return ""
     
 
-@router.get("/{chat_id}/messages", status_code=200, response_model=List[ChatMessageOutput])
-def get_chat_messages(chat_id: UUID):
-    """
-    Get chat messages
+# @router.get("/{chat_id}/messages", status_code=200, response_model=List[ChatMessageOutput])
+# def get_chat_messages(chat_id: UUID):
+#     """
+#     Get chat messages
 
-    Args:
-        is_private_chat (bool): Is private or team chat
-        agent_id (Optional[UUID]): Agent id
+#     Args:
+#         is_private_chat (bool): Is private or team chat
+#         agent_id (Optional[UUID]): Agent id
 
-    """
-    #todo need Authentication check
+#     """
+#     #todo need Authentication check
 
-    chat_messages = (db.session.query(ChatMessageModel)
-                 .filter(ChatMessageModel.chat_id == chat_id)
-                 .order_by(ChatMessageModel.created_on.desc())
-                 .limit(50)
-                 .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.sender_user))
-                 .all())
+#     chat_messages = (db.session.query(ChatMessageModel)
+#                  .filter(ChatMessageModel.chat_id == chat_id)
+#                  .order_by(ChatMessageModel.created_on.desc())
+#                  .limit(50)
+#                  .options(joinedload(ChatMessageModel.agent), joinedload(ChatMessageModel.team), joinedload(ChatMessageModel.parent), joinedload(ChatMessageModel.sender_user))
+#                  .all())
     
-    chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
-    chat_messages.reverse()
+#     chat_messages = [chat_message.to_dict() for chat_message in chat_messages]
+#     chat_messages.reverse()
 
-    return chat_messages
+#     return chat_messages
 
 @router.delete("/{chat_id}", status_code=200)
 def delete_chat(chat_id: str, auth: UserAccount = Depends(authenticate)) -> dict:

@@ -331,7 +331,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               chatMessages &&
               chatMessages?.length === 0 &&
               (!agentId
-                ? `Hello ${user?.name}, you can chat with agents and teams on your dashboard.`
+                ? `Hello ${user?.name || ''} , you can chat with agents and teams on your dashboard.`
                 : chatGreeting)
             }
           />
