@@ -43,9 +43,10 @@ class PlanAndExecute(BaseAgent):
 
         for agent in agents:
             if agent.role == TeamAgentRole.PLANNER.value:
-                planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.provider_account))
+                #todo need account filter
+                planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id))
             if agent.role == TeamAgentRole.EXECUTOR.value:
-                executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.provider_account))
+                executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id))
 
         ai_message = history.create_ai_message("", human_message_id)
         ai_message_id = ai_message['id']

@@ -35,7 +35,7 @@ def create_team(team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticat
     team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
     TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
 
-    return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
+    return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id))
 
 
 @router.put("/{id}", status_code=200, response_model=TeamOutput)  # Changed status code to 200
@@ -62,7 +62,7 @@ def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(au
         TeamAgentModel.delete_by_team_id(db, id, auth.account)
         TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
 
-        return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id, auth.account))
+        return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id))
     
     except TeamNotFoundException:
         raise HTTPException(status_code=404, detail="Team not found")
@@ -243,7 +243,7 @@ def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOu
     Returns:
         TeamOutput: Team associated with the given ID.
     """
-    db_team = TeamModel.get_team_by_id(db, team_id=id, account=auth.account)
+    db_team = TeamModel.get_team_by_id(db, team_id=id)
     
     if not db_team or db_team.is_deleted:
         raise HTTPException(status_code=404, detail="Team not found")  # Ensure consistent case in error messages
@@ -262,7 +262,7 @@ def get_discover_team_by_id(id: str) -> TeamOutput:
     Returns:
         TeamOutput: Team associated with the given ID.
     """
-    db_team = TeamModel.get_team_by_id(db, team_id=id, account=None)
+    db_team = TeamModel.get_team_by_id(db, team_id=id)
     
     if not db_team or db_team.is_deleted:
         raise HTTPException(status_code=404, detail="Team not found")  # Ensure consistent case in error messages

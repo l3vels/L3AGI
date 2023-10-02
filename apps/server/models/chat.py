@@ -7,7 +7,10 @@ from typings.account import AccountOutput
 from typings.chat import ChatInput
 from models.user import UserModel
 from models.account import AccountModel
+from models.agent import AgentModel
+from models.team import TeamModel
 from exceptions import ChatNotFoundException
+
 
 class ChatModel(BaseModel):
     """
@@ -20,8 +23,8 @@ class ChatModel(BaseModel):
     __tablename__ = 'chat'
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)    
-    session_id = Column(String, nullable=False, index=True)
-    name = Column(String)
+    session_id = Column(String, nullable=True, index=True)
+    name = Column(String, nullable=True)
     agent_id = Column(UUID, ForeignKey('agent.id', ondelete='CASCADE'), index=True)
     team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), index=True)
     
@@ -75,7 +78,7 @@ class ChatModel(BaseModel):
         return chat
     
     @classmethod
-    def get_chat_by_id(cls, db, chat_id: UUID, account: AccountOutput):
+    def get_chat_by_id(cls, db, chat_id: UUID):
         """
             Get Chat message from chat_id
 
@@ -107,10 +110,26 @@ class ChatModel(BaseModel):
             Agent: The created agent.
 
         """
-        db_chat = ChatModel(
-                         created_by=user.id, 
-                         account_id=account.id,
-                         )
+        db_chat = ChatModel()
+        if chat.team_id:
+            team = TeamModel.get_team_by_id(db, chat.team_id)
+            if not team:
+                ChatNotFoundException('Team not found!')
+            db_chat.team_id = team.id 
+            db_chat.provider_user_id = team.created_by
+            db_chat.provider_account_id = team.account_id
+            
+        if chat.agent_id:
+            agent = AgentModel.get_agent_by_id(db, chat.agent_id)
+            if not agent:
+                ChatNotFoundException('Agent not found!')
+            db_chat.agent_id = agent.id 
+            db_chat.provider_user_id = agent.created_by
+            db_chat.provider_account_id = agent.account_id
+            
+        db_chat.creator_user_id = user.id
+        db_chat.creator_account_id = account.id
+        
         cls.update_model_from_input(db_chat, chat)
         db.session.add(db_chat)
         db.session.flush()  # Flush pending changes to generate the agent's ID

@@ -78,14 +78,15 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         parent_id=parent_id, 
         local_chat_message_ref_id=local_chat_message_ref_id, 
         provider_account=provider_account, 
-        provider_user=provider_user
+        provider_user=provider_user,
+        chat_id=None
     )
 
     return ""
 
-def create_chat_message(body: ChatMessageInput, auth: UserAccount):
+def create_client_message(body: ChatMessageInput, auth: UserAccount):
     chat_id = body.chat_id
-    chat = ChatModel.get_chat_by_id(db, chat_id, auth)
+    chat = ChatModel.get_chat_by_id(db, chat_id)
     if not chat:
         ChatNotFoundException('Chat not found')
     
@@ -126,7 +127,8 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount):
         parent_id=parent_id, 
         local_chat_message_ref_id=local_chat_message_ref_id, 
         provider_account=provider_account, 
-        provider_user=provider_user
+        provider_user=provider_user,
+        chat_id=chat_id
     )
     return ""
     
@@ -143,7 +145,8 @@ def process_chat_message(
     parent_id: str, 
     local_chat_message_ref_id: str, 
     provider_account: UserAccount, 
-    provider_user: UserModel
+    provider_user: UserModel,
+    chat_id: str
 ):
     agents: List[AgentWithConfigsOutput] = []    
     agents, prompt = handle_agent_mentions(prompt, provider_account, agents)
@@ -166,7 +169,8 @@ def process_chat_message(
         team_id=team_id,
         parent_id=parent_id,
         local_chat_message_ref_id=local_chat_message_ref_id,
-        current_agent_id=current_agent_id
+        current_agent_id=current_agent_id,
+        chat_id=chat_id
     )
     
     settings = ConfigModel.get_account_settings(db, provider_account)
@@ -213,7 +217,7 @@ def process_chat_message(
         
 def append_agent_to_list(agent_id, account, agents):
     if agent_id:
-        agent = AgentModel.get_agent_by_id(db, agent_id, account)
+        agent = AgentModel.get_agent_by_id(db, agent_id)
 
         if not agent:
             raise HTTPException(status_code=404, detail="Agent not found")
@@ -258,7 +262,7 @@ def handle_agent_mentions(prompt: str, account, agents: List[AgentWithConfigsOut
     mentions = parse_agent_mention(prompt)
     new_agents = agents.copy()
     for agent_id, cleaned_prompt in mentions:
-        agent = AgentModel.get_agent_by_id(db, agent_id, account)
+        agent = AgentModel.get_agent_by_id(db, agent_id)
         if not agent:
             raise HTTPException(status_code=404, detail="Agent not found")
         new_agents.append(convert_model_to_response(agent))
@@ -464,6 +468,7 @@ def create_and_send_chat_message(
     team_id: str, 
     parent_id: str, 
     local_chat_message_ref_id: str, 
+    chat_id: str,
     current_agent_id: Optional[str] = None
 ):
     history = PostgresChatMessageHistory(
@@ -474,6 +479,7 @@ def create_and_send_chat_message(
         parent_id=parent_id,
         team_id=team_id,
         agent_id=current_agent_id,
+        chat_id=chat_id
     )
 
     human_message = history.create_human_message(prompt)

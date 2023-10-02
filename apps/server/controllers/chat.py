@@ -13,18 +13,21 @@ from typings.config import  ConfigOutput
 from models.team import TeamModel
 from models.config import ConfigModel
 from models.chat import ChatModel
+from utils.chat import convert_model_to_response
 from services.pubsub import AzurePubSubService
 from typings.chat import ChatStatus
 from utils.configuration import convert_model_to_response as convert_config_model_to_response
-from exceptions import ChatNotFoundException
-from services.chat import create_user_message
+from exceptions import ChatNotFoundException, ChatException
+from services.chat import create_user_message, create_client_message
 
 router = APIRouter()
 
 @router.post("", status_code=201)
-def create_chat(chat: ChatInput, request: Request, response: Response):
-    auth = try_auth_user(request, response)
+def create_chat(chat: ChatInput, auth: UserAccount = Depends(authenticate)) -> ChatOutput:
+    if not chat.agent_id and not chat.team_id:
+         ChatException('Agent or Team should be defined')
     db_chat = ChatModel.create_chat(db, chat=chat, user=auth.user, account=auth.account)
+    return convert_model_to_response(db_chat)
 
 
 @router.get("", response_model=List[ChatOutput])
@@ -136,13 +139,13 @@ def negotiate(id: str):
     token = AzurePubSubService().get_client_access_token(user_id=id)
     return NegotiateOutput(url=token['url'])
 
-@router.post("{chat_id}/messages", status_code=201)
+@router.post("/client/messages", status_code=201)
 def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
     """
     Create new chat message
     """
     # authenticate
-    create_chat_message(body, auth)
+    create_client_message(body, auth)
     return ""
     
 
@@ -154,7 +157,7 @@ def get_chat_messages(chat_id: UUID):
     Args:
         is_private_chat (bool): Is private or team chat
         agent_id (Optional[UUID]): Agent id
-        team_id (Optional[UUID]): Team of agents id
+
     """
     #todo need Authentication check
 

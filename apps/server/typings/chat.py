@@ -30,16 +30,13 @@ class ChatInput(BaseModel):
     team_id: Optional[UUID] = None
     
 class ChatOutput(BaseModel):
-    name: str
+    id: str
+    name: Optional[str]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
-    agent_id: Optional[UUID] = None
-    agent: Optional[Dict] = None
-    team_id: Optional[UUID] = None
-    team: Optional[Dict] = None
-    sender_user_id: UUID
-    sender_user: Optional[Dict] = None
-    account_id: UUID
+    # creator_user_id: Optional[UUID]
+    # provider_user_id: Optional[UUID]
+    # account_id: Optional[UUID]
 
 
 class ChatMessageOutput(BaseModel):
@@ -57,6 +54,8 @@ class ChatMessageOutput(BaseModel):
     message: Dict
     thoughts: Optional[List[Dict]] = None
     created_on: datetime
+    sender_name: Optional[str]
+    chat_id: Optional[UUID]
 
 
 class NegotiateOutput(BaseModel):
