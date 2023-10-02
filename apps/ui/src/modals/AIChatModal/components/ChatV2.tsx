@@ -42,6 +42,9 @@ import { useConfigsService } from 'services/config/useConfigsService'
 import getSessionId from '../utils/getSessionId'
 import { ButtonSecondary } from 'components/Button/Button'
 
+import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
+import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
+
 type ChatV2Props = {
   isPrivate?: boolean
 }
@@ -70,6 +73,14 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
+  const chatId = urlParams.get('chatId')
+
+  const { data: clientMessages } = useClientChatMessagesService({
+    chat_id: chatId || '462be552-0663-4c11-b7b0-8a01607df5be',
+  })
+  const [createClientChatMessage] = useCreateClientChatMessageService()
+
+  console.log(clientMessages)
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
@@ -200,15 +211,23 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       if (reply.isReply) {
         setReply(defaultReplyState)
       }
-
-      await createChatMessageService({
-        message,
-        isPrivateChat: isPrivate,
-        agentId,
-        teamId,
-        localChatMessageRefId, // Used to update the message with socket
-        parentId: parentMessageId,
-      })
+      console.log(localChatMessageRefId)
+      if (chatId) {
+        await createClientChatMessage({
+          chat_id: chatId,
+          prompt: message,
+          localChatMessageRefId,
+        })
+      } else {
+        await createChatMessageService({
+          message,
+          isPrivateChat: isPrivate,
+          agentId,
+          teamId,
+          localChatMessageRefId, // Used to update the message with socket
+          parentId: parentMessageId,
+        })
+      }
 
       setThinking(false)
     } catch (e) {
@@ -300,7 +319,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
-            data={chatMessages}
+            data={chatId ? clientMessages : chatMessages}
             thinking={thinking}
             isNewMessage={socket?.isNewMessage}
             setIsNewMessage={socket?.setIsNewMessage}
@@ -380,18 +399,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   />
                 </StyledInputWrapper>
               ) : (
-                // <StyledInput
-                //   expanded
-                //   ref={inputRef}
-                //   value={formValue}
-                //   onKeyDown={handleKeyDown}
-                //   onChange={e => {
-                //     setFormValue(e.target.value)
-                //     adjustTextareaHeight()
-                //   }}
-                //   placeholder='Ask or Generate anything'
-                //   rows={1}
-                // />
                 <StyledInputWrapper>
                   <Mentions
                     inputRef={inputRef}

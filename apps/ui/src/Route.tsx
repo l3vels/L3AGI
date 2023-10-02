@@ -76,6 +76,8 @@ import SettingsModal from 'modals/SettingsModal'
 import ToolkitModal from 'modals/ToolkitModal'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
 
+import ClientChat from 'modals/AIChatModal/components/ClientChat'
+
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [cmdkOpen, setCmdkOpen] = useState(false)
@@ -158,6 +160,14 @@ const Route = () => {
               key={document.location.href}
             >
               <Router index element={<ChatHistory />} key={document.location.href} />
+            </Router>
+
+            <Router
+              path={'/chat/client'}
+              element={<ChatHistoryRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<ClientChat />} key={document.location.href} />
             </Router>
 
             <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>

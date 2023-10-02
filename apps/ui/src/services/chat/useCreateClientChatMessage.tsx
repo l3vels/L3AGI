@@ -6,13 +6,14 @@ import CREATEClient_CLIENT_CHAT_MESSAGE_GQL from '../../gql/chat/createClientCha
 interface CreateClientChatMessageInput {
   chat_id: string
   prompt: string
+  localChatMessageRefId: string
 }
 
 export const useCreateClientChatMessageService = () => {
   const [mutation] = useMutation(CREATEClient_CLIENT_CHAT_MESSAGE_GQL)
 
   const createClientChatMessageService = async (input: CreateClientChatMessageInput) => {
-    const { chat_id, prompt } = input
+    const { chat_id, prompt, localChatMessageRefId } = input
 
     const {
       data: { createClientChatMessage },
@@ -21,6 +22,7 @@ export const useCreateClientChatMessageService = () => {
         input: {
           prompt,
           chat_id,
+          local_chat_message_ref_id: localChatMessageRefId,
         },
       },
     })
