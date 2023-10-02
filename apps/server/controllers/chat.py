@@ -74,7 +74,7 @@ def get_chat_messages(is_private_chat: bool, request: Request, response: Respons
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
-    auth = try_auth_user(request, response)
+    auth: UserAccount = try_auth_user(request, response)
     if not chat_id and not auth:
         raise HTTPException(status_code=401, detail="Unauthorized")
     
@@ -149,7 +149,7 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     Create new chat message
     """
     # authenticate
-    auth = try_auth_user(request, response)
+    auth: UserAccount = try_auth_user(request, response)
     create_client_message(body, auth)
     return ""
     
