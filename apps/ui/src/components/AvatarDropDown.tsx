@@ -169,7 +169,7 @@ const StyledDropdownContent = styled(Content)`
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 102030;
   border-radius: 8px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);/* Blur/cake */
+  background: ${({ theme }) => theme.body.avatarDropDownColor}
   /* background-color: white; */
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(100px);
