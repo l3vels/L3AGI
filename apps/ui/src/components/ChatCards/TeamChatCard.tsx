@@ -31,12 +31,9 @@ const TeamChatCard = ({
       <StyledTeamAgents>
         {agents?.map((agent: any, index: number) => {
           return (
-            <AvatarGenerator
-              key={index}
-              name={agent?.agent?.name}
-              avatar={agent?.agent?.avatar}
-              size={20}
-            />
+            <StyledAgent key={index}>
+              <AvatarGenerator name={agent?.agent?.name} avatar={agent?.agent?.avatar} size={20} />
+            </StyledAgent>
           )
         })}
       </StyledTeamAgents>
@@ -131,4 +128,7 @@ const StyledEditIcon = styled(Edit)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledAgent = styled.div`
+  margin-right: -8px;
 `

@@ -31,7 +31,7 @@ def create_agent(agent_with_configs: AgentConfigInput, auth: UserAccount = Depen
     """
     # Consider adding try-except for error handling during creation if needed
     db_agent = AgentModel.create_agent(db, agent=agent_with_configs.agent, configs=agent_with_configs.configs, user=auth.user, account=auth.account)
-    return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id, auth.account))
+    return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
 
 @router.put("/{id}", status_code=200, response_model=AgentWithConfigsOutput)  # Changed status code to 200
 def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)) -> AgentWithConfigsOutput:
@@ -54,7 +54,7 @@ def update_agent(id: str, agent_with_configs: AgentConfigInput, auth: UserAccoun
                                            user=auth.user, 
                                            account=auth.account)
         db.session.commit()
-        return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id, auth.account))
+        return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
     
     except AgentNotFoundException:
         raise HTTPException(status_code=404, detail="Agent not found")
@@ -79,7 +79,7 @@ def create_agent_from_template(template_id: str, auth: UserAccount = Depends(aut
                                            account=auth.account,
                                            check_is_template=True)
         db.session.commit()
-        db_agent = AgentModel.get_agent_by_id(db=db, agent_id=new_agent.id, account=auth.account)
+        db_agent = AgentModel.get_agent_by_id(db=db, agent_id=new_agent.id)
         return convert_model_to_response(db_agent)
     
     except AgentNotFoundException:
@@ -157,7 +157,7 @@ def get_agent_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> Agent
     Returns:
         AgentWithConfigsOutput: Agent associated with the given ID.
     """
-    db_agent = AgentModel.get_agent_by_id(db, agent_id=id, account=auth.account)
+    db_agent = AgentModel.get_agent_by_id(db, agent_id=id)
     
     if not db_agent or db_agent.is_deleted:
         raise HTTPException(status_code=404, detail="Agent not found")  # Ensure consistent case in error messages
@@ -176,7 +176,7 @@ def get_discover_agent_by_id(id: str) -> AgentWithConfigsOutput:
     Returns:
         AgentWithConfigsOutput: Agent associated with the given ID.
     """
-    db_agent = AgentModel.get_agent_by_id(db, agent_id=id, account=None)
+    db_agent = AgentModel.get_agent_by_id(db, agent_id=id)
     
     if not db_agent or db_agent.is_deleted:
         raise HTTPException(status_code=404, detail="Agent not found")  # Ensure consistent case in error messages

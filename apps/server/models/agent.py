@@ -111,7 +111,7 @@ class AgentModel(BaseModel):
             Agent: The created agent.
 
         """
-        old_agent = cls.get_agent_by_id(db=db, agent_id=id, account=account)
+        old_agent = cls.get_agent_by_id(db=db, agent_id=id)
         if not old_agent:
             raise AgentNotFoundException("Agent not found")
         db_agent = cls.update_model_from_input(agent_model=old_agent, agent_input=agent)
@@ -143,7 +143,7 @@ class AgentModel(BaseModel):
             Agent: The crated agent.
 
         """
-        template_agent = cls.get_agent_by_id(db=db, agent_id=template_id, account=account)
+        template_agent = cls.get_agent_by_id(db=db, agent_id=template_id)
         if check_is_template:
             if template_agent is None or not (template_agent.is_public or template_agent.is_template):
                 raise AgentNotFoundException("Agent not found")
@@ -222,7 +222,7 @@ class AgentModel(BaseModel):
     
 
     @classmethod
-    def get_agent_by_id(cls, db, agent_id, account):
+    def get_agent_by_id(cls, db, agent_id):
         """
             Get Agent from agent_id
 

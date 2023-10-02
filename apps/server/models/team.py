@@ -167,7 +167,7 @@ class TeamModel(BaseModel):
             Team: The created team.
 
         """
-        old_team = cls.get_team_by_id(db=db, team_id=id, account=account)
+        old_team = cls.get_team_by_id(db=db, team_id=id)
         if not old_team:
             raise TeamNotFoundException("Team not found")
         db_team = cls.update_model_from_input(team_model=old_team, team_input=team)
@@ -250,7 +250,7 @@ class TeamModel(BaseModel):
     
 
     @classmethod
-    def get_team_by_id(cls, db, team_id, account):
+    def get_team_by_id(cls, db, team_id):
         """
             Get Team from team_id
 

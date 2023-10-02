@@ -39,6 +39,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             agent_id: Optional[str] = None,
             team_id: Optional[str] = None,
             sender_name: Optional[str] = None,
+            chat_id: Optional[str] = None,
     ):
         self.sender_account_id = sender_account_id
         self.sender_user_id = sender_user_id
@@ -48,6 +49,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         self.agent_id = agent_id
         self.team_id = team_id
         self.sender_name = sender_name
+        self.chat_id = chat_id
 
 
     @property
@@ -67,6 +69,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             team_id=self.team_id,
             parent_id=parent_id,
             sender_name=self.sender_name,
+            chat_id=self.chat_id
         )
 
         db.session.add(chat_message)
