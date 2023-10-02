@@ -32,7 +32,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { user } = React.useContext(AuthContext)
 
   const navigate = useNavigate()
-  const { closeModal } = useModal()
+  const { closeModal, openModal } = useModal()
 
   const { agent, configs } = agentData
 
@@ -49,8 +49,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
   const [createChat] = useCreateChatService()
 
-  const handleCreateChat = () => {
-    createChat({ agent_id: agent?.id })
+  const handleCreateChat = async () => {
+    try {
+      const res = await createChat({ agent_id: agent?.id })
+      openModal({ name: 'chat-link-modal', data: { chatLink: res.id } })
+    } catch (e) {
+      console.log(e)
+    }
+    // openModal({ name: 'chat-link-modal', data: { chatLink: res.id, label: 'Copy your Chat link' } })
   }
 
   return (

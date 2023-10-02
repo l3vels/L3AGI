@@ -49,7 +49,7 @@ const StyledWrapper = styled.div`
   gap: 5px;
   padding: 0 10px;
 `
-const StyledActionButton = styled.div`
+export const StyledActionButton = styled.div`
   opacity: 0.5;
   :hover {
     opacity: 1;
@@ -63,12 +63,12 @@ const StyledReplyIcon = styled(ReplyIcon)`
   }
 `
 
-const StyledCopyIcon = styled(Copy)`
+export const StyledCopyIcon = styled(Copy)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledCheckIcon = styled(Check)`
+export const StyledCheckIcon = styled(Check)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }

@@ -77,6 +77,7 @@ import ToolkitModal from 'modals/ToolkitModal'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 import ClientChat from 'modals/AIChatModal/components/ClientChat'
+import ChatLinkModal from 'modals/ChatLinkModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -264,6 +265,7 @@ const Route = () => {
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
+      <ChatLinkModal />
       <CommandMenu
         open={cmdkOpen}
         setCmdkOpen={setCmdkOpen}
