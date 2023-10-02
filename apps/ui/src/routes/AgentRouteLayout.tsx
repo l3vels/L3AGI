@@ -61,7 +61,7 @@ const AgentRouteLayout = () => {
             <IconButton
               icon={() => (
                 <StyledIconWrapper>
-                  <Add size={30} />
+                  <StyledAddIcon size={30} />
                 </StyledIconWrapper>
               )}
               onClick={() => navigate('/team-of-agents/create-team')}
