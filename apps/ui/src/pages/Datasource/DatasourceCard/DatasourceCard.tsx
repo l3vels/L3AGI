@@ -11,6 +11,10 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import {
+  StyledDeleteIcon,
+  StyledEditIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type DatasourceCardProps = {
   name: string
@@ -76,14 +80,14 @@ const DatasourceCard = ({
         <StyledButtonsWrapper>
           <IconButton
             onClick={onDeleteClick}
-            icon={() => <Delete />}
+            icon={() => <StyledDeleteIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
             ariaLabel='Delete'
           />
           <IconButton
             onClick={onEditClick}
-            icon={() => <Edit />}
+            icon={() => <StyledEditIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
             ariaLabel='Edit'
@@ -103,7 +107,7 @@ const StyledCard = styled.div`
   height: 170px;
   min-height: 170px;
   border: ${({ theme }) => theme.body.border};
-  background: rgba(0, 0, 0, 0.2);
+  background: ${({ theme }) => theme.body.backgroundColorSecondary};
   /* background: rgba(0, 0, 0, 0.4); */
 
   border-radius: 10px;
