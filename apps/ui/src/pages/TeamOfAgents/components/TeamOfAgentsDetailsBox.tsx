@@ -22,6 +22,7 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
+import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -55,7 +56,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
           {isCreator && (
             <IconButton
               onClick={handleEdit}
-              icon={() => <Edit />}
+              icon={() => <StyledEditIcon />}
               size={IconButton.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               ariaLabel='Edit'
