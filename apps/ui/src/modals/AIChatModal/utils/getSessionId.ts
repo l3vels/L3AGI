@@ -6,7 +6,7 @@ const getSessionId = ({
   isPrivateChat,
   agentId,
   teamId,
-  chatId
+  chatId,
 }: {
   user: any
   account: any
@@ -21,7 +21,7 @@ const getSessionId = ({
     if (agentId) return `${agentId}-${user.id}`
     if (teamId) return `${teamId}-${user.id}`
     if (chatId) return `${chatId}`
-    return `${account?.id}-${user.id}`
+    return `${account?.id}-${user?.id}`
   } else {
     // If chat is team
 

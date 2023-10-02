@@ -30,7 +30,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     isPrivateChat,
     agentId,
     teamId,
-    chatId
+    chatId,
   })
 
   const [connectedUsers, setConnectedUsers] = useState<string[]>([])
@@ -40,18 +40,18 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const getClientAccessUrl = useCallback(async () => {
     let url = ''
-    if(user){
+    if (user) {
       url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${user.id}`
     }
 
-    if(chatId){
+    if (chatId) {
       url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${chatId}`
     }
 
     const response = await fetch(url)
     const data = await response.json()
     return data.url
-  }, [user.id])
+  }, [user?.id])
 
   useEffect(() => {
     const client = new WebPubSubClient({

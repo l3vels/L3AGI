@@ -127,7 +127,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       id: uuid(),
       session_id: '',
       thoughts: null,
-      user_id: user.id,
+      user_id: user?.id,
       account_id: account.id,
       parent_id: null,
       parent: null,
@@ -231,6 +231,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
       setThinking(false)
     } catch (e) {
+      console.log(e)
       setToast({
         message: 'Something went wrong',
         type: 'negative',
@@ -292,7 +293,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   }, [formValue])
 
   const filteredTypingUsers = socket?.typingUsersData?.filter(
-    (data: any) => user.id !== data.userId,
+    (data: any) => user?.id !== data.userId,
   )
 
   const canStopGenerating =
@@ -330,7 +331,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               chatMessages &&
               chatMessages?.length === 0 &&
               (!agentId
-                ? `Hello ${user.name}, you can chat with agents and teams on your dashboard.`
+                ? `Hello ${user?.name}, you can chat with agents and teams on your dashboard.`
                 : chatGreeting)
             }
           />
