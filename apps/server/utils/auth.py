@@ -52,7 +52,7 @@ def try_auth_user(request: Request, response: Response) -> Tuple[UserOutput, Acc
 
         return UserAccount(user=convert_model_to_response_user(db_user), 
                            account=convert_model_to_response_account(db_account))
-    except gql.transport.exceptions.TransportQueryError:
+    except Exception:
         return None
     
 

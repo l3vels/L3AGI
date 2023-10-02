@@ -140,11 +140,12 @@ def negotiate(id: str):
     return NegotiateOutput(url=token['url'])
 
 @router.post("/client/messages", status_code=201)
-def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(authenticate)):
+def create_chat_message(request: Request, response: Response, body: ChatMessageInput):
     """
     Create new chat message
     """
     # authenticate
+    auth = try_auth_user(request, response)
     create_client_message(body, auth)
     return ""
     
