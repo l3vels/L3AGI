@@ -7,7 +7,7 @@ from utils.auth import authenticate, try_auth_user
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatUserMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput, ChatInput, ChatOutput
-from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention, MentionModule, convert_chats_to_chat_list
+from utils.chat import get_chat_session_id, MentionModule, convert_chats_to_chat_list
 from models.agent import AgentModel
 from typings.config import  ConfigOutput
 from models.team import TeamModel
@@ -25,11 +25,7 @@ router = APIRouter()
 def create_chat(chat: ChatInput, request: Request, response: Response):
     auth = try_auth_user(request, response)
     db_chat = ChatModel.create_chat(db, chat=chat, user=auth.user, account=auth.account)
-    
-def create_chat(chat: ChatInput, request: Request, response: Response):
-    try_auth_user(request, response)
-    
-    return 1
+
 
 @router.get("", response_model=List[ChatOutput])
 def get_chats(auth: UserAccount = Depends(authenticate)) -> List[ChatOutput]:
@@ -146,7 +142,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     Create new chat message
     """
     # authenticate
-    create_user_message(body, auth)
+    create_chat_message(body, auth)
     return ""
     
 
