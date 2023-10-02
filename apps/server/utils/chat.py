@@ -14,7 +14,7 @@ class MentionModule(Enum):
     USER = 'user'
 
 
-def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None, team_id: UUID = None) -> str:
+def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None, team_id: UUID = None, chat_id: UUID = None) -> str:
     if is_private_chat:
         # private chat
         if agent_id:
@@ -22,6 +22,9 @@ def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, 
         
         if team_id:
             return f"{team_id}-{user_id}"
+        
+        if chat_id:
+            return f"{chat_id}"
         
         return f"{account_id}-{user_id}"
     else:
@@ -31,6 +34,9 @@ def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, 
 
         if team_id:
             return f"{team_id}"
+        
+        if chat_id:
+            return f"{chat_id}"
 
         return f"{account_id}"
 

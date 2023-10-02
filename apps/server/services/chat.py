@@ -66,13 +66,92 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
 
     session_id = get_chat_session_id(user.id, account.id, is_private_chat, agent_id, team_id)
     
+    process_chat_message(
+        session_id=session_id, 
+        sender_name=sender_name, 
+        sender_user_id=sender_user_id, 
+        sender_account_id=sender_account_id, 
+        prompt=prompt, 
+        is_private_chat=is_private_chat, 
+        agent_id=agent_id, 
+        team_id=team_id, 
+        parent_id=parent_id, 
+        local_chat_message_ref_id=local_chat_message_ref_id, 
+        provider_account=provider_account, 
+        provider_user=provider_user
+    )
+
+    return ""
+
+def create_chat_message(body: ChatMessageInput, auth: UserAccount):
+    chat_id = body.chat_id
+    chat = ChatModel.get_chat_by_id(db, chat_id, auth)
+    if not chat:
+        ChatNotFoundException('Chat not found')
+    
+    account = chat.creator_account
+    user = chat.creator_user
+    if auth:
+        account = auth.account
+        user = auth.user
+
+    provider_account = chat.provider_account
+    provider_user = chat.provider_user
+    
+    sender_name = user.name    
+    sender_user_id = user.id
+    sender_account_id= account.id
+    
+    is_private_chat = True
+    agent_id = chat.agent_id
+    team_id = chat.team_id
+    parent_id = body.parent_id
+    
+    # what is it?
+    local_chat_message_ref_id = body.local_chat_message_ref_id
+    
+    prompt = body.prompt
+
+    session_id = get_chat_session_id(user.id, account.id, is_private_chat, agent_id, team_id)
+    
+    process_chat_message(
+        session_id=session_id, 
+        sender_name=sender_name, 
+        sender_user_id=sender_user_id, 
+        sender_account_id=sender_account_id, 
+        prompt=prompt, 
+        is_private_chat=is_private_chat, 
+        agent_id=agent_id, 
+        team_id=team_id, 
+        parent_id=parent_id, 
+        local_chat_message_ref_id=local_chat_message_ref_id, 
+        provider_account=provider_account, 
+        provider_user=provider_user
+    )
+    return ""
+    
+
+def process_chat_message(
+    session_id: str, 
+    sender_name: str, 
+    sender_user_id: str, 
+    sender_account_id: str, 
+    prompt: str,
+    is_private_chat: bool, 
+    agent_id: str, 
+    team_id: str, 
+    parent_id: str, 
+    local_chat_message_ref_id: str, 
+    provider_account: UserAccount, 
+    provider_user: UserModel
+):
     agents: List[AgentWithConfigsOutput] = []    
-    agents, prompt = handle_agent_mentions(prompt, account, agents)
-    agents = append_agent_to_list(agent_id, account, agents)
-    agents, prompt = retrieve_parent_message_and_agent(parent_id, account, agents, prompt)
+    agents, prompt = handle_agent_mentions(prompt, provider_account, agents)
+    agents = append_agent_to_list(agent_id, provider_account, agents)
+    agents, prompt = retrieve_parent_message_and_agent(parent_id, provider_account, agents, prompt)
     
     team_configs = {}  
-    team_configs, team = retrieve_team_configs(team_id, account, team_configs)
+    team_configs, team = retrieve_team_configs(team_id, provider_account, team_configs)
 
     current_agent_id = agents[0].agent.id if len(agents) == 1 else None
 
@@ -90,7 +169,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         current_agent_id=current_agent_id
     )
     
-    settings = ConfigModel.get_account_settings(db, account)
+    settings = ConfigModel.get_account_settings(db, provider_account)
 
     if not settings.openai_api_key:
         message_text = f"Please add OpenAI API key in [Settings](/settings)"
@@ -131,25 +210,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
             provider_account=provider_account,
             provider_user=provider_user
         )
-
-    return ""
-
-def create_chat_message(body: ChatMessageInput, auth: UserAccount):
-    chat_id = body.chat_id
-    chat = ChatModel.get_chat_by_id(db, chat_id, auth)
-    agent_id = body.agent_id
-    team_id = body.team_id
-    if not chat:
-        ChatNotFoundException('Chat not found')
-    # session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
-    
-    
-    agents: List[AgentWithConfigsOutput] = []    
-    agents, prompt = handle_agent_mentions(prompt, account, agents)
-    agents = append_agent_to_list(agent_id, account, agents)
-    agents, prompt = retrieve_parent_message_and_agent(parent_id, account, agents, prompt)
-    
-
+        
 def append_agent_to_list(agent_id, account, agents):
     if agent_id:
         agent = AgentModel.get_agent_by_id(db, agent_id, account)
