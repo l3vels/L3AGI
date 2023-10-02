@@ -14,11 +14,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import TypographySecondary from 'components/Typography/Secondary'
 import { useModal } from 'hooks'
-import {
-  StyledActionButton,
-  StyledCheckIcon,
-  StyledCopyIcon,
-} from './AIChatModal/components/ChatMessageList/components/MessageActions'
+import CopyButton from 'components/CopyButton'
 
 type ChatLinkModalProps = {
   data: {
@@ -32,17 +28,6 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
   const { closeModal } = useModal()
 
   const { t } = useTranslation()
-
-  const [copied, setCopied] = useState(false)
-
-  const handleCopyClick = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/chat/client?chatId=${chatLink}`)
-    setCopied(true)
-
-    setTimeout(() => {
-      setCopied(false)
-    }, 2000)
-  }
 
   return (
     <StyledChatLinkModal
@@ -71,9 +56,11 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
               size={Typography.sizes.md}
             />
           </StyledLink>
-          <StyledActionButton onClick={handleCopyClick}>
-            {copied ? <StyledCheckIcon size={20} /> : <StyledCopyIcon size={20} />}
-          </StyledActionButton>
+          <CopyButton
+            onCopyClick={() =>
+              navigator.clipboard.writeText(`http://localhost:3000/chat/client?chatId=${chatLink}`)
+            }
+          />
         </StyledLinkWrapper>
       </StyledText>
       <StyledModalFooter>

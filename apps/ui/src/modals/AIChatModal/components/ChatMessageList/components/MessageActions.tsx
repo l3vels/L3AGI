@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import ReplyIcon from '@l3-lib/ui-core/dist/icons/Replay'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Check from '@l3-lib/ui-core/dist/icons/Check'
+import CopyButton, { StyledActionButton } from 'components/CopyButton/CopyButton'
 
 type MessageActionsProps = {
   onReplyClick?: () => void
@@ -12,26 +13,9 @@ type MessageActionsProps = {
 }
 
 const MessageActions = ({ onReplyClick, onCopyClick }: MessageActionsProps) => {
-  const [copied, setCopied] = useState(false)
-
-  const handleCopyClick = () => {
-    if (onCopyClick) {
-      onCopyClick()
-      setCopied(true)
-
-      setTimeout(() => {
-        setCopied(false)
-      }, 2000)
-    }
-  }
-
   return (
     <StyledWrapper>
-      {onCopyClick && (
-        <StyledActionButton onClick={handleCopyClick}>
-          {copied ? <StyledCheckIcon size={20} /> : <StyledCopyIcon size={20} />}
-        </StyledActionButton>
-      )}
+      {onCopyClick && <CopyButton onCopyClick={onCopyClick} />}
       {onReplyClick && (
         <StyledActionButton onClick={onReplyClick}>
           <StyledReplyIcon />
@@ -49,13 +33,6 @@ const StyledWrapper = styled.div`
   gap: 5px;
   padding: 0 10px;
 `
-export const StyledActionButton = styled.div`
-  opacity: 0.5;
-  :hover {
-    opacity: 1;
-    cursor: pointer;
-  }
-`
 
 const StyledReplyIcon = styled(ReplyIcon)`
   path {
@@ -63,12 +40,12 @@ const StyledReplyIcon = styled(ReplyIcon)`
   }
 `
 
-export const StyledCopyIcon = styled(Copy)`
+const StyledCopyIcon = styled(Copy)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-export const StyledCheckIcon = styled(Check)`
+const StyledCheckIcon = styled(Check)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
