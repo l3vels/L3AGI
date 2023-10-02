@@ -62,8 +62,8 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
   justify-content: flex-start;
   padding: 24px 16px 8px;
   gap: 8px;
-  width: 250px;
-  min-width: 250px;
+  width: 260px;
+  min-width: 260px;
   height: 158px;
   min-height: 158px;
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
