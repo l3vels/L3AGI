@@ -74,7 +74,7 @@ const lightTheme: DefaultTheme = {
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
-    contentSecondary: 'rgb(49,49,49)',
+    contentSecondary: 'rgb(110,110,110)',
     contentTertiary: 'rgb(172,172, 173)',
     contentQuaternary: 'rgb(189,189,189)',
   },
