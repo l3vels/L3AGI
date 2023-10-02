@@ -65,7 +65,7 @@ def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
 
 
 @router.get("/messages", status_code=200, response_model=List[ChatMessageOutput])
-def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
+def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, chat_id: Optional[UUID] = None, auth: UserAccount = Depends(authenticate)):
     """
     Get chat messages
 
@@ -74,7 +74,7 @@ def get_chat_messages(is_private_chat: bool, agent_id: Optional[UUID] = None, te
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id, team_id)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id, team_id, chat_id)
 
     chat_messages = (db.session.query(ChatMessageModel)
                  .filter(ChatMessageModel.session_id == session_id)
