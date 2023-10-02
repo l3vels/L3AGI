@@ -22,6 +22,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
+  const chatId = urlParams.get('chat')
 
   const groupId = getSessionId({
     user,
@@ -29,6 +30,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     isPrivateChat,
     agentId,
     teamId,
+    chatId
   })
 
   const [connectedUsers, setConnectedUsers] = useState<string[]>([])
@@ -37,7 +39,14 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const { upsertChatMessageInCache, upsertChatStatusConfig } = useUpdateChatCache()
 
   const getClientAccessUrl = useCallback(async () => {
-    const url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${user.id}`
+    let url = ''
+    if(user){
+      url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${user.id}`
+    }
+
+    if(chatId){
+      url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${chatId}`
+    }
 
     const response = await fetch(url)
     const data = await response.json()

@@ -501,6 +501,7 @@ def create_and_send_chat_message(
         is_private_chat=is_private_chat,
         agent_id=str(agent_id) if agent_id else None,
         team_id=str(team_id) if team_id else None,
+        chat_id=str(chat_id) if chat_id else None,
     )
 
     chat_pubsub_service.send_chat_message(chat_message=human_message, local_chat_message_ref_id=local_chat_message_ref_id)
