@@ -21,7 +21,10 @@ import { AuthContext } from 'contexts'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import { useModal } from 'hooks'
 import MemberText from './components/MemberText'
-import { StyledEyeOpenIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import {
+  StyledEditIcon,
+  StyledEyeOpenIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 const ChatMembers = ({
   agentById,
@@ -103,7 +106,7 @@ const ChatMembers = ({
                       {isCreator && (
                         <IconButton
                           onClick={handleEdit}
-                          icon={() => <StyledEyeEditIcon />}
+                          icon={() => <StyledEditIcon />}
                           size={IconButton.sizes.SMALL}
                           kind={IconButton.kinds.TERTIARY}
                           // ariaLabel='Edit'
@@ -259,10 +262,4 @@ const StyledDiv = styled.div`
 `
 const StyledSpan = styled.span`
   color: ${({ theme }) => theme.body.textColorPrimary};
-`
-
-export const StyledEyeEditIcon = styled(Edit)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
 `
