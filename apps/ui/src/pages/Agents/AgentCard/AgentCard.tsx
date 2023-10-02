@@ -49,8 +49,8 @@ const AgentCard = ({
   avatar,
 }: AgentCardProps) => {
   let shortDescription = description
-  if (description.length > 75) {
-    shortDescription = `${description.slice(0, 75)}...`
+  if (description.length > 130) {
+    shortDescription = `${description.slice(0, 130)}...`
   }
 
   let shortHeaderTag = headerTag
@@ -58,10 +58,27 @@ const AgentCard = ({
     shortHeaderTag = `${headerTag.slice(0, 40)}...`
   }
 
+  let shortTitle = name
+  if (name && name?.length > 20) {
+    shortTitle = `${name.slice(0, 20)}...`
+  }
+
   return (
     <StyledAgentCard>
       <StyledCardHeader>
-        <div>
+        <StyledAvatarWrapper>
+          <AvatarGenerator name={name} size={50} avatar={avatar} />
+        </StyledAvatarWrapper>
+
+        <StyledTitleWrapper>
+          <TypographyPrimary
+            value={shortTitle}
+            type={Typography.types.P}
+            size={Typography.sizes.lg}
+          />
+          <div>{headerTag && <Tags label={shortHeaderTag} readOnly size='small' outlined />}</div>
+        </StyledTitleWrapper>
+        {/* <div>
           {headerText && (
             <TypographySecondary
               value={headerText}
@@ -69,17 +86,10 @@ const AgentCard = ({
               size={Typography.sizes.sm}
             />
           )}
-        </div>
-
-        <div>{headerTag && <Tags label={shortHeaderTag} readOnly size='small' outlined />}</div>
+        </div> */}
       </StyledCardHeader>
       <StyledCardBody>
-        <StyledAvatarWrapper>
-          <AvatarGenerator name={name} size={50} avatar={avatar} />
-        </StyledAvatarWrapper>
         <StyledBodyTextWrapper>
-          <TypographyPrimary value={name} type={Typography.types.P} size={Typography.sizes.lg} />
-
           <TypographySecondary
             value={shortDescription}
             type={Typography.types.P}
@@ -162,8 +172,8 @@ export default AgentCard
 
 export const StyledAgentCard = styled.div`
   position: relative;
-  width: 335px;
-  min-width: 335px;
+  width: 345px;
+  min-width: 345px;
   height: 185px;
   min-height: 185px;
 
@@ -189,12 +199,15 @@ export const StyledAgentCard = styled.div`
 const StyledCardHeader = styled.div`
   width: 100%;
 
+  padding: 20px 0;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
+  /* justify-content: space-between; */
 
-  margin-bottom: auto;
-  padding-bottom: 5px;
+  margin-bottom: 5px;
+  /* padding-bottom: 5px; */
   min-height: 20px;
   /* margin-bottom: 10px; */
 `
@@ -262,4 +275,8 @@ const StyledEyeOpenIcon = styled(EyeOpen)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `
