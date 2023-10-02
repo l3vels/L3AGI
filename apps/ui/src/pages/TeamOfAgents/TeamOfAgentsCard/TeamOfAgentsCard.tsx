@@ -177,8 +177,8 @@ export default TeamOfAgentCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 320px;
-  min-width: 320px;
+  width: 345px;
+  min-width: 345px;
   height: 370px;
   min-height: 370px;
 

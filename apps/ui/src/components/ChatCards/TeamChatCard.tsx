@@ -31,12 +31,9 @@ const TeamChatCard = ({
       <StyledTeamAgents>
         {agents?.map((agent: any, index: number) => {
           return (
-            <AvatarGenerator
-              key={index}
-              name={agent?.agent?.name}
-              avatar={agent?.agent?.avatar}
-              size={20}
-            />
+            <StyledAgent key={index}>
+              <AvatarGenerator name={agent?.agent?.name} avatar={agent?.agent?.avatar} size={20} />
+            </StyledAgent>
           )
         })}
       </StyledTeamAgents>
@@ -119,4 +116,7 @@ export const StyledIconButtonWrapper = styled.div`
 export const StyledTeamAgents = styled.div`
   /* height: 100%; */
   display: flex;
+`
+const StyledAgent = styled.div`
+  margin-right: -8px;
 `
