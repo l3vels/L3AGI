@@ -121,37 +121,37 @@ const StyledIconWrapper = styled.div`
   /* margin-bottom: 10px; */
   margin-top: 10px;
 `
-const StyledAboutIcon = styled(About)`
+export const StyledAboutIcon = styled(About)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledCollectionIcon = styled(Collection)`
+export const StyledCollectionIcon = styled(Collection)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledTeamIcon = styled(Team)`
+export const StyledTeamIcon = styled(Team)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledValueOutLineIcon = styled(ValueOutline)`
+export const StyledValueOutLineIcon = styled(ValueOutline)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledAddIcon = styled(Add)`
+export const StyledAddIcon = styled(Add)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledLaunchIcon = styled(Launch)`
+export const StyledLaunchIcon = styled(Launch)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }

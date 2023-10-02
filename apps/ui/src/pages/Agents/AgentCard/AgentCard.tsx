@@ -14,6 +14,9 @@ import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import {
   StyledChatButtonWrapper,
+  StyledDeleteIcon,
+  StyledEditIcon,
+  StyledEyeOpenIcon,
   StyledInnerButtonWrapper,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -119,7 +122,7 @@ const AgentCard = ({
           {onDeleteClick && (
             <IconButton
               onClick={onDeleteClick}
-              icon={() => <Delete />}
+              icon={() => <StyledDeleteIcon />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               // ariaLabel='Delete'
@@ -128,7 +131,7 @@ const AgentCard = ({
           {onEditClick && (
             <IconButton
               onClick={onEditClick}
-              icon={() => <Edit />}
+              icon={() => <StyledEditIcon />}
               size={IconButton.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
               // ariaLabel='Edit'
@@ -271,11 +274,6 @@ const StyledCreatorWrapper = styled.div`
   gap: 4px;
 `
 
-const StyledEyeOpenIcon = styled(EyeOpen)`
-  path {
-    stroke: ${({ theme }) => theme.body.iconColor};
-  }
-`
 const StyledTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;

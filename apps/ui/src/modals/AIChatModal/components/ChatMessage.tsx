@@ -124,7 +124,7 @@ export const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolea
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  color: #ffffff;
+  color: ${({ theme }) => theme.typography.contentPrimary};
   a {
     color: #fff;
   }

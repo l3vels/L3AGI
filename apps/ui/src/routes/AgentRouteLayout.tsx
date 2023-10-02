@@ -5,7 +5,7 @@ import { AuthContext } from 'contexts'
 
 import { Footer, Header } from 'components/Layout'
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
-import MainNavigation from 'pages/Navigation/MainNavigation'
+import MainNavigation, { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 import styled, { css } from 'styled-components'
 import AIChat from 'modals/AIChatModal/AIChat'
 import { useAgents } from 'pages/Agents/useAgents'
@@ -21,6 +21,10 @@ import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { StyledSectionTitle } from 'pages/Home/homeStyle.css'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
+import {
+  StyledEditIcon,
+  StyledEyeOpenIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 const AgentRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -57,7 +61,7 @@ const AgentRouteLayout = () => {
             <IconButton
               icon={() => (
                 <StyledIconWrapper>
-                  <Add size={30} />
+                  <StyledAddIcon size={30} />
                 </StyledIconWrapper>
               )}
               onClick={() => navigate('/team-of-agents/create-team')}
@@ -103,7 +107,7 @@ const AgentRouteLayout = () => {
                     // }
                     icon={() => (
                       <StyledIconWrapper>
-                        <EyeOpen size={50} />
+                        <StyledEyeOpenIcon size={50} />
                       </StyledIconWrapper>
                     )}
                     size={IconButton.sizes.SMALL}
@@ -134,7 +138,7 @@ const AgentRouteLayout = () => {
             <IconButton
               icon={() => (
                 <StyledIconWrapper>
-                  <Add size={30} />
+                  <StyledAddIcon size={30} />
                 </StyledIconWrapper>
               )}
               onClick={() => navigate('/agents/create-agent-template')}
@@ -186,7 +190,7 @@ const AgentRouteLayout = () => {
                       }
                       icon={() => (
                         <StyledIconWrapper>
-                          <EyeOpen size={50} />
+                          <StyledEyeOpenIcon size={50} />
                         </StyledIconWrapper>
                       )}
                       size={IconButton.sizes.SMALL}
@@ -197,7 +201,7 @@ const AgentRouteLayout = () => {
                     {isCreator && (
                       <IconButton
                         onClick={handleEdit}
-                        icon={() => <Edit />}
+                        icon={() => <StyledEditIcon />}
                         size={IconButton.sizes.SMALL}
                         kind={IconButton.kinds.TERTIARY}
                         // ariaLabel='Edit'

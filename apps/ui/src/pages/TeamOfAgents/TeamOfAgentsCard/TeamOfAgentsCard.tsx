@@ -121,7 +121,7 @@ const TeamOfAgentCard = ({
             <StyledButtonWrapper className='footerButtons'>
               <IconButton
                 onClick={onDeleteClick}
-                icon={() => <Delete />}
+                icon={() => <StyledDeleteIcon />}
                 size={Button.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Delete'
@@ -133,7 +133,7 @@ const TeamOfAgentCard = ({
             <StyledButtonWrapper className='footerButtons'>
               <IconButton
                 onClick={onEditClick}
-                icon={() => <Edit />}
+                icon={() => <StyledEditIcon />}
                 size={Button.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Edit'
@@ -285,5 +285,17 @@ const StyledCreatorWrapper = styled.div`
 export const StyledEyeOpenIcon = styled(EyeOpen)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+export const StyledDeleteIcon = styled(Delete)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+export const StyledEditIcon = styled(Edit)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `

@@ -10,6 +10,10 @@ import {
   StyledIconButtonWrapper,
   StyledIconWrapper,
 } from 'components/ChatCards/TeamChatCard'
+import {
+  StyledEditIcon,
+  StyledEyeOpenIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type AgentChatCardProps = {
   onClick: () => void
@@ -36,7 +40,7 @@ const AgentChatCard = ({
           onClick={onViewClick}
           icon={() => (
             <StyledIconWrapper>
-              <EyeOpen size={50} />
+              <StyledEyeOpenIcon size={50} />
             </StyledIconWrapper>
           )}
           size={IconButton.sizes.SMALL}
@@ -47,7 +51,7 @@ const AgentChatCard = ({
         {onEditClick && (
           <IconButton
             onClick={onEditClick}
-            icon={() => <Edit />}
+            icon={() => <StyledEditIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
             // ariaLabel='Edit'

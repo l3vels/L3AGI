@@ -5,6 +5,10 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import styled, { css } from 'styled-components'
+import {
+  StyledEditIcon,
+  StyledEyeOpenIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type TeamChatCardProps = {
   onClick: () => void
@@ -116,18 +120,6 @@ export const StyledIconButtonWrapper = styled.div`
 export const StyledTeamAgents = styled.div`
   /* height: 100%; */
   display: flex;
-`
-
-const StyledEyeOpenIcon = styled(EyeOpen)`
-  path {
-    stroke: ${({ theme }) => theme.body.iconColor};
-  }
-`
-
-const StyledEditIcon = styled(Edit)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
 `
 const StyledAgent = styled.div`
   margin-right: -8px;

@@ -96,7 +96,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
           tooltipSize='large'
         >
           <StyledIcon picked={active[1] === ''} onClick={() => onHandleClick('/')}>
-            <About />
+            <StyledAboutIcon />
           </StyledIcon>
         </Tooltip>
 
@@ -106,7 +106,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
           tooltipSize='large'
         >
           <StyledIcon picked={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-            <Mention size={46} />
+            <StyledMentionIcon size={46} />
           </StyledIcon>
         </Tooltip>
 
@@ -119,7 +119,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             picked={includes(active, 'datasources')}
             onClick={() => onHandleClick('/datasources')}
           >
-            <ValueOutline />
+            <StyledValueOutlineIcon />
           </StyledIcon>
         </Tooltip>
 
@@ -132,7 +132,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             picked={includes(active, 'toolkits')}
             onClick={() => onHandleClick('/toolkits')}
           >
-            <Games />
+            <StyledGamesIcon />
           </StyledIcon>
         </Tooltip>
 
@@ -145,7 +145,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             picked={includes(active, 'discover')}
             onClick={() => onHandleClick('/discover')}
           >
-            <SearchOutline />
+            <StyledSearchOutlineIcon />
           </StyledIcon>
         </Tooltip>
       </StyledChatSwitcher>
@@ -296,5 +296,29 @@ const StyledCollectionIcon = styled(Collection)`
 const StyledMentionIcon = styled(Mention)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledGamesIcon = styled(Games)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledAboutIcon = styled(About)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledValueOutlineIcon = styled(ValueOutline)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledSearchOutlineIcon = styled(SearchOutline)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
