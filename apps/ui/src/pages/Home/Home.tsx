@@ -61,6 +61,16 @@ const Home = () => {
               />
             </StyledHeadingWrapper>
 
+            <StyledIframe
+              width='560'
+              height='315'
+              src={`https://www.youtube.com/embed/${import.meta.env.REACT_APP_YOUTUBE_VIDEO_ID}`}
+              title='YouTube video player'
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen
+            ></StyledIframe>
+
             <Discover />
           </>
         )}
@@ -101,4 +111,8 @@ const StyledHeadingWrapper = styled.div`
   align-items: center;
 
   padding: 16px 10px;
+`
+const StyledIframe = styled.iframe`
+  border-radius: 10px;
+  margin: auto;
 `
