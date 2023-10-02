@@ -5,6 +5,7 @@ import 'styled-components'
 declare module 'styled-components' {
   export interface DefaultTheme {
     body: {
+      avatarDropDownColor: string
       backgroundColorPrimary: string
       backgroundColorSecondary: string
       boxShadow: string
