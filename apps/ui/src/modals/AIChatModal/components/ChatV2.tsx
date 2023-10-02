@@ -76,7 +76,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const chatId = urlParams.get('chatId')
 
   const { data: clientMessages } = useClientChatMessagesService({
-    chat_id: chatId || '462be552-0663-4c11-b7b0-8a01607df5be',
+    chat_id: chatId || '',
   })
   const [createClientChatMessage] = useCreateClientChatMessageService()
 
