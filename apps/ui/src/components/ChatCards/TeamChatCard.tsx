@@ -43,7 +43,7 @@ const TeamChatCard = ({
           onClick={onViewClick}
           icon={() => (
             <StyledIconWrapper>
-              <EyeOpen size={50} />
+              <StyledEyeOpenIcon size={50} />
             </StyledIconWrapper>
           )}
           size={IconButton.sizes.SMALL}
@@ -54,7 +54,7 @@ const TeamChatCard = ({
         {onEditClick && (
           <IconButton
             onClick={onEditClick}
-            icon={() => <Edit />}
+            icon={() => <StyledEditIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
             // ariaLabel='Edit'
@@ -116,6 +116,18 @@ export const StyledIconButtonWrapper = styled.div`
 export const StyledTeamAgents = styled.div`
   /* height: 100%; */
   display: flex;
+`
+
+const StyledEyeOpenIcon = styled(EyeOpen)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledEditIcon = styled(Edit)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
 `
 const StyledAgent = styled.div`
   margin-right: -8px;

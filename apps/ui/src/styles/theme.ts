@@ -50,7 +50,7 @@ const darkTheme: DefaultTheme = {
 const lightTheme: DefaultTheme = {
   body: {
     backgroundImage: defaultBgImage,
-    backgroundColorPrimary: 'rgb(255, 255, 255)',
+    backgroundColorPrimary: 'rgb(253,252,250)',
     backgroundColorSecondary: 'rgb(255, 255, 255)',
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(50px);',
@@ -74,7 +74,7 @@ const lightTheme: DefaultTheme = {
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
-    contentSecondary: 'rgb(49,49,49)',
+    contentSecondary: 'rgb(110,110,110)',
     contentTertiary: 'rgb(172,172, 173)',
     contentQuaternary: 'rgb(189,189,189)',
   },
