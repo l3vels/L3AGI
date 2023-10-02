@@ -1,44 +1,33 @@
 from typing import Optional, List
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi_sqlalchemy import db
 from sqlalchemy.orm import joinedload
-from utils.auth import authenticate
+from utils.auth import authenticate, try_auth_user
 from models.chat_message import ChatMessage as ChatMessageModel
 from typings.auth import UserAccount
-from agents.conversational.conversational import ConversationalAgent
-from agents.plan_and_execute.plan_and_execute import PlanAndExecute
-from agents.agent_simulations.authoritarian.authoritarian_speaker import AuthoritarianSpeaker
-from agents.agent_simulations.debates.agent_debates import AgentDebates
-from postgres import PostgresChatMessageHistory
 from typings.chat import ChatMessageInput, ChatUserMessageInput, NegotiateOutput, ChatMessageOutput, ChatStopInput, ChatInput, ChatOutput
 from utils.chat import get_chat_session_id, has_team_member_mention, parse_agent_mention, MentionModule, convert_chats_to_chat_list
-from tools.get_tools import get_agent_tools
 from models.agent import AgentModel
-from models.datasource import DatasourceModel
-from utils.agent import convert_model_to_response
-from tools.datasources.get_datasource_tools import get_datasource_tools
-from typings.config import ConfigInput, ConfigOutput
+from typings.config import  ConfigOutput
 from models.team import TeamModel
 from models.config import ConfigModel
 from models.chat import ChatModel
-from agents.team_base import TeamOfAgentsType
-from services.pubsub import ChatPubSubService, AzurePubSubService
-from memory.zep.zep_memory import ZepMemory
+from services.pubsub import AzurePubSubService
 from typings.chat import ChatStatus
-from config import Config
 from utils.configuration import convert_model_to_response as convert_config_model_to_response
-from typings.agent import AgentWithConfigsOutput
-from typings.config import AccountSettings
 from exceptions import ChatNotFoundException
 from services.chat import create_user_message
 
 router = APIRouter()
 
 @router.post("", status_code=201)
-def create_chat(chat: ChatInput):
+def create_chat(chat: ChatInput, request: Request, response: Response):
+    auth = try_auth_user(request, response)
     db_chat = ChatModel.create_chat(db, chat=chat, user=auth.user, account=auth.account)
     
+def create_chat(chat: ChatInput, request: Request, response: Response):
+    try_auth_user(request, response)
     
     return 1
 
@@ -156,6 +145,7 @@ def create_chat_message(body: ChatMessageInput, auth: UserAccount = Depends(auth
     """
     Create new chat message
     """
+    # authenticate
     create_user_message(body, auth)
     return ""
     
