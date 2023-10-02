@@ -75,12 +75,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const teamId = urlParams.get('team')
   const chatId = urlParams.get('chatId')
 
-  const { data: clientMessages } = useClientChatMessagesService({
-    chat_id: chatId || '',
-  })
+  // const { data: clientMessages } = useClientChatMessagesService({
+  //   chat_id: chatId || '',
+  // })
   const [createClientChatMessage] = useCreateClientChatMessageService()
-
-  console.log(clientMessages)
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
@@ -88,7 +86,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     isPrivateChat: isPrivate,
     agentId,
     teamId,
+    chatId,
   })
+
+  // console.log('chatMessages', chatMessages)
 
   const { data: configs } = useConfigsService()
 
@@ -109,6 +110,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     isPrivateChat: isPrivate,
     agentId,
     teamId,
+    chatId,
   })
 
   const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
@@ -135,6 +137,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       agent: null,
       team_id: teamId,
       team: null,
+      chat_id: chatId,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',
@@ -146,6 +149,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     upsertChatMessageInCache(message, isPrivate, {
       agentId,
       teamId,
+      chatId,
     })
 
     return message
@@ -320,7 +324,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
-            data={chatId ? clientMessages : chatMessages}
+            data={chatMessages}
             thinking={thinking}
             isNewMessage={socket?.isNewMessage}
             setIsNewMessage={socket?.setIsNewMessage}
@@ -331,7 +335,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
               chatMessages &&
               chatMessages?.length === 0 &&
               (!agentId
-                ? `Hello ${user?.name || ''} , you can chat with agents and teams on your dashboard.`
+                ? `Hello ${
+                    user?.name || ''
+                  } , you can chat with agents and teams on your dashboard.`
                 : chatGreeting)
             }
           />

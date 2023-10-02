@@ -10,12 +10,14 @@ type UseChatMessagesService = {
   isPrivateChat: boolean
   agentId?: Nullable<string>
   teamId?: Nullable<string>
+  chatId?: Nullable<string>
 }
 
 export const useChatMessagesService = ({
   isPrivateChat,
   agentId,
   teamId,
+  chatId,
 }: UseChatMessagesService) => {
   const { data, error, loading, refetch } = useQuery(CHAT_MESSAGES_GQL, {
     // Omit undefined variables to exclude in query params
@@ -24,6 +26,7 @@ export const useChatMessagesService = ({
         is_private_chat: isPrivateChat,
         agent_id: agentId,
         team_id: teamId,
+        chat_id: chatId,
       },
       isNil,
     ),

@@ -18,10 +18,12 @@ const useUpdateChatCache = () => {
       localChatMessageRefId,
       agentId,
       teamId,
+      chatId,
     }: {
       localChatMessageRefId?: Nullable<string>
       agentId?: Nullable<string>
       teamId?: Nullable<string>
+      chatId?: Nullable<string>
     } = {},
   ) => {
     const queryVariables = omitBy(
@@ -29,6 +31,7 @@ const useUpdateChatCache = () => {
         is_private_chat: is_private_chat,
         agent_id: agentId,
         team_id: teamId,
+        chat_id: chatId,
       },
       isNil,
     )
