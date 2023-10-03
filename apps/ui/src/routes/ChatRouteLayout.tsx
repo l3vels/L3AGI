@@ -128,7 +128,7 @@ const ChatRouteLayout = () => {
             </>
           )}
 
-          {chatsData?.length > 0 && (
+          {user && chatsData?.length > 0 && (
             <>
               <ListHeader title='Customer Chat' />
 
