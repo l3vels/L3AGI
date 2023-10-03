@@ -15,6 +15,7 @@ import {
   StyledDeleteIcon,
   StyledEditIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import { textSlicer } from 'utils/textSlicer'
 
 type DatasourceCardProps = {
   name: string
@@ -43,10 +44,7 @@ const DatasourceCard = ({
   onDeleteClick,
   imageSrc,
 }: DatasourceCardProps) => {
-  let shortDescription = description || ''
-  if (shortDescription.length > 45) {
-    shortDescription = `${description.slice(0, 45)}...`
-  }
+  const { shortText: shortDescription } = textSlicer(description, 45)
 
   const statusIcon = getStatusIcon(status)
 

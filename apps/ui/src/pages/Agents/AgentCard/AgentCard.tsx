@@ -23,6 +23,7 @@ import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary } from 'components/Button/Button'
+import { textSlicer } from 'utils/textSlicer'
 
 type AgentCardProps = {
   name: string
@@ -51,19 +52,13 @@ const AgentCard = ({
   creator,
   avatar,
 }: AgentCardProps) => {
-  let shortDescription = description
-  if (description.length > 130) {
-    shortDescription = `${description.slice(0, 130)}...`
-  }
+  const { shortText: shortDescription } = textSlicer(description, 130)
+  const { shortText: shortName } = textSlicer(name, 25)
 
-  let shortHeaderTag = headerTag
-  if (headerTag && headerTag?.length > 40) {
-    shortHeaderTag = `${headerTag.slice(0, 40)}...`
-  }
-
-  let shortTitle = name
-  if (name && name?.length > 20) {
-    shortTitle = `${name.slice(0, 20)}...`
+  let shortHeaderTag
+  if (headerTag) {
+    const { shortText } = textSlicer(headerTag, 40)
+    shortHeaderTag = shortText
   }
 
   return (
@@ -75,7 +70,7 @@ const AgentCard = ({
 
         <StyledTitleWrapper>
           <TypographyPrimary
-            value={shortTitle}
+            value={shortName}
             type={Typography.types.P}
             size={Typography.sizes.lg}
           />

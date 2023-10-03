@@ -18,6 +18,7 @@ import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
+import { textSlicer } from 'utils/textSlicer'
 
 type TeamOfAgentCardProps = {
   name: string
@@ -44,10 +45,7 @@ const TeamOfAgentCard = ({
   avatar,
   teamType,
 }: TeamOfAgentCardProps) => {
-  let shortDescription = description || ''
-  if (description.length > 120) {
-    shortDescription = `${description.slice(0, 120)}...`
-  }
+  const { shortText: shortDescription } = textSlicer(description, 120)
 
   return (
     <StyledCard>
