@@ -140,9 +140,6 @@ export const useAgents = () => {
             closeModal('delete-confirmation-modal')
           }
         },
-        closeModal: () => {
-          closeModal('delete-confirmation-modal')
-        },
         label: 'Delete Agent?',
       },
     })
