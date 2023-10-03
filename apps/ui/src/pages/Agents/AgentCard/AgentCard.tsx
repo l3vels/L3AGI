@@ -177,8 +177,8 @@ export const StyledAgentCard = styled.div`
   position: relative;
   width: 345px;
   min-width: 345px;
-  height: 185px;
-  min-height: 185px;
+  height: 190px;
+  min-height: 190px;
 
   padding: 15px;
   padding-bottom: 10px;
