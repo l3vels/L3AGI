@@ -6,5 +6,8 @@ mutation deleteChat($id: id!) @api(name: ai) {
       method: "DELETE"
       bodyKey: "input"
       endpoint: "ai"
-    )
+    ) {
+    id
+    name
+  }
 }
