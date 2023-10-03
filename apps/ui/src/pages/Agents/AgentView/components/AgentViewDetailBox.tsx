@@ -19,7 +19,6 @@ import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
-import { useCreateChatService } from 'services/chat/useCreateChat'
 
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
@@ -47,16 +46,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     navigate(`/agents/${agent?.id}/edit-agent`)
   }
 
-  const [createChat] = useCreateChatService()
-
   const handleCreateChat = async () => {
-    try {
-      const res = await createChat({ agent_id: agent?.id })
-      openModal({ name: 'chat-link-modal', data: { chatLink: res.id } })
-    } catch (e) {
-      console.log(e)
-    }
-    // openModal({ name: 'chat-link-modal', data: { chatLink: res.id, label: 'Copy your Chat link' } })
+    openModal({ name: 'chat-link-modal', data: { agentId: agent.id } })
   }
 
   return (

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 //eslint-disable-next-line
 import PropTypes from 'prop-types'
@@ -10,24 +9,59 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import { useTranslation } from 'react-i18next'
-import TypographyPrimary from 'components/Typography/Primary'
+
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import TypographySecondary from 'components/Typography/Secondary'
 import { useModal } from 'hooks'
 import CopyButton from 'components/CopyButton'
+import { useCreateChatService } from 'services/chat/useCreateChat'
+import { FormikProvider, useFormik } from 'formik'
+import { useState } from 'react'
+import FormikTextField from 'components/TextFieldFormik'
+import { useChatsService } from 'services/chat/useChatsService'
 
 type ChatLinkModalProps = {
   data: {
-    chatLink: string
+    agentId: string
   }
 }
 
 const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
-  const { chatLink } = data
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { agentId } = data
+
+  const [chatLink, setChatLink] = useState<string | null>(null)
+
+  const { refetch: refetchChat } = useChatsService()
 
   const { closeModal } = useModal()
 
   const { t } = useTranslation()
+
+  const [createChat] = useCreateChatService()
+
+  const initialValues = {
+    chat_name: '',
+  }
+  const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+    try {
+      const res = await createChat({ agent_id: agentId, name: values.chat_name })
+      await refetchChat()
+      setChatLink(`http://localhost:3000/chat/client?chat=${res.id}`)
+    } catch (e) {
+      console.log(e)
+    }
+    setIsLoading(false)
+  }
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: async values => handleSubmit(values),
+    // validationSchema: agentValidationSchema,
+    // enableReinitialize: true,
+  })
 
   return (
     <StyledChatLinkModal
@@ -35,42 +69,51 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
       show
       backgroundColor='dark'
       hideCloseButton={true}
-      //   title={isLoading ? 'Processing...' : label}
+      title={chatLink ? 'Copy your Link' : 'Create Chat Link'}
     >
-      <StyledText>
-        <TypographyPrimary
-          value={'Copy your Link'}
-          type={Typography.types.P}
-          size={Typography.sizes.lg}
-        />
-
-        <StyledLinkWrapper>
-          <StyledLink
-            onClick={() => {
-              openLinkTab(`http://localhost:3000/chat/client?chat=${chatLink}`)
-            }}
-          >
-            <TypographySecondary
-              value={`http://localhost:3000/chat/client?chat=${chatLink}`}
-              type={Typography.types.P}
-              size={Typography.sizes.md}
-            />
-          </StyledLink>
-          <CopyButton
-            onCopyClick={() =>
-              navigator.clipboard.writeText(`http://localhost:3000/chat/client?chat=${chatLink}`)
-            }
-          />
-        </StyledLinkWrapper>
-      </StyledText>
+      <FormikProvider value={formik}>
+        <StyledBody>
+          {chatLink ? (
+            <>
+              <StyledLinkWrapper>
+                <StyledLink
+                  onClick={() => {
+                    openLinkTab(chatLink)
+                  }}
+                >
+                  <TypographySecondary
+                    value={chatLink}
+                    type={Typography.types.P}
+                    size={Typography.sizes.md}
+                  />
+                </StyledLink>
+                <CopyButton onCopyClick={() => navigator.clipboard.writeText(chatLink)} />
+              </StyledLinkWrapper>
+            </>
+          ) : (
+            <FormikTextField name='chat_name' placeholder='Name' label='Name' />
+          )}
+        </StyledBody>
+      </FormikProvider>
       <StyledModalFooter>
         <Button
           onClick={() => closeModal('chat-link-modal')}
           kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
+          size={Button.sizes.MEDIUM}
         >
           <Typography value='Cancel' type={Typography.types.LABEL} size={Typography.sizes.sm} />
         </Button>
+
+        {!chatLink && (
+          <Button
+            onClick={formik?.handleSubmit}
+            kind={Button.kinds.PRIMARY}
+            size={Button.sizes.MEDIUM}
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader size={20} /> : 'Confirm'}
+          </Button>
+        )}
       </StyledModalFooter>
     </StyledChatLinkModal>
   )
@@ -87,25 +130,29 @@ export default withRenderModal('chat-link-modal')(ChatLinkModal)
 const StyledChatLinkModal = styled(Modal)`
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  /* padding: 12px; */
   width: fit-content;
   height: fit-content;
 `
 const StyledModalFooter = styled(ModalFooter)`
   display: flex;
   justify-content: flex-end;
+  gap: 4px;
 `
 
 const StyledLink = styled.span`
   cursor: pointer;
 `
-const StyledText = styled.div`
+const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
   justify-content: center;
   gap: 30px;
-  width: 100%;
+  width: 100vw;
+  max-width: 650px;
+
+  margin-top: 30px;
 `
 const StyledLinkWrapper = styled.div`
   display: flex;

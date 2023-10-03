@@ -25,8 +25,8 @@ const ChatRouteLayout = () => {
 
   const outlet = useOutlet()
   const { agentsData } = useAgents()
-
   const { teamOfAgents: teamOfAgentsArray } = useTeamOfAgents()
+  const { data: chatsData } = useChatsService()
 
   const navigate = useNavigate()
 
@@ -41,7 +41,6 @@ const ChatRouteLayout = () => {
   const teamId = urlParams.get('team') || params.teamId
   const chatId = urlParams.get('chat')
 
-  const { data: chatsData } = useChatsService()
   // if (!user) return <Navigate to='/' />
 
   return (
