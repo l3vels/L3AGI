@@ -178,6 +178,20 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
 
 #     return chat_messages
 
+@router.get("/{chat_id}", response_model=ChatOutput)
+def get_chat(chat_id: UUID) -> ChatOutput:
+    """
+    Get all get_chats by account ID.
+
+    Args:
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        List[ChatOutput]: List of agents associated with the account.
+    """
+    db_chat = ChatModel.get_chat_by_id(db=db, chat_id=chat_id)
+    return convert_model_to_response(db_chat)
+
 @router.delete("/{chat_id}", status_code=200)
 def delete_chat(chat_id: str, auth: UserAccount = Depends(authenticate)) -> dict:
     """

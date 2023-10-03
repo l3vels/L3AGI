@@ -113,7 +113,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     
     prompt = body.prompt
 
-    session_id = get_chat_session_id(user.id, account.id, is_private_chat, agent_id, team_id)
+    session_id = get_chat_session_id(user.id, account.id, is_private_chat, agent_id, team_id, chat_id)
     
     process_chat_message(
         session_id=session_id, 

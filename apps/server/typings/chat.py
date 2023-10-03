@@ -34,6 +34,12 @@ class ChatOutput(BaseModel):
     name: Optional[str]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
+    team: Optional[Dict] = None
+    agent: Optional[Dict] = None
+    creator_user: Optional[Dict] = None
+    creator_account: Optional[Dict] = None
+    # provider_user: Optional[Dict] = None
+    # provider_account: Optional[Dict] = None
     # creator_user_id: Optional[UUID]
     # provider_user_id: Optional[UUID]
     # account_id: Optional[UUID]
