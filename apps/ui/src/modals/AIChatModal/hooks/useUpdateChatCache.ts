@@ -24,8 +24,8 @@ const useUpdateChatCache = () => {
       teamId?: Nullable<string>
       chatId?: Nullable<string>
     } = {},
-  ) => {
-    const queryVariables = omitBy(
+  ) => {    
+    let queryVariables = omitBy(
       {
         agent_id: agentId,
         team_id: teamId,
@@ -33,6 +33,14 @@ const useUpdateChatCache = () => {
       },
       isNil,
     )
+    if (chatId) {
+      queryVariables = omitBy(
+        {
+          chat_id: chatId,
+        },
+        isNil,
+      )
+    }
     apolloClient.cache.updateQuery(
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {
