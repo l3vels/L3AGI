@@ -74,6 +74,7 @@ def get_chat_messages(request: Request, response: Response, agent_id: Optional[U
         team_id (Optional[UUID]): Team of agents id
     """
     auth: UserAccount = try_auth_user(request, response)
+    #todo need validate is_public or not chat
     if not chat_id and not auth:
         raise HTTPException(status_code=401, detail="Unauthorized")
     

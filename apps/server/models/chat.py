@@ -34,6 +34,7 @@ class ChatModel(BaseModel):
     provider_account_id = Column(UUID, ForeignKey('account.id', name='fk_provider_account_id', ondelete='CASCADE'), nullable=False, index=True)
     is_deleted = Column(Boolean, default=False, index=True)
     max_chat_messages = Column(Integer, nullable=True)
+    is_public = Column(Boolean, default=False, index=True)
     
     
     agent = relationship("AgentModel", back_populates="chat")

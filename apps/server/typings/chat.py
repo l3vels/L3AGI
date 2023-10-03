@@ -25,12 +25,14 @@ class ChatMessageInput(BaseModel):
     
 class ChatInput(BaseModel):
     name: str
+    is_public: Optional[bool]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
     
 class ChatOutput(BaseModel):
     id: str
     name: Optional[str]
+    is_public: Optional[bool]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
     team: Optional[Dict] = None
