@@ -55,7 +55,7 @@ export const StyledReplyWrapper = styled.div`
   width: calc(100vw - 100px);
 
   max-width: 850px;
-  height: 30px;
+  height: 20px;
   /* background: red; */
   gap: 10px;
 `
@@ -69,7 +69,7 @@ export const StyledReplyInfoWrapper = styled.div`
 `
 export const StyledReplyTextWrapper = styled.div`
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 2px;
 `
 export const StyledReplyLine = styled.div`
   width: 24px;
