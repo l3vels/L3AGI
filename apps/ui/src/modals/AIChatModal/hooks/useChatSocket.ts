@@ -59,8 +59,6 @@ const useChatSocket = () => {
     client.on('group-message', e => {
       const data = e.message.data as any
 
-      console.log('group_message', data)
-
       if (data.type === 'user_disconnected') {
         onUserDisconnectEvent(e)
       }
