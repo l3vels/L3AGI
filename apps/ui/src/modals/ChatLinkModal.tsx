@@ -49,7 +49,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
     try {
       const res = await createChat({ agent_id: agentId, name: values.chat_name })
       await refetchChat()
-      setChatLink(`http://localhost:3000/chat/client?chat=${res.id}`)
+      setChatLink(`${import.meta.env.REACT_APP_DOMAIN_NAME}/chat/client?chat=${res.id}`)
     } catch (e) {
       console.log(e)
     }
