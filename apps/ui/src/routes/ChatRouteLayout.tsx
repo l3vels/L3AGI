@@ -17,6 +17,8 @@ import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import TeamChatCard from 'components/ChatCards/TeamChatCard'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import ListHeader from './components/ListHeader'
+import { useChatsService } from 'services/chat/useChatsService'
+import CustomerChatCard from 'components/ChatCards/CustomerChatCard'
 
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -37,9 +39,11 @@ const ChatRouteLayout = () => {
 
   const agentId = urlParams.get('agent') || params.agentId
   const teamId = urlParams.get('team') || params.teamId
+  const chatId = urlParams.get('chat')
 
+  const { data: chatsData } = useChatsService()
   // if (!user) return <Navigate to='/' />
-  console.log('pathname', location.pathname)
+
   return (
     <StyledAppContainer className='app_container'>
       <Header />
@@ -124,6 +128,23 @@ const ChatRouteLayout = () => {
               })}
             </>
           )}
+
+          <>
+            <ListHeader title='Customer Chat' />
+
+            {chatsData?.map((chat: any) => {
+              const { agent, name, id } = chat
+
+              return (
+                <CustomerChatCard
+                  key={id}
+                  onClick={() => navigate(`/chat/client?chat=${id}`)}
+                  picked={id === chatId}
+                  name={name}
+                />
+              )
+            })}
+          </>
         </StyledList>
         <StyledMainWrapper>
           <StyledOutletWrapper>{outlet}</StyledOutletWrapper>

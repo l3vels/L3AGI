@@ -1,0 +1,15 @@
+query getChats @api(name: "ai") {
+  getChats @rest(type: "ChatMessage", path: "/chat", method: "GET", endpoint: "ai") {
+    id
+    name
+    agent_id
+    team_id
+    team
+    agent {
+      agent
+      configs
+    }
+    creator_user
+    creator_account
+  }
+}
