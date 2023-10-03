@@ -129,7 +129,7 @@ const ChatRouteLayout = () => {
 
           {user && chatsData?.length > 0 && (
             <>
-              <ListHeader title='Customer Chat' />
+              <ListHeader title='Channel' />
 
               {chatsData?.map((chat: any) => {
                 const { agent, name, id } = chat

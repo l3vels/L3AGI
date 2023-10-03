@@ -77,7 +77,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             {isCreator && (
               <MenuButton component={MenuDots}>
                 <StyledMenuButtonsWrapper>
-                  <ButtonTertiary onClick={handleCreateChat}>Create Chat Link</ButtonTertiary>
+                  <ButtonTertiary onClick={handleCreateChat}>Create Channel</ButtonTertiary>
                   <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
                     Delete Agent
                   </ButtonTertiary>

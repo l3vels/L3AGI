@@ -69,7 +69,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
       show
       backgroundColor='dark'
       hideCloseButton={true}
-      title={chatLink ? 'Copy your Link' : 'Create Chat Link'}
+      title={chatLink ? 'Create Channel' : 'Create Channel'}
     >
       <FormikProvider value={formik}>
         <StyledBody>
