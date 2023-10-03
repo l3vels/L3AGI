@@ -13,7 +13,7 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
-import { StyledEyeEditIcon } from 'modals/AIChatModal/components/ChatMembers/ChatMembers'
+import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -64,7 +64,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             {isCreator && (
               <IconButton
                 onClick={handleEdit}
-                icon={() => <StyledEyeEditIcon />}
+                icon={() => <StyledEditIcon />}
                 size={IconButton.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 ariaLabel='Edit'

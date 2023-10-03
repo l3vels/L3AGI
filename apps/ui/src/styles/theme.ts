@@ -28,6 +28,8 @@ const darkTheme: DefaultTheme = {
     humanMessageBgColor: 'var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1))',
     replyBoxBgColor: 'rgba(0, 0, 0, 0.4)',
     secondaryIconColor: 'rgb(255, 255, 255)',
+    avatarDropDownColor:
+      'linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -50,7 +52,7 @@ const darkTheme: DefaultTheme = {
 const lightTheme: DefaultTheme = {
   body: {
     backgroundImage: defaultBgImage,
-    backgroundColorPrimary: 'rgb(255, 255, 255)',
+    backgroundColorPrimary: 'rgb(253,252,250)',
     backgroundColorSecondary: 'rgb(255, 255, 255)',
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(50px);',
@@ -71,10 +73,11 @@ const lightTheme: DefaultTheme = {
     humanMessageBgColor: 'rgb(240,240,240)',
     replyBoxBgColor: 'rgb(194,194,194)',
     secondaryIconColor: 'rgb(255, 255, 255)',
+    avatarDropDownColor: 'rgb(255, 255, 255)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
-    contentSecondary: 'rgb(49,49,49)',
+    contentSecondary: 'rgb(110,110,110)',
     contentTertiary: 'rgb(172,172, 173)',
     contentQuaternary: 'rgb(189,189,189)',
   },

@@ -5,6 +5,10 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import styled, { css } from 'styled-components'
+import {
+  StyledEditIcon,
+  StyledEyeOpenIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type TeamChatCardProps = {
   onClick: () => void
@@ -43,7 +47,7 @@ const TeamChatCard = ({
           onClick={onViewClick}
           icon={() => (
             <StyledIconWrapper>
-              <EyeOpen size={50} />
+              <StyledEyeOpenIcon size={50} />
             </StyledIconWrapper>
           )}
           size={IconButton.sizes.SMALL}
@@ -54,7 +58,7 @@ const TeamChatCard = ({
         {onEditClick && (
           <IconButton
             onClick={onEditClick}
-            icon={() => <Edit />}
+            icon={() => <StyledEditIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
             // ariaLabel='Edit'

@@ -5,6 +5,8 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/Secondary'
+import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 
 type ListHeaderProps = {
   title: string
@@ -14,17 +16,16 @@ type ListHeaderProps = {
 const ListHeader = ({ title, onAddClick }: ListHeaderProps) => {
   return (
     <StyledListHeader>
-      <Typography
+      <TypographySecondary
         value={`${title}s`}
         type={Typography.types.LABEL}
         size={Typography.sizes.md}
-        customColor={'rgba(255, 255, 255, 0.8)'}
       />
       {onAddClick && (
         <IconButton
           icon={() => (
             <StyledIconWrapper>
-              <Add size={30} />
+              <StyledAddIcon size={30} />
             </StyledIconWrapper>
           )}
           onClick={onAddClick}
