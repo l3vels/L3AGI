@@ -32,7 +32,7 @@ const Discover = () => {
 
   return (
     <StyledRoot>
-      <DiscoverTeamAgents />å
+      <DiscoverTeamAgents />
 
       {user && <DiscoverSystemAgents />}
 
