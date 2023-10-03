@@ -21,7 +21,6 @@ export enum MessageTypeEnum {
   User = 'User',
 }
 
-
 type ChatMessageListV2Props = {
   data: any
   thinking: boolean
@@ -175,6 +174,7 @@ const ChatMessageListV2 = ({
                     ))}
                 </StyledReplyMessageContainer>
                 <HumanMessage
+                  userName={chat.sender_user?.name}
                   avatarImg={chat.sender_user?.avatar}
                   userId={chat.sender_user_id}
                   messageDate={chat.date}
