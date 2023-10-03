@@ -194,10 +194,16 @@ class ChatModel(BaseModel):
         if self.team:
             data['team'] = self.team.to_dict()
 
-        if self.parent:
-            data['parent'] = self.parent.to_dict()
+        if self.creator_user:
+            data['creator_user'] = self.creator_user.to_dict()
 
-        if self.creator:
-            data['creator'] = self.creator.to_dict()
+        if self.creator_account:
+            data['creator_account'] = self.creator_account.to_dict()
+        
+        if self.provider_user:
+            data['provider_user'] = self.provider_user.to_dict()
+            
+        if self.provider_account:
+            data['provider_account'] = self.provider_account.to_dict()
 
         return data

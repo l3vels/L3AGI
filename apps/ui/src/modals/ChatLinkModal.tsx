@@ -47,18 +47,18 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
         <StyledLinkWrapper>
           <StyledLink
             onClick={() => {
-              openLinkTab(`http://localhost:3000/chat/client?chatId=${chatLink}`)
+              openLinkTab(`http://localhost:3000/chat/client?chat=${chatLink}`)
             }}
           >
             <TypographySecondary
-              value={`http://localhost:3000/chat/client?chatId=${chatLink}`}
+              value={`http://localhost:3000/chat/client?chat=${chatLink}`}
               type={Typography.types.P}
               size={Typography.sizes.md}
             />
           </StyledLink>
           <CopyButton
             onCopyClick={() =>
-              navigator.clipboard.writeText(`http://localhost:3000/chat/client?chatId=${chatLink}`)
+              navigator.clipboard.writeText(`http://localhost:3000/chat/client?chat=${chatLink}`)
             }
           />
         </StyledLinkWrapper>

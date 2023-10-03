@@ -76,7 +76,7 @@ class ChatMessage(BaseModel):
             data['parent'] = self.parent.to_dict()
 
         if self.sender_user:
-            data['creator'] = self.sender_user.to_dict()
+            data['sender_user'] = self.sender_user.to_dict()
             
         if self.sender_account:
             data['sender_account'] = self.sender_account.to_dict()

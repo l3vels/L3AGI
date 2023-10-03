@@ -49,7 +49,7 @@ const useUpdateChatCache = () => {
           ...newChatMessage,
         }
 
-        if (localChatMessageRefId && user.id === newChatMessage.user_id) {
+        if (localChatMessageRefId && user.id === newChatMessage.sender_user_id) {
           // If the message is from the current user, we need to update the local message
 
           const index = newChatMessages.findIndex(

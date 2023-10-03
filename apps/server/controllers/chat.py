@@ -139,6 +139,7 @@ def negotiate(id: str):
     Returns:
         NegotiateOutput: url with access token
     """
+    #todo need validation
 
     token = AzurePubSubService().get_client_access_token(user_id=id)
     return NegotiateOutput(url=token['url'])

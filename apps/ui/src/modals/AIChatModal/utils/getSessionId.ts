@@ -15,20 +15,20 @@ const getSessionId = ({
   teamId: Nullable<string>
   chatId: Nullable<string>
 }) => {
+  //todo need remove isPrivateChat validation
   if (isPrivateChat) {
     // If chat is private
+    if (chatId) return `${chatId}-${chatId}`
 
     if (agentId) return `${agentId}-${user.id}`
     if (teamId) return `${teamId}-${user.id}`
-    if (chatId) return `${chatId}`
     return `${account?.id}-${user?.id}`
   } else {
     // If chat is team
-
-    if (agentId) return agentId
-    if (teamId) return teamId
-    if (chatId) return `${chatId}`
-    return account?.id
+    if (chatId) return `${chatId}-${chatId}`
+    if (agentId) return `${agentId}-${agentId}`
+    if (teamId) return  `${teamId}-${teamId}`
+    return `${account?.id}-${account?.id}`
   }
 }
 

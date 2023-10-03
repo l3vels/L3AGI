@@ -21,7 +21,7 @@ def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, 
     if is_private_chat:
         # private chat                
         if chat_id:
-            return f"{chat_id}"
+            return f"{chat_id}-{chat_id}"
         
         if agent_id:
             return f"{agent_id}-{user_id}"
@@ -32,7 +32,7 @@ def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, 
         return f"{account_id}-{user_id}"
     else:        
         if chat_id:
-            return f"{chat_id}"
+            return f"{chat_id}-{chat_id}"
         
         # Team chat
         if agent_id:

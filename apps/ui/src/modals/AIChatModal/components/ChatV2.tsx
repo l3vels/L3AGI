@@ -73,11 +73,8 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
-  const chatId = urlParams.get('chatId')
+  const chatId = urlParams.get('chat')
 
-  // const { data: clientMessages } = useClientChatMessagesService({
-  //   chat_id: chatId || '',
-  // })
   const [createClientChatMessage] = useCreateClientChatMessageService()
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
@@ -113,6 +110,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     chatId,
   })
 
+  console.log(sessionId, " === sessionId")
   const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
 
   const status = chatStatusConfig?.value
@@ -129,8 +127,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       id: uuid(),
       session_id: '',
       thoughts: null,
-      user_id: user?.id,
-      account_id: account.id,
+      sender_user_id: user?.id,
+      sender_account_id: account?.id,
+      sender_name: '',
       parent_id: null,
       parent: null,
       agent_id: agentId,
