@@ -19,6 +19,7 @@ import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import ListHeader from './components/ListHeader'
 import { useChatsService } from 'services/chat/useChatsService'
 import CustomerChatCard from 'components/ChatCards/CustomerChatCard'
+import { useDeleteChatService } from 'services/chat/useDeleteChatService'
 
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -40,6 +41,8 @@ const ChatRouteLayout = () => {
   const agentId = urlParams.get('agent') || params.agentId
   const teamId = urlParams.get('team') || params.teamId
   const chatId = urlParams.get('chat')
+
+  const { deleteChat } = useDeleteChatService()
 
   if (!user && !chatId) return <Navigate to='/' />
 
@@ -136,12 +139,15 @@ const ChatRouteLayout = () => {
                 const { agent, name, id } = chat
 
                 return (
-                  <CustomerChatCard
-                    key={id}
-                    onClick={() => navigate(`/chat/client?chat=${id}`)}
-                    picked={id === chatId}
-                    name={name}
-                  />
+                  <>
+                    <CustomerChatCard
+                      key={id}
+                      onClick={() => navigate(`/chat/client?chat=${id}`)}
+                      picked={id === chatId}
+                      name={name}
+                    />
+                    <button onClick={() => deleteChat(id)}>delete CHat</button>
+                  </>
                 )
               })}
             </>

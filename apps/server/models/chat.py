@@ -171,13 +171,13 @@ class ChatModel(BaseModel):
         return agents
     
     @classmethod
-    def delete_by_id(cls, db, agent_id, account):
-        db_agent = db.session.query(ChatModel).filter(ChatModel.id == agent_id, ChatModel.provider_account_id==account.id).first()
+    def delete_by_id(cls, db, chat_id, account):
+        db_chat = db.session.query(ChatModel).filter(ChatModel.id == chat_id, ChatModel.provider_account_id==account.id).first()
 
-        if not db_agent or db_agent.is_deleted:
+        if not db_chat or db_chat.is_deleted:
             raise ChatNotFoundException("Agent not found")
 
-        db_agent.is_deleted = True
+        db_chat.is_deleted = True
         db.session.commit()
     
     def to_dict(self):
