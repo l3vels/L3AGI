@@ -45,6 +45,8 @@ const StyledListHeader = styled.div`
 
   justify-content: space-between;
   width: 100%;
+
+  min-height: 50px;
 `
 const StyledIconWrapper = styled.div`
   color: transparent;

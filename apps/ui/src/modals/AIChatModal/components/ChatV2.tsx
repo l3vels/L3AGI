@@ -244,7 +244,6 @@ const ChatV2 = () => {
     }
   }
 
-
   useEffect(() => {
     if (reply.isReply) {
       setTimeout(() => {
@@ -298,7 +297,7 @@ const ChatV2 = () => {
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}
-            agentName={agentName || ''}
+            agentName={agentName || 'Agent'}
             greeting={
               chatMessages &&
               chatMessages?.length === 0 &&
