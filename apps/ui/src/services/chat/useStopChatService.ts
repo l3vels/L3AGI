@@ -4,7 +4,6 @@ import { Nullable } from 'types'
 
 interface Variables {
   input: {
-    is_private_chat: boolean
     agent_id: Nullable<string>
     team_id: Nullable<string>
   }

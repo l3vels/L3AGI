@@ -37,7 +37,6 @@ const ChatHistory = () => {
   const { data: chatHistory } = useChatMessagesHistoryService({
     agentId,
     teamId,
-    isPrivateChat: false,
   })
 
   const { data: agentById } = useDiscoverAgentByIdService({ id: agentId || '' })

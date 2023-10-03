@@ -44,11 +44,8 @@ import { ButtonSecondary } from 'components/Button/Button'
 import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
 
-type ChatV2Props = {
-  isPrivate?: boolean
-}
 
-const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
+const ChatV2 = () => {
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -79,7 +76,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   const { data: chatMessages } = useChatMessagesService({
-    isPrivateChat: isPrivate,
     agentId,
     teamId,
     chatId,
@@ -103,7 +99,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const sessionId = getSessionId({
     user,
     account,
-    isPrivateChat: isPrivate,
     agentId,
     teamId,
     chatId,
@@ -143,7 +138,7 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       sender_user: user,
     }
 
-    upsertChatMessageInCache(message, isPrivate, {
+    upsertChatMessageInCache(message, {
       agentId,
       teamId,
       chatId,
@@ -221,7 +216,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       } else {
         await createChatMessageService({
           message,
-          isPrivateChat: isPrivate,
           agentId,
           teamId,
           localChatMessageRefId, // Used to update the message with socket
@@ -283,7 +277,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const handleStopGenerating = async () => {
     await stopChatService({
       input: {
-        is_private_chat: isPrivate,
         agent_id: agentId,
         team_id: teamId,
       },

@@ -7,14 +7,12 @@ import CHAT_CLIENT_MESSAGES_GQL from '../../gql/chat/chatMessages.gql'
 import CHAT_MESSAGES_HISTORY_GQL from '../../gql/chat/chatMessagesHistory.gql'
 
 type UseChatMessagesService = {
-  isPrivateChat: boolean
   agentId?: Nullable<string>
   teamId?: Nullable<string>
   chatId?: Nullable<string>
 }
 
 export const useChatMessagesService = ({
-  isPrivateChat,
   agentId,
   teamId,
   chatId,
@@ -23,7 +21,6 @@ export const useChatMessagesService = ({
     // Omit undefined variables to exclude in query params
     variables: omitBy(
       {
-        is_private_chat: isPrivateChat,
         agent_id: agentId,
         team_id: teamId,
         chat_id: chatId,
@@ -41,7 +38,6 @@ export const useChatMessagesService = ({
 }
 
 export const useChatMessagesHistoryService = ({
-  isPrivateChat,
   agentId,
   teamId,
 }: UseChatMessagesService) => {
@@ -49,7 +45,6 @@ export const useChatMessagesHistoryService = ({
     // Omit undefined variables to exclude in query params
     variables: omitBy(
       {
-        is_private_chat: isPrivateChat,
         agent_id: agentId,
         team_id: teamId,
       },

@@ -17,31 +17,17 @@ class MentionModule(Enum):
     USER = 'user'
 
 
-def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None, team_id: UUID = None, chat_id: UUID = None) -> str:
-    if is_private_chat:
-        # private chat                
-        if chat_id:
-            return f"{chat_id}-{chat_id}"
-        
-        if agent_id:
-            return f"{agent_id}-{user_id}"
-        
-        if team_id:
-            return f"{team_id}-{user_id}"
-        
-        return f"{account_id}-{user_id}"
-    else:        
-        if chat_id:
-            return f"{chat_id}-{chat_id}"
-        
-        # Team chat
-        if agent_id:
-            return f"{agent_id}"
-
-        if team_id:
-            return f"{team_id}"
-
-        return f"{account_id}"
+def get_chat_session_id(user_id: UUID, account_id: UUID, agent_id: UUID = None, team_id: UUID = None, chat_id: UUID = None) -> str:
+    if chat_id:
+        return f"{chat_id}-{chat_id}"
+    
+    if agent_id:
+        return f"{agent_id}-{user_id}"
+    
+    if team_id:
+        return f"{team_id}-{user_id}"
+    
+    return f"{account_id}-{user_id}"
 
 
 def parse_agent_mention(text: str) -> List[Tuple[str, str, str]]:

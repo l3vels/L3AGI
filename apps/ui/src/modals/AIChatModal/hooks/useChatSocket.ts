@@ -6,10 +6,9 @@ import useUpdateChatCache from './useUpdateChatCache'
 import { useLocation } from 'react-router-dom'
 
 type UseChatSocketProps = {
-  isPrivateChat: boolean
 }
 
-const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
+const useChatSocket = () => {
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
@@ -27,7 +26,6 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const groupId = getSessionId({
     user,
     account,
-    isPrivateChat,
     agentId,
     teamId,
     chatId,
@@ -61,6 +59,8 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     client.on('group-message', e => {
       const data = e.message.data as any
 
+      console.log('group_message', data)
+
       if (data.type === 'user_disconnected') {
         onUserDisconnectEvent(e)
       }
@@ -72,9 +72,10 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         onUserTypingEvent(e)
       }
       if (data.type === 'CHAT_MESSAGE_ADDED') {
-        upsertChatMessageInCache(data.chat_message, isPrivateChat, {
+        upsertChatMessageInCache(data.chat_message, {
           agentId: data.agent_id,
           teamId: data.team_id,
+          chatId: data.chat_id,
           localChatMessageRefId: data.local_chat_message_ref_id,
         })
 
@@ -82,10 +83,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
       }
 
       if (data.type === 'CHAT_STATUS') {
-        console.log('CHAT_STATUS', data)
-
         upsertChatStatusConfig(data.config, {
-          is_private_chat: data.is_private_chat,
           agentId: data.agent_id,
           teamId: data.team_id,
         })
@@ -110,7 +108,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
     return () => {
       unsubscribe()
     }
-  }, [groupId, getClientAccessUrl, isPrivateChat])
+  }, [groupId, getClientAccessUrl])
 
   useEffect(() => {
     if (!pubSubClient) return
@@ -185,7 +183,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         },
       }
 
-      const response = await mainClient?.sendToGroup(groupId, chat, 'json', {
+      await mainClient?.sendToGroup(groupId, chat, 'json', {
         noEcho: true,
         fireAndForget: false,
       })
@@ -218,7 +216,7 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
         content: `disconnected`,
         example: false,
         additional_kwargs: {
-          chat_id: 'chat_id',
+          chat_id: 'chat_id', //todo need to validate
           user_id: user.id,
         },
       },
@@ -229,27 +227,28 @@ const useChatSocket = ({ isPrivateChat }: UseChatSocketProps) => {
   const sendUserTyping = async (chat_id: string) => {
     const type = 'user_typing'
 
-    await send(type, {
-      content: user?.first_name,
-      example: false,
-      additional_kwargs: {
-        chat_id: chat_id,
-        user_id: user?.id,
-      },
-    })
+    if(!user){ return }
+    // await send(type, {
+    //   content: user?.first_name,
+    //   example: false,
+    //   additional_kwargs: {
+    //     chat_id: chat_id,
+    //     user_id: user?.id,
+    //   },
+    // })
   }
 
   const sendUserStopTyping = async (chat_id: string) => {
     const type = 'user_stop_typing'
 
-    await send(type, {
-      content: false,
-      example: false,
-      additional_kwargs: {
-        chat_id: chat_id,
-        user_id: user.id,
-      },
-    })
+    // await send(type, {
+    //   content: false,
+    //   example: false,
+    //   additional_kwargs: {
+    //     chat_id: chat_id,
+    //     user_id: user.id,
+    //   },
+    // })
   }
 
   const sendUserLikeDislike = async (message_id: string, type: string) => {

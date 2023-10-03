@@ -11,7 +11,6 @@ class ChatStatus(Enum):
 
 class ChatUserMessageInput(BaseModel):
     prompt: str
-    is_private_chat: bool
     local_chat_message_ref_id: Optional[str] = None
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
@@ -68,6 +67,5 @@ class NegotiateOutput(BaseModel):
     url: str
 
 class ChatStopInput(BaseModel):
-    is_private_chat: bool
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None

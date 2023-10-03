@@ -16,18 +16,16 @@ export const ChatContext = createContext({
 
 type ChatContextProviderProps = {
   children: ReactNode,
-  isPrivateChat: boolean
 }
 
 export const ChatContextProvider = ({
   children,
-  isPrivateChat,
 }: ChatContextProviderProps) => {
   const {
     thinking,
     setThinking,
     socket,
-  } = useChat({ isPrivateChat })
+  } = useChat()
 
   return (
     <ChatContext.Provider

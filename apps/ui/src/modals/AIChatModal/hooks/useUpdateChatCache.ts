@@ -13,7 +13,6 @@ const useUpdateChatCache = () => {
 
   const upsertChatMessageInCache = (
     newChatMessage: Record<string, unknown>,
-    is_private_chat: boolean,
     {
       localChatMessageRefId,
       agentId,
@@ -28,14 +27,12 @@ const useUpdateChatCache = () => {
   ) => {
     const queryVariables = omitBy(
       {
-        is_private_chat: is_private_chat,
         agent_id: agentId,
         team_id: teamId,
         chat_id: chatId,
       },
       isNil,
     )
-
     apolloClient.cache.updateQuery(
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {
@@ -87,11 +84,9 @@ const useUpdateChatCache = () => {
   const upsertChatStatusConfig = (
     config: Record<string, unknown>,
     {
-      is_private_chat,
       agentId,
       teamId,
     }: {
-      is_private_chat?: boolean
       agentId?: Nullable<string>
       teamId?: Nullable<string>
     } = {},

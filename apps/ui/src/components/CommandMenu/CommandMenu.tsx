@@ -103,18 +103,18 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
     // return openModal({ name: item.modal_name, data: { game_id: path_id } })
   }
 
-  const onCreateOptionBasedOnOption = (game_id: any) => {
-    openModal({ name: modal_options.modal_name, data: { game_id } })
-    set_game_id(game_id)
-  }
+  // const onCreateOptionBasedOnOption = (game_id: any) => {
+  //   openModal({ name: modal_options.modal_name, data: { game_id } })
+  //   set_game_id(game_id)
+  // }
 
-  const onCreateOptionBasedOnCollection = (collection_data: any) => {
-    const { id } = collection_data
-    openModal({ name: 'create-asset-modal', data: { collection_id: id } })
-    navigate(`/collection/${id}/assets`)
-    // closeModal('spotlight-modal')
-    setCmdkOpen(false)
-  }
+  // const onCreateOptionBasedOnCollection = (collection_data: any) => {
+  //   const { id } = collection_data
+  //   openModal({ name: 'create-asset-modal', data: { collection_id: id } })
+  //   navigate(`/collection/${id}/assets`)
+  //   // closeModal('spotlight-modal')
+  //   setCmdkOpen(false)
+  // }
 
   useEffect(() => {
     // Function to handle outside click

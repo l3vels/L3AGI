@@ -4,20 +4,13 @@ import { ChatContext } from '../context/ChatContext'
 import { useChatSocket } from './useChatSocket'
 
 type UseChatProps = {
-  isPrivateChat: boolean
+
 }
 
-const useChat = ({ isPrivateChat }: UseChatProps) => {
-
-
-  const socket = useChatSocket({
-    isPrivateChat,
-  })
+const useChat = () => {
+  const socket = useChatSocket()
 
   const [thinking, setThinking] = useState(false)
-
-
- 
 
   return {
     thinking,

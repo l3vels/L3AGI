@@ -56,7 +56,7 @@ def create_user_chat_message(body: ChatUserMessageInput, auth: UserAccount = Dep
 
 @router.post("/stop", status_code=201, response_model=ConfigOutput)
 def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.is_private_chat, body.agent_id, body.team_id)
+    session_id = get_chat_session_id(auth.user.id, auth.account.id, body.agent_id, body.team_id)
     team_status_config = ConfigModel.get_config_by_session_id(db, session_id, auth.account)
     team_status_config.value = ChatStatus.STOPPED.value
     db.session.add(team_status_config)
@@ -65,12 +65,11 @@ def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
 
 
 @router.get("/messages", status_code=200, response_model=List[ChatMessageOutput])
-def get_chat_messages(is_private_chat: bool, request: Request, response: Response, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, chat_id: Optional[UUID] = None):
+def get_chat_messages(request: Request, response: Response, agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None, chat_id: Optional[UUID] = None):
     """
     Get chat messages
 
     Args:
-        is_private_chat (bool): Is private or team chat
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
@@ -78,8 +77,12 @@ def get_chat_messages(is_private_chat: bool, request: Request, response: Respons
     if not chat_id and not auth:
         raise HTTPException(status_code=401, detail="Unauthorized")
     
-    session_id = get_chat_session_id(auth.user.id, auth.account.id, is_private_chat, agent_id, team_id, chat_id)
-
+    session_id = None
+    if auth:
+        session_id = get_chat_session_id(auth.user.id, auth.account.id, agent_id, team_id, chat_id)
+    else:
+        session_id = get_chat_session_id(None, None, None, None, chat_id)
+        
     chat_messages = (db.session.query(ChatMessageModel)
                  .filter(ChatMessageModel.session_id == session_id)
                  .order_by(ChatMessageModel.created_on.desc())
@@ -98,7 +101,6 @@ def get_chat_messages(agent_id: Optional[UUID] = None, team_id: Optional[UUID] =
     Get chat messages
 
     Args:
-        is_private_chat (bool): Is private or team chat
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
@@ -110,9 +112,9 @@ def get_chat_messages(agent_id: Optional[UUID] = None, team_id: Optional[UUID] =
     if agent_id:
         agent = AgentModel.get_agent_by_id_with_account(db, agent_id)
     if team and (team.is_public or team.is_template):
-        session_id = get_chat_session_id(team.creator.id, team.account.id, False, agent_id, team_id)
+        session_id = get_chat_session_id(team.creator.id, team.account.id, agent_id, team_id)
     if agent and (agent.is_public or agent.is_template):
-        session_id = get_chat_session_id(agent.creator.id, agent.account.id, False, agent_id, team_id)
+        session_id = get_chat_session_id(agent.creator.id, agent.account.id, agent_id, team_id)
         
     if not session_id:
         raise HTTPException(status_code=401, detail="Unauthorized")
@@ -161,7 +163,6 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
 #     Get chat messages
 
 #     Args:
-#         is_private_chat (bool): Is private or team chat
 #         agent_id (Optional[UUID]): Agent id
 
 #     """
