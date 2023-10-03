@@ -1,0 +1,24 @@
+query chatMessages($chat_id: chat_id!) @api(name: "ai") {
+  chatMessages(chat_id: $chat_id)
+    @rest(
+      type: "ChatMessage"
+      path: "/chat/{args.chat_id}/messages"
+      method: "GET"
+      endpoint: "ai"
+    ) {
+    id
+    session_id
+    sender_user_id
+    sender_account_id
+    message
+    thoughts
+    created_on
+    parent
+    parent_id
+    agent_id
+    agent
+    team_id
+    team
+    sender_user
+  }
+}

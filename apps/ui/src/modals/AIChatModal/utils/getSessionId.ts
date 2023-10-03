@@ -3,33 +3,21 @@ import { Nullable } from 'types'
 const getSessionId = ({
   user,
   account,
-  isPrivateChat,
   agentId,
   teamId,
-  chatId
+  chatId,
 }: {
   user: any
   account: any
-  isPrivateChat: boolean
   agentId: Nullable<string>
   teamId: Nullable<string>
   chatId: Nullable<string>
 }) => {
-  if (isPrivateChat) {
-    // If chat is private
+  if (chatId) return `${chatId}-${chatId}`
 
-    if (agentId) return `${agentId}-${user.id}`
-    if (teamId) return `${teamId}-${user.id}`
-    if (chatId) return `${chatId}`
-    return `${account?.id}-${user.id}`
-  } else {
-    // If chat is team
-
-    if (agentId) return agentId
-    if (teamId) return teamId
-    if (chatId) return `${chatId}`
-    return account?.id
-  }
+  if (agentId) return `${agentId}-${user.id}`
+  if (teamId) return `${teamId}-${user.id}`
+  return `${account?.id}-${user?.id}`
 }
 
 export default getSessionId

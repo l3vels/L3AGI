@@ -27,7 +27,7 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
         ref={uploadRef}
         onChange={onChange}
         multiple
-        accept='.pdf, .csv, .docx, .pptx, .md, .jpg, .png, .jpeg, .epub, .mbox, .ipynb, .mp3, .mp4'
+        accept='.txt .pdf, .csv, .docx, .pptx, .md, .jpg, .png, .jpeg, .epub, .mbox, .ipynb, .mp3, .mp4'
       />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>
@@ -37,7 +37,7 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
           <>
             <StyledFileIcon />
             <TypographySecondary
-              value='pdf, csv, docx, pptx, md, jpg, png, jpeg, epub, mbox, ipynb, mp3, mp4'
+              value='txt, pdf, csv, docx, pptx, md, jpg, png, jpeg, epub, mbox, ipynb, mp3, mp4'
               type={Typography.types.LABEL}
               size={Typography.sizes.xss}
             />

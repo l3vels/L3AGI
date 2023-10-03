@@ -19,17 +19,8 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   } else {
     filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
   }
-
-  // .map((item: any) => item.label)
-  // console.log('res', res)
-  // if (realValues) {
-  //   //  realValues.map((item: any) => <div>{item}</div>)
-  //   console.log('realValues', realValues)
-  // }
-
   const [value, setValue] = useState(filteredValues)
   const refInput = useRef(null as any)
-  // console.log('props', props)
   useEffect(() => {
     // focus on the input
     refInput.current?.focus()

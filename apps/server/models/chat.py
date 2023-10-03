@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index, Integer
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import relationship, joinedload, foreign
+from sqlalchemy.orm import relationship, joinedload, foreign, aliased
 from models.base_model import BaseModel
 import uuid
 from typings.account import AccountOutput
@@ -32,8 +32,9 @@ class ChatModel(BaseModel):
     creator_account_id = Column(UUID, ForeignKey('account.id', name='fk_creator_account_id', ondelete='CASCADE'), nullable=False, index=True)
     provider_user_id = Column(UUID,  ForeignKey('user.id', name='fk_provider_user_id', ondelete='CASCADE'), nullable=True, index=True)
     provider_account_id = Column(UUID, ForeignKey('account.id', name='fk_provider_account_id', ondelete='CASCADE'), nullable=False, index=True)
-    
+    is_deleted = Column(Boolean, default=False, index=True)
     max_chat_messages = Column(Integer, nullable=True)
+    is_public = Column(Boolean, default=False, index=True)
     
     
     agent = relationship("AgentModel", back_populates="chat")
@@ -61,17 +62,18 @@ class ChatModel(BaseModel):
             Returns:
                 Chat message: Chat message object is returned.
         """
+        # Create aliases for UserModel
         chat = (
             db.session.query(ChatModel)
-            .leftJoin(UserModel, ChatModel.creator_user_id == UserModel.id)           
-            .leftJoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)           
-            .leftJoin(UserModel, ChatModel.creator_user == UserModel.id)           
-            .leftJoin(AccountModel, ChatModel.provider_user_id == AccountModel.id)           
+            .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)           
+            .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)            
+            .outerjoin(TeamModel, ChatModel.team_id == TeamModel.id)           
+            .outerjoin(AgentModel, ChatModel.agent_id == AgentModel.id)  
             .filter(ChatModel.id == chat_id, ChatModel.provider_account_id == account.id)
+            .options(joinedload(ChatModel.team))
+            .options(joinedload(ChatModel.agent))
             .options(joinedload(ChatModel.creator_user))
             .options(joinedload(ChatModel.creator_account))
-            .options(joinedload(ChatModel.provider_user))
-            .options(joinedload(ChatModel.provider_account))
             .first()
         )
 
@@ -91,8 +93,16 @@ class ChatModel(BaseModel):
         """
         chat = (
             db.session.query(ChatModel)
-            .filter(ChatModel.id == chat_id)
-            .first()
+                .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)           
+                .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)                
+                .outerjoin(TeamModel, ChatModel.team_id == TeamModel.id)           
+                .outerjoin(AgentModel, ChatModel.agent_id == AgentModel.id)        
+                .filter(ChatModel.id == chat_id)
+                .options(joinedload(ChatModel.team))
+                .options(joinedload(ChatModel.agent))
+                .options(joinedload(ChatModel.creator_user))
+                .options(joinedload(ChatModel.creator_account))
+                .first()
         )
 
         return chat
@@ -147,16 +157,22 @@ class ChatModel(BaseModel):
     def get_chats(cls, db, account):
         agents = (
             db.session.query(ChatModel)
-            .join(UserModel, ChatModel.created_by == UserModel.id)           
-            .filter(ChatModel.account_id == account.id, or_(or_(ChatModel.is_deleted == False, ChatModel.is_deleted is None), ChatModel.is_deleted is None))
-            .options(joinedload(ChatModel.creator))
+            .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)           
+            .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)             
+            .outerjoin(TeamModel, ChatModel.team_id == TeamModel.id)           
+            .outerjoin(AgentModel, ChatModel.agent_id == AgentModel.id)              
+            .filter(ChatModel.creator_account_id == account.id, or_(or_(ChatModel.is_deleted == False, ChatModel.is_deleted is None), ChatModel.is_deleted is None))
+            .options(joinedload(ChatModel.team))
+            .options(joinedload(ChatModel.agent))
+            .options(joinedload(ChatModel.creator_user))
+            .options(joinedload(ChatModel.creator_account))
             .all()
         )
         return agents
     
     @classmethod
     def delete_by_id(cls, db, agent_id, account):
-        db_agent = db.session.query(ChatModel).filter(ChatModel.id == agent_id, ChatModel.account_id==account.id).first()
+        db_agent = db.session.query(ChatModel).filter(ChatModel.id == agent_id, ChatModel.provider_account_id==account.id).first()
 
         if not db_agent or db_agent.is_deleted:
             raise ChatNotFoundException("Agent not found")
@@ -179,10 +195,16 @@ class ChatModel(BaseModel):
         if self.team:
             data['team'] = self.team.to_dict()
 
-        if self.parent:
-            data['parent'] = self.parent.to_dict()
+        if self.creator_user:
+            data['creator_user'] = self.creator_user.to_dict()
 
-        if self.creator:
-            data['creator'] = self.creator.to_dict()
+        if self.creator_account:
+            data['creator_account'] = self.creator_account.to_dict()
+        
+        if self.provider_user:
+            data['provider_user'] = self.provider_user.to_dict()
+            
+        if self.provider_account:
+            data['provider_account'] = self.provider_account.to_dict()
 
         return data

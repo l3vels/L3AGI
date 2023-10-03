@@ -55,7 +55,6 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     sender_user_id = user.id
     sender_account_id= account.id
     
-    is_private_chat = body.is_private_chat
     agent_id = body.agent_id
     team_id = body.team_id
     parent_id = body.parent_id
@@ -64,7 +63,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     
     prompt = body.prompt
 
-    session_id = get_chat_session_id(user.id, account.id, is_private_chat, agent_id, team_id)
+    session_id = get_chat_session_id(user.id, account.id, agent_id, team_id)
     
     process_chat_message(
         session_id=session_id, 
@@ -72,7 +71,6 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         sender_user_id=sender_user_id, 
         sender_account_id=sender_account_id, 
         prompt=prompt, 
-        is_private_chat=is_private_chat, 
         agent_id=agent_id, 
         team_id=team_id, 
         parent_id=parent_id, 
@@ -103,7 +101,6 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     sender_user_id = user.id
     sender_account_id= account.id
     
-    is_private_chat = True
     agent_id = chat.agent_id
     team_id = chat.team_id
     parent_id = body.parent_id
@@ -113,7 +110,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     
     prompt = body.prompt
 
-    session_id = get_chat_session_id(user.id, account.id, is_private_chat, agent_id, team_id)
+    session_id = get_chat_session_id(user.id, account.id, agent_id, team_id, chat_id)
     
     process_chat_message(
         session_id=session_id, 
@@ -121,7 +118,6 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
         sender_user_id=sender_user_id, 
         sender_account_id=sender_account_id, 
         prompt=prompt, 
-        is_private_chat=is_private_chat, 
         agent_id=agent_id, 
         team_id=team_id, 
         parent_id=parent_id, 
@@ -139,7 +135,6 @@ def process_chat_message(
     sender_user_id: str, 
     sender_account_id: str, 
     prompt: str,
-    is_private_chat: bool, 
     agent_id: str, 
     team_id: str, 
     parent_id: str, 
@@ -164,7 +159,6 @@ def process_chat_message(
         sender_user_id=sender_user_id, 
         sender_account_id=sender_account_id, 
         prompt=prompt,
-        is_private_chat=is_private_chat,
         agent_id=agent_id,
         team_id=team_id,
         parent_id=parent_id,
@@ -462,8 +456,7 @@ def create_and_send_chat_message(
     sender_name: str, 
     sender_user_id: str, 
     sender_account_id: str, 
-    prompt: str, 
-    is_private_chat: bool, 
+    prompt: str,  
     agent_id: str, 
     team_id: str, 
     parent_id: str, 
@@ -498,7 +491,6 @@ def create_and_send_chat_message(
     chat_pubsub_service = ChatPubSubService(
         session_id=session_id,
         user_id=sender_user_id,
-        is_private_chat=is_private_chat,
         agent_id=str(agent_id) if agent_id else None,
         team_id=str(team_id) if team_id else None,
         chat_id=str(chat_id) if chat_id else None,

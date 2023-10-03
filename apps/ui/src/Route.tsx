@@ -76,6 +76,9 @@ import SettingsModal from 'modals/SettingsModal'
 import ToolkitModal from 'modals/ToolkitModal'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
 
+import ClientChat from 'modals/AIChatModal/components/ClientChat'
+import ChatLinkModal from 'modals/ChatLinkModal'
+
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [cmdkOpen, setCmdkOpen] = useState(false)
@@ -159,6 +162,14 @@ const Route = () => {
             >
               <Router index element={<ChatHistory />} key={document.location.href} />
             </Router>
+
+            <Router
+              path={'/chat/client'}
+              element={<ChatRouteLayout />}
+              key={document.location.href}
+            />
+            {/* <Router index element={<ClientChat />} key={document.location.href} />
+            </Router> */}
 
             <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
               {/* <Router index element={<div />} key={document.location.href} /> */}
@@ -254,6 +265,7 @@ const Route = () => {
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
+      <ChatLinkModal />
       <CommandMenu
         open={cmdkOpen}
         setCmdkOpen={setCmdkOpen}

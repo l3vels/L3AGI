@@ -1,11 +1,17 @@
-query chatMessages($is_private_chat: Boolean!, $agent_id: String!, $team_id: String!)
-@api(name: "ai") {
-  chatMessages(is_private_chat: $is_private_chat, agent_id: $agent_id, team_id: $team_id)
-    @rest(type: "ChatMessage", path: "/chat/messages?{args}", method: "GET", endpoint: "ai") {
+query chatMessages(
+  $agent_id: String!
+  $team_id: String!
+  $chat_id: String!
+) @api(name: "ai") {
+  chatMessages(
+    agent_id: $agent_id
+    team_id: $team_id
+    chat_id: $chat_id
+  ) @rest(type: "ChatMessage", path: "/chat/messages?{args}", method: "GET", endpoint: "ai") {
     id
     session_id
-    user_id
-    account_id
+    sender_user_id
+    sender_account_id
     message
     thoughts
     created_on

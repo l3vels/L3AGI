@@ -3,7 +3,6 @@ import { useState, useRef, useEffect, useContext } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
-import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
@@ -42,11 +41,11 @@ import { useConfigsService } from 'services/config/useConfigsService'
 import getSessionId from '../utils/getSessionId'
 import { ButtonSecondary } from 'components/Button/Button'
 
-type ChatV2Props = {
-  isPrivate?: boolean
-}
+import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
+import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
 
-const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
+
+const ChatV2 = () => {
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -70,14 +69,19 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
+  const chatId = urlParams.get('chat')
+
+  const [createClientChatMessage] = useCreateClientChatMessageService()
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   const { data: chatMessages } = useChatMessagesService({
-    isPrivateChat: isPrivate,
     agentId,
     teamId,
+    chatId,
   })
+
+  // console.log('chatMessages', chatMessages)
 
   const { data: configs } = useConfigsService()
 
@@ -95,9 +99,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const sessionId = getSessionId({
     user,
     account,
-    isPrivateChat: isPrivate,
     agentId,
     teamId,
+    chatId,
   })
 
   const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
@@ -116,14 +120,16 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       id: uuid(),
       session_id: '',
       thoughts: null,
-      user_id: user.id,
-      account_id: account.id,
+      sender_user_id: user?.id,
+      sender_account_id: account?.id,
+      sender_name: '',
       parent_id: null,
       parent: null,
       agent_id: agentId,
       agent: null,
       team_id: teamId,
       team: null,
+      chat_id: chatId,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',
@@ -132,9 +138,10 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       sender_user: user,
     }
 
-    upsertChatMessageInCache(message, isPrivate, {
+    upsertChatMessageInCache(message, {
       agentId,
       teamId,
+      chatId,
     })
 
     return message
@@ -200,15 +207,21 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       if (reply.isReply) {
         setReply(defaultReplyState)
       }
-
-      await createChatMessageService({
-        message,
-        isPrivateChat: isPrivate,
-        agentId,
-        teamId,
-        localChatMessageRefId, // Used to update the message with socket
-        parentId: parentMessageId,
-      })
+      if (chatId) {
+        await createClientChatMessage({
+          chat_id: chatId,
+          prompt: message,
+          localChatMessageRefId,
+        })
+      } else {
+        await createChatMessageService({
+          message,
+          agentId,
+          teamId,
+          localChatMessageRefId, // Used to update the message with socket
+          parentId: parentMessageId,
+        })
+      }
 
       setThinking(false)
     } catch (e) {
@@ -232,15 +245,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   }
 
   useEffect(() => {
-    setAPIVersion(ApiVersionEnum.L3_Conversational)
-
-    setTimeout(() => {
-      setFormValue('')
-      inputRef.current?.focus()
-    }, 1)
-  }, [])
-
-  useEffect(() => {
     if (reply.isReply) {
       setTimeout(() => {
         setFormValue('')
@@ -255,25 +259,13 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   }
 
   useEffect(() => {
-    const versions = [
-      ApiVersionEnum.L3_Conversational,
-      // ApiVersionEnum.L3_PlanAndExecute,
-      ApiVersionEnum.L3_PlanAndExecuteWithTools,
-    ]
-
-    if (!versions.includes(apiVersion)) {
-      navigate('chat')
-    }
-  }, [apiVersion])
-
-  useEffect(() => {
     if (formValue.length > 0) {
       socket.sendUserTyping('chat_id')
     }
   }, [formValue])
 
   const filteredTypingUsers = socket?.typingUsersData?.filter(
-    (data: any) => user.id !== data.userId,
+    (data: any) => user?.id !== data.userId,
   )
 
   const canStopGenerating =
@@ -284,7 +276,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const handleStopGenerating = async () => {
     await stopChatService({
       input: {
-        is_private_chat: isPrivate,
         agent_id: agentId,
         team_id: teamId,
       },
@@ -306,12 +297,14 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}
-            agentName={agentName || ''}
+            agentName={agentName || 'Agent'}
             greeting={
               chatMessages &&
               chatMessages?.length === 0 &&
               (!agentId
-                ? `Hello ${user.name}, you can chat with agents and teams on your dashboard.`
+                ? `Hello ${
+                    user?.name || ''
+                  } , you can chat with agents and teams on your dashboard.`
                 : chatGreeting)
             }
           />
@@ -380,18 +373,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   />
                 </StyledInputWrapper>
               ) : (
-                // <StyledInput
-                //   expanded
-                //   ref={inputRef}
-                //   value={formValue}
-                //   onKeyDown={handleKeyDown}
-                //   onChange={e => {
-                //     setFormValue(e.target.value)
-                //     adjustTextareaHeight()
-                //   }}
-                //   placeholder='Ask or Generate anything'
-                //   rows={1}
-                // />
                 <StyledInputWrapper>
                   <Mentions
                     inputRef={inputRef}
@@ -420,58 +401,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             </StyledTextareaWrapper>
           </StyledForm>
           <StyledChatBottom>
-            {/* <button
-            onClick={() => {
-              console.log('sendUserShare')
-              //todo need to replace message_id
-              socket.sendUserShare('message_id')
-            }}
-          >
-            Share
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserLikeDislike Like')
-              //todo need to replace message_id
-              const message_id = 'message_id'
-              socket.sendUserLikeDislike(message_id, 'user_like')
-            }}
-          >
-            Like
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserLikeDislike Dislike')
-              //todo need to replace message_id
-              const message_id = 'message_id'
-              socket.sendUserLikeDislike(message_id, 'user_dislike')
-            }}
-          >
-            Dislike
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserTyping')
-              //todo need to replace chat_id,
-              socket.sendUserTyping('chat_id')
-            }}
-          >
-            Send User Typing
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserStopTyping')
-              //todo need to replace chat_id,
-              socket.sendUserStopTyping('chat_id')
-            }}
-          >
-            Send User stop typing
-          </button> */}
-
             <TypingUsers usersData={filteredTypingUsers} />
           </StyledChatBottom>
         </StyledChatInputWrapper>

@@ -48,43 +48,26 @@ export const useLogoutService = () => {
   return [logout]
 }
 
-// export const useRegistrationService = () => {
-//   const [mutation] = useMutation(registrationMutation)
-
-//   const registrationComplete = async (data: object): Promise<{ message: string }> => {
-//     const {
-//       data: { registration },
-//     } = await mutation({ variables: { body: data } })
-//     debugger
-//     return registration
-//   }
-
-//   return [registrationComplete]
-// }
+export const useRegistrationService = () => {
+  const [mutation, { loading }] = useMutation(registrationMutation)
+  const registrationComplete = async (data: object) => {
+    try {
+      const {
+        data: { registration },
+      } = await mutation({ variables: { body: { ...data } } })
 
 
-
-
-  export const useRegistrationService = () => {
-    const [mutation, { loading }] = useMutation(registrationMutation)
-    const registrationComplete = async (data: object) => {
-      try {
-        const {
-          data: { registration },
-        } = await mutation({ variables: { body: { ...data } } })
-  
-
-        return registration
-      } catch (error) {
-        return {
-          hasError: true,
-          error,
-        }
+      return registration
+    } catch (error) {
+      return {
+        hasError: true,
+        error,
       }
     }
-  
-    return [registrationComplete]
   }
+
+  return [registrationComplete]
+}
 
 
 

@@ -13,11 +13,15 @@ import Download from '@l3-lib/ui-core/dist/icons/Download'
 import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
+import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
-import { ButtonPrimary } from 'components/Button/Button'
-import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -27,7 +31,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { user } = React.useContext(AuthContext)
 
   const navigate = useNavigate()
-  const { closeModal } = useModal()
+  const { closeModal, openModal } = useModal()
 
   const { agent, configs } = agentData
 
@@ -42,6 +46,10 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     navigate(`/agents/${agent?.id}/edit-agent`)
   }
 
+  const handleCreateChat = async () => {
+    openModal({ name: 'chat-link-modal', data: { agentId: agent.id } })
+  }
+
   return (
     <StyledDetailsBox>
       <StyledWrapper>
@@ -52,15 +60,24 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             size={Typography.sizes.lg}
           />
 
-          {isCreator && (
-            <IconButton
-              onClick={handleEdit}
-              icon={() => <StyledEditIcon />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Edit'
-            />
-          )}
+          <StyledButtonsWrapper>
+            {isCreator && (
+              <IconButton
+                onClick={handleEdit}
+                icon={() => <StyledEditIcon />}
+                size={IconButton.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                ariaLabel='Edit'
+              />
+            )}
+
+            <MenuButton component={MenuDots}>
+              <StyledMenuButtonsWrapper>
+                <ButtonTertiary onClick={handleCreateChat}>Create Chat Link</ButtonTertiary>
+                <ButtonTertiary>Delete Agent</ButtonTertiary>
+              </StyledMenuButtonsWrapper>
+            </MenuButton>
+          </StyledButtonsWrapper>
         </StyledNameWrapper>
         {creator && (
           <TypographySecondary
@@ -158,4 +175,22 @@ export const StyledNameWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 5px;
+`
+const StyledMenuButtonsWrapper = styled.div`
+  background: ${({ theme }) => theme.body.backgroundColorSecondary};
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  backdrop-filter: blur(100px);
+  padding: 10px;
+  border-radius: 10px;
+  width: 200px;
+  min-width: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `

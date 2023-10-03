@@ -7,6 +7,9 @@ from typings.chat import ChatOutput
 from utils.type import convert_value_to_type
 from models.chat import ChatModel
 from utils.user import convert_model_to_response as user_convert_model_to_response
+from utils.team import convert_model_to_response as team_convert_model_to_response
+from utils.agent import convert_model_to_response as agent_convert_model_to_response
+from utils.account import convert_model_to_response as account_convert_model_to_response
 
 class MentionModule(Enum):
     AGENT = 'agent'
@@ -14,31 +17,17 @@ class MentionModule(Enum):
     USER = 'user'
 
 
-def get_chat_session_id(user_id: UUID, account_id: UUID, is_private_chat: bool, agent_id: UUID = None, team_id: UUID = None, chat_id: UUID = None) -> str:
-    if is_private_chat:
-        # private chat
-        if agent_id:
-            return f"{agent_id}-{user_id}"
-        
-        if team_id:
-            return f"{team_id}-{user_id}"
-        
-        if chat_id:
-            return f"{chat_id}"
-        
-        return f"{account_id}-{user_id}"
-    else:
-        # Team chat
-        if agent_id:
-            return f"{agent_id}"
-
-        if team_id:
-            return f"{team_id}"
-        
-        if chat_id:
-            return f"{chat_id}"
-
-        return f"{account_id}"
+def get_chat_session_id(user_id: UUID, account_id: UUID, agent_id: UUID = None, team_id: UUID = None, chat_id: UUID = None) -> str:
+    if chat_id:
+        return f"{chat_id}-{chat_id}"
+    
+    if agent_id:
+        return f"{agent_id}-{user_id}"
+    
+    if team_id:
+        return f"{team_id}-{user_id}"
+    
+    return f"{account_id}-{user_id}"
 
 
 def parse_agent_mention(text: str) -> List[Tuple[str, str, str]]:
@@ -122,8 +111,17 @@ def convert_model_to_response(chat_model: ChatModel) -> ChatOutput:
             
     #         configs[key] = value
     
-    # if hasattr(chat_model, 'sender_user') and chat_model.sender_user:
-    #    chat_data['sender_user'] = user_convert_model_to_response(chat_model.sender_user)
+    if hasattr(chat_model, 'team') and chat_model.team:
+       chat_data['team'] = team_convert_model_to_response(chat_model.team)
+    
+    if hasattr(chat_model, 'agent') and chat_model.agent:
+       chat_data['agent'] = agent_convert_model_to_response(chat_model.agent)
+    
+    if hasattr(chat_model, 'creator_user') and chat_model.creator_user:
+       chat_data['creator_user'] = user_convert_model_to_response(chat_model.creator_user)
+    
+    if hasattr(chat_model, 'creator_account') and chat_model.creator_account:
+       chat_data['creator_account'] = account_convert_model_to_response(chat_model.creator_account)
 
     
     return ChatOutput(**chat_data)
