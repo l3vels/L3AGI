@@ -6,41 +6,18 @@ import { useModal } from 'hooks'
 
 import { Command } from 'cmdk'
 import { get, groupBy, has, slice } from 'lodash'
-import { darkTheme, lightTheme } from 'styles/theme'
-import StarVector from 'assets/svgComponents/StarVector'
-import StarsVector from 'assets/svgComponents/StartsVector'
-import { enterIcon } from 'assets/icons'
-
-import Typography from '@l3-lib/ui-core/dist/Typography'
-
-import About from '@l3-lib/ui-core/dist/icons/About'
-import API from '@l3-lib/ui-core/dist/icons/API'
-import Doc from '@l3-lib/ui-core/dist/icons/Doc'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
-import Teams from '@l3-lib/ui-core/dist/icons/Teams'
-import Players from '@l3-lib/ui-core/dist/icons/Players'
-import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
-import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-import Logs from '@l3-lib/ui-core/dist/icons/Logs'
-import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
-import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 
 import {
   StyledCommandInput,
-  StyledCommandItem,
   StyledCommandList,
   StyledCommandWrapper,
   StyledCommandDialog,
   StyledCommandItemHeader,
   StyledSvgContainer,
-  StyleEnterGroup,
 } from './CommandMenuStyles'
-import { ApiVersionEnum } from 'modals/AIChatModal/types'
 
 import { defaultData } from './defaultData'
-
-import CommandItemName from './components/ItemName'
-import { ThemeProvider } from 'styled-components'
 import CommandItem from './components/CommandItem'
 
 const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {

@@ -187,46 +187,6 @@ const DataGrid = forwardRef(
       components_wrapper,
     ])
 
-    //do not delete this code
-    // const handleAddRow = useCallback(async () => {
-    //   const res = gridRef.current.api.getLastDisplayedRow()
-    //   console.log(res)
-    //   // gridRef.current.api.setFocusedCell(res, 'name')
-    //   gridRef.current.api.startEditingCell({
-    //     rowIndex: res,
-    //     colKey: 'name',
-    //     // set to 'top', 'bottom' or undefined
-    //     // rowPinned: true,
-    //     // key: key,
-    //     // charPress: char,
-    //   })
-    // }, [])
-
-    // const sideBar = useMemo(
-    //   () => ({
-    //     toolPanels: [
-    //       {
-    //         id: 'columns',
-    //         labelDefault: 'Columns',
-    //         labelKey: 'columns',
-    //         iconKey: 'columns',
-    //         toolPanel: 'agColumnsToolPanel',
-    //         toolPanelParams: {
-    //           suppressRowGroups: true,
-    //           suppressValues: true,
-    //           suppressPivots: true,
-    //           suppressPivotMode: true,
-    //           suppressColumnFilter: true,
-    //           suppressColumnSelectAll: true,
-    //           suppressColumnExpandAll: true,
-    //         },
-    //       },
-    //     ],
-    //     defaultToolPanel: 'false',
-    //   }),
-    //   [],
-    // )
-
     const popupParent = useMemo(() => document.querySelector('body'), [])
 
     useImperativeHandle(ref, () => ({
@@ -241,14 +201,12 @@ const DataGrid = forwardRef(
         const allData: any = []
 
         gridRef.current.api.forEachNode((node: any) => {
-          // console.log('nodessssssssss', node)
           const item = node.data
           const index = node.rowIndex
 
           allData.push({ item: item, index: index })
         })
 
-        // console.log('allData', allData)
         return allData
       },
 
