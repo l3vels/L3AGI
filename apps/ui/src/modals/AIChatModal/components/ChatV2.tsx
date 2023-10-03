@@ -3,7 +3,6 @@ import { useState, useRef, useEffect, useContext } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
-import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
@@ -110,7 +109,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     chatId,
   })
 
-  console.log(sessionId, " === sessionId")
   const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
 
   const status = chatStatusConfig?.value
@@ -214,7 +212,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       if (reply.isReply) {
         setReply(defaultReplyState)
       }
-      console.log(localChatMessageRefId)
       if (chatId) {
         await createClientChatMessage({
           chat_id: chatId,
@@ -234,7 +231,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
       setThinking(false)
     } catch (e) {
-      console.log(e)
       setToast({
         message: 'Something went wrong',
         type: 'negative',
@@ -254,14 +250,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     }
   }
 
-  useEffect(() => {
-    setAPIVersion(ApiVersionEnum.L3_Conversational)
-
-    setTimeout(() => {
-      setFormValue('')
-      inputRef.current?.focus()
-    }, 1)
-  }, [])
 
   useEffect(() => {
     if (reply.isReply) {
@@ -276,18 +264,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
     setFormValue(value)
     setTypingEffectText(true)
   }
-
-  useEffect(() => {
-    const versions = [
-      ApiVersionEnum.L3_Conversational,
-      // ApiVersionEnum.L3_PlanAndExecute,
-      ApiVersionEnum.L3_PlanAndExecuteWithTools,
-    ]
-
-    if (!versions.includes(apiVersion)) {
-      navigate('chat')
-    }
-  }, [apiVersion])
 
   useEffect(() => {
     if (formValue.length > 0) {

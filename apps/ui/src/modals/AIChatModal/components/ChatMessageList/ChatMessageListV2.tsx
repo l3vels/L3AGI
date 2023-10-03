@@ -12,10 +12,15 @@ import HumanMessage from './components/HumanMessage'
 import AiMessage from './components/AiMessage'
 import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
-import { MessageTypeEnum } from 'modals/AIChatModal/types'
 import HumanReply from './components/HumanReply'
 import AiReply from './components/AiReply'
 import { ReplyStateProps } from '../ReplyBox'
+
+export enum MessageTypeEnum {
+  AI_MANUAL = 'AI_MANUAL',
+  User = 'User',
+}
+
 
 type ChatMessageListV2Props = {
   data: any
