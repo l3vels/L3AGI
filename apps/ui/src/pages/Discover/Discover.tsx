@@ -32,9 +32,9 @@ const Discover = () => {
 
   return (
     <StyledRoot>
-      <DiscoverTeamAgents />
+      <DiscoverTeamAgents />å
 
-      <DiscoverSystemAgents />
+      {user && <DiscoverSystemAgents />}
 
       {/* {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
