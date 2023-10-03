@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
-import { AuthContext } from 'contexts'
+import { AuthContext, ToastContext } from 'contexts'
 
 import { Header } from 'components/Layout'
 import { StyledAppContainer } from '../components/Layout/LayoutStyle'
@@ -19,18 +19,21 @@ import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import ListHeader from './components/ListHeader'
 import { useChatsService } from 'services/chat/useChatsService'
 import CustomerChatCard from 'components/ChatCards/CustomerChatCard'
+import { useDeleteChatService } from 'services/chat/useDeleteChatService'
 
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
 
+  const { setToast } = useContext(ToastContext)
+
   const outlet = useOutlet()
   const { agentsData } = useAgents()
   const { teamOfAgents: teamOfAgentsArray } = useTeamOfAgents()
-  const { data: chatsData } = useChatsService()
+  const { data: chatsData, refetch: refetchChat } = useChatsService()
 
   const navigate = useNavigate()
 
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const location = useLocation()
 
@@ -41,7 +44,9 @@ const ChatRouteLayout = () => {
   const teamId = urlParams.get('team') || params.teamId
   const chatId = urlParams.get('chat')
 
-  // if (!user) return <Navigate to='/' />
+  const { deleteChat } = useDeleteChatService()
+
+  if (!user && !chatId) return <Navigate to='/' />
 
   return (
     <StyledAppContainer className='app_container'>
@@ -57,17 +62,14 @@ const ChatRouteLayout = () => {
 
                 const isCreator = user?.id === teamOfAgents?.created_by
 
-                const handleView = (event: any) => {
-                  event.stopPropagation()
-
+                const handleView = () => {
                   openModal({
                     name: 'team-of-agent-view-modal',
                     data: { teamOfAgents: teamOfAgents },
                   })
                 }
 
-                const handleEdit = (event: any) => {
-                  event.stopPropagation()
+                const handleEdit = () => {
                   navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
                 }
 
@@ -98,14 +100,11 @@ const ChatRouteLayout = () => {
 
                 const isCreator = user?.id === agent?.created_by
 
-                const handleEdit = (event: any) => {
-                  event.stopPropagation()
+                const handleEdit = () => {
                   navigate(`/agents/${agent?.id}/edit-agent`)
                 }
 
-                const handleView = (event: any) => {
-                  event.stopPropagation()
-
+                const handleView = () => {
                   openModal({
                     name: 'agent-view-modal',
                     data: {
@@ -128,22 +127,53 @@ const ChatRouteLayout = () => {
             </>
           )}
 
-          <>
-            <ListHeader title='Customer Chat' />
+          {user && chatsData?.length > 0 && (
+            <>
+              <ListHeader title='Customer Chat' />
 
-            {chatsData?.map((chat: any) => {
-              const { agent, name, id } = chat
+              {chatsData?.map((chat: any) => {
+                const { agent, name, id } = chat
 
-              return (
-                <CustomerChatCard
-                  key={id}
-                  onClick={() => navigate(`/chat/client?chat=${id}`)}
-                  picked={id === chatId}
-                  name={name}
-                />
-              )
-            })}
-          </>
+                const deleteChatHandler = () => {
+                  openModal({
+                    name: 'delete-confirmation-modal',
+                    data: {
+                      deleteItem: async () => {
+                        try {
+                          await deleteChat(id)
+                          await refetchChat()
+                          navigate('/chat')
+                          setToast({
+                            message: 'Chat was deleted!',
+                            type: 'positive',
+                            open: true,
+                          })
+                        } catch (e) {
+                          setToast({
+                            message: 'Failed to delete Chat!',
+                            type: 'negative',
+                            open: true,
+                          })
+                        }
+                        closeModal('delete-confirmation-modal')
+                      },
+                      label: 'Delete Chat?',
+                    },
+                  })
+                }
+
+                return (
+                  <CustomerChatCard
+                    key={id}
+                    picked={id === chatId}
+                    name={name}
+                    onClick={() => navigate(`/chat/client?chat=${id}`)}
+                    onDeleteClick={deleteChatHandler}
+                  />
+                )
+              })}
+            </>
+          )}
         </StyledList>
         <StyledMainWrapper>
           <StyledOutletWrapper>{outlet}</StyledOutletWrapper>

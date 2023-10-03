@@ -1,0 +1,16 @@
+query chatById($id: id!) @api(name: "ai") {
+  chatById(id: $id)
+    @rest(type: "ChatMessage", path: "/chat/{args.id}", method: "GET", endpoint: "ai") {
+    id
+    name
+    agent_id
+    team_id
+    team
+    agent {
+      agent
+      configs
+    }
+    creator_user
+    creator_account
+  }
+}

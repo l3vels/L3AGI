@@ -12,8 +12,8 @@ import {
 
 type TeamChatCardProps = {
   onClick: () => void
-  onViewClick: (event: any) => void
-  onEditClick?: (event: any) => void
+  onViewClick: () => void
+  onEditClick?: () => void
   picked: boolean
   team: any
   agents: any
@@ -27,6 +27,18 @@ const TeamChatCard = ({
   team,
   agents,
 }: TeamChatCardProps) => {
+  const handleEdit = (event: any) => {
+    event.stopPropagation()
+    if (onEditClick) {
+      onEditClick()
+    }
+  }
+
+  const handleView = (event: any) => {
+    event.stopPropagation()
+    onViewClick()
+  }
+
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <AvatarGenerator name={team?.name} size={30} avatar={team.avatar} />
@@ -44,7 +56,7 @@ const TeamChatCard = ({
 
       <StyledIconButtonWrapper className='hiddenButton'>
         <IconButton
-          onClick={onViewClick}
+          onClick={handleView}
           icon={() => (
             <StyledIconWrapper>
               <StyledEyeOpenIcon size={50} />
@@ -57,7 +69,7 @@ const TeamChatCard = ({
 
         {onEditClick && (
           <IconButton
-            onClick={onEditClick}
+            onClick={handleEdit}
             icon={() => <StyledEditIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}

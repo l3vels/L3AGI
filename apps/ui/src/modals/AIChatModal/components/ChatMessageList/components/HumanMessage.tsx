@@ -18,6 +18,7 @@ type HumanMessageProps = {
   messageDate: string
   messageText: string
   userId: string
+  userName: string
   onReplyClick?: () => void
 }
 
@@ -26,7 +27,7 @@ const HumanMessage = ({
   messageDate,
   messageText,
   userId,
-
+  userName,
   onReplyClick,
 }: HumanMessageProps) => {
   const { wordArray, handleFileClick, authorName, fileUrlMatch, fileName } = useHumanMessage({
@@ -39,14 +40,14 @@ const HumanMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={authorName} size={50} avatar={avatarImg} />
+          <AvatarGenerator name={userName} size={50} avatar={avatarImg} />
         </StyledAvatarWrapper>
 
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
               <TypographyPrimary
-                value={authorName}
+                value={userName}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />

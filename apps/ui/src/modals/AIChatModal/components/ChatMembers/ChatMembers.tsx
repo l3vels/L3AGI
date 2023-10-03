@@ -55,10 +55,10 @@ const ChatMembers = ({
         <StyledDiv>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>
-              <StyledSpan>Members</StyledSpan>
+              <StyledSpan>Info</StyledSpan>
             </Tab>
             <Tab onClick={() => setActiveTab(1)}>
-              <StyledSpan>Info</StyledSpan>
+              <StyledSpan>Members</StyledSpan>
             </Tab>
           </TabList>
         </StyledDiv>
@@ -66,6 +66,10 @@ const ChatMembers = ({
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
+              <TabPanel>
+                <AgentViewDetailBox agentData={agentById} />
+              </TabPanel>
+
               <TabPanel>
                 {!isHistory && user?.name && (
                   <StyledAgentWrapper>
@@ -116,10 +120,6 @@ const ChatMembers = ({
                   </StyledAgentWrapper>
                 </>
               </TabPanel>
-
-              <TabPanel>
-                <AgentViewDetailBox agentData={agentById} />
-              </TabPanel>
             </TabPanels>
           </TabsContext>
         </StyledContainer>
@@ -131,13 +131,17 @@ const ChatMembers = ({
     return (
       <StyledRoot>
         <TabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>Members</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Info</Tab>
+          <Tab onClick={() => setActiveTab(0)}>Info</Tab>
+          <Tab onClick={() => setActiveTab(1)}>Members</Tab>
         </TabList>
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
+              <TabPanel>
+                <TeamOfAgentsDetailsBox teamData={teamOfAgents} />
+              </TabPanel>
+
               <TabPanel>
                 {!isHistory && user?.name && (
                   <StyledAgentWrapper>
@@ -197,10 +201,6 @@ const ChatMembers = ({
                       </StyledAgentWrapper>
                     )
                   })}
-              </TabPanel>
-
-              <TabPanel>
-                <TeamOfAgentsDetailsBox teamData={teamOfAgents} />
               </TabPanel>
             </TabPanels>
           </TabsContext>

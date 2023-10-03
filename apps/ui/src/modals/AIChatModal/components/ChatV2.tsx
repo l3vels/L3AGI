@@ -43,7 +43,7 @@ import { ButtonSecondary } from 'components/Button/Button'
 
 import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
-
+import { useChatByIdService } from 'services/chat/useChatByIdService'
 
 const ChatV2 = () => {
   const navigate = useNavigate()
@@ -81,15 +81,17 @@ const ChatV2 = () => {
     chatId,
   })
 
-  // console.log('chatMessages', chatMessages)
+  const { data: chatById } = useChatByIdService({ id: chatId || '' })
 
   const { data: configs } = useConfigsService()
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const agentName = agentById?.agent?.name
 
-  const chatSuggestions = agentById?.configs?.suggestions || []
-  const chatGreeting = agentById?.configs?.greeting || ''
+  const chatSuggestions =
+    agentById?.configs?.suggestions || chatById?.agent?.configs?.suggestions || []
+
+  const chatGreeting = agentById?.configs?.greeting || chatById?.agent?.configs?.greeting || ''
 
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
 
@@ -285,7 +287,7 @@ const ChatV2 = () => {
   return (
     <StyledWrapper>
       <StyledMembersWrapper>
-        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} />
+        <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
       </StyledMembersWrapper>
 
       <StyledMessages>

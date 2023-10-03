@@ -30,7 +30,7 @@ const HumanMessageText = ({ textArray }: { textArray: any }) => {
         return (
           <React.Fragment key={index}>
             <TypographySecondary
-              value={word}
+              value={`${word} `}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
             />

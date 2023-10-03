@@ -35,11 +35,7 @@ export const useDatasource = () => {
             closeModal('delete-confirmation-modal')
           }
         },
-        closeModal: () => {
-          closeModal('delete-confirmation-modal')
-        },
         label: 'Delete Datasource?',
-        title: 'Delete Datasource?',
       },
     })
   }

@@ -22,6 +22,7 @@ import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import { useAgents } from 'pages/Agents/useAgents'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -29,6 +30,8 @@ type AgentViewDetailBoxProps = {
 
 const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { user } = React.useContext(AuthContext)
+
+  const { deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
   const { closeModal, openModal } = useModal()
@@ -71,12 +74,16 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               />
             )}
 
-            <MenuButton component={MenuDots}>
-              <StyledMenuButtonsWrapper>
-                <ButtonTertiary onClick={handleCreateChat}>Create Chat Link</ButtonTertiary>
-                <ButtonTertiary>Delete Agent</ButtonTertiary>
-              </StyledMenuButtonsWrapper>
-            </MenuButton>
+            {isCreator && (
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  <ButtonTertiary onClick={handleCreateChat}>Create Chat Link</ButtonTertiary>
+                  <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
+                    Delete Agent
+                  </ButtonTertiary>
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
+            )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
         {creator && (

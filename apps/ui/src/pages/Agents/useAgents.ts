@@ -124,6 +124,8 @@ export const useAgents = () => {
             await deleteAgentById(id)
             await refetchAgents()
             closeModal('delete-confirmation-modal')
+            closeModal('agent-view-modal')
+            navigate('/chat')
             setToast({
               message: 'Agent was deleted!',
               type: 'positive',
@@ -138,11 +140,7 @@ export const useAgents = () => {
             closeModal('delete-confirmation-modal')
           }
         },
-        closeModal: () => {
-          closeModal('delete-confirmation-modal')
-        },
         label: 'Delete Agent?',
-        title: 'Delete Agent?',
       },
     })
   }
