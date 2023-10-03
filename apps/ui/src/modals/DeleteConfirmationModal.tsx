@@ -21,7 +21,7 @@ type DeleteConfirmationModalProps = {
 }
 
 const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
-  const { closeModal, deleteItem, label, title } = data
+  const { closeModal, deleteItem, label } = data
   const [isLoading, setIsLoading] = useState(false)
 
   const handleConfirm = async () => {
