@@ -287,7 +287,7 @@ const ChatV2 = () => {
   return (
     <StyledWrapper>
       <StyledMembersWrapper>
-        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} />
+        <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
       </StyledMembersWrapper>
 
       <StyledMessages>

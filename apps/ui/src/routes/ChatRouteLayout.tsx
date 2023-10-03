@@ -41,7 +41,7 @@ const ChatRouteLayout = () => {
   const teamId = urlParams.get('team') || params.teamId
   const chatId = urlParams.get('chat')
 
-  // if (!user) return <Navigate to='/' />
+  if (!user && !chatId) return <Navigate to='/' />
 
   return (
     <StyledAppContainer className='app_container'>

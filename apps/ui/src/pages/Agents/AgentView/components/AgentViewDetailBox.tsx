@@ -71,12 +71,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               />
             )}
 
-            <MenuButton component={MenuDots}>
-              <StyledMenuButtonsWrapper>
-                <ButtonTertiary onClick={handleCreateChat}>Create Chat Link</ButtonTertiary>
-                <ButtonTertiary>Delete Agent</ButtonTertiary>
-              </StyledMenuButtonsWrapper>
-            </MenuButton>
+            {isCreator && (
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  <ButtonTertiary onClick={handleCreateChat}>Create Chat Link</ButtonTertiary>
+                  {/* <ButtonTertiary>Delete Agent</ButtonTertiary> */}
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
+            )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
         {creator && (
