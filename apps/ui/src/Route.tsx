@@ -165,11 +165,11 @@ const Route = () => {
 
             <Router
               path={'/chat/client'}
-              element={<ChatHistoryRouteLayout />}
+              element={<ChatRouteLayout />}
               key={document.location.href}
-            >
-              <Router index element={<ClientChat />} key={document.location.href} />
-            </Router>
+            />
+            {/* <Router index element={<ClientChat />} key={document.location.href} />
+            </Router> */}
 
             <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
               {/* <Router index element={<div />} key={document.location.href} /> */}
