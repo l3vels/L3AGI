@@ -128,22 +128,24 @@ const ChatRouteLayout = () => {
             </>
           )}
 
-          <>
-            <ListHeader title='Customer Chat' />
+          {chatsData?.length > 0 && (
+            <>
+              <ListHeader title='Customer Chat' />
 
-            {chatsData?.map((chat: any) => {
-              const { agent, name, id } = chat
+              {chatsData?.map((chat: any) => {
+                const { agent, name, id } = chat
 
-              return (
-                <CustomerChatCard
-                  key={id}
-                  onClick={() => navigate(`/chat/client?chat=${id}`)}
-                  picked={id === chatId}
-                  name={name}
-                />
-              )
-            })}
-          </>
+                return (
+                  <CustomerChatCard
+                    key={id}
+                    onClick={() => navigate(`/chat/client?chat=${id}`)}
+                    picked={id === chatId}
+                    name={name}
+                  />
+                )
+              })}
+            </>
+          )}
         </StyledList>
         <StyledMainWrapper>
           <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
