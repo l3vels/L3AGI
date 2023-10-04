@@ -28,6 +28,10 @@ declare module 'styled-components' {
       humanMessageBgColor: string
       replyBoxBgColor: string
       secondaryIconColor: string
+      detailCardBackgroundColor: string
+      toolkitCardBgColorPrimary: string
+      toolkitCardBgColorSecondary: string
+      toolkitCardBgColorTertiary: string
     }
     typography: {
       contentPrimary: string

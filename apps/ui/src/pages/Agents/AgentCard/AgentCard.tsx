@@ -74,7 +74,15 @@ const AgentCard = ({
             type={Typography.types.P}
             size={Typography.sizes.lg}
           />
-          <div>{headerTag && <Tags label={shortHeaderTag} readOnly size='small' outlined />}</div>
+          <div>
+            {headerTag && (
+              <TypographySecondary
+                value={shortHeaderTag}
+                type={Typography.types.P}
+                size={Typography.sizes.sm}
+              />
+            )}
+          </div>
         </StyledTitleWrapper>
         {/* <div>
           {headerText && (

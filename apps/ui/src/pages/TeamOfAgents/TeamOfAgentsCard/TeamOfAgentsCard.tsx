@@ -185,7 +185,7 @@ const StyledCard = styled.div`
 
   border-radius: 22px;
   border: ${({ theme }) => theme.body.border};
-  background: ${({ theme }) => theme.body.backgroundColorSecondary};
+  background: ${({ theme }) => theme.body.cardBgColor};
   display: flex;
   flex-direction: column;
   align-items: center;
