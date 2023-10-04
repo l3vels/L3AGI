@@ -118,7 +118,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 export default AgentVIewDetailBox
 
 export const StyledDetailsBox = styled.div`
-  background: ${({ theme }) => theme.body.detailCardBackgroundColor};
+  background: ${({ theme }) => theme.body.cardBgColor};
   border: ${({ theme }) => theme.body.secondaryBorder};
   width: 100%;
   max-width: 300px;
