@@ -246,7 +246,7 @@ const StyledChatSwitcher = styled.div`
   gap: 10px;
   border-radius: 100px;
   border: ${({ theme }) => theme.body.border};
-  background: ${({ theme }) => theme.body.detailCardBackgroundColor};
+  background: ${({ theme }) => theme.body.breadCrumbsBg};
   /* Style */
   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
     0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
