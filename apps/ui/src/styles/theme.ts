@@ -81,7 +81,7 @@ const lightTheme: DefaultTheme = {
     detailCardBackgroundColor: 'rgba(0,0,0,0.2)',
     toolkitCardBgColorPrimary: 'rgb(253,252,250)',
     toolkitCardBgColorSecondary: 'rgb(253,252,250)',
-    toolkitCardBgColorTertiary: 'none',
+    toolkitCardBgColorTertiary: '#f3f3f3',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
