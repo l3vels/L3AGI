@@ -69,7 +69,7 @@ const lightTheme: DefaultTheme = {
     breadCrumbsBg: 'rgb(217,217,217)',
     commandBorderColor: '1px solid rgb(126,126,126)',
     placeHolderColor: 'rgb(187,187,187)',
-    cardBgColor: 'rgb(255,255,255)',
+    cardBgColor: 'rgb(253,252,250)',
     secondaryBorder: '1px solid lightGray',
     humanMessageBgColor: 'rgb(240,240,240)',
     replyBoxBgColor: 'rgb(194,194,194)',
