@@ -25,6 +25,10 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
 
+import Hide from '@l3-lib/ui-core/dist/icons/Hide'
+import Show from '@l3-lib/ui-core/dist/icons/Show'
+import { ButtonTertiary } from 'components/Button/Button'
+
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
 
@@ -79,7 +83,9 @@ const ChatRouteLayout = () => {
   return (
     <StyledAppContainer className='app_container'>
       <div style={{ position: 'absolute', bottom: 30, right: 50, zIndex: 1000 }}>
-        <button onClick={() => setFocus(!focus)}>Focus {focus ? 'on' : 'off'}</button>
+        <ButtonTertiary size={'medium'} onClick={() => setFocus(!focus)}>
+          Focus {focus ? <Hide /> : <Show />}
+        </ButtonTertiary>
       </div>
       <Header />
       <StyledContainer>
