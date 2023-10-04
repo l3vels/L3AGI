@@ -34,7 +34,6 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
-import ChatMembers from './ChatMembers'
 import { ChatStatus, TeamOfAgentsType } from 'types'
 import useStopChatService from 'services/chat/useStopChatService'
 import { useConfigsService } from 'services/config/useConfigsService'
@@ -286,10 +285,6 @@ const ChatV2 = () => {
 
   return (
     <StyledWrapper>
-      <StyledMembersWrapper>
-        {/* <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} /> */}
-      </StyledMembersWrapper>
-
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
@@ -315,7 +310,7 @@ const ChatV2 = () => {
       <StyledChatFooter>
         <StyledChatInputWrapper>
           <StyledButtonGroup>
-            {/* <StyledSuggestionsContainer>
+            <StyledSuggestionsContainer>
               {chatSuggestions.map((chatSuggestion: string, index: number) => {
                 return (
                   <StyledOption
@@ -328,7 +323,7 @@ const ChatV2 = () => {
                   </StyledOption>
                 )
               })}
-            </StyledSuggestionsContainer> */}
+            </StyledSuggestionsContainer>
 
             {canStopGenerating && (
               <StyledStopGeneratingButton>
@@ -512,7 +507,7 @@ const StyledChatFooter = styled.div`
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 
   padding: 16px 0;
   width: 100%;
@@ -530,13 +525,14 @@ const StyledChatWrapper = styled.div`
 `
 
 const StyledSuggestionsContainer = styled.div`
+  position: absolute;
   display: flex;
   width: 100%;
-
+  max-width: 800px;
   align-items: center;
   gap: 12px;
 
-  overflow-x: scroll;
+  overflow-x: auto;
 
   ::-webkit-scrollbar {
     display: none;
@@ -585,24 +581,4 @@ const StyledChatBottom = styled.div`
   gap: 10px;
   padding: 0 50px;
   width: 100%;
-`
-const StyledMembersWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 5px;
-  border-radius: 23px;
-  z-index: 12000000;
-  padding: 10px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  /* background: rgba(0, 0, 0, 0.3); */
-
-  height: calc(100vh - 240px);
-
-  @media only screen and (max-width: 1400px) {
-    display: none;
-  }
 `
