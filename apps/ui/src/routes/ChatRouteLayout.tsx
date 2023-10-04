@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext, LayoutContext, ToastContext } from 'contexts'
@@ -32,6 +32,9 @@ const ChatRouteLayout = () => {
 
   const { setToast } = useContext(ToastContext)
 
+  const [showChats, setShowChats] = useState(true)
+  const [showInfo, setShowInfo] = useState(false)
+
   const outlet = useOutlet()
   const { agentsData } = useAgents()
   const { teamOfAgents: teamOfAgentsArray } = useTeamOfAgents()
@@ -59,7 +62,7 @@ const ChatRouteLayout = () => {
   // useEffect(() => {
   //   const handleResize = () => {
   //     // Check the window width and update the state accordingly
-  //     setFocus(window.innerWidth <= 1400) // Adjust the breakpoint as needed
+  //     onChangeLayout(window.innerWidth <= 1400) // Adjust the breakpoint as needed
   //   }
 
   //   // Set the initial state on component mount
@@ -80,7 +83,20 @@ const ChatRouteLayout = () => {
     <StyledAppContainer className='app_container'>
       <Header />
       <StyledContainer>
-        <StyledLeftColumn isHidden={expand}>
+        {expand && !showChats && (
+          <StyledShowButton
+            onClick={() => setShowChats(true)}
+            onMouseEnter={() => setShowChats(true)}
+          />
+        )}
+        {expand && !showInfo && (
+          <StyledShowButton
+            isRight
+            onClick={() => setShowInfo(true)}
+            onMouseEnter={() => setShowInfo(true)}
+          />
+        )}
+        <StyledLeftColumn isHidden={expand && !showChats} onMouseLeave={() => setShowChats(false)}>
           {user && (
             <>
               <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
@@ -214,7 +230,10 @@ const ChatRouteLayout = () => {
           )}
         </StyledMainWrapper>
 
-        <StyledRightColumn isHidden={expand || !location.pathname.includes('/chat')}>
+        <StyledRightColumn
+          isHidden={!showInfo && (expand || !location.pathname.includes('/chat'))}
+          onMouseLeave={() => setShowInfo(false)}
+        >
           <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
         </StyledRightColumn>
       </StyledContainer>
@@ -307,4 +326,22 @@ const StyledOutletWrapper = styled.div`
   padding: 0 30px;
 
   max-width: 1500px;
+`
+const StyledShowButton = styled.div<{ isRight?: boolean }>`
+  height: 100%;
+  width: 9%;
+
+  cursor: pointer;
+
+  position: absolute;
+  z-index: 10000;
+  left: 0;
+  max-height: calc(100vh - 185px);
+
+  ${props =>
+    props.isRight &&
+    css`
+      right: 0;
+      margin-left: auto;
+    `}
 `

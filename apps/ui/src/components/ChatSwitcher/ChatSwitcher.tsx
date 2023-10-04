@@ -201,14 +201,14 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   position: absolute;
   top: 50%;
   left: 0;
-  z-index: 2147483647;
+  z-index: 2000000;
   transform: translateY(-50%);
   /* background: red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  height: 80%;
+  /* height: 80%; */
   /* width: 110px; */
   padding-right: 10px;
   /* margin-left: 20px; */
