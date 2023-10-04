@@ -30,6 +30,7 @@ const darkTheme: DefaultTheme = {
     secondaryIconColor: 'rgb(255, 255, 255)',
     avatarDropDownColor:
       'linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);',
+    detailCardBackgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -74,6 +75,7 @@ const lightTheme: DefaultTheme = {
     replyBoxBgColor: 'rgb(194,194,194)',
     secondaryIconColor: 'rgb(255, 255, 255)',
     avatarDropDownColor: 'rgb(255, 255, 255)',
+    detailCardBackgroundColor: 'rgba(0,0,0,0.2)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
