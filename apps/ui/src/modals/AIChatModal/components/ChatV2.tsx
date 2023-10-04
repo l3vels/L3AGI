@@ -287,7 +287,7 @@ const ChatV2 = () => {
   return (
     <StyledWrapper>
       <StyledMembersWrapper>
-        <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
+        {/* <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} /> */}
       </StyledMembersWrapper>
 
       <StyledMessages>
@@ -315,7 +315,7 @@ const ChatV2 = () => {
       <StyledChatFooter>
         <StyledChatInputWrapper>
           <StyledButtonGroup>
-            <StyledSuggestionsContainer>
+            {/* <StyledSuggestionsContainer>
               {chatSuggestions.map((chatSuggestion: string, index: number) => {
                 return (
                   <StyledOption
@@ -328,7 +328,7 @@ const ChatV2 = () => {
                   </StyledOption>
                 )
               })}
-            </StyledSuggestionsContainer>
+            </StyledSuggestionsContainer> */}
 
             {canStopGenerating && (
               <StyledStopGeneratingButton>
@@ -461,7 +461,8 @@ const StyledForm = styled.form`
   border-radius: 100px;
   /* cursor: pointer; */
 
-  width: fit-content;
+  width: 100%;
+  max-width: 800px;
   min-height: 48px;
   height: fit-content;
   max-height: 250px;
@@ -503,9 +504,10 @@ const StyledChatFooter = styled.div`
 
   display: flex;
   /* flex-direction: column; */
-  /* justify-content: center; */
+  justify-content: center;
 
   width: 100%;
+  padding: 0 20px;
 `
 
 const StyledButtonGroup = styled.div`
@@ -529,13 +531,12 @@ const StyledChatWrapper = styled.div`
 
 const StyledSuggestionsContainer = styled.div`
   display: flex;
-  width: calc(100vw - 100px);
+  width: 100%;
 
-  max-width: 800px;
   align-items: center;
   gap: 12px;
 
-  overflow-y: scroll;
+  overflow-x: scroll;
 
   ::-webkit-scrollbar {
     display: none;
@@ -556,10 +557,11 @@ const StyledFileWrapper = styled.div`
 `
 
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
-  width: calc(100vw - 700px);
-  max-width: 600px;
-  padding-bottom: 2px;
+  /* width: calc(100vw - 600px);
+  max-width: 600px; */
 
+  padding-bottom: 2px;
+  width: 100%;
   ${p =>
     p.secondary &&
     css`
@@ -575,6 +577,7 @@ const StyledChatInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 const StyledChatBottom = styled.div`
   display: flex;

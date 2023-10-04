@@ -91,7 +91,8 @@ export const StyledAgentWrapper = styled.div<{ picked: boolean }>`
   gap: 5px;
 
   padding: 10px;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
 
   /* background: rgba(255, 255, 255, 0.1); */
 

@@ -54,7 +54,8 @@ export const StyledReplyWrapper = styled.div`
 
   width: calc(100vw - 100px);
 
-  max-width: 850px;
+  max-width: 800px;
+
   height: 20px;
   /* background: red; */
   gap: 10px;

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
 import { AuthContext, ToastContext } from 'contexts'
@@ -20,6 +20,10 @@ import ListHeader from './components/ListHeader'
 import { useChatsService } from 'services/chat/useChatsService'
 import CustomerChatCard from 'components/ChatCards/CustomerChatCard'
 import { useDeleteChatService } from 'services/chat/useDeleteChatService'
+import ChatMembers from 'modals/AIChatModal/components/ChatMembers'
+import { useAgentByIdService } from 'services/agent/useAgentByIdService'
+import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+import { useChatByIdService } from 'services/chat/useChatByIdService'
 
 const ChatRouteLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -46,13 +50,40 @@ const ChatRouteLayout = () => {
 
   const { deleteChat } = useDeleteChatService()
 
+  const [focus, setFocus] = useState(false)
+
+  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
+  const { data: chatById } = useChatByIdService({ id: chatId || '' })
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     // Check the window width and update the state accordingly
+  //     setFocus(window.innerWidth <= 1400) // Adjust the breakpoint as needed
+  //   }
+
+  //   // Set the initial state on component mount
+  //   handleResize()
+
+  //   // Add a resize event listener to handle changes
+  //   window.addEventListener('resize', handleResize)
+
+  //   // Remove the event listener on component unmount to avoid memory leaks
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize)
+  //   }
+  // }, [])
+
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
     <StyledAppContainer className='app_container'>
+      <div style={{ position: 'absolute', bottom: 30, right: 50, zIndex: 1000 }}>
+        <button onClick={() => setFocus(!focus)}>Focus {focus ? 'on' : 'off'}</button>
+      </div>
       <Header />
       <StyledContainer>
-        <StyledList>
+        <StyledLeftColumn isHidden={focus}>
           {user && (
             <>
               <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
@@ -174,13 +205,21 @@ const ChatRouteLayout = () => {
               })}
             </>
           )}
-        </StyledList>
+        </StyledLeftColumn>
+
         <StyledMainWrapper>
-          <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
-          <StyledChatWrapper isHidden={!location.pathname.includes('/chat')}>
-            <AIChat />
-          </StyledChatWrapper>
+          {location.pathname.includes('/chat') ? (
+            <StyledChatWrapper isHidden={false}>
+              <AIChat />
+            </StyledChatWrapper>
+          ) : (
+            <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
+          )}
         </StyledMainWrapper>
+
+        <StyledRightColumn isHidden={focus || !location.pathname.includes('/chat')}>
+          <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
+        </StyledRightColumn>
       </StyledContainer>
     </StyledAppContainer>
   )
@@ -192,40 +231,74 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-left: 100px;
-  /* gap: 100px; */
-  /* margin-top: 30px; */
+  overflow: hidden;
 `
-const StyledList = styled.div`
-  /* background: rgba(255, 255, 255, 0.1); */
+const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 5px;
 
-  padding: 20px;
+  padding: 20px 10px;
+  padding-left: 100px;
 
   height: 100%;
-  width: 100%;
-  max-width: 400px;
+  min-width: 500px;
 
-  max-height: calc(100vh - 260px);
+  max-height: calc(100vh - 185px);
 
   margin-top: 30px;
+
+  transition: margin-left 0.1s ease-in-out;
+
+  ${props =>
+    props.isHidden &&
+    css`
+      margin-left: -500px;
+      overflow: hidden;
+      cursor: pointer;
+      :hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    `}
+`
+const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  height: 100%;
+  min-width: 500px;
+
+  max-height: calc(100vh - 185px);
+
+  margin-top: 30px;
+  padding-right: 10px;
+  transition: margin-right 0.1s ease-in-out;
+
+  ${props =>
+    props.isHidden &&
+    css`
+      margin-right: -500px;
+      overflow: hidden;
+      cursor: pointer;
+      :hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    `}
 `
 
 const StyledMainWrapper = styled.div`
   margin-top: 30px;
-  max-width: 1500px;
+
+  display: flex;
+  justify-content: center;
   width: 100%;
 `
 const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
-  /* max-width: 1400px; */
-  margin-left: 50px;
-
-  /* width: calc(100% - 450px;); */
   height: 100%;
-
+  width: 100%;
   ${props =>
     props.isHidden &&
     css`
@@ -233,6 +306,8 @@ const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
     `}
 `
 const StyledOutletWrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 0px);
   padding: 0 30px;
+
+  max-width: 1500px;
 `

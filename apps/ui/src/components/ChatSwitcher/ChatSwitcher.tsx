@@ -210,7 +210,8 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
 
   height: 80%;
   /* width: 110px; */
-
+  padding-right: 10px;
+  /* margin-left: 20px; */
   @keyframes slideAnimation {
     from {
       left: 0; /* Element slides to the right and is fully visible */
@@ -226,7 +227,7 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
     p.collapsed &&
     css`
       /* width: 10px; */
-      left: -100px;
+      left: -80px;
       overflow: hidden;
       /* animation: slideAnimation 0.2s ease-in-out; */
 
