@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 
-import { AuthContext, ToastContext } from 'contexts'
+import { AuthContext, LayoutContext, ToastContext } from 'contexts'
 
 import { Header } from 'components/Layout'
 import { StyledAppContainer } from '../components/Layout/LayoutStyle'
@@ -25,11 +25,9 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
 
-import Hide from '@l3-lib/ui-core/dist/icons/Hide'
-import Show from '@l3-lib/ui-core/dist/icons/Show'
-import { ButtonTertiary } from 'components/Button/Button'
-
 const ChatRouteLayout = () => {
+  const { expand } = useContext(LayoutContext)
+
   const { user } = React.useContext(AuthContext)
 
   const { setToast } = useContext(ToastContext)
@@ -53,8 +51,6 @@ const ChatRouteLayout = () => {
   const chatId = urlParams.get('chat')
 
   const { deleteChat } = useDeleteChatService()
-
-  const [focus, setFocus] = useState(false)
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
@@ -82,14 +78,9 @@ const ChatRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <div style={{ position: 'absolute', bottom: 30, right: 50, zIndex: 1000 }}>
-        <ButtonTertiary size={'medium'} onClick={() => setFocus(!focus)}>
-          Focus {focus ? <Hide /> : <Show />}
-        </ButtonTertiary>
-      </div>
       <Header />
       <StyledContainer>
-        <StyledLeftColumn isHidden={focus}>
+        <StyledLeftColumn isHidden={expand}>
           {user && (
             <>
               <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
@@ -223,7 +214,7 @@ const ChatRouteLayout = () => {
           )}
         </StyledMainWrapper>
 
-        <StyledRightColumn isHidden={focus || !location.pathname.includes('/chat')}>
+        <StyledRightColumn isHidden={expand || !location.pathname.includes('/chat')}>
           <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
         </StyledRightColumn>
       </StyledContainer>

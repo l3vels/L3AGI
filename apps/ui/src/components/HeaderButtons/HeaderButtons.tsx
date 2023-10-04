@@ -10,13 +10,24 @@ import TwitterLogo from 'assets/tools/twitter.png'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonTertiary } from 'components/Button/Button'
 
+import Hide from '@l3-lib/ui-core/dist/icons/Hide'
+import Show from '@l3-lib/ui-core/dist/icons/Show'
+import { useContext } from 'react'
+import { LayoutContext } from 'contexts'
+
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
 }
 
 const HeaderButtons = () => {
+  const { expand, onChangeLayout } = useContext(LayoutContext)
+
   return (
     <StyledButtonsWrapper>
+      <ButtonTertiary size={'medium'} onClick={() => onChangeLayout(!expand)}>
+        Focus {expand ? <Hide /> : <Show />}
+      </ButtonTertiary>
+
       <ButtonTertiary
         size={Button.sizes.SMALL}
         onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
