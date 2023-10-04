@@ -31,6 +31,9 @@ const darkTheme: DefaultTheme = {
     avatarDropDownColor:
       'linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);',
     detailCardBackgroundColor: 'rgba(0, 0, 0, 0.2)',
+    toolkitCardBgColorPrimary: 'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%)',
+    toolkitCardBgColorSecondary: 'rgba(0, 0, 0, 0.8)',
+    toolkitCardBgColorTertiary: '#000',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -76,6 +79,9 @@ const lightTheme: DefaultTheme = {
     secondaryIconColor: 'rgb(255, 255, 255)',
     avatarDropDownColor: 'rgb(255, 255, 255)',
     detailCardBackgroundColor: 'rgba(0,0,0,0.2)',
+    toolkitCardBgColorPrimary: 'rgb(253,252,250)',
+    toolkitCardBgColorSecondary: 'rgb(253,252,250)',
+    toolkitCardBgColorTertiary: 'none',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
