@@ -25,7 +25,7 @@ const HeaderButtons = () => {
   return (
     <StyledButtonsWrapper>
       <ButtonTertiary size={'medium'} onClick={() => onChangeLayout(!expand)}>
-        Focus {expand ? <Hide /> : <Show />}
+        {expand ? <Hide size={24} /> : <Show size={24} />}
       </ButtonTertiary>
 
       <ButtonTertiary
