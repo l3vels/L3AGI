@@ -25,13 +25,13 @@ export const useChatSwitcher = () => {
     }
   }, [])
 
-  useEffect(() => {
-    if (expand) {
-      setShowSwitcher(false)
-    } else {
-      setShowSwitcher(true)
-    }
-  }, [expand])
+  // useEffect(() => {
+  //   if (expand) {
+  //     setShowSwitcher(false)
+  //   } else {
+  //     setShowSwitcher(true)
+  //   }
+  // }, [expand])
 
   const handleMouseLeave = () => {
     const clearHoverTimer = () => {
@@ -39,7 +39,7 @@ export const useChatSwitcher = () => {
     }
     clearHoverTimer()
 
-    if (window.innerWidth <= 1000 || expand) {
+    if (window.innerWidth <= 1000) {
       setTimeout(() => {
         setShowSwitcher(false)
       }, 1000)

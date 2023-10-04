@@ -10,58 +10,93 @@ import TwitterLogo from 'assets/tools/twitter.png'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonTertiary } from 'components/Button/Button'
 
+import Hide from '@l3-lib/ui-core/dist/icons/Hide'
+import Show from '@l3-lib/ui-core/dist/icons/Show'
+import { useContext } from 'react'
+import { LayoutContext } from 'contexts'
+
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
 }
 
 const HeaderButtons = () => {
+  const { expand, onChangeLayout } = useContext(LayoutContext)
+
   return (
     <StyledButtonsWrapper>
-      <ButtonTertiary
-        size={Button.sizes.SMALL}
-        onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
+      <Tooltip
+        content={() => <span>Focus Mode</span>}
+        position={Tooltip.positions.BOTTOM}
+        tooltipSize='small'
       >
-        <StyledInnerButtonWrapper>
-          <StyledImageWrapper>
-            <StyledImg src={TwitterLogo} customScale={1} />
-          </StyledImageWrapper>
-          <TypographyPrimary
+        <ButtonTertiary size={'small'} onClick={() => onChangeLayout(!expand)}>
+          {expand ? <Hide size={26} /> : <Show size={26} />}
+        </ButtonTertiary>
+      </Tooltip>
+
+      <Tooltip
+        content={() => <span>Twitter</span>}
+        position={Tooltip.positions.BOTTOM}
+        tooltipSize='small'
+      >
+        <ButtonTertiary
+          size={Button.sizes.SMALL}
+          onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
+        >
+          <StyledInnerButtonWrapper>
+            <StyledImageWrapper>
+              <StyledImg src={TwitterLogo} customScale={1} />
+            </StyledImageWrapper>
+            {/* <TypographyPrimary
             value='Twitter'
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-          />
-        </StyledInnerButtonWrapper>
-      </ButtonTertiary>
+          /> */}
+          </StyledInnerButtonWrapper>
+        </ButtonTertiary>
+      </Tooltip>
 
-      <ButtonTertiary
-        size={Button.sizes.SMALL}
-        onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
+      <Tooltip
+        content={() => <span>Discord</span>}
+        position={Tooltip.positions.BOTTOM}
+        tooltipSize='small'
       >
-        <StyledInnerButtonWrapper>
-          <StyledDiscordIcon size='20' />
-          <TypographyPrimary
+        <ButtonTertiary
+          size={Button.sizes.SMALL}
+          onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
+        >
+          <StyledInnerButtonWrapper>
+            <StyledDiscordIcon size='20' />
+            {/* <TypographyPrimary
             value='Discord'
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-          />
-        </StyledInnerButtonWrapper>
-      </ButtonTertiary>
+          /> */}
+          </StyledInnerButtonWrapper>
+        </ButtonTertiary>
+      </Tooltip>
 
-      <ButtonTertiary
-        size={Button.sizes.SMALL}
-        onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
+      <Tooltip
+        content={() => <span>Github</span>}
+        position={Tooltip.positions.BOTTOM}
+        tooltipSize='small'
       >
-        <StyledInnerButtonWrapper>
-          <StyledImageWrapper>
-            <StyledImg src={githubIcon} />
-          </StyledImageWrapper>
-          <TypographyPrimary
+        <ButtonTertiary
+          size={Button.sizes.SMALL}
+          onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
+        >
+          <StyledInnerButtonWrapper>
+            <StyledImageWrapper>
+              <StyledImg src={githubIcon} />
+            </StyledImageWrapper>
+            {/* <TypographyPrimary
             value='Github'
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-          />
-        </StyledInnerButtonWrapper>
-      </ButtonTertiary>
+          /> */}
+          </StyledInnerButtonWrapper>
+        </ButtonTertiary>
+      </Tooltip>
     </StyledButtonsWrapper>
   )
 }

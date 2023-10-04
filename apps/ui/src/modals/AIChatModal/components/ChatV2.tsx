@@ -34,7 +34,6 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
-import ChatMembers from './ChatMembers'
 import { ChatStatus, TeamOfAgentsType } from 'types'
 import useStopChatService from 'services/chat/useStopChatService'
 import { useConfigsService } from 'services/config/useConfigsService'
@@ -286,10 +285,6 @@ const ChatV2 = () => {
 
   return (
     <StyledWrapper>
-      <StyledMembersWrapper>
-        <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
-      </StyledMembersWrapper>
-
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
@@ -461,7 +456,8 @@ const StyledForm = styled.form`
   border-radius: 100px;
   /* cursor: pointer; */
 
-  width: fit-content;
+  width: 100%;
+  max-width: 800px;
   min-height: 48px;
   height: fit-content;
   max-height: 250px;
@@ -503,14 +499,15 @@ const StyledChatFooter = styled.div`
 
   display: flex;
   /* flex-direction: column; */
-  /* justify-content: center; */
+  justify-content: center;
 
   width: 100%;
+  padding: 0 20px;
 `
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 
   padding: 16px 0;
   width: 100%;
@@ -528,14 +525,14 @@ const StyledChatWrapper = styled.div`
 `
 
 const StyledSuggestionsContainer = styled.div`
+  position: absolute;
   display: flex;
-  width: calc(100vw - 100px);
-
+  width: 100%;
   max-width: 800px;
   align-items: center;
   gap: 12px;
 
-  overflow-y: scroll;
+  overflow-x: auto;
 
   ::-webkit-scrollbar {
     display: none;
@@ -556,10 +553,11 @@ const StyledFileWrapper = styled.div`
 `
 
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
-  width: calc(100vw - 700px);
-  max-width: 600px;
-  padding-bottom: 2px;
+  /* width: calc(100vw - 600px);
+  max-width: 600px; */
 
+  padding-bottom: 2px;
+  width: 100%;
   ${p =>
     p.secondary &&
     css`
@@ -575,6 +573,7 @@ const StyledChatInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 const StyledChatBottom = styled.div`
   display: flex;
@@ -582,24 +581,4 @@ const StyledChatBottom = styled.div`
   gap: 10px;
   padding: 0 50px;
   width: 100%;
-`
-const StyledMembersWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 5px;
-  border-radius: 23px;
-  z-index: 12000000;
-  padding: 10px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  /* background: rgba(0, 0, 0, 0.3); */
-
-  height: calc(100vh - 240px);
-
-  @media only screen and (max-width: 1400px) {
-    display: none;
-  }
 `

@@ -253,11 +253,11 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
   gap: 5px;
+
   padding-top: 10px;
   /* margin-right: 50px; */
-
   .visible-reply {
     opacity: 1;
   }
@@ -288,10 +288,11 @@ const StyledLoaderWrapper = styled.div`
   margin-top: 30px;
 
   width: calc(100% - 50px);
-  max-width: 850px;
+  max-width: 800px;
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
+  /* width: 100%; */
   opacity: 0;
   height: 30px;
   max-height: 30px;
