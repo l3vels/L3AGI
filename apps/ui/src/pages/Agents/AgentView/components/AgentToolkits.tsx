@@ -56,7 +56,7 @@ const AgentToolkits = ({ tools }: { tools: string[] }) => {
 export default AgentToolkits
 
 export const StyledWrapper = styled.div`
-  background: rgba(0, 0, 0, 0.2);
+  background: ${({ theme }) => theme.body.cardBgColor};
 
   width: 100%;
   max-width: 1440px;

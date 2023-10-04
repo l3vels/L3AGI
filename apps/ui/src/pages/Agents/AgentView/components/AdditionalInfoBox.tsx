@@ -31,7 +31,7 @@ const AdditionalInfoBox = ({ items, title }: AdditionalInfoBoxProps) => {
 export default AdditionalInfoBox
 
 const StyledAdditionalInfo = styled.div`
-  background: rgba(0, 0, 0, 0.2);
+  background: ${({ theme }) => theme.body.cardBgColor};
 
   width: 100%;
   max-width: 1440px;
