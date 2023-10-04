@@ -246,7 +246,7 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
 
   margin-top: 30px;
 
-  transition: margin-left 0.1s ease-in-out;
+  transition: margin-left 0.3s ease-in-out;
 
   ${props =>
     props.isHidden &&
@@ -272,7 +272,7 @@ const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
 
   margin-top: 30px;
   padding-right: 10px;
-  transition: margin-right 0.1s ease-in-out;
+  transition: margin-right 0.3s ease-in-out;
 
   ${props =>
     props.isHidden &&
