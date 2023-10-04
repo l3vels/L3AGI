@@ -62,7 +62,7 @@ const lightTheme: DefaultTheme = {
     border: '1px solid #acacad',
     backgroundImageSecondary: defaultBgImageSecondary,
     testVariableColor: 'var(--color-highlight_blue)',
-    iconColor: 'rgb(187,187,187)',
+    iconColor: 'rgb(130,130,130)',
     mainNavColorActive: 'rgb(80,80,80)',
     mainNavColor: 'rgb(193,193,193)',
     breadCrumbsColor: 'rgb(91,91,91)',
