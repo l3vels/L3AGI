@@ -113,7 +113,20 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                         kind={IconButton.kinds.TERTIARY}
                         // ariaLabel='View'
                       />
-                      <Tags label={role} readOnly size='small' outlined />
+                      <Tags
+                        key={index}
+                        label={
+                          <TypographySecondary
+                            value={role}
+                            type={Typography.types.LABEL}
+                            size={Typography.sizes.xss}
+                          />
+                        }
+                        color='Tags.colors.gradient_dark_blue'
+                        readOnly
+                        size='small'
+                        outlined
+                      />
                     </StyledSecondInfoWrapper>
                   </StyledAgent>
                 )
