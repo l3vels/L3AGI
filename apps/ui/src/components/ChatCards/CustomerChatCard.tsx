@@ -3,6 +3,7 @@ import { StyledAgentWrapper, StyledIconButtonWrapper } from './TeamChatCard'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import { StyledDeleteIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type CustomerChatCardProps = {
   onClick: () => void
@@ -21,13 +22,13 @@ const CustomerChatCard = ({ onClick, picked, name, onDeleteClick }: CustomerChat
 
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
-      {/* <AvatarGenerator name={team?.name} size={30} avatar={team.avatar} /> */}
+      <AvatarGenerator name={name} size={30} />
       <MemberText name={name} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
         {onDeleteClick && (
           <IconButton
-            onClick={onDeleteClick}
+            onClick={handleDelete}
             icon={() => <StyledDeleteIcon />}
             size={IconButton.sizes.SMALL}
             kind={IconButton.kinds.TERTIARY}
