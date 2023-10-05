@@ -14,6 +14,7 @@ import Hide from '@l3-lib/ui-core/dist/icons/Hide'
 import Show from '@l3-lib/ui-core/dist/icons/Show'
 import { useContext } from 'react'
 import { LayoutContext } from 'contexts'
+import { useLocation } from 'react-router-dom'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -21,18 +22,21 @@ export const openLinkTab = (url: string) => {
 
 const HeaderButtons = () => {
   const { expand, onChangeLayout } = useContext(LayoutContext)
+  const location = useLocation()
 
   return (
     <StyledButtonsWrapper>
-      <Tooltip
-        content={() => <span>Focus Mode</span>}
-        position={Tooltip.positions.BOTTOM}
-        tooltipSize='small'
-      >
-        <ButtonTertiary size={'small'} onClick={() => onChangeLayout(!expand)}>
-          {expand ? <Hide size={26} /> : <Show size={26} />}
-        </ButtonTertiary>
-      </Tooltip>
+      {location.pathname.includes('/chat') && (
+        <Tooltip
+          content={() => <span>Focus: cmd+SHIFT+F</span>}
+          position={Tooltip.positions.BOTTOM}
+          tooltipSize='small'
+        >
+          <ButtonTertiary size={'small'} onClick={() => onChangeLayout(!expand)}>
+            {expand ? <Show size={26} /> : <Hide size={26} />}
+          </ButtonTertiary>
+        </Tooltip>
+      )}
 
       <Tooltip
         content={() => <span>Twitter</span>}

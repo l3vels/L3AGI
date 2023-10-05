@@ -248,8 +248,20 @@ const StyledContainer = styled.div`
   justify-content: center;
   width: 100%;
   overflow: hidden;
+
+  position: relative;
 `
 const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
+  /* background: ${({ theme }) => theme.body.cardBgColor}; */
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  border-radius: 10px;
+
+  position: absolute;
+  left: 0;
+  z-index: 10000;
+
+  backdrop-filter: blur(100px);
+
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -259,35 +271,38 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
   padding-left: 100px;
 
   height: 100%;
-  min-width: 500px;
+  min-width: 450px;
 
   max-height: calc(100vh - 185px);
 
-  margin-top: 30px;
+  margin-top: 10px;
 
   transition: margin-left 0.3s ease-in-out;
 
   ${props =>
     props.isHidden &&
     css`
-      margin-left: -500px;
+      margin-left: -450px;
       overflow: hidden;
       cursor: pointer;
-      :hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
     `}
 `
 const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
+  position: absolute;
+  right: 0;
+  z-index: 10000;
+
+  backdrop-filter: blur(100px);
+
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 
   height: 100%;
-  min-width: 500px;
+  min-width: 320px;
 
-  max-height: calc(100vh - 185px);
+  max-height: calc(100vh - 205px);
 
   margin-top: 30px;
   padding-right: 10px;
@@ -296,17 +311,14 @@ const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
   ${props =>
     props.isHidden &&
     css`
-      margin-right: -500px;
+      margin-right: -320px;
       overflow: hidden;
       cursor: pointer;
-      :hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
     `}
 `
 
 const StyledMainWrapper = styled.div`
-  margin-top: 30px;
+  /* margin-top: 30px; */
 
   display: flex;
   justify-content: center;
@@ -329,7 +341,7 @@ const StyledOutletWrapper = styled.div`
 `
 const StyledShowButton = styled.div<{ isRight?: boolean }>`
   height: 100%;
-  width: 9%;
+  width: calc(20% - 120px);
 
   cursor: pointer;
 
