@@ -109,9 +109,9 @@ export const StyledAgentWrapper = styled.div<{ picked: boolean }>`
   ${props =>
     props.picked &&
     css`
-      background: rgba(250, 250, 250, 0.3);
+      background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
       :hover {
-        background: rgba(250, 250, 250, 0.3);
+        background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
       }
     `}
 `

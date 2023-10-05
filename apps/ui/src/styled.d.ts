@@ -32,6 +32,7 @@ declare module 'styled-components' {
       toolkitCardBgColorPrimary: string
       toolkitCardBgColorSecondary: string
       toolkitCardBgColorTertiary: string
+      teamChatCardSelectedColor: string
     }
     typography: {
       contentPrimary: string
