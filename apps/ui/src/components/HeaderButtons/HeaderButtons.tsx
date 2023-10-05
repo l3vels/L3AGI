@@ -30,7 +30,7 @@ const HeaderButtons = () => {
         tooltipSize='small'
       >
         <ButtonTertiary size={'small'} onClick={() => onChangeLayout(!expand)}>
-          {expand ? <Hide size={26} /> : <Show size={26} />}
+          {expand ? <Show size={26} /> : <Hide size={26} />}
         </ButtonTertiary>
       </Tooltip>
 
