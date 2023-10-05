@@ -28,7 +28,7 @@ const HeaderButtons = () => {
     <StyledButtonsWrapper>
       {location.pathname.includes('/chat') && (
         <Tooltip
-          content={() => <span>Focus Mode</span>}
+          content={() => <span>Focus: cmd+SHIFT+F</span>}
           position={Tooltip.positions.BOTTOM}
           tooltipSize='small'
         >

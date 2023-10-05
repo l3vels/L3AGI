@@ -77,6 +77,11 @@ const ChatRouteLayout = () => {
   //   }
   // }, [])
 
+  useEffect(() => {
+    setShowChats(!expand)
+    setShowInfo(!expand)
+  }, [expand])
+
   if (!user && !chatId) return <Navigate to='/' />
 
   return (

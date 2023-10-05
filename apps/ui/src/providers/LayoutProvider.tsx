@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { useHotkeys } from 'react-hotkeys-hook'
+
 import { LayoutContext } from 'contexts'
 // import { useLocation } from 'react-router-dom'
 
@@ -10,6 +12,15 @@ export const LayoutProvider = ({ children }: any) => {
   // useEffect(() => {
   //   setExpand(false)
   // }, [location.pathname])
+
+  const commandFunction = () => {
+    // Replace this with your desired functionality
+    setExpand(!expand)
+  }
+
+  // Use the useHotkeys hook to define your keyboard shortcut
+  useHotkeys('cmd+shift+f', commandFunction)
+  useHotkeys('ctrl+shift+f', commandFunction)
 
   useEffect(() => {
     if (expand) {
