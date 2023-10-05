@@ -252,6 +252,10 @@ const StyledContainer = styled.div`
   position: relative;
 `
 const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
+  /* background: ${({ theme }) => theme.body.cardBgColor}; */
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  border-radius: 10px;
+
   position: absolute;
   left: 0;
   z-index: 10000;
@@ -281,9 +285,6 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
       margin-left: -500px;
       overflow: hidden;
       cursor: pointer;
-      :hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
     `}
 `
 const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
@@ -313,9 +314,6 @@ const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
       margin-right: -320px;
       overflow: hidden;
       cursor: pointer;
-      :hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
     `}
 `
 
