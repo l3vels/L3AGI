@@ -83,20 +83,24 @@ const ChatRouteLayout = () => {
     <StyledAppContainer className='app_container'>
       <Header />
       <StyledContainer>
-        {expand && !showChats && (
+        {expand && !showChats && location.pathname.includes('/chat') && (
           <StyledShowButton
             onClick={() => setShowChats(true)}
             onMouseEnter={() => setShowChats(true)}
           />
         )}
-        {expand && !showInfo && (
+        {expand && !showInfo && location.pathname.includes('/chat') && (
           <StyledShowButton
             isRight
             onClick={() => setShowInfo(true)}
             onMouseEnter={() => setShowInfo(true)}
           />
         )}
-        <StyledLeftColumn isHidden={expand && !showChats} onMouseLeave={() => setShowChats(false)}>
+        <StyledLeftColumn
+          isHidden={expand && !showChats && location.pathname.includes('/chat')}
+          onMouseLeave={() => setShowChats(false)}
+          onMouseEnter={() => setShowChats(true)}
+        >
           {user && (
             <>
               <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
@@ -231,7 +235,7 @@ const ChatRouteLayout = () => {
         </StyledMainWrapper>
 
         <StyledRightColumn
-          isHidden={!showInfo && (expand || !location.pathname.includes('/chat'))}
+          isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}
           onMouseLeave={() => setShowInfo(false)}
         >
           <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
@@ -253,8 +257,8 @@ const StyledContainer = styled.div`
 `
 const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
   /* background: ${({ theme }) => theme.body.cardBgColor}; */
-  border: ${({ theme }) => theme.body.secondaryBorder};
-  border-radius: 10px;
+  border-right: ${({ theme }) => theme.body.secondaryBorder};
+  /* border-radius: 10px; */
 
   position: absolute;
   left: 0;
@@ -334,9 +338,9 @@ const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
     `}
 `
 const StyledOutletWrapper = styled.div`
-  width: calc(100% - 0px);
+  width: calc(100% - 450px);
   padding: 0 30px;
-
+  margin-left: 450px;
   max-width: 1500px;
 `
 const StyledShowButton = styled.div<{ isRight?: boolean }>`
