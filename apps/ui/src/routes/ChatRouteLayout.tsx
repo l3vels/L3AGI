@@ -77,11 +77,6 @@ const ChatRouteLayout = () => {
   //   }
   // }, [])
 
-  useEffect(() => {
-    setShowChats(!expand)
-    setShowInfo(!expand)
-  }, [expand])
-
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
@@ -276,7 +271,7 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
   padding-left: 100px;
 
   height: 100%;
-  min-width: 500px;
+  min-width: 450px;
 
   max-height: calc(100vh - 185px);
 
@@ -287,7 +282,7 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
   ${props =>
     props.isHidden &&
     css`
-      margin-left: -500px;
+      margin-left: -450px;
       overflow: hidden;
       cursor: pointer;
     `}
