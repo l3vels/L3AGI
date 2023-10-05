@@ -34,6 +34,7 @@ const darkTheme: DefaultTheme = {
     toolkitCardBgColorPrimary: 'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%)',
     toolkitCardBgColorSecondary: 'rgba(0, 0, 0, 0.8)',
     toolkitCardBgColorTertiary: '#000',
+    teamChatCardSelectedColor: 'rgba(250, 250, 250, 0.3)',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -82,6 +83,7 @@ const lightTheme: DefaultTheme = {
     toolkitCardBgColorPrimary: 'rgb(253,252,250)',
     toolkitCardBgColorSecondary: 'rgb(253,252,250)',
     toolkitCardBgColorTertiary: '#f3f3f3',
+    teamChatCardSelectedColor: 'rgb(217,217,217)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
