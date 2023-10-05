@@ -17,7 +17,22 @@ const TagsRow = ({ items, title }: TagsRowProps) => {
 
       <StyledContainer>
         {items.map((item: string, index: number) => {
-          return <Tags key={index} label={item} readOnly size='small' outlined />
+          return (
+            <Tags
+              key={index}
+              label={
+                <TypographySecondary
+                  value={item}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                />
+              }
+              color='Tags.colors.gradient_dark_blue'
+              readOnly
+              size='small'
+              outlined
+            />
+          )
         })}
       </StyledContainer>
     </StyledRow>
