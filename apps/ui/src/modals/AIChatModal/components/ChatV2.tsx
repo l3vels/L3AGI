@@ -7,7 +7,7 @@ import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
-import SendIconSvg from 'assets/icons/send_icon.svg'
+import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 
@@ -392,7 +392,7 @@ const ChatV2 = () => {
                 }}
                 disabled={!formValue || thinking}
               >
-                <img src={SendIconSvg} alt='sen' />
+                <StyledSenIcon size={27} />
               </StyledButton>
               <CommandIcon />
             </StyledTextareaWrapper>
@@ -581,4 +581,10 @@ const StyledChatBottom = styled.div`
   gap: 10px;
   padding: 0 50px;
   width: 100%;
+`
+const StyledSenIcon = styled(SendIcon)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
 `
