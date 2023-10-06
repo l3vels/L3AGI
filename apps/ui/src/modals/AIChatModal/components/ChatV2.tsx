@@ -584,6 +584,7 @@ const StyledChatBottom = styled.div`
 `
 const StyledSenIcon = styled(SendIcon)`
   path {
+    fill: ${({ theme }) => theme.body.iconColor};
     stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
