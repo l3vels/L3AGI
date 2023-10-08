@@ -175,7 +175,7 @@ const StepWrapper = styled.div`
     border: none;
 
     textarea {
-      color: ${({ theme }) => theme.body.textColorPrimary} !important;
+      color: ${({ theme }) => theme.body.textColorSecondary} !important;
 
       &:focus {
         outline: none;
