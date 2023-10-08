@@ -1,5 +1,6 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 import styled from 'styled-components'
 
 type TypingUsersProps = {
@@ -12,7 +13,7 @@ const TypingUsers = ({ usersData }: TypingUsersProps) => {
       {usersData?.map((data: any, index: number) => {
         return (
           <>
-            <TypographyPrimary
+            <TypographySecondary
               value={data.text}
               type={Typography.types.P}
               size={Typography.sizes.sm}
@@ -21,7 +22,7 @@ const TypingUsers = ({ usersData }: TypingUsersProps) => {
             {usersData.length > 1 &&
               index !== usersData.length - 1 &&
               index === usersData.length - 2 && (
-                <TypographyPrimary
+                <TypographySecondary
                   value='and'
                   type={Typography.types.P}
                   size={Typography.sizes.sm}
@@ -31,14 +32,14 @@ const TypingUsers = ({ usersData }: TypingUsersProps) => {
         )
       })}
       {usersData.length > 1 && (
-        <TypographyPrimary
+        <TypographySecondary
           value='are typing...'
           type={Typography.types.P}
           size={Typography.sizes.sm}
         />
       )}
       {usersData.length === 1 && (
-        <TypographyPrimary
+        <TypographySecondary
           value='is typing...'
           type={Typography.types.P}
           size={Typography.sizes.sm}
