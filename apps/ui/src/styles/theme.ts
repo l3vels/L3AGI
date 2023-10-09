@@ -61,7 +61,7 @@ const lightTheme: DefaultTheme = {
     backgroundColorSecondary: 'rgb(255, 255, 255)',
     boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.8)',
     backdropFilter: 'blur(50px);',
-    textColorPrimary: 'rgb(59, 59, 59)',
+    textColorPrimary: 'rgb(0, 0, 0)',
     textColorSecondary: 'rgb(110,110,110)',
     border: '1px solid #acacad',
     backgroundImageSecondary: defaultBgImageSecondary,
