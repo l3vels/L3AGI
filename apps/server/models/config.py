@@ -195,7 +195,7 @@ class ConfigModel(BaseModel):
     
     @classmethod
     def get_account_settings(cls, db, account) -> AccountSettings:
-        keys = ["open_api_key", "hugging_face_token"]
+        keys = ["open_api_key", "hugging_face_token", "pinecone_api_key", "pinecone_environment", "weaviate_url", "weaviate_api_key"]
 
         configs: List[ConfigModel] = (
             db.session.query(ConfigModel)
@@ -208,7 +208,14 @@ class ConfigModel(BaseModel):
         for cfg in configs:
             config[cfg.key] = decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
 
-        return AccountSettings(openai_api_key=config.get("open_api_key"), hugging_face_auth_token=config.get("hugging_face_token"))
+        return AccountSettings(
+            openai_api_key=config.get("open_api_key"),
+            hugging_face_auth_token=config.get("hugging_face_token"),
+            pinecone_api_key=config.get("pinecone_api_key"),
+            pinecone_environment=config.get("pinecone_environment"),
+            weaviate_url=config.get("weaviate_url"),
+            weaviate_api_key=config.get("weaviate_api_key"),
+        )
 
     @classmethod
     def delete_by_id(cls, db, config_id, account):

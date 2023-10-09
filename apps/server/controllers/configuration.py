@@ -29,9 +29,10 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
         files = value['files']
         index_type = value['index_type']
         response_mode = value['response_mode']
+        vector_store = value['vector_store']
 
         file_urls = [file['url'] for file in files]
-        retriever = FileDatasourceRetriever(settings, index_type, response_mode, str(account.id), str(datasource_id))
+        retriever = FileDatasourceRetriever(settings, index_type, response_mode, vector_store, str(account.id), str(datasource_id))
         retriever.index_documents(file_urls)
 
         datasource.status = DatasourceStatus.READY.value
