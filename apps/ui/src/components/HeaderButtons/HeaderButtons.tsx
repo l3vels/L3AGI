@@ -15,6 +15,7 @@ import Show from '@l3-lib/ui-core/dist/icons/Show'
 import { useContext } from 'react'
 import { LayoutContext } from 'contexts'
 import { useLocation } from 'react-router-dom'
+import { isMacOS } from 'utils/isMac'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -28,7 +29,7 @@ const HeaderButtons = () => {
     <StyledButtonsWrapper>
       {location.pathname.includes('/chat') && (
         <Tooltip
-          content={() => <span>Focus: cmd+SHIFT+F</span>}
+          content={() => <span>Focus: {isMacOS ? 'cmd+Shift+F' : 'Ctrl+Shift+F'}</span>}
           position={Tooltip.positions.BOTTOM}
           tooltipSize='small'
         >
