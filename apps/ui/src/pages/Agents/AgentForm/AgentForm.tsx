@@ -5,9 +5,6 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 
-import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
-import NavigationChevronDown from '@l3-lib/ui-core/dist/icons/NavigationChevronDown'
-
 import FormikTextField from 'components/TextFieldFormik'
 
 import CustomField from './components/CustomField'
@@ -15,6 +12,7 @@ import AgentSlider from './components/AgentSlider'
 import { useAgentForm } from './useAgentForm'
 import AgentDropdown from './components/AgentDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
+import ShowAdvancedButton from './components/ShowAdvancedButton'
 
 type AgentFormProps = {
   formik: any
@@ -160,19 +158,13 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             placeholder={'Constraint'}
           />
 
-          <StyledAdvancedButton
+          <ShowAdvancedButton
+            isShow={showAdvanced}
             onClick={() => {
               setShowAdvanced(!showAdvanced)
               scrollToAdvancedRef()
             }}
-          >
-            <TypographyPrimary
-              value='Advanced Options'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-            {showAdvanced ? <StyledNavigationChevronDown /> : <StyledNavigationChevronUp />}
-          </StyledAdvancedButton>
+          />
 
           {showAdvanced && (
             <StyledTextareaWrapper>
@@ -258,22 +250,4 @@ const StyledCombinedFields = styled.div`
   justify-content: space-between;
 
   gap: 20px;
-`
-const StyledAdvancedButton = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-
-  gap: 5px;
-`
-
-const StyledNavigationChevronUp = styled(NavigationChevronUp)`
-  path {
-    color: ${({ theme }) => theme.body.iconColor};
-  }
-`
-const StyledNavigationChevronDown = styled(NavigationChevronDown)`
-  path {
-    color: ${({ theme }) => theme.body.iconColor};
-  }
 `

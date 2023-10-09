@@ -39,7 +39,7 @@ export const useEditAgent = () => {
     agent_model_provider: agentById?.configs?.model_provider,
     agent_suggestions: agentById?.configs?.suggestions,
     agent_greeting: agentById?.configs?.greeting,
-    agent_text: agentById?.configs?.text,
+    agent_text: agentById?.configs?.text || '',
   }
 
   const handleSubmit = async (values: any) => {
