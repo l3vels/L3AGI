@@ -131,8 +131,6 @@ const StyledRoot = styled.div`
 const StyledMessages = styled.main`
   // flex-grow: 1;
   width: 100%;
-  max-width: 900px;
-  margin-left: 100px;
 
   display: flex;
   /* overflow-y: auto; */
