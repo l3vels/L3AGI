@@ -175,9 +175,13 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                     fieldValue={response_mode}
                     setFieldValue={setFieldValue}
                     options={[
-                      { label: 'Tree Summarize', value: 'tree_summarize' },
                       { label: 'Refine', value: 'refine' },
+                      { label: 'Compact', value: 'compact' },
+                      { label: 'Tree Summarize', value: 'tree_summarize' },
                       { label: 'Simple Summarize', value: 'simple_summarize' },
+                      { label: 'No Text', value: 'no_text' },
+                      { label: 'Accumulate', value: 'accumulate' },
+                      { label: 'Compact Accumulate', value: 'compact_accumulate' },
                     ]}
                   />
                 </StyledUploadFileWrapper>

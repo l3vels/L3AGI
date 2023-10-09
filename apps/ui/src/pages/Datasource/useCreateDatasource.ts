@@ -28,7 +28,7 @@ export const useCreateDatasource = () => {
     configs: {},
     files: [],
     index_type: 'summary',
-    response_mode: 'tree_summarize',
+    response_mode: 'compact',
   }
 
   const formik = useFormik({

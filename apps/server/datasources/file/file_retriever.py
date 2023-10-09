@@ -18,11 +18,6 @@ s3 = s3fs.S3FileSystem(
    secret=Config.AWS_SECRET_ACCESS_KEY,
 )
 
-class ResponseMode(Enum):
-    REFINE = 'refine'
-    TREE_SUMMARIZE = 'tree_summarize'
-    SIMPLE_SUMMARIZE = 'simple_summarize'
-
 class IndexType(Enum):
     SUMMARY = 'summary'
     VECTOR_STORE = 'vector_store'
