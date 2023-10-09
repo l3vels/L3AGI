@@ -8,7 +8,7 @@ const StyledSectionTitle = styled.h2`
   font-weight: 500;
   font-size: 24px;
   font-size: 18px;
-  color: ${({ theme }) => theme.body.textColorSecondary};
+  color: ${({ theme }) => theme.body.textColorPrimary};
 `
 
 const StyledSectionDescription = styled.h2`
