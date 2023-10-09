@@ -54,7 +54,7 @@ export default memo(Typewriter)
 
 const StyledTypewriterWrapper = styled.div<{ size: string }>`
   width: 100%;
-  color: ${({ theme }) => theme.body.textColorSecondary};
+  color: ${({ theme }) => theme.body.textColorPrimary};
 
   ${p =>
     p.size === 'small' &&
