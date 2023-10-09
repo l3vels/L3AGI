@@ -45,6 +45,7 @@ export const useAgents = () => {
     agent_greeting: '',
     agent_model_provider: 'OpenAI',
     agent_is_memory: true,
+    agent_text: '',
   }
 
   if (agentById) {
@@ -64,6 +65,7 @@ export const useAgents = () => {
       agent_model_provider: agentById.configs?.model_provider,
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
+      agent_text: agentById.configs?.text,
     }
   }
 
@@ -86,6 +88,7 @@ export const useAgents = () => {
         is_memory: values.agent_is_memory,
         suggestions: values.agent_suggestions,
         greeting: values.agent_greeting,
+        text: values.agent_text,
       }
       const newAgent = await createAgentService(agentInput)
       await refetchAgents()

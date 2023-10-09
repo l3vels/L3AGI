@@ -22,6 +22,7 @@ export const useUpdateAgentService = () => {
       is_memory,
       suggestions,
       greeting,
+      text,
     } = input
 
     const { data } = await mutation({
@@ -46,6 +47,7 @@ export const useUpdateAgentService = () => {
             instructions: instructions,
             suggestions: suggestions,
             greeting: greeting,
+            text: text,
           },
         },
       },

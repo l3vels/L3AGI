@@ -36,7 +36,7 @@ const CreateTeamOfAgentsForm = () => {
             </div>
 
             <StyledButtonWrapper>
-              <BackButton customOnClick={() => navigate('/chat')} />
+              <BackButton />
 
               <ButtonPrimary
                 onClick={() => handleSubmit(formik?.values)}

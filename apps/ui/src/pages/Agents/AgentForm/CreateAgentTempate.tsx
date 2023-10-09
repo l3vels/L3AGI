@@ -41,7 +41,7 @@ const CreateAgentTemplate = () => {
         </div>
 
         <StyledButtonWrapper>
-          <BackButton customOnClick={() => navigate('/chat')} />
+          <BackButton />
         </StyledButtonWrapper>
       </StyledHeaderGroup>
 

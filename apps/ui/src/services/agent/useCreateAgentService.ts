@@ -18,6 +18,7 @@ export type AgentInput = {
   model_provider: string
   is_memory: boolean
   suggestions: string[]
+  text: string
 }
 
 export const useCreateAgentService = () => {
@@ -40,6 +41,7 @@ export const useCreateAgentService = () => {
       is_memory,
       suggestions,
       greeting,
+      text,
     } = input
 
     const {
@@ -65,6 +67,7 @@ export const useCreateAgentService = () => {
             instructions: instructions,
             suggestions: suggestions,
             greeting: greeting,
+            text: text,
           },
         },
       },

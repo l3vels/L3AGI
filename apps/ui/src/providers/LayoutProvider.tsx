@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import { LayoutContext } from 'contexts'
+import { isMacOS } from 'utils/isMac'
 // import { useLocation } from 'react-router-dom'
 
 export const LayoutProvider = ({ children }: any) => {
@@ -18,9 +19,9 @@ export const LayoutProvider = ({ children }: any) => {
     setExpand(!expand)
   }
 
-  // Use the useHotkeys hook to define your keyboard shortcut
-  useHotkeys('cmd+shift+f', commandFunction)
-  useHotkeys('ctrl+shift+f', commandFunction)
+  const keyboardShortcut = isMacOS ? 'cmd+shift+f' : 'ctrl+shift+f'
+
+  useHotkeys(keyboardShortcut, commandFunction)
 
   useEffect(() => {
     if (expand) {

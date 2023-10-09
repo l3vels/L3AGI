@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -11,12 +12,22 @@ import AgentSlider from './components/AgentSlider'
 import { useAgentForm } from './useAgentForm'
 import AgentDropdown from './components/AgentDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
+import ShowAdvancedButton from './components/ShowAdvancedButton'
 
 type AgentFormProps = {
   formik: any
 }
 
 const AgentForm = ({ formik }: AgentFormProps) => {
+  const advancedRef = useRef(null as any)
+  const scrollToAdvancedRef = () => {
+    if (advancedRef) {
+      setTimeout(function () {
+        advancedRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 1)
+    }
+  }
+
   const { setFieldValue, values } = formik
   const {
     agent_datasources,
@@ -26,7 +37,10 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_is_memory,
     agent_tools,
     agent_greeting,
+    agent_text,
   } = values
+
+  const [showAdvanced, setShowAdvanced] = useState(agent_text?.length > 0 ? true : false)
 
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
@@ -96,20 +110,6 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
           </StyledTextareaWrapper>
 
-          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
-
-          <CustomField
-            formik={formik}
-            formikField={'agent_instructions'}
-            placeholder={'Instruction'}
-          />
-
-          <CustomField
-            formik={formik}
-            formikField={'agent_constraints'}
-            placeholder={'Constraint'}
-          />
-
           <StyledCombinedFields>
             <AgentDropdown
               label={'Mode Provider'}
@@ -143,6 +143,46 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
             />
           </StyledCheckboxWrapper>
+
+          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_instructions'}
+            placeholder={'Instruction'}
+          />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_constraints'}
+            placeholder={'Constraint'}
+          />
+
+          <ShowAdvancedButton
+            isShow={showAdvanced}
+            onClick={() => {
+              setShowAdvanced(!showAdvanced)
+              scrollToAdvancedRef()
+            }}
+          />
+
+          {showAdvanced && (
+            <StyledTextareaWrapper>
+              {/* <TypographyPrimary
+                value='Advanced text'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              /> */}
+              <Textarea
+                hint=''
+                placeholder='text'
+                value={agent_text}
+                name='agent_text'
+                onChange={(value: string) => onTextareaChange('agent_text', value)}
+              />
+              <div ref={advancedRef} />
+            </StyledTextareaWrapper>
+          )}
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
