@@ -166,6 +166,20 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                     ]}
                   />
 
+                  {index_type === 'vector_store' && (
+                    <DataSourceDropdown
+                      label={'Vector Store Provider'}
+                      fieldName={'vector_store'}
+                      fieldValue={vector_store}
+                      setFieldValue={setFieldValue}
+                      options={[
+                        { label: 'Zep', value: 'zep' },
+                        { label: 'Pinecone', value: 'pinecone' },
+                        { label: 'Weaviate', value: 'weaviate' },
+                      ]}
+                    />
+                  )}
+
                   <DataSourceDropdown
                     onHelpClick={() =>
                       window.open(import.meta.env.REACT_APP_RESPONSE_MODES_LINK, '_blank')
@@ -182,18 +196,6 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                       { label: 'No Text', value: 'no_text' },
                       { label: 'Accumulate', value: 'accumulate' },
                       { label: 'Compact Accumulate', value: 'compact_accumulate' },
-                    ]}
-                  />
-
-                  <DataSourceDropdown
-                    label={'Vector Store Provider'}
-                    fieldName={'vector_store'}
-                    fieldValue={vector_store}
-                    setFieldValue={setFieldValue}
-                    options={[
-                      { label: 'Zep', value: 'zep' },
-                      { label: 'Pinecone', value: 'pinecone' },
-                      { label: 'Weaviate', value: 'weaviate' },
                     ]}
                   />
                 </StyledUploadFileWrapper>
