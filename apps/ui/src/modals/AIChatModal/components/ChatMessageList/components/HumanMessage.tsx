@@ -107,7 +107,7 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
 `
 
 export const StyledMessageText = styled.div<{ secondary?: boolean }>`
-  color: #fff;
+  color: ${({ theme }) => theme.body.textColorPrimary};
   display: flex;
   padding: 16px 16px 18px 16px;
   flex-direction: column;
