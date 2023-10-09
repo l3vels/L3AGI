@@ -1,8 +1,12 @@
+import { useState, useRef } from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
+
+import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
+import NavigationChevronDown from '@l3-lib/ui-core/dist/icons/NavigationChevronDown'
 
 import FormikTextField from 'components/TextFieldFormik'
 
@@ -17,6 +21,15 @@ type AgentFormProps = {
 }
 
 const AgentForm = ({ formik }: AgentFormProps) => {
+  const advancedRef = useRef(null as any)
+  const scrollToAdvancedRef = () => {
+    if (advancedRef) {
+      setTimeout(function () {
+        advancedRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 1)
+    }
+  }
+
   const { setFieldValue, values } = formik
   const {
     agent_datasources,
@@ -28,6 +41,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_greeting,
     agent_text,
   } = values
+
+  const [showAdvanced, setShowAdvanced] = useState(agent_text?.length > 0 ? true : false)
 
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
@@ -97,35 +112,6 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
           </StyledTextareaWrapper>
 
-          <StyledTextareaWrapper>
-            <TypographyPrimary
-              value='Advanced text'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-            <Textarea
-              hint=''
-              placeholder='text'
-              value={agent_text}
-              name='agent_text'
-              onChange={(value: string) => onTextareaChange('agent_text', value)}
-            />
-          </StyledTextareaWrapper>
-
-          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
-
-          <CustomField
-            formik={formik}
-            formikField={'agent_instructions'}
-            placeholder={'Instruction'}
-          />
-
-          <CustomField
-            formik={formik}
-            formikField={'agent_constraints'}
-            placeholder={'Constraint'}
-          />
-
           <StyledCombinedFields>
             <AgentDropdown
               label={'Mode Provider'}
@@ -159,6 +145,52 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
             />
           </StyledCheckboxWrapper>
+
+          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_instructions'}
+            placeholder={'Instruction'}
+          />
+
+          <CustomField
+            formik={formik}
+            formikField={'agent_constraints'}
+            placeholder={'Constraint'}
+          />
+
+          <StyledAdvancedButton
+            onClick={() => {
+              setShowAdvanced(!showAdvanced)
+              scrollToAdvancedRef()
+            }}
+          >
+            <TypographyPrimary
+              value='Advanced Options'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
+            {showAdvanced ? <StyledNavigationChevronDown /> : <StyledNavigationChevronUp />}
+          </StyledAdvancedButton>
+
+          {showAdvanced && (
+            <StyledTextareaWrapper>
+              {/* <TypographyPrimary
+                value='Advanced text'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              /> */}
+              <Textarea
+                hint=''
+                placeholder='text'
+                value={agent_text}
+                name='agent_text'
+                onChange={(value: string) => onTextareaChange('agent_text', value)}
+              />
+              <div ref={advancedRef} />
+            </StyledTextareaWrapper>
+          )}
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -226,4 +258,22 @@ const StyledCombinedFields = styled.div`
   justify-content: space-between;
 
   gap: 20px;
+`
+const StyledAdvancedButton = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+`
+
+const StyledNavigationChevronUp = styled(NavigationChevronUp)`
+  path {
+    color: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledNavigationChevronDown = styled(NavigationChevronDown)`
+  path {
+    color: ${({ theme }) => theme.body.iconColor};
+  }
 `
