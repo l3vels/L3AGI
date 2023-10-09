@@ -77,6 +77,16 @@ const ChatRouteLayout = () => {
   //   }
   // }, [])
 
+  // console.log(teamOfAgentsArray?.[0])
+
+  useEffect(() => {
+    if (teamOfAgentsArray?.length > 0) {
+      navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
+    } else if (agentsData?.length > 0) {
+      navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
+    }
+  }, [teamOfAgentsArray, agentsData])
+
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
