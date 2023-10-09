@@ -10,12 +10,15 @@ from llama_index.llms import LangChainLLM
 from llama_index.vector_stores.types import VectorStore
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.vector_stores.zep import ZepVectorStore
+from llama_index.vector_stores.weaviate import WeaviateVectorStore
 from langchain.chat_models import ChatOpenAI
 from config import Config
 from services.aws_s3 import AWSS3Service
 from typings.config import AccountSettings
 from enum import Enum
 import pinecone
+import weaviate
+from uuid import UUID
 
 s3 = s3fs.S3FileSystem(
    key=Config.AWS_ACCESS_KEY_ID,
@@ -25,6 +28,7 @@ s3 = s3fs.S3FileSystem(
 class VectorStoreProvider(Enum):
     ZEP = 'zep'
     PINECONE = 'pinecone'
+    WEAVIATE = 'weaviate'
 
 class IndexType(Enum):
     SUMMARY = 'summary'
@@ -55,28 +59,45 @@ class FileDatasourceRetriever:
         llm = LangChainLLM(llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=settings.openai_api_key))
         self.service_context = ServiceContext.from_defaults(llm=llm)
 
+    def get_vector_store(self):
+        vector_store: VectorStore
+
+        index_name = f"LLamaIndex_{UUID(self.datasource_id).hex}"
+
+        if self.vector_store == VectorStoreProvider.ZEP.value:
+            vector_store = ZepVectorStore(
+                api_url=Config.ZEP_API_URL, api_key=Config.ZEP_API_KEY, collection_name=index_name, embedding_dimensions=1536
+            )
+        elif self.vector_store == VectorStoreProvider.PINECONE.value:
+            pinecone.init(api_key=self.settings.pinecone_api_key, environment=self.settings.pinecone_environment)
+            pinecone.create_index(index_name, dimension=1536, metric="cosine")
+            pinecone_index = pinecone.Index(index_name)
+
+            vector_store = PineconeVectorStore(
+                pinecone_index=pinecone_index,
+            )
+        elif self.vector_store == VectorStoreProvider.WEAVIATE.value:
+            auth_config = weaviate.AuthApiKey(api_key=self.settings.weaviate_api_key)
+
+            client = weaviate.Client(
+                self.settings.weaviate_url,
+                auth_client_secret=auth_config,
+            )
+
+            vector_store = WeaviateVectorStore(
+                weaviate_client=client,
+                index_name=index_name,
+
+            )
+        
+        return vector_store
+
     def index_documents(self, file_urls: List[str]):
         # Read documents from S3 and store them in tmp directory
         self.download_documents(file_urls)
         documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
 
-        # Zep supports only alphanumerical collection name
-        collection_name = self.datasource_id.replace('-', '')
-
-        vector_store: VectorStore
-
-        if self.vector_store == VectorStoreProvider.ZEP.value:
-            vector_store = ZepVectorStore(
-                api_url=Config.ZEP_API_URL, api_key=Config.ZEP_API_KEY, collection_name=collection_name, embedding_dimensions=1536
-            )
-        elif self.vector_store == VectorStoreProvider.PINECONE.value:
-            pinecone.init(api_key=self.settings.pinecone_api_key, environment=self.settings.pinecone_environment)
-            pinecone.create_index(collection_name, dimension=1536, metric="cosine")
-            pinecone_index = pinecone.Index(collection_name)
-
-            vector_store = PineconeVectorStore(
-                pinecone_index=pinecone_index,
-            )
+        vector_store = self.get_vector_store()
 
         storage_context = StorageContext.from_defaults(
             vector_store=vector_store
@@ -97,24 +118,8 @@ class FileDatasourceRetriever:
         # Remove tmp directory
         shutil.rmtree(self.datasource_path)
 
-
     def load_index(self):
-        collection_name = self.datasource_id.replace('-', '')
-
-        vector_store: VectorStore
-
-        if self.vector_store == VectorStoreProvider.ZEP.value:
-            vector_store = ZepVectorStore(
-                api_url=Config.ZEP_API_URL, api_key=Config.ZEP_API_KEY, collection_name=collection_name, embedding_dimensions=1536
-            )
-        elif self.vector_store == VectorStoreProvider.PINECONE.value:
-            pinecone.init(api_key=self.settings.pinecone_api_key, environment=self.settings.pinecone_environment)
-            pinecone_index = pinecone.Index(collection_name)
-
-            vector_store = PineconeVectorStore(
-                pinecone_index=pinecone_index,
-            )
-
+        vector_store = self.get_vector_store()
         storage_context = StorageContext.from_defaults(persist_dir=self.index_persist_dir, fs=s3, vector_store=vector_store)
         self.index = load_index_from_storage(storage_context, self.datasource_id)
     

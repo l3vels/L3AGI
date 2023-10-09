@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "650b0c6cad1140ae878413f89850cad45903ada844bee885159525be41c19ae1"
+            "sha256": "7f6019ee4b765522d0e54b31496d142802b108e98e4e2ad8d1154539a1fdd959"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -178,6 +178,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==23.1.0"
+        },
+        "authlib": {
+            "hashes": [
+                "sha256:421f7c6b468d907ca2d9afede256f068f87e34d23dd221c07d13d4c234726afb",
+                "sha256:c88984ea00149a90e3537c964327da930779afa4564e354edfd98410bea01911"
+            ],
+            "version": "==1.2.1"
         },
         "azure-core": {
             "hashes": [
@@ -3632,6 +3639,14 @@
             ],
             "version": "==0.17.0"
         },
+        "validators": {
+            "hashes": [
+                "sha256:61cf7d4a62bbae559f2e54aed3b000cea9ff3e2fdbe463f51179b92c58c9585a",
+                "sha256:77b2689b172eeeb600d9605ab86194641670cdb73b60afd577142a9397873370"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==0.22.0"
+        },
         "watchfiles": {
             "hashes": [
                 "sha256:007dcc4a401093010b389c044e81172c8a2520dba257c88f8828b3d460c6bb38",
@@ -3665,6 +3680,14 @@
                 "sha256:8705c569999ffbb4f6a87c6d1b80f324bd6db952f5eb0b95bc07517f4c1813d4"
             ],
             "version": "==0.2.8"
+        },
+        "weaviate-client": {
+            "hashes": [
+                "sha256:6914c48c9a7e5ad0be9399271f9cb85d6f59ab77476c6d4e56a3925bf149edaa",
+                "sha256:bc50ca5fcebcd48de0d00f66700b0cf7c31a97c4cd3d29b4036d77c5d1d9479b"
+            ],
+            "index": "pypi",
+            "version": "==3.24.2"
         },
         "webencodings": {
             "hashes": [

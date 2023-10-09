@@ -46,6 +46,8 @@ class ConfigQueryParams(BaseModel):
 
 class AccountSettings(BaseModel):
     openai_api_key: Optional[str]
+    hugging_face_auth_token: Optional[str]
     pinecone_api_key: Optional[str]
     pinecone_environment: Optional[str]
-    hugging_face_auth_token: Optional[str]
+    weaviate_url: Optional[str]
+    weaviate_api_key: Optional[str]

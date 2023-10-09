@@ -61,6 +61,7 @@ nbconvert = "*"
 protobuf = "*"
 s3fs = "*"
 pinecone-client = "*"
+weaviate-client = "*"
 
 [dev-packages]
 

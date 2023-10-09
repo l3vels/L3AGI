@@ -19,6 +19,14 @@ export const SETTINGS_FIELDS = [
     key: 'pinecone_environment',
     label: 'Pinecone Environment',
   },
+  {
+    key: 'weaviate_url',
+    label: 'Weaviate Url',
+  },
+  {
+    key: 'weaviate_api_key',
+    label: 'Weaviate Api Key',
+  },
   // {
   //   key: 'hugging_face_token',
   //   label: 'Hugging Face token',

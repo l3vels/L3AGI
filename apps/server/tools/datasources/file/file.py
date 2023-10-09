@@ -39,8 +39,9 @@ class FileDatasourceTool(BaseTool):
         value = json.loads(files_config.value)
         index_type = value['index_type']
         response_mode = value['response_mode']
+        vector_store = value['vector_store']
 
-        retriever = FileDatasourceRetriever(self.settings, index_type, response_mode, str(self.account.id), datasource_id)
+        retriever = FileDatasourceRetriever(self.settings, index_type, response_mode, vector_store, str(self.account.id), datasource_id)
         retriever.load_index()
         result = retriever.query(question)
         return result
