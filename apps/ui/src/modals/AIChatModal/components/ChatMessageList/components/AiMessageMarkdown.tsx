@@ -4,6 +4,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { useModal } from 'hooks'
+import { memo } from 'react'
 
 const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
@@ -89,7 +90,7 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
   )
 }
 
-export default AiMessageMarkdown
+export default memo(AiMessageMarkdown)
 
 const StyledReactMarkdown = styled(ReactMarkdown)`
   color: ${({ theme }) => theme.body.textColorSecondary};
