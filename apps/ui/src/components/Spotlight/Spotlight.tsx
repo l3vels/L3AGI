@@ -451,7 +451,7 @@ export const StyledOption = styled.div`
   backdrop-filter: blur(100px);
   border-radius: 60px;
 
-  color: ${({ theme }) => theme.body.textColorSecondary};
+  color: ${({ theme }) => theme.body.textColorPrimary};
   font-style: normal;
   font-weight: 500;
   font-size: 12px;

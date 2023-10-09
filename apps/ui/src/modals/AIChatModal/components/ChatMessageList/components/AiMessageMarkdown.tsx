@@ -92,7 +92,7 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
 export default AiMessageMarkdown
 
 const StyledReactMarkdown = styled(ReactMarkdown)`
-  color: ${({ theme }) => theme.body.textColorSecondary};
+  color: ${({ theme }) => theme.typography.contentPrimary};
   display: flex;
   flex-direction: column;
   gap: 10px;
