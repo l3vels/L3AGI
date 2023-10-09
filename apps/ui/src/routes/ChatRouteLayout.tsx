@@ -77,14 +77,15 @@ const ChatRouteLayout = () => {
   //   }
   // }, [])
 
-  // console.log(teamOfAgentsArray?.[0])
-
   useEffect(() => {
-    if (teamOfAgentsArray?.length > 0) {
-      navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
-    } else if (agentsData?.length > 0) {
-      navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
+    if (!teamId && !chatId && !agentId) {
+      if (teamOfAgentsArray?.length > 0) {
+        navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
+      } else if (agentsData?.length > 0) {
+        navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamOfAgentsArray, agentsData])
 
   useEffect(() => {
@@ -326,7 +327,7 @@ const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
   height: 100%;
   min-width: 320px;
 
-  max-height: calc(100vh - 205px);
+  max-height: calc(100vh - 230px);
 
   margin-top: 30px;
   padding-right: 10px;
