@@ -35,7 +35,7 @@ const CreateAgentForm = () => {
           </div>
 
           <StyledButtonWrapper>
-            <BackButton customOnClick={() => navigate('/agents/create-agent-template')} />
+            <BackButton />
 
             <ButtonPrimary
               onClick={formik?.handleSubmit}
