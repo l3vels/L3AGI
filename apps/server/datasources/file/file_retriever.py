@@ -7,16 +7,24 @@ from uuid import uuid4
 from llama_index import SummaryIndex, VectorStoreIndex, TreeIndex, SimpleDirectoryReader, ServiceContext
 from llama_index import load_index_from_storage, StorageContext
 from llama_index.llms import LangChainLLM
+from llama_index.vector_stores.types import VectorStore
+from llama_index.vector_stores.pinecone import PineconeVectorStore
+from llama_index.vector_stores.zep import ZepVectorStore
 from langchain.chat_models import ChatOpenAI
 from config import Config
 from services.aws_s3 import AWSS3Service
 from typings.config import AccountSettings
 from enum import Enum
+import pinecone
 
 s3 = s3fs.S3FileSystem(
    key=Config.AWS_ACCESS_KEY_ID,
    secret=Config.AWS_SECRET_ACCESS_KEY,
 )
+
+class VectorStoreProvider(Enum):
+    ZEP = 'zep'
+    PINECONE = 'pinecone'
 
 class IndexType(Enum):
     SUMMARY = 'summary'
@@ -24,6 +32,7 @@ class IndexType(Enum):
     TREE = 'tree'
 
 class FileDatasourceRetriever:
+    settings: AccountSettings
     datasource_id = None
     index: SummaryIndex
     index_persist_dir: str
@@ -31,13 +40,16 @@ class FileDatasourceRetriever:
     service_context: ServiceContext
     index_type: str
     response_mode: str
+    vector_store: str
 
-    def __init__(self, settings: AccountSettings, index_type: str, response_mode: str, account_id: str, datasource_id: str) -> None:
+    def __init__(self, settings: AccountSettings, index_type: str, response_mode: str, vector_store: str, account_id: str, datasource_id: str) -> None:
+        self.settings = settings
         self.datasource_id = datasource_id
         self.datasource_path = Path(f"tmp/datasources/{self.datasource_id}")
         self.index_type = index_type
         self.response_mode = response_mode
-        
+        self.vector_store = vector_store
+
         self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
 
         llm = LangChainLLM(llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=settings.openai_api_key))
@@ -48,11 +60,33 @@ class FileDatasourceRetriever:
         self.download_documents(file_urls)
         documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
 
+        # Zep supports only alphanumerical collection name
+        collection_name = self.datasource_id.replace('-', '')
+
+        vector_store: VectorStore
+
+        if self.vector_store == VectorStoreProvider.ZEP.value:
+            vector_store = ZepVectorStore(
+                api_url=Config.ZEP_API_URL, api_key=Config.ZEP_API_KEY, collection_name=collection_name, embedding_dimensions=1536
+            )
+        elif self.vector_store == VectorStoreProvider.PINECONE.value:
+            pinecone.init(api_key=self.settings.pinecone_api_key, environment=self.settings.pinecone_environment)
+            pinecone.create_index(collection_name, dimension=1536, metric="cosine")
+            pinecone_index = pinecone.Index(collection_name)
+
+            vector_store = PineconeVectorStore(
+                pinecone_index=pinecone_index,
+            )
+
+        storage_context = StorageContext.from_defaults(
+            vector_store=vector_store
+        )
+
         # Create index from documents
         if self.index_type == IndexType.SUMMARY.value:
             self.index = SummaryIndex.from_documents(documents, service_context=self.service_context)
         elif self.index_type == IndexType.VECTOR_STORE.value:
-            self.index = VectorStoreIndex.from_documents(documents, service_context=self.service_context)
+            self.index = VectorStoreIndex.from_documents(documents, service_context=self.service_context, storage_context=storage_context)
         elif self.index_type == IndexType.TREE.value:
             self.index = TreeIndex.from_documents(documents, service_context=self.service_context)
 
@@ -65,7 +99,23 @@ class FileDatasourceRetriever:
 
 
     def load_index(self):
-        storage_context = StorageContext.from_defaults(persist_dir=self.index_persist_dir, fs=s3)
+        collection_name = self.datasource_id.replace('-', '')
+
+        vector_store: VectorStore
+
+        if self.vector_store == VectorStoreProvider.ZEP.value:
+            vector_store = ZepVectorStore(
+                api_url=Config.ZEP_API_URL, api_key=Config.ZEP_API_KEY, collection_name=collection_name, embedding_dimensions=1536
+            )
+        elif self.vector_store == VectorStoreProvider.PINECONE.value:
+            pinecone.init(api_key=self.settings.pinecone_api_key, environment=self.settings.pinecone_environment)
+            pinecone_index = pinecone.Index(collection_name)
+
+            vector_store = PineconeVectorStore(
+                pinecone_index=pinecone_index,
+            )
+
+        storage_context = StorageContext.from_defaults(persist_dir=self.index_persist_dir, fs=s3, vector_store=vector_store)
         self.index = load_index_from_storage(storage_context, self.datasource_id)
     
     def download_documents(self, file_urls: List[str]):

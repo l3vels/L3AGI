@@ -18,7 +18,6 @@ import { DATA_LOADER_IMAGES } from '../constants'
 import { useDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
 import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlTables'
 import { useParams } from 'react-router-dom'
-import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import DataSourceDropdown from './components/DataSourceDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
@@ -45,6 +44,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     configs,
     index_type,
     response_mode,
+    vector_store,
     files,
   } = values
 
@@ -182,6 +182,18 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                       { label: 'No Text', value: 'no_text' },
                       { label: 'Accumulate', value: 'accumulate' },
                       { label: 'Compact Accumulate', value: 'compact_accumulate' },
+                    ]}
+                  />
+
+                  <DataSourceDropdown
+                    label={'Vector Store Provider'}
+                    fieldName={'vector_store'}
+                    fieldValue={vector_store}
+                    setFieldValue={setFieldValue}
+                    options={[
+                      { label: 'Zep', value: 'zep' },
+                      { label: 'Pinecone', value: 'pinecone' },
+                      { label: 'Weaviate', value: 'weaviate' },
                     ]}
                   />
                 </StyledUploadFileWrapper>

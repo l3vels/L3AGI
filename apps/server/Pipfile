@@ -60,6 +60,7 @@ html2text = "*"
 nbconvert = "*"
 protobuf = "*"
 s3fs = "*"
+pinecone-client = "*"
 
 [dev-packages]
 
