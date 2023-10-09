@@ -87,6 +87,13 @@ const ChatRouteLayout = () => {
     }
   }, [teamOfAgentsArray, agentsData])
 
+  useEffect(() => {
+    if (!expand) {
+      setShowChats(false)
+      setShowInfo(false)
+    }
+  }, [expand])
+
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
@@ -106,11 +113,17 @@ const ChatRouteLayout = () => {
             onMouseEnter={() => setShowInfo(true)}
           />
         )}
-        <StyledLeftColumn
-          isHidden={expand && !showChats && location.pathname.includes('/chat')}
-          onMouseLeave={() => setShowChats(false)}
-          onMouseEnter={() => setShowChats(true)}
-        >
+
+        {(showInfo || showChats) && (
+          <StyledMiddleArea
+            onMouseEnter={() => {
+              setShowChats(false)
+              setShowInfo(false)
+            }}
+          />
+        )}
+
+        <StyledLeftColumn isHidden={expand && !showChats && location.pathname.includes('/chat')}>
           {user && (
             <>
               <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
@@ -244,10 +257,7 @@ const ChatRouteLayout = () => {
           )}
         </StyledMainWrapper>
 
-        <StyledRightColumn
-          isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}
-          onMouseLeave={() => setShowInfo(false)}
-        >
+        <StyledRightColumn isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}>
           <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
         </StyledRightColumn>
       </StyledContainer>
@@ -341,6 +351,7 @@ const StyledMainWrapper = styled.div`
 const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
   height: 100%;
   width: 100%;
+
   ${props =>
     props.isHidden &&
     css`
@@ -354,7 +365,7 @@ const StyledOutletWrapper = styled.div`
   max-width: 1500px;
 `
 const StyledShowButton = styled.div<{ isRight?: boolean }>`
-  height: 100%;
+  height: 100vh;
   width: calc(20% - 120px);
 
   cursor: pointer;
@@ -362,7 +373,6 @@ const StyledShowButton = styled.div<{ isRight?: boolean }>`
   position: absolute;
   z-index: 10000;
   left: 0;
-  max-height: calc(100vh - 185px);
 
   ${props =>
     props.isRight &&
@@ -370,4 +380,14 @@ const StyledShowButton = styled.div<{ isRight?: boolean }>`
       right: 0;
       margin-left: auto;
     `}
+`
+const StyledMiddleArea = styled.div`
+  height: 100%;
+  width: calc(0% + 800px);
+
+  cursor: pointer;
+
+  position: absolute;
+  z-index: 10000;
+  /* left: 0; */
 `
