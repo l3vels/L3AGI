@@ -286,7 +286,7 @@ const StyledContainer = styled.div`
 const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasChat: boolean }>`
   /* background: ${({ theme }) => theme.body.cardBgColor}; */
   border-right: ${({ theme }) =>
-    location.pathname.includes('/chat') ? 'none' : theme.body.secondaryBorder};
+    location.pathname.includes('/chat') ? theme.body.secondaryBorder : 'none'};
   /* border-radius: 10px; */
 
   position: absolute;
