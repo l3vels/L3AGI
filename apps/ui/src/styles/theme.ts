@@ -52,6 +52,9 @@ const darkTheme: DefaultTheme = {
     secondary: 'SECONDARY',
     tertiary: 'TERTIARY',
   },
+  textFiled: {
+    primary: 'dark',
+  },
 }
 
 const lightTheme: DefaultTheme = {
@@ -100,6 +103,9 @@ const lightTheme: DefaultTheme = {
     primary: 'PRIMARY',
     secondary: 'SECONDARY',
     tertiary: 'SECONDARY',
+  },
+  textFiled: {
+    primary: 'light',
   },
 }
 
