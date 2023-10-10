@@ -1,44 +1,32 @@
-from dotenv import load_dotenv
-
-load_dotenv(override=False)
-
-import uvicorn
 import sentry_sdk
+import strawberry
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi_sqlalchemy import DBSessionMiddleware
+from fastapi.responses import JSONResponse
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
-from fastapi.responses import JSONResponse
-from typings.auth import AuthJWTSettings
+from fastapi_sqlalchemy import DBSessionMiddleware
+from strawberry.fastapi import GraphQLRouter
+
 from config import Config
-from models.db import Base, engine
-
-
-from controllers.auth import router as user_router
-from controllers.workspace import router as workspace_router
-from controllers.team import router as team_router
-from controllers.team_agent import router as team_agent_router
-
 from controllers.agent import router as agent_router
+from controllers.auth import router as user_router
+from controllers.chat import router as chat_router
 from controllers.configuration import router as config_router
 from controllers.datasource import router as datasource_router
-from controllers.tool import router as tool_router
-from controllers.llm import router as llm_router
-from controllers.chat import router as chat_router
 from controllers.file import router as file_router
-from resolvers.account import AccountQuery, AccountMutation
-from resolvers.user import UserQuery, UserMutation
-from strawberry.fastapi import BaseContext, GraphQLRouter
-from strawberry.types import Info as _Info
-from strawberry.types.info import RootValueType
-from strawberry.fastapi import GraphQLRouter
-from functools import cached_property
-from typings.user import User
-import strawberry
+from controllers.llm import router as llm_router
+from controllers.team import router as team_router
+from controllers.team_agent import router as team_agent_router
+from controllers.tool import router as tool_router
+from controllers.workspace import router as workspace_router
+from models.db import Base, engine
+from resolvers.account import AccountMutation, AccountQuery
 from resolvers.context import get_context
+from resolvers.user import UserMutation, UserQuery
+from typings.auth import AuthJWTSettings
 
-VERSION = "0.3.1"
 
 app = FastAPI()
 
@@ -46,11 +34,11 @@ app = FastAPI()
 @strawberry.type
 class Query(AccountQuery, UserQuery):
     pass
+
+
 @strawberry.type
 class Mutation(AccountMutation, UserMutation):
     pass
-
-
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
@@ -69,7 +57,6 @@ if Config.ENV != "local" and Config.SENTRY_DSN:
 
 app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 
-# Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 origins = [
@@ -90,6 +77,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @AuthJWT.load_config
 def get_config():
     return AuthJWTSettings()
@@ -99,10 +87,8 @@ def get_config():
 # in production, you can tweak performance using orjson response
 @app.exception_handler(AuthJWTException)
 def jwt_exception_handler(request: Request, exc: AuthJWTException):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail": exc.message}
-    )
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
+
 
 app.include_router(user_router, prefix="/auth")
 app.include_router(workspace_router, prefix="/workspace")
@@ -119,7 +105,7 @@ app.include_router(file_router, prefix="/file")
 
 @app.get("/")
 def root():
-    return f"Version {VERSION} is up!"
+    return f"Server is running on {Config.ENV} environment"
 
 
 print("Project run on 4000 port")

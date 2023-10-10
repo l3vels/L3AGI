@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv(override=False)
 
 
 class Config:
@@ -23,7 +26,7 @@ class Config:
 
     JWT_EXPIRY = os.environ.get("JWT_EXPIRY")
     JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-    
+
     GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID")
     GITHUB_CLIENT_SECRET = os.environ.get("GITHUB_CLIENT_SECRET")
 

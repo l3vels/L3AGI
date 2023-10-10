@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# React linting and formatting
+echo "Linting and formatting React..."
+cd apps/ui && yarn lint-staged && cd ../..
+
+# FastAPI formatting with black and linting with flake8
+staged_files=$(git diff --cached --name-only)
+
+# Loop through each staged file
+for file in $staged_files; do
+    # Check if the file ends with .py
+    if [[ $file == *.py ]]; then
+        # Format the file with black
+        black $file
+        ruff check $file --fix
+
+        # Check the exit status of ruff
+        if [ $? -ne 0 ]; then
+            echo "Ruff check failed for $file. Aborting commit."
+            exit 1
+        fi
+
+        # Stage the formatted file
+        git add $file
+    fi
+done
+
+# Return to the root directory
+cd ../..
+
+echo "Pre-commit checks passed!"
