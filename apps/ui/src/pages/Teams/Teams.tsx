@@ -11,7 +11,7 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
-import DataGrid from 'components/DataGrid'
+// import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 
 import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
@@ -131,13 +131,13 @@ const Teams = () => {
         </StyledHeaderGroup>
       </div>
 
-      <DataGrid
+      {/* <DataGrid
         ref={gridRef}
         data={assignedUserList || []}
         columnConfig={config}
         contextMenu={getContextMenuItems}
         headerHeight={130}
-      />
+      /> */}
 
       <AddMemberModal />
     </StyledGroupContainer>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 type TableCellProps = {
   cell: any
@@ -13,7 +13,7 @@ const TableCell = ({ cell }: TableCellProps) => {
 
   const { column, row, value: cellValue } = cell
   const { original: data } = row
-  const { isEdit, cellEditor: Editor, cellEditorParams, valueSetter } = column
+  const { isEdit, cellEditor: Editor, cellEditorParams, valueSetter, maxWidth } = column
 
   let handleEditMode = null
 
@@ -68,7 +68,13 @@ const TableCell = ({ cell }: TableCellProps) => {
   }, [isEditing])
 
   return (
-    <StyledTd ref={tableCellRef} {...cell.getCellProps()} onClick={handleEditMode}>
+    <StyledTd
+      ref={tableCellRef}
+      {...cell.getCellProps()}
+      onClick={handleEditMode}
+      maxWidth={maxWidth}
+      noPadding={isEditing}
+    >
       {isEditing ? (
         <>
           {/* tst */}
@@ -83,9 +89,13 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td`
+const StyledTd = styled.td<{ maxWidth: number; noPadding: boolean }>`
   width: 100%;
 
+  padding: ${p => (p.noPadding ? `0px` : `10px`)};
+
+  display: flex;
+  align-items: center;
   /* padding: 10px 20px; */
 
   /* text-align: center; */
@@ -95,4 +105,5 @@ const StyledTd = styled.td`
   :hover {
     background-color: rgba(0, 0, 0, 0.2);
   }
+  max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')};
 `

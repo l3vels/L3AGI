@@ -1,12 +1,11 @@
-import { useMemo, useRef } from 'react'
+import { useMemo, useState } from 'react'
 
-import DataGrid from 'components/DataGrid'
 import { IDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
-import useCheckboxRenderer from 'components/DataGrid/GridComponents/useCheckboxRenderer'
-import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 
-import TextCellRenderer from './TextCellRenderer'
-import { GridReadyEvent } from 'ag-grid-community'
+import Table from 'components/Table'
+
+import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import styled from 'styled-components'
 
 type DatasourceSqlTablesProps = {
   data: IDatasourceSqlTables
@@ -15,75 +14,78 @@ type DatasourceSqlTablesProps = {
 }
 
 const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTablesProps) => {
-  const gridRef = useRef<any>({})
-
-  const { HeaderCheckbox, RowCheckbox } = useCheckboxRenderer()
-
-  const config = useMemo(
+  const [selectedTables, setSelectedTables] = useState<string[]>(tables || [])
+  const allTables = data?.map((item: any) => item.name)
+  const columns = useMemo(
     () => [
       {
-        headerComponent: HeaderCheckbox,
-        cellRenderer: RowCheckbox,
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        width: 50,
+        Header: () => {
+          return (
+            <Checkbox
+              indeterminate={selectedTables?.length > 0 && selectedTables?.length !== data?.length}
+              checked={selectedTables?.length === data?.length}
+              size='small'
+              kind='secondary'
+              onChange={() => {
+                if (selectedTables?.length === data?.length) {
+                  onTablesSelected([])
+                  setSelectedTables([])
+                } else {
+                  onTablesSelected(allTables)
+                  setSelectedTables(allTables)
+                }
+              }}
+            />
+          )
+        },
+        accessor: 'id',
+        maxWidth: 50,
+
+        Cell: ({ cell }: any) => {
+          return (
+            <StyledCheckboxWrapper>
+              <Checkbox
+                checked={selectedTables.includes(cell.value)}
+                size='small'
+                kind='secondary'
+                onChange={() => {
+                  setSelectedTables((prevState: any) => {
+                    if (prevState.includes(cell.value)) {
+                      const newArray = prevState.filter((value: string) => value !== cell.value)
+                      onTablesSelected(newArray)
+                      return newArray
+                    } else {
+                      onTablesSelected([...prevState, cell.value])
+                      return [...prevState, cell.value]
+                    }
+                  })
+                }}
+              />
+            </StyledCheckboxWrapper>
+          )
+        },
       },
       {
-        headerName: 'Table',
-        field: 'name',
-        headerComponent: HeaderComponent,
-        filter: 'agTextColumnFilter',
-        resizable: true,
-        cellRenderer: TextCellRenderer,
-        minWidth: 200,
-        width: 350,
-        flex: 2,
+        Header: 'Table',
+        accessor: 'name',
       },
       {
-        headerName: 'Rows',
-        headerComponent: HeaderComponent,
-        field: 'count',
-        filter: 'agTextColumnFilter',
-        resizable: true,
-        minWidth: 200,
-        width: 350,
-        flex: 2,
+        Header: 'Rows',
+        accessor: 'count',
       },
     ],
-    [HeaderCheckbox, RowCheckbox],
+    [selectedTables, onTablesSelected],
   )
-
-  const onSelectionChanged = () => {
-    const selectedRows = gridRef.current.getSelectedRows()
-    const tables = selectedRows.map((row: any) => row.name)
-    onTablesSelected(tables)
-  }
-
-  const onGridReady = (params: GridReadyEvent<any>) => {
-    if (!tables) return
-
-    tables.forEach(name => {
-      const rowNode = params.api.getRowNode(name)
-      if (rowNode) {
-        rowNode.setSelected(true)
-      }
-    })
-  }
 
   return (
     <div>
-      <DataGrid
-        ref={gridRef}
-        data={data || []}
-        columnConfig={config}
-        headerHeight={130}
-        maxHeight={400}
-        onSelectionChanged={onSelectionChanged}
-        onGridReady={onGridReady}
-      />
+      <Table columns={columns} data={data || []} />
     </div>
   )
 }
 
 export default DatasourceSqlTables
+
+const StyledCheckboxWrapper = styled.div`
+  margin-left: 10px;
+`

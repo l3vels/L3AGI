@@ -4,12 +4,13 @@ import styled, { css } from 'styled-components'
 import TableCell from './components/TableCell'
 
 type ColumnProps = {
-  Header: string
+  Header: any
   accessor: string
   isEdit?: boolean
   cellEditor?: any
   cellEditorParams?: any
   valueSetter?: any
+  maxWidth?: number
 }
 
 type TableProps = {
@@ -29,7 +30,7 @@ const Table = ({ columns, data }: TableProps) => {
         {headerGroups.map((headerGroup: any, index: number) => (
           <StyledTr key={index} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column: any, index: number) => (
-              <StyledTh key={index} {...column.getHeaderProps()}>
+              <StyledTh key={index} {...column.getHeaderProps()} maxWidth={column.maxWidth}>
                 {column.render('Header')}
               </StyledTh>
             ))}
@@ -98,8 +99,9 @@ const StyledTr = styled.tr<{ bodyRow?: boolean }>`
       `};
   }
 `
-const StyledTh = styled.th`
+const StyledTh = styled.th<{ maxWidth: number }>`
   width: 100%;
+  max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')};
 
   text-align: center;
 
