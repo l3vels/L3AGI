@@ -136,7 +136,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
 
                   <StyledUploadedFiles>
-                    {files.length > 0 &&
+                    {files?.length > 0 &&
                       files.map((file: any) => (
                         <UploadedFile
                           key={file.url}
