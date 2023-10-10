@@ -168,6 +168,9 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
 
                   {index_type === 'vector_store' && (
                     <DataSourceDropdown
+                      onHelpClick={() =>
+                        window.open(import.meta.env.REACT_APP_VECTOR_STORES_LINK, '_blank')
+                      }
                       label={'Vector Store Provider'}
                       fieldName={'vector_store'}
                       fieldValue={vector_store}
