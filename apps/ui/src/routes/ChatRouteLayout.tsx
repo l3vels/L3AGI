@@ -97,6 +97,10 @@ const ChatRouteLayout = () => {
 
   if (!user && !chatId) return <Navigate to='/' />
 
+  const hasChat = !!chatId
+
+  console.log('chat', hasChat)
+
   return (
     <StyledAppContainer className='app_container'>
       <Header />
@@ -124,7 +128,10 @@ const ChatRouteLayout = () => {
           />
         )}
 
-        <StyledLeftColumn isHidden={expand && !showChats && location.pathname.includes('/chat')}>
+        <StyledLeftColumn
+          isHidden={expand && !showChats && location.pathname.includes('/chat')}
+          hasChat={hasChat}
+        >
           {user && (
             <>
               <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
@@ -276,9 +283,10 @@ const StyledContainer = styled.div`
 
   position: relative;
 `
-const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean }>`
+const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasChat: boolean }>`
   /* background: ${({ theme }) => theme.body.cardBgColor}; */
-  border-right: ${({ theme }) => theme.body.secondaryBorder};
+  border-right: ${({ theme }) =>
+    location.pathname.includes('/chat') ? 'none' : theme.body.secondaryBorder};
   /* border-radius: 10px; */
 
   position: absolute;
