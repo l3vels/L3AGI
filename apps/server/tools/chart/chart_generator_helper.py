@@ -24,7 +24,8 @@ Notes:
     'geopandas' # geopandas==0.13.2
 - For data visualization, you can use
         'matplotlib', # matplotlib==3.7.1
-    - Be sure to generate charts with matplotlib. If you need geographical charts, use geopandas with the geopandas.datasets module. 
+    - Be sure to generate charts with matplotlib.
+    - If you need geographical charts, use geopandas with the geopandas.datasets module.
     - I'll give give you query result as method parameters.
     - Consider query result field types when you are doing data munging.
     - Method name must be "query_runner"
@@ -35,13 +36,13 @@ Notes:
 1. Please output only code
 2. Please do not use any other external packages to avoid ModuleNotFoundError.
 3. Use multiple colors for charts.
-4. Use white color for only labels, titles or text. Do not use black for labels, titles or text.
 """
+
 
 def generate_chart_code_chain(openai_api_key: str) -> LLMChain:
     """Generate code for chart generation."""
 
-    llm = ChatOpenAI(openai_api_key=openai_api_key,temperature=0, model_name="gpt-4")
+    llm = ChatOpenAI(openai_api_key=openai_api_key, temperature=0, model_name="gpt-4")
     prompt = PromptTemplate(input_variables=["data"], template=TEMPLATE)
     return LLMChain(llm=llm, prompt=prompt)
 
