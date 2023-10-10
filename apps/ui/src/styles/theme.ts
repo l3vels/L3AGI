@@ -35,6 +35,8 @@ const darkTheme: DefaultTheme = {
     toolkitCardBgColorSecondary: 'rgba(0, 0, 0, 0.8)',
     toolkitCardBgColorTertiary: '#000',
     teamChatCardSelectedColor: 'rgba(250, 250, 250, 0.3)',
+    componentsWrapperBg: 'rgba(255, 255, 255, 0.1)',
+    componentsSecondaryWrapperBg: 'rgba(255, 255, 255, 0.1)',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -73,7 +75,7 @@ const lightTheme: DefaultTheme = {
     mainNavColorActive: 'rgb(80,80,80)',
     mainNavColor: 'rgb(193,193,193)',
     breadCrumbsColor: 'rgb(91,91,91)',
-    breadCrumbsBg: 'rgbrgb(253,252,250)',
+    breadCrumbsBg: 'rgb(253,252,250)',
     commandBorderColor: '1px solid rgb(126,126,126)',
     placeHolderColor: 'rgb(187,187,187)',
     cardBgColor: 'rgb(253,252,250)',
@@ -87,6 +89,8 @@ const lightTheme: DefaultTheme = {
     toolkitCardBgColorSecondary: 'rgb(253,252,250)',
     toolkitCardBgColorTertiary: '#f3f3f3',
     teamChatCardSelectedColor: 'rgb(217,217,217)',
+    componentsWrapperBg: '#F5F5F7',
+    componentsSecondaryWrapperBg: 'rgb(253,252,250)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
