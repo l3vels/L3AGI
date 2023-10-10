@@ -23,6 +23,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
 import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -50,8 +51,8 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
         <StyledNameWrapper>
           <TypographyPrimary
             value={name}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
+            type={Typography.types.Heading}
+            size={Typography.sizes.md}
           />
           {isCreator && (
             <IconButton
@@ -84,9 +85,9 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
           <StyledDivider />
 
           <StyledWrapper>
-            <TypographySecondary
+            <TypographyTertiary
               value={description}
-              type={Typography.types.LABEL}
+              type={Typography.types.P}
               size={Typography.sizes.sm}
             />
           </StyledWrapper>

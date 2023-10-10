@@ -59,8 +59,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         <StyledNameWrapper>
           <TypographyPrimary
             value={name}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
+            type={Typography.types.Heading}
+            size={Typography.sizes.md}
           />
 
           <StyledButtonsWrapper>
