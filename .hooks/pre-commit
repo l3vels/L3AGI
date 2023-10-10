@@ -11,9 +11,18 @@ staged_files=$(git diff --cached --name-only)
 for file in $staged_files; do
     # Check if the file ends with .py
     if [[ $file == *.py ]]; then
-        # Format the file with black
-        black $file
-        ruff check $file --fix
+        # Change to the directory where the pipenv environment is located
+        cd apps/server
+
+        # Adjust the file path since we changed directory
+        relative_file=../../$file
+        
+        # Format the file with black and run ruff within the pipenv environment
+        pipenv run black $relative_file
+        pipenv run ruff check $relative_file --fix
+
+        # Return to the root directory
+        cd ../..
 
         # Check the exit status of ruff
         if [ $? -ne 0 ]; then
@@ -25,8 +34,5 @@ for file in $staged_files; do
         git add $file
     fi
 done
-
-# Return to the root directory
-cd ../..
 
 echo "Pre-commit checks passed!"
