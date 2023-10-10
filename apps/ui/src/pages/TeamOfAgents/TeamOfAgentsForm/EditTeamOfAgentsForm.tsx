@@ -13,10 +13,10 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
+import ComponentsSecondaryWrapper from 'components/ComponentsSecondaryWrapper/Wrapper'
 
 const EditTeamOfAgentsForm = () => {
   const { formik, handleSubmit, isLoading } = useEditTeamOfAgents()
@@ -46,11 +46,11 @@ const EditTeamOfAgentsForm = () => {
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 
-          <ComponentsWrapper noPadding>
+          <ComponentsSecondaryWrapper noPadding>
             <StyledFormWrapper>
               <TeamOfAgentsForm formik={formik} isLoading={isLoading} />
             </StyledFormWrapper>
-          </ComponentsWrapper>
+          </ComponentsSecondaryWrapper>
         </StyledSectionWrapper>
       </FormikProvider>
     </>
