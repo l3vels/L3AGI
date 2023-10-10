@@ -7,6 +7,9 @@ import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
 import LogList from '../LogList'
 
+import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
+
 const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
   const { log_list } = useLog()
   const [is_open, setIsOpen] = React.useState(false)
@@ -38,20 +41,20 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
         />
       </StyledFieldWrapper>
       <StyledButtonContainer>
-        <StyledTertiaryButton
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.SMALL}
-          onClick={onClose}
-        >
-          <Typography value='Clear' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+        <StyledTertiaryButton size={Button.sizes.SMALL} onClick={onClose}>
+          <TypographyPrimary
+            value='Clear'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledTertiaryButton>
 
-        <StyledPrimaryButton
-          kind={Button.kinds.PRIMARY}
-          size={Button.sizes.SMALL}
-          onClick={handleFilter}
-        >
-          <Typography value='Apply' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+        <StyledPrimaryButton size={Button.sizes.SMALL} onClick={handleFilter}>
+          <TypographyPrimary
+            value='Apply'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </StyledPrimaryButton>
       </StyledButtonContainer>
     </StyledEndPointContainer>
@@ -101,9 +104,9 @@ const StyledButtonContainer = styled.div`
   color: #ffffff;
   //   gap: 90px;
 `
-const StyledPrimaryButton = styled(Button)`
+const StyledPrimaryButton = styled(ButtonPrimary)`
   padding: 10px 26px;
 `
-const StyledTertiaryButton = styled(Button)`
+const StyledTertiaryButton = styled(ButtonPrimary)`
   padding: 10px 26px;
 `

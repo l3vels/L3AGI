@@ -18,6 +18,8 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import CreateApiKeysForm from './CreateApikeysForm'
 import { StyledRoot } from '../EditApiKey/EditApiModal'
+import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 type CreateApiModalProps = {
   closeModal: () => void
@@ -59,25 +61,21 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
             <CreateApiKeysForm closeModal={closeModal} formik={formik} />
             <StyledModalFooter>
               <StyledActionsContainer>
-                <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
-                  <Typography
+                <ButtonTertiary onClick={closeModal} size={Button.sizes.LARGE}>
+                  <TypographyPrimary
                     value='Cancel'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                   />
-                </Button>
+                </ButtonTertiary>
 
-                <Button
-                  onClick={formik?.handleSubmit}
-                  kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.LARGE}
-                >
+                <ButtonPrimary onClick={formik?.handleSubmit} size={Button.sizes.LARGE}>
                   <StyledLabelTypography
                     value='Create'
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                   />
-                </Button>
+                </ButtonPrimary>
               </StyledActionsContainer>
             </StyledModalFooter>
           </StyledCreateModal>

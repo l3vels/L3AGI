@@ -6,6 +6,7 @@ import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
 import MenuOutline from '@l3-lib/ui-core/dist/icons/MenuOutline'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const HeaderComponent = (props: any) => {
   const { icon, displayName, noText } = props
@@ -77,11 +78,10 @@ const HeaderComponent = (props: any) => {
       <StyledHeadingWrapper onClick={(event: any) => sortHandler(event)}>
         {icon && <StyledIconWrapper>{icon}</StyledIconWrapper>}
         {!noText && (
-          <Typography
+          <TypographyPrimary
             value={displayName}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
-            customColor='#fff'
           />
         )}
         {sort}

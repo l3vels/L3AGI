@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import useTwoFA from './useTwoFA'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const TwoFAuthentication = () => {
   const { formik, handleResendCode, alertMessage } = useTwoFA()
@@ -23,12 +24,12 @@ const TwoFAuthentication = () => {
           <TextField name='code' placeholder='Authentication code' />
         </FormikProvider>
         <ButtonContainer>
-          <Button onClick={formik.handleSubmit}>Submit</Button>
+          <ButtonPrimary onClick={formik.handleSubmit}>Submit</ButtonPrimary>
         </ButtonContainer>
 
         <ButtonContainer>
           <span>Didn’t receive the code or code expired?</span>
-          <Button onClick={handleResendCode}>Resend code?</Button>
+          <ButtonPrimary onClick={handleResendCode}>Resend code?</ButtonPrimary>
         </ButtonContainer>
       </StyledFormContainer>
     </StyledContainer>

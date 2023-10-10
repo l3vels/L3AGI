@@ -20,7 +20,7 @@ class UserModel(RootBaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None)
-    avatar = Column(String(300), default=None)
+    avatar = Column(String(300), default=None, nullable=True)
     email = Column(String(100), index=True, default=None)
     password = Column(String, default=None)
     is_active = Column(Boolean, default=True)

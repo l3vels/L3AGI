@@ -21,6 +21,10 @@ import { AuthContext } from 'contexts'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import { useModal } from 'hooks'
 import MemberText from './components/MemberText'
+import {
+  StyledEditIcon,
+  StyledEyeOpenIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 const ChatMembers = ({
   agentById,
@@ -48,14 +52,24 @@ const ChatMembers = ({
 
     return (
       <StyledRoot>
-        <TabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>Members</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Info</Tab>
-        </TabList>
+        <StyledDiv>
+          <TabList size='small'>
+            <Tab onClick={() => setActiveTab(0)}>
+              <StyledSpan>Info</StyledSpan>
+            </Tab>
+            <Tab onClick={() => setActiveTab(1)}>
+              <StyledSpan>Members</StyledSpan>
+            </Tab>
+          </TabList>
+        </StyledDiv>
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
+              <TabPanel>
+                <AgentViewDetailBox agentData={agentById} />
+              </TabPanel>
+
               <TabPanel>
                 {!isHistory && user?.name && (
                   <StyledAgentWrapper>
@@ -85,7 +99,7 @@ const ChatMembers = ({
                         }
                         icon={() => (
                           <StyledIconWrapper>
-                            <EyeOpen size={50} />
+                            <StyledEyeOpenIcon size={50} />
                           </StyledIconWrapper>
                         )}
                         size={IconButton.sizes.SMALL}
@@ -96,7 +110,7 @@ const ChatMembers = ({
                       {isCreator && (
                         <IconButton
                           onClick={handleEdit}
-                          icon={() => <Edit />}
+                          icon={() => <StyledEditIcon />}
                           size={IconButton.sizes.SMALL}
                           kind={IconButton.kinds.TERTIARY}
                           // ariaLabel='Edit'
@@ -105,10 +119,6 @@ const ChatMembers = ({
                     </StyledIconButtonWrapper>
                   </StyledAgentWrapper>
                 </>
-              </TabPanel>
-
-              <TabPanel>
-                <AgentViewDetailBox agentData={agentById} />
               </TabPanel>
             </TabPanels>
           </TabsContext>
@@ -121,13 +131,17 @@ const ChatMembers = ({
     return (
       <StyledRoot>
         <TabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>Members</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Info</Tab>
+          <Tab onClick={() => setActiveTab(0)}>Info</Tab>
+          <Tab onClick={() => setActiveTab(1)}>Members</Tab>
         </TabList>
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
+              <TabPanel>
+                <TeamOfAgentsDetailsBox teamData={teamOfAgents} />
+              </TabPanel>
+
               <TabPanel>
                 {!isHistory && user?.name && (
                   <StyledAgentWrapper>
@@ -188,10 +202,6 @@ const ChatMembers = ({
                     )
                   })}
               </TabPanel>
-
-              <TabPanel>
-                <TeamOfAgentsDetailsBox teamData={teamOfAgents} />
-              </TabPanel>
             </TabPanels>
           </TabsContext>
         </StyledContainer>
@@ -245,4 +255,11 @@ const StyledIconButtonWrapper = styled.div`
 
   display: flex;
   align-items: center;
+`
+const StyledDiv = styled.div`
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  border-radius: 20px;
+`
+const StyledSpan = styled.span`
+  color: ${({ theme }) => theme.body.textColorPrimary};
 `

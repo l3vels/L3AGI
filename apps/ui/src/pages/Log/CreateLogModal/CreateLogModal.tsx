@@ -14,6 +14,10 @@ import useFilter from '../Components/useFilter'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import withRenderModal from 'hocs/withRenderModal'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 type CreateLogModalProps = {
   closeModal: () => void
@@ -26,11 +30,11 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
         onClose={closeModal}
         show
         backgroundColor='dark'
-        title={<Heading type={Heading.types.h1} size={Heading.sizes.sm} value='Filer' />}
+        title={<HeadingPrimary type={Heading.types.h1} size={Heading.sizes.sm} value='Filer' />}
       >
         <StyledApiAddressContainerWrapper>
           <StyledIPAddressContainer>
-            <Typography
+            <TypographyPrimary
               value='IP address'
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
@@ -46,7 +50,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
             <Toggle size='small' kind='primary' />
           </StyledSwitchContainer>
           <StyledSwitchTextContainer>
-            <Typography
+            <TypographySecondary
               value='Show IP address column'
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
@@ -56,12 +60,16 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
 
         <StyledSourceContainerWrapper>
           <StyledSourceTextWrapper>
-            <Typography value='Source' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+            <TypographyPrimary
+              value='Source'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.lg}
+            />
           </StyledSourceTextWrapper>
           <StyledCheckBoxWrapper>
             <StyledDashboardCheckboxContainer>
               <StyledDashboardText>
-                <Typography
+                <TypographyTertiary
                   value='Dashboard'
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
@@ -84,12 +92,16 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
 
         <StyledAccountContainerWrapper>
           <StyledAccountTextWrapper>
-            <Typography value='Account' type={Typography.types.LABEL} size={Typography.sizes.lg} />
+            <TypographyTertiary
+              value='Account'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.lg}
+            />
           </StyledAccountTextWrapper>
           <StyledCheckBoxWrapper>
             <StyledCheckboxContainer_1>
               <StyledAccountText>
-                <Typography
+                <TypographyTertiary
                   value='This account'
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
@@ -101,7 +113,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
             </StyledCheckboxContainer_1>
             <StyledCheckboxContainer_2>
               <StyledConnectText>
-                <Typography
+                <TypographyTertiary
                   value='Incoming connect requests'
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
@@ -113,7 +125,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
             </StyledCheckboxContainer_2>
             <StyledCheckboxContainer_3>
               <StyledRequestText>
-                <Typography
+                <TypographyTertiary
                   value='Outgoing connect request'
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
@@ -128,7 +140,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
 
         <StyledApiVersionContainerWrapper>
           <StyledIPAddressContainer>
-            <Typography
+            <TypographyTertiary
               value='API version '
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
@@ -141,7 +153,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
 
         <StyledApiVersionContainerWrapper>
           <StyledIPAddressContainer>
-            <Typography
+            <TypographyTertiary
               value='Error type'
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
@@ -154,7 +166,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
 
         <StyledApiVersionContainerWrapper>
           <StyledIPAddressContainer>
-            <Typography
+            <TypographyTertiary
               value='Error code'
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
@@ -167,7 +179,7 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
 
         <StyledApiVersionContainerWrapper>
           <StyledIPAddressContainer>
-            <Typography
+            <TypographyTertiary
               value='Error param'
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
@@ -217,7 +229,6 @@ const StyledApiAddressContainerWrapper = styled.div`
 const StyledIPAddressContainer = styled.div`
   width: 296px;
   height: 24px;
-  color: #ffffff;
 `
 const StyledIPAdressFieldContainer = styled.div`
   display: flex;
@@ -241,7 +252,6 @@ const StyledSwitchContainer = styled.div`
 const StyledSwitchTextContainer = styled.div`
   width: fit-content;
   height: 30px;
-  color: rgba(255, 255, 255, 0.8);
 `
 const StyledSourceContainerWrapper = styled.div`
   display: flex;
@@ -252,7 +262,6 @@ const StyledSourceContainerWrapper = styled.div`
 const StyledSourceTextWrapper = styled.div`
   width: 58px;
   height: 24px;
-  color: #ffffff;
 `
 const StyledCheckBoxWrapper = styled.div`
   display: grid;
@@ -276,7 +285,7 @@ const StyledAPICheckboxContainer = styled.div`
 const StyledDashboardText = styled.div`
   width: 80px;
   height: 25px;
-  color: rgba(255, 255, 255, 0.6);
+
   align-items: center;
 `
 const StyledDashboardCheckbox = styled.div`
@@ -322,17 +331,14 @@ const StyledCheckboxContainer_3 = styled.div`
 const StyledAccountText = styled.div`
   width: 104px;
   height: 30px;
-  color: rgba(255, 255, 255, 0.6);
 `
 const StyledConnectText = styled.div`
   width: fit-content;
   height: 30px;
-  color: rgba(255, 255, 255, 0.6);
 `
 const StyledRequestText = styled.div`
   width: fit-content;
   height: 30px;
-  color: rgba(255, 255, 255, 0.6);
 `
 const StyledAccountCheckbox = styled.div`
   width: 15px;

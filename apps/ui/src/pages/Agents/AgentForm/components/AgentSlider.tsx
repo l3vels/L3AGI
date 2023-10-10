@@ -2,16 +2,16 @@ import styled from 'styled-components'
 
 import Slider from '@l3-lib/ui-core/dist/Slider'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const AgentSlider = ({ formik }: { formik: any }) => {
   return (
     <StyledSliderWrapper>
       <StyledSliderHeader>
-        <Typography
+        <TypographyPrimary
           value='Temperature'
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
-          customColor={'#FFF'}
         />
         {formik?.values.agent_temperature ? formik?.values.agent_temperature : 0}/{1}
       </StyledSliderHeader>

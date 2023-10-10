@@ -19,6 +19,8 @@ import AiMessageMarkdown from './AiMessageMarkdown'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type AiMessageProps = {
   agentName?: string
@@ -62,17 +64,16 @@ const AiMessage = ({
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
-              <Typography
+              <TypographyPrimary
                 value={agentName && teamName ? agentName : name}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'#FFF'}
               />
-              <Typography
+
+              <TypographyTertiary
                 value={messageDate}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
-                customColor={'rgba(255, 255, 255, 0.60)'}
               />
             </StyledMessageInfo>
 

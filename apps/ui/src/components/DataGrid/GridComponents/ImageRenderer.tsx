@@ -9,6 +9,7 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const ImageRenderer = (p: any) => {
   const [item, setItem] = useState<string | null>(null)
@@ -57,11 +58,10 @@ const ImageRenderer = (p: any) => {
               <Attach />
             </StyledOutlineIcon>
 
-            <Typography
+            <TypographySecondary
               value={'Upload'}
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
-              customColor={'rgba(255, 255, 255, 0.8)'}
             />
           </StyledWrapper>
         </StyledUploadDiv>

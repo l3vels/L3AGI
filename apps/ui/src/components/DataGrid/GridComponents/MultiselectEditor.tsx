@@ -2,6 +2,7 @@ import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 're
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type OptionRendererProps = {
   label: string
@@ -18,17 +19,8 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   } else {
     filteredValues = props.optionsArr?.filter((item: any) => props.value?.includes(item.value))
   }
-
-  // .map((item: any) => item.label)
-  // console.log('res', res)
-  // if (realValues) {
-  //   //  realValues.map((item: any) => <div>{item}</div>)
-  //   console.log('realValues', realValues)
-  // }
-
   const [value, setValue] = useState(filteredValues)
   const refInput = useRef(null as any)
-  // console.log('props', props)
   useEffect(() => {
     // focus on the input
     refInput.current?.focus()
@@ -86,12 +78,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 
   const OptionRenderer = ({ label }: OptionRendererProps) => {
     return (
-      <Typography
-        value={label}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
     )
   }
 

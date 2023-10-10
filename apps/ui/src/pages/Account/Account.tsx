@@ -15,6 +15,9 @@ import ChangePassword from 'pages/ChangePassword'
 import AccountForm from './AccountForm/AccountForm'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
+import TypographyPrimary from 'components/Typography/Primary'
+import HeadingPrimary from 'components/Heading/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Account = () => {
   const { openCreateChangePasswordModal } = useChangePassword()
@@ -24,19 +27,17 @@ const Account = () => {
       <div id='header_group'>
         <StyledHeaderGroup>
           <StyledTextHeaderWrapper>
-            <Heading type={Heading.types.h1} size={Heading.sizes.lg} value='My Profile' />
+            <HeadingPrimary type={Heading.types.h1} size={Heading.sizes.lg} value='My Profile' />
           </StyledTextHeaderWrapper>
           <StyledButtonsContainer>
             <StyledChangePasswordButton
               onClick={openCreateChangePasswordModal}
-              kind={Button.kinds.PRIMARY}
               size={Button.sizes.MEDIUM}
             >
-              <Typography
+              <TypographyPrimary
                 value='Change password'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'#FFFFFF'}
               />
             </StyledChangePasswordButton>
           </StyledButtonsContainer>
@@ -75,12 +76,11 @@ const StyledTextHeaderWrapper = styled.div`
   display: flex;
   position: relative;
   align-items: center;
-  color: #ffffff;
   width: 180px;
   height: 40px;
   flex: 1;
 `
-const StyledChangePasswordButton = styled(Button)`
+const StyledChangePasswordButton = styled(ButtonPrimary)`
   padding: 10px 26px;
 `
 
@@ -90,10 +90,3 @@ const StyledButtonsContainer = styled.div`
   align-items: center;
   gap: 5px;
 `
-// const StyledContainer = styled.div`
-//   display: grid;
-//   justify-content: center;
-//   align-items: Center;
-//   width: 200px;
-//   height: 100px;
-// `

@@ -9,6 +9,9 @@ import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
 import { useLogoutService } from 'services'
 import { logout as logOutCookies } from 'helpers/authHelper'
 import useAccount from 'pages/Account/useAccount'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonTertiary } from 'components/Button/Button'
 
 const AccountForm = () => {
   const { formik } = useAccount()
@@ -33,11 +36,10 @@ const AccountForm = () => {
         <StyledFormContainer>
           <StyledCustomTextField>
             <StyledTypographyWrapper>
-              <Typography
+              <TypographyTertiary
                 value='Full Name'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor={'rgba(255, 255, 255, 0.6)'}
               />
             </StyledTypographyWrapper>
             <TextField
@@ -49,11 +51,10 @@ const AccountForm = () => {
           </StyledCustomTextField>
           <StyledCustomTextField>
             <StyledTypographyWrapper>
-              <Typography
+              <TypographyTertiary
                 value='Company name'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor={'rgba(255, 255, 255, 0.6)'}
               />
             </StyledTypographyWrapper>
             <TextField
@@ -66,11 +67,10 @@ const AccountForm = () => {
 
           <StyledCustomTextField>
             <StyledTypographyWrapper>
-              <Typography
+              <TypographyTertiary
                 value='Email'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-                customColor={'rgba(255, 255, 255, 0.6)'}
               />
             </StyledTypographyWrapper>
             <TextField
@@ -82,19 +82,13 @@ const AccountForm = () => {
           </StyledCustomTextField>
 
           <StyledButton>
-            <Button
-              onClick={handleLogout}
-              leftIcon={LogOut}
-              kind={Button.kinds.TERTIARY}
-              size={Button.sizes.SMALL}
-            >
-              <Typography
+            <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes.SMALL}>
+              <TypographySecondary
                 value='Log out'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'rgba(255, 255, 255, 0.8)'}
               />
-            </Button>
+            </ButtonTertiary>
           </StyledButton>
         </StyledFormContainer>
       </FormikProvider>

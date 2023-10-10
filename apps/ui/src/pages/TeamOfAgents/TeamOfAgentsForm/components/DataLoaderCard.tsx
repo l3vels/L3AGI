@@ -4,6 +4,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import Help from '@l3-lib/ui-core/dist/icons/Help'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DataLoaderCardProps = {
   title: string
@@ -30,12 +31,7 @@ const DataLoaderCard = ({
       isSelected={isSelected}
       isActive={isActive}
     >
-      <Typography
-        value={title}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.md} />
 
       {onHelpClick && (
         <IconButton
@@ -56,6 +52,9 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
   flex-grow: 1;
   height: 50px;
   min-height: 50px;
+  min-width: fit-content;
+
+  padding: 0 5px;
 
   border-radius: 8px;
   border: 2px solid transparent;

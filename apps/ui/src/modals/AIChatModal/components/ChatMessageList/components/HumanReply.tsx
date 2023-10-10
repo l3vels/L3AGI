@@ -5,6 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const HumanReply = ({
   messageText,
@@ -29,11 +30,11 @@ const HumanReply = ({
         <StyledSmallAvatarWrapper>
           <AvatarGenerator name={authorName} size={16} textSizeRatio={1.5} />
         </StyledSmallAvatarWrapper>
-        <Typography
+
+        <TypographyPrimary
           value={`@${authorName}`}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor={'#FFF'}
         />
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
@@ -53,8 +54,9 @@ export const StyledReplyWrapper = styled.div`
 
   width: calc(100vw - 100px);
 
-  max-width: 850px;
-  height: 30px;
+  max-width: 800px;
+
+  height: 20px;
   /* background: red; */
   gap: 10px;
 `
@@ -68,7 +70,7 @@ export const StyledReplyInfoWrapper = styled.div`
 `
 export const StyledReplyTextWrapper = styled.div`
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 2px;
 `
 export const StyledReplyLine = styled.div`
   width: 24px;

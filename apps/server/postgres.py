@@ -6,7 +6,6 @@ from datetime import datetime
 from langchain.schema.messages import AIMessage, HumanMessage
 from models.chat_message import ChatMessage
 from fastapi_sqlalchemy import db
-from typings.user import UserOutput
 
 from langchain.schema import (
     BaseChatMessageHistory,
@@ -32,21 +31,25 @@ class ChatMessageJSONEncoder(json.JSONEncoder):
 class PostgresChatMessageHistory(BaseChatMessageHistory):
     def __init__(
             self,
-            account_id: str,
-            user_id: str,
-            user: UserOutput,
-            session_id: str,
+            sender_account_id: Optional[str],
+            sender_user_id: Optional[str],
+            # user: Optional[UserOutput],
+            session_id: Optional[str],
             parent_id: Optional[str] = None,
             agent_id: Optional[str] = None,
             team_id: Optional[str] = None,
+            sender_name: Optional[str] = None,
+            chat_id: Optional[str] = None,
     ):
-        self.account_id = account_id
-        self.user_id = user_id
-        self.user = user
+        self.sender_account_id = sender_account_id
+        self.sender_user_id = sender_user_id
+        # self.user = user
         self.session_id = session_id
         self.parent_id = parent_id
         self.agent_id = agent_id
         self.team_id = team_id
+        self.sender_name = sender_name
+        self.chat_id = chat_id
 
 
     @property
@@ -58,13 +61,15 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
     def create_message(self, message, parent_id: Optional[str] = None, agent_id: Optional[UUID] = None):
         # Append the message to the record in PostgreSQL
         chat_message = ChatMessage(
-            user_id=self.user_id,
-            account_id=self.account_id,
+            sender_user_id=self.sender_user_id,
+            sender_account_id=self.sender_account_id,
             message=_message_to_dict(message),
             session_id=self.session_id,
             agent_id=self.agent_id or agent_id,
             team_id=self.team_id,
             parent_id=parent_id,
+            sender_name=self.sender_name,
+            chat_id=self.chat_id
         )
 
         db.session.add(chat_message)
@@ -87,7 +92,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
 
     def create_human_message(self, message: str):
         return self.create_message(HumanMessage(content=message, additional_kwargs={
-            "name": self.user.name,
+            "name": self.sender_name,
         }), parent_id=self.parent_id)
 
     def add_message(self, message: BaseMessage) -> str:

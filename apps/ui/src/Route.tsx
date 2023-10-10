@@ -23,19 +23,18 @@ import MainComponent from 'pages/MainComponent'
 import ChangePassword from 'pages/ChangePassword'
 import Account from 'pages/Account'
 import { AuthContext } from 'contexts'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { PublicRoute } from 'routes'
 
 import UpdatePassword from 'pages/UpdatePassword'
 
 import { ThemeProvider } from 'styled-components'
-import { defaultTheme, lightTheme } from 'styles/theme'
+import { darkTheme, lightTheme } from 'styles/theme'
 import { WelcomeLoader } from 'components/Loader/WelcomeLoader'
 import { CheatCode } from 'pages/Auth/Register/CheatCode'
 
 import Log from 'pages/Log/Log'
-import Webhook from 'pages/Webhook/Webhook'
 
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -46,15 +45,14 @@ import MainRouteLayout from 'routes/MainRouteLayout'
 import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 import RootLayout from 'routes/RootLayout'
-import AIChat from 'modals/AIChatModal/AIChat'
-import ChatRouteLayout from 'routes/ChatRouteLayout'
+
 import CreateAgentModal from 'modals/CreateAgentModal'
 import EditAgentModal from 'modals/EditAgentModal'
 import CreateDatasourceModal from 'modals/CreateDatasourceModal'
 import EditDatasourceModal from 'modals/EditDatasourceModal'
 import Datasource from 'pages/Datasource'
 import TeamOfAgents from 'pages/TeamOfAgents'
-import Agents from 'pages/Agents'
+
 import Discover from 'pages/Discover'
 import AgentView from 'pages/Agents/AgentView'
 
@@ -76,11 +74,18 @@ import ChatHistory from 'modals/AIChatModal/components/ChatHistory'
 import ChatHistoryRouteLayout from 'routes/ChatHistoryRouteLayout'
 import SettingsModal from 'modals/SettingsModal'
 import ToolkitModal from 'modals/ToolkitModal'
+import ChatRouteLayout from 'routes/ChatRouteLayout'
+
+import ClientChat from 'modals/AIChatModal/components/ClientChat'
+import ChatLinkModal from 'modals/ChatLinkModal'
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
-  const [theme, setTheme] = useState<any>(defaultTheme)
   const [cmdkOpen, setCmdkOpen] = useState(false)
+  const [theme, setTheme] = useState<string>(() => {
+    const storedTheme = localStorage.getItem('theme')
+    return storedTheme || 'dark'
+  })
 
   useHotkeys('ctrl+enter, meta+k', event => {
     event.preventDefault()
@@ -88,18 +93,26 @@ const Route = () => {
     return false
   })
 
-  // const handleChangeTheme = (theme: any) => {
-  //   setTheme(theme)
-  // }
+  useEffect(() => {
+    const currentThemeName = localStorage.getItem('theme')
+
+    if (currentThemeName && currentThemeName !== theme) {
+      setTheme(currentThemeName)
+    } else {
+      localStorage.setItem('theme', theme)
+    }
+  }, [theme])
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('theme', newTheme)
+    setTheme(newTheme)
+  }
 
   if (loading) return <WelcomeLoader />
 
   return (
-    <ThemeProvider theme={theme}>
-      {/* <div>
-        <button onClick={() => handleChangeTheme(defaultTheme)}>default Theme</button>
-        <button onClick={() => handleChangeTheme(lightTheme)}>light Theme</button>
-      </div> */}
+    <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Routes>
         <>
           <Router element={<RootLayout />}>
@@ -138,12 +151,28 @@ const Route = () => {
               {/* <Router path='webhook' element={<Webhook />} key={document.location.href} /> */}
             </Router>
 
-            <Router path={'chat'} element={<ChatRouteLayout />} key={document.location.href}>
-              <Router index element={<AIChat />} key={document.location.href} />
+            <Router path={'chat'} element={<ChatRouteLayout />} key={document.location.href} />
+            {/* <Router index element={<AIChat />} key={document.location.href} />
+            </Router> */}
+
+            <Router
+              path={'/chatHistory'}
+              element={<ChatHistoryRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<ChatHistory />} key={document.location.href} />
             </Router>
 
-            <Router path={'agents'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Agents />} key={document.location.href} />
+            <Router
+              path={'/chat/client'}
+              element={<ChatRouteLayout />}
+              key={document.location.href}
+            />
+            {/* <Router index element={<ClientChat />} key={document.location.href} />
+            </Router> */}
+
+            <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
+              {/* <Router index element={<div />} key={document.location.href} /> */}
               <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
               <Router
                 path={'create-agent-template'}
@@ -178,7 +207,7 @@ const Route = () => {
             </Router>
             <Router
               path={'team-of-agents'}
-              element={<MainRouteLayout />}
+              element={<ChatRouteLayout />}
               key={document.location.href}
             >
               <Router index element={<TeamOfAgents />} key={document.location.href} />
@@ -202,7 +231,6 @@ const Route = () => {
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
               <Router index element={<ApiKeys />} key={document.location.href} />
-              <Router path={'webhook'} element={<Webhook />} key={document.location.href} />
               <Router path={'logs'} element={<Log />} key={document.location.href} />
               <Router path={'log/:id'} element={<Log />} key={document.location.href} />
               <Router path={'successful/:id'} element={<Log />} key={document.location.href} />
@@ -224,14 +252,6 @@ const Route = () => {
           <Router path='/login/update-password' element={<UpdatePassword />} />
           <Router path='/cheat-code' element={<CheatCode />} />
           {/* <Router path='/chat/history' element={<AIChat isHistory />} /> */}
-
-          <Router
-            path={'/chat/history'}
-            element={<ChatHistoryRouteLayout />}
-            key={document.location.href}
-          >
-            <Router index element={<ChatHistory />} key={document.location.href} />
-          </Router>
         </Router>
       </Routes>
 
@@ -245,7 +265,13 @@ const Route = () => {
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
-      <CommandMenu open={cmdkOpen} setCmdkOpen={setCmdkOpen} />
+      <ChatLinkModal />
+      <CommandMenu
+        open={cmdkOpen}
+        setCmdkOpen={setCmdkOpen}
+        theme={theme}
+        toggleTheme={toggleTheme}
+      />
 
       {/* <NotificationsModal /> */}
     </ThemeProvider>

@@ -38,6 +38,23 @@ def authenticate(request: Request, response: Response) -> Tuple[UserOutput, Acco
     except gql.transport.exceptions.TransportQueryError:
         raise HTTPException(status_code=401, detail="Unauthorized")
     
+def try_auth_user(request: Request, response: Response) -> Tuple[UserOutput, AccountOutput]:
+    try:
+        authorize = AuthJWT(request, response)
+        authorize.jwt_required()
+        email = authorize.get_jwt_subject()
+        db_user = UserModel.get_user_by_email(db, email)
+        account_id = request.headers.get('account_id', None)
+        if account_id == 'undefined' or  not account_id:
+            db_account = AccountModel.get_account_created_by(db, db_user.id)            
+        else:
+            db_account = AccountModel.get_account_by_access(db, user_id=db_user.id, account_id=account_id)
+
+        return UserAccount(user=convert_model_to_response_user(db_user), 
+                           account=convert_model_to_response_account(db_account))
+    except Exception:
+        return None
+    
 
 def generate_token(subject, jwt_authorizer: AuthJWT = Depends()):
     token_config = Config.JWT_EXPIRY

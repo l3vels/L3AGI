@@ -30,7 +30,7 @@ class ConversationalAgent(BaseAgent):
             return_messages=True,
         )
 
-        memory.human_name = self.user.name
+        memory.human_name = self.sender_name
         memory.ai_name = agent_with_configs.agent.name
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
@@ -68,7 +68,7 @@ class ConversationalAgent(BaseAgent):
                 'output': res,
             })
         
-        ai_message = history.create_ai_message(res, human_message_id)
+        ai_message = history.create_ai_message(res, human_message_id, agent_with_configs.agent.id)
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return res

@@ -3,12 +3,11 @@ import { useState, useRef, useEffect, useContext } from 'react'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
-import { ApiVersionEnum } from '../types'
 import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
-import SendIconSvg from 'assets/icons/send_icon.svg'
+import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 
@@ -35,17 +34,17 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 
-import ChatMembers from './ChatMembers'
 import { ChatStatus, TeamOfAgentsType } from 'types'
 import useStopChatService from 'services/chat/useStopChatService'
 import { useConfigsService } from 'services/config/useConfigsService'
 import getSessionId from '../utils/getSessionId'
+import { ButtonSecondary } from 'components/Button/Button'
 
-type ChatV2Props = {
-  isPrivate?: boolean
-}
+import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
+import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
+import { useChatByIdService } from 'services/chat/useChatByIdService'
 
-const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
+const ChatV2 = () => {
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -69,22 +68,29 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
+  const chatId = urlParams.get('chat')
+
+  const [createClientChatMessage] = useCreateClientChatMessageService()
 
   const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
 
   const { data: chatMessages } = useChatMessagesService({
-    isPrivateChat: isPrivate,
     agentId,
     teamId,
+    chatId,
   })
+
+  const { data: chatById } = useChatByIdService({ id: chatId || '' })
 
   const { data: configs } = useConfigsService()
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const agentName = agentById?.agent?.name
 
-  const chatSuggestions = agentById?.configs?.suggestions || []
-  const chatGreeting = agentById?.configs?.greeting || ''
+  const chatSuggestions =
+    agentById?.configs?.suggestions || chatById?.agent?.configs?.suggestions || []
+
+  const chatGreeting = agentById?.configs?.greeting || chatById?.agent?.configs?.greeting || ''
 
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
 
@@ -94,9 +100,9 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const sessionId = getSessionId({
     user,
     account,
-    isPrivateChat: isPrivate,
     agentId,
     teamId,
+    chatId,
   })
 
   const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
@@ -115,24 +121,28 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       id: uuid(),
       session_id: '',
       thoughts: null,
-      user_id: user.id,
-      account_id: account.id,
+      sender_user_id: user?.id,
+      sender_account_id: account?.id,
+      sender_name: '',
       parent_id: null,
       parent: null,
       agent_id: agentId,
       agent: null,
       team_id: teamId,
       team: null,
+      chat_id: chatId,
       message: {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',
       },
       created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
+      sender_user: user,
     }
 
-    upsertChatMessageInCache(message, isPrivate, {
+    upsertChatMessageInCache(message, {
       agentId,
       teamId,
+      chatId,
     })
 
     return message
@@ -198,15 +208,21 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
       if (reply.isReply) {
         setReply(defaultReplyState)
       }
-
-      await createChatMessageService({
-        message,
-        isPrivateChat: isPrivate,
-        agentId,
-        teamId,
-        localChatMessageRefId, // Used to update the message with socket
-        parentId: parentMessageId,
-      })
+      if (chatId) {
+        await createClientChatMessage({
+          chat_id: chatId,
+          prompt: message,
+          localChatMessageRefId,
+        })
+      } else {
+        await createChatMessageService({
+          message,
+          agentId,
+          teamId,
+          localChatMessageRefId, // Used to update the message with socket
+          parentId: parentMessageId,
+        })
+      }
 
       setThinking(false)
     } catch (e) {
@@ -230,15 +246,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   }
 
   useEffect(() => {
-    setAPIVersion(ApiVersionEnum.L3_Conversational)
-
-    setTimeout(() => {
-      setFormValue('')
-      inputRef.current?.focus()
-    }, 1)
-  }, [])
-
-  useEffect(() => {
     if (reply.isReply) {
       setTimeout(() => {
         setFormValue('')
@@ -253,25 +260,13 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   }
 
   useEffect(() => {
-    const versions = [
-      ApiVersionEnum.L3_Conversational,
-      // ApiVersionEnum.L3_PlanAndExecute,
-      ApiVersionEnum.L3_PlanAndExecuteWithTools,
-    ]
-
-    if (!versions.includes(apiVersion)) {
-      navigate('chat')
-    }
-  }, [apiVersion])
-
-  useEffect(() => {
     if (formValue.length > 0) {
       socket.sendUserTyping('chat_id')
     }
   }, [formValue])
 
   const filteredTypingUsers = socket?.typingUsersData?.filter(
-    (data: any) => user.id !== data.userId,
+    (data: any) => user?.id !== data.userId,
   )
 
   const canStopGenerating =
@@ -282,7 +277,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
   const handleStopGenerating = async () => {
     await stopChatService({
       input: {
-        is_private_chat: isPrivate,
         agent_id: agentId,
         team_id: teamId,
       },
@@ -291,10 +285,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
   return (
     <StyledWrapper>
-      <StyledMembersWrapper>
-        <ChatMembers agentById={agentById} teamOfAgents={teamOfAgents} />
-      </StyledMembersWrapper>
-
       <StyledMessages>
         <StyledChatWrapper>
           <ChatMessageListV2
@@ -304,12 +294,14 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}
-            agentName={agentName || ''}
+            agentName={agentName || 'Agent'}
             greeting={
               chatMessages &&
               chatMessages?.length === 0 &&
               (!agentId
-                ? `Hello ${user.name}, you can chat with agents and teams on your dashboard.`
+                ? `Hello ${
+                    user?.name || ''
+                  } , you can chat with agents and teams on your dashboard.`
                 : chatGreeting)
             }
           />
@@ -335,14 +327,13 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
 
             {canStopGenerating && (
               <StyledStopGeneratingButton>
-                <Button
+                <ButtonSecondary
                   onClick={handleStopGenerating}
                   size={Button.sizes.SMALL}
-                  kind={Button.kinds.SECONDARY}
                   disabled={stopChatLoading}
                 >
                   Stop Generating
-                </Button>
+                </ButtonSecondary>
               </StyledStopGeneratingButton>
             )}
           </StyledButtonGroup>
@@ -379,18 +370,6 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                   />
                 </StyledInputWrapper>
               ) : (
-                // <StyledInput
-                //   expanded
-                //   ref={inputRef}
-                //   value={formValue}
-                //   onKeyDown={handleKeyDown}
-                //   onChange={e => {
-                //     setFormValue(e.target.value)
-                //     adjustTextareaHeight()
-                //   }}
-                //   placeholder='Ask or Generate anything'
-                //   rows={1}
-                // />
                 <StyledInputWrapper>
                   <Mentions
                     inputRef={inputRef}
@@ -413,64 +392,12 @@ const ChatV2 = ({ isPrivate = false }: ChatV2Props) => {
                 }}
                 disabled={!formValue || thinking}
               >
-                <img src={SendIconSvg} alt='sen' />
+                <StyledSenIcon size={27} />
               </StyledButton>
               <CommandIcon />
             </StyledTextareaWrapper>
           </StyledForm>
           <StyledChatBottom>
-            {/* <button
-            onClick={() => {
-              console.log('sendUserShare')
-              //todo need to replace message_id
-              socket.sendUserShare('message_id')
-            }}
-          >
-            Share
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserLikeDislike Like')
-              //todo need to replace message_id
-              const message_id = 'message_id'
-              socket.sendUserLikeDislike(message_id, 'user_like')
-            }}
-          >
-            Like
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserLikeDislike Dislike')
-              //todo need to replace message_id
-              const message_id = 'message_id'
-              socket.sendUserLikeDislike(message_id, 'user_dislike')
-            }}
-          >
-            Dislike
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserTyping')
-              //todo need to replace chat_id,
-              socket.sendUserTyping('chat_id')
-            }}
-          >
-            Send User Typing
-          </button> */}
-
-            {/* <button
-            onClick={() => {
-              console.log('sendUserStopTyping')
-              //todo need to replace chat_id,
-              socket.sendUserStopTyping('chat_id')
-            }}
-          >
-            Send User stop typing
-          </button> */}
-
             <TypingUsers usersData={filteredTypingUsers} />
           </StyledChatBottom>
         </StyledChatInputWrapper>
@@ -503,7 +430,7 @@ const StyledMessages = styled.main`
   flex-direction: column;
   align-items: center;
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 240px);
+  height: calc(100vh - 275px);
   margin-top: 30px;
 `
 
@@ -527,27 +454,13 @@ const StyledForm = styled.form`
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 100px;
-
   /* cursor: pointer; */
 
-  width: fit-content;
+  width: 100%;
+  max-width: 800px;
   min-height: 48px;
   height: fit-content;
   max-height: 250px;
-`
-
-const StyledSelect = styled.select`
-  outline: none;
-  border: none;
-  padding-left: 24px;
-  height: 100%;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.6);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: rgba(255, 255, 255, 0.6);
 `
 
 const StyledTextareaWrapper = styled.div`
@@ -578,17 +491,18 @@ const StyledButton = styled.div<{ disabled: boolean }>`
 `
 
 const StyledChatFooter = styled.div`
-  position: fixed;
+  /* position: fixed;
   left: 50%;
   z-index: 100001;
   bottom: -135px;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
 
   display: flex;
   /* flex-direction: column; */
   justify-content: center;
 
   width: 100%;
+  padding: 0 20px;
 `
 
 const StyledButtonGroup = styled.div`
@@ -597,6 +511,8 @@ const StyledButtonGroup = styled.div`
 
   padding: 16px 0;
   width: 100%;
+
+  height: 70px;
 `
 
 const StyledChatWrapper = styled.div`
@@ -609,14 +525,14 @@ const StyledChatWrapper = styled.div`
 `
 
 const StyledSuggestionsContainer = styled.div`
+  position: absolute;
   display: flex;
-  width: calc(100vw - 50px);
-
+  width: 100%;
   max-width: 800px;
   align-items: center;
   gap: 12px;
 
-  overflow-y: scroll;
+  overflow-x: auto;
 
   ::-webkit-scrollbar {
     display: none;
@@ -637,10 +553,11 @@ const StyledFileWrapper = styled.div`
 `
 
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
-  width: calc(100vw - 200px);
-  max-width: 600px;
-  padding-bottom: 2px;
+  /* width: calc(100vw - 600px);
+  max-width: 600px; */
 
+  padding-bottom: 2px;
+  width: 100%;
   ${p =>
     p.secondary &&
     css`
@@ -656,6 +573,7 @@ const StyledChatInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 const StyledChatBottom = styled.div`
   display: flex;
@@ -664,49 +582,9 @@ const StyledChatBottom = styled.div`
   padding: 0 50px;
   width: 100%;
 `
-const StyledReplyBox = styled.div`
-  position: absolute;
-  /* z-index: 100000000; */
-  /* background: var(--primitives-gray-800, #383f4b); */
-  width: 100%;
-  height: 40px;
-  top: -40px;
-  left: 0;
-
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(100px);
-  /* box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
-    inset 0px 1px 1px rgba(255, 255, 255, 0.25); */
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 15px;
-  border-radius: 8px;
-`
-const StyledReplyText = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`
-const StyledMembersWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 5px;
-
-  z-index: 12000000;
-
-  padding: 10px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  /* background: rgba(0, 0, 0, 0.3); */
-
-  height: calc(100vh - 240px);
-
-  @media only screen and (max-width: 1400px) {
-    display: none;
+const StyledSenIcon = styled(SendIcon)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `

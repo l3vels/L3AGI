@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type PluginItemProps = {
   image: string
@@ -13,12 +14,7 @@ const PluginItem = ({ image, title, description, isActive = false, onClick }: Pl
   return (
     <StyledPluginItem active={isActive} onClick={onClick}>
       <StyledImg src={image} />
-      <Typography
-        value={title}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
       <StyledDescription>{description}</StyledDescription>
     </StyledPluginItem>
   )

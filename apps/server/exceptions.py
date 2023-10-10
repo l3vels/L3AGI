@@ -94,3 +94,10 @@ class ApiKeyNotFoundException(DatasourceException):
 
 class PlannerEmptyTasksException(AppBaseException):
     pass
+
+
+class ChatException(AppBaseException):
+    pass
+
+class ChatNotFoundException(DatasourceException):
+    pass

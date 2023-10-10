@@ -10,12 +10,15 @@ import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 type HumanMessageProps = {
   avatarImg: string
   messageDate: string
   messageText: string
   userId: string
+  userName: string
   onReplyClick?: () => void
 }
 
@@ -24,7 +27,7 @@ const HumanMessage = ({
   messageDate,
   messageText,
   userId,
-
+  userName,
   onReplyClick,
 }: HumanMessageProps) => {
   const { wordArray, handleFileClick, authorName, fileUrlMatch, fileName } = useHumanMessage({
@@ -37,23 +40,22 @@ const HumanMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={authorName} size={50} avatar={avatarImg} />
+          <AvatarGenerator name={userName} size={50} avatar={avatarImg} />
         </StyledAvatarWrapper>
 
         <StyledMainContent>
           <StyledMessageTop>
             <StyledMessageInfo>
-              <Typography
-                value={authorName}
+              <TypographyPrimary
+                value={userName}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'#FFF'}
               />
-              <Typography
+
+              <TypographyTertiary
                 value={messageDate}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
-                customColor={'rgba(255, 255, 255, 0.60)'}
               />
             </StyledMessageInfo>
 
@@ -89,7 +91,7 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   padding-right: 10px;
   min-width: 400px;
   width: calc(100% - 100px);
-  max-width: 850px;
+  max-width: 800px;
 
   :hover {
     .actions {
@@ -105,7 +107,7 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
 `
 
 export const StyledMessageText = styled.div<{ secondary?: boolean }>`
-  color: #fff;
+  color: ${({ theme }) => theme.body.textColorPrimary};
   display: flex;
   padding: 16px 16px 18px 16px;
   flex-direction: column;
@@ -117,7 +119,7 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   width: 100%;
 
   border-radius: 4px 18px 18px 18px;
-  background: var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
+  background: ${({ theme }) => theme.body.humanMessageBgColor};
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
 
   ${props =>

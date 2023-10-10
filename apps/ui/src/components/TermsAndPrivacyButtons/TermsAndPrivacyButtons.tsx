@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
+import TypographyQuaternary from 'components/Typography/Quaternary'
 
 const TermsAndPrivacyButtons = () => {
   return (
     <StyledWrapper>
       <button onClick={() => openLinkTab(import.meta.env.REACT_APP_TERMS_LINK)}>
-        <Typography
+        <TypographyQuaternary
           value='Terms of Use'
           type={Typography.types.label}
           size={Typography.sizes.xss}
           as={'a'}
-          customColor='rgba(255,255,255, 0.5)'
           style={{
             cursor: 'pointer',
             textAlign: 'center',
@@ -22,12 +22,11 @@ const TermsAndPrivacyButtons = () => {
       <StyledDivider />
 
       <button onClick={() => openLinkTab(import.meta.env.REACT_APP_PRIVACY)}>
-        <Typography
+        <TypographyQuaternary
           value='Privacy Policy'
           type={Typography.types.label}
           size={Typography.sizes.xss}
           as={'a'}
-          customColor='rgba(255,255,255, 0.5)'
           style={{
             cursor: 'pointer',
             textAlign: 'center',

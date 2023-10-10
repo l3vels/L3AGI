@@ -24,14 +24,14 @@ class DialogueAgentWithTools(DialogueAgent):
         model: ChatOpenAI,
         tools: List[any],
         session_id: str,
-        user: UserOutput,
+        sender_name: str,
         is_memory: bool = False,
         **tool_kwargs,
     ) -> None:
         super().__init__(name, agent_with_configs, system_message, model)
         self.tools = tools
         self.session_id = session_id
-        self.user = user
+        self.sender_name = sender_name
         self.is_memory = is_memory
 
     def send(self) -> str:
@@ -51,7 +51,7 @@ class DialogueAgentWithTools(DialogueAgent):
                 return_messages=True,
             )
             
-            memory.human_name = self.user.name
+            memory.human_name = self.sender_name
             memory.ai_name = self.agent_with_configs.agent.name
             memory.auto_save = False
         else:

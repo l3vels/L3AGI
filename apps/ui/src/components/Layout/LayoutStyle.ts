@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const StyledAppContainer = styled.div`
-  /* background: ${({ theme }) => theme.body.testVariableColor}; */
-  background: linear-gradient(265.15deg, rgba(76, 166, 248, 1) -32.37%, rgba(33, 82, 243, 1) 100%);
+  background: ${({ theme }) => theme.body.backgroundColorPrimary};
   height: 100vh;
   display: flex;
   flex-direction: column;

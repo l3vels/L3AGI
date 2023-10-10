@@ -14,8 +14,16 @@ import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import {
   StyledChatButtonWrapper,
+  StyledDeleteIcon,
+  StyledEditIcon,
+  StyledEyeOpenIcon,
   StyledInnerButtonWrapper,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import { ButtonPrimary } from 'components/Button/Button'
+import { textSlicer } from 'utils/textSlicer'
 
 type AgentCardProps = {
   name: string
@@ -44,52 +52,58 @@ const AgentCard = ({
   creator,
   avatar,
 }: AgentCardProps) => {
-  let shortDescription = description
-  if (description.length > 75) {
-    shortDescription = `${description.slice(0, 75)}...`
-  }
+  const { shortText: shortDescription } = textSlicer(description, 130)
+  const { shortText: shortName } = textSlicer(name, 25)
 
-  let shortHeaderTag = headerTag
-  if (headerTag && headerTag?.length > 40) {
-    shortHeaderTag = `${headerTag.slice(0, 40)}...`
+  let shortHeaderTag
+  if (headerTag) {
+    const { shortText } = textSlicer(headerTag, 40)
+    shortHeaderTag = shortText
   }
 
   return (
     <StyledAgentCard>
       <StyledCardHeader>
-        <div>
-          {headerText && (
-            <Typography
-              value={headerText}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255,255,255, 0.8)'}
-            />
-          )}
-        </div>
-
-        <div>{headerTag && <Tags label={shortHeaderTag} readOnly size='small' outlined />}</div>
-      </StyledCardHeader>
-      <StyledCardBody>
         <StyledAvatarWrapper>
           <AvatarGenerator name={name} size={50} avatar={avatar} />
         </StyledAvatarWrapper>
-        <StyledBodyTextWrapper>
-          <Typography
-            value={name}
+
+        <StyledTitleWrapper>
+          <TypographyPrimary
+            value={shortName}
             type={Typography.types.P}
             size={Typography.sizes.lg}
-            customColor={'#FFF'}
           />
-          <Typography
+          <div>
+            {headerTag && (
+              <TypographySecondary
+                value={shortHeaderTag}
+                type={Typography.types.P}
+                size={Typography.sizes.sm}
+              />
+            )}
+          </div>
+        </StyledTitleWrapper>
+        {/* <div>
+          {headerText && (
+            <TypographySecondary
+              value={headerText}
+              type={Typography.types.P}
+              size={Typography.sizes.sm}
+            />
+          )}
+        </div> */}
+      </StyledCardHeader>
+      <StyledCardBody>
+        <StyledBodyTextWrapper>
+          <TypographySecondary
             value={shortDescription}
             type={Typography.types.P}
             size={Typography.sizes.sm}
-            customColor={'rgba(255,255,255, 0.8)'}
           />
         </StyledBodyTextWrapper>
       </StyledCardBody>
-      <StyledCardFooter>
+      <StyledCardFooter className='cardFooter'>
         {creator && (
           <StyledCreatorWrapper>
             {/* <StyledLogo src={l3Logo} /> */}
@@ -99,65 +113,59 @@ const AgentCard = ({
               textSizeRatio={1.5}
               avatar={creator.avatar}
             />
-            <Typography
+
+            <TypographyTertiary
               value={creator.name}
               type={Typography.types.P}
               size={Typography.sizes.xss}
-              customColor={'rgba(255,255,255, 0.6)'}
             />
           </StyledCreatorWrapper>
         )}
-        <StyledButtonsWrapper className='footerButtons'>
+        <StyledButtonsWrapper>
           {onDeleteClick && (
-            <StyledHiddenButton className='hiddenButton'>
-              <IconButton
-                onClick={onDeleteClick}
-                icon={() => <Delete />}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='Delete'
-              />
-            </StyledHiddenButton>
+            <IconButton
+              onClick={onDeleteClick}
+              icon={() => <StyledDeleteIcon />}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              // ariaLabel='Delete'
+            />
           )}
           {onEditClick && (
-            <StyledHiddenButton className='hiddenButton'>
-              <IconButton
-                onClick={onEditClick}
-                icon={() => <Edit />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='Edit'
-              />
-            </StyledHiddenButton>
+            <IconButton
+              onClick={onEditClick}
+              icon={() => <StyledEditIcon />}
+              size={IconButton.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              // ariaLabel='Edit'
+            />
           )}
           {onViewClick && (
-            <StyledHiddenButton className='hiddenButton'>
-              <IconButton
-                onClick={onViewClick}
-                icon={() => (
-                  <StyledIconWrapper>
-                    <EyeOpen size={50} />
-                  </StyledIconWrapper>
-                )}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='View'
-              />
-            </StyledHiddenButton>
+            <IconButton
+              onClick={onViewClick}
+              icon={() => (
+                <StyledIconWrapper>
+                  <StyledEyeOpenIcon size={50} />
+                </StyledIconWrapper>
+              )}
+              size={Button.sizes.SMALL}
+              kind={IconButton.kinds.TERTIARY}
+              // ariaLabel='View'
+            />
           )}
           {onCreateClick && (
-            <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onCreateClick}>
+            <ButtonPrimary size={Button.sizes.SMALL} onClick={onCreateClick}>
               Create
-            </Button>
+            </ButtonPrimary>
           )}
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper secondary>
                   Chat
                   <MoveArrowRight size={14} />
                 </StyledInnerButtonWrapper>
-              </Button>
+              </ButtonPrimary>
             </StyledChatButtonWrapper>
           )}
         </StyledButtonsWrapper>
@@ -170,25 +178,26 @@ export default AgentCard
 
 export const StyledAgentCard = styled.div`
   position: relative;
-  width: 335px;
-  min-width: 335px;
-  height: 185px;
-  min-height: 185px;
+  width: 345px;
+  min-width: 345px;
+  height: 190px;
+  min-height: 190px;
 
   padding: 15px;
   padding-bottom: 10px;
 
-  border-radius: 10px;
-  /* background: rgba(0, 0, 0, 0.5); */
-  background: rgba(0, 0, 0, 0.2);
+  border-radius: 22px;
 
+  /* background: rgba(0, 0, 0, 0.5); */
+  background: ${({ theme }) => theme.body.cardBgColor};
+  border: ${({ theme }) => theme.body.border};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   :hover {
-    .hiddenButton {
+    .cardFooter {
       opacity: 1;
     }
   }
@@ -196,13 +205,15 @@ export const StyledAgentCard = styled.div`
 const StyledCardHeader = styled.div`
   width: 100%;
 
+  padding: 20px 0;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
+  /* justify-content: space-between; */
 
-  margin-bottom: auto;
-  padding-bottom: 5px;
-
+  margin-bottom: 5px;
+  /* padding-bottom: 5px; */
   min-height: 20px;
   /* margin-bottom: 10px; */
 `
@@ -230,6 +241,8 @@ const StyledCardFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  opacity: 0;
+  transition: opacity 800ms;
 `
 const StyledButtonsWrapper = styled.div`
   display: flex;
@@ -243,7 +256,6 @@ const StyledBodyTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* gap: 5px; */
-
   overflow: hidden;
 
   /* padding-top: 5px; */
@@ -253,13 +265,7 @@ const StyledAvatarWrapper = styled.div`
   text-align: center;
   height: fit-content;
 `
-const StyledHiddenButton = styled.div`
-  width: fit-content;
-  height: fit-content;
 
-  opacity: 0;
-  transition: opacity 300ms;
-`
 const StyledIconWrapper = styled.div`
   /* color: #000; */
   color: transparent;
@@ -269,4 +275,9 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+`
+
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `

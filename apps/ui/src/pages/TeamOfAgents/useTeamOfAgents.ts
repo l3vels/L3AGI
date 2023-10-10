@@ -35,11 +35,7 @@ export const useTeamOfAgents = () => {
             closeModal('delete-confirmation-modal')
           }
         },
-        closeModal: () => {
-          closeModal('delete-confirmation-modal')
-        },
         label: 'Delete Team?',
-        title: 'Delete Team?',
       },
     })
   }

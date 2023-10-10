@@ -25,7 +25,7 @@ class AgentModel(BaseModel):
         is_deleted (bool): Flag indicating if the agent has been soft-deleted.
         is_template (bool): Flag indicating if the agent is a template.
         user_id (UUID): ID of the user associated with the agent.
-        account_id (UUID): ID of the account associated with the agent.
+    account_id (UUID): ID of the account associated with the agent.
         is_public (bool): Flag indicating if the agent is a system agent.
         configs: Relationship with agent configurations.
     """ 
@@ -49,6 +49,7 @@ class AgentModel(BaseModel):
     configs = relationship("AgentConfigModel", back_populates="agent", lazy='select')
     chat_messages = relationship("ChatMessage", back_populates="agent", lazy='select')
     team_agents = relationship("TeamAgentModel", back_populates="agent", lazy='select')
+    chat = relationship("ChatModel", back_populates="agent", lazy='select')
     account = relationship("AccountModel", lazy='select')
     
     
@@ -110,7 +111,7 @@ class AgentModel(BaseModel):
             Agent: The created agent.
 
         """
-        old_agent = cls.get_agent_by_id(db=db, agent_id=id, account=account)
+        old_agent = cls.get_agent_by_id(db=db, agent_id=id)
         if not old_agent:
             raise AgentNotFoundException("Agent not found")
         db_agent = cls.update_model_from_input(agent_model=old_agent, agent_input=agent)
@@ -142,7 +143,7 @@ class AgentModel(BaseModel):
             Agent: The crated agent.
 
         """
-        template_agent = cls.get_agent_by_id(db=db, agent_id=template_id, account=account)
+        template_agent = cls.get_agent_by_id(db=db, agent_id=template_id)
         if check_is_template:
             if template_agent is None or not (template_agent.is_public or template_agent.is_template):
                 raise AgentNotFoundException("Agent not found")
@@ -221,7 +222,7 @@ class AgentModel(BaseModel):
     
 
     @classmethod
-    def get_agent_by_id(cls, db, agent_id, account):
+    def get_agent_by_id(cls, db, agent_id):
         """
             Get Agent from agent_id
 
@@ -296,8 +297,6 @@ class AgentModel(BaseModel):
             .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .options(joinedload(AgentModel.creator))
             .options(joinedload(AgentModel.account))
-            # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
-            # .options(joinedload(UserModel.agents))
             .first()
         )
         return agents

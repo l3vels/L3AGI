@@ -1,10 +1,18 @@
-import styled, { css } from 'styled-components'
+import styled, { css, useTheme } from 'styled-components'
 import commandIcon from 'assets/icons/command.png'
+import darkCommandIcon from 'assets/icons/darkCommand.png'
 
 const CommandIcon = () => {
+  const theme = useTheme()
+
   return (
     <StyledRightIcon>
-      <StyledIcon src={commandIcon} />
+      <StyledIcon
+        src={
+          theme.body.backgroundColorPrimary === 'rgb(253,252,250)' ? darkCommandIcon : commandIcon
+        }
+      />
+
       <StyledKeyIcon>K</StyledKeyIcon>
     </StyledRightIcon>
   )
@@ -28,6 +36,11 @@ const StyledIcon = styled.img<{ active?: boolean }>`
     css`
       opacity: 0.4;
     `}
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+
+  border: ${({ theme }) => theme.body.commandBorderColor};
 `
 const StyledKeyIcon = styled.span<{ active?: boolean }>`
   display: flex;
@@ -37,12 +50,11 @@ const StyledKeyIcon = styled.span<{ active?: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   border-radius: 4px;
-  border: 1px solid var(--basic-foreground-white-2, rgba(255, 255, 255, 0.2));
+  border: ${({ theme }) => theme.body.commandBorderColor};
   background: var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
+  color: ${({ theme }) => theme.body.textColorSecondary};
 
-  color: #fff;
   ${props =>
     !props.active &&
     css`

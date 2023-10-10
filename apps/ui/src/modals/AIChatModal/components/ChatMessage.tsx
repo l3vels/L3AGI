@@ -7,13 +7,12 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import user from 'assets/avatars/user.png'
 import l3 from 'assets/avatars/l3.png'
-import { IChatMessage, MessageTypeEnum } from '../types'
 import styled from 'styled-components'
 
 import loadingVideo from 'assets/videos/sidebyside-s.mp4'
 
 type ChatMessageProps = {
-  message: IChatMessage
+  message: any
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
@@ -100,20 +99,6 @@ const StyledMessageWrapper = styled.div`
   flex-grow: 1;
 `
 
-const StyledMessagePicWrapper = styled.div`
-  height: 40px;
-  width: 40px;
-  margin-left: 0.5rem;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-
-  img {
-    width: 100%;
-  }
-`
 
 export const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
   text-align: left;
@@ -124,7 +109,7 @@ export const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolea
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  color: #ffffff;
+  color: ${({ theme }) => theme.typography.contentPrimary};
   a {
     color: #fff;
   }
@@ -138,8 +123,6 @@ const StyledInnerGroupHeader = styled.div`
 `
 
 const StyledVideo = styled.video`
-  /* -webkit-clip-path: url(#my-clip-path);
-  clip-path: url(#my-clip-path); */
   border-radius: 100px;
   width: 50px;
   height: 50px;

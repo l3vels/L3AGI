@@ -1,0 +1,9 @@
+mutation createChat($input: input!) @api(name: ai) {
+  createChat: publish(input: $input)
+    @rest(type: "ChatMessage", path: "/chat", method: "POST", bodyKey: "input", endpoint: "ai") {
+    id
+    agent_id
+    team_id
+    name
+  }
+}

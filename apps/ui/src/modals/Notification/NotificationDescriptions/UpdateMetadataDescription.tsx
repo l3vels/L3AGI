@@ -1,4 +1,6 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographyTertiary from 'components/Typography/Tertiary'
 
 export type MetadataDescriptionProps = {
   collectionName: string
@@ -7,23 +9,20 @@ export type MetadataDescriptionProps = {
 export const UpdateMetadataDescription = ({ collectionName }: MetadataDescriptionProps) => {
   return (
     <>
-      <Typography
+      <TypographyPrimary
         value={'Metadata'}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor={'#FFF'}
       />
-      <Typography
+      <TypographyTertiary
         value='update required in collection'
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor={'rgba(255, 255, 255, 0.6)'}
       />
-      <Typography
+      <TypographyPrimary
         value={collectionName}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
-        customColor={'#FFF'}
       />
     </>
   )

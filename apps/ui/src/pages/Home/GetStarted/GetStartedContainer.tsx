@@ -9,6 +9,8 @@ import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Connect from '@l3-lib/ui-core/dist/icons/Connect'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { SectionDivider } from 'styles/globalStyle.css'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 type GetStartedContainerProps = {
   children: ReactNode
@@ -28,27 +30,22 @@ const GetStartedContainer = ({
       <StyledHeader>
         <StyledColumn>
           <StyledCloseButton onClick={() => setShow(false)}>
-            <Close />
+            <StyledCloseIcon />
           </StyledCloseButton>
-          {!noText && (
-            <Heading
-              type={Heading.types.h1}
-              value='Get Started'
-              size='medium'
-              customColor={'#fff'}
-            />
-          )}
+          {!noText && <HeadingPrimary type={Heading.types.h1} value='Get Started' size='medium' />}
         </StyledColumn>
         {!noText && (
           <StyledColumn>
-            <Typography
-              value='Learn'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-              customColor={'rgba(255, 255, 255, 0.6)'}
-            />
+            <StyledTypographyWrapper>
+              <TypographyTertiary
+                value='Learns'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            </StyledTypographyWrapper>
+
             <StyledIconWrapper>
-              <Connect />
+              <StyledConnectIcon />
             </StyledIconWrapper>
           </StyledColumn>
         )}
@@ -108,4 +105,19 @@ const StyledDragScroll = styled(ScrollContainer)`
 `
 const StyledCloseButton = styled.div`
   cursor: pointer;
+`
+const StyledTypographyWrapper = styled.div`
+  color: ${({ theme }) => theme.body.mainNavColor};
+`
+
+const StyledCloseIcon = styled(Close)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledConnectIcon = styled(Connect)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
 `

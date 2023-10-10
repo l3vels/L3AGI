@@ -1,0 +1,13 @@
+mutation deleteChat($id: id!) @api(name: ai) {
+  deleteChat(id: $id)
+    @rest(
+      type: "ChatMessage"
+      path: "/chat/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    id
+    name
+  }
+}

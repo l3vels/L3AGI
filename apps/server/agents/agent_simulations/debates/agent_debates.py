@@ -31,12 +31,12 @@ class AgentDebates(BaseAgent):
         self,
         settings: AccountSettings,
         chat_pubsub_service: ChatPubSubService,
-        user,
-        account,
+        sender_name: str,
+        provider_account,
         session_id,     
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(user=user, account=account, session_id=session_id)
+        super().__init__(sender_name=sender_name, provider_account=provider_account, session_id=session_id)
         self.word_limit = word_limit
         self.settings = settings
         self.chat_pubsub_service = chat_pubsub_service
@@ -70,22 +70,15 @@ class AgentDebates(BaseAgent):
 
     def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-        datasource_tools = get_datasource_tools(datasources, settings, self.account)
-        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account, settings)
+        datasource_tools = get_datasource_tools(datasources, settings, self.provider_account)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.provider_account, settings)
         return datasource_tools + agent_tools
 
     def run(self,
             topic: str,            
             team: TeamModel, 
             agents_with_configs: List[AgentWithConfigsOutput],   
-            # agent_summaries: List[any],
-            history: PostgresChatMessageHistory,
-            is_private_chat: bool):
-        agent_summary_string = "\n- ".join(
-            [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
-        )
-
-        
+            history: PostgresChatMessageHistory):        
         specified_topic= topic #self.generate_specified_prompt(topic, agent_summary_string, team)
 
         print(f"Original topic:\n{topic}\n")
@@ -99,7 +92,7 @@ class AgentDebates(BaseAgent):
             return_messages=True,
         )
 
-        memory.human_name = self.user.name
+        memory.human_name = self.sender_name
         memory.save_human_message(specified_topic)
 
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
@@ -117,7 +110,7 @@ class AgentDebates(BaseAgent):
                 tools=self.get_tools(agent_with_config, self.settings),
                 top_k_results=2,
                 session_id=self.session_id,
-                user=self.user,
+                sender_name=self.sender_name,
                 is_memory=team.is_memory,
             )
             for agent_with_config in agents_with_configs
@@ -131,7 +124,7 @@ class AgentDebates(BaseAgent):
         simulator.inject("Moderator", specified_topic)
 
         while n < max_iters:
-            status_config = ConfigModel.get_config_by_session_id(db, self.session_id, self.account)
+            status_config = ConfigModel.get_config_by_session_id(db, self.session_id, self.provider_account)
             
             if status_config.value == ChatStatus.STOPPED.value:
                 break

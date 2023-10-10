@@ -6,6 +6,7 @@ import { RandomAvatar } from 'helpers/RandomImage'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Share from '@l3-lib/ui-core/dist/icons/Share'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import TypographySecondary from 'components/Typography/Secondary'
 
 // import { avatarsArray } from 'assets/avatars'
 
@@ -48,11 +49,10 @@ const HeaderShare = ({ activeUsers = [] }: HeaderShareProps) => {
           <Share />
         </StyledIconWrapper>
 
-        <Typography
+        <TypographySecondary
           value={'Share'}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor={'rgba(255, 255, 255, 0.80)'}
         />
       </StyledShareButton>
     </StyledSharedColumn>

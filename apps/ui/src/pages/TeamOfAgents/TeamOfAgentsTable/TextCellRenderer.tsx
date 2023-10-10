@@ -1,4 +1,5 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type RendererProps = {
   webhooks(data: string): string
@@ -7,11 +8,10 @@ type RendererProps = {
 
 const TextCellRenderer = (props: RendererProps) => (
   <div>
-    <Typography
+    <TypographyPrimary
       value={props.value}
       type={Typography.types.LABEL}
       size={Typography.sizes.sm}
-      customColor='rgba(255, 255, 255, 1)'
     />
   </div>
 )

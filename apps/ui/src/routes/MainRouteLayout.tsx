@@ -19,9 +19,9 @@ const MainRouteLayout = () => {
   return (
     <StyledAppContainer className='app_container'>
       <Header />
-      <StyledNavigationWrapper>
+      {/* <StyledNavigationWrapper>
         <MainNavigation />
-      </StyledNavigationWrapper>
+      </StyledNavigationWrapper> */}
       <StyledMainContainer>{outlet}</StyledMainContainer>
       <Footer />
     </StyledAppContainer>

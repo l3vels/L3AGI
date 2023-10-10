@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const HumanMessageText = ({ textArray }: { textArray: any }) => {
   const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
@@ -13,14 +16,24 @@ const HumanMessageText = ({ textArray }: { textArray: any }) => {
             const mention = mentionMatch[1]
             return (
               <React.Fragment key={index}>
-                <StyledMentionText>@{mention}</StyledMentionText>
+                <StyledMentionText>
+                  <TypographyPrimary
+                    value={`@${mention}`}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                  />
+                </StyledMentionText>
               </React.Fragment>
             )
           }
         }
         return (
           <React.Fragment key={index}>
-            {word} {/* Add a space before each word */}
+            <TypographyPrimary
+              value={`${word} `}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
           </React.Fragment>
         )
       })}
@@ -34,6 +47,9 @@ const StyledTextWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  & > * {
+    margin-right: 3px;
+  }
 `
 
 const StyledMentionText = styled.div`

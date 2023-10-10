@@ -8,6 +8,8 @@ import Delete from '@l3-lib/ui-core/dist/icons/Delete'
 
 import FormikTextField from 'components/TextFieldFormik'
 import { FieldArray } from 'formik'
+import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
 
 type CustomFieldProps = {
   formik: any
@@ -20,36 +22,30 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
     <FieldArray name={formikField}>
       {({ insert, remove }) => (
         <StyledFieldsWrapper>
-          <Typography
+          <TypographyPrimary
             value={`${placeholder}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           {formik?.values[formikField]?.map((item: any, index: number) => (
             <>
               <StyledCustomFieldWrapper key={index}>
                 <FormikTextField name={`${formikField}.${index}`} />
 
-                <StyledButton
-                  onClick={() => remove(index)}
-                  kind={Button.kinds.TERTIARY}
-                  size={Button.sizes.SMALL}
-                >
+                <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes.SMALL}>
                   <Delete siz={50} />
-                </StyledButton>
+                </StyledButtonTertiary>
               </StyledCustomFieldWrapper>
             </>
           ))}
 
           <StyledButtonWrapper>
-            <Button
+            <ButtonSecondary
               onClick={() => insert(formik?.values[formikField].length, '')}
-              kind={Button.kinds.SECONDARY}
               size={Button.sizes.SMALL}
             >
               + Add
-            </Button>
+            </ButtonSecondary>
           </StyledButtonWrapper>
         </StyledFieldsWrapper>
       )}
@@ -73,6 +69,6 @@ const StyledCustomFieldWrapper = styled.div`
 const StyledButtonWrapper = styled.div`
   width: fit-content;
 `
-const StyledButton = styled(Button)`
+const StyledButtonTertiary = styled(ButtonTertiary)`
   padding: 0 4px;
 `

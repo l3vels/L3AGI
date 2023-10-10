@@ -5,6 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import File from '@l3-lib/ui-core/dist/icons/File'
 import Loader from '@l3-lib/ui-core/dist/Loader'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -27,11 +28,10 @@ const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
         ) : (
           <>
             <StyledFileIcon />
-            <Typography
+            <TypographySecondary
               value='csv, pdf, txt, ms-excel, etc.'
               type={Typography.types.LABEL}
               size={Typography.sizes.xss}
-              customColor={'rgba(255, 255, 255, 0.8)'}
             />
           </>
         )}

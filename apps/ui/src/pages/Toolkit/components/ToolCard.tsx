@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type ToolCardProps = {
   title: string
@@ -24,34 +26,26 @@ const ToolCard = ({
       <StyledWrapper>
         <StyledImg src={logoSrc} />
         <StyledTextWrapper>
-          <Typography
+          <TypographySecondary
             value={`By`}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255,0.8'}
           />
 
-          <Typography
+          <TypographySecondary
             value={`L3`}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255,0.8'}
             style={{ textDecoration: 'underline' }}
           />
         </StyledTextWrapper>
       </StyledWrapper>
       <StyledMainTextWrapper>
-        <Typography
-          value={title}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.md}
-          customColor={'#FFF'}
-        />
-        <Typography
+        <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        <TypographyPrimary
           value={subTitle}
           type={Typography.types.LABEL}
           size={Typography.sizes.xss}
-          customColor={'#FFF'}
         />
       </StyledMainTextWrapper>
     </StyledRoot>
@@ -68,13 +62,14 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
   justify-content: flex-start;
   padding: 24px 16px 8px;
   gap: 8px;
-  width: 250px;
-  min-width: 250px;
+  width: 260px;
+  min-width: 260px;
   height: 158px;
   min-height: 158px;
-  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.4) 100%);
-  background: rgba(0, 0, 0, 0.8);
+  background: ${({ theme }) => theme.body.toolkitCardBgColorPrimary};
+  background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
   backdrop-filter: blur(8px);
+  border: ${({ theme }) => theme.body.border};
   border-radius: 16px;
   background-image: ${p =>
     p.bgImg &&
@@ -89,7 +84,7 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
     css`
       pointer-events: none;
       opacity: 0.6;
-      background: #000;
+      background: ${({ theme }) => theme.body.toolkitCardBgColorTertiary};
     `};
 
   ${p =>

@@ -87,7 +87,11 @@ const StyledCenteredWrapper = styled.div`
 `
 
 const SectionDivider = styled.div`
-  background: rgba(255, 255, 255, 0.3);
+  // background: rgba(255, 255, 255, 0.3);
+  background: ${({ theme }) =>
+    theme.body.backgroundColorPrimary === 'rgb(255, 255, 255)'
+      ? 'rgb(217,217,217)'
+      : 'rgba(255, 255, 255, 0.3)'};
   border-radius: 3px;
   height: 1px;
 `

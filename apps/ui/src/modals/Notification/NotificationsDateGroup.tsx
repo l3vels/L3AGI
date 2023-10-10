@@ -19,6 +19,8 @@ import { IsUpdatingMetadataDescription } from './NotificationDescriptions/IsUpda
 import { MetadataUpdatedDescription } from './NotificationDescriptions/MetadataUpdatedDescription'
 import { SizeNotEqualDescription } from './NotificationDescriptions/SizeNotEqualDescription'
 import { ContractImportedDescription } from './NotificationDescriptions/ContractImportedDescription'
+import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type NotificationsDateGroupProps = {
   notifications: any
@@ -232,22 +234,16 @@ const NotificationsDateGroup = ({
       }}
     >
       <StyledNotificationGroupHeader>
-        <Typography
-          value={title}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor={'#FFF'}
-        />
+        <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
         {isOpen && (
           <StyledHeaderButtonWrapper>
-            <Button
-              kind={Button.kinds.PRIMARY}
+            <ButtonPrimary
               size={IconButton.sizes.SMALL}
               onClick={() => updateNotifications(notifications)}
               disabled={activeNotificationCount === 0 || marked}
             >
               Mark as read
-            </Button>
+            </ButtonPrimary>
             <IconButton
               kind={IconButton.kinds.TERTIARY}
               leftIcon={() => <Close />}

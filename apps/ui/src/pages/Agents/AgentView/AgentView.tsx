@@ -28,7 +28,8 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
   const { configs } = agentById || agentData
 
-  const { tools, goals, constraints, instructions, datasources, suggestions, greeting } = configs
+  const { tools, goals, constraints, instructions, datasources, suggestions, greeting, text } =
+    configs
 
   return (
     <StyledSectionWrapper>
@@ -96,6 +97,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
               />
             )}
             {greeting.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
+            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={'Advanced'} />}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>

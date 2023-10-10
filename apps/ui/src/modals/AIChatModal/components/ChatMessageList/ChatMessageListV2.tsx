@@ -12,10 +12,14 @@ import HumanMessage from './components/HumanMessage'
 import AiMessage from './components/AiMessage'
 import ChatMessage from '../ChatMessage'
 import { v4 as uuidv4 } from 'uuid'
-import { MessageTypeEnum } from 'modals/AIChatModal/types'
 import HumanReply from './components/HumanReply'
 import AiReply from './components/AiReply'
 import { ReplyStateProps } from '../ReplyBox'
+
+export enum MessageTypeEnum {
+  AI_MANUAL = 'AI_MANUAL',
+  User = 'User',
+}
 
 type ChatMessageListV2Props = {
   data: any
@@ -51,14 +55,14 @@ const ChatMessageListV2 = ({
       type: chat?.message?.type,
       date: chatDate,
       thoughts: chat?.thoughts,
-      user_id: chat?.user_id,
+      sender_user_id: chat?.sender_user_id,
       version: chat?.version,
       parent: chat?.parent,
       username: chat.message.data.additional_kwargs.name,
       agentName: chat.agent?.name,
       teamName: chat.team?.name,
       avatar: chat?.agent?.avatar,
-      creator: chat?.creator,
+      sender_user: chat?.sender_user,
     }
   })
 
@@ -157,7 +161,7 @@ const ChatMessageListV2 = ({
                       <HumanReply
                         messageText={chat.parent.message.data.content}
                         avatarImg={Avatar_3}
-                        userId={chat.parent.user_id}
+                        userId={chat.parent.sender_user_id}
                       />
                     ) : (
                       <AiReply
@@ -170,15 +174,16 @@ const ChatMessageListV2 = ({
                     ))}
                 </StyledReplyMessageContainer>
                 <HumanMessage
-                  avatarImg={chat.creator?.avatar}
-                  userId={chat.user_id}
+                  userName={chat.sender_user?.name}
+                  avatarImg={chat.sender_user?.avatar}
+                  userId={chat.sender_user_id}
                   messageDate={chat.date}
                   messageText={chat.message}
                   onReplyClick={() => {
                     setReply({
                       isReply: true,
                       messageId: chat.id,
-                      userId: chat.user_id,
+                      userId: chat.sender_user_id,
                       messageText: chat.message,
                       isHuman: true,
                     })
@@ -193,7 +198,7 @@ const ChatMessageListV2 = ({
                     <HumanReply
                       messageText={chat.parent.message.data.content}
                       avatarImg={Avatar_3}
-                      userId={chat.parent.user_id}
+                      userId={chat.parent.sender_user_id}
                     />
                   )}
                 </StyledReplyMessageContainer>
@@ -233,6 +238,7 @@ export default memo(ChatMessageListV2)
 const StyledRoot = styled.div<{ show: boolean }>`
   opacity: 0;
   width: 100%;
+
   height: 100%;
   ${p =>
     p.show &&
@@ -252,7 +258,6 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
 
   padding-top: 10px;
   /* margin-right: 50px; */
-
   .visible-reply {
     opacity: 1;
   }
@@ -283,10 +288,11 @@ const StyledLoaderWrapper = styled.div`
   margin-top: 30px;
 
   width: calc(100% - 50px);
-  max-width: 850px;
+  max-width: 800px;
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
+  /* width: 100%; */
   opacity: 0;
   height: 30px;
   max-height: 30px;

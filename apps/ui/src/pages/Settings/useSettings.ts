@@ -6,6 +6,33 @@ import { useConfigsService } from 'services/config/useConfigsService'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
 
+export const SETTINGS_FIELDS = [
+  {
+    key: 'open_api_key',
+    label: 'OpenAI API key',
+  },
+  {
+    key: 'pinecone_api_key',
+    label: 'Pinecone API key',
+  },
+  {
+    key: 'pinecone_environment',
+    label: 'Pinecone Environment',
+  },
+  {
+    key: 'weaviate_url',
+    label: 'Weaviate Url',
+  },
+  {
+    key: 'weaviate_api_key',
+    label: 'Weaviate Api Key',
+  },
+  // {
+  //   key: 'hugging_face_token',
+  //   label: 'Hugging Face token',
+  // }
+]
+
 export const useSettings = () => {
   const { setToast } = useContext(ToastContext)
   const { account: currentAccount } = useContext(AuthContext)
@@ -17,52 +44,44 @@ export const useSettings = () => {
   const [createConfig] = useCreateConfigService()
   const [updateConfig] = useUpdateConfigService()
 
-  const openApiKeyConfig = configsData?.filter(
-    (config: any) => config.account_id === currentAccount?.id && config.key === 'open_api_key',
-  )
-  console.log('openApiKeyConfig', openApiKeyConfig)
+  const initialValues = SETTINGS_FIELDS.reduce<Record<string, string>>((prev, field) => {
+    const config = configsData?.find(
+      (config: any) => config.account_id === currentAccount?.id && config.key === field.key,
+    )
 
-  // const huggingFaceConfig = configsData?.filter(
-  //   (config: any) =>
-  //     config.account_id === currentAccount?.id && config.key === 'hugging_face_token',
-  // )
+    prev[field.key] = config?.value || ''
+    return prev
+  }, {})
 
-  const initialValues = {
-    open_api_key: openApiKeyConfig?.[0]?.value,
-    // hugging_face_token: huggingFaceConfig?.[0]?.value,
-  }
-
-  // console.log('initialValues', initialValues)
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
+
     try {
-      const openApiKeyValues = {
-        key: 'open_api_key',
-        key_type: 'string',
-        value: values.open_api_key,
-        is_secret: true,
-        is_required: true,
-      }
-      // const huggingFaceTokenValues = {
-      //   key: 'hugging_face_token',
-      //   key_type: 'string',
-      //   value: values.hugging_face_token,
-      //   is_secret: true,
-      //   is_required: true,
-      // }
+      const promises = SETTINGS_FIELDS.map(async field => {
+        const value = values[field.key]
 
-      if (openApiKeyConfig?.length > 0) {
-        await updateConfig(openApiKeyConfig[0]?.id, { ...openApiKeyValues })
-      } else {
-        await createConfig(openApiKeyValues)
-      }
-      // if (huggingFaceConfig?.length > 0) {
-      //   await updateConfig(huggingFaceConfig[0]?.id, { ...huggingFaceTokenValues })
-      // } else {
-      //   await createConfig(huggingFaceTokenValues)
-      // }
+        const config = configsData.find(
+          (config: any) => config.account_id === currentAccount?.id && config.key === field.key,
+        )
 
+        const data = {
+          key: field.key,
+          key_type: 'string',
+          is_secret: true,
+          is_required: true,
+          value,
+        }
+
+        if (config) {
+          return updateConfig(config.id, data)
+        } else {
+          return createConfig(data)
+        }
+      })
+
+      await Promise.all(promises)
       await refetchConfigs()
+
       setToast({
         message: 'Settings updated!',
         type: 'positive',
@@ -70,6 +89,7 @@ export const useSettings = () => {
       })
     } catch (e) {
       console.log(e)
+
       setToast({
         message: 'Failed to save!',
         type: 'negative',

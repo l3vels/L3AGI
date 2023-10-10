@@ -12,6 +12,7 @@ import {
 import Button from '@l3-lib/ui-core/dist/Button'
 import AgentCard from './AgentCard'
 import { useAgents } from './useAgents'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
   const { agentsData, deleteAgentHandler } = useAgents()
@@ -30,12 +31,12 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
 
         <div>
           {!isHome && (
-            <Button
+            <ButtonPrimary
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
               Create Agent
-            </Button>
+            </ButtonPrimary>
           )}
         </div>
       </StyledHeaderGroup>

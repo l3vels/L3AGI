@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
+import TypographyQuaternary from 'components/Typography/Quaternary'
 import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import SendIconSvg from 'assets/icons/send_icon.svg'
@@ -45,14 +45,9 @@ const Spotlight = () => {
 
   // Prefetch messages
   useChatMessagesService({
-    isPrivateChat: false,
     agentId,
     teamId,
   })
-
-  // useChatMessagesService({
-  //   isPrivateChat: true,
-  // })
 
   const inputRef = useRef(null as any)
   const outsideClickRef = useRef(null as any)
@@ -100,7 +95,6 @@ const Spotlight = () => {
 
       await createChatMessageService({
         message: formValue,
-        isPrivateChat: false,
         agentId,
         teamId,
       })
@@ -182,11 +176,11 @@ const Spotlight = () => {
           {chatLoading ? (
             <>
               <ChatLoader />
-              <Typography
+              <TypographyQuaternary
                 value={'Thinking...'}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'rgba(255, 255, 255, 0.4)'}
+                style={{ color: 'red' }}
               />
             </>
           ) : (
@@ -197,19 +191,16 @@ const Spotlight = () => {
                 active={showPlugins}
                 onClick={() => setShowPlugins(!showPlugins)}
               /> */}
-                <Search size={28} />
+                <StyledSearchIcon size={28} />
               </StyledIconWrapper>
 
               <StyledInputWrapper onClick={handleChatClick}>
                 {!expanded && (
-                  <>
-                    <Typography
-                      value={'Search'}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.4)'}
-                    />
-                  </>
+                  <TypographyQuaternary
+                    value={'Search'}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.sm}
+                  />
                 )}
                 {
                   <>
@@ -325,62 +316,6 @@ const Spotlight = () => {
 
 export default Spotlight
 
-const StyledWrapper = styled.div`
-  padding: 12px 12px 12px 21px;
-  background: rgba(0, 0, 0, 0.7);
-  box-shadow: 0px 3px 30px rgba(0, 0, 0, 0.3), 0px 3px 10px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(96.6443px);
-  border-radius: 100px;
-  // position: fixed;
-  // left: 50%;
-  bottom: 24px;
-  // transform: translateX(-50%);
-`
-
-const StyledTypography = styled.p`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
-`
-
-const StyledColumnContainer = styled.div<{ gap?: string }>`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: ${p => (p.gap ? p.gap : '15')}px;
-  .polygon_none {
-    margin-top: -2px;
-  }
-`
-
-const StyledInnerContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 24px;
-`
-
-const StyledNotificationContainer = styled.div`
-  padding: 3px;
-  background: linear-gradient(180deg, #eea03c 0%, #e85c29 100%);
-  border-radius: 50px;
-  min-width: 67px;
-`
-
-const StyledBanner = styled.div`
-  padding: 2px 0 1px;
-  background: var(--color-gradient-orange);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.8);
-`
 const StyledFooterChat = styled.div<{ expanded: boolean }>`
   display: flex;
   /* justify-content: space-between; */
@@ -415,14 +350,7 @@ const StyledFooterChat = styled.div<{ expanded: boolean }>`
       max-height: 150px;
     `}
 `
-const StyledPluginButton = styled.img<{ active?: boolean }>`
-  cursor: pointer;
-  ${props =>
-    !props.active &&
-    css`
-      opacity: 0.4;
-    `};
-`
+
 export const StyledInputWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -523,7 +451,7 @@ export const StyledOption = styled.div`
   backdrop-filter: blur(100px);
   border-radius: 60px;
 
-  color: rgba(255, 255, 255, 0.8);
+  color: ${({ theme }) => theme.body.textColorPrimary};
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -542,16 +470,7 @@ const StyledRow = styled.div`
   gap: 16px;
   text-align: center;
 `
-const StyledNotificationsButtonWrapper = styled.div`
-  position: fixed;
-  right: 50px;
-  bottom: 24px;
-`
-const StyledNotificationLabelWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`
+
 const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
   display: none;
 
@@ -573,4 +492,10 @@ const StyledTypewriterWrapper = styled.div`
 `
 const StyledIconWrapper = styled.div`
   opacity: 0.6;
+`
+
+const StyledSearchIcon = styled(Search)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
 `

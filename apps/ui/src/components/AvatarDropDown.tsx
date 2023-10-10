@@ -11,7 +11,7 @@ import {
 } from '@radix-ui/react-dropdown-menu'
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
-
+import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled, { css, keyframes } from 'styled-components'
 
 import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
@@ -26,6 +26,7 @@ import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
 import AvatarGenerator from './AvatarGenerator/AvatarGenerator'
 import React from 'react'
 import { AuthContext } from 'contexts'
+import TypographyPrimary from './Typography/Primary'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
@@ -91,12 +92,24 @@ const AvatarDropDown = () => {
           {t('Developers')}
         </StyledDropDownMenuItem> */}
         <StyledDropDownMenuItem onClick={() => navigate('/settings')}>
-          <Settings size={20} />
-          Settings
+          <StyledSettingsIcon size={20} />
+
+          <TypographyPrimary
+            value={'Settings'}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
+          />
         </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={handleLogout}>
-          <LogOut size={20} />
-          {t('logout')}
+          <StyledLogOutIcon size={20} />
+
+          <TypographyPrimary
+            value={t('logout')}
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
+          />
         </StyledDropDownMenuItem>
         <Arrow className='text-white' fill='currentColor' />
       </StyledDropdownContent>
@@ -156,7 +169,7 @@ const StyledDropdownContent = styled(Content)`
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 102030;
   border-radius: 8px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);/* Blur/cake */
+  background: ${({ theme }) => theme.body.avatarDropDownColor}
   /* background-color: white; */
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(100px);
@@ -305,4 +318,16 @@ const StyledPickedText = styled.span<{ picked: boolean }>`
       pointer-events: none;
       opacity: 0.6;
     `};
+`
+
+const StyledLogOutIcon = styled(LogOut)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledSettingsIcon = styled(Settings)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
 `

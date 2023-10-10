@@ -9,6 +9,8 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useToolsService } from 'services/tool/useToolsService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
+import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonTertiary } from 'components/Button/Button'
 
 const GetAgentName = () => {
   const params = useParams()
@@ -67,7 +69,7 @@ const routes: any = [
 
   //chat
   { path: '/chat', breadcrumb: null },
-  { path: '/chat/history', breadcrumb: null },
+  { path: '/chatHistory', breadcrumb: null },
 ]
 
 type BreadcrumbsProps = {
@@ -84,14 +86,13 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
-                    <Typography
+                  <ButtonTertiary size={Button.sizes.SMALL}>
+                    <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.80)'}
                     />
-                  </Button>
+                  </ButtonTertiary>
                 </StyledNavLink>
                 <div className='line' />
               </StyledBreadcrumbLi>
@@ -101,14 +102,13 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <Button size={Button.sizes.SMALL} kind={Button.kinds.TERTIARY}>
-                    <Typography
+                  <ButtonTertiary size={Button.sizes.SMALL}>
+                    <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.sm}
-                      customColor={'rgba(255, 255, 255, 0.80)'}
                     />
-                  </Button>
+                  </ButtonTertiary>
                 </StyledNavLink>
               </StyledBreadcrumbLi>
             )
@@ -151,6 +151,7 @@ const StyledBreadcrumbLi = styled.li`
   .line {
     height: 50%;
     width: 1px;
-    background: rgba(255, 255, 255, 0.1);
+    // background: rgba(255, 255, 255, 0.1);
+    background: ${({ theme }) => theme.body.breadCrumbsBg};
   }
 `

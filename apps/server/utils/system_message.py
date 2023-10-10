@@ -10,13 +10,18 @@ class SystemMessageBuilder:
 
     def build(self) -> str:
         result = ""
+        
+        datasources = self.build_datasources(self.configs.datasources)
+        
+        if self.configs.text is not None and self.configs.text != "":
+            result = f"{self.configs.text}\n{datasources}"
+            return result
 
         role = self.build_role(self.agent.role)
         description = self.build_description(self.agent.description)
         goals = self.build_goals(self.configs.goals)
         instructions = self.build_instructions(self.configs.instructions)
         constraints = self.build_constraints(self.configs.constraints)
-        datasources = self.build_datasources(self.configs.datasources)
 
         result = f"{role}{description}{goals}{instructions}{constraints}{datasources}"
         return result
@@ -64,6 +69,7 @@ class SystemMessageBuilder:
 
 
         result = (
+            "DATASOURCES:"
             "Data sources can be: SQL databases and files. You can use tools to get data from them.\n"
             "You can use the following data sources:\n"
         )

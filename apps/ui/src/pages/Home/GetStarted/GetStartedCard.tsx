@@ -20,7 +20,7 @@ const GetStartedCard = ({
   fullWidth = false,
 }: GetStartedCardProps) => {
   const openNewTabHandler = () => {
-    if(link){
+    if (link) {
       window.open(link, '_blank')
     }
   }

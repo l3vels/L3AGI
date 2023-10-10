@@ -6,15 +6,16 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
+import HeadingTertiary from 'components/Heading/Tertiary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const ForgotPassword = () => {
   const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
   return (
     <StyledCenterFormContainer>
-      <Heading
+      <HeadingTertiary
         value={'Add email'}
         type={Heading.types.h1}
-        customColor='rgba(255, 255, 255, 0.4)'
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
@@ -22,13 +23,13 @@ const ForgotPassword = () => {
           <TextFieldFormik field_name='email' placeholder='Email*' size='large' />
         </FormikProvider>
 
-        <Button
+        <ButtonPrimary
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
           onClick={() => formik.handleSubmit()}
           size={Button.sizes.LARGE}
         >
           Send
-        </Button>
+        </ButtonPrimary>
       </StyledFormContainer>
     </StyledCenterFormContainer>
   )

@@ -19,6 +19,7 @@ import { StyledButtonWrapper } from './CreateAgentForm'
 import CreateAgentButtonCard from './components/CreateAgentButtonCard'
 import { useModal } from 'hooks'
 import { useAgentTemplatesService } from 'services/discover/useAgentTemplatesService'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const CreateAgentTemplate = () => {
   const { refetchAgent } = useAgents()
@@ -34,9 +35,9 @@ const CreateAgentTemplate = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Create Agent</StyledSectionTitle>
-          <StyledSectionDescription>
+          {/* <StyledSectionDescription>
             Here are all your agents, managing tasks and operations.
-          </StyledSectionDescription>
+          </StyledSectionDescription> */}
         </div>
 
         <StyledButtonWrapper>
@@ -50,11 +51,10 @@ const CreateAgentTemplate = () => {
             <CreateAgentButtonCard onClick={() => navigate('/agents/create-agent')} />
 
             {agentsData?.length > 0 && (
-              <Typography
+              <TypographyPrimary
                 value='Choose Template'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
-                customColor={'#FFF'}
               />
             )}
           </StyledTemplateHeader>
@@ -75,7 +75,7 @@ const CreateAgentTemplate = () => {
                     await refetchAgent({ id: agent.id })
                     navigate(`/agents/create-agent?agentId=${agent.id}`)
                   }}
-                  creator={agent.creator}
+                  // creator={agent.creator}
                   avatar={agent.avatar}
                 />
               )
@@ -94,10 +94,13 @@ const StyledTemplatesWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
 
-  max-height: calc(100vh - 325px);
-  height: 100%;
+  height: calc(100vh - 225px);
+
+  max-height: 1000px;
   overflow-y: auto;
   padding: 0 20px;
+
+  /* max-width: 600px; */
 `
 const StyledTemplateHeader = styled.div`
   display: flex;

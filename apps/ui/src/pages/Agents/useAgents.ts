@@ -45,6 +45,7 @@ export const useAgents = () => {
     agent_greeting: '',
     agent_model_provider: 'OpenAI',
     agent_is_memory: true,
+    agent_text: '',
   }
 
   if (agentById) {
@@ -64,6 +65,7 @@ export const useAgents = () => {
       agent_model_provider: agentById.configs?.model_provider,
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
+      agent_text: agentById.configs?.text,
     }
   }
 
@@ -86,15 +88,16 @@ export const useAgents = () => {
         is_memory: values.agent_is_memory,
         suggestions: values.agent_suggestions,
         greeting: values.agent_greeting,
+        text: values.agent_text,
       }
-      await createAgentService(agentInput)
+      const newAgent = await createAgentService(agentInput)
       await refetchAgents()
       setToast({
         message: 'New Agent was Created!',
         type: 'positive',
         open: true,
       })
-      navigate('/agents')
+      navigate(`/chat?agent=${newAgent.agent.id}`)
     } catch (e) {
       console.log('rrorr', e)
       // navigate('/agents')
@@ -124,6 +127,8 @@ export const useAgents = () => {
             await deleteAgentById(id)
             await refetchAgents()
             closeModal('delete-confirmation-modal')
+            closeModal('agent-view-modal')
+            navigate('/chat')
             setToast({
               message: 'Agent was deleted!',
               type: 'positive',
@@ -138,11 +143,7 @@ export const useAgents = () => {
             closeModal('delete-confirmation-modal')
           }
         },
-        closeModal: () => {
-          closeModal('delete-confirmation-modal')
-        },
         label: 'Delete Agent?',
-        title: 'Delete Agent?',
       },
     })
   }

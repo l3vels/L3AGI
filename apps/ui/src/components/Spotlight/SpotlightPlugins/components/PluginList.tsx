@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
+import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type PluginListProps = {
   isNew?: boolean
@@ -15,19 +17,17 @@ const PluginList = ({ title, description, isNew = false, children }: PluginListP
     <StyledPluginList>
       <StyledListHeader>
         <StyledListTitle>
-          <Typography
+          <TypographyPrimary
             value={title}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           {isNew && <Tags label='New' readOnly color='gradient_yellow' size='small' />}
         </StyledListTitle>
-        <Typography
+        <TypographySecondary
           value={description}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor={'rgba(255, 255, 255, 0.8)'}
         />
       </StyledListHeader>
 

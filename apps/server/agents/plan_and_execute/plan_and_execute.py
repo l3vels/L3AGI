@@ -31,8 +31,8 @@ class PlanAndExecute(BaseAgent):
 
     def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
         datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-        datasource_tools = get_datasource_tools(datasources, settings, self.account)
-        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.account, settings)
+        datasource_tools = get_datasource_tools(datasources, settings, self.provider_account)
+        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.provider_account, settings)
         return datasource_tools + agent_tools
 
     def run(self, settings: AccountSettings, chat_pubsub_service: ChatPubSubService, team: TeamModel, prompt: str, history: PostgresChatMessageHistory, human_message_id: UUID):
@@ -43,9 +43,10 @@ class PlanAndExecute(BaseAgent):
 
         for agent in agents:
             if agent.role == TeamAgentRole.PLANNER.value:
-                planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.account))
+                #todo need account filter
+                planner_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id))
             if agent.role == TeamAgentRole.EXECUTOR.value:
-                executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id, self.account))
+                executor_agent_with_configs = convert_model_to_response(AgentModel.get_agent_by_id(db, agent.agent_id))
 
         ai_message = history.create_ai_message("", human_message_id)
         ai_message_id = ai_message['id']

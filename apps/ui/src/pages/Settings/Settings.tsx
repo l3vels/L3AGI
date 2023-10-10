@@ -17,8 +17,9 @@ import BackButton from 'components/BackButton'
 
 import FormikTextField from 'components/TextFieldFormik'
 
-import { useSettings } from './useSettings'
+import { SETTINGS_FIELDS, useSettings } from './useSettings'
 import { useModal } from 'hooks'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Settings = ({ isModal = false }: { isModal?: boolean }) => {
   const { formik, isLoading, handleSubmit, configsData } = useSettings()
@@ -38,27 +39,28 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
 
             <StyledButtonWrapper>
               <BackButton />
-              <Button onClick={formik?.handleSubmit} disabled={isLoading} size={Button.sizes.SMALL}>
+              <ButtonPrimary
+                onClick={formik?.handleSubmit}
+                disabled={isLoading}
+                size={Button.sizes.SMALL}
+              >
                 {isLoading ? <Loader size={32} /> : 'Save'}
-              </Button>
+              </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>
         )}
         <ComponentsWrapper noPadding hideBox={isModal}>
           <StyledForm isModal={isModal}>
             <StyledWrapper isModal={isModal}>
-              <FormikTextField name='open_api_key' placeholder='' label='Open AI API key' />
-              {/* <FormikTextField
-                name='hugging_face_token'
-                placeholder=''
-                label='Hugging Face auth token'
-              /> */}
+              {SETTINGS_FIELDS.map(({ key, label }) => (
+                <FormikTextField key={key} name={key} placeholder='' label={label} />
+              ))}
             </StyledWrapper>
           </StyledForm>
         </ComponentsWrapper>
         {isModal && (
           <StyledModalButton>
-            <Button
+            <ButtonPrimary
               onClick={async () => {
                 await handleSubmit(formik?.values)
                 closeModal('settings-modal')
@@ -67,7 +69,7 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
               size={Button.sizes.SMALL}
             >
               {isLoading ? <Loader size={32} /> : 'Save'}
-            </Button>
+            </ButtonPrimary>
           </StyledModalButton>
         )}
       </StyledSectionWrapper>

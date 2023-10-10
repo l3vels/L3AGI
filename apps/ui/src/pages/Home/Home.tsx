@@ -20,6 +20,8 @@ import { useAgents } from 'pages/Agents/useAgents'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/Secondary'
+import HeadingPrimary from 'components/Heading/Primary'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -51,18 +53,23 @@ const Home = () => {
               link={''}
             /> */}
             <StyledHeadingWrapper>
-              <Heading
-                type={Heading.types.h1}
-                value='BUILD TEAMS OF AI AGENTS'
-                customColor={'#FFF'}
-              />
-              <Typography
+              <HeadingPrimary type={Heading.types.h1} value='BUILD TEAMS OF AI AGENTS' />
+              <TypographySecondary
                 value='Open-source tool that enables AI agents to collaborate as effectively as human teams'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'rgba(255,255,255,0.8)'}
               />
             </StyledHeadingWrapper>
+
+            <StyledIframe
+              width='560'
+              height='315'
+              src={`https://www.youtube.com/embed/${import.meta.env.REACT_APP_YOUTUBE_VIDEO_ID}`}
+              title='YouTube video player'
+              frameBorder='0'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen
+            ></StyledIframe>
 
             <Discover />
           </>
@@ -92,10 +99,7 @@ const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   grid-auto-rows: max-content;
   gap: 20px;
 `
-const StyledDivider = styled.div`
-  height: 20px;
-  width: 100%;
-`
+
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -107,4 +111,8 @@ const StyledHeadingWrapper = styled.div`
   align-items: center;
 
   padding: 16px 10px;
+`
+const StyledIframe = styled.iframe`
+  border-radius: 10px;
+  margin: auto;
 `

@@ -20,6 +20,10 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import OrDivider from 'components/OrDivider/OrDivider'
 import useGithubLogin from '../Login/useGithubLogin'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import TypographyPrimary from 'components/Typography/Primary'
+import HeadingSecondary from 'components/Heading/Secondary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Register = () => {
   const { formik, alertMessage } = useRegister()
@@ -32,22 +36,21 @@ const Register = () => {
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
 
       <StyledHeaderWrapper>
-        <Heading
+        <HeadingSecondary
           value={'Join our community today! Sign up'}
           type={Heading.types.h2}
           customColor='rgba(255, 255, 255, 0.9)'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
 
-        <Typography
+        <TypographyTertiary
           value={`AI agents' team collaboration as effective as human collaboration.`}
           type={Typography.types.label}
           size={Typography.sizes.sm}
-          customColor={'rgba(255,255,255, 0.6)'}
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
-        <Button
+        <ButtonPrimary
           onClick={async () => {
             const res = await githubLogin()
             window.location.href = res.auth_url
@@ -59,7 +62,7 @@ const Register = () => {
             </StyledImageWrapper>
             Sign up with Github
           </StyledInnerButtonWrapper>
-        </Button>
+        </ButtonPrimary>
 
         <OrDivider />
 
@@ -83,26 +86,24 @@ const Register = () => {
           </StyledInputWrapper>
         </FormikProvider>
 
-        <Button onClick={formik.handleSubmit}>Sign up</Button>
+        <ButtonPrimary onClick={formik.handleSubmit}>Sign up</ButtonPrimary>
 
         <StyledLoginWrapper>
-          <Typography
+          <TypographyTertiary
             value={`Already have an account?`}
             type={Typography.types.label}
             size={Typography.sizes.md}
-            customColor={'rgba(255,255,255, 0.6)'}
           />
           <button
             onClick={() => {
               openModal({ name: 'login-modal', data: { isRegister: false } })
             }}
           >
-            <Typography
+            <TypographyPrimary
               value='Login'
               type={Typography.types.label}
               size={Typography.sizes.md}
               as={'a'}
-              customColor='#FFFFFF'
               style={{
                 textDecorationLine: 'underline',
                 cursor: 'pointer',

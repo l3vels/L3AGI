@@ -23,7 +23,7 @@ const Header = ({ expandMode = false, isPublicRoute }: HeaderTypes) => {
         {!isPublicRoute && (
           <>
             <ArrowNavigation />
-            <Breadcrumbs />
+            {/* <Breadcrumbs /> */}
           </>
         )}
       </StyledNavigationColumn>

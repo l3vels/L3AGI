@@ -7,6 +7,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import useLog from 'pages/Log/useLog'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
   const { log_list, filter } = useLog()
@@ -20,7 +21,11 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
       <StyledLogMethodContainer>
         <StyledContainerWrapper>
           <StyledTextWrapper>
-            <Typography value='GET' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            <TypographyPrimary
+              value='GET'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
           </StyledTextWrapper>
           <StyledCheckBoxWrapper>
             <Toggle size='small' kind='primary' isDefaultSelected={false} />
@@ -29,7 +34,11 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
 
         <StyledContainerWrapper>
           <StyledTextWrapper>
-            <Typography value='POST' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            <TypographyPrimary
+              value='POST'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
           </StyledTextWrapper>
           <StyledCheckBoxWrapper>
             <Toggle size='small' kind='primary' isDefaultSelected={false} />
@@ -38,7 +47,11 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
 
         <StyledContainerWrapper>
           <StyledTextWrapper>
-            <Typography value='DELETE' type={Typography.types.LABEL} size={Typography.sizes.md} />
+            <TypographyPrimary
+              value='DELETE'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
           </StyledTextWrapper>
           <StyledCheckBoxWrapper>
             <Toggle size='small' kind='primary' isDefaultSelected={false} />
@@ -51,11 +64,19 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
             size={Button.sizes.SMALL}
             onClick={onClose}
           >
-            <Typography value='Clear' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+            <TypographyPrimary
+              value='Clear'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
           </StyledTertiaryButton>
 
           <StyledPrimaryButton kind={Button.kinds.PRIMARY} size={Button.sizes.SMALL}>
-            <Typography value='Apply' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+            <TypographyPrimary
+              value='Apply'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
           </StyledPrimaryButton>
         </StyledButtonContainer>
       </StyledLogMethodContainer>
@@ -81,7 +102,6 @@ const StyledButtonContainer = styled.div`
   position: relative;
   justify-content: flex-end;
   align-items: center;
-  color: #ffffff;
   //   gap: 40px;
   margin-top: 10px;
   right: 10px;
@@ -95,7 +115,7 @@ const StyledTertiaryButton = styled(Button)`
 const StyledTextWrapper = styled.div`
   width: 176px;
   height: 20px;
-  color: #ffffff;
+
   display: flex;
   align-items: center;
 `

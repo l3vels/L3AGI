@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DataLoaderCardProps = {
   title: string
@@ -22,12 +23,7 @@ const DataLoaderCard = ({ title, onClick, isSelected, isActive, iconSrc }: DataL
       isActive={isActive}
     >
       <StyledIcon src={iconSrc} />
-      <Typography
-        value={title}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-        customColor={'#FFF'}
-      />
+      <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.md} />
     </StyledDataLoaderCard>
   )
 }

@@ -18,6 +18,9 @@ import { DATA_LOADER_IMAGES } from '../constants'
 import { useDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
 import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlTables'
 import { useParams } from 'react-router-dom'
+import DataSourceDropdown from './components/DataSourceDropdown'
+import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonPrimary } from 'components/Button/Button'
 
 type DatasourceFormProps = {
   formik: any
@@ -34,7 +37,16 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { datasource_source_type, config_value, datasource_description, configs } = values
+  const {
+    datasource_source_type,
+    config_value,
+    datasource_description,
+    configs,
+    index_type,
+    response_mode,
+    vector_store,
+    files,
+  } = values
 
   const { host, port, user, pass, name, tables } = values.configs
 
@@ -73,11 +85,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
         <FormikTextField name='datasource_name' placeholder='Name' label='Name' />
 
         <StyledTextareaWrapper>
-          <Typography
+          <TypographyPrimary
             value='Description'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           <Textarea
             hint=''
@@ -89,11 +100,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
         </StyledTextareaWrapper>
 
         <StyledSourceTypeWrapper>
-          <Typography
+          <TypographyPrimary
             value='Source Type'
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
-            customColor={'#FFF'}
           />
           <StyledCardWrapper>
             {dataLoaders?.map((dataLoader: any) => {
@@ -126,26 +136,68 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
 
                   <StyledUploadedFiles>
-                    {configs.files?.value?.length > 0 &&
-                      configs.files.value.map((file: any) => (
+                    {files.length > 0 &&
+                      files.map((file: any) => (
                         <UploadedFile
                           key={file.url}
                           id={file.url}
                           hasDeleteIcon
                           onClick={id => {
-                            const filteredFiles = configs.files.value.filter(
-                              (file: any) => file.url !== id,
-                            )
-
-                            setFieldValue('configs.files', {
-                              ...configs.files,
-                              value: filteredFiles,
-                            })
+                            const filteredFiles = files.filter((file: any) => file.url !== id)
+                            setFieldValue('configs.files', filteredFiles)
                           }}
                           name={file.name}
                         />
                       ))}
                   </StyledUploadedFiles>
+
+                  <DataSourceDropdown
+                    onHelpClick={() =>
+                      window.open(import.meta.env.REACT_APP_INDEX_TYPES_LINK, '_blank')
+                    }
+                    label={'Index Type'}
+                    fieldName={'index_type'}
+                    fieldValue={index_type}
+                    setFieldValue={setFieldValue}
+                    options={[
+                      { label: 'Summarize Index', value: 'summary' },
+                      { label: 'Vector Store Index', value: 'vector_store' },
+                      { label: 'Tree Index', value: 'tree' },
+                    ]}
+                  />
+
+                  {index_type === 'vector_store' && (
+                    <DataSourceDropdown
+                      label={'Vector Store Provider'}
+                      fieldName={'vector_store'}
+                      fieldValue={vector_store}
+                      setFieldValue={setFieldValue}
+                      options={[
+                        { label: 'Zep', value: 'zep' },
+                        { label: 'Pinecone', value: 'pinecone' },
+                        { label: 'Weaviate', value: 'weaviate' },
+                      ]}
+                    />
+                  )}
+
+                  <DataSourceDropdown
+                    onHelpClick={() =>
+                      window.open(import.meta.env.REACT_APP_RESPONSE_MODES_LINK, '_blank')
+                    }
+                    label={'Response Mode'}
+                    fieldName={'response_mode'}
+                    fieldValue={response_mode}
+                    setFieldValue={setFieldValue}
+                    options={[
+                      { label: 'Refine', value: 'refine' },
+                      { label: 'Compact', value: 'compact' },
+                      { label: 'Tree Summarize', value: 'tree_summarize' },
+                      { label: 'Simple Summarize', value: 'simple_summarize' },
+                      { label: 'No Text', value: 'no_text' },
+                      { label: 'Accumulate', value: 'accumulate' },
+                      { label: 'Compact Accumulate', value: 'compact_accumulate' },
+                    ]}
+                  />
                 </StyledUploadFileWrapper>
               )}
 
@@ -185,7 +237,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
           <>
             {!isEdit && (
               <div>
-                <Button
+                <ButtonPrimary
                   onClick={() => {
                     fetchSqlTables()
                   }}
@@ -193,7 +245,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   size={Button.sizes.SMALL}
                 >
                   {loading ? <Loader size={32} /> : 'Connect'}
-                </Button>
+                </ButtonPrimary>
               </div>
             )}
 

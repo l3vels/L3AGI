@@ -13,6 +13,12 @@ import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
+import HeadingSecondary from 'components/Heading/Secondary'
+import { ButtonPrimary } from 'components/Button/Button'
+import { textSlicer } from 'utils/textSlicer'
 
 type TeamOfAgentCardProps = {
   name: string
@@ -39,10 +45,7 @@ const TeamOfAgentCard = ({
   avatar,
   teamType,
 }: TeamOfAgentCardProps) => {
-  let shortDescription = description || ''
-  if (description.length > 150) {
-    shortDescription = `${description.slice(0, 150)}...`
-  }
+  const { shortText: shortDescription } = textSlicer(description, 120)
 
   return (
     <StyledCard>
@@ -56,31 +59,30 @@ const TeamOfAgentCard = ({
             avatar={creator.avatar}
           />
 
-          <Typography
+          <TypographyTertiary
             value={creator.name}
             type={Typography.types.P}
             size={Typography.sizes.xss}
-            customColor={'rgba(255,255,255, 0.6)'}
           />
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
-        <Heading type={Heading.types.h1} value={name} customColor={'#FFF'} size='medium' />
-        <Typography
+        <HeadingSecondary type={Heading.types.h1} value={name} size='medium' />
+
+        <TypographySecondary
           value={shortDescription}
           type={Typography.types.P}
           size={Typography.sizes.sm}
-          customColor={'rgba(255,255,255, 0.8)'}
         />
 
         {teamAgents?.length > 0 && (
           <StyledRowWrapper>
-            <Typography
+            <TypographyPrimary
               value={'Agents'}
               type={Typography.types.P}
               size={Typography.sizes.md}
-              customColor={'#FFF'}
             />
+
             <StyledAvatarsContainer>
               {teamAgents?.map((teamAgents: any) => {
                 const { id, agent } = teamAgents
@@ -97,17 +99,16 @@ const TeamOfAgentCard = ({
 
         {teamType && (
           <StyledRowWrapper>
-            <Typography
+            <TypographyPrimary
               value={'Type'}
               type={Typography.types.P}
               size={Typography.sizes.md}
-              customColor={'#FFF'}
             />
-            <Typography
+
+            <TypographySecondary
               value={teamType}
               type={Typography.types.P}
               size={Typography.sizes.xss}
-              customColor={'rgba(255,255,255,0.8)'}
             />
           </StyledRowWrapper>
         )}
@@ -118,7 +119,7 @@ const TeamOfAgentCard = ({
             <StyledButtonWrapper className='footerButtons'>
               <IconButton
                 onClick={onDeleteClick}
-                icon={() => <Delete />}
+                icon={() => <StyledDeleteIcon />}
                 size={Button.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Delete'
@@ -130,7 +131,7 @@ const TeamOfAgentCard = ({
             <StyledButtonWrapper className='footerButtons'>
               <IconButton
                 onClick={onEditClick}
-                icon={() => <Edit />}
+                icon={() => <StyledEditIcon />}
                 size={Button.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Edit'
@@ -144,7 +145,7 @@ const TeamOfAgentCard = ({
                 onClick={onViewClick}
                 icon={() => (
                   <StyledIconWrapper>
-                    <EyeOpen size={50} />
+                    <StyledEyeOpenIcon size={50} />
                   </StyledIconWrapper>
                 )}
                 size={Button.sizes.SMALL}
@@ -156,12 +157,12 @@ const TeamOfAgentCard = ({
 
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <Button size={Button.sizes.SMALL} kind={Button.kinds.PRIMARY} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper>
                   Chat
                   <MoveArrowRight size={14} />
                 </StyledInnerButtonWrapper>
-              </Button>
+              </ButtonPrimary>
             </StyledChatButtonWrapper>
           )}
         </StyledButtonsWrapper>
@@ -174,18 +175,17 @@ export default TeamOfAgentCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 320px;
-  min-width: 320px;
+  width: 345px;
+  min-width: 345px;
   height: 370px;
   min-height: 370px;
 
   padding: 20px 25px;
   /* padding-top: 30px; */
 
-  border-radius: 10px;
-  /* background: rgba(0, 0, 0, 0.5); */
-  background: rgba(0, 0, 0, 0.2);
-
+  border-radius: 22px;
+  border: ${({ theme }) => theme.body.border};
+  background: ${({ theme }) => theme.body.cardBgColor};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -262,7 +262,6 @@ const StyledBody = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-
   gap: 8px;
 `
 
@@ -277,4 +276,24 @@ const StyledCreatorWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  color: ${({ theme }) =>
+    theme.body.backgroundColorPrimary === 'rgb(255, 255, 255)' ? 'red' : 'rgba(0, 0, 0, 0.2)'};
+`
+
+export const StyledEyeOpenIcon = styled(EyeOpen)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+export const StyledDeleteIcon = styled(Delete)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+export const StyledEditIcon = styled(Edit)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
 `

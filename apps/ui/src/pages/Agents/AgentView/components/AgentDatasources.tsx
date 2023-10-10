@@ -5,6 +5,7 @@ import { useDatasourcesService } from 'services/datasource/useDatasourcesService
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledWrapper } from './AgentToolkits'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const AgentDatasources = ({ datasources }: any) => {
   const { data: datasourcesData } = useDatasourcesService()
@@ -18,11 +19,10 @@ const AgentDatasources = ({ datasources }: any) => {
 
   return (
     <StyledWrapper>
-      <Typography
-        value={'Datasaources'}
+      <TypographyPrimary
+        value={'Datasources'}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
-        customColor={'#FFF'}
       />
 
       <StyledInnerWrapper>
@@ -36,11 +36,10 @@ const AgentDatasources = ({ datasources }: any) => {
           return (
             <StyledDatasource key={index}>
               <StyledImg src={imageSrc} />
-              <Typography
+              <TypographyPrimary
                 value={datasource.name}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
-                customColor={'#FFF'}
               />
             </StyledDatasource>
           )

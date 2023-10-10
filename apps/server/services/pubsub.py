@@ -36,12 +36,12 @@ class AzurePubSubService:
 
 
 class ChatPubSubService:
-    def __init__(self, session_id: str, user: UserOutput, is_private_chat: bool, team_id: Optional[str] = None, agent_id: Optional[str] = None):
+    def __init__(self, session_id: str, user_id: str, team_id: Optional[str] = None, agent_id: Optional[str] = None, chat_id: Optional[str] = None):
         self.session_id = session_id
-        self.user = user
+        self.user_id = user_id
         self.team_id = team_id
         self.agent_id = agent_id
-        self.is_private_chat = is_private_chat
+        self.chat_id = chat_id
         
         self.azure_pubsub_service = AzurePubSubService()
 
@@ -50,12 +50,12 @@ class ChatPubSubService:
 
         self.azure_pubsub_service.send_to_group(self.session_id, message={
             'type': 'CHAT_MESSAGE_ADDED',
-            'from': str(self.user.id),
+            'from': str(self.user_id),
             'chat_message': chat_message,
-            'is_private_chat': self.is_private_chat,
             'local_chat_message_ref_id': local_chat_message_ref_id,
             'agent_id': self.agent_id,
             'team_id': self.team_id,
+            'chat_id': self.chat_id,
         })
 
     def send_chat_status(self, config: Dict):
@@ -64,9 +64,8 @@ class ChatPubSubService:
 
         self.azure_pubsub_service.send_to_group(self.session_id, message={
             'type': 'CHAT_STATUS',
-            'from': str(self.user.id),
+            'from': str(self.user_id),
             'config': data,
-            'is_private_chat': self.is_private_chat,
             'agent_id': self.agent_id,
             'team_id': self.team_id,
         })

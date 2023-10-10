@@ -2,7 +2,7 @@ import { useApolloClient } from '@apollo/client'
 import { useContext } from 'react'
 import isNil from 'lodash/fp/isNil'
 import omitBy from 'lodash/omitBy'
-import CHAT_MESSAGES_GQL from '../../../gql/chat/chatMessages.gql'
+import CHAT_MESSAGES_GQL from '../../../gql/chat/userChatMessages.gql'
 import CONFIGS_GQL from '../../../gql/ai/config/configs.gql'
 import { AuthContext } from 'contexts'
 import { Nullable } from 'types'
@@ -13,26 +13,34 @@ const useUpdateChatCache = () => {
 
   const upsertChatMessageInCache = (
     newChatMessage: Record<string, unknown>,
-    is_private_chat: boolean,
     {
       localChatMessageRefId,
       agentId,
       teamId,
+      chatId,
     }: {
       localChatMessageRefId?: Nullable<string>
       agentId?: Nullable<string>
       teamId?: Nullable<string>
+      chatId?: Nullable<string>
     } = {},
-  ) => {
-    const queryVariables = omitBy(
+  ) => {    
+    let queryVariables = omitBy(
       {
-        is_private_chat: is_private_chat,
         agent_id: agentId,
         team_id: teamId,
+        chat_id: chatId,
       },
       isNil,
     )
-
+    if (chatId) {
+      queryVariables = omitBy(
+        {
+          chat_id: chatId,
+        },
+        isNil,
+      )
+    }
     apolloClient.cache.updateQuery(
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {
@@ -46,7 +54,7 @@ const useUpdateChatCache = () => {
           ...newChatMessage,
         }
 
-        if (localChatMessageRefId && user.id === newChatMessage.user_id) {
+        if (localChatMessageRefId && user.id === newChatMessage.sender_user_id) {
           // If the message is from the current user, we need to update the local message
 
           const index = newChatMessages.findIndex(
@@ -84,11 +92,9 @@ const useUpdateChatCache = () => {
   const upsertChatStatusConfig = (
     config: Record<string, unknown>,
     {
-      is_private_chat,
       agentId,
       teamId,
     }: {
-      is_private_chat?: boolean
       agentId?: Nullable<string>
       teamId?: Nullable<string>
     } = {},

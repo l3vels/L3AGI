@@ -5,48 +5,24 @@ import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
 
 import { Command } from 'cmdk'
-import get from 'lodash/get'
-import groupBy from 'lodash/groupBy'
-import has from 'lodash/has'
-import slice from 'lodash/slice'
-
-import StarVector from 'assets/svgComponents/StarVector'
-import StarsVector from 'assets/svgComponents/StartsVector'
-import { enterIcon } from 'assets/icons'
-
-import Typography from '@l3-lib/ui-core/dist/Typography'
-
-import About from '@l3-lib/ui-core/dist/icons/About'
-import API from '@l3-lib/ui-core/dist/icons/API'
-import Doc from '@l3-lib/ui-core/dist/icons/Doc'
+import { get, groupBy, has, slice } from 'lodash'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
-import Teams from '@l3-lib/ui-core/dist/icons/Teams'
-import Players from '@l3-lib/ui-core/dist/icons/Players'
-import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
-import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-import Logs from '@l3-lib/ui-core/dist/icons/Logs'
-import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
-import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 
 import {
   StyledCommandInput,
-  StyledCommandItem,
   StyledCommandList,
   StyledCommandWrapper,
   StyledCommandDialog,
   StyledCommandItemHeader,
   StyledSvgContainer,
-  StyleEnterGroup,
 } from './CommandMenuStyles'
-import { ApiVersionEnum } from 'modals/AIChatModal/types'
 
 import { defaultData } from './defaultData'
-
-import CommandItemName from './components/ItemName'
-import styled from 'styled-components'
 import CommandItem from './components/CommandItem'
 
-const CommandMenu = ({ open, setCmdkOpen }: any) => {
+import { useHotkeys } from 'react-hotkeys-hook'
+
+const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   const { openModal, closeModal } = useModal()
   const componentRef = useRef<HTMLDivElement>(null)
 
@@ -61,6 +37,12 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
   const location = useLocation()
   const navigate = useNavigate()
 
+  const handleOpenChat = () => {
+    navigate('/chat')
+  }
+
+  useHotkeys('c', handleOpenChat)
+
   const filter_routes = 'developers'
 
   const path_id = location.pathname.includes(filter_routes) ? '' : location.pathname.split('/')[2]
@@ -70,6 +52,20 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
       await navigate(item.url)
       // closeModal('spotlight-modal')
       setCmdkOpen(false)
+    }
+    if (item.option === 'theme') {
+      if (theme === 'dark' && item.name === 'Dark') {
+        setCmdkOpen(false)
+        return
+      }
+      if (theme === 'light' && item.name === 'Light') {
+        setCmdkOpen(false)
+        return
+      }
+
+      toggleTheme()
+      setCmdkOpen(false)
+      return
     }
     if (item.option === 'open-modal') {
       openModal({ name: item.modal_name, data: { game_id: path_id, ...item.modalData } })
@@ -115,18 +111,18 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
     // return openModal({ name: item.modal_name, data: { game_id: path_id } })
   }
 
-  const onCreateOptionBasedOnOption = (game_id: any) => {
-    openModal({ name: modal_options.modal_name, data: { game_id } })
-    set_game_id(game_id)
-  }
+  // const onCreateOptionBasedOnOption = (game_id: any) => {
+  //   openModal({ name: modal_options.modal_name, data: { game_id } })
+  //   set_game_id(game_id)
+  // }
 
-  const onCreateOptionBasedOnCollection = (collection_data: any) => {
-    const { id } = collection_data
-    openModal({ name: 'create-asset-modal', data: { collection_id: id } })
-    navigate(`/collection/${id}/assets`)
-    // closeModal('spotlight-modal')
-    setCmdkOpen(false)
-  }
+  // const onCreateOptionBasedOnCollection = (collection_data: any) => {
+  //   const { id } = collection_data
+  //   openModal({ name: 'create-asset-modal', data: { collection_id: id } })
+  //   navigate(`/collection/${id}/assets`)
+  //   // closeModal('spotlight-modal')
+  //   setCmdkOpen(false)
+  // }
 
   useEffect(() => {
     // Function to handle outside click
@@ -218,7 +214,7 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                   {search ? (
                     <>
                       {groupedItems?.go_to.map((item, index) => (
-                        <>
+                        <div key={item.id}>
                           <CommandItem
                             index={index}
                             name={item.name}
@@ -226,12 +222,12 @@ const CommandMenu = ({ open, setCmdkOpen }: any) => {
                             groupName={'Go To'}
                             itemIcon={item.icon}
                           />
-                        </>
+                        </div>
                       ))}
                     </>
                   ) : (
                     <>
-                      {slice(groupedItems.go_to, 1, 8)?.map((item, index) => (
+                      {slice(groupedItems.go_to, 1, 11)?.map((item, index) => (
                         <>
                           <CommandItem
                             index={index}

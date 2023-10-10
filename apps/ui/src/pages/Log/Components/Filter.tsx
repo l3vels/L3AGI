@@ -15,6 +15,8 @@ import CreateLogMethod from './CreateLogMethod/CreateLogMethod'
 import FilterLogDate from './FilterLogDate/FilterLogDate'
 import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
+import TypographyPrimary from 'components/Typography/Primary'
+import { ButtonTertiary } from 'components/Button/Button'
 
 const Filter = ({ filter }: any) => {
   const [showDate, setShowDate] = useState<any>(false)
@@ -94,42 +96,23 @@ const Filter = ({ filter }: any) => {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
         placeholder='Filter by resource ID'
       />
-      <Button
-        kind={Button.kinds.TERTIARY}
-        size={Button.sizes.SMALL}
-        onClick={() => setShowDate(true)}
-      >
-        <Typography
-          value='Date'
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-          customColor='#FFFFFF'
-        />
-      </Button>
-      <Button
-        kind={Button.kinds.TERTIARY}
-        size={Button.sizes.SMALL}
-        onClick={() => setShowMethod(true)}
-      >
-        <Typography
+      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowDate(true)}>
+        <TypographyPrimary value='Date' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+      </ButtonTertiary>
+      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowMethod(true)}>
+        <TypographyPrimary
           value='Method'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='#FFFFFF'
         />
-      </Button>
-      <Button
-        kind={Button.kinds.TERTIARY}
-        size={Button.sizes.SMALL}
-        onClick={() => setShowEndpoint(true)}
-      >
-        <Typography
+      </ButtonTertiary>
+      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowEndpoint(true)}>
+        <TypographyPrimary
           value='API endpoints'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
-          customColor='#FFFFFF'
         />
-      </Button>
+      </ButtonTertiary>
       {/* <StyledAdditionalFilterContainer>
         <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={openCreateLogModal}>
           <Typography
@@ -171,9 +154,6 @@ const StyledContainer = styled.div`
   margin-top: 25px;
 `
 
-const StyledAdditionalFilterContainer = styled.div`
-  position: relative;
-`
 const StyledEndPointContainer = styled.div`
   display: flex;
   position: relative;

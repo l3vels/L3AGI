@@ -39,6 +39,7 @@ export const useEditAgent = () => {
     agent_model_provider: agentById?.configs?.model_provider,
     agent_suggestions: agentById?.configs?.suggestions,
     agent_greeting: agentById?.configs?.greeting,
+    agent_text: agentById?.configs?.text || '',
   }
 
   const handleSubmit = async (values: any) => {
@@ -60,6 +61,7 @@ export const useEditAgent = () => {
       model_provider: values.agent_model_provider,
       suggestions: values.agent_suggestions,
       greeting: values.agent_greeting,
+      text: values.agent_text,
     }
 
     await updateAgent(agentId || '', {
@@ -67,7 +69,7 @@ export const useEditAgent = () => {
     })
     await refetchAgents()
 
-    navigate(`/agents`)
+    navigate(`/chat?agent=${agentId}`)
 
     setToast({
       message: 'Agent was updated!',

@@ -10,19 +10,21 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import { useTranslation } from 'react-i18next'
+import { useModal } from 'hooks'
 
 type DeleteConfirmationModalProps = {
   data: {
     deleteItem: () => void
-    closeModal: () => void
     label: string
     title: string
   }
 }
 
 const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
-  const { closeModal, deleteItem, label, title } = data
+  const { deleteItem, label } = data
   const [isLoading, setIsLoading] = useState(false)
+
+  const { closeModal } = useModal()
 
   const handleConfirm = async () => {
     setIsLoading(true)
@@ -30,11 +32,15 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
     setIsLoading(false)
   }
 
+  const handleClose = () => {
+    closeModal('delete-confirmation-modal')
+  }
+
   const { t } = useTranslation()
 
   return (
     <StyledDeleteConfirmationModal
-      onClose={closeModal}
+      onClose={handleClose}
       show
       backgroundColor='dark'
       hideCloseButton={true}
@@ -48,7 +54,7 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
         ) : (
           <StyledActionsContainer>
             <Button
-              onClick={closeModal}
+              onClick={handleClose}
               kind={Button.kinds.TERTIARY}
               size={Button.sizes.LARGE}
               disabled={isLoading}

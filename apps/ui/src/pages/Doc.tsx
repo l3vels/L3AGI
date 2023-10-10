@@ -24,7 +24,6 @@ const Doc: React.FC = () => {
         window.location.href === 'https://docs.l3agi.com/'
       ) {
         window.history.pushState({}, '', previousRoute)
-        console.log(window.history.pushState({}, '', previousRoute))
         window.location.reload()
       }
     }
