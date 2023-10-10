@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# React linting and formatting
+echo "Linting and formatting React..."
+cd apps/ui && yarn lint-staged
+
+# Return to the root directory
+cd ../..
+
+echo "Pre-commit checks passed!"
