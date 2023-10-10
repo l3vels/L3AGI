@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
 
-import DataGrid from 'components/DataGrid'
+// import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -72,7 +72,7 @@ const ApiKeys = () => {
         </div>
       </div>
 
-      <DataGrid
+      {/* <DataGrid
         ref={gridRef}
         data={apiKeys?.items || []}
         columnConfig={config}
@@ -82,7 +82,7 @@ const ApiKeys = () => {
         // deleteRow={deleteRow}
         // openEditModal={openEditAssetModal}
         // noBorder={true}
-      />
+      /> */}
 
       <CreateApiModal />
       <ShowApiKeyModal />
