@@ -20,6 +20,8 @@ import {
 import { defaultData } from './defaultData'
 import CommandItem from './components/CommandItem'
 
+import { useHotkeys } from 'react-hotkeys-hook'
+
 const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   const { openModal, closeModal } = useModal()
   const componentRef = useRef<HTMLDivElement>(null)
@@ -34,6 +36,12 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   const page = pages[pages.length - 1]
   const location = useLocation()
   const navigate = useNavigate()
+
+  const handleOpenChat = () => {
+    navigate('/chat')
+  }
+
+  useHotkeys('c', handleOpenChat)
 
   const filter_routes = 'developers'
 
