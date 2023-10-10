@@ -24,7 +24,7 @@ const useUpdateChatCache = () => {
       teamId?: Nullable<string>
       chatId?: Nullable<string>
     } = {},
-  ) => {    
+  ) => {
     let queryVariables = omitBy(
       {
         agent_id: agentId,
@@ -89,21 +89,12 @@ const useUpdateChatCache = () => {
     )
   }
 
-  const upsertChatStatusConfig = (
-    config: Record<string, unknown>,
-    {
-      agentId,
-      teamId,
-    }: {
-      agentId?: Nullable<string>
-      teamId?: Nullable<string>
-    } = {},
-  ) => {
+  const upsertChatStatusConfig = (config: Record<string, unknown>) => {
     apolloClient.cache.updateQuery({ query: CONFIGS_GQL }, data => {
       const configs = data?.configs || []
       const newConfigs = [...configs]
 
-      const newConfig = {
+      const newConfig: any = {
         __typename: 'Config',
         ...config,
       }

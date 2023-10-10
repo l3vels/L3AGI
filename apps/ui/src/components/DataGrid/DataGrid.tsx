@@ -19,8 +19,6 @@ import {
 // import useDataGrid from './useDataGrid'
 // import { AddRowButton } from './AddRowButton'
 
-// import { useUpdateCacheThenServerProperty } from 'services/usePropertyService'
-
 import processDataFromClipboard from './helpers/processDataFromClipboard'
 import styled from 'styled-components'
 import { LayoutContext } from 'contexts'
@@ -248,7 +246,7 @@ const DataGrid = forwardRef(
             if (localHiddenData) {
               const JsonLocalData = await JSON.parse(localHiddenData)
               Object.entries(JsonLocalData[`${path}`]).forEach(function (key) {
-                params.columnApi.setColumnVisible(key[0], key[1])
+                params.columnApi.setColumnVisible(key[0], key[1] as boolean)
               })
             }
 
@@ -303,7 +301,11 @@ const DataGrid = forwardRef(
 
 export default DataGrid
 
-const StyledDiv = styled.div<{ headerHeight?: number; elementHeights?: number; maxHeight: number }>`
+const StyledDiv = styled.div<{
+  headerHeight?: number
+  elementHeights?: number
+  maxHeight: number | null
+}>`
   height: ${p =>
     p.elementHeights ? `calc(100vh - ${p.elementHeights}px) ` : 'calc(100vh - 175px)'};
   // height: ${p => (p.elementHeights ? `100vh - ${p.elementHeights}` : '100vh')};

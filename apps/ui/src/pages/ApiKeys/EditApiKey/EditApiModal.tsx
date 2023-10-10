@@ -40,6 +40,7 @@ type EditApiModalProps = {
 
 const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
   const { t } = useTranslation()
+  // @ts-expect-error TODO: fix gamesOptions
   const { formik, gamesOptions } = useEditApiKey(data)
   const { setFieldValue } = formik
 

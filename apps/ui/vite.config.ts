@@ -16,7 +16,7 @@ export default defineConfig({
   envPrefix: 'REACT_APP_',
   plugins: [
     graphql() as any,
-    eslint({ emitWarning: false, cache: false }),
+    eslint(),
     react(),
     envCompatible(),
     viteTsconfigPaths(),
