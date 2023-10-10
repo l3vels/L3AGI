@@ -27,7 +27,6 @@ from resolvers.context import get_context
 from resolvers.user import UserMutation, UserQuery
 from typings.auth import AuthJWTSettings
 
-VERSION = "0.3.1"
 
 app = FastAPI()
 
@@ -106,7 +105,7 @@ app.include_router(file_router, prefix="/file")
 
 @app.get("/")
 def root():
-    return f"Version {VERSION} is up!"
+    return f"Server is running on {Config.ENV} environment"
 
 
 print("Project run on 4000 port")
