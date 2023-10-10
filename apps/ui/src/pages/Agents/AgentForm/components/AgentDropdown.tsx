@@ -85,4 +85,18 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  .css-xrcw8y-container {
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+  }
+  .menu.dropdown-menu-wrapper.css-19zapvn-menu {
+    background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
+    color: ${({ theme }) => theme.body.textColorPrimary};
+    border: ${({ theme }) => theme.body.border};
+  }
+  .dropdown-wrapper__option--reset {
+    &:hover {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+      background: ${({ theme }) => theme.body.placeHolderColor};
+    }
+  }
 `
