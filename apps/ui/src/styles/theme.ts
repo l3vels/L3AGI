@@ -52,6 +52,9 @@ const darkTheme: DefaultTheme = {
     secondary: 'SECONDARY',
     tertiary: 'TERTIARY',
   },
+  textFiled: {
+    primary: 'dark',
+  },
 }
 
 const lightTheme: DefaultTheme = {
@@ -70,7 +73,7 @@ const lightTheme: DefaultTheme = {
     mainNavColorActive: 'rgb(80,80,80)',
     mainNavColor: 'rgb(193,193,193)',
     breadCrumbsColor: 'rgb(91,91,91)',
-    breadCrumbsBg: 'rgb(217,217,217)',
+    breadCrumbsBg: 'rgbrgb(253,252,250)',
     commandBorderColor: '1px solid rgb(126,126,126)',
     placeHolderColor: 'rgb(187,187,187)',
     cardBgColor: 'rgb(253,252,250)',
@@ -98,8 +101,11 @@ const lightTheme: DefaultTheme = {
   },
   button: {
     primary: 'PRIMARY',
-    secondary: 'SECONDARY',
+    secondary: 'PRIMARY',
     tertiary: 'SECONDARY',
+  },
+  textFiled: {
+    primary: 'light',
   },
 }
 

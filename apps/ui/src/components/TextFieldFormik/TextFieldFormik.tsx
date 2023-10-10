@@ -1,5 +1,6 @@
 import { Field } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
+import { useTheme } from 'styled-components'
 
 const FormikTextField = ({
   field_name,
@@ -30,6 +31,7 @@ const FormikTextField = ({
   onChange?: (event: React.FocusEvent<HTMLInputElement>) => void
 }) => {
   const input_name = field_name || name
+  const theme = useTheme()
 
   return (
     <Field name={input_name}>
@@ -49,6 +51,7 @@ const FormikTextField = ({
             onChange={onHandleChange}
             title={title || label}
             disabled={disabled}
+            color={theme.textFiled.primary}
             validation={{
               text: meta.error,
               status: meta.error && 'error',

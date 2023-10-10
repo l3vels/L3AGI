@@ -1409,10 +1409,10 @@
     "@json-rpc-tools/types" "^1.7.6"
     "@pedrouid/environment" "^1.0.1"
 
-"@l3-lib/ui-core@^0.0.58":
-  version "0.0.58"
-  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.58.tgz#5adbb3d680f1be5cd2b0d9a4cc3e4ee244693630"
-  integrity sha512-FxhC8KB/reZ9mk7W9vDCY9SmR7uyHtJRdLFPFVpf8TuH0sjYVM4ULSkRwJK0MqehtpYudLccqPwszE/uk492pg==
+"@l3-lib/ui-core@^0.0.59":
+  version "0.0.59"
+  resolved "https://registry.yarnpkg.com/@l3-lib/ui-core/-/ui-core-0.0.59.tgz#30a7ccf0430dceddc789b23a7d145b2e4603c1bb"
+  integrity sha512-SR2vYNmes90QeGqLR9MSYFqoh+5bOAZY1t1Tz2TXQQi4oEm1hZvIBfI9cq5cAKM6bU7PE5tvKt8ByNoAYddwvw==
   dependencies:
     "@l3-lib/ui-style" "^0.0.29"
     "@popperjs/core" "2.11.6"

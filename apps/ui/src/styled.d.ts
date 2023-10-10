@@ -50,5 +50,8 @@ declare module 'styled-components' {
       secondary: string
       tertiary: string
     }
+    textFiled: {
+      primary: string
+    }
   }
 }
