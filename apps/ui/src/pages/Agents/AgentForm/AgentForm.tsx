@@ -237,6 +237,9 @@ export const StyledTextareaWrapper = styled.div`
 
   .components-Textarea-Textarea-module__textarea--Qy3d2 {
     font-size: 14px;
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    color: ${({ theme }) => theme.body.textColorPrimary};
+    background: ${({ theme }) => theme.body.textAreaBgColor};
   }
 `
 const StyledCheckboxWrapper = styled.div`
