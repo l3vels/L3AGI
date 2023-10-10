@@ -35,6 +35,8 @@ declare module 'styled-components' {
       teamChatCardSelectedColor: string
       componentsWrapperBg: string
       componentsSecondaryWrapperBg: string
+      textareaBorder: string
+      textAreaBgColor: string
     }
     typography: {
       contentPrimary: string

@@ -37,6 +37,8 @@ const darkTheme: DefaultTheme = {
     teamChatCardSelectedColor: 'rgba(250, 250, 250, 0.3)',
     componentsWrapperBg: 'rgba(255, 255, 255, 0.1)',
     componentsSecondaryWrapperBg: 'rgba(255, 255, 255, 0.1)',
+    textareaBorder: 'none',
+    textAreaBgColor: 'rgba(255, 255, 255, 0.2)',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -91,6 +93,8 @@ const lightTheme: DefaultTheme = {
     teamChatCardSelectedColor: 'rgb(217,217,217)',
     componentsWrapperBg: '#F5F5F7',
     componentsSecondaryWrapperBg: 'rgb(253,252,250)',
+    textareaBorder: 'rgba(0, 0, 0, 0.1)',
+    textAreaBgColor: 'rgba(255, 255, 255, 1)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
