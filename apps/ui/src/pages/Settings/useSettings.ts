@@ -45,7 +45,7 @@ export const useSettings = () => {
   const [updateConfig] = useUpdateConfigService()
 
   const initialValues = SETTINGS_FIELDS.reduce<Record<string, string>>((prev, field) => {
-    const config = configsData.find(
+    const config = configsData?.find(
       (config: any) => config.account_id === currentAccount?.id && config.key === field.key,
     )
 
