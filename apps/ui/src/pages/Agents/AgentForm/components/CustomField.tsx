@@ -10,6 +10,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import { FieldArray } from 'formik'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
+import { StyledDeleteIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 type CustomFieldProps = {
   formik: any
@@ -33,7 +34,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
                 <FormikTextField name={`${formikField}.${index}`} />
 
                 <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes.SMALL}>
-                  <Delete siz={50} />
+                  <StyledDeleteIcon siz={50} />
                 </StyledButtonTertiary>
               </StyledCustomFieldWrapper>
             </>
