@@ -19,7 +19,7 @@ export const LayoutProvider = ({ children }: any) => {
     setExpand(!expand)
   }
 
-  const keyboardShortcut = isMacOS ? 'cmd+shift+f' : 'ctrl+shift+f'
+  const keyboardShortcut = 'ctrl+f' //isMacOS ? 'cmd+shift+f' : 'ctrl+shift+f'
 
   useHotkeys(keyboardShortcut, commandFunction)
 

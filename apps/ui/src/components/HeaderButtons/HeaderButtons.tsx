@@ -29,7 +29,7 @@ const HeaderButtons = () => {
     <StyledButtonsWrapper>
       {location.pathname.includes('/chat') && (
         <Tooltip
-          content={() => <span>Focus: {isMacOS ? 'cmd+Shift+F' : 'Ctrl+Shift+F'}</span>}
+          content={() => <span>Focus: {isMacOS ? 'Ctrl+F' : 'Ctrl+Shift+F'}</span>}
           position={Tooltip.positions.BOTTOM}
           tooltipSize='small'
         >
