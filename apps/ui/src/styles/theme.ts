@@ -101,7 +101,7 @@ const lightTheme: DefaultTheme = {
   },
   button: {
     primary: 'PRIMARY',
-    secondary: 'SECONDARY',
+    secondary: 'PRIMARY',
     tertiary: 'SECONDARY',
   },
   textFiled: {
