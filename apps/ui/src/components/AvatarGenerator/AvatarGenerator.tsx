@@ -23,6 +23,7 @@ const AvatarGenerator = ({
   avatar,
 }: AvatarGeneratorProps) => {
   return (
+    // @ts-expect-error https://github.com/ambassify/react-avatar/issues/258
     <ConfigProvider colors={AVATAR_COLORS}>
       <StyledAvatar
         name={name}

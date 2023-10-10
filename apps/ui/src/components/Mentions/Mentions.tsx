@@ -25,8 +25,8 @@ type MentionsProps = {
   onChange: OnChangeHandlerType
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
   setValue: any
-  agentId: Nullable<string>
-  teamId: Nullable<string>
+  agentId?: Nullable<string>
+  teamId?: Nullable<string>
 }
 
 const Mentions = ({

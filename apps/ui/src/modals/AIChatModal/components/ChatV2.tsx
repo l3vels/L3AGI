@@ -72,7 +72,7 @@ const ChatV2 = () => {
 
   const [createClientChatMessage] = useCreateClientChatMessageService()
 
-  const { apiVersion, setAPIVersion, thinking, setThinking, socket } = useChatState()
+  const { thinking, setThinking, socket } = useChatState()
 
   const { data: chatMessages } = useChatMessagesService({
     agentId,
@@ -290,7 +290,9 @@ const ChatV2 = () => {
           <ChatMessageListV2
             data={chatMessages}
             thinking={thinking}
+            // @ts-expect-error TODO: fix type
             isNewMessage={socket?.isNewMessage}
+            // @ts-expect-error TODO: fix type
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}

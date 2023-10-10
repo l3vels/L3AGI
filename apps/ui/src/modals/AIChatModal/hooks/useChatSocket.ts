@@ -5,8 +5,7 @@ import getSessionId from '../utils/getSessionId'
 import useUpdateChatCache from './useUpdateChatCache'
 import { useLocation } from 'react-router-dom'
 
-type UseChatSocketProps = {
-}
+type UseChatSocketProps = {}
 
 const useChatSocket = () => {
   const { user, account } = useContext(AuthContext)
@@ -81,10 +80,7 @@ const useChatSocket = () => {
       }
 
       if (data.type === 'CHAT_STATUS') {
-        upsertChatStatusConfig(data.config, {
-          agentId: data.agent_id,
-          teamId: data.team_id,
-        })
+        upsertChatStatusConfig(data.config)
       }
     })
 
@@ -225,7 +221,9 @@ const useChatSocket = () => {
   const sendUserTyping = async (chat_id: string) => {
     const type = 'user_typing'
 
-    if(!user){ return }
+    if (!user) {
+      return
+    }
     // await send(type, {
     //   content: user?.first_name,
     //   example: false,

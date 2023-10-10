@@ -1,6 +1,3 @@
-
-
-
 export enum ChatMessageVersionEnum {
   ChatConversational = 'chat_conversational',
   // PlanAndExecute = 'plan_and_execute',
