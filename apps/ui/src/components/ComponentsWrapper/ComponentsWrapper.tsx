@@ -32,6 +32,7 @@ const StyledMainWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
   /* max-height: fit-content; */
   min-height: 200px;
   width: 100%;
+  /* max-width: 1060px; */
   ${p =>
     p.noPadding &&
     css`
@@ -45,4 +46,7 @@ const StyledMainWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
       box-shadow: unset;
       padding: 0;
     `};
+
+  display: flex;
+  justify-content: center;
 `

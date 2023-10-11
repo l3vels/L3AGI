@@ -62,8 +62,8 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
   justify-content: flex-start;
   padding: 24px 16px 8px;
   gap: 8px;
-  width: 260px;
-  min-width: 260px;
+  width: 245px;
+  min-width: 245px;
   height: 158px;
   min-height: 158px;
   background: ${({ theme }) => theme.body.toolkitCardBgColorPrimary};

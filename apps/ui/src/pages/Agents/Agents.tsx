@@ -74,8 +74,11 @@ export const StyledCardsWrapper = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
+  /* background: red; */
+  max-width: 1040px;
+
   max-height: calc(100vh - 325px);
   height: 100%;
   overflow-y: auto;
-  padding: 0 10px;
+  /* padding: 0 10px; */
 `

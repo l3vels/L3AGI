@@ -178,8 +178,8 @@ export default AgentCard
 
 export const StyledAgentCard = styled.div`
   position: relative;
-  width: 345px;
-  min-width: 345px;
+  width: 335px;
+  min-width: 335px;
   height: 190px;
   min-height: 190px;
 
