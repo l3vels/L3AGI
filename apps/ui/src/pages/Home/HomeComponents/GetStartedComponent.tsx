@@ -5,8 +5,11 @@ import cardBg1 from 'assets/images/basicsBg.png'
 import cardBg2 from 'assets/images/gameBg.png'
 import cardBg3 from 'assets/images/developerBg.png'
 import cardBg4 from 'assets/images/whiteBg.png'
+import cardBg5 from 'assets/images/cardBg5.png'
+import { useTheme } from 'styled-components'
 
 const GetStartedComponent = () => {
+  const theme = useTheme()
   return (
     <GetStartedContainer>
       <GetStartedCard
@@ -33,7 +36,7 @@ const GetStartedComponent = () => {
       <GetStartedCard
         subTitle={'Learn about'}
         title={'Data sources'}
-        image={cardBg4}
+        image={theme.body.backgroundColorPrimary === 'rgb(253,252,250)' ? cardBg5 : cardBg4}
         bgColor={'red'}
         link={import.meta.env.REACT_APP_DATASOURCES_LINK}
       />
