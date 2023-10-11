@@ -33,6 +33,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+pipenv run isort $python_files
+if [ $? -ne 0 ]; then
+    echo "Isort failed to sort Python imports. Aborting commit."
+    exit 1
+fi
+
 # Run ruff check and fix
 pipenv run ruff check $python_files --fix --ignore E501
 if [ $? -ne 0 ]; then
