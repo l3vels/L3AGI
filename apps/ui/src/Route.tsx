@@ -84,7 +84,7 @@ const Route = () => {
   const [cmdkOpen, setCmdkOpen] = useState(false)
   const [theme, setTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem('theme')
-    return storedTheme || 'dark'
+    return storedTheme || 'light'
   })
 
   useHotkeys('ctrl+enter, meta+k', event => {
