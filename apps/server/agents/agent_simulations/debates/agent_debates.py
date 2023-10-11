@@ -1,33 +1,28 @@
 from typing import List, Optional
 
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import (
-    HumanMessage,
-    SystemMessage,
-)
 from fastapi_sqlalchemy import db
-from services.pubsub import ChatPubSubService
-from agents.agent_simulations.agent.dialogue_agent import (
-    DialogueAgent,
-    DialogueSimulator,
-)
-from agents.agent_simulations.agent.dialogue_agent_with_tools import (
-    DialogueAgentWithTools,
-)
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import HumanMessage, SystemMessage
 
+from agents.agent_simulations.agent.dialogue_agent import (DialogueAgent,
+                                                           DialogueSimulator)
+from agents.agent_simulations.agent.dialogue_agent_with_tools import \
+    DialogueAgentWithTools
 from agents.base_agent import BaseAgent
-from postgres import PostgresChatMessageHistory
-from typings.agent import AgentWithConfigsOutput
-from models.team import TeamModel
-from utils.system_message import SystemMessageBuilder
-from typings.config import AccountSettings
-from tools.get_tools import get_agent_tools
-from tools.datasources.get_datasource_tools import get_datasource_tools
-from models.datasource import DatasourceModel
 from config import Config
 from memory.zep.zep_memory import ZepMemory
 from models.config import ConfigModel
+from models.datasource import DatasourceModel
+from models.team import TeamModel
+from postgres import PostgresChatMessageHistory
+from services.pubsub import ChatPubSubService
+from tools.datasources.get_datasource_tools import get_datasource_tools
+from tools.get_tools import get_agent_tools
+from typings.agent import AgentWithConfigsOutput
 from typings.chat import ChatStatus
+from typings.config import AccountSettings
+from utils.llm import get_llm
+from utils.system_message import SystemMessageBuilder
 
 
 class AgentDebates(BaseAgent):
@@ -74,6 +69,7 @@ class AgentDebates(BaseAgent):
             SystemMessage(content="You can make a topic more specific."),
             HumanMessage(content=content),
         ]
+        # TODO: support llm after we gonna use this function
         specified_topic = ChatOpenAI(
             openai_api_key=self.settings.openai_api_key,
             temperature=1.0,
@@ -90,10 +86,14 @@ class AgentDebates(BaseAgent):
             .all()
         )
         datasource_tools = get_datasource_tools(
-            datasources, settings, self.provider_account
+            datasources, settings, self.provider_account, agent_with_configs
         )
         agent_tools = get_agent_tools(
-            agent_with_configs.configs.tools, db, self.provider_account, settings
+            agent_with_configs.configs.tools,
+            db,
+            self.provider_account,
+            settings,
+            agent_with_configs,
         )
         return datasource_tools + agent_tools
 
@@ -132,13 +132,11 @@ class AgentDebates(BaseAgent):
                 system_message=SystemMessage(
                     content=SystemMessageBuilder(agent_with_config).build()
                 ),
-                # later need support other llms
-                model=ChatOpenAI(
-                    openai_api_key=self.settings.openai_api_key,
-                    temperature=agent_with_config.configs.temperature,
-                    model_name=agent_with_config.configs.model_version
-                    if agent_with_config.configs.model_version
-                    else "gpt-4",
+                model=get_llm(
+                    self.settings,
+                    agent_with_config.configs.model_provider,
+                    agent_with_config.configs.model_version,
+                    agent_with_config.configs.temperature,
                 ),
                 tools=self.get_tools(agent_with_config, self.settings),
                 top_k_results=2,

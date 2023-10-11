@@ -1,11 +1,14 @@
 from abc import abstractmethod
-from pydantic import BaseModel, Field, validator
-from typing import List, Dict, Optional
-from langchain.tools import BaseTool as LangchainBaseTool
 from enum import Enum
+from typing import Dict, List, Optional
+
+from langchain.tools import BaseTool as LangchainBaseTool
+from pydantic import BaseModel, Field, validator
+
 from models.config import ConfigModel
-from typings.config import ConfigQueryParams, AccountSettings
 from typings.account import AccountOutput
+from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings, ConfigQueryParams
 
 
 class ToolEnvKeyType(Enum):
@@ -51,6 +54,7 @@ class BaseTool(LangchainBaseTool):
     settings: Optional[AccountSettings] = None
     toolkit_slug: Optional[str] = None
     account: Optional[AccountOutput] = None
+    agent_with_configs: AgentWithConfigsOutput
 
     def get_env_key(self, key: str):
         return self.configs.get(key)
@@ -63,7 +67,9 @@ class BaseToolkit(BaseModel):
     slug: str
     is_active: bool = Field(default=True)
 
-    def get_tools_with_configs(self, db, account, settings) -> List[BaseTool]:
+    def get_tools_with_configs(
+        self, db, account, settings, agent_with_configs
+    ) -> List[BaseTool]:
         configs = ConfigModel.get_configs(
             db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account
         )
@@ -75,6 +81,7 @@ class BaseToolkit(BaseModel):
             tool.toolkit_slug = self.slug
             tool.settings = settings
             tool.account = account
+            tool.agent_with_configs = agent_with_configs
 
         return tools
 

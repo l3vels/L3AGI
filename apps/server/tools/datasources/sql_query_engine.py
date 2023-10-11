@@ -1,28 +1,34 @@
-from sqlalchemy import create_engine, MetaData
-from llama_index.indices.struct_store.sql_query import SQLTableRetrieverQueryEngine
-from llama_index.objects import SQLTableNodeMapping, ObjectIndex, SQLTableSchema
-from llama_index import (
-    VectorStoreIndex,
-    SQLDatabase,
-    ServiceContext,
-    set_global_service_context,
-)
+from llama_index import (ServiceContext, SQLDatabase, VectorStoreIndex,
+                         set_global_service_context)
+from llama_index.indices.struct_store.sql_query import \
+    SQLTableRetrieverQueryEngine
+from llama_index.llm_predictor import LLMPredictor
+from llama_index.llms import LangChainLLM
+from llama_index.objects import (ObjectIndex, SQLTableNodeMapping,
+                                 SQLTableSchema)
 from llama_index.prompts.base import Prompt
 from llama_index.prompts.prompt_type import PromptType
-from llama_index.llms import LangChainLLM
-from llama_index.llm_predictor import LLMPredictor
-from langchain.chat_models import ChatOpenAI
+from sqlalchemy import MetaData, create_engine
+
+from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
+from utils.llm import get_llm
 
 
 class SQLQueryEngine:
     """LLamaIndex SQL Query Engine for SQL datasource"""
 
-    def __init__(self, settings: AccountSettings, uri: str):
+    def __init__(
+        self,
+        settings: AccountSettings,
+        agent_with_configs: AgentWithConfigsOutput,
+        uri: str,
+    ):
         self.sql_database = SQLDatabase(engine=create_engine(uri))
         self.meta = MetaData()
         self.meta.reflect(bind=self.sql_database.engine)
         self.settings = settings
+        self.agent_with_configs = agent_with_configs
 
     def run(self, query: str):
         """Run query and return result"""
@@ -65,11 +71,12 @@ class SQLQueryEngine:
         )
 
         llm = LangChainLLM(
-            llm=ChatOpenAI(
-                openai_api_key=self.settings.openai_api_key,
-                model_name="gpt-3.5-turbo",
-                temperature=0,
-            )
+            llm=get_llm(
+                self.settings,
+                self.agent_with_configs.configs.model_provider,
+                self.agent_with_configs.configs.model_version,
+                0,
+            ),
         )
         llm_predictor = LLMPredictor(llm=llm)
 

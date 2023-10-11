@@ -1,47 +1,38 @@
-from typing import Optional, List
+from typing import Dict, List, Optional, Union
 from uuid import UUID
+
 from fastapi import HTTPException
 from fastapi_sqlalchemy import db
-from typings.auth import UserAccount
+
+from agents.agent_simulations.authoritarian.authoritarian_speaker import \
+    AuthoritarianSpeaker
+from agents.agent_simulations.debates.agent_debates import AgentDebates
 from agents.conversational.conversational import ConversationalAgent
 from agents.plan_and_execute.plan_and_execute import PlanAndExecute
-from agents.agent_simulations.authoritarian.authoritarian_speaker import (
-    AuthoritarianSpeaker,
-)
-from agents.agent_simulations.debates.agent_debates import AgentDebates
-from postgres import PostgresChatMessageHistory
-from typings.chat import (
-    ChatMessageInput,
-    ChatUserMessageInput,
-)
-from utils.chat import (
-    get_chat_session_id,
-    parse_agent_mention,
-)
-from tools.get_tools import get_agent_tools
-from models.agent import AgentModel
-from models.datasource import DatasourceModel
-from utils.agent import convert_model_to_response
-from tools.datasources.get_datasource_tools import get_datasource_tools
-from typings.config import ConfigInput
-from models.team import TeamModel
-from models.config import ConfigModel
-from models.chat import ChatModel
 from agents.team_base import TeamOfAgentsType
-from services.pubsub import ChatPubSubService
-from memory.zep.zep_memory import ZepMemory
-from typings.chat import ChatStatus
 from config import Config
-from utils.configuration import (
-    convert_model_to_response as convert_config_model_to_response,
-)
-from typings.agent import AgentWithConfigsOutput
-from typings.config import AccountSettings
 from exceptions import ChatNotFoundException
-from typing import Dict, Union
-from models.chat_message import ChatMessage as ChatMessageModel
-from models.user import UserModel
+from memory.zep.zep_memory import ZepMemory
 from models.account import AccountModel
+from models.agent import AgentModel
+from models.chat import ChatModel
+from models.chat_message import ChatMessage as ChatMessageModel
+from models.config import ConfigModel
+from models.datasource import DatasourceModel
+from models.team import TeamModel
+from models.user import UserModel
+from postgres import PostgresChatMessageHistory
+from services.pubsub import ChatPubSubService
+from tools.datasources.get_datasource_tools import get_datasource_tools
+from tools.get_tools import get_agent_tools
+from typings.agent import AgentWithConfigsOutput
+from typings.auth import UserAccount
+from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
+from typings.config import AccountSettings, ConfigInput
+from utils.agent import convert_model_to_response
+from utils.chat import get_chat_session_id, parse_agent_mention
+from utils.configuration import \
+    convert_model_to_response as convert_config_model_to_response
 
 
 def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
@@ -483,9 +474,15 @@ def run_conversational_agent(
         .all()
     )
 
-    datasource_tools = get_datasource_tools(datasources, settings, provider_account)
+    datasource_tools = get_datasource_tools(
+        datasources, settings, provider_account, agent_with_configs
+    )
     agent_tools = get_agent_tools(
-        agent_with_configs.configs.tools, db, provider_account, settings
+        agent_with_configs.configs.tools,
+        db,
+        provider_account,
+        settings,
+        agent_with_configs,
     )
     tools = datasource_tools + agent_tools
 

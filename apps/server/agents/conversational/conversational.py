@@ -1,15 +1,16 @@
-from langchain.agents import initialize_agent, AgentType
-from langchain.chat_models import ChatOpenAI
-from postgres import PostgresChatMessageHistory
-from memory.zep.zep_memory import ZepMemory
-from services.pubsub import ChatPubSubService
+from langchain.agents import AgentType, initialize_agent
+
 from agents.base_agent import BaseAgent
-from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
-from utils.system_message import SystemMessageBuilder
+from agents.handle_agent_errors import handle_agent_error
+from config import Config
+from memory.zep.zep_memory import ZepMemory
+from postgres import PostgresChatMessageHistory
+from services.pubsub import ChatPubSubService
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from agents.handle_agent_errors import handle_agent_error
+from utils.llm import get_llm
+from utils.system_message import SystemMessageBuilder
 
 
 class ConversationalAgent(BaseAgent):
@@ -36,13 +37,15 @@ class ConversationalAgent(BaseAgent):
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
+        model_provider = agent_with_configs.configs.model_provider
         model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
         temperature = agent_with_configs.configs.temperature
 
-        llm = ChatOpenAI(
-            openai_api_key=settings.openai_api_key,
-            temperature=temperature,
-            model_name=model_name,
+        llm = get_llm(
+            settings,
+            model_provider,
+            model_name,
+            temperature,
         )
 
         agent = initialize_agent(

@@ -1,7 +1,11 @@
 import re
+
 from langchain.chains import LLMChain
-from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
+
+from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings
+from utils.llm import get_llm
 
 TEMPLATE = """
 You are expert at generating charts.
@@ -39,10 +43,17 @@ Notes:
 """
 
 
-def generate_chart_code_chain(openai_api_key: str) -> LLMChain:
+def generate_chart_code_chain(
+    settings: AccountSettings, agent_with_configs: AgentWithConfigsOutput
+) -> LLMChain:
     """Generate code for chart generation."""
+    llm = get_llm(
+        settings,
+        agent_with_configs.configs.model_provider,
+        agent_with_configs.configs.model_version,
+        0,
+    )
 
-    llm = ChatOpenAI(openai_api_key=openai_api_key, temperature=0, model_name="gpt-4")
     prompt = PromptTemplate(input_variables=["data"], template=TEMPLATE)
     return LLMChain(llm=llm, prompt=prompt)
 

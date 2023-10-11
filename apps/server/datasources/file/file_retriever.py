@@ -1,29 +1,26 @@
-from pathlib import Path
-from typing import List
 import shutil
+from enum import Enum
+from pathlib import Path
+from typing import List, Optional
+from uuid import UUID, uuid4
+
+import pinecone
 import s3fs
-from uuid import uuid4
-from llama_index import (
-    SummaryIndex,
-    VectorStoreIndex,
-    TreeIndex,
-    SimpleDirectoryReader,
-    ServiceContext,
-)
-from llama_index import load_index_from_storage, StorageContext
+import weaviate
+from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
+                         SummaryIndex, TreeIndex, VectorStoreIndex,
+                         load_index_from_storage)
 from llama_index.llms import LangChainLLM
-from llama_index.vector_stores.types import VectorStore
 from llama_index.vector_stores.pinecone import PineconeVectorStore
-from llama_index.vector_stores.zep import ZepVectorStore
+from llama_index.vector_stores.types import VectorStore
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
-from langchain.chat_models import ChatOpenAI
+from llama_index.vector_stores.zep import ZepVectorStore
+
 from config import Config
 from services.aws_s3 import AWSS3Service
+from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from enum import Enum
-import pinecone
-import weaviate
-from uuid import UUID
+from utils.llm import get_llm
 
 s3 = s3fs.S3FileSystem(
     key=Config.AWS_ACCESS_KEY_ID,
@@ -49,10 +46,10 @@ class FileDatasourceRetriever:
     index: SummaryIndex
     index_persist_dir: str
     datasource_path: Path
-    service_context: ServiceContext
     index_type: str
     response_mode: str
     vector_store: str
+    agent_with_configs: AgentWithConfigsOutput
 
     def __init__(
         self,
@@ -62,6 +59,7 @@ class FileDatasourceRetriever:
         vector_store: str,
         account_id: str,
         datasource_id: str,
+        agent_with_configs: Optional[AgentWithConfigsOutput] = None,
     ) -> None:
         self.settings = settings
         self.datasource_id = datasource_id
@@ -69,24 +67,19 @@ class FileDatasourceRetriever:
         self.index_type = index_type
         self.response_mode = response_mode
         self.vector_store = vector_store
+        self.agent_with_configs = agent_with_configs
 
         self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
-
-        llm = LangChainLLM(
-            llm=ChatOpenAI(
-                model_name="gpt-3.5-turbo",
-                temperature=0,
-                openai_api_key=settings.openai_api_key,
-            )
-        )
-        self.service_context = ServiceContext.from_defaults(llm=llm)
 
     def get_vector_store(self):
         vector_store: VectorStore
 
-        index_name = f"LLamaIndex_{UUID(self.datasource_id).hex}"
+        index_name = f"Idx_{UUID(self.datasource_id).hex}"
 
         if self.vector_store == VectorStoreProvider.ZEP.value:
+            # Zep only supports alphanumeric characters. Max length 40
+            index_name = UUID(self.datasource_id).hex
+
             vector_store = ZepVectorStore(
                 api_url=Config.ZEP_API_URL,
                 api_key=Config.ZEP_API_KEY,
@@ -124,25 +117,19 @@ class FileDatasourceRetriever:
         self.download_documents(file_urls)
         documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
 
-        vector_store = self.get_vector_store()
-
-        storage_context = StorageContext.from_defaults(vector_store=vector_store)
-
         # Create index from documents
         if self.index_type == IndexType.SUMMARY.value:
-            self.index = SummaryIndex.from_documents(
-                documents, service_context=self.service_context
-            )
+            self.index = SummaryIndex.from_documents(documents)
         elif self.index_type == IndexType.VECTOR_STORE.value:
+            vector_store = self.get_vector_store()
+            storage_context = StorageContext.from_defaults(vector_store=vector_store)
+
             self.index = VectorStoreIndex.from_documents(
                 documents,
-                service_context=self.service_context,
                 storage_context=storage_context,
             )
         elif self.index_type == IndexType.TREE.value:
-            self.index = TreeIndex.from_documents(
-                documents, service_context=self.service_context
-            )
+            self.index = TreeIndex.from_documents()
 
         # Persist index to S3
         self.index.set_index_id(self.datasource_id)
@@ -169,8 +156,20 @@ class FileDatasourceRetriever:
             AWSS3Service.download_file(key, absolute_path)
 
     def query(self, query_str):
-        query_engine = self.index.as_query_engine(
-            response_mode=self.response_mode, service_context=self.service_context
+        llm = LangChainLLM(
+            llm=get_llm(
+                self.settings,
+                self.agent_with_configs.configs.model_provider,
+                self.agent_with_configs.configs.model_version,
+                0,
+            ),
         )
+
+        service_context = ServiceContext.from_defaults(llm=llm)
+
+        query_engine = self.index.as_query_engine(
+            response_mode=self.response_mode, service_context=service_context
+        )
+
         result = query_engine.query(query_str)
         return result
