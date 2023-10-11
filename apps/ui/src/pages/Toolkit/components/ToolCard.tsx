@@ -88,6 +88,7 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
       opacity: 0.6;
       background: ${({ theme }) => theme.body.toolkitCardBgColorTertiary};
       border: ${({ theme }) => theme.body.border};
+      box-shadow: none;
     `};
 
   ${p =>
