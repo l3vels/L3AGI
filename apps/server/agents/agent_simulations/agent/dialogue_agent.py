@@ -8,6 +8,7 @@ from typing import List, Callable
 from typings.agent import AgentWithConfigsOutput
 from agents.handle_agent_errors import handle_agent_error
 
+
 class DialogueAgent:
     def __init__(
         self,
@@ -24,7 +25,7 @@ class DialogueAgent:
         self.reset()
 
     def reset(self):
-        #todo Need send history of chat @mirian
+        # todo Need send history of chat @mirian
         self.message_history = ["Here is the conversation so far."]
 
     def send(self) -> str:
@@ -96,4 +97,8 @@ class DialogueSimulator:
             message = handle_agent_error(err)
             self._step += 1
 
-        return speaker.agent_with_configs.agent.id, speaker.agent_with_configs.agent.name, message 
+        return (
+            speaker.agent_with_configs.agent.id,
+            speaker.agent_with_configs.agent.name,
+            message,
+        )

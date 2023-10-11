@@ -2,8 +2,8 @@ from cryptography.fernet import Fernet, InvalidToken, InvalidSignature
 
 # Generate a key
 # key = Fernet.generate_key()
-#todo move in ENV
-key = b'Y2g4Wn0qJ5kT7v9DfQ41aM_zXpEoBnI6+UjVcRLbGwO=='
+# todo move in ENV
+key = b"Y2g4Wn0qJ5kT7v9DfQ41aM_zXpEoBnI6+UjVcRLbGwO=="
 
 cipher_suite = Fernet(key)
 
@@ -37,8 +37,8 @@ def decrypt_data(encrypted_data):
 
 
 def is_encrypted(value):
-    #todo move in ENV
-    key = b'Y2g4Wn0qJ5kT7v9DfQ41aM_zXpEoBnI6+UjVcRLbGwO=='
+    # todo move in ENV
+    key = b"Y2g4Wn0qJ5kT7v9DfQ41aM_zXpEoBnI6+UjVcRLbGwO=="
     try:
         f = Fernet(key)
         f.decrypt(value)

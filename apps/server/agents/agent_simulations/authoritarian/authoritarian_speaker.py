@@ -8,15 +8,18 @@ from langchain.schema import (
 import functools
 from fastapi_sqlalchemy import db
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
-from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
-from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import DirectorDialogueAgentWithTools
+from agents.agent_simulations.agent.dialogue_agent_with_tools import (
+    DialogueAgentWithTools,
+)
+from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import (
+    DirectorDialogueAgentWithTools,
+)
 from services.pubsub import ChatPubSubService
 from agents.base_agent import BaseAgent
 from postgres import PostgresChatMessageHistory
 from models.team import TeamModel
 from utils.system_message import SystemMessageBuilder
 from typings.agent import AgentWithConfigsOutput
-from typings.config import AccountSettings
 from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
@@ -27,6 +30,7 @@ from config import Config
 from memory.zep.zep_memory import ZepMemory
 from models.config import ConfigModel
 from typings.chat import ChatStatus
+
 
 class AuthoritarianSpeaker(BaseAgent):
     def __init__(
@@ -39,14 +43,21 @@ class AuthoritarianSpeaker(BaseAgent):
         stopping_probability: int,
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(sender_name=sender_name, provider_account=provider_account, session_id=session_id)
-        self.word_limit = word_limit    
+        super().__init__(
+            sender_name=sender_name,
+            provider_account=provider_account,
+            session_id=session_id,
+        )
+        self.word_limit = word_limit
         self.stopping_probability = stopping_probability
         self.settings = settings
         self.chat_pubsub_service = chat_pubsub_service
-    
+
     def select_next_speaker(
-            self, step: int, agents: List[DialogueAgentWithTools], director: DirectorDialogueAgentWithTools
+        self,
+        step: int,
+        agents: List[DialogueAgentWithTools],
+        director: DirectorDialogueAgentWithTools,
     ) -> int:
         """
         If the step is even, then select the director
@@ -57,9 +68,11 @@ class AuthoritarianSpeaker(BaseAgent):
             idx = 0
         else:
             # here the director chooses the next speaker
-            idx = director.select_next_speaker() + 1  # +1 because we excluded the director
+            idx = (
+                director.select_next_speaker() + 1
+            )  # +1 because we excluded the director
         return idx
-    
+
     def generate_specified_prompt(self, topic, agent_summary, team):
         description = """
         This is a Daily Show episode discussing the following topic: {user_input}.
@@ -69,38 +82,59 @@ class AuthoritarianSpeaker(BaseAgent):
         Be creative and imaginative.
         Please reply with the specified topic in {word_limit} words or less. 
         Do not add anything else."""
-        
 
         if team.description:
             description = team.description
-        
-        content = description.format(user_input=topic, word_limit=self.word_limit, agents=agent_summary)  
+
+        content = description.format(
+            user_input=topic, word_limit=self.word_limit, agents=agent_summary
+        )
 
         topic_specifier_prompt = [
             SystemMessage(content="You can make a topic more specific."),
             HumanMessage(content=content),
         ]
-        specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
+        specified_topic = ChatOpenAI(
+            openai_api_key=self.settings.openai_api_key,
+            temperature=1.0,
+            model_name="gpt-4",
+        )(topic_specifier_prompt).content
         return specified_topic
-    
-    def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
-        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-        datasource_tools = get_datasource_tools(datasources, settings, self.provider_account)
-        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.provider_account, settings)
+
+    def get_tools(
+        self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings
+    ):
+        datasources = (
+            db.session.query(DatasourceModel)
+            .filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources))
+            .all()
+        )
+        datasource_tools = get_datasource_tools(
+            datasources, settings, self.provider_account
+        )
+        agent_tools = get_agent_tools(
+            agent_with_configs.configs.tools, db, self.provider_account, settings
+        )
         return datasource_tools + agent_tools
 
-        
-    def run(self,
-            topic: str,
-            team: TeamModel, 
-            agents_with_configs:List[AgentWithConfigsOutput],   
-            history: PostgresChatMessageHistory,
-            ):
-        agent_summary = "\n- ".join(
-            [""] + [f"{agent_config.agent.name}: {agent_config.agent.role}" for agent_config in agents_with_configs]
+    def run(
+        self,
+        topic: str,
+        team: TeamModel,
+        agents_with_configs: List[AgentWithConfigsOutput],
+        history: PostgresChatMessageHistory,
+    ):
+        "\n- ".join(
+            [""]
+            + [
+                f"{agent_config.agent.name}: {agent_config.agent.role}"
+                for agent_config in agents_with_configs
+            ]
         )
 
-        specified_topic = topic #self.generate_specified_prompt(topic, agent_summary, team)
+        specified_topic = (
+            topic  # self.generate_specified_prompt(topic, agent_summary, team)
+        )
 
         memory = ZepMemory(
             session_id=self.session_id,
@@ -119,54 +153,78 @@ class AuthoritarianSpeaker(BaseAgent):
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
         # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
 
-        directors = [convert_model_to_response(team_agent.agent) for team_agent in team.team_agents if team_agent.role == TeamAgentRole.DIRECTOR.value]
+        directors = [
+            convert_model_to_response(team_agent.agent)
+            for team_agent in team.team_agents
+            if team_agent.role == TeamAgentRole.DIRECTOR.value
+        ]
 
         director_agent = directors[0] if directors else agents_with_configs[0]
         director_name = director_agent.agent.name
         director_id = director_agent.agent.id
 
         director = DirectorDialogueAgentWithTools(
-                    name=director_name,
-                    agent_with_configs=director_agent,
-                    tools=self.get_tools(director_agent, self.settings),
-                    system_message=SystemMessage(content=SystemMessageBuilder(director_agent).build()),
-                    model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=director_agent.configs.temperature, 
-                        model_name=director_agent.configs.model_version 
-                        if director_agent.configs.model_version else "gpt-4"),
-                    speakers=[agent_with_config for agent_with_config in agents_with_configs if agent_with_config.agent.id != director_agent.agent.id],
-                    stopping_probability=self.stopping_probability,
-                    session_id=self.session_id,
-                    sender_name=self.sender_name,
-                    is_memory=team.is_memory
-                    )
-        
+            name=director_name,
+            agent_with_configs=director_agent,
+            tools=self.get_tools(director_agent, self.settings),
+            system_message=SystemMessage(
+                content=SystemMessageBuilder(director_agent).build()
+            ),
+            model=ChatOpenAI(
+                openai_api_key=self.settings.openai_api_key,
+                temperature=director_agent.configs.temperature,
+                model_name=director_agent.configs.model_version
+                if director_agent.configs.model_version
+                else "gpt-4",
+            ),
+            speakers=[
+                agent_with_config
+                for agent_with_config in agents_with_configs
+                if agent_with_config.agent.id != director_agent.agent.id
+            ],
+            stopping_probability=self.stopping_probability,
+            session_id=self.session_id,
+            sender_name=self.sender_name,
+            is_memory=team.is_memory,
+        )
+
         agents = [director]
         for agent_with_configs in agents_with_configs:
             if agent_with_configs.agent.id != director_id:
                 agents.append(
-                DialogueAgentWithTools(
-                    name=agent_with_configs.agent.name,
-                    agent_with_configs=agent_with_configs,
-                    tools=self.get_tools(agent_with_configs, self.settings),
-                    system_message=SystemMessage(content=SystemMessageBuilder(agent_with_configs).build()),
-                    model=ChatOpenAI(openai_api_key=self.settings.openai_api_key,temperature=0.2, model_name="gpt-4"),
-                    session_id=self.session_id,
-                    sender_name=self.sender_name,
-                    is_memory=team.is_memory
+                    DialogueAgentWithTools(
+                        name=agent_with_configs.agent.name,
+                        agent_with_configs=agent_with_configs,
+                        tools=self.get_tools(agent_with_configs, self.settings),
+                        system_message=SystemMessage(
+                            content=SystemMessageBuilder(agent_with_configs).build()
+                        ),
+                        model=ChatOpenAI(
+                            openai_api_key=self.settings.openai_api_key,
+                            temperature=0.2,
+                            model_name="gpt-4",
+                        ),
+                        session_id=self.session_id,
+                        sender_name=self.sender_name,
+                        is_memory=team.is_memory,
+                    )
                 )
-            )
 
         simulator = DialogueSimulator(
             agents=agents,
-            selection_function=functools.partial(self.select_next_speaker, director=director),
-            is_memory=team.is_memory
+            selection_function=functools.partial(
+                self.select_next_speaker, director=director
+            ),
+            is_memory=team.is_memory,
         )
         simulator.reset()
         simulator.inject("Audience member", specified_topic)
 
         while True:
-            status_config = ConfigModel.get_config_by_session_id(db, self.session_id, self.provider_account)
-            
+            status_config = ConfigModel.get_config_by_session_id(
+                db, self.session_id, self.provider_account
+            )
+
             if status_config.value == ChatStatus.STOPPED.value:
                 break
 
@@ -176,9 +234,9 @@ class AuthoritarianSpeaker(BaseAgent):
 
             if status_config.value == ChatStatus.STOPPED.value:
                 break
-            
+
             ai_message = history.create_ai_message(message, None, agent_id)
-            
+
             if team.is_memory:
                 memory.ai_name = agent_name
                 memory.save_ai_message(message)

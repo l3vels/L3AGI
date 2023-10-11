@@ -13,11 +13,12 @@ class ArxivSearchSchema(BaseModel):
         description="The search query for ArXiv search.",
     )
 
+
 class ArxivSearchTool(BaseTool):
     """Tool that searches the Arxiv API."""
 
     name = "ArXiv Search"
-    
+
     description = (
         "A wrapper around Arxiv.org "
         "Useful for when you need to answer questions about Physics, Mathematics, "
@@ -37,4 +38,3 @@ class ArxivSearchTool(BaseTool):
         """Search Arxiv and return the results."""
         arxiv = ArxivAPIWrapper()
         return arxiv.run(query)
-

@@ -1,13 +1,12 @@
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, Index
-from sqlalchemy.orm import relationship, joinedload
-from models.base_model import BaseModel, RootBaseModel
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy import Column, String, Boolean, UUID, or_, Index
+from models.base_model import RootBaseModel
 import uuid
-from exceptions import UserException, UserNotFoundException
+from exceptions import UserNotFoundException
 from typings.user import UserInput
 import hashlib
 import binascii
 import os
+
 
 class UserModel(RootBaseModel):
     """
@@ -16,7 +15,8 @@ class UserModel(RootBaseModel):
     Attributes:
         id (UUID): Unique identifier of the user.
     """
-    __tablename__ = 'user'
+
+    __tablename__ = "user"
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), default=None)
@@ -27,31 +27,29 @@ class UserModel(RootBaseModel):
     is_deleted = Column(Boolean, default=False, index=True)
 
     __table_args__ = (
-        Index('ix_user_model_email_is_deleted_index', 'email', 'is_deleted'),
+        Index("ix_user_model_email_is_deleted_index", "email", "is_deleted"),
     )
-    
+
     @classmethod
     def hash_password(cls, password):
         """Hash a password for storing."""
-        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
-        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
-                                    salt, 100000)
+        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode("ascii")
+        pwdhash = hashlib.pbkdf2_hmac("sha512", password.encode("utf-8"), salt, 100000)
         pwdhash = binascii.hexlify(pwdhash)
-        return (salt + pwdhash).decode('ascii')
-    
+        return (salt + pwdhash).decode("ascii")
+
     @classmethod
     def verify_password(cls, stored_password, provided_password):
         """Verify a stored password against one provided by user"""
         salt = stored_password[:64]
         stored_password = stored_password[64:]
-        pwdhash = hashlib.pbkdf2_hmac('sha512', 
-                                    provided_password.encode('utf-8'), 
-                                    salt.encode('ascii'), 
-                                    100000)
-        pwdhash = binascii.hexlify(pwdhash).decode('ascii')
-        
+        pwdhash = hashlib.pbkdf2_hmac(
+            "sha512", provided_password.encode("utf-8"), salt.encode("ascii"), 100000
+        )
+        pwdhash = binascii.hexlify(pwdhash).decode("ascii")
+
         return pwdhash == stored_password
-    
+
     @classmethod
     def create_user(cls, db, user):
         """
@@ -72,9 +70,9 @@ class UserModel(RootBaseModel):
         db.session.add(db_user)
         db.session.flush()  # Flush pending changes to generate the user's ID
         db.session.commit()
-        
+
         return db_user
-       
+
     @classmethod
     def update_user(cls, db, id, user):
         """
@@ -94,14 +92,14 @@ class UserModel(RootBaseModel):
         if user.password:
             user.password = cls.hash_password(user.password)  # Hash the password
         db_user = cls.update_model_from_input(user_model=old_user, user_input=user)
-        
+
         db.session.add(db_user)
         db.session.commit()
 
         return db_user
-     
+
     @classmethod
-    def update_model_from_input(cls, user_model: 'UserModel', user_input: UserInput):
+    def update_model_from_input(cls, user_model: "UserModel", user_input: UserInput):
         for field in UserInput.__annotations__.keys():
             setattr(user_model, field, getattr(user_input, field))
         return user_model
@@ -109,50 +107,65 @@ class UserModel(RootBaseModel):
     @classmethod
     def get_user_by_id(cls, db, user_id):
         """
-            Get User from user_id
+        Get User from user_id
 
-            Args:
-                session: The database session.
-                user_id(int) : Unique identifier of an User.
+        Args:
+            session: The database session.
+            user_id(int) : Unique identifier of an User.
 
-            Returns:
-                User: User object is returned.
+        Returns:
+            User: User object is returned.
         """
         # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
         users = (
             db.session.query(UserModel)
-            .filter(UserModel.id == user_id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None))
+            .filter(
+                UserModel.id == user_id,
+                or_(
+                    or_(UserModel.is_deleted is False, UserModel.is_deleted is None),
+                    UserModel.is_deleted is None,
+                ),
+            )
             .first()
         )
         return users
-    
+
     @classmethod
     def get_user_by_email(cls, db, email):
         """
-            Get User from user_id
+        Get User from user_id
 
-            Args:
-                session: The database session.
-                user_id(int) : Unique identifier of an User.
+        Args:
+            session: The database session.
+            user_id(int) : Unique identifier of an User.
 
-            Returns:
-                User: User object is returned.
+        Returns:
+            User: User object is returned.
         """
         # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
         users = (
             db.session.query(UserModel)
-            .filter(UserModel.email == email, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None))
+            .filter(
+                UserModel.email == email,
+                or_(
+                    or_(UserModel.is_deleted is False, UserModel.is_deleted is None),
+                    UserModel.is_deleted is None,
+                ),
+            )
             .first()
         )
         return users
 
     @classmethod
     def delete_by_id(cls, db, user_id, account):
-        db_user = db.session.query(UserModel).filter(UserModel.id == user_id, UserModel.account_id==account.id).first()
+        db_user = (
+            db.session.query(UserModel)
+            .filter(UserModel.id == user_id, UserModel.account_id == account.id)
+            .first()
+        )
 
         if not db_user or db_user.is_deleted:
             raise UserNotFoundException("User not found")
 
         db_user.is_deleted = True
         db.session.commit()
-

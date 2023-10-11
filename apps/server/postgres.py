@@ -11,7 +11,6 @@ from langchain.schema import (
     BaseChatMessageHistory,
     BaseMessage,
     _message_to_dict,
-    messages_from_dict,
 )
 
 logger = logging.getLogger(__name__)
@@ -30,16 +29,16 @@ class ChatMessageJSONEncoder(json.JSONEncoder):
 
 class PostgresChatMessageHistory(BaseChatMessageHistory):
     def __init__(
-            self,
-            sender_account_id: Optional[str],
-            sender_user_id: Optional[str],
-            # user: Optional[UserOutput],
-            session_id: Optional[str],
-            parent_id: Optional[str] = None,
-            agent_id: Optional[str] = None,
-            team_id: Optional[str] = None,
-            sender_name: Optional[str] = None,
-            chat_id: Optional[str] = None,
+        self,
+        sender_account_id: Optional[str],
+        sender_user_id: Optional[str],
+        # user: Optional[UserOutput],
+        session_id: Optional[str],
+        parent_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        team_id: Optional[str] = None,
+        sender_name: Optional[str] = None,
+        chat_id: Optional[str] = None,
     ):
         self.sender_account_id = sender_account_id
         self.sender_user_id = sender_user_id
@@ -51,14 +50,14 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         self.sender_name = sender_name
         self.chat_id = chat_id
 
-
     @property
     def messages(self) -> List[BaseMessage]:  # type: ignore
         """Retrieve the messages from PostgreSQL"""
         return []
 
-
-    def create_message(self, message, parent_id: Optional[str] = None, agent_id: Optional[UUID] = None):
+    def create_message(
+        self, message, parent_id: Optional[str] = None, agent_id: Optional[UUID] = None
+    ):
         # Append the message to the record in PostgreSQL
         chat_message = ChatMessage(
             sender_user_id=self.sender_user_id,
@@ -69,31 +68,43 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             team_id=self.team_id,
             parent_id=parent_id,
             sender_name=self.sender_name,
-            chat_id=self.chat_id
+            chat_id=self.chat_id,
         )
 
         db.session.add(chat_message)
         db.session.commit()
         db.session.refresh(chat_message)
 
-
         # Serialize the model instance's data dictionary
         data_dict = chat_message.to_dict()
         if chat_message.parent:
             parent_dict = chat_message.parent.to_dict()
-            data_dict['parent'] = parent_dict
-      
-        data_json = json.dumps(data_dict, cls=ChatMessageJSONEncoder)  # Use default=str to handle UUID and datetime
+            data_dict["parent"] = parent_dict
+
+        data_json = json.dumps(
+            data_dict, cls=ChatMessageJSONEncoder
+        )  # Use default=str to handle UUID and datetime
         # print("the result", json.loads(data_json))
         return json.loads(data_json)
 
-    def create_ai_message(self, message: str, parent_id: Optional[str] = None, agent_id: Optional[str] = None):
+    def create_ai_message(
+        self,
+        message: str,
+        parent_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+    ):
         return self.create_message(AIMessage(content=message), parent_id, agent_id)
 
     def create_human_message(self, message: str):
-        return self.create_message(HumanMessage(content=message, additional_kwargs={
-            "name": self.sender_name,
-        }), parent_id=self.parent_id)
+        return self.create_message(
+            HumanMessage(
+                content=message,
+                additional_kwargs={
+                    "name": self.sender_name,
+                },
+            ),
+            parent_id=self.parent_id,
+        )
 
     def add_message(self, message: BaseMessage) -> str:
         """Append the message to the record in PostgreSQL"""
@@ -104,7 +115,9 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         chat_message.thoughts = thoughts
         db.session.commit()
 
-        updated_message_json = json.dumps(chat_message.to_dict(), cls=ChatMessageJSONEncoder)
+        updated_message_json = json.dumps(
+            chat_message.to_dict(), cls=ChatMessageJSONEncoder
+        )
         return json.loads(updated_message_json)
 
     def delete_message(self, message_id: str):

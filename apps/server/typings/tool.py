@@ -1,11 +1,13 @@
 from pydantic import BaseModel, UUID4
 from typing import List, Optional
 
+
 class ToolInput(BaseModel):
     name: str
     description: Optional[str]
     group_name: Optional[str]
     class_name: Optional[str]
+
 
 class ToolFieldOutput(BaseModel):
     label: str
@@ -14,10 +16,12 @@ class ToolFieldOutput(BaseModel):
     is_required: bool
     is_secret: bool
 
+
 class SingleToolOutput(BaseModel):
     tool_id: UUID4
     name: str
     description: str
+
 
 class ToolOutput(BaseModel):
     toolkit_id: UUID4
@@ -28,4 +32,3 @@ class ToolOutput(BaseModel):
     slug: str
     fields: List[ToolFieldOutput]
     tools: List[SingleToolOutput]
-

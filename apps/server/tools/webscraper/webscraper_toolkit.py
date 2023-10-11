@@ -3,6 +3,7 @@ from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 from tools.webscraper.webscraper import WebScraperTool
 
+
 class WebScraperToolkit(BaseToolkit, ABC):
     name: str = "Web Scraper Toolkit"
     description: str = "Toolkit containing tools for performing web scraping"
@@ -11,6 +12,6 @@ class WebScraperToolkit(BaseToolkit, ABC):
 
     def get_tools(self) -> List[BaseTool]:
         return [WebScraperTool()]
-    
+
     def get_env_keys(self) -> List[ToolEnvKey]:
         return []

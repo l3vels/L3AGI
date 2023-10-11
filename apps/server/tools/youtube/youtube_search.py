@@ -13,11 +13,12 @@ class YoutubeSearchSchema(BaseModel):
         description="The search query for Youtube search.",
     )
 
+
 class YoutubeSearchTool(BaseTool):
     """Tool that queries YouTube."""
 
     name = "Youtube Search"
-    
+
     description = (
         "search for youtube videos associated with a person. "
         "the input to this tool should be a comma separated list, "
@@ -36,4 +37,3 @@ class YoutubeSearchTool(BaseTool):
         """Search Youtube and return the results."""
         youtube = YouTubeSearchTool()
         return youtube.run(query)
-

@@ -13,7 +13,7 @@ from langchain.schema import (
 from typings.agent import AgentWithConfigsOutput
 from memory.zep.zep_memory import ZepMemory
 from config import Config
-from typings.user import UserOutput
+
 
 class DialogueAgentWithTools(DialogueAgent):
     def __init__(
@@ -50,7 +50,7 @@ class DialogueAgentWithTools(DialogueAgent):
                 memory_key="chat_history",
                 return_messages=True,
             )
-            
+
             memory.human_name = self.sender_name
             memory.ai_name = self.agent_with_configs.agent.name
             memory.auto_save = False
@@ -58,7 +58,6 @@ class DialogueAgentWithTools(DialogueAgent):
             memory = ConversationBufferMemory(
                 memory_key="chat_history", return_messages=True
             )
-
 
         agent = initialize_agent(
             self.tools,
@@ -72,17 +71,10 @@ class DialogueAgentWithTools(DialogueAgent):
             },
         )
 
-        prompt = "\n".join(
-           self.message_history + [self.prefix]
-        )
+        prompt = "\n".join(self.message_history + [self.prefix])
 
-        res = agent.run(
-            input=prompt
-        )
+        res = agent.run(input=prompt)
 
-        message = AIMessage(
-            content=res
-        )
+        message = AIMessage(content=res)
 
         return message.content
-    

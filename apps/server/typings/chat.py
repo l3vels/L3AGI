@@ -4,10 +4,12 @@ from pydantic import BaseModel
 from datetime import datetime
 from enum import Enum
 
+
 class ChatStatus(Enum):
-    IDLE = 'Idle'
-    RUNNING = 'Running'
-    STOPPED = 'Stopped'
+    IDLE = "Idle"
+    RUNNING = "Running"
+    STOPPED = "Stopped"
+
 
 class ChatUserMessageInput(BaseModel):
     prompt: str
@@ -15,20 +17,23 @@ class ChatUserMessageInput(BaseModel):
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
     parent_id: Optional[UUID] = None
-    
+
+
 class ChatMessageInput(BaseModel):
     prompt: str
     chat_id: Optional[UUID] = None
-    #todo what it is?
+    # todo what it is?
     local_chat_message_ref_id: Optional[str] = None
     parent_id: Optional[UUID] = None
-    
+
+
 class ChatInput(BaseModel):
     name: str
     is_public: Optional[bool]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
-    
+
+
 class ChatOutput(BaseModel):
     id: str
     name: Optional[str]
@@ -67,6 +72,7 @@ class ChatMessageOutput(BaseModel):
 
 class NegotiateOutput(BaseModel):
     url: str
+
 
 class ChatStopInput(BaseModel):
     agent_id: Optional[UUID] = None

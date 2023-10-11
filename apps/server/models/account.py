@@ -1,11 +1,11 @@
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index
-from sqlalchemy.orm import relationship, joinedload
+from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey, Index
+from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
-from sqlalchemy.dialects.postgresql import JSONB
 import uuid
-from exceptions import AccountException, AccountNotFoundException
+from exceptions import AccountNotFoundException
 from typings.account import AccountInput
 from models.user_account import UserAccountModel
+
 
 class AccountModel(BaseModel):
     """
@@ -17,24 +17,35 @@ class AccountModel(BaseModel):
         name (str): Name of the account.
         is_deleted (bool): Flag indicating if the account has been soft-is_deleted.
     """
-    __tablename__ = 'account'
+
+    __tablename__ = "account"
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    name = Column(String(100), default=None) 
-    is_deleted = Column(Boolean, default=False)       
-    
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
-    
-    
+    name = Column(String(100), default=None)
+    is_deleted = Column(Boolean, default=False)
+
+    created_by = Column(
+        UUID,
+        ForeignKey("user.id", name="fk_created_by", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    modified_by = Column(
+        UUID,
+        ForeignKey("user.id", name="fk_modified_by", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
+
     # user_accounts = relationship("UserAccountModel", back_populates="account")
     # projects = relationship("WorkspaceModel", back_populates="account")
     # Define indexes
     __table_args__ = (
-        Index('ix_account_model_created_by_is_deleted', 'created_by', 'is_deleted'),
-        Index('ix_account_model_id_is_deleted', 'id', 'is_deleted'),
+        Index("ix_account_model_created_by_is_deleted", "created_by", "is_deleted"),
+        Index("ix_account_model_id_is_deleted", "id", "is_deleted"),
     )
+
     def __repr__(self) -> str:
         return (
             f"Account(id={self.id}, "
@@ -45,31 +56,34 @@ class AccountModel(BaseModel):
     @classmethod
     def create_account(cls, db, account, user):
         db_account = AccountModel(
-                         created_by=user.id, 
-                         )
+            created_by=user.id,
+        )
         cls.update_model_from_input(db_account, account)
         db.session.add(db_account)
         db.session.commit()
         db.session.flush()  # Flush pending changes to generate the account's ID
 
-        
         return db_account
-       
+
     @classmethod
     def update_account(cls, db, id, account, user):
         old_account = cls.get_account_by_id(db=db, account_id=id)
         if not old_account:
             raise AccountNotFoundException("Account not found")
-        db_account = cls.update_model_from_input(account_model=old_account, account_input=account)
+        db_account = cls.update_model_from_input(
+            account_model=old_account, account_input=account
+        )
         db_account.modified_by = user.id
-        
+
         db.session.add(db_account)
         db.session.commit()
-        
+
         return db_account
-     
+
     @classmethod
-    def update_model_from_input(cls, account_model: 'AccountModel', account_input: AccountInput):
+    def update_model_from_input(
+        cls, account_model: "AccountModel", account_input: AccountInput
+    ):
         for field in AccountInput.__annotations__.keys():
             setattr(account_model, field, getattr(account_input, field))
         return account_model
@@ -78,37 +92,70 @@ class AccountModel(BaseModel):
     def get_accounts(cls, db):
         accounts = (
             db.session.query(AccountModel)
-            .filter(or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
+            .filter(
+                or_(
+                    or_(
+                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted is None,
+                    ),
+                    AccountModel.is_deleted is None,
+                )
+            )
             .all()
         )
         return accounts
-    
 
     @classmethod
     def get_account_by_id(cls, db, account_id):
         accounts = (
             db.session.query(AccountModel)
-            .filter(AccountModel.id == account_id, or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
+            .filter(
+                AccountModel.id == account_id,
+                or_(
+                    or_(
+                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted is None,
+                    ),
+                    AccountModel.is_deleted is None,
+                ),
+            )
             .first()
         )
         return accounts
-    
+
     @classmethod
     def get_account_created_by(cls, db, user_id):
         accounts = (
             db.session.query(AccountModel)
-            .filter(AccountModel.created_by == user_id, or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
+            .filter(
+                AccountModel.created_by == user_id,
+                or_(
+                    or_(
+                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted is None,
+                    ),
+                    AccountModel.is_deleted is None,
+                ),
+            )
             .first()
         )
         return accounts
-    
+
     @classmethod
     def get_account_by_access(cls, db, user_id, account_id):
-       
         accounts = (
-             db.session.query(AccountModel)
+            db.session.query(AccountModel)
             .join(UserAccountModel, AccountModel.id == UserAccountModel.account_id)
-            .filter(UserAccountModel.account_id == account_id, or_(or_(AccountModel.is_deleted == False, AccountModel.is_deleted is None), AccountModel.is_deleted is None))
+            .filter(
+                UserAccountModel.account_id == account_id,
+                or_(
+                    or_(
+                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted is None,
+                    ),
+                    AccountModel.is_deleted is None,
+                ),
+            )
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .first()
         )
@@ -116,7 +163,9 @@ class AccountModel(BaseModel):
 
     @classmethod
     def delete_by_id(cls, db, account_id):
-        db_account = db.session.query(AccountModel).filter(AccountModel.id == account_id).first()
+        db_account = (
+            db.session.query(AccountModel).filter(AccountModel.id == account_id).first()
+        )
 
         if not db_account or db_account.is_deleted:
             raise AccountNotFoundException("Account not found")

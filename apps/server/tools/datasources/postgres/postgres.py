@@ -10,13 +10,16 @@ from tools.base import BaseTool
 from models.config import ConfigModel
 from utils.encyption import decrypt_data, is_encrypted
 
+
 class PostgresDatabaseSchema(BaseModel):
-    query: str = Field(description="Containing Datasource Id and database question in English natural language, separated by semicolon")
+    query: str = Field(
+        description="Containing Datasource Id and database question in English natural language, separated by semicolon"
+    )
 
 
 class PostgresDatabaseTool(BaseTool):
     name = "PostgreSQL Database Q&A"
-    
+
     description = (
         "useful for when you need to answer questions over Postgres datasource.\n"
         "Input is string. String is separated by semicolon. First is database question in English natural language. Second is datasource ID.\n"
@@ -32,22 +35,30 @@ class PostgresDatabaseTool(BaseTool):
     ) -> str:
         """Convert natural language to SQL Query and execute. Return result."""
 
-        question, datasource_id = query.split(';')
-        configs = db.session.query(ConfigModel).where(ConfigModel.datasource_id == datasource_id, ConfigModel.is_deleted == False).all()
+        question, datasource_id = query.split(";")
+        configs = (
+            db.session.query(ConfigModel)
+            .where(
+                ConfigModel.datasource_id == datasource_id,
+                ConfigModel.is_deleted is False,
+            )
+            .all()
+        )
 
         config = {}
 
         for cfg in configs:
-            config[cfg.key] = decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
+            config[cfg.key] = (
+                decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
+            )
 
-        user = config.get('user')
-        password = config.get('pass')
-        host = config.get('host')
-        port = config.get('port')
-        name = config.get('name')
+        user = config.get("user")
+        password = config.get("pass")
+        host = config.get("host")
+        port = config.get("port")
+        name = config.get("name")
 
         uri = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}"
 
         result = SQLQueryEngine(self.settings, uri).run(question)
         return result
-

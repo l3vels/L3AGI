@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Callable
+from typing import Any, Dict, List, Optional
 from pydantic import Field
 from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains.base import Chain
@@ -14,7 +14,10 @@ from langchain_experimental.plan_and_execute.schema import (
 class PlanAndExecuteChain(Chain):
     planner: BasePlanner
     executor: BaseExecutor
-    on_thoughts: Callable[[List[Dict]], None] = lambda x: None
+
+    def on_thoughts(x: List[Dict]) -> None:
+        return None
+
     step_container: BaseStepContainer = Field(default_factory=ListStepContainer)
     input_key: str = "input"
     output_key: str = "output"
@@ -29,21 +32,24 @@ class PlanAndExecuteChain(Chain):
         return [self.output_key]
 
     def _call(
-            self,
-            inputs: Dict[str, Any],
-            run_manager: Optional[CallbackManagerForChainRun] = None,
+        self,
+        inputs: Dict[str, Any],
+        run_manager: Optional[CallbackManagerForChainRun] = None,
     ) -> Dict[str, Any]:
         plan, user_steps = self.planner.plan(
             inputs,
             callbacks=run_manager.get_child() if run_manager else None,
         )
 
-        self.thoughts = [{
-            "id": index + 1,
-            "title": step,
-            "result": None,
-            "loading": True,
-        } for index, step in enumerate(user_steps)]
+        self.thoughts = [
+            {
+                "id": index + 1,
+                "title": step,
+                "result": None,
+                "loading": True,
+            }
+            for index, step in enumerate(user_steps)
+        ]
 
         self.on_thoughts(self.thoughts)
 

@@ -7,6 +7,7 @@ from tools.base import BaseTool
 from langchain.utilities.bing_search import BingSearchAPIWrapper
 from exceptions import ToolEnvKeyException
 
+
 class BingSearchSchema(BaseModel):
     query: str = Field(
         ...,
@@ -16,7 +17,7 @@ class BingSearchSchema(BaseModel):
 
 class BingSearchTool(BaseTool):
     name = "Bing Search"
-    
+
     description = (
         "A tool for performing a Bing search."
         "useful for when you need to answer questions about current events"
@@ -33,17 +34,21 @@ class BingSearchTool(BaseTool):
         bing_subscription_key = self.get_env_key("BING_SUBSCRIPTION_KEY")
 
         if not bing_subscription_key:
-            raise ToolEnvKeyException(f"Please fill Bing Subscription Key in the [Bing Search Toolkit](/toolkits/{self.toolkit_slug})")
+            raise ToolEnvKeyException(
+                f"Please fill Bing Subscription Key in the [Bing Search Toolkit](/toolkits/{self.toolkit_slug})"
+            )
 
         search = BingSearchAPIWrapper(
             bing_subscription_key=bing_subscription_key,
-            bing_search_url="https://api.bing.microsoft.com/v7.0/search"
+            bing_search_url="https://api.bing.microsoft.com/v7.0/search",
         )
 
         try:
             return search.run(query)
         except Exception as err:
             if "401 Client Error: PermissionDenied for url" in str(err):
-                raise ToolEnvKeyException(f"Bing Subscription Key is not valid. Please check in the [Bing Search Toolkit](/toolkits/{self.toolkit_slug})")
-        
+                raise ToolEnvKeyException(
+                    f"Bing Subscription Key is not valid. Please check in the [Bing Search Toolkit](/toolkits/{self.toolkit_slug})"
+                )
+
             return "Could not search using Bing. Please try again later."

@@ -72,7 +72,7 @@ def get_all_tools():
     return result
 
 
-def get_agent_tools(toolkit_ids: List[str], db, account, settings) ->  List[BaseTool]:
+def get_agent_tools(toolkit_ids: List[str], db, account, settings) -> List[BaseTool]:
     """Return a list of tools."""
     tools = []
 
