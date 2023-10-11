@@ -100,8 +100,8 @@ export default DatasourceCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 245px;
-  min-width: 245px;
+  width: 248px;
+  min-width: 248px;
   height: 170px;
   min-height: 170px;
   /* border: ${({ theme }) => theme.body.border}; */
