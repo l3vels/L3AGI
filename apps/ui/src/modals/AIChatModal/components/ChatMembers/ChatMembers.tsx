@@ -186,7 +186,7 @@ const ChatMembers = ({
                             }
                             icon={() => (
                               <StyledIconWrapper>
-                                <EyeOpen size={50} />
+                                <StyledEyeOpenIcon size={50} />
                               </StyledIconWrapper>
                             )}
                             size={IconButton.sizes.SMALL}
@@ -197,7 +197,7 @@ const ChatMembers = ({
                           {isCreator && (
                             <IconButton
                               onClick={handleEdit}
-                              icon={() => <Edit />}
+                              icon={() => <StyledEditIcon />}
                               size={IconButton.sizes.SMALL}
                               kind={IconButton.kinds.TERTIARY}
                               // ariaLabel='Edit'
