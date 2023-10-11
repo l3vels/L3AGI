@@ -28,6 +28,7 @@ const darkTheme: DefaultTheme = {
     humanMessageBgColor: 'var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1))',
     replyBoxBgColor: 'rgba(0, 0, 0, 0.4)',
     secondaryIconColor: 'rgb(255, 255, 255)',
+    tertiaryIconColor: 'rgb(130,130,130)',
     avatarDropDownColor:
       'linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%), linear-gradient(225deg, rgba(76, 166, 248, 0.10) 0%, rgba(33, 82, 243, 0.10) 100%);',
     detailCardBackgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -82,6 +83,7 @@ const lightTheme: DefaultTheme = {
     placeHolderColor: 'rgb(187,187,187)',
     cardBgColor: 'rgb(253,252,250)',
     secondaryBorder: '1px solid lightGray',
+    tertiaryIconColor: 'rgb(130,130,130)',
     humanMessageBgColor: 'rgb(240,240,240)',
     replyBoxBgColor: 'rgb(194,194,194)',
     secondaryIconColor: 'rgb(255, 255, 255)',

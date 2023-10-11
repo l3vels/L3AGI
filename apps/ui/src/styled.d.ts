@@ -37,6 +37,7 @@ declare module 'styled-components' {
       componentsSecondaryWrapperBg: string
       textareaBorder: string
       textAreaBgColor: string
+      tertiaryIconColor: string
     }
     typography: {
       contentPrimary: string
