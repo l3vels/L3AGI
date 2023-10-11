@@ -11,7 +11,7 @@ from typings.team import ConfigInput
     
 class TeamConfigModel(BaseModel):
     """
-    Agent related configurations like goals, instructions, constraints and tools are stored here
+    Team related configurations like goals, instructions, constraints and tools are stored here
 
     Attributes:
         id (int): The unique identifier of the team configuration.
@@ -27,7 +27,7 @@ class TeamConfigModel(BaseModel):
     key = Column(String, index=True)
     value = Column(Text)
     
-    team = relationship("AgentModel", back_populates="configs", cascade="all, delete")
+    team = relationship("TeamModel", back_populates="configs", cascade="all, delete")
     
     created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
     modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
@@ -37,10 +37,10 @@ class TeamConfigModel(BaseModel):
 
     def __repr__(self):
         """
-        Returns a string representation of the Agent Configuration object.
+        Returns a string representation of the Team Configuration object.
 
         Returns:
-            str: String representation of the Agent Configuration.
+            str: String representation of the Team Configuration.
 
         """
         return f"TeamConfig(id={self.id}, key={self.key}, value={self.value})" 
@@ -52,12 +52,15 @@ class TeamConfigModel(BaseModel):
 
         Args:
             db (Session): The database session.
-            team (AgentModel): The team object.
+            team (TeamModel): The team object.
             update_configs (ConfigInput): The updated configurations.
 
         Returns:
             List[TeamConfigModel]: The list of created or updated configurations.
         """
+        if not update_configs:
+            return
+        
         db_configs= db.session.query(TeamConfigModel).filter(
             TeamConfigModel.team_id == team.id,
         ).all()

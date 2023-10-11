@@ -9,7 +9,6 @@ from typings.team import TeamInput, ConfigInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
-from models.config import ConfigModel
 from models.team_config import TeamConfigModel
 
 class TeamModel(BaseModel):
@@ -39,7 +38,7 @@ class TeamModel(BaseModel):
     account = relationship("AccountModel", lazy='select')
     team_agents = relationship("TeamAgentModel", back_populates="team", lazy='select')
     chat_messages = relationship("ChatMessage", back_populates="team", lazy='select')
-    configs = relationship("TeamConfigModel", back_populates="agent", lazy='select')
+    configs = relationship("TeamConfigModel", back_populates="team", lazy='select')
     chat = relationship("ChatModel", back_populates="team", lazy='select')
     
         
@@ -190,6 +189,8 @@ class TeamModel(BaseModel):
     @classmethod
     def update_model_from_input(cls, team_model: TeamModel, team_input: TeamInput):
         for field in TeamInput.__annotations__.keys():
+            if field == 'configs' or field == 'team_agents':
+                continue
             setattr(team_model, field, getattr(team_input, field))
         return team_model  
 
@@ -273,11 +274,11 @@ class TeamModel(BaseModel):
         # return db.session.query(TeamModel).filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)).all()
         team = (
             db.session.query(TeamModel)
-            .join(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
             .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
-            .options(joinedload(AgentModel.configs))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .options(joinedload(TeamModel.configs))
             .first()
         )
         return team
@@ -296,7 +297,7 @@ class TeamModel(BaseModel):
         """
         teams = (
             db.session.query(TeamModel)
-            .join(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
             .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, 
                                                      TeamModel.is_deleted is None), 
                                                      TeamModel.is_deleted is None))
@@ -322,13 +323,13 @@ class TeamModel(BaseModel):
     def get_template_teams(cls, db):
         teams = (
             db.session.query(TeamModel)
-            .join(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
             .filter(TeamModel.is_template == True, or_(or_(TeamModel.is_deleted == False,
                                                            TeamModel.is_deleted is None),
                                                             TeamModel.is_deleted is None))
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .options(joinedload(TeamModel.creator))
-            .options(joinedload(AgentModel.configs))
+            .options(joinedload(TeamModel.configs))
             .all()
         )
         return teams
@@ -337,11 +338,11 @@ class TeamModel(BaseModel):
     def get_public_teams(cls, db):
         teams = (
             db.session.query(TeamModel)
-            .join(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
             .filter(TeamModel.is_public == True, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .options(joinedload(TeamModel.creator))
-            .options(joinedload(AgentModel.configs))
+            .options(joinedload(TeamModel.configs))
             .all()
         )
         return teams
