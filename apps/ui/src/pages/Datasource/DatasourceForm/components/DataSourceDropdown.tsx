@@ -101,6 +101,39 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  .css-7xl64p-container {
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+  }
+  .menu.dropdown-menu-wrapper.css-19zapvn-menu {
+    background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
+    color: ${({ theme }) => theme.body.textColorPrimary};
+    border: ${({ theme }) => theme.body.border};
+  }
+  .css-1aqeloh-singleValue {
+    color: ${({ theme }) => theme.body.textColorPrimary};
+  
+  }
+  .dropdown-wrapper__option--reset {
+    &:hover {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+      background: ${({ theme }) => theme.body.placeHolderColor};
+    }
+  }
+  .clear-indicator.css-1rycjgo {
+    path {
+      fill: ${({ theme }) => theme.body.iconColor};
+    }
+  }
+  .dropdown-indicator.css-12prnvf-indicatorContainer{
+    path{
+      fill:${({ theme }) => theme.body.iconColor}}
+    }
+  }
+  .dropdown-indicator.css-bfmogb-indicatorContainer {
+    path{
+      fill:${({ theme }) => theme.body.iconColor}}
+    }
+  }
 `
 
 const StyledHeader = styled.div`
