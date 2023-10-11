@@ -1,63 +1,57 @@
-
-from typing import List, Optional
-from fastapi import APIRouter, HTTPException, Depends
+from typing import Optional
+from fastapi import Depends
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel
 from fastapi_jwt_auth import AuthJWT
 from models.user import UserModel
 from models.account import AccountModel
 from models.user_account import UserAccountModel
-from typings.user import UserOutput, UserInput
-from typings.user_account import UserAccountInput
-from utils.auth import authenticate, generate_token
 from typings.user import UserInput
+from typings.user_account import UserAccountInput
 from typings.auth import LoginInput, RegisterInput
 from typings.account import AccountInput
-from utils.user import convert_users_to_user_list, convert_model_to_response
-from exceptions import UserNotFoundException
-import requests
-from exceptions import AuthenticationException, UserException
-from utils.auth import authenticate
+from exceptions import UserException
 from typings.auth import UserAccount
 from utils.account import convert_model_to_response as convert_model_to_response_account
 from utils.user import convert_model_to_response as convert_model_to_response_user
-\
+
 
 def register(input: RegisterInput):
     """
     Register
     """
-   
+
     if UserModel.get_user_by_email(db=db, email=input.email):
         raise UserException("User already exists!")
-    
+
     # Create a new user
-    user_input = UserInput(name=input.name, email=input.email, password=input.password, avatar=input.avatar)
+    user_input = UserInput(
+        name=input.name, email=input.email, password=input.password, avatar=input.avatar
+    )
     user = UserModel.create_user(db=db, user=user_input)
-    
+
     # Create a new account
     account_input = AccountInput(name=input.name)
     account = AccountModel.create_account(db=db, account=account_input, user=user)
 
-
     # Create a new user-account
     user_account_input = UserAccountInput(user_id=user.id, account_id=account.id)
-    user_account = UserAccountModel.create_user_account(db=db, user_account=user_account_input)
+    user_account = UserAccountModel.create_user_account(
+        db=db, user_account=user_account_input
+    )
 
     return {"account": account, "user": user, "user_account": user_account}
 
-    
-def login(input:LoginInput):
+
+def login(input: LoginInput):
     """
     Login
     """
     db_user = UserModel.get_user_by_email(db, input.email)
     if not db_user or not UserModel.verify_password(db_user.password, input.password):
         raise UserException("User email or password is incorrect")
-    
+
     return db_user
 
-    
 
 # def login_with_google(token: str):
 #     """
@@ -83,25 +77,33 @@ def login(input:LoginInput):
 
 #     except requests.exceptions.RequestException as e:
 #         raise AuthenticationException('Could not authenticate with Google')
-    
-def login_with_github(name:str, email: str, account_name:str, avatar:Optional[str]):
+
+
+def login_with_github(name: str, email: str, account_name: str, avatar: Optional[str]):
     """
     Authenticate with Google
     """
     user = UserModel.get_user_by_email(db, email)
     if not user:
-        register_input = RegisterInput(name=name, email=email, account_name=account_name, avatar=avatar)
+        register_input = RegisterInput(
+            name=name, email=email, account_name=account_name, avatar=avatar
+        )
         registered = register(register_input)
-        return registered['user']        
-   
+        return registered["user"]
+
     return user
-    
-def authorize(account_id: str, Authorize: AuthJWT = Depends())-> UserAccount:
+
+
+def authorize(account_id: str, Authorize: AuthJWT = Depends()) -> UserAccount:
     email = Authorize.get_jwt_subject()
     db_user = UserModel.get_user_by_email(db, email)
-    if account_id == 'undefined' or  not account_id:
-        db_account = AccountModel.get_account_created_by(db, db_user.id)            
+    if account_id == "undefined" or not account_id:
+        db_account = AccountModel.get_account_created_by(db, db_user.id)
     else:
-        db_account = AccountModel.get_account_by_access(db, user_id=db_user.id, account_id=account_id)
-    return UserAccount(user=convert_model_to_response_user(db_user), 
-                       account=convert_model_to_response_account(db_account))
+        db_account = AccountModel.get_account_by_access(
+            db, user_id=db_user.id, account_id=account_id
+        )
+    return UserAccount(
+        user=convert_model_to_response_user(db_user),
+        account=convert_model_to_response_account(db_account),
+    )

@@ -107,14 +107,20 @@ class ZepMemory(ConversationBufferMemory):
         )
 
     def save_human_message(self, content: str):
-        self.chat_memory.add_user_message(content, metadata={
-            "author": self.human_name,
-        })
+        self.chat_memory.add_user_message(
+            content,
+            metadata={
+                "author": self.human_name,
+            },
+        )
 
     def save_ai_message(self, content: str):
-        self.chat_memory.add_ai_message(content, metadata={
-            "author": self.ai_name,
-        })
+        self.chat_memory.add_ai_message(
+            content,
+            metadata={
+                "author": self.ai_name,
+            },
+        )
 
     def save_context(
         self,
@@ -137,9 +143,15 @@ class ZepMemory(ConversationBufferMemory):
             return
 
         input_str, output_str = self._get_input_output(inputs, outputs)
-        self.chat_memory.add_user_message(input_str, metadata={
-            "author": self.human_name,
-        })
-        self.chat_memory.add_ai_message(output_str, metadata={
-            "author": self.ai_name,
-        })
+        self.chat_memory.add_user_message(
+            input_str,
+            metadata={
+                "author": self.human_name,
+            },
+        )
+        self.chat_memory.add_ai_message(
+            output_str,
+            metadata={
+                "author": self.ai_name,
+            },
+        )

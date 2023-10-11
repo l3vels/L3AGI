@@ -4,35 +4,52 @@
 echo "Linting and formatting React..."
 cd apps/ui && yarn lint-staged && cd ../..
 
-# FastAPI formatting with black and linting with flake8
+# FastAPI formatting with black and linting with ruff
+cd apps/server
+
 staged_files=$(git diff --cached --name-only)
+python_files=""
 
-# Loop through each staged file
+# Accumulate staged python files
 for file in $staged_files; do
-    # Check if the file ends with .py
     if [[ $file == *.py ]]; then
-        # Change to the directory where the pipenv environment is located
-        cd apps/server
-
         # Adjust the file path since we changed directory
-        relative_file=../../$file
-        
-        # Format the file with black and run ruff within the pipenv environment
-        pipenv run black $relative_file
-        pipenv run ruff check $relative_file --fix
-
-        # Return to the root directory
-        cd ../..
-
-        # Check the exit status of ruff
-        if [ $? -ne 0 ]; then
-            echo "Ruff check failed for $file. Aborting commit."
-            exit 1
-        fi
-
-        # Stage the formatted file
-        git add $file
+        python_files="$python_files ../../$file"
     fi
 done
+
+# If there are no python files, skip the formatting and linting step
+if [ -z "$python_files" ]; then
+    echo "No Python files staged. Skipping formatting and linting."
+    exit 0
+fi
+
+echo "Checking Python files..."
+
+# Format with black
+pipenv run black $python_files
+if [ $? -ne 0 ]; then
+    echo "Black formatting failed. Aborting commit."
+    exit 1
+fi
+
+pipenv run isort $python_files
+if [ $? -ne 0 ]; then
+    echo "Isort failed to sort Python imports. Aborting commit."
+    exit 1
+fi
+
+# Run ruff check and fix
+pipenv run ruff check $python_files --fix --ignore E501
+if [ $? -ne 0 ]; then
+    echo "Ruff check failed. Aborting commit."
+    exit 1
+fi
+
+# Stage the formatted files
+git add $python_files
+
+# Return to the root directory
+cd ../..
 
 echo "Pre-commit checks passed!"

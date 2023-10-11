@@ -57,7 +57,7 @@ class TeamOutput(BaseModel):
     name: str
     description: Optional[str]
     team_type: str
-    workspace_id: Optional[UUID4] 
+    workspace_id: Optional[UUID4]
     is_deleted: bool
     is_public: bool
     is_template: bool

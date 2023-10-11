@@ -1,10 +1,12 @@
 from pydantic import BaseModel, UUID4
-from typing import List, Optional
+from typing import Optional
 import strawberry
+
 
 class AccountInput(BaseModel):
     name: Optional[str]
     deleted: Optional[bool]
+
 
 class AccountOutput(BaseModel):
     id: UUID4

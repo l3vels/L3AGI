@@ -3,6 +3,7 @@ from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 from tools.chart.chart_generator import ChartGeneratorTool
 
+
 class ChartToolkit(BaseToolkit, ABC):
     name: str = "Chart Toolkit"
     description: str = "Toolkit containing tools for generating different types of charts including bar, pie, line."
@@ -11,6 +12,6 @@ class ChartToolkit(BaseToolkit, ABC):
 
     def get_tools(self) -> List[BaseTool]:
         return [ChartGeneratorTool()]
-    
+
     def get_env_keys(self) -> List[ToolEnvKey]:
         return []

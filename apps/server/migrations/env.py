@@ -5,10 +5,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from dotenv import load_dotenv
-
-load_dotenv(override=False)
-
 from config import Config
 
 # this is the Alembic Config object, which provides
@@ -25,12 +21,10 @@ if cfg.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-from models.base_model import BaseModel
+from models.base_model import BaseModel  # noqa: E402
 
 target_metadata = BaseModel.metadata
-from models import *
-
-print(target_metadata)
+from models import *  # noqa: E402, F403
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

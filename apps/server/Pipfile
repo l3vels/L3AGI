@@ -64,6 +64,7 @@ pinecone-client = "*"
 weaviate-client = "*"
 black = "*"
 ruff = "*"
+isort = "*"
 
 [dev-packages]
 

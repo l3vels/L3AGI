@@ -7,14 +7,16 @@ from models.config import ConfigModel
 from typings.config import ConfigQueryParams, AccountSettings
 from typings.account import AccountOutput
 
+
 class ToolEnvKeyType(Enum):
-    STRING = 'string'
-    FILE = 'file'
-    INT = 'int'
+    STRING = "string"
+    FILE = "file"
+    INT = "int"
 
     def __str__(self):
         return self.value
-    
+
+
 class ToolEnvKey(BaseModel):
     label: str = Field()
     key: str = Field()
@@ -22,7 +24,7 @@ class ToolEnvKey(BaseModel):
     is_required: bool = Field(default=False)
     is_secret: bool = Field(default=False)
 
-    @validator('is_secret', 'is_required', pre=True, always=True)
+    @validator("is_secret", "is_required", pre=True, always=True)
     def check_bool(cls, v):
         """Check if the value is a boolean."""
         if v is None:
@@ -32,7 +34,7 @@ class ToolEnvKey(BaseModel):
         else:
             raise ValueError("Value should be a boolean")
 
-    @validator('key_type', pre=True, always=True)
+    @validator("key_type", pre=True, always=True)
     def check_key_type(cls, v):
         """Check if the value is a boolean."""
         if v is None:
@@ -41,6 +43,7 @@ class ToolEnvKey(BaseModel):
             return v
         else:
             raise ValueError("key_type should be string/file/integer")
+
 
 class BaseTool(LangchainBaseTool):
     tool_id: str
@@ -61,16 +64,18 @@ class BaseToolkit(BaseModel):
     is_active: bool = Field(default=True)
 
     def get_tools_with_configs(self, db, account, settings) -> List[BaseTool]:
-        configs = ConfigModel.get_configs(db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account)
+        configs = ConfigModel.get_configs(
+            db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account
+        )
         config_dict = {config.key: config.value for config in configs}
         tools = self.get_tools()
-        
+
         for tool in tools:
             tool.configs = config_dict
             tool.toolkit_slug = self.slug
             tool.settings = settings
             tool.account = account
-        
+
         return tools
 
     @abstractmethod

@@ -1,4 +1,3 @@
-
 from typing import List, Optional
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
@@ -7,10 +6,17 @@ from concurrent.futures import ThreadPoolExecutor
 
 from models.datasource import DatasourceModel
 from models.config import ConfigModel
-from typings.datasource import DatasourceOutput, DatasourceInput, DatasourceSQLTableOutput
+from typings.datasource import (
+    DatasourceOutput,
+    DatasourceInput,
+    DatasourceSQLTableOutput,
+)
 from utils.auth import authenticate
 from typings.auth import UserAccount
-from utils.datasource import convert_datasources_to_datasource_list, convert_model_to_response
+from utils.datasource import (
+    convert_datasources_to_datasource_list,
+    convert_model_to_response,
+)
 from exceptions import DatasourceNotFoundException
 from datasources.get_datasources import get_all_datasources
 from datasources.base import DatasourceType
@@ -18,8 +24,11 @@ from typings.config import ConfigQueryParams
 
 router = APIRouter()
 
+
 @router.post("", status_code=201, response_model=DatasourceOutput)
-def create_datasource(datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
+def create_datasource(
+    datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)
+) -> DatasourceOutput:
     """
     Create a new datasource with configurations.
 
@@ -31,11 +40,20 @@ def create_datasource(datasource: DatasourceInput, auth: UserAccount = Depends(a
         DatasourceOutput: Created datasource object.
     """
     # Consider adding try-except for error handling during creation if needed
-    db_datasource = DatasourceModel.create_datasource(db, datasource=datasource, user=auth.user, account=auth.account)
-    return convert_model_to_response(DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account))
+    db_datasource = DatasourceModel.create_datasource(
+        db, datasource=datasource, user=auth.user, account=auth.account
+    )
+    return convert_model_to_response(
+        DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account)
+    )
 
-@router.put("/{id}", status_code=200, response_model=DatasourceOutput)  # Changed status code to 200
-def update_datasource(id: str, datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
+
+@router.put(
+    "/{id}", status_code=200, response_model=DatasourceOutput
+)  # Changed status code to 200
+def update_datasource(
+    id: str, datasource: DatasourceInput, auth: UserAccount = Depends(authenticate)
+) -> DatasourceOutput:
     """
     Update an existing datasource with configurations.
 
@@ -48,13 +66,13 @@ def update_datasource(id: str, datasource: DatasourceInput, auth: UserAccount = 
         DatasourceOutput: Updated datasource object.
     """
     try:
-        db_datasource = DatasourceModel.update_datasource(db, 
-                                           id=id, 
-                                           datasource=datasource, 
-                                           user=auth.user, 
-                                           account=auth.account)
-        return convert_model_to_response(DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account))
-    
+        db_datasource = DatasourceModel.update_datasource(
+            db, id=id, datasource=datasource, user=auth.user, account=auth.account
+        )
+        return convert_model_to_response(
+            DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account)
+        )
+
     except DatasourceNotFoundException:
         raise HTTPException(status_code=404, detail="Datasource not found")
 
@@ -72,9 +90,12 @@ def get_data_loaders(auth: UserAccount = Depends(authenticate)) -> List[object]:
     """
 
     return get_all_datasources()
-    
+
+
 @router.get("", response_model=List[DatasourceOutput])
-def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[DatasourceOutput]:
+def get_datasources(
+    auth: UserAccount = Depends(authenticate),
+) -> List[DatasourceOutput]:
     """
     Get all datasources by account ID.
 
@@ -89,34 +110,52 @@ def get_datasources(auth: UserAccount = Depends(authenticate)) -> List[Datasourc
 
 
 @router.get("/sql/tables", response_model=List[DatasourceSQLTableOutput])
-def get_sql_tables(source_type: Optional[str] = None, host: Optional[str] = None, port: Optional[int] = None, user: Optional[str] = None, password: Optional[str] = None, name: Optional[str] = None, id: Optional[str] = None, auth: UserAccount = Depends(authenticate)):
+def get_sql_tables(
+    source_type: Optional[str] = None,
+    host: Optional[str] = None,
+    port: Optional[int] = None,
+    user: Optional[str] = None,
+    password: Optional[str] = None,
+    name: Optional[str] = None,
+    id: Optional[str] = None,
+    auth: UserAccount = Depends(authenticate),
+):
     """
     Get all SQL database table names and counts for a datasource by its ID or by provided credentials.
     """
 
     if id:
-        datasource = DatasourceModel.get_datasource_by_id(db, datasource_id=id, account=auth.account)
+        datasource = DatasourceModel.get_datasource_by_id(
+            db, datasource_id=id, account=auth.account
+        )
 
         if not datasource or datasource.is_deleted:
-            raise HTTPException(status_code=404, detail="Datasource not found")  # Ensure consistent case in error messages
+            raise HTTPException(
+                status_code=404, detail="Datasource not found"
+            )  # Ensure consistent case in error messages
 
-        configs = ConfigModel.get_configs(db, ConfigQueryParams(datasource_id=id), account=auth.account)
+        configs = ConfigModel.get_configs(
+            db, ConfigQueryParams(datasource_id=id), account=auth.account
+        )
 
         config = {}
 
         for cfg in configs:
             config[cfg.key] = cfg.value
 
-        user = config.get('user')
-        password = config.get('pass')
-        host = config.get('host')
-        port = config.get('port')
-        name = config.get('name')
+        user = config.get("user")
+        password = config.get("pass")
+        host = config.get("host")
+        port = config.get("port")
+        name = config.get("name")
 
         source_type = datasource.source_type
     else:
         if not all([source_type, host, port, user, password, name]):
-            raise HTTPException(status_code=400, detail="All parameters must be provided when id is not given")
+            raise HTTPException(
+                status_code=400,
+                detail="All parameters must be provided when id is not given",
+            )
 
     if source_type == DatasourceType.POSTGRES.value:
         prefix = "postgresql+psycopg2"
@@ -126,7 +165,7 @@ def get_sql_tables(source_type: Optional[str] = None, host: Optional[str] = None
         raise HTTPException(status_code=400, detail="Invalid source_type")
 
     uri = f"{prefix}://{user}:{password}@{host}:{port}/{name}"
-    
+
     engine = create_engine(uri)
     meta = MetaData()
     meta.reflect(bind=engine)
@@ -142,16 +181,17 @@ def get_sql_tables(source_type: Optional[str] = None, host: Optional[str] = None
                 "name": table,
                 "count": count,
             }
-        
+
     with ThreadPoolExecutor() as executor:
         result = list(executor.map(get_table_count, tables))
 
     return result
 
 
-
 @router.get("/{id}", response_model=DatasourceOutput)
-def get_datasource_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> DatasourceOutput:
+def get_datasource_by_id(
+    id: str, auth: UserAccount = Depends(authenticate)
+) -> DatasourceOutput:
     """
     Get a datasource by its ID.
 
@@ -162,12 +202,17 @@ def get_datasource_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> 
     Returns:
         DatasourceOutput: Datasource associated with the given ID.
     """
-    db_datasource = DatasourceModel.get_datasource_by_id(db, datasource_id=id, account=auth.account)
-    
+    db_datasource = DatasourceModel.get_datasource_by_id(
+        db, datasource_id=id, account=auth.account
+    )
+
     if not db_datasource or db_datasource.is_deleted:
-        raise HTTPException(status_code=404, detail="Datasource not found")  # Ensure consistent case in error messages
+        raise HTTPException(
+            status_code=404, detail="Datasource not found"
+        )  # Ensure consistent case in error messages
 
     return convert_model_to_response(db_datasource)
+
 
 @router.delete("/{datasource_id}", status_code=200)  # Changed status code to 204
 def delete_datasource(datasource_id: str, auth: UserAccount = Depends(authenticate)):
@@ -182,9 +227,10 @@ def delete_datasource(datasource_id: str, auth: UserAccount = Depends(authentica
         dict: A dictionary indicating the success or failure of the deletion.
     """
     try:
-        DatasourceModel.delete_by_id(db, datasource_id=datasource_id, account=auth.account)
-        return { "message": "Datasource deleted successfully" }
+        DatasourceModel.delete_by_id(
+            db, datasource_id=datasource_id, account=auth.account
+        )
+        return {"message": "Datasource deleted successfully"}
 
     except DatasourceNotFoundException:
         raise HTTPException(status_code=404, detail="Datasource not found")
-

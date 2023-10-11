@@ -8,7 +8,11 @@ from langchain_experimental.plan_and_execute.schema import (
     PlanOutputParser,
     Step,
 )
-from langchain.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder, PromptTemplate
+from langchain.prompts import (
+    ChatPromptTemplate,
+    HumanMessagePromptTemplate,
+    MessagesPlaceholder,
+)
 from langchain.schema.messages import SystemMessage
 from memory.zep.zep_memory import ZepMemory
 
@@ -31,13 +35,14 @@ class PlanningOutputParser(PlanOutputParser):
 
 
 INSTRUCTIONS = (
-    "Let's first understand the problem and devise a plan to solve the problem. Please make the plan the minimum number of steps required to accurately complete the task. Please output the plan as list of steps as JSON array of objects format. This is example format: ``` [   {{     \"agent_step\": \"Technical description for agent executor to use\",     \"user_step\": \"Description for non-technical user so they understand what is step about\",   }} ] ```\n"
+    'Let\'s first understand the problem and devise a plan to solve the problem. Please make the plan the minimum number of steps required to accurately complete the task. Please output the plan as list of steps as JSON array of objects format. This is example format: ``` [   {{     "agent_step": "Technical description for agent executor to use",     "user_step": "Description for non-technical user so they understand what is step about",   }} ] ```\n'
     "If the task is a question, the final step should almost always be 'Given the above steps taken, please respond to the users original question'.\n"
     "At the end of your plan, say '<END_OF_PLAN>'\n"
 )
 
+
 def initialize_chat_planner(
-        llm: BaseLanguageModel, system_prompt: str, memory: ZepMemory
+    llm: BaseLanguageModel, system_prompt: str, memory: ZepMemory
 ) -> LLMPlanner:
     """
     Load a chat planner.

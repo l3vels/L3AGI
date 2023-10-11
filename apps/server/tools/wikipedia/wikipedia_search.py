@@ -13,11 +13,12 @@ class WikipediaSearchSchema(BaseModel):
         description="The search query for Wikipedia search.",
     )
 
+
 class WikipediaSearchTool(BaseTool):
     """Tool for the Wikipedia API."""
 
     name = "Wikipedia Search"
-    
+
     description = (
         "A wrapper around Wikipedia. "
         "Useful for when you need to answer general questions about "
@@ -35,4 +36,3 @@ class WikipediaSearchTool(BaseTool):
         """Search Wikipedia and return the results."""
         wikipedia = WikipediaAPIWrapper()
         return wikipedia.run(query)
-

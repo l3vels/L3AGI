@@ -13,6 +13,7 @@ from langchain.schema import (
 )
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent
 
+
 class IntegerOutputParser(RegexParser):
     def get_format_instructions(self) -> str:
         return "Your response should be an integer delimited by angled brackets, like this: <int>."
@@ -161,4 +162,3 @@ Prompt the next speaker to speak with an insightful question.
             message = " ".join([self.response, message])
 
         return message
-   

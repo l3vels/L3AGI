@@ -11,6 +11,7 @@ from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
 from models.team_config import TeamConfigModel
 
+
 class TeamModel(BaseModel):
     """
     Represents an team entity.
@@ -20,13 +21,16 @@ class TeamModel(BaseModel):
         name (str): Name of the team.
 
     """
-    __tablename__ = 'team'
+
+    __tablename__ = "team"
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     avatar = Column(String(300), default=None)
-    team_type = Column(String) #todo replace as enum (Debates, Plan_Execute, Authoritarian_Speaker, Decentralized_speaker)
-    description = Column(String, nullable=True) 
+    team_type = Column(
+        String
+    )  # todo replace as enum (Debates, Plan_Execute, Authoritarian_Speaker, Decentralized_speaker)
+    description = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
     is_template = Column(Boolean, default=False, index=True)
@@ -48,11 +52,11 @@ class TeamModel(BaseModel):
     
     # Define indexes
     __table_args__ = (
-        Index('ix_team_model_account_id_is_deleted', 'account_id', 'is_deleted'),
-        Index('ix_team_model_created_by_is_deleted', 'created_by', 'is_deleted'),
-        Index('ix_team_model_id_is_deleted', 'id', 'is_deleted'),
+        Index("ix_team_model_account_id_is_deleted", "account_id", "is_deleted"),
+        Index("ix_team_model_created_by_is_deleted", "created_by", "is_deleted"),
+        Index("ix_team_model_id_is_deleted", "id", "is_deleted"),
     )
-    
+
     def __repr__(self) -> str:
         return (
             f"Team(id={self.id}, "
@@ -75,9 +79,9 @@ class TeamModel(BaseModel):
 
         """
         db_team = TeamModel(
-                         created_by=user.id, 
-                         account_id=account.id,
-                         )
+            created_by=user.id,
+            account_id=account.id,
+        )
         cls.update_model_from_input(db_team, team)
         db.session.add(db_team)
         db.session.flush()  # Flush pending changes to generate the team's ID
@@ -85,7 +89,7 @@ class TeamModel(BaseModel):
         
         TeamConfigModel.create_or_update(db, db_team, configs, user, account)
         return db_team
-    
+
     @classmethod
     def create_team_from_template(cls, db, template_id, user, account):
         """
@@ -100,34 +104,40 @@ class TeamModel(BaseModel):
 
         """
         template_team = cls.get_team_with_agents(db=db, id=template_id, account=account)
-        if template_team is None or not (template_team.is_public or template_team.is_template):
+        if template_team is None or not (
+            template_team.is_public or template_team.is_template
+        ):
             raise TeamNotFoundException("Team not found")
 
-        new_team = TeamModel(name=template_team.name,
-                            team_type=template_team.team_type,
-                            description=template_team.description,
-                            is_public=False,
-                            is_template=False,
-                            created_by=user.id, 
-                            account_id=account.id,
-                            modified_by=None,
-                            parent_id=template_team.id
-                            )        
-                               
+        new_team = TeamModel(
+            name=template_team.name,
+            team_type=template_team.team_type,
+            description=template_team.description,
+            is_public=False,
+            is_template=False,
+            created_by=user.id,
+            account_id=account.id,
+            modified_by=None,
+            parent_id=template_team.id,
+        )
+
         db.session.add(new_team)
-        db.session.commit() 
-        
-        new_team_agents= []
+        db.session.commit()
+
+        new_team_agents = []
         new_agents = []
         for template_team_agent in template_team.team_agents:
-            agent = AgentModel.create_agent_from_template(db, template_team_agent.agent.id, user, account, False)
+            agent = AgentModel.create_agent_from_template(
+                db, template_team_agent.agent.id, user, account, False
+            )
             new_agents.append(agent)
-            new_config = TeamAgentModel(team_id=new_team.id,
-                                        agent_id=agent.id,
-                                        role= template_team_agent.role,
-                                        account_id=account.id,
-                                        created_by=user.id
-                                        )
+            new_config = TeamAgentModel(
+                team_id=new_team.id,
+                agent_id=agent.id,
+                role=template_team_agent.role,
+                account_id=account.id,
+                created_by=user.id,
+            )
             new_team_agents.append(new_config)
         db.session.add_all(new_agents)
         db.session.commit()
@@ -159,7 +169,7 @@ class TeamModel(BaseModel):
         # db.session.commit() 
 
         return new_team
-       
+
     @classmethod
     def update_team(cls, db, id, team: TeamInput, configs: List[ConfigInput], user, account):
         """
@@ -178,98 +188,107 @@ class TeamModel(BaseModel):
             raise TeamNotFoundException("Team not found")
         db_team = cls.update_model_from_input(team_model=old_team, team_input=team)
         db_team.modified_by = user.id
-        
+
         db.session.add(db_team)
         db.session.commit()        
         
         TeamConfigModel.create_or_update(db, db_team, configs, user, account)
 
         return db_team
-     
+
     @classmethod
     def update_model_from_input(cls, team_model: TeamModel, team_input: TeamInput):
         for field in TeamInput.__annotations__.keys():
             if field == 'configs' or field == 'team_agents':
                 continue
             setattr(team_model, field, getattr(team_input, field))
-        return team_model  
+        return team_model
 
     @classmethod
     def get_teams(cls, db, account):
         teams = (
             db.session.query(TeamModel)
-            .filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .filter(
+                TeamModel.account_id == account.id,
+                or_(
+                    or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
+                    TeamModel.is_deleted is None,
+                ),
+            )
+            .options(
+                joinedload(TeamModel.team_agents)
+                .joinedload(TeamAgentModel.agent)
+                .joinedload(AgentModel.configs)
+            )
             .options(joinedload(TeamModel.creator))
             .all()
         )
         return teams
-    
-    
+
     @classmethod
     def get_team_with_agents(cls, db, account, id: str):
-        #todo later need to filter by account_id        
+        # todo later need to filter by account_id
         # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
-        filter_conditions = [or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        filter_conditions = [
+            or_(
+                or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
+                TeamModel.is_deleted is None,
+            )
+        ]
 
         filter_conditions.append(TeamModel.id == id)
-                
+
         teams = (
             db.session.query(TeamModel)
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .options(
+                joinedload(TeamModel.team_agents)
+                .joinedload(TeamAgentModel.agent)
+                .joinedload(AgentModel.configs)
+            )
             .filter(and_(*filter_conditions))
             .options(joinedload(TeamModel.creator))
             .first()
         )
         return teams
-    
+
     @classmethod
     def get_team_with_agents_by_parent_id(cls, db, account, parent_id: str):
-        #todo later need to filter by account_id        
+        # todo later need to filter by account_id
         # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
-        filter_conditions = [or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        filter_conditions = [
+            or_(
+                or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
+                TeamModel.is_deleted is None,
+            )
+        ]
 
         filter_conditions.append(TeamModel.parent_id == parent_id)
         filter_conditions.append(TeamModel.account_id == account.id)
-                
-        teams = (
-            db.session.query(TeamModel)
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
-            .filter(and_(*filter_conditions))
-            .options(joinedload(TeamModel.creator))
-            .first()
-        )
-        return teams
-    
-    @classmethod
-    def get_team_with_agents(cls, db, account, id: str):
-        #todo later need to filter by account_id        
-        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
-        filter_conditions = [or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
 
-        filter_conditions.append(TeamModel.id == id)
-                
         teams = (
             db.session.query(TeamModel)
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .options(
+                joinedload(TeamModel.team_agents)
+                .joinedload(TeamAgentModel.agent)
+                .joinedload(AgentModel.configs)
+            )
             .filter(and_(*filter_conditions))
             .options(joinedload(TeamModel.creator))
             .first()
         )
         return teams
-    
 
     @classmethod
     def get_team_by_id(cls, db, team_id):
         """
-            Get Team from team_id
+        Get Team from team_id
 
-            Args:
-                session: The database session.
-                team_id(int) : Unique identifier of an Team.
+        Args:
+            session: The database session.
+            team_id(int) : Unique identifier of an Team.
 
-            Returns:
-                Team: Team object is returned.
+        Returns:
+            Team: Team object is returned.
         """
         # return db.session.query(TeamModel).filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)).all()
         team = (
@@ -282,18 +301,18 @@ class TeamModel(BaseModel):
             .first()
         )
         return team
-        
+
     @classmethod
     def get_team_by_id_with_account(cls, db, team_id):
         """
-            Get Team from team_id
+        Get Team from team_id
 
-            Args:
-                session: The database session.
-                team_id(int) : Unique identifier of an Team.
+        Args:
+            session: The database session.
+            team_id(int) : Unique identifier of an Team.
 
-            Returns:
-                Team: Team object is returned.
+        Returns:
+            Team: Team object is returned.
         """
         teams = (
             db.session.query(TeamModel)
@@ -317,9 +336,8 @@ class TeamModel(BaseModel):
 
         db_team.is_deleted = True
         db.session.commit()
-        
-    
-    @classmethod        
+
+    @classmethod
     def get_template_teams(cls, db):
         teams = (
             db.session.query(TeamModel)
@@ -346,5 +364,3 @@ class TeamModel(BaseModel):
             .all()
         )
         return teams
-
-    

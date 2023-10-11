@@ -3,6 +3,7 @@ from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey, ToolEnvKeyType
 from tools.serp_google_search.serp_google_search import SerpGoogleSearchTool
 
+
 class SerpGoogleSearchToolkit(BaseToolkit, ABC):
     name: str = "Google SERP Search Toolkit"
     description: str = "Toolkit containing tools for performing Google SERP search"
@@ -11,8 +12,14 @@ class SerpGoogleSearchToolkit(BaseToolkit, ABC):
 
     def get_tools(self) -> List[BaseTool]:
         return [SerpGoogleSearchTool()]
-    
+
     def get_env_keys(self) -> List[ToolEnvKey]:
         return [
-            ToolEnvKey(label="Serp API Key", key="SERP_API_KEY", key_type=ToolEnvKeyType.STRING, is_required=True, is_secret=True)
+            ToolEnvKey(
+                label="Serp API Key",
+                key="SERP_API_KEY",
+                key_type=ToolEnvKeyType.STRING,
+                is_required=True,
+                is_secret=True,
+            )
         ]

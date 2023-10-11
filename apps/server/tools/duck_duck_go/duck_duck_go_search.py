@@ -16,7 +16,7 @@ class DuckDuckGoSearchSchema(BaseModel):
 
 class DuckDuckGoSearchTool(BaseTool):
     name = "DuckDuckGo Search"
-    
+
     description = (
         "A tool for performing a DuckDuckGo search."
         "useful for when you need to answer questions about current events"
@@ -32,4 +32,3 @@ class DuckDuckGoSearchTool(BaseTool):
         """Search DuckDuckGo and return the results."""
         search = DuckDuckGoSearchResults(num_results=5)
         return search.run(query)
-

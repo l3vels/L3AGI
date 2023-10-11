@@ -14,6 +14,7 @@ from llama_index.llm_predictor import LLMPredictor
 from langchain.chat_models import ChatOpenAI
 from typings.config import AccountSettings
 
+
 class SQLQueryEngine:
     """LLamaIndex SQL Query Engine for SQL datasource"""
 
@@ -36,15 +37,13 @@ class SQLQueryEngine:
             print(err)
             return str(err)
 
-
     def initialize_sql_index(self):
         """Initialize LLamaIndex SQL index"""
-        
+
         table_names = self.meta.tables.keys()
 
         table_schema_objs = [
-            SQLTableSchema(table_name=table_name)
-            for table_name in table_names
+            SQLTableSchema(table_name=table_name) for table_name in table_names
         ]
 
         table_node_mapping = SQLTableNodeMapping(self.sql_database)
@@ -59,14 +58,19 @@ class SQLQueryEngine:
 
         return obj_index
 
-
     def create_query_engine(self, obj_index, template: str):
         text_to_sql_prompt = Prompt(
             template,
             prompt_type=PromptType.TEXT_TO_SQL,
         )
 
-        llm = LangChainLLM(llm=ChatOpenAI(openai_api_key=self.settings.openai_api_key, model_name="gpt-3.5-turbo", temperature=0))
+        llm = LangChainLLM(
+            llm=ChatOpenAI(
+                openai_api_key=self.settings.openai_api_key,
+                model_name="gpt-3.5-turbo",
+                temperature=0,
+            )
+        )
         llm_predictor = LLMPredictor(llm=llm)
 
         service_context = ServiceContext.from_defaults(
@@ -84,7 +88,6 @@ class SQLQueryEngine:
         )
 
         return query_engine
-
 
     def create_sql_query_engine(self, obj_index: ObjectIndex):
         TEXT_TO_SQL_PROMPT_TEMPLATE = (
@@ -111,7 +114,6 @@ class SQLQueryEngine:
         )
 
         return self.create_query_engine(obj_index, TEXT_TO_SQL_PROMPT_TEMPLATE)
-
 
     def fix_sql_query_engine(self, obj_index: ObjectIndex, sql: str, error: str):
         TEXT_TO_SQL_PROMPT_TEMPLATE = (

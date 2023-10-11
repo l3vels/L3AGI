@@ -2,15 +2,17 @@ from pydantic import BaseModel, UUID4
 from typing import List, Optional
 from typings.user import UserOutput
 
+
 class AgentInput(BaseModel):
     name: str
     description: Optional[str]
-    agent_type:Optional[str]
+    agent_type: Optional[str]
     workspace_id: Optional[UUID4]
     role: Optional[str]
     is_memory: Optional[bool]
     # avatar: Optional[str]
     is_template: bool
+
 
 class ConfigInput(BaseModel):
     goals: List[str]
@@ -25,7 +27,7 @@ class ConfigInput(BaseModel):
     greeting: Optional[str]
     text: Optional[str]
 
-    
+
 class AgentConfigInput(BaseModel):
     agent: AgentInput
     configs: ConfigInput
@@ -62,11 +64,8 @@ class AgentOutput(BaseModel):
     modified_by: Optional[UUID4]
     is_memory: Optional[bool]
     avatar: Optional[str]
-    
+
+
 class AgentWithConfigsOutput(BaseModel):
     agent: AgentOutput
     configs: Optional[ConfigsOutput]
- 
-    
-    
-

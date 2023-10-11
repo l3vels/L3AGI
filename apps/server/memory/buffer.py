@@ -2,7 +2,14 @@ from __future__ import annotations
 from typing import Any, Dict, List
 from langchain.memory.chat_memory import BaseChatMemory
 from typing import Sequence
-from langchain.schema.messages import AIMessage, BaseMessage, ChatMessage, FunctionMessage, HumanMessage, SystemMessage
+from langchain.schema.messages import (
+    AIMessage,
+    BaseMessage,
+    ChatMessage,
+    FunctionMessage,
+    HumanMessage,
+    SystemMessage,
+)
 
 
 def get_buffer_string(
@@ -85,4 +92,3 @@ class ConversationBufferMemory(BaseChatMemory):
     def load_memory_variables(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """Return history buffer."""
         return {self.memory_key: self.buffer}
-
