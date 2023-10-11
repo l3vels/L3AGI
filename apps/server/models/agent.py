@@ -2,14 +2,13 @@ from __future__ import annotations
 from typing import List
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index
+from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey, Index
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
 from typings.agent import ConfigInput, AgentInput
 from models.agent_config import AgentConfigModel
 from exceptions import AgentNotFoundException
 from models.user import UserModel
-from sqlalchemy import Column, UUID, ForeignKey
 
 class AgentModel(BaseModel):
     """
@@ -215,7 +214,7 @@ class AgentModel(BaseModel):
             db.session.query(AgentModel)
             .filter(
                 or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
-                AgentModel.is_template is True,
+                AgentModel.is_template.is_(True),
             )
             .options(joinedload(AgentModel.creator))
             .options(
@@ -233,7 +232,7 @@ class AgentModel(BaseModel):
             .join(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
-                AgentModel.is_public is True,
+                AgentModel.is_public.is_(True),
             )
             .options(joinedload(AgentModel.creator))
             .options(
@@ -323,7 +322,7 @@ class AgentModel(BaseModel):
         Returns:
             Agent: Agent object is returned.
         """
-        # return db.session.query(AgentModel).filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted == False, AgentModel.is_deleted is None), AgentModel.is_deleted is None)).all()
+        # return db.session.query(AgentModel).filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None), AgentModel.is_deleted is None)).all()
         agents = (
             db.session.query(AgentModel)
             .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)

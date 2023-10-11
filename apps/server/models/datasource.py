@@ -172,7 +172,7 @@ class DatasourceModel(BaseModel):
         Returns:
             Datasource: Datasource object is returned.
         """
-        # return db.session.query(DatasourceModel).filter(DatasourceModel.account_id == account.id, or_(or_(DatasourceModel.is_deleted == False, DatasourceModel.is_deleted is None), DatasourceModel.is_deleted is None)).all()
+        # return db.session.query(DatasourceModel).filter(DatasourceModel.account_id == account.id, or_(or_(DatasourceModel.is_deleted.is_(False), DatasourceModel.is_deleted is None), DatasourceModel.is_deleted is None)).all()
         datasources = (
             db.session.query(DatasourceModel)
             .filter(

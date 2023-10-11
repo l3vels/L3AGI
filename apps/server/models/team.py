@@ -228,7 +228,7 @@ class TeamModel(BaseModel):
     @classmethod
     def get_team_with_agents(cls, db, account, id: str):
         # todo later need to filter by account_id
-        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
         filter_conditions = [
             or_(
                 or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None),
@@ -254,7 +254,7 @@ class TeamModel(BaseModel):
     @classmethod
     def get_team_with_agents_by_parent_id(cls, db, account, parent_id: str):
         # todo later need to filter by account_id
-        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
+        # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
         filter_conditions = [
             or_(
                 or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None),
@@ -290,11 +290,11 @@ class TeamModel(BaseModel):
         Returns:
             Team: Team object is returned.
         """
-        # return db.session.query(TeamModel).filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)).all()
+        # return db.session.query(TeamModel).filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None), TeamModel.is_deleted is None)).all()
         team = (
             db.session.query(TeamModel)
             .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
-            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
             .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .options(joinedload(TeamModel.configs))
@@ -317,7 +317,7 @@ class TeamModel(BaseModel):
         teams = (
             db.session.query(TeamModel)
             .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
-            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, 
+            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted.is_(False), 
                                                      TeamModel.is_deleted is None), 
                                                      TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
@@ -342,7 +342,7 @@ class TeamModel(BaseModel):
         teams = (
             db.session.query(TeamModel)
             .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
-            .filter(TeamModel.is_template == True, or_(or_(TeamModel.is_deleted == False,
+            .filter(TeamModel.is_deleted.is_(True), or_(or_(TeamModel.is_deleted.is_(False),
                                                            TeamModel.is_deleted is None),
                                                             TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
@@ -357,7 +357,7 @@ class TeamModel(BaseModel):
         teams = (
             db.session.query(TeamModel)
             .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
-            .filter(TeamModel.is_public == True, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .filter(TeamModel.is_public.is_(True), or_(or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .options(joinedload(TeamModel.creator))
             .options(joinedload(TeamModel.configs))

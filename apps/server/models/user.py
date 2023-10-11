@@ -116,7 +116,7 @@ class UserModel(RootBaseModel):
         Returns:
             User: User object is returned.
         """
-        # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
+        # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
         users = (
             db.session.query(UserModel)
             .filter(
@@ -142,7 +142,7 @@ class UserModel(RootBaseModel):
         Returns:
             User: User object is returned.
         """
-        # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
+        # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
         user = (
             db.session.query(UserModel)
             .filter(
@@ -157,7 +157,7 @@ class UserModel(RootBaseModel):
         
         # users = (
         #     db.session.query(UserModel)
-        #     .filter(UserModel.email == email, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None))
+        #     .filter(UserModel.email == email, or_(or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None), UserModel.is_deleted is None))
         #     .first()
         # )
         return user

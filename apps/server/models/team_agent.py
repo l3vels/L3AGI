@@ -183,7 +183,7 @@ class TeamAgentModel(BaseModel):
         Returns:
             TeamAgent: TeamAgent object is returned.
         """
-        # return db.session.query(TeamAgentModel).filter(TeamAgentModel.account_id == account.id, or_(or_(TeamAgentModel.is_deleted == False, TeamAgentModel.is_deleted is None), TeamAgentModel.is_deleted is None)).all()
+        # return db.session.query(TeamAgentModel).filter(TeamAgentModel.account_id == account.id, or_(or_(TeamAgentModel.is_deleted.is_(False), TeamAgentModel.is_deleted is None), TeamAgentModel.is_deleted is None)).all()
         team_agents = (
             db.session.query(TeamAgentModel)
             .filter(

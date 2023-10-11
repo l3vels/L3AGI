@@ -128,7 +128,7 @@ class UserAccountModel(BaseModel):
         Returns:
             UserAccount: UserAccount object is returned.
         """
-        # return db.session.query(UserAccountModel).filter(UserAccountModel.account_id == account.id, or_(or_(UserAccountModel.is_deleted == False, UserAccountModel.is_deleted is None), UserAccountModel.is_deleted is None)).all()
+        # return db.session.query(UserAccountModel).filter(UserAccountModel.account_id == account.id, or_(or_(UserAccountModel.is_deleted.is_(False), UserAccountModel.is_deleted is None), UserAccountModel.is_deleted is None)).all()
         user_accounts = (
             db.session.query(UserAccountModel)
             .filter(

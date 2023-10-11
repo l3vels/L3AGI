@@ -143,7 +143,7 @@ class ApiKeyModel(BaseModel):
         Returns:
             ApiKey: ApiKey object is returned.
         """
-        # return db.session.query(ApiKeyModel).filter(ApiKeyModel.account_id == account.id, or_(or_(ApiKeyModel.is_deleted == False, ApiKeyModel.is_deleted is None), ApiKeyModel.is_deleted is None)).all()
+        # return db.session.query(ApiKeyModel).filter(ApiKeyModel.account_id == account.id, or_(or_(ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None), ApiKeyModel.is_deleted is None)).all()
         api_keys = (
             db.session.query(ApiKeyModel)
             .filter(

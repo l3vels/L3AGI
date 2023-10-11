@@ -1,9 +1,6 @@
 from sqlalchemy import Column, Text, String, UUID, ForeignKey, Index
 from sqlalchemy.orm import relationship
-from sqlalchemy.exc import SQLAlchemyError
-from typing import Union
 
-from utils.encyption import decrypt_data
 from models.base_model import BaseModel
 import uuid
 from typings.team import ConfigInput
