@@ -9,6 +9,7 @@ from typings.agent import ConfigInput, AgentInput
 from models.agent_config import AgentConfigModel
 from exceptions import AgentNotFoundException
 from models.user import UserModel
+from models.workspace import WorkspaceModel
 
 class AgentModel(BaseModel):
     """
@@ -36,9 +37,7 @@ class AgentModel(BaseModel):
     parent_id = Column(
         UUID, ForeignKey("agent.id", ondelete="CASCADE"), nullable=True, index=True
     )
-    workspace_id = Column(
-        UUID, ForeignKey("workspace.id", ondelete="CASCADE"), nullable=True, index=True
-    )
+    workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True) 
     agent_type = Column(String)  # Later add as Enum
     description = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)
