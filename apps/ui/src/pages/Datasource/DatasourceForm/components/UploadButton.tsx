@@ -72,5 +72,5 @@ const StyledInput = styled.input`
 `
 
 const StyledFileIcon = styled(File)`
-  color: #fff;
+  color: ${({ theme }) => theme.body.iconColor};
 `
