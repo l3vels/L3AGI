@@ -39,4 +39,52 @@ class TeamOutput(BaseModel):
 class QueryParams(BaseModel):
     id: Optional[str]
     workspace_id: Optional[UUID4]
+    
+class ConfigInput(BaseModel):
+    goals: List[str]
+    constraints: List[str]
+    tools: List[str]
+    datasources: List[str]
+    model_provider: str
+    model_version: str
+    temperature: float
+    instructions: List[str]
+    suggestions: Optional[List[str]]
+    greeting: Optional[str]
+    text: Optional[str]
+
+    
+class TeamConfigInput(BaseModel):
+    team: TeamOfAgentsInput
+    configs: ConfigInput
+    
+class ConfigsOutput(BaseModel):
+    goals: List[str]
+    constraints: List[str]
+    tools: List[str]
+    datasources: List[str]
+    model_provider: str
+    model_version: str
+    temperature: float
+    instructions: List[str]
+    suggestions: Optional[List[str]]
+    greeting: Optional[str]
+    text: Optional[str]
+    
+class TeamWithConfigsOutput(BaseModel):
+    team: TeamOutput
+    configs: Optional[ConfigsOutput]
+
+class ConfigsOutput(BaseModel):
+    goals: List[str]
+    constraints: List[str]
+    tools: List[str]
+    datasources: List[str]
+    model_provider: str
+    model_version: str
+    temperature: float
+    instructions: List[str]
+    suggestions: Optional[List[str]]
+    greeting: Optional[str]
+    text: Optional[str]
 

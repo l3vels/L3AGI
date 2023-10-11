@@ -7,9 +7,8 @@ from models.team import TeamModel
 from models.team_agent import TeamAgentModel
 from utils.auth import authenticate
 from utils.team import convert_teams_to_team_list, convert_model_to_response
-from typings.team import TeamOutput, TeamOfAgentsInput
+from typings.team import TeamOutput, TeamOfAgentsInput, TeamWithConfigsOutput, TeamConfigInput
 from typings.team_agent import TeamAgentInput
-from utils.auth import authenticate
 from typings.auth import UserAccount
 from exceptions import TeamNotFoundException
 from agents.team_base import TeamOfAgentsType
@@ -17,8 +16,8 @@ from utils.team import convert_teams_to_team_list, convert_model_to_response
 
 router = APIRouter()
 
-@router.post("", status_code=201, response_model=TeamOutput)
-def create_team(team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+@router.post("", status_code=201, response_model=TeamWithConfigsOutput)
+def create_team(team_with_configs: TeamConfigInput, auth: UserAccount = Depends(authenticate)) -> TeamWithConfigsOutput:
     """
     Create a new team with configurations.
 
@@ -27,19 +26,23 @@ def create_team(team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticat
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamOutput: Created team object.
+        TeamWithConfigsOutput: Created team object.
     """
     # Consider adding try-except for error handling during creation if needed
-    db_team = TeamModel.create_team(db, team=team, user=auth.user, account=auth.account)
+    db_team = TeamModel.create_team(db, 
+                                    team=team_with_configs.team, 
+                                    configs=team_with_configs.configs,
+                                    user=auth.user, 
+                                    account=auth.account)
 
-    team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
+    team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team_with_configs.team.team_agents]
     TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
 
     return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id))
 
 
-@router.put("/{id}", status_code=200, response_model=TeamOutput)  # Changed status code to 200
-def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+@router.put("/{id}", status_code=200, response_model=TeamWithConfigsOutput)  # Changed status code to 200
+def update_team(id: str, team_with_configs: TeamConfigInput,  auth: UserAccount = Depends(authenticate)) -> TeamWithConfigsOutput:
     """
     Update an existing team with configurations.
 
@@ -49,16 +52,17 @@ def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(au
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamOutput: Updated team object.
+        TeamWithConfigsOutput: Updated team object.
     """
     try:
         db_team = TeamModel.update_team(db, 
-                                           id=id, 
-                                           team=team, 
-                                           user=auth.user, 
-                                           account=auth.account)
+                                        id=id, 
+                                        team=team_with_configs.team, 
+                                        configs=team_with_configs.configs,
+                                        user=auth.user, 
+                                        account=auth.account)
         
-        team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team.team_agents]
+        team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team_with_configs.team.team_agents]
         TeamAgentModel.delete_by_team_id(db, id, auth.account)
         TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
 
@@ -68,8 +72,8 @@ def update_team(id: str, team: TeamOfAgentsInput, auth: UserAccount = Depends(au
         raise HTTPException(status_code=404, detail="Team not found")
     
     
-@router.post("/from-template/{template_id}", status_code=201, response_model=TeamOutput)  # Changed status code to 200
-def create_team_from_template(template_id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+@router.post("/from-template/{template_id}", status_code=201, response_model=TeamWithConfigsOutput)  # Changed status code to 200
+def create_team_from_template(template_id: str, auth: UserAccount = Depends(authenticate)) -> TeamWithConfigsOutput:
     """
     Update an existing team with configurations.
 
@@ -79,7 +83,7 @@ def create_team_from_template(template_id: str, auth: UserAccount = Depends(auth
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamOutput: Updated team object.
+        TeamWithConfigsOutput: Updated team object.
     """
     try:
         new_team = TeamModel.create_team_from_template(db, 
@@ -94,8 +98,8 @@ def create_team_from_template(template_id: str, auth: UserAccount = Depends(auth
         raise HTTPException(status_code=404, detail="Team not found")
     
     
-@router.get("", response_model=List[TeamOutput])
-def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamOutput]:
+@router.get("", response_model=List[TeamWithConfigsOutput])
+def get_teams(auth: UserAccount = Depends(authenticate)) -> List[TeamWithConfigsOutput]:
     """
     Get all teams by account ID.
 
@@ -212,8 +216,8 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         "agents": []
     }]
     
-@router.get("/from-template/is-created/{parent_id}", response_model=TeamOutput)
-def get_team_by_id(parent_id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+@router.get("/from-template/is-created/{parent_id}", response_model=TeamWithConfigsOutput)
+def get_team_by_id(parent_id: str, auth: UserAccount = Depends(authenticate)) -> TeamWithConfigsOutput:
     """
     Get a team by its ID.
 
@@ -222,7 +226,7 @@ def get_team_by_id(parent_id: str, auth: UserAccount = Depends(authenticate)) ->
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        TeamOutput: Team associated with the given ID.
+        TeamWithConfigsOutput: Team associated with the given ID.
     """
     db_team = TeamModel.get_team_with_agents_by_parent_id(db, parent_id=parent_id, account=auth.account)
     
@@ -231,8 +235,8 @@ def get_team_by_id(parent_id: str, auth: UserAccount = Depends(authenticate)) ->
 
     return convert_model_to_response(db_team)
 
-@router.get("/{id}", response_model=TeamOutput)
-def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+@router.get("/{id}", response_model=TeamWithConfigsOutput)
+def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamWithConfigsOutput:
     """
     Get a team by its ID.
 
@@ -250,7 +254,7 @@ def get_team_by_id(id: str, auth: UserAccount = Depends(authenticate)) -> TeamOu
 
     return convert_model_to_response(db_team)
 
-@router.get("/discover/{id}", response_model=TeamOutput)
+@router.get("/discover/{id}", response_model=TeamWithConfigsOutput)
 def get_discover_team_by_id(id: str) -> TeamOutput:
     """
     Get a team by its ID.

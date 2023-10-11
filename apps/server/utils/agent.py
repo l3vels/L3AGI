@@ -34,7 +34,7 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput
 
     
     return AgentWithConfigsOutput(agent=AgentOutput(**agent_data), 
-                                    configs= ConfigsOutput(**configs) if configs else None )
+                                    configs= ConfigsOutput(**configs) if configs else None)
 
 
 def convert_agents_to_agent_list(agents: List[AgentModel]) -> List[AgentWithConfigsOutput]:

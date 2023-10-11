@@ -1,17 +1,15 @@
 from __future__ import annotations
-from typing import List, Optional
+from typing import List
 import uuid
 
 from sqlalchemy import Column, String, Boolean, UUID, func, or_, ForeignKey, Index
-from sqlalchemy.orm import relationship, joinedload, foreign
+from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
 from typings.agent import ConfigInput, AgentInput
 from models.agent_config import AgentConfigModel
 from exceptions import AgentNotFoundException
 from models.user import UserModel
-from sqlalchemy import Column, DateTime, UUID, ForeignKey
-from datetime import datetime
-from models.base_model import RootBaseModel
+from sqlalchemy import Column, UUID, ForeignKey
 
 class AgentModel(BaseModel):
     """

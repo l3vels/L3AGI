@@ -5,11 +5,10 @@ from typing import List, Dict
 # Third-party imports
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel
 
 # Local application imports
 from models.agent import AgentModel
-from typings.agent import AgentConfigInput, AgentWithConfigsOutput, AgentOutput
+from typings.agent import AgentConfigInput, AgentWithConfigsOutput
 from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
