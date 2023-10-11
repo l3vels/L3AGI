@@ -62,14 +62,16 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
   justify-content: flex-start;
   padding: 24px 16px 8px;
   gap: 8px;
-  width: 260px;
-  min-width: 260px;
+  width: 248px;
+  min-width: 248px;
   height: 158px;
   min-height: 158px;
   background: ${({ theme }) => theme.body.toolkitCardBgColorPrimary};
   background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
   backdrop-filter: blur(8px);
-  border: ${({ theme }) => theme.body.border};
+  /* border: ${({ theme }) => theme.body.border}; */
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+
   border-radius: 16px;
   background-image: ${p =>
     p.bgImg &&
@@ -85,6 +87,8 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
       pointer-events: none;
       opacity: 0.6;
       background: ${({ theme }) => theme.body.toolkitCardBgColorTertiary};
+      border: ${({ theme }) => theme.body.border};
+      box-shadow: none;
     `};
 
   ${p =>

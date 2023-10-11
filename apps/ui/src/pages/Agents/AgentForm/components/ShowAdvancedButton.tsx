@@ -14,7 +14,7 @@ const ShowAdvancedButton = ({ onClick, isShow }: { onClick: () => void; isShow: 
         type={Typography.types.LABEL}
         size={Typography.sizes.md}
       />
-      {isShow ? <StyledNavigationChevronDown /> : <StyledNavigationChevronUp />}
+      {isShow ? <StyledNavigationChevronUp /> : <StyledNavigationChevronDown />}
     </StyledAdvancedButton>
   )
 }
