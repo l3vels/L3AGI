@@ -16,7 +16,7 @@ const UploadedFile = ({ id, name, onClick, hasDeleteIcon = false }: UploadedFile
   return (
     <StyledUploadedFile onClick={() => onClick(id)}>
       <StyledIconWrapper>
-        <Doc />
+        <StyledDocIcon />
       </StyledIconWrapper>
       <StyledTextWrapper>
         <Typography
@@ -29,7 +29,7 @@ const UploadedFile = ({ id, name, onClick, hasDeleteIcon = false }: UploadedFile
       {hasDeleteIcon && (
         <IconButton
           size={IconButton.sizes.XS}
-          icon={() => <Close />}
+          icon={() => <StyledCloseIcon size='22' />}
           kind={IconButton.kinds.TERTIARY}
           ariaLabel='Delete'
         />
@@ -75,4 +75,15 @@ const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+const StyledDocIcon = styled(Doc)`
+  path {
+    fill: ${({ theme }) => theme.body.secondaryIconColor};
+  }
+`
+
+const StyledCloseIcon = styled(Close)`
+  path {
+    stroke: ${({ theme }) => theme.body.tertiaryIconColor};
+  }
 `
