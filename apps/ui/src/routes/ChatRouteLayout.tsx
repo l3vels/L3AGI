@@ -299,7 +299,7 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasCh
   gap: 5px;
 
   padding: 20px 10px;
-  padding-left: 100px;
+  padding-left: 120px;
 
   height: 100%;
   min-width: 450px;

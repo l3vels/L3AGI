@@ -35,11 +35,19 @@ const Home = () => {
       <StyledInnerWrapperEdit>
         {user ? (
           <>
-            <GetStartedComponent />
+            {/* <GetStartedComponent /> */}
+            <StyledHeadingWrapper>
+              <HeadingPrimary type={Heading.types.h1} value='BUILD TEAMS OF AI AGENTS' />
+              <TypographySecondary
+                value='Open-source tool that enables AI agents to collaborate as effectively as human teams'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            </StyledHeadingWrapper>
             <StyledWrapper>
               {teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />}
 
-              {agentsData?.length > 0 ? <Agents isHome /> : <DiscoverSystemAgents />}
+              {agentsData?.length > 0 && <Agents isHome />}
             </StyledWrapper>
           </>
         ) : (
