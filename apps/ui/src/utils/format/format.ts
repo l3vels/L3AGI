@@ -7,5 +7,5 @@ export function shortenTransactionHash(hash: string) {
 }
 
 function shortenText(text: string, { head, tail }: { head: number; tail: number }) {
-  return `${text.slice(0, head)}...${text.slice(-tail)}`
+  return `${text?.slice(0, head) || ''}...${text?.slice(-tail) || ''}`
 }
