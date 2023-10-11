@@ -104,11 +104,13 @@ const HeaderButtons = () => {
             <StyledImageWrapper>
               <StyledImg src={githubIcon} />
             </StyledImageWrapper>
-            <TypographyPrimary
-              value='Github'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-            />
+            {!location.pathname.includes('/chat') && (
+              <TypographyPrimary
+                value='Start us on Github!'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            )}
           </StyledInnerButtonWrapper>
         </ButtonTertiary>
       </Tooltip>
