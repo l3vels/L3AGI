@@ -8,7 +8,7 @@ export const textSlicer = (text: string, maxLength: number) => {
   }
 
   // Add "..." if the original text is longer than maxLength
-  if (text.length > maxLength) {
+  if (text?.length > maxLength) {
     shortText += '...'
   }
 
