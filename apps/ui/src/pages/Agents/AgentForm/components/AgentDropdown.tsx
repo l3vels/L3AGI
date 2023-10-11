@@ -99,4 +99,14 @@ const StyledWrapper = styled.div`
       background: ${({ theme }) => theme.body.placeHolderColor};
     }
   }
+  .clear-indicator.css-1rycjgo {
+    path {
+      fill: ${({ theme }) => theme.body.iconColor};
+    }
+  }
+  .dropdown-indicator.css-12prnvf-indicatorContainer{
+    path{
+      fill:${({ theme }) => theme.body.iconColor}}
+    }
+  }
 `
