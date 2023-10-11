@@ -104,7 +104,9 @@ const StyledCard = styled.div`
   min-width: 245px;
   height: 170px;
   min-height: 170px;
-  border: ${({ theme }) => theme.body.border};
+  /* border: ${({ theme }) => theme.body.border}; */
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+
   background: ${({ theme }) => theme.body.cardBgColor};
   /* background: rgba(0, 0, 0, 0.4); */
 
