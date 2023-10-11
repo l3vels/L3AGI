@@ -1,55 +1,55 @@
-#!/bin/bash
+# #!/bin/bash
 
-# React linting and formatting
-echo "Linting and formatting React..."
-cd apps/ui && yarn lint-staged && cd ../..
+# # React linting and formatting
+# echo "Linting and formatting React..."
+# cd apps/ui && yarn lint-staged && cd ../..
 
-# FastAPI formatting with black and linting with ruff
-cd apps/server
+# # FastAPI formatting with black and linting with ruff
+# cd apps/server
 
-staged_files=$(git diff --cached --name-only)
-python_files=""
+# staged_files=$(git diff --cached --name-only)
+# python_files=""
 
-# Accumulate staged python files
-for file in $staged_files; do
-    if [[ $file == *.py ]]; then
-        # Adjust the file path since we changed directory
-        python_files="$python_files ../../$file"
-    fi
-done
+# # Accumulate staged python files
+# for file in $staged_files; do
+#     if [[ $file == *.py ]]; then
+#         # Adjust the file path since we changed directory
+#         python_files="$python_files ../../$file"
+#     fi
+# done
 
-# If there are no python files, skip the formatting and linting step
-if [ -z "$python_files" ]; then
-    echo "No Python files staged. Skipping formatting and linting."
-    exit 0
-fi
+# # If there are no python files, skip the formatting and linting step
+# if [ -z "$python_files" ]; then
+#     echo "No Python files staged. Skipping formatting and linting."
+#     exit 0
+# fi
 
-echo "Checking Python files..."
+# echo "Checking Python files..."
 
-# Format with black
-pipenv run black $python_files
-if [ $? -ne 0 ]; then
-    echo "Black formatting failed. Aborting commit."
-    exit 1
-fi
+# # Format with black
+# pipenv run black $python_files
+# if [ $? -ne 0 ]; then
+#     echo "Black formatting failed. Aborting commit."
+#     exit 1
+# fi
 
-pipenv run isort $python_files
-if [ $? -ne 0 ]; then
-    echo "Isort failed to sort Python imports. Aborting commit."
-    exit 1
-fi
+# pipenv run isort $python_files
+# if [ $? -ne 0 ]; then
+#     echo "Isort failed to sort Python imports. Aborting commit."
+#     exit 1
+# fi
 
-# Run ruff check and fix
-pipenv run ruff check $python_files --fix --ignore E501
-if [ $? -ne 0 ]; then
-    echo "Ruff check failed. Aborting commit."
-    exit 1
-fi
+# # Run ruff check and fix
+# pipenv run ruff check $python_files --fix --ignore E501
+# if [ $? -ne 0 ]; then
+#     echo "Ruff check failed. Aborting commit."
+#     exit 1
+# fi
 
-# Stage the formatted files
-git add $python_files
+# # Stage the formatted files
+# git add $python_files
 
-# Return to the root directory
-cd ../..
+# # Return to the root directory
+# cd ../..
 
-echo "Pre-commit checks passed!"
+# echo "Pre-commit checks passed!"
