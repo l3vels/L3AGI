@@ -1,6 +1,6 @@
 import { Field } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
-import { useTheme } from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 const FormikTextField = ({
   field_name,
@@ -49,7 +49,7 @@ const FormikTextField = ({
             placeholder={placeholder ?? 'Please enter value'}
             size={size}
             onChange={onHandleChange}
-            title={title || label}
+            title={<StyledTitle>{title || label}</StyledTitle>}
             disabled={disabled}
             color={theme.textFiled.primary}
             validation={{
@@ -66,3 +66,7 @@ const FormikTextField = ({
 }
 
 export default FormikTextField
+
+const StyledTitle = styled.div`
+  color: ${({ theme }) => theme.typography.contentPrimary};
+`

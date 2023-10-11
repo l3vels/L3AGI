@@ -10,16 +10,16 @@ const ComponentsWrapper = ({
   hideBox?: boolean
 }) => {
   return (
-    <StyledMainWrapper id='components_wrapper' noPadding={noPadding} hideBox={hideBox}>
+    <StyledSecondaryWrapper id='components_wrapper' noPadding={noPadding} hideBox={hideBox}>
       {children}
-    </StyledMainWrapper>
+    </StyledSecondaryWrapper>
   )
 }
 
 export default ComponentsWrapper
 
-const StyledMainWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
-  background: ${({ theme }) => theme.body.componentsWrapperBg};
+const StyledSecondaryWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
+  background: ${({ theme }) => theme.body.componentsSecondaryWrapperBg};
   box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
     inset 0px 1px 1px rgba(255, 255, 255, 0.25);
   border-radius: 27.5px;

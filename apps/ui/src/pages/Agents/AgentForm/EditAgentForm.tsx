@@ -9,11 +9,11 @@ import { useEditAgent } from '../useEditAgent'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from './CreateAgentForm'
 import AgentForm from './AgentForm'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
+import ComponentsSecondaryWrapper from 'components/ComponentsSecondaryWrapper/Wrapper'
 
 const EditAgentForm = () => {
   const { formik, handleSubmit, isLoading } = useEditAgent()
@@ -41,11 +41,11 @@ const EditAgentForm = () => {
           </StyledButtonWrapper>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
+        <ComponentsSecondaryWrapper noPadding>
           <StyledFormWrapper>
             <AgentForm formik={formik} />
           </StyledFormWrapper>
-        </ComponentsWrapper>
+        </ComponentsSecondaryWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

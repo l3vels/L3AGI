@@ -57,7 +57,7 @@ const StyledImg = styled.img`
   right: 0px;
   bottom: 0px;
   // box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.15);
-  // border-radius: 4px 0px 0px 0px;
+  border-radius: 4px 0px 0px 0px;
 `
 const StyledTextWrapper = styled.div`
   display: flex;
