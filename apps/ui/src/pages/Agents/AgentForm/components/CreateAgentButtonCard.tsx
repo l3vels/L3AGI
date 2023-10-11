@@ -5,6 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import TypographyPrimary from 'components/Typography/Primary'
+import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 
 type CreateAgentButtonCardProps = {
   onClick: () => void
@@ -19,7 +20,7 @@ const CreateAgentButtonCard = ({ onClick }: CreateAgentButtonCardProps) => {
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
         />
-        <Add size={60} />
+        <StyledAddIcon size={60} />
       </StyledInnerWrapper>
     </StyledAgentCard>
   )

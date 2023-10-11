@@ -28,6 +28,7 @@ import TeamOfAgentsDetailsBox from './components/TeamOfAgentsDetailsBox'
 import { useModal } from 'hooks'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
+import { StyledEyeOpenIcon } from './TeamOfAgentsCard/TeamOfAgentsCard'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()
@@ -106,7 +107,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                         }
                         icon={() => (
                           <StyledIconWrapper className='hiddenButton'>
-                            <EyeOpen size={50} />
+                            <StyledEyeOpenIcon size={50} />
                           </StyledIconWrapper>
                         )}
                         size={IconButton.sizes.SMALL}
