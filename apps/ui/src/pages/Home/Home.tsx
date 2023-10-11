@@ -47,7 +47,7 @@ const Home = () => {
             <StyledWrapper>
               {teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />}
 
-              {agentsData?.length > 0 ? <Agents isHome /> : <DiscoverSystemAgents />}
+              {agentsData?.length > 0 && <Agents isHome />}
             </StyledWrapper>
           </>
         ) : (
