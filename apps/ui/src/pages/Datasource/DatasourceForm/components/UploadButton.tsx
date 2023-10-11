@@ -61,6 +61,8 @@ const StyledUploadButton = styled.div<{ disabled?: boolean }>`
   justify-content: center;
   gap: 13px;
   cursor: pointer;
+  border: ${({ theme }) => theme.body.border};
+  background: ${({ theme }) => theme.body.textAreaBgColor};
   // Use the default value for disabled if it's not provided
   pointer-events: ${props => (props.disabled === true ? 'none' : 'auto')};
 `
