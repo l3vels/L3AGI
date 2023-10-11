@@ -40,6 +40,23 @@ Run server with hot reload
 docker run -p 4000:4000 -v .:/code l3_ai_api
 ```
 
+## Linting
+
+We use `Ruff` for linting and we run it periodically. To run it locally:
+
+```commandline
+ruff check . --ignore E501
+```
+
+## Formatting
+
+We use `Black` formatter for Python. We format files before committing.
+To run it locally:
+
+```commandline
+black .
+```
+
 ## Migrations
 
 We use `Alembic` for migrations. To create new migration run:

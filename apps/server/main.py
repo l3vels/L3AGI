@@ -21,12 +21,12 @@ from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
 from controllers.tool import router as tool_router
 from controllers.workspace import router as workspace_router
+from models import *  # noqa: F403
 from models.db import Base, engine
 from resolvers.account import AccountMutation, AccountQuery
 from resolvers.context import get_context
 from resolvers.user import UserMutation, UserQuery
 from typings.auth import AuthJWTSettings
-
 
 app = FastAPI()
 
