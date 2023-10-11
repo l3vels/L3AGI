@@ -11,6 +11,7 @@ from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from agents.handle_agent_errors import handle_agent_error
 
+
 class ConversationalAgent(BaseAgent):
     def run(
         self,
@@ -38,7 +39,11 @@ class ConversationalAgent(BaseAgent):
         model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
         temperature = agent_with_configs.configs.temperature
 
-        llm = ChatOpenAI(openai_api_key=settings.openai_api_key,temperature=temperature, model_name=model_name)
+        llm = ChatOpenAI(
+            openai_api_key=settings.openai_api_key,
+            temperature=temperature,
+            model_name=model_name,
+        )
 
         agent = initialize_agent(
             tools,
@@ -53,22 +58,26 @@ class ConversationalAgent(BaseAgent):
             },
         )
 
-
         res: str
 
         try:
             res = agent.run(prompt)
         except Exception as err:
             res = handle_agent_error(err)
-            
-            memory.save_context({
-                'input': prompt,
-                'chat_history': memory.load_memory_variables({})['chat_history'],
-            }, {
-                'output': res,
-            })
-        
-        ai_message = history.create_ai_message(res, human_message_id, agent_with_configs.agent.id)
+
+            memory.save_context(
+                {
+                    "input": prompt,
+                    "chat_history": memory.load_memory_variables({})["chat_history"],
+                },
+                {
+                    "output": res,
+                },
+            )
+
+        ai_message = history.create_ai_message(
+            res, human_message_id, agent_with_configs.agent.id
+        )
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return res

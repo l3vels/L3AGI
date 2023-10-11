@@ -12,7 +12,7 @@ router = APIRouter()
 def generate_presigned_url(file: FileInput, auth: UserAccount = Depends(authenticate)):
     """Generate presigned url for frontend to upload file to S3."""
 
-    name, ext = file.name.rsplit('.', 1)
+    name, ext = file.name.rsplit(".", 1)
     key = f"account_{auth.account.id}/files/{name}-{uuid4()}.{ext}"
 
     signed_url = AWSS3Service.generate_presigned_url(key=key, content_type=file.type)

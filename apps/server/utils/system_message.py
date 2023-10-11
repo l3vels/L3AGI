@@ -3,6 +3,7 @@ from typings.agent import AgentWithConfigsOutput
 from models.datasource import DatasourceModel
 from fastapi_sqlalchemy import db
 
+
 class SystemMessageBuilder:
     def __init__(self, agent_with_configs: AgentWithConfigsOutput):
         self.agent = agent_with_configs.agent
@@ -10,9 +11,9 @@ class SystemMessageBuilder:
 
     def build(self) -> str:
         result = ""
-        
+
         datasources = self.build_datasources(self.configs.datasources)
-        
+
         if self.configs.text is not None and self.configs.text != "":
             result = f"{self.configs.text}\n{datasources}"
             return result
@@ -26,47 +27,57 @@ class SystemMessageBuilder:
         result = f"{role}{description}{goals}{instructions}{constraints}{datasources}"
         return result
 
-
     def build_role(self, role: Optional[str]):
         if role is None or role == "":
             return ""
-        
+
         return f"ROLE: {role}\n"
-    
+
     def build_description(self, description: Optional[str]):
         if description is None or description == "":
             return ""
-        
+
         return f"DESCRIPTION: {description}\n"
 
     def build_goals(self, goals: List[str]):
         if len(goals) == 0:
             return ""
-        
+
         goals = "GOALS: \n" + "\n".join(f"- {goal}" for goal in goals) + "\n"
         return goals
-    
+
     def build_instructions(self, instructions: List[str]):
         if len(instructions) == 0:
             return ""
-        
-        instructions = "INSTRUCTIONS: \n" + "\n".join(f"- {instruction}" for instruction in instructions) + "\n"
+
+        instructions = (
+            "INSTRUCTIONS: \n"
+            + "\n".join(f"- {instruction}" for instruction in instructions)
+            + "\n"
+        )
         return instructions
-    
+
     def build_constraints(self, constraints: List[str]):
         if len(constraints) == 0:
             return ""
-        
-        constraints = "CONSTRAINTS: \n" + "\n".join(f"- {constraint}" for constraint in constraints) + "\n"
+
+        constraints = (
+            "CONSTRAINTS: \n"
+            + "\n".join(f"- {constraint}" for constraint in constraints)
+            + "\n"
+        )
         return constraints
-    
+
     def build_datasources(self, datasource_ids: List[str]):
         """Builds the data sources section of the system message."""
         if len(datasource_ids) == 0:
             return ""
-        
-        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(datasource_ids)).all()
 
+        datasources = (
+            db.session.query(DatasourceModel)
+            .filter(DatasourceModel.id.in_(datasource_ids))
+            .all()
+        )
 
         result = (
             "DATASOURCES:"
@@ -76,7 +87,7 @@ class SystemMessageBuilder:
 
         for datasource in datasources:
             result += f"- Datasource Type: {datasource.source_type}, Datasource Name: {datasource.name}, Useful for: {datasource.description}, Datasource Id for tool: {datasource.id}  \n"
-        
+
         result += "\n"
 
         return result

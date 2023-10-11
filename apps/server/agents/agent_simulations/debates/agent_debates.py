@@ -7,24 +7,28 @@ from langchain.schema import (
 )
 from fastapi_sqlalchemy import db
 from services.pubsub import ChatPubSubService
-from agents.agent_simulations.agent.dialogue_agent import DialogueAgent, DialogueSimulator
-from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
+from agents.agent_simulations.agent.dialogue_agent import (
+    DialogueAgent,
+    DialogueSimulator,
+)
+from agents.agent_simulations.agent.dialogue_agent_with_tools import (
+    DialogueAgentWithTools,
+)
 
 from agents.base_agent import BaseAgent
 from postgres import PostgresChatMessageHistory
 from typings.agent import AgentWithConfigsOutput
 from models.team import TeamModel
 from utils.system_message import SystemMessageBuilder
-from utils.agent import convert_model_to_response
 from typings.config import AccountSettings
 from tools.get_tools import get_agent_tools
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from models.datasource import DatasourceModel
-from agents.handle_agent_errors import handle_agent_error
 from config import Config
 from memory.zep.zep_memory import ZepMemory
 from models.config import ConfigModel
 from typings.chat import ChatStatus
+
 
 class AgentDebates(BaseAgent):
     def __init__(
@@ -33,18 +37,22 @@ class AgentDebates(BaseAgent):
         chat_pubsub_service: ChatPubSubService,
         sender_name: str,
         provider_account,
-        session_id,     
+        session_id,
         word_limit: Optional[int] = 50,
     ) -> None:
-        super().__init__(sender_name=sender_name, provider_account=provider_account, session_id=session_id)
+        super().__init__(
+            sender_name=sender_name,
+            provider_account=provider_account,
+            session_id=session_id,
+        )
         self.word_limit = word_limit
         self.settings = settings
         self.chat_pubsub_service = chat_pubsub_service
- 
+
     def select_next_speaker(self, step: int, agents: List[DialogueAgent]) -> int:
         idx = (step) % len(agents)
-        return idx  
-    
+        return idx
+
     def generate_specified_prompt(self, topic, agent_summary, team):
         description = """
         Here is user request: {user_input}                
@@ -54,32 +62,51 @@ class AgentDebates(BaseAgent):
         Speak directly to the participants: {agents}.
         Focus on your tools, and data which is provided, don't create any temp game
         Do not add anything else."""
-        
+
         if team.description:
             description = team.description
-        
-        content = description.format(user_input=topic, word_limit=self.word_limit, agents=agent_summary)  
+
+        content = description.format(
+            user_input=topic, word_limit=self.word_limit, agents=agent_summary
+        )
 
         topic_specifier_prompt = [
             SystemMessage(content="You can make a topic more specific."),
             HumanMessage(content=content),
         ]
-        specified_topic = ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=1.0, model_name="gpt-4")(topic_specifier_prompt).content
+        specified_topic = ChatOpenAI(
+            openai_api_key=self.settings.openai_api_key,
+            temperature=1.0,
+            model_name="gpt-4",
+        )(topic_specifier_prompt).content
         return specified_topic
-        
 
-    def get_tools(self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings):
-        datasources = db.session.query(DatasourceModel).filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources)).all()
-        datasource_tools = get_datasource_tools(datasources, settings, self.provider_account)
-        agent_tools = get_agent_tools(agent_with_configs.configs.tools, db, self.provider_account, settings)
+    def get_tools(
+        self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings
+    ):
+        datasources = (
+            db.session.query(DatasourceModel)
+            .filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources))
+            .all()
+        )
+        datasource_tools = get_datasource_tools(
+            datasources, settings, self.provider_account
+        )
+        agent_tools = get_agent_tools(
+            agent_with_configs.configs.tools, db, self.provider_account, settings
+        )
         return datasource_tools + agent_tools
 
-    def run(self,
-            topic: str,            
-            team: TeamModel, 
-            agents_with_configs: List[AgentWithConfigsOutput],   
-            history: PostgresChatMessageHistory):        
-        specified_topic= topic #self.generate_specified_prompt(topic, agent_summary_string, team)
+    def run(
+        self,
+        topic: str,
+        team: TeamModel,
+        agents_with_configs: List[AgentWithConfigsOutput],
+        history: PostgresChatMessageHistory,
+    ):
+        specified_topic = (
+            topic  # self.generate_specified_prompt(topic, agent_summary_string, team)
+        )
 
         print(f"Original topic:\n{topic}\n")
         print(f"Detailed topic:\n{specified_topic}\n")
@@ -102,11 +129,17 @@ class AgentDebates(BaseAgent):
             DialogueAgentWithTools(
                 name=agent_with_config.agent.name,
                 agent_with_configs=agent_with_config,
-                system_message=SystemMessage(content=SystemMessageBuilder(agent_with_config).build()),
-                #later need support other llms
-                model=ChatOpenAI(openai_api_key=self.settings.openai_api_key, temperature=agent_with_config.configs.temperature, 
-                                 model_name=agent_with_config.configs.model_version 
-                                 if agent_with_config.configs.model_version else "gpt-4"),
+                system_message=SystemMessage(
+                    content=SystemMessageBuilder(agent_with_config).build()
+                ),
+                # later need support other llms
+                model=ChatOpenAI(
+                    openai_api_key=self.settings.openai_api_key,
+                    temperature=agent_with_config.configs.temperature,
+                    model_name=agent_with_config.configs.model_version
+                    if agent_with_config.configs.model_version
+                    else "gpt-4",
+                ),
                 tools=self.get_tools(agent_with_config, self.settings),
                 top_k_results=2,
                 session_id=self.session_id,
@@ -119,30 +152,35 @@ class AgentDebates(BaseAgent):
         max_iters = 6
         n = 0
 
-        simulator = DialogueSimulator(agents=dialogue_agents, selection_function=self.select_next_speaker, is_memory=team.is_memory)
+        simulator = DialogueSimulator(
+            agents=dialogue_agents,
+            selection_function=self.select_next_speaker,
+            is_memory=team.is_memory,
+        )
         simulator.reset()
         simulator.inject("Moderator", specified_topic)
 
         while n < max_iters:
-            status_config = ConfigModel.get_config_by_session_id(db, self.session_id, self.provider_account)
-            
+            status_config = ConfigModel.get_config_by_session_id(
+                db, self.session_id, self.provider_account
+            )
+
             if status_config.value == ChatStatus.STOPPED.value:
                 break
 
             agent_id, agent_name, message = simulator.step()
-            
+
             db.session.refresh(status_config)
 
             if status_config.value == ChatStatus.STOPPED.value:
                 break
 
             ai_message = history.create_ai_message(message, None, agent_id)
-            
+
             if team.is_memory:
                 memory.ai_name = agent_name
                 memory.save_ai_message(message)
-            
+
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
             n += 1
- 

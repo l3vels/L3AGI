@@ -4,14 +4,16 @@ from pydantic import BaseModel, Field, validator
 from tools.base import BaseTool
 from enum import Enum
 
+
 class DatasourceEnvKeyType(Enum):
-    STRING = 'string'
-    FILE = 'file'
-    FILES = 'files'
-    INT = 'int'
+    STRING = "string"
+    FILE = "file"
+    FILES = "files"
+    INT = "int"
 
     def __str__(self):
         return self.value
+
 
 class DatasourceEnvKey(BaseModel):
     label: str = Field()
@@ -20,7 +22,7 @@ class DatasourceEnvKey(BaseModel):
     is_required: bool = Field(default=False)
     is_secret: bool = Field(default=False)
 
-    @validator('is_secret', 'is_required', pre=True, always=True)
+    @validator("is_secret", "is_required", pre=True, always=True)
     def check_bool(cls, v):
         """Check if the value is a boolean."""
         if v is None:
@@ -30,7 +32,7 @@ class DatasourceEnvKey(BaseModel):
         else:
             raise ValueError("Value should be a boolean")
 
-    @validator('key_type', pre=True, always=True)
+    @validator("key_type", pre=True, always=True)
     def check_key_type(cls, v):
         """Check if the value is a boolean."""
         if v is None:
@@ -40,23 +42,24 @@ class DatasourceEnvKey(BaseModel):
         else:
             raise ValueError("key_type should be string/file/integer")
 
+
 class DatasourceCategory(Enum):
-    DATABASE = 'Database'
-    FILE = 'File'
-    APPLICATION = 'Application'
-    CRAWLER = 'Crawler'
-    
+    DATABASE = "Database"
+    FILE = "File"
+    APPLICATION = "Application"
+    CRAWLER = "Crawler"
 
     def __str__(self):
         return self.value
-    
+
+
 class DatasourceType(Enum):
-    POSTGRES = 'Postgres'
-    MYSQL = 'MySQL'
-    FILE = 'File'
-    WEB_PAGE = 'Web Page'
-    NOTION = 'Notion'
-    SHOPIFY = 'Shopify'
+    POSTGRES = "Postgres"
+    MYSQL = "MySQL"
+    FILE = "File"
+    WEB_PAGE = "Web Page"
+    NOTION = "Notion"
+    SHOPIFY = "Shopify"
 
     def __str__(self):
         return self.value

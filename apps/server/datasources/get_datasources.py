@@ -41,8 +41,9 @@ COMING_SOON = [
         "description": "Firebase",
         "category": DatasourceCategory.APPLICATION,
         "source_type": DatasourceType.SHOPIFY,
-    }
+    },
 ]
+
 
 def get_all_datasources():
     """Return a list of all datasources."""
@@ -69,7 +70,6 @@ def get_all_datasources():
                 ],
             }
         )
-
 
     result.extend(COMING_SOON)
 

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Optional
+from typing import List
 import uuid
 from fastapi_sqlalchemy.middleware import DBSessionMeta
 
@@ -12,7 +12,6 @@ from typings.account import AccountOutput
 from exceptions import ConfigNotFoundException
 from utils.encyption import encrypt_data, decrypt_data, is_encrypted
 
-import uuid
 
 class ConfigModel(BaseModel):
     """
@@ -32,35 +31,58 @@ class ConfigModel(BaseModel):
         is_required (Boolean): Whether the tool configuration is a required field.
         is_deleted (Boolean): Whether the tool configuration is deleted.
     """
-    __tablename__ = 'config'
 
+    __tablename__ = "config"
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     key = Column(String, index=True)
-    agent_id = Column(UUID,ForeignKey('agent.id', ondelete='CASCADE'), nullable=True, index=True)
+    agent_id = Column(
+        UUID, ForeignKey("agent.id", ondelete="CASCADE"), nullable=True, index=True
+    )
     toolkit_id = Column(UUID, nullable=True)
-    account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True)
-    workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True)
-    datasource_id = Column(UUID, ForeignKey('datasource.id', ondelete='CASCADE'), nullable=True, index=True)
-    team_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True)
-    team_agent_id = Column(UUID, ForeignKey('team_agent.id', ondelete='CASCADE'), nullable=True, index=True)
-    chat_id = Column(UUID, ForeignKey('chat.id', ondelete='CASCADE'), nullable=True, index=True)
+    account_id = Column(
+        UUID, ForeignKey("account.id", ondelete="CASCADE"), nullable=True
+    )
+    workspace_id = Column(
+        UUID, ForeignKey("workspace.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    datasource_id = Column(
+        UUID, ForeignKey("datasource.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    team_id = Column(
+        UUID, ForeignKey("team.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    team_agent_id = Column(
+        UUID, ForeignKey("team_agent.id", ondelete="CASCADE"), nullable=True, index=True
+    )
+    chat_id = Column(
+        UUID, ForeignKey("chat.id", ondelete="CASCADE"), nullable=True, index=True
+    )
     session_id = Column(String, nullable=True, index=True)
     value = Column(String)
     key_type = Column(String)
     is_secret = Column(Boolean)
-    is_required = Column(Boolean)    
+    is_required = Column(Boolean)
     is_deleted = Column(Boolean, default=False, index=True)
-    
-        
-    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
-    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
-    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
+
+    created_by = Column(
+        UUID,
+        ForeignKey("user.id", name="fk_created_by", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    modified_by = Column(
+        UUID,
+        ForeignKey("user.id", name="fk_modified_by", ondelete="CASCADE"),
+        nullable=True,
+        index=True,
+    )
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
 
     # Define indexes
-    Index('ix_config_model_created_by_is_deleted', 'created_by', 'is_deleted')
-    Index('ix_config_model_id_is_deleted', 'id', 'is_deleted')
-    
+    Index("ix_config_model_created_by_is_deleted", "created_by", "is_deleted")
+    Index("ix_config_model_id_is_deleted", "id", "is_deleted")
+
     def __repr__(self) -> str:
         return (
             f"Config(id={self.id}, "
@@ -83,18 +105,18 @@ class ConfigModel(BaseModel):
 
         """
         db_config = ConfigModel(
-                         created_by=user.id, 
-                         account_id=account.id,
-                         )
+            created_by=user.id,
+            account_id=account.id,
+        )
         cls.update_model_from_input(db_config, config)
         if db_config.is_secret:
             db_config.value = encrypt_data(db_config.value)
         db.session.add(db_config)
         db.session.flush()  # Flush pending changes to generate the config's ID
         db.session.commit()
-        
+
         return db_config
-       
+
     @classmethod
     def update_config(cls, db, id, config, user, account):
         """
@@ -111,7 +133,9 @@ class ConfigModel(BaseModel):
         old_config = cls.get_config_by_id(db=db, config_id=id, account=account)
         if not old_config:
             raise ConfigNotFoundException("Config not found")
-        db_config = cls.update_model_from_input(config_model=old_config, config_input=config)
+        db_config = cls.update_model_from_input(
+            config_model=old_config, config_input=config
+        )
 
         if db_config.is_secret:
             db_config.value = encrypt_data(db_config.value)
@@ -120,93 +144,135 @@ class ConfigModel(BaseModel):
         db.session.commit()
 
         return db_config
-     
+
     @classmethod
-    def update_model_from_input(cls, config_model: ConfigModel, config_input: ConfigInput):
+    def update_model_from_input(
+        cls, config_model: ConfigModel, config_input: ConfigInput
+    ):
         for field in ConfigInput.__annotations__.keys():
             setattr(config_model, field, getattr(config_input, field))
-            
-        return config_model  
-    
+
+        return config_model
+
     @classmethod
-    def get_configs(cls, db, query:ConfigQueryParams, account):        
-        filter_conditions = [ConfigModel.account_id == account.id, or_(or_(ConfigModel.is_deleted == False, ConfigModel.is_deleted is None), ConfigModel.is_deleted is None)]
+    def get_configs(cls, db, query: ConfigQueryParams, account):
+        filter_conditions = [
+            ConfigModel.account_id == account.id,
+            or_(
+                or_(ConfigModel.is_deleted is False, ConfigModel.is_deleted is None),
+                ConfigModel.is_deleted is None,
+            ),
+        ]
 
         # Iterate over fields in ConfigQueryParams
         for field in ConfigQueryParams.__annotations__.keys():
             # If the field value is not None, add it to the filter conditions
             if getattr(query, field) is not None:
-                filter_conditions.append(getattr(ConfigModel, field) == getattr(query, field))
+                filter_conditions.append(
+                    getattr(ConfigModel, field) == getattr(query, field)
+                )
 
         # Query the database with the filter conditions
-        configs = (
-            db.session.query(ConfigModel)
-            .filter(and_(*filter_conditions))
-            .all()
-        )
+        configs = db.session.query(ConfigModel).filter(and_(*filter_conditions)).all()
         for config in configs:
             if config and config.is_secret and is_encrypted(config.value):
                 config.value = decrypt_data(config.value)
         return configs
-    
 
     @classmethod
     def get_config_by_id(cls, db, config_id, account):
         """
-            Get Config from config_id
+        Get Config from config_id
 
-            Args:
-                session: The database session.
-                config_id(int) : Unique identifier of an Config.
+        Args:
+            session: The database session.
+            config_id(int) : Unique identifier of an Config.
 
-            Returns:
-                Config: Config object is returned.
+        Returns:
+            Config: Config object is returned.
         """
         config = (
             db.session.query(ConfigModel)
-            .filter(ConfigModel.id == config_id, or_(or_(ConfigModel.is_deleted == False, ConfigModel.is_deleted is None), ConfigModel.is_deleted is None))
+            .filter(
+                ConfigModel.id == config_id,
+                or_(
+                    or_(
+                        ConfigModel.is_deleted is False, ConfigModel.is_deleted is None
+                    ),
+                    ConfigModel.is_deleted is None,
+                ),
+            )
             .first()
         )
         if config and config.is_secret and is_encrypted(config.value):
             config.value = decrypt_data(config.value)
-            
+
         return config
-    
+
     @classmethod
-    def get_config_by_session_id(cls, db: DBSessionMeta, session_id: str, account: AccountOutput):
+    def get_config_by_session_id(
+        cls, db: DBSessionMeta, session_id: str, account: AccountOutput
+    ):
         """
-            Get Config from session_id
+        Get Config from session_id
 
-            Args:
-                db: The database session.
-                session_id(str): Unique identifier of an Config.
-                account(AccountOutput): Account
+        Args:
+            db: The database session.
+            session_id(str): Unique identifier of an Config.
+            account(AccountOutput): Account
 
-            Returns:
-                Config: Config object is returned.
+        Returns:
+            Config: Config object is returned.
         """
         config = (
             db.session.query(ConfigModel)
-            .filter(ConfigModel.session_id == session_id, ConfigModel.account_id == account.id, or_(or_(ConfigModel.is_deleted == False, ConfigModel.is_deleted is None), ConfigModel.is_deleted is None))
+            .filter(
+                ConfigModel.session_id == session_id,
+                ConfigModel.account_id == account.id,
+                or_(
+                    or_(
+                        ConfigModel.is_deleted is False, ConfigModel.is_deleted is None
+                    ),
+                    ConfigModel.is_deleted is None,
+                ),
+            )
             .first()
         )
-   
+
         return config
-    
+
     @classmethod
     def get_account_settings(cls, db, account) -> AccountSettings:
-        keys = ["open_api_key", "hugging_face_token", "pinecone_api_key", "pinecone_environment", "weaviate_url", "weaviate_api_key"]
+        keys = [
+            "open_api_key",
+            "hugging_face_token",
+            "pinecone_api_key",
+            "pinecone_environment",
+            "weaviate_url",
+            "weaviate_api_key",
+        ]
 
         configs: List[ConfigModel] = (
             db.session.query(ConfigModel)
-            .filter(ConfigModel.key.in_(keys), ConfigModel.account_id == account.id, or_(or_(ConfigModel.is_deleted == False, ConfigModel.is_deleted is None), ConfigModel.is_deleted is None))
+            .filter(
+                ConfigModel.key.in_(keys),
+                ConfigModel.account_id == account.id,
+                or_(
+                    or_(
+                        ConfigModel.is_deleted is False, ConfigModel.is_deleted is None
+                    ),
+                    ConfigModel.is_deleted is None,
+                ),
+            )
             .all()
         )
 
         config = {}
 
         for cfg in configs:
-            config[cfg.key] = decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
+            config[cfg.key] = (
+                decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
+            )
 
         return AccountSettings(
             openai_api_key=config.get("open_api_key"),
@@ -219,14 +285,14 @@ class ConfigModel(BaseModel):
 
     @classmethod
     def delete_by_id(cls, db, config_id, account):
-        db_config = db.session.query(ConfigModel).filter(ConfigModel.id == config_id, ConfigModel.account_id==account.id).first()
+        db_config = (
+            db.session.query(ConfigModel)
+            .filter(ConfigModel.id == config_id, ConfigModel.account_id == account.id)
+            .first()
+        )
 
         if not db_config or db_config.is_deleted:
             raise ConfigNotFoundException("Config not found")
 
         db_config.is_deleted = True
         db.session.commit()
-
-    
-
-    

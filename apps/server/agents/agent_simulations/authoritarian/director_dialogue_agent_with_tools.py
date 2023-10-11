@@ -11,8 +11,11 @@ from langchain.schema import (
     HumanMessage,
     SystemMessage,
 )
-from agents.agent_simulations.agent.dialogue_agent_with_tools import DialogueAgentWithTools
+from agents.agent_simulations.agent.dialogue_agent_with_tools import (
+    DialogueAgentWithTools,
+)
 from typings.agent import AgentWithConfigsOutput
+
 
 class IntegerOutputParser(RegexParser):
     def get_format_instructions(self) -> str:
@@ -33,7 +36,16 @@ class DirectorDialogueAgentWithTools(DialogueAgentWithTools):
         sender_name: str,
         is_memory: bool,
     ) -> None:
-        super().__init__(name=name, agent_with_configs=agent_with_configs,  system_message=system_message, model=model, tools=tools, session_id=session_id, sender_name=sender_name, is_memory=is_memory)
+        super().__init__(
+            name=name,
+            agent_with_configs=agent_with_configs,
+            system_message=system_message,
+            model=model,
+            tools=tools,
+            session_id=session_id,
+            sender_name=sender_name,
+            is_memory=is_memory,
+        )
         self.speakers = speakers
         self.next_speaker = ""
 
@@ -112,7 +124,10 @@ Prompt the next speaker to speak with an insightful question.
     )  # Default value when all retries are exhausted
     def _choose_next_speaker(self) -> str:
         speaker_names = "\n".join(
-            [f"{idx}: (Name:{agent_with_config.agent.name} - Role:{agent_with_config.agent.role}) - Description:{agent_with_config.agent.description}" for idx, agent_with_config in enumerate(self.speakers)]
+            [
+                f"{idx}: (Name:{agent_with_config.agent.name} - Role:{agent_with_config.agent.role}) - Description:{agent_with_config.agent.description}"
+                for idx, agent_with_config in enumerate(self.speakers)
+            ]
         )
         choice_prompt = self.choose_next_speaker_prompt_template.format(
             message_history="\n".join(
@@ -166,4 +181,3 @@ Prompt the next speaker to speak with an insightful question.
             message = " ".join([self.response, message])
 
         return message
-   

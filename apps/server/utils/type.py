@@ -1,6 +1,7 @@
-from typing import List, Optional, Union
+from typing import Union
 import ast
 import uuid
+
 
 def convert_value_to_type(value, target_type):
     # Convert the value to the specified type
@@ -19,7 +20,7 @@ def convert_value_to_type(value, target_type):
             # For this case, we'll just return the value as is, since we don't
             # know which type to convert it to among the Union types.
             return value
-    
+
     if target_type == bool:
         return bool(value)
     elif target_type == int:
@@ -34,7 +35,7 @@ def convert_value_to_type(value, target_type):
         return uuid.UUID(value)
     elif hasattr(target_type, "__origin__") and target_type.__origin__ == list:
         inner_type = target_type.__args__[0]
-        if isinstance(value, str) and value.startswith('[') and value.endswith(']'):
+        if isinstance(value, str) and value.startswith("[") and value.endswith("]"):
             value = ast.literal_eval(value)
         converted_list = [convert_value_to_type(item, inner_type) for item in value]
         return converted_list

@@ -2,6 +2,7 @@ from abc import ABC
 from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 
+
 class SlackToolkit(BaseToolkit, ABC):
     name: str = "Slack Toolkit"
     description: str = "Toolkit containing tools for Slack"
@@ -12,6 +13,6 @@ class SlackToolkit(BaseToolkit, ABC):
 
     def get_tools(self) -> List[BaseTool]:
         return []
-    
+
     def get_env_keys(self) -> List[ToolEnvKey]:
         return []

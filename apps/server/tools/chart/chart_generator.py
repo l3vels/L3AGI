@@ -19,21 +19,22 @@ class ChartGeneratorSchema(BaseModel):
     query: str = Field(
         description=(
             "Parameter is JSON string representing action input.\n"
-            "\"data\" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n"
-            "\"user_prompt\" str, which is objective in natural language provided by user\n"
+            '"data" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n'
+            '"user_prompt" str, which is objective in natural language provided by user\n'
         )
     )
+
 
 class ChartGeneratorTool(BaseTool):
     """Tool that generates charts."""
 
     name = "Chart Generator"
-    
+
     description = (
         "generates chart and returns image URL\n"
         "Parameter is JSON string representing action input.\n"
-        "\"data\" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n"
-        "\"user_prompt\" str, objective in English natural language provided by user\n"
+        '"data" Python List or Dictionary which was you got by calling report tool. data is used for pandas DataFrame\n'
+        '"user_prompt" str, objective in English natural language provided by user\n'
         "Make sure to include `data` and `user_prompt` in your JSON string and nothing else\n"
     )
 
@@ -62,11 +63,13 @@ class ChartGeneratorTool(BaseTool):
                 base64_image = body["result"]
 
                 chart_id = uuid.uuid4()
-                
+
                 key = f"account_{self.account.id}/chat/chart-{chart_id}.png"
                 img_data = io.BytesIO(base64.b64decode(base64_image))
 
-                url = AWSS3Service.upload(body=img_data, key=key, content_type='image/png')
+                url = AWSS3Service.upload(
+                    body=img_data, key=key, content_type="image/png"
+                )
                 return url
             else:
                 return "Could not generate chart"

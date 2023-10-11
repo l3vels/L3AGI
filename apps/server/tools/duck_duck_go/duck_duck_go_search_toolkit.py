@@ -3,6 +3,7 @@ from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 from tools.duck_duck_go.duck_duck_go_search import DuckDuckGoSearchTool
 
+
 class DuckDuckGoSearchToolkit(BaseToolkit, ABC):
     name: str = "DuckDuckGo Search Toolkit"
     description: str = "Toolkit containing tools for performing DuckDuckGo search"
@@ -11,6 +12,6 @@ class DuckDuckGoSearchToolkit(BaseToolkit, ABC):
 
     def get_tools(self) -> List[BaseTool]:
         return [DuckDuckGoSearchTool()]
-    
+
     def get_env_keys(self) -> List[ToolEnvKey]:
         return []

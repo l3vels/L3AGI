@@ -7,7 +7,9 @@ from langchain.schema.messages import (
     HumanMessage,
     SystemMessage,
 )
-from langchain.memory.chat_message_histories import ZepChatMessageHistory as ZepChatMessageHistoryBase
+from langchain.memory.chat_message_histories import (
+    ZepChatMessageHistory as ZepChatMessageHistoryBase,
+)
 
 if TYPE_CHECKING:
     from zep_python import Memory, Message
@@ -40,7 +42,9 @@ class ZepChatMessageHistory(ZepChatMessageHistoryBase):
                     "created_at": msg.created_at,
                     "token_count": msg.token_count,
                     "metadata": msg.metadata,
-                    "name": re.sub(r'[^a-zA-Z0-9_-]', '', author)[:64], # add author for OpenAI chat completions in "name" field
+                    "name": re.sub(r"[^a-zA-Z0-9_-]", "", author)[
+                        :64
+                    ],  # add author for OpenAI chat completions in "name" field
                 }
                 if msg.role == "ai":
                     messages.append(
@@ -52,4 +56,3 @@ class ZepChatMessageHistory(ZepChatMessageHistoryBase):
                     )
 
         return messages
-

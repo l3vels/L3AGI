@@ -8,7 +8,12 @@ from tools.base import BaseTool
 from typings.config import AccountSettings
 from typings.account import AccountOutput
 
-def get_datasource_tools(datasources: List[DatasourceModel], settings: AccountSettings, account: AccountOutput) -> List[BaseTool]:
+
+def get_datasource_tools(
+    datasources: List[DatasourceModel],
+    settings: AccountSettings,
+    account: AccountOutput,
+) -> List[BaseTool]:
     """Get tools needed for datasources. For example Postgres datasource needs SQL tool to execute queries."""
 
     tools: List[BaseTool] = []

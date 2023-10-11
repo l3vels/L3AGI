@@ -1,5 +1,6 @@
 from pydantic import BaseModel, UUID4
-from typing import List, Optional
+from typing import Optional
+
 
 class ConfigInput(BaseModel):
     key: str
@@ -32,7 +33,8 @@ class ConfigOutput(BaseModel):
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]
     session_id: Optional[str]
-    
+
+
 class ConfigQueryParams(BaseModel):
     id: Optional[str]
     key: Optional[str]

@@ -2,6 +2,7 @@ from abc import ABC
 from typing import List
 from tools.base import BaseToolkit, BaseTool, ToolEnvKey
 
+
 class InstagramToolkit(BaseToolkit, ABC):
     name: str = "Instagram Toolkit"
     description: str = "Toolkit containing tools for Instagram"
@@ -12,6 +13,6 @@ class InstagramToolkit(BaseToolkit, ABC):
 
     def get_tools(self) -> List[BaseTool]:
         return []
-    
+
     def get_env_keys(self) -> List[ToolEnvKey]:
         return []

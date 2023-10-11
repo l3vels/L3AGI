@@ -12,14 +12,13 @@ class TweetSchema(BaseModel):
         description="The text for the tweet.",
     )
 
+
 class TweetTool(BaseTool):
     """Tool that tweets on Twitter."""
 
     name = "Tweet on Twitter"
-    
-    description = (
-        "Tweet a message using Twitter."
-    )
+
+    description = "Tweet a message using Twitter."
 
     args_schema: Type[TweetSchema] = TweetSchema
 
@@ -30,4 +29,3 @@ class TweetTool(BaseTool):
     ) -> str:
         """Tweet message and return."""
         return ""
-
