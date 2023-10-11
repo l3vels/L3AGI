@@ -103,6 +103,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   .css-7xl64p-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    height: none;
   }
   .menu.dropdown-menu-wrapper.css-19zapvn-menu {
     background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
