@@ -10,6 +10,8 @@ import Spotlight from 'components/Spotlight'
 import styled, { css } from 'styled-components'
 import AvatarDropDown from 'components/AvatarDropDown'
 
+import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
+
 const RootLayout = () => {
   const { user } = React.useContext(AuthContext)
   const { isCheckedRoute } = useCheckRoute('chat')
@@ -24,8 +26,12 @@ const RootLayout = () => {
 
       {user && (
         <StyledAvatarContainer>
-          <AvatarDropDown />
-          <StyledFirstName>{user.name}</StyledFirstName>
+          <StyledInnerWrapper>
+            <AvatarDropDown />
+            <StyledFirstName>{user.name}</StyledFirstName>
+          </StyledInnerWrapper>
+
+          <TermsAndPrivacyButtons />
         </StyledAvatarContainer>
       )}
 
@@ -63,12 +69,13 @@ const StyledFirstName = styled.span`
 `
 const StyledAvatarContainer = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  flex-direction: column;
   gap: 10px;
 
   position: absolute;
   left: 40px;
-  bottom: 24px;
+  bottom: 5px;
 
   @media (max-width: 900px) {
     display: none;
@@ -81,4 +88,9 @@ const StyledAvatarContainer = styled.div`
     line-height: 16px;
     /* color: rgba(255, 255, 255, 0.2); */
   }
+`
+const StyledInnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `
