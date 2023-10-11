@@ -1,23 +1,15 @@
 from __future__ import annotations
+from typing import List
 import uuid
 
-from sqlalchemy import (
-    Column,
-    String,
-    Boolean,
-    UUID,
-    or_,
-    ForeignKey,
-    and_,
-    Index,
-)
+from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey, and_, Index
 from sqlalchemy.orm import relationship, joinedload
 from models.base_model import BaseModel
-from typings.team import TeamInput
+from typings.team import TeamInput, ConfigInput
 from exceptions import TeamNotFoundException
 from models.team_agent import TeamAgentModel
 from models.agent import AgentModel
-from models.config import ConfigModel
+from models.team_config import TeamConfigModel
 
 
 class TeamModel(BaseModel):
@@ -43,36 +35,21 @@ class TeamModel(BaseModel):
     is_public = Column(Boolean, default=False, index=True)
     is_template = Column(Boolean, default=False, index=True)
     is_memory = Column(Boolean, default=False)
-    workspace_id = Column(
-        UUID, ForeignKey("workspace.id", ondelete="CASCADE"), nullable=True, index=True
-    )
-    account_id = Column(
-        UUID, ForeignKey("account.id", ondelete="CASCADE"), nullable=True, index=True
-    )
-    parent_id = Column(
-        UUID, ForeignKey("team.id", ondelete="CASCADE"), nullable=True, index=True
-    )
-
-    account = relationship("AccountModel", lazy="select")
-    team_agents = relationship("TeamAgentModel", back_populates="team", lazy="select")
-    chat_messages = relationship("ChatMessage", back_populates="team", lazy="select")
-    configs = relationship("ConfigModel", lazy="select")
-    chat = relationship("ChatModel", back_populates="team", lazy="select")
-
-    created_by = Column(
-        UUID,
-        ForeignKey("user.id", name="fk_created_by", ondelete="CASCADE"),
-        nullable=True,
-        index=True,
-    )
-    modified_by = Column(
-        UUID,
-        ForeignKey("user.id", name="fk_modified_by", ondelete="CASCADE"),
-        nullable=True,
-        index=True,
-    )
-    creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
-
+    workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True) 
+    account_id = Column(UUID, ForeignKey('account.id', ondelete='CASCADE'), nullable=True, index=True)
+    parent_id = Column(UUID, ForeignKey('team.id', ondelete='CASCADE'), nullable=True, index=True) 
+    
+    account = relationship("AccountModel", lazy='select')
+    team_agents = relationship("TeamAgentModel", back_populates="team", lazy='select')
+    chat_messages = relationship("ChatMessage", back_populates="team", lazy='select')
+    configs = relationship("TeamConfigModel", back_populates="team", lazy='select')
+    chat = relationship("ChatModel", back_populates="team", lazy='select')
+    
+        
+    created_by = Column(UUID, ForeignKey('user.id', name='fk_created_by', ondelete='CASCADE'), nullable=True, index=True)
+    modified_by = Column(UUID, ForeignKey('user.id', name='fk_modified_by', ondelete='CASCADE'), nullable=True, index=True)
+    creator = relationship("UserModel", foreign_keys=[created_by], lazy='select')
+    
     # Define indexes
     __table_args__ = (
         Index("ix_team_model_account_id_is_deleted", "account_id", "is_deleted"),
@@ -89,7 +66,7 @@ class TeamModel(BaseModel):
         )
 
     @classmethod
-    def create_team(cls, db, team: TeamInput, user, account) -> TeamModel:
+    def create_team(cls, db, team: TeamInput, configs: List[ConfigInput], user, account) -> TeamModel:
         """
         Creates a new team with the provided configuration.
 
@@ -109,7 +86,8 @@ class TeamModel(BaseModel):
         db.session.add(db_team)
         db.session.flush()  # Flush pending changes to generate the team's ID
         db.session.commit()
-
+        
+        TeamConfigModel.create_or_update(db, db_team, configs, user, account)
         return db_team
 
     @classmethod
@@ -165,28 +143,35 @@ class TeamModel(BaseModel):
         db.session.commit()
         db.session.commit()
         db.session.add_all(new_team_agents)
+        
+        
+        TeamConfigModel.create_configs_from_template(db=db, 
+                                                configs=template_team.configs, 
+                                                user=user, 
+                                                team_id=new_team.id)   
+        
+        # new_configs = []
+        # for template_config in template_team.configs:
+        #     new_config = ConfigModel(
+        #         key=template_config.key,
+        #         value=template_config.value,
+        #         is_secret=template_config.is_secret,
+        #         is_required=template_config.is_required,
+        #         key_type=template_config.key_type,
+        #         account_id=account.id,
+        #         created_by=user.id, 
+        #         team_id=new_team.id,
 
-        new_configs = []
-        for template_config in template_team.configs:
-            new_config = ConfigModel(
-                key=template_config.key,
-                value=template_config.value,
-                is_secret=template_config.is_secret,
-                is_required=template_config.is_required,
-                key_type=template_config.key_type,
-                account_id=account.id,
-                created_by=user.id,
-                team_id=new_team.id,
-            )
-            new_configs.append(new_config)
+        #     )
+        #     new_configs.append(new_config)            
 
-        db.session.add_all(new_configs)
-        db.session.commit()
+        # db.session.add_all(new_configs)
+        # db.session.commit() 
 
         return new_team
 
     @classmethod
-    def update_team(cls, db, id, team: TeamInput, user, account):
+    def update_team(cls, db, id, team: TeamInput, configs: List[ConfigInput], user, account):
         """
         Creates a new team with the provided configuration.
 
@@ -205,13 +190,17 @@ class TeamModel(BaseModel):
         db_team.modified_by = user.id
 
         db.session.add(db_team)
-        db.session.commit()
+        db.session.commit()        
+        
+        TeamConfigModel.create_or_update(db, db_team, configs, user, account)
 
         return db_team
 
     @classmethod
     def update_model_from_input(cls, team_model: TeamModel, team_input: TeamInput):
         for field in TeamInput.__annotations__.keys():
+            if field == 'configs' or field == 'team_agents':
+                continue
             setattr(team_model, field, getattr(team_input, field))
         return team_model
 
@@ -304,19 +293,11 @@ class TeamModel(BaseModel):
         # return db.session.query(TeamModel).filter(TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)).all()
         team = (
             db.session.query(TeamModel)
-            .filter(
-                TeamModel.id == team_id,
-                or_(
-                    or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
-                    TeamModel.is_deleted is None,
-                ),
-            )
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
-            .options(
-                joinedload(TeamModel.team_agents)
-                .joinedload(TeamAgentModel.agent)
-                .joinedload(AgentModel.configs)
-            )
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
+            .options(joinedload(TeamModel.configs))
             .first()
         )
         return team
@@ -335,13 +316,10 @@ class TeamModel(BaseModel):
         """
         teams = (
             db.session.query(TeamModel)
-            .filter(
-                TeamModel.id == team_id,
-                or_(
-                    or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
-                    TeamModel.is_deleted is None,
-                ),
-            )
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .filter(TeamModel.id == team_id, or_(or_(TeamModel.is_deleted == False, 
+                                                     TeamModel.is_deleted is None), 
+                                                     TeamModel.is_deleted is None))
             .options(joinedload(TeamModel.creator))
             .options(joinedload(TeamModel.account))
             .first()
@@ -350,11 +328,8 @@ class TeamModel(BaseModel):
 
     @classmethod
     def delete_by_id(cls, db, team_id, account):
-        db_team = (
-            db.session.query(TeamModel)
-            .filter(TeamModel.id == team_id, TeamModel.account_id == account.id)
-            .first()
-        )
+        db_team = db.session.query(TeamModel).filter(TeamModel.id == team_id, 
+                                                     TeamModel.account_id==account.id).first()
 
         if not db_team or db_team.is_deleted:
             raise TeamNotFoundException("Team not found")
@@ -366,15 +341,13 @@ class TeamModel(BaseModel):
     def get_template_teams(cls, db):
         teams = (
             db.session.query(TeamModel)
-            .filter(
-                TeamModel.is_template is True,
-                or_(
-                    or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
-                    TeamModel.is_deleted is None,
-                ),
-            )
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .filter(TeamModel.is_template == True, or_(or_(TeamModel.is_deleted == False,
+                                                           TeamModel.is_deleted is None),
+                                                            TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .options(joinedload(TeamModel.creator))
+            .options(joinedload(TeamModel.configs))
             .all()
         )
         return teams
@@ -383,15 +356,11 @@ class TeamModel(BaseModel):
     def get_public_teams(cls, db):
         teams = (
             db.session.query(TeamModel)
-            .filter(
-                TeamModel.is_public is True,
-                or_(
-                    or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
-                    TeamModel.is_deleted is None,
-                ),
-            )
-            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent))
+            .outerjoin(TeamConfigModel, TeamModel.id == TeamConfigModel.team_id)
+            .filter(TeamModel.is_public == True, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None))
+            .options(joinedload(TeamModel.team_agents).joinedload(TeamAgentModel.agent).joinedload(AgentModel.configs))
             .options(joinedload(TeamModel.creator))
+            .options(joinedload(TeamModel.configs))
             .all()
         )
         return teams

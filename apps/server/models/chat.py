@@ -19,6 +19,7 @@ from models.team import TeamModel
 from exceptions import ChatNotFoundException
 
 
+
 class ChatModel(BaseModel):
     """
     Model representing a chat message.

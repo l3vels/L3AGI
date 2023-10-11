@@ -4,22 +4,53 @@ from typings.team_agent import TeamAgentOutput
 from typings.user import UserOutput
 
 
+class TeamAgentInput(BaseModel):
+    agent_id: UUID4
+    role: str
+
+class QueryParams(BaseModel):
+    id: Optional[str]
+    workspace_id: Optional[UUID4]
+    
+class ConfigInput(BaseModel):
+    goals: Optional[List[str]]
+    constraints: Optional[List[str]]
+    tools: Optional[List[str]]
+    datasources: Optional[List[str]]
+    model_provider: Optional[str]
+    model_version: Optional[str]
+    temperature: Optional[float]
+    instructions: Optional[List[str]]
+    suggestions: Optional[List[str]]
+    greeting: Optional[str]
+    text: Optional[str]
+    
+# class TeamOfAgentsInput(TeamInput):
+    
+        
+# class TeamInput(TeamOfAgentsInput):
+   
 class TeamInput(BaseModel):
     name: str
     description: Optional[str]
     team_type: str
     workspace_id: Optional[UUID4]
     is_memory: Optional[bool]
+    team_agents: Optional[List[TeamAgentInput]]
+    configs: Optional[ConfigInput]
 
-
-class TeamAgentInput(BaseModel):
-    agent_id: UUID4
-    role: str
-
-
-class TeamOfAgentsInput(TeamInput):
-    team_agents: List[TeamAgentInput]
-
+class ConfigsOutput(BaseModel):
+    goals: Optional[List[str]]
+    constraints: Optional[List[str]]
+    tools: Optional[List[str]]
+    datasources: Optional[List[str]]
+    model_provider: Optional[str]
+    model_version: Optional[str]
+    temperature: Optional[float]
+    instructions: Optional[List[str]]
+    suggestions: Optional[List[str]]
+    greeting: Optional[str]
+    text: Optional[str]
 
 class TeamOutput(BaseModel):
     id: UUID4
@@ -38,8 +69,5 @@ class TeamOutput(BaseModel):
     team_agents: Optional[List[TeamAgentOutput]]
     avatar: Optional[str]
     is_memory: Optional[bool]
+    configs: Optional[ConfigsOutput]
 
-
-class QueryParams(BaseModel):
-    id: Optional[str]
-    workspace_id: Optional[UUID4]
