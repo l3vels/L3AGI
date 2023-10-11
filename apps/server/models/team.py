@@ -211,7 +211,7 @@ class TeamModel(BaseModel):
             .filter(
                 TeamModel.account_id == account.id,
                 or_(
-                    or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
+                    or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None),
                     TeamModel.is_deleted is None,
                 ),
             )
@@ -231,7 +231,7 @@ class TeamModel(BaseModel):
         # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
         filter_conditions = [
             or_(
-                or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
+                or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None),
                 TeamModel.is_deleted is None,
             )
         ]
@@ -257,7 +257,7 @@ class TeamModel(BaseModel):
         # filter_conditions = [TeamModel.account_id == account.id, or_(or_(TeamModel.is_deleted == False, TeamModel.is_deleted is None), TeamModel.is_deleted is None)]
         filter_conditions = [
             or_(
-                or_(TeamModel.is_deleted is False, TeamModel.is_deleted is None),
+                or_(TeamModel.is_deleted.is_(False), TeamModel.is_deleted is None),
                 TeamModel.is_deleted is None,
             )
         ]

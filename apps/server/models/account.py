@@ -95,7 +95,7 @@ class AccountModel(BaseModel):
             .filter(
                 or_(
                     or_(
-                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted.is_(False),
                         AccountModel.is_deleted is None,
                     ),
                     AccountModel.is_deleted is None,
@@ -113,7 +113,7 @@ class AccountModel(BaseModel):
                 AccountModel.id == account_id,
                 or_(
                     or_(
-                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted.is_(False),
                         AccountModel.is_deleted is None,
                     ),
                     AccountModel.is_deleted is None,
@@ -131,7 +131,7 @@ class AccountModel(BaseModel):
                 AccountModel.created_by == user_id,
                 or_(
                     or_(
-                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted.is_(False),
                         AccountModel.is_deleted is None,
                     ),
                     AccountModel.is_deleted is None,
@@ -150,7 +150,7 @@ class AccountModel(BaseModel):
                 UserAccountModel.account_id == account_id,
                 or_(
                     or_(
-                        AccountModel.is_deleted is False,
+                        AccountModel.is_deleted.is_(False),
                         AccountModel.is_deleted is None,
                     ),
                     AccountModel.is_deleted is None,

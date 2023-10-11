@@ -201,7 +201,7 @@ class ChatModel(BaseModel):
             .filter(
                 ChatModel.creator_account_id == account.id,
                 or_(
-                    or_(ChatModel.is_deleted is False, ChatModel.is_deleted is None),
+                    or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
                     ChatModel.is_deleted is None,
                 ),
             )

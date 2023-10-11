@@ -46,7 +46,7 @@ def login(input: LoginInput):
     """
     Login
     """
-    db_user = UserModel.get_user_by_email(db, input.email)
+    db_user = UserModel.get_user_by_email(db=db, email=input.email)
     if not db_user or not UserModel.verify_password(db_user.password, input.password):
         raise UserException("User email or password is incorrect")
 

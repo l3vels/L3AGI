@@ -154,7 +154,7 @@ class TeamAgentModel(BaseModel):
         filter_conditions = [
             or_(
                 or_(
-                    TeamAgentModel.is_deleted is False,
+                    TeamAgentModel.is_deleted.is_(False),
                     TeamAgentModel.is_deleted is None,
                 ),
                 TeamAgentModel.is_deleted is None,
@@ -190,7 +190,7 @@ class TeamAgentModel(BaseModel):
                 TeamAgentModel.id == team_agent_id,
                 or_(
                     or_(
-                        TeamAgentModel.is_deleted is False,
+                        TeamAgentModel.is_deleted.is_(False),
                         TeamAgentModel.is_deleted is None,
                     ),
                     TeamAgentModel.is_deleted is None,
@@ -224,7 +224,7 @@ class TeamAgentModel(BaseModel):
             .filter(
                 TeamAgentModel.team_id == team_id,
                 TeamAgentModel.account_id == account.id,
-                TeamAgentModel.is_deleted is False,
+                TeamAgentModel.is_deleted.is_(False),
             )
             .all()
         )

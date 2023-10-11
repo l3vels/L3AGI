@@ -122,7 +122,7 @@ class UserModel(RootBaseModel):
             .filter(
                 UserModel.id == user_id,
                 or_(
-                    or_(UserModel.is_deleted is False, UserModel.is_deleted is None),
+                    or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None),
                     UserModel.is_deleted is None,
                 ),
             )
@@ -143,18 +143,24 @@ class UserModel(RootBaseModel):
             User: User object is returned.
         """
         # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
-        users = (
+        user = (
             db.session.query(UserModel)
             .filter(
                 UserModel.email == email,
                 or_(
-                    or_(UserModel.is_deleted is False, UserModel.is_deleted is None),
+                    or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None),
                     UserModel.is_deleted is None,
                 ),
             )
             .first()
         )
-        return users
+        
+        # users = (
+        #     db.session.query(UserModel)
+        #     .filter(UserModel.email == email, or_(or_(UserModel.is_deleted == False, UserModel.is_deleted is None), UserModel.is_deleted is None))
+        #     .first()
+        # )
+        return user
 
     @classmethod
     def delete_by_id(cls, db, user_id, account):

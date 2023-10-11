@@ -97,7 +97,7 @@ class UserAccountModel(BaseModel):
         filter_conditions = [
             or_(
                 or_(
-                    UserAccountModel.is_deleted is False,
+                    UserAccountModel.is_deleted.is_(False),
                     UserAccountModel.is_deleted is None,
                 ),
                 UserAccountModel.is_deleted is None,
@@ -135,7 +135,7 @@ class UserAccountModel(BaseModel):
                 UserAccountModel.id == user_account_id,
                 or_(
                     or_(
-                        UserAccountModel.is_deleted is False,
+                        UserAccountModel.is_deleted.is_(False),
                         UserAccountModel.is_deleted is None,
                     ),
                     UserAccountModel.is_deleted is None,

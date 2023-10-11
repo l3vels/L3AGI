@@ -150,7 +150,7 @@ class DatasourceModel(BaseModel):
                 DatasourceModel.account_id == account.id,
                 or_(
                     or_(
-                        DatasourceModel.is_deleted is False,
+                        DatasourceModel.is_deleted.is_(False),
                         DatasourceModel.is_deleted is None,
                     ),
                     DatasourceModel.is_deleted is None,
@@ -179,7 +179,7 @@ class DatasourceModel(BaseModel):
                 DatasourceModel.id == datasource_id,
                 or_(
                     or_(
-                        DatasourceModel.is_deleted is False,
+                        DatasourceModel.is_deleted.is_(False),
                         DatasourceModel.is_deleted is None,
                     ),
                     DatasourceModel.is_deleted is None,

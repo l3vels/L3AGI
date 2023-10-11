@@ -197,7 +197,7 @@ class AgentModel(BaseModel):
             .join(UserModel, AgentModel.created_by == UserModel.id).filter(
                 AgentModel.account_id == account.id,
                 or_(
-                    or_(AgentModel.is_deleted is False, AgentModel.is_deleted is None),
+                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
                     AgentModel.is_deleted is None,
                 ),
             )
@@ -214,7 +214,7 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             .filter(
-                or_(AgentModel.is_deleted is False, AgentModel.is_deleted.is_(None)),
+                or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
                 AgentModel.is_template is True,
             )
             .options(joinedload(AgentModel.creator))
@@ -232,7 +232,7 @@ class AgentModel(BaseModel):
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
             .join(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
-                or_(AgentModel.is_deleted is False, AgentModel.is_deleted.is_(None)),
+                or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
                 AgentModel.is_public is True,
             )
             .options(joinedload(AgentModel.creator))
@@ -263,7 +263,7 @@ class AgentModel(BaseModel):
             .filter(
                 AgentModel.id == agent_id,
                 or_(
-                    or_(AgentModel.is_deleted is False, AgentModel.is_deleted is None),
+                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
                     AgentModel.is_deleted is None,
                 ),
             )
@@ -297,7 +297,7 @@ class AgentModel(BaseModel):
                 AgentModel.parent_id == parent_id,
                 AgentModel.account_id == account.id,
                 or_(
-                    or_(AgentModel.is_deleted is False, AgentModel.is_deleted is None),
+                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
                     AgentModel.is_deleted is None,
                 ),
             )
@@ -331,7 +331,7 @@ class AgentModel(BaseModel):
             .filter(
                 AgentModel.id == agent_id,
                 or_(
-                    or_(AgentModel.is_deleted is False, AgentModel.is_deleted is None),
+                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
                     AgentModel.is_deleted is None,
                 ),
             )

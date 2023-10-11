@@ -159,7 +159,7 @@ class ConfigModel(BaseModel):
         filter_conditions = [
             ConfigModel.account_id == account.id,
             or_(
-                or_(ConfigModel.is_deleted is False, ConfigModel.is_deleted is None),
+                or_(ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None),
                 ConfigModel.is_deleted is None,
             ),
         ]
@@ -197,7 +197,7 @@ class ConfigModel(BaseModel):
                 ConfigModel.id == config_id,
                 or_(
                     or_(
-                        ConfigModel.is_deleted is False, ConfigModel.is_deleted is None
+                        ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None
                     ),
                     ConfigModel.is_deleted is None,
                 ),
@@ -231,7 +231,7 @@ class ConfigModel(BaseModel):
                 ConfigModel.account_id == account.id,
                 or_(
                     or_(
-                        ConfigModel.is_deleted is False, ConfigModel.is_deleted is None
+                        ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None
                     ),
                     ConfigModel.is_deleted is None,
                 ),
@@ -259,7 +259,7 @@ class ConfigModel(BaseModel):
                 ConfigModel.account_id == account.id,
                 or_(
                     or_(
-                        ConfigModel.is_deleted is False, ConfigModel.is_deleted is None
+                        ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None
                     ),
                     ConfigModel.is_deleted is None,
                 ),

@@ -40,7 +40,7 @@ class MySQLDatabaseTool(BaseTool):
             db.session.query(ConfigModel)
             .where(
                 ConfigModel.datasource_id == datasource_id,
-                ConfigModel.is_deleted is False,
+                ConfigModel.is_deleted.is_(False),
             )
             .all()
         )

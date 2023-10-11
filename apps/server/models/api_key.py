@@ -122,7 +122,7 @@ class ApiKeyModel(BaseModel):
                 ApiKeyModel.account_id == account.id,
                 or_(
                     or_(
-                        ApiKeyModel.is_deleted is False, ApiKeyModel.is_deleted is None
+                        ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None
                     ),
                     ApiKeyModel.is_deleted is None,
                 ),
@@ -150,7 +150,7 @@ class ApiKeyModel(BaseModel):
                 ApiKeyModel.id == api_key_id,
                 or_(
                     or_(
-                        ApiKeyModel.is_deleted is False, ApiKeyModel.is_deleted is None
+                        ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None
                     ),
                     ApiKeyModel.is_deleted is None,
                 ),
