@@ -40,6 +40,25 @@ const HeaderButtons = () => {
       )}
 
       <Tooltip
+        content={() => <span>Docs</span>}
+        position={Tooltip.positions.BOTTOM}
+        tooltipSize='small'
+      >
+        <ButtonTertiary
+          size={Button.sizes.SMALL}
+          onClick={() => openLinkTab(import.meta.env.REACT_APP_BASICS_LINK)}
+        >
+          <StyledInnerButtonWrapper>
+            <TypographyPrimary
+              value='Docs'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
+          </StyledInnerButtonWrapper>
+        </ButtonTertiary>
+      </Tooltip>
+
+      {/* <Tooltip
         content={() => <span>Twitter</span>}
         position={Tooltip.positions.BOTTOM}
         tooltipSize='small'
@@ -52,16 +71,12 @@ const HeaderButtons = () => {
             <StyledImageWrapper>
               <StyledImg src={TwitterLogo} customScale={1} />
             </StyledImageWrapper>
-            {/* <TypographyPrimary
-            value='Twitter'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          /> */}
+        
           </StyledInnerButtonWrapper>
         </ButtonTertiary>
-      </Tooltip>
+      </Tooltip> */}
 
-      <Tooltip
+      {/* <Tooltip
         content={() => <span>Discord</span>}
         position={Tooltip.positions.BOTTOM}
         tooltipSize='small'
@@ -72,14 +87,9 @@ const HeaderButtons = () => {
         >
           <StyledInnerButtonWrapper>
             <StyledDiscordIcon size='20' />
-            {/* <TypographyPrimary
-            value='Discord'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          /> */}
           </StyledInnerButtonWrapper>
         </ButtonTertiary>
-      </Tooltip>
+      </Tooltip> */}
 
       <Tooltip
         content={() => <span>Github</span>}
@@ -94,11 +104,11 @@ const HeaderButtons = () => {
             <StyledImageWrapper>
               <StyledImg src={githubIcon} />
             </StyledImageWrapper>
-            {/* <TypographyPrimary
-            value='Github'
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          /> */}
+            <TypographyPrimary
+              value='Github'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
           </StyledInnerButtonWrapper>
         </ButtonTertiary>
       </Tooltip>
