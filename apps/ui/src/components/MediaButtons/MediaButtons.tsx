@@ -1,16 +1,17 @@
+import styled from 'styled-components'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import {
   StyledDivider,
   StyledWrapper,
 } from 'components/TermsAndPrivacyButtons/TermsAndPrivacyButtons'
-import TypographyQuaternary from 'components/Typography/Quaternary'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import TwitterLogo from 'assets/tools/twitter.png'
 import YoutubeLogo from 'assets/tools/youtube.svg'
 
-import styled from 'styled-components'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const MediaButtons = () => {
   return (
@@ -18,7 +19,7 @@ const MediaButtons = () => {
       <button onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}>
         <StyledInnerButtonWrapper>
           <StyledImg src={TwitterLogo} />
-          <TypographyQuaternary
+          <TypographyPrimary
             value='Twitter'
             type={Typography.types.label}
             size={Typography.sizes.xss}
@@ -36,7 +37,7 @@ const MediaButtons = () => {
       <button onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}>
         <StyledInnerButtonWrapper>
           <StyledDiscordIcon />
-          <TypographyQuaternary
+          <TypographyPrimary
             value='Discord'
             type={Typography.types.label}
             size={Typography.sizes.xss}
@@ -54,7 +55,7 @@ const MediaButtons = () => {
       <button onClick={() => openLinkTab(import.meta.env.REACT_APP_YOUTUBE_LINK)}>
         <StyledInnerButtonWrapper>
           <StyledImg src={YoutubeLogo} />
-          <TypographyQuaternary
+          <TypographyPrimary
             value='Youtube'
             type={Typography.types.label}
             size={Typography.sizes.xss}
