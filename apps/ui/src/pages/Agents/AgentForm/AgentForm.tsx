@@ -235,6 +235,9 @@ export const StyledTextareaWrapper = styled.div`
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
     color: ${({ theme }) => theme.body.textColorPrimary};
     background: ${({ theme }) => theme.body.textAreaBgColor};
+    &::placeholder {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+    }
   }
 `
 const StyledCheckboxWrapper = styled.div`
