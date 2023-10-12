@@ -17,6 +17,7 @@ from controllers.configuration import router as config_router
 from controllers.datasource import router as datasource_router
 from controllers.file import router as file_router
 from controllers.llm import router as llm_router
+from controllers.model import router as model_router
 from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
 from controllers.tool import router as tool_router
@@ -101,6 +102,7 @@ app.include_router(tool_router, prefix="/tool")
 app.include_router(llm_router, prefix="/llm")
 app.include_router(chat_router, prefix="/chat")
 app.include_router(file_router, prefix="/file")
+app.include_router(model_router, prefix="/model")
 
 
 @app.get("/")
@@ -108,7 +110,7 @@ def root():
     return f"Server is running on {Config.ENV} environment"
 
 
-print("Project run on 4000 port")
+print("Server is running on port 4000")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=4000)

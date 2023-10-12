@@ -32,7 +32,7 @@ export default WelcomeLoader
 
 const StyledMainWraper = styled.div`
   position: relative;
-  background-color: #0d0a2c;
+  background-color: rgb(253, 252, 250);
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
@@ -84,7 +84,7 @@ const StyledFirstFigure = styled.div`
 `
 
 const StyledSecondFigure = styled.div`
-  background: rgb(33, 252, 199);
+  background: F5F5F7;
   filter: blur(310px);
   width: 1642px;
   height: 686px;
@@ -101,7 +101,7 @@ const StyledSecondFigure = styled.div`
   animation-fill-mode: forwards;
 `
 const StyledThirdFigure = styled.div`
-  background: #0819b5;
+  background: rgb(14, 14, 14);
   filter: blur(310px);
   width: 1324px;
   height: 1324px;

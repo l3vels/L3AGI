@@ -1,18 +1,21 @@
 from typing import List
-from models.datasource import DatasourceModel
+
 from datasources.base import DatasourceType
-from tools.datasources.postgres.postgres import PostgresDatabaseTool
-from tools.datasources.mysql.mysql import MySQLDatabaseTool
-from tools.datasources.file.file import FileDatasourceTool
+from models.datasource import DatasourceModel
 from tools.base import BaseTool
-from typings.config import AccountSettings
+from tools.datasources.file.file import FileDatasourceTool
+from tools.datasources.mysql.mysql import MySQLDatabaseTool
+from tools.datasources.postgres.postgres import PostgresDatabaseTool
 from typings.account import AccountOutput
+from typings.agent import AgentWithConfigsOutput
+from typings.config import AccountSettings
 
 
 def get_datasource_tools(
     datasources: List[DatasourceModel],
     settings: AccountSettings,
     account: AccountOutput,
+    agent_with_configs: AgentWithConfigsOutput,
 ) -> List[BaseTool]:
     """Get tools needed for datasources. For example Postgres datasource needs SQL tool to execute queries."""
 
@@ -32,5 +35,6 @@ def get_datasource_tools(
     for tool in tools:
         tool.settings = settings
         tool.account = account
+        tool.agent_with_configs = agent_with_configs
 
     return tools

@@ -65,6 +65,8 @@ weaviate-client = "*"
 black = "*"
 ruff = "*"
 isort = "*"
+huggingface-hub = "*"
+replicate = "*"
 
 [dev-packages]
 

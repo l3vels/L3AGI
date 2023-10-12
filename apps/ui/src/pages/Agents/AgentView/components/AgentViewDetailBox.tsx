@@ -65,24 +65,28 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
           <StyledButtonsWrapper>
             {isCreator && (
-              <IconButton
-                onClick={handleEdit}
-                icon={() => <StyledEditIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                ariaLabel='Edit'
-              />
+              <StyledIconButton>
+                <IconButton
+                  onClick={handleEdit}
+                  icon={() => <StyledEditIcon />}
+                  size={IconButton.sizes.SMALL}
+                  kind={IconButton.kinds.TERTIARY}
+                  ariaLabel='Edit'
+                />
+              </StyledIconButton>
             )}
 
             {isCreator && (
-              <MenuButton component={MenuDots}>
-                <StyledMenuButtonsWrapper>
-                  <ButtonTertiary onClick={handleCreateChat}>Create Channel</ButtonTertiary>
-                  <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
-                    Delete Agent
-                  </ButtonTertiary>
-                </StyledMenuButtonsWrapper>
-              </MenuButton>
+              <StyledMenuDots>
+                <MenuButton component={MenuDots}>
+                  <StyledMenuButtonsWrapper>
+                    <ButtonTertiary onClick={handleCreateChat}>Create Channel</ButtonTertiary>
+                    <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
+                      Delete Agent
+                    </ButtonTertiary>
+                  </StyledMenuButtonsWrapper>
+                </MenuButton>
+              </StyledMenuDots>
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
@@ -200,4 +204,22 @@ export const StyledButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 2px;
+`
+const StyledMenuDots = styled.div`
+  .menu-button--wrapper.menu-button--wrapper--size-32 {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+    }
+    path {
+      stroke: ${({ theme }) => theme.body.iconColor};
+    }
+  }
+`
+const StyledIconButton = styled.div`
+  .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+      border-radius: 50%;
+    }
+  }
 `

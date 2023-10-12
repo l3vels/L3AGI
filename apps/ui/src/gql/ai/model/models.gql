@@ -1,0 +1,8 @@
+query models @api(name: "ai") {
+  models @rest(type: "Model", path: "/model", method: "GET", endpoint: "ai") {
+    id
+    provider
+    name
+    value
+  }
+}

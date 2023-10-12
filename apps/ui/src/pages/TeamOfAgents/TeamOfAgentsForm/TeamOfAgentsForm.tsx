@@ -155,14 +155,15 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             )
           })}
         </StyledFields>
-
-        <Checkbox
-          label='Memory'
-          kind='secondary'
-          name='is_memory'
-          checked={is_memory}
-          onChange={() => setFieldValue('is_memory', !is_memory)}
-        />
+        <StyledCheckbox>
+          <Checkbox
+            label='Memory'
+            kind='secondary'
+            name='is_memory'
+            checked={is_memory}
+            onChange={() => setFieldValue('is_memory', !is_memory)}
+          />
+        </StyledCheckbox>
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
       </StyledInputWrapper>
@@ -228,4 +229,12 @@ const StyledUploadFileWrapper = styled.div`
 const StyledFields = styled.div`
   display: flex;
   gap: 40px;
+`
+const StyledCheckbox = styled.div`
+  .l3-style-checkbox--kind-secondary .l3-style-checkbox__checkbox {
+    border-color: ${({ theme }) => theme.typography.contentPrimary};
+  }
+  .l3-style-checkbox--kind-secondary .l3-style-checkbox__label {
+    color: ${({ theme }) => theme.typography.contentPrimary};
+  }
 `

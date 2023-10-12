@@ -1,24 +1,23 @@
-import sentry_sdk
-from typing import List
 import json
-from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
-from fastapi_sqlalchemy import db
+from typing import List
 from uuid import UUID
 
+import sentry_sdk
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi_sqlalchemy import db
+
+from datasources.base import DatasourceEnvKeyType
+from datasources.file.file_retriever import FileDatasourceRetriever
+from exceptions import ConfigNotFoundException
 from models.config import ConfigModel
 from models.datasource import DatasourceModel
-from typings.config import ConfigOutput, ConfigInput, ConfigQueryParams
-from utils.auth import authenticate
-from typings.auth import UserAccount
-from utils.configuration import (
-    convert_configs_to_config_list,
-    convert_model_to_response,
-)
-from exceptions import ConfigNotFoundException
-from datasources.base import DatasourceEnvKeyType
-from typings.datasource import DatasourceStatus
 from typings.account import AccountOutput
-from datasources.file.file_retriever import FileDatasourceRetriever
+from typings.auth import UserAccount
+from typings.config import ConfigInput, ConfigOutput, ConfigQueryParams
+from typings.datasource import DatasourceStatus
+from utils.auth import authenticate
+from utils.configuration import (convert_configs_to_config_list,
+                                 convert_model_to_response)
 
 router = APIRouter()
 
@@ -43,6 +42,7 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
             vector_store,
             str(account.id),
             str(datasource_id),
+            None,
         )
         retriever.index_documents(file_urls)
 

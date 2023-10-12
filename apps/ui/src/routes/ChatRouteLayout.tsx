@@ -103,8 +103,6 @@ const ChatRouteLayout = () => {
 
   const hasChat = !!chatId
 
-  console.log('chat', hasChat)
-
   return (
     <StyledAppContainer className='app_container'>
       <Header />

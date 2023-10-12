@@ -12,7 +12,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import includes from 'lodash/includes'
 import {
   StyledGamesIcon,
-  StyledMentionIcon,
+  StyledBasicIcon,
+  StyledRobotIcon,
   StyledSearchOutlineIcon,
   StyledValueOutlineIcon,
 } from 'components/ChatSwitcher/ChatSwitcher'
@@ -50,7 +51,7 @@ const MainNavigation = () => {
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-        <StyledMentionIcon size={40} />
+        <StyledRobotIcon size={40} />
         <TypographySecondary
           value={'Chat'}
           type={Typography.types.LABEL}
@@ -84,6 +85,11 @@ const MainNavigation = () => {
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />
+      </StyledLi>
+
+      <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
+        <StyledBasicIcon size={30} />
+        <span>Models</span>
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>

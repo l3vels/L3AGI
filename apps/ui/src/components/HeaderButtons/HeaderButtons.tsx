@@ -6,7 +6,6 @@ import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
-import TwitterLogo from 'assets/tools/twitter.png'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonTertiary } from 'components/Button/Button'
 

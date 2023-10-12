@@ -133,6 +133,7 @@ const StyledChatLinkModal = styled(Modal)`
   /* padding: 12px; */
   width: fit-content;
   height: fit-content;
+  color: ${({ theme }) => theme.body.textColorPrimary} !important;
 `
 const StyledModalFooter = styled(ModalFooter)`
   display: flex;

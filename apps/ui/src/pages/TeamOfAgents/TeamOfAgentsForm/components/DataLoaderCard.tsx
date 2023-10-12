@@ -61,7 +61,7 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
 
   box-shadow: inset 0px 1px 20px rgba(8, 8, 16, 0.1);
 
-  background: rgba(0, 0, 0, 0.1);
+  background: ${({ theme }) => theme.body.dropdownBgColor};
 
   display: flex;
   justify-content: center;
@@ -80,6 +80,6 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
   ${p =>
     p.isSelected &&
     css`
-      border-color: #48ecf0;
+      border: 3px solid ${({ theme }) => theme.body.dataLoaderCardBorder};
     `};
 `

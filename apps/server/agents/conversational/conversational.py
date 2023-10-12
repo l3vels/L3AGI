@@ -1,15 +1,16 @@
-from langchain.agents import initialize_agent, AgentType
-from langchain.chat_models import ChatOpenAI
-from postgres import PostgresChatMessageHistory
-from memory.zep.zep_memory import ZepMemory
-from services.pubsub import ChatPubSubService
+from langchain.agents import AgentType, initialize_agent
+
 from agents.base_agent import BaseAgent
-from config import Config
 from agents.conversational.output_parser import ConvoOutputParser
-from utils.system_message import SystemMessageBuilder
+from agents.handle_agent_errors import handle_agent_error
+from config import Config
+from memory.zep.zep_memory import ZepMemory
+from postgres import PostgresChatMessageHistory
+from services.pubsub import ChatPubSubService
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from agents.handle_agent_errors import handle_agent_error
+from utils.model import get_llm
+from utils.system_message import SystemMessageBuilder
 
 
 class ConversationalAgent(BaseAgent):
@@ -36,31 +37,27 @@ class ConversationalAgent(BaseAgent):
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
-        model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
-        temperature = agent_with_configs.configs.temperature
-
-        llm = ChatOpenAI(
-            openai_api_key=settings.openai_api_key,
-            temperature=temperature,
-            model_name=model_name,
-        )
-
-        agent = initialize_agent(
-            tools,
-            llm,
-            agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
-            verbose=True,
-            memory=memory,
-            handle_parsing_errors="Check your output and make sure it conforms!",
-            agent_kwargs={
-                "system_message": system_message,
-                "output_parser": ConvoOutputParser(),
-            },
+        llm = get_llm(
+            settings,
+            agent_with_configs,
         )
 
         res: str
 
         try:
+            agent = initialize_agent(
+                tools,
+                llm,
+                agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+                verbose=True,
+                memory=memory,
+                handle_parsing_errors="Check your output and make sure it conforms!",
+                agent_kwargs={
+                    "system_message": system_message,
+                    "output_parser": ConvoOutputParser(),
+                },
+            )
+
             res = agent.run(prompt)
         except Exception as err:
             res = handle_agent_error(err)

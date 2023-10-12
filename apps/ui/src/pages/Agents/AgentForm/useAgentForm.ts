@@ -1,25 +1,16 @@
-import { useEffect } from 'react'
+import { useModelsService } from 'services'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
-import { useProvidersService } from 'services/llm/useProvidersService'
 import { useToolsService } from 'services/tool/useToolsService'
 
 export const useAgentForm = (formik: any) => {
-  const { data: providersData } = useProvidersService()
   const { data: datasourcesData } = useDatasourcesService()
   const { data: tools } = useToolsService()
+  const { data: models } = useModelsService()
 
-  const providerOptions = providersData
-    ?.filter((item: any) => item.isActive === true)
-    .map((item: any) => {
-      return { value: item.provider, label: item.provider, isActive: item.isActive }
-    })
-
-  const modelOptions = providersData
-    ?.filter((item: any) => item.provider === formik?.values?.agent_model_provider)
-    ?.map((filteredItem: any) => filteredItem.models)[0]
-    ?.map((model: any) => {
-      return { value: model, label: model }
-    })
+  const modelOptions = models.map(({ id, name, provider }) => ({
+    value: id,
+    label: `${name} (${provider})`,
+  }))
 
   const datasourceOptions = datasourcesData?.map((datasource: any) => {
     return { value: datasource.id, label: datasource.name }
@@ -32,7 +23,6 @@ export const useAgentForm = (formik: any) => {
     })
 
   return {
-    providerOptions,
     modelOptions,
     datasourceOptions,
     toolOptions,

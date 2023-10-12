@@ -1,15 +1,18 @@
 from __future__ import annotations
-from typing import List
-import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey, Index
-from sqlalchemy.orm import relationship, joinedload
-from models.base_model import BaseModel
-from typings.agent import ConfigInput, AgentInput
-from models.agent_config import AgentConfigModel
+import uuid
+from typing import List
+
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String, or_
+from sqlalchemy.orm import joinedload, relationship
+
 from exceptions import AgentNotFoundException
+from models.agent_config import AgentConfigModel
+from models.base_model import BaseModel
 from models.user import UserModel
-from models.workspace import WorkspaceModel
+from models.workspace import WorkspaceModel  # noqa
+from typings.agent import AgentInput, ConfigInput
+
 
 class AgentModel(BaseModel):
     """
@@ -37,7 +40,9 @@ class AgentModel(BaseModel):
     parent_id = Column(
         UUID, ForeignKey("agent.id", ondelete="CASCADE"), nullable=True, index=True
     )
-    workspace_id = Column(UUID, ForeignKey('workspace.id', ondelete='CASCADE'), nullable=True, index=True) 
+    workspace_id = Column(
+        UUID, ForeignKey("workspace.id", ondelete="CASCADE"), nullable=True, index=True
+    )
     agent_type = Column(String)  # Later add as Enum
     description = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)
@@ -192,10 +197,12 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id).filter(
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id).filter(
                 AgentModel.account_id == account.id,
                 or_(
-                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
+                    or_(
+                        AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None
+                    ),
                     AgentModel.is_deleted is None,
                 ),
             )
@@ -228,7 +235,7 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
                 AgentModel.is_public.is_(True),
@@ -256,12 +263,14 @@ class AgentModel(BaseModel):
         """
         agent = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.id == agent_id,
                 or_(
-                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
+                    or_(
+                        AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None
+                    ),
                     AgentModel.is_deleted is None,
                 ),
             )
@@ -289,13 +298,15 @@ class AgentModel(BaseModel):
         """
         agent = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)  # Corrected line
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.parent_id == parent_id,
                 AgentModel.account_id == account.id,
                 or_(
-                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
+                    or_(
+                        AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None
+                    ),
                     AgentModel.is_deleted is None,
                 ),
             )
@@ -324,12 +335,14 @@ class AgentModel(BaseModel):
         # return db.session.query(AgentModel).filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None), AgentModel.is_deleted is None)).all()
         agents = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.id == agent_id,
                 or_(
-                    or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
+                    or_(
+                        AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None
+                    ),
                     AgentModel.is_deleted is None,
                 ),
             )

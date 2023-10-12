@@ -1,35 +1,32 @@
+import functools
 from typing import List, Optional
 
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import (
-    HumanMessage,
-    SystemMessage,
-)
-import functools
 from fastapi_sqlalchemy import db
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import HumanMessage, SystemMessage
+
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
-from agents.agent_simulations.agent.dialogue_agent_with_tools import (
-    DialogueAgentWithTools,
-)
-from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import (
-    DirectorDialogueAgentWithTools,
-)
-from services.pubsub import ChatPubSubService
+from agents.agent_simulations.agent.dialogue_agent_with_tools import \
+    DialogueAgentWithTools
+from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import \
+    DirectorDialogueAgentWithTools
 from agents.base_agent import BaseAgent
-from postgres import PostgresChatMessageHistory
-from models.team import TeamModel
-from utils.system_message import SystemMessageBuilder
-from typings.agent import AgentWithConfigsOutput
-from typings.config import AccountSettings
-from tools.get_tools import get_agent_tools
-from tools.datasources.get_datasource_tools import get_datasource_tools
-from models.datasource import DatasourceModel
-from typings.team_agent import TeamAgentRole
-from utils.agent import convert_model_to_response
 from config import Config
 from memory.zep.zep_memory import ZepMemory
 from models.config import ConfigModel
+from models.datasource import DatasourceModel
+from models.team import TeamModel
+from postgres import PostgresChatMessageHistory
+from services.pubsub import ChatPubSubService
+from tools.datasources.get_datasource_tools import get_datasource_tools
+from tools.get_tools import get_agent_tools
+from typings.agent import AgentWithConfigsOutput
 from typings.chat import ChatStatus
+from typings.config import AccountSettings
+from typings.team_agent import TeamAgentRole
+from utils.agent import convert_model_to_response
+from utils.model import get_llm
+from utils.system_message import SystemMessageBuilder
 
 
 class AuthoritarianSpeaker(BaseAgent):
@@ -94,6 +91,8 @@ class AuthoritarianSpeaker(BaseAgent):
             SystemMessage(content="You can make a topic more specific."),
             HumanMessage(content=content),
         ]
+
+        # TODO: support llm after we gonna use this function
         specified_topic = ChatOpenAI(
             openai_api_key=self.settings.openai_api_key,
             temperature=1.0,
@@ -110,10 +109,14 @@ class AuthoritarianSpeaker(BaseAgent):
             .all()
         )
         datasource_tools = get_datasource_tools(
-            datasources, settings, self.provider_account
+            datasources, settings, self.provider_account, agent_with_configs
         )
         agent_tools = get_agent_tools(
-            agent_with_configs.configs.tools, db, self.provider_account, settings
+            agent_with_configs.configs.tools,
+            db,
+            self.provider_account,
+            settings,
+            agent_with_configs,
         )
         return datasource_tools + agent_tools
 
@@ -170,13 +173,7 @@ class AuthoritarianSpeaker(BaseAgent):
             system_message=SystemMessage(
                 content=SystemMessageBuilder(director_agent).build()
             ),
-            model=ChatOpenAI(
-                openai_api_key=self.settings.openai_api_key,
-                temperature=director_agent.configs.temperature,
-                model_name=director_agent.configs.model_version
-                if director_agent.configs.model_version
-                else "gpt-4",
-            ),
+            model=get_llm(self.settings, director_agent),
             speakers=[
                 agent_with_config
                 for agent_with_config in agents_with_configs
@@ -199,10 +196,9 @@ class AuthoritarianSpeaker(BaseAgent):
                         system_message=SystemMessage(
                             content=SystemMessageBuilder(agent_with_configs).build()
                         ),
-                        model=ChatOpenAI(
-                            openai_api_key=self.settings.openai_api_key,
-                            temperature=0.2,
-                            model_name="gpt-4",
+                        model=get_llm(
+                            self.settings,
+                            agent_with_configs,
                         ),
                         session_id=self.session_id,
                         sender_name=self.sender_name,

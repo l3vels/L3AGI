@@ -14,8 +14,7 @@ export type AgentInput = {
   tools: string[]
   datasources: string[]
   instructions: string[]
-  model_version: string
-  model_provider: string
+  model: string
   is_memory: boolean
   suggestions: string[]
   text: string
@@ -36,8 +35,7 @@ export const useCreateAgentService = () => {
       tools,
       datasources,
       instructions,
-      model_version,
-      model_provider,
+      model,
       is_memory,
       suggestions,
       greeting,
@@ -61,8 +59,7 @@ export const useCreateAgentService = () => {
             constraints: constraints,
             tools: tools,
             datasources: datasources,
-            model_provider: model_provider,
-            model_version: model_version,
+            model,
             temperature: temperature,
             instructions: instructions,
             suggestions: suggestions,

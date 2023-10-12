@@ -1,14 +1,14 @@
 import json
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
 from fastapi_sqlalchemy import db
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
-from typings.config import ConfigQueryParams
-from tools.base import BaseTool
+from langchain.callbacks.manager import CallbackManagerForToolRun
+from pydantic import BaseModel, Field
+
 from datasources.file.file_retriever import FileDatasourceRetriever
 from models.config import ConfigModel
+from tools.base import BaseTool
+from typings.config import ConfigQueryParams
 
 
 class FileDatasourceSchema(BaseModel):
@@ -53,6 +53,7 @@ class FileDatasourceTool(BaseTool):
             vector_store,
             str(self.account.id),
             datasource_id,
+            self.agent_with_configs,
         )
         retriever.load_index()
         result = retriever.query(question)
