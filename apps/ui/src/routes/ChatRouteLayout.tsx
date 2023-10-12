@@ -317,7 +317,7 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasCh
   ${props =>
     props.isHidden &&
     css`
-      margin-left: -450px;
+      margin-left: -475px;
       overflow: hidden;
       cursor: pointer;
     `}

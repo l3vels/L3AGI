@@ -34,6 +34,7 @@ const EditTeamOfAgentsForm = () => {
             </div>
 
             <StyledButtonWrapper>
+              <BackButton />
               <ButtonPrimary
                 onClick={() => handleSubmit(formik?.values)}
                 size={Button.sizes.SMALL}
@@ -41,8 +42,6 @@ const EditTeamOfAgentsForm = () => {
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </ButtonPrimary>
-
-              <BackButton />
             </StyledButtonWrapper>
           </StyledHeaderGroup>
 

@@ -52,6 +52,17 @@ export const useEditTeamOfAgents = () => {
         role: team_agent.role,
       })) || [],
     is_memory: teamOfAgentsById?.is_memory,
+    //configs
+    team_constraints: teamOfAgentsById?.configs.constraints,
+    team_datasources: teamOfAgentsById?.configs.datasources,
+    team_goals: teamOfAgentsById?.configs.goals,
+    team_greeting: teamOfAgentsById?.configs.greeting,
+    team_instructions: teamOfAgentsById?.configs.instructions,
+    team_suggestions: teamOfAgentsById?.configs.suggestions,
+    team_temperature: teamOfAgentsById?.configs.temperature,
+    team_text: teamOfAgentsById?.configs.text,
+    team_tools: teamOfAgentsById?.configs.tools,
+    team_model: teamOfAgentsById?.configs.model,
   }
 
   const handleSubmit = async (values: any) => {
@@ -65,6 +76,16 @@ export const useEditTeamOfAgents = () => {
       team_type: values.teamOfAgents_team_type,
       team_agents: values.agents.filter((agent: any) => agent?.agent_id),
       is_memory: values.is_memory,
+      constraints: values.team_constraints,
+      datasources: values.team_datasources,
+      goals: values.team_goals,
+      greeting: values.team_greeting,
+      instructions: values.team_instructions,
+      suggestions: values.team_suggestions,
+      temperature: values.team_temperature,
+      text: values.team_text,
+      tools: values.team_tools,
+      model: values.team_model,
     }
 
     const promises = [

@@ -24,10 +24,20 @@ export const useCreateTeamOfAgents = () => {
     teamOfAgents_name: '',
     teamOfAgents_description: '',
     teamOfAgents_team_type: 'Plan and Execute',
-    configs: {},
     agents: [],
     is_memory: true,
     // TODO: add agents selected in form
+    //configs
+    team_constraints: [],
+    team_datasources: [],
+    team_goals: [],
+    team_greeting: '',
+    team_instructions: [],
+    team_suggestions: [],
+    team_temperature: 0.2,
+    team_text: '',
+    team_tools: [],
+    team_model: '',
   }
 
   const formik = useFormik({
@@ -71,6 +81,16 @@ export const useCreateTeamOfAgents = () => {
         team_type: values.teamOfAgents_team_type,
         team_agents: values.agents.filter((agent: any) => agent?.agent_id),
         is_memory: values.is_memory,
+        constraints: values.team_constraints,
+        datasources: values.team_datasources,
+        goals: values.team_goals,
+        greeting: values.team_greeting,
+        instructions: values.team_instructions,
+        suggestions: values.team_suggestions,
+        temperature: values.team_temperature,
+        text: values.team_text,
+        tools: values.team_tools,
+        model: values.team_model,
       }
 
       const teamOfAgents = await createTeamOfAgents(teamOfAgentsInput)

@@ -37,6 +37,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_tools,
     agent_greeting,
     agent_text,
+    agent_temperature,
   } = values
 
   const [showAdvanced, setShowAdvanced] = useState(agent_text?.length > 0 ? true : false)
@@ -123,7 +124,10 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
           </StyledCombinedFields>
 
-          <AgentSlider formik={formik} />
+          <AgentSlider
+            onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
+            value={agent_temperature}
+          />
 
           <StyledCheckboxWrapper>
             <Checkbox
@@ -243,7 +247,7 @@ const StyledCheckboxWrapper = styled.div`
     color: ${({ theme }) => theme.typography.contentPrimary};
   }
 `
-const StyledCombinedFields = styled.div`
+export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

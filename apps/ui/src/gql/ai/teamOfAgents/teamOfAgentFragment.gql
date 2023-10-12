@@ -21,4 +21,5 @@ fragment TeamOfAgentFragment on TeamOfAgents {
     role
     agent
   }
+  configs
 }

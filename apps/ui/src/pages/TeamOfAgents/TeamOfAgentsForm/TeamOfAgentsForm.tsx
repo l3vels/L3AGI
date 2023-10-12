@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
+import { StyledCombinedFields, StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import { useTeamOfAgentsForm } from './useTeamOfAgentsForm'
 import UploadButton from './components/UploadButton'
 import UploadedFile from 'components/UploadedFile'
@@ -16,6 +16,10 @@ import TeamOfAgentsTable from '../TeamOfAgentsTable'
 import { teamTypeDocs } from './constants'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import TypographyPrimary from 'components/Typography/Primary'
+import CustomField from 'pages/Agents/AgentForm/components/CustomField'
+import AgentSlider from 'pages/Agents/AgentForm/components/AgentSlider'
+import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
+import ShowAdvancedButton from 'pages/Agents/AgentForm/components/ShowAdvancedButton'
 
 type TeamOfAgentsFormProps = {
   formik: any
@@ -23,17 +27,48 @@ type TeamOfAgentsFormProps = {
 }
 
 const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
-  const { teamTypes, pickedLoaderFields, handleUploadFile, fileLoading } =
-    useTeamOfAgentsForm(formik)
+  const advancedRef = useRef(null as any)
+  const scrollToAdvancedRef = () => {
+    if (advancedRef) {
+      setTimeout(function () {
+        advancedRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 1)
+    }
+  }
+
+  const {
+    teamTypes,
+    pickedLoaderFields,
+    handleUploadFile,
+    fileLoading,
+    modelOptions,
+    datasourceOptions,
+    toolOptions,
+  } = useTeamOfAgentsForm(formik)
 
   const { category, fields } = pickedLoaderFields
 
   const { values, setFieldValue } = formik
-  const { teamOfAgents_team_type, config_value, teamOfAgents_description, configs, is_memory } =
-    values
+  const {
+    teamOfAgents_team_type,
+    config_value,
+    teamOfAgents_description,
+    configs,
+    is_memory,
+    team_greeting,
+    team_temperature,
+    team_text,
+    team_tools,
+    team_datasources,
+    team_model,
+  } = values
 
   const onDescriptionChange = (value: string) => {
     formik.setFieldValue('teamOfAgents_description', value)
+  }
+
+  const onTextareaChange = (field: string, value: string) => {
+    formik.setFieldValue(field, value)
   }
 
   useEffect(() => {
@@ -44,6 +79,8 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
   }, [teamOfAgents_team_type])
 
   const teamType = teamTypes?.find((teamType: any) => teamType.team_type === teamOfAgents_team_type)
+
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   return (
     <StyledFormContainer>
@@ -166,6 +203,97 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
         </StyledCheckbox>
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
+
+        <CustomField formik={formik} formikField={'team_suggestions'} placeholder={'Suggestion'} />
+
+        <StyledTextareaWrapper>
+          <TypographyPrimary
+            value='Greeting'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+          />
+          <Textarea
+            hint=''
+            placeholder='Greeting'
+            value={team_greeting}
+            name='team_greeting'
+            onChange={(value: string) => onTextareaChange('team_greeting', value)}
+          />
+        </StyledTextareaWrapper>
+
+        <AgentDropdown
+          isMulti
+          label={'Data source'}
+          fieldName={'team_datasources'}
+          fieldValue={team_datasources}
+          setFieldValue={setFieldValue}
+          options={datasourceOptions}
+        />
+
+        <AgentDropdown
+          isMulti
+          label={'Tools'}
+          fieldName={'team_tools'}
+          fieldValue={team_tools}
+          setFieldValue={setFieldValue}
+          options={toolOptions}
+        />
+
+        <AgentSlider
+          onChange={(value: number) => setFieldValue('team_temperature', value / 10)}
+          value={team_temperature}
+        />
+
+        <ShowAdvancedButton
+          isShow={showAdvanced}
+          onClick={() => {
+            setShowAdvanced(!showAdvanced)
+            scrollToAdvancedRef()
+          }}
+        />
+
+        {showAdvanced && (
+          <>
+            <StyledTextareaWrapper>
+              {/* <TypographyPrimary
+                value='Advanced text'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              /> */}
+              <Textarea
+                hint=''
+                placeholder='text'
+                value={team_text}
+                name='team_text'
+                onChange={(value: string) => onTextareaChange('team_text', value)}
+              />
+            </StyledTextareaWrapper>
+
+            <StyledCombinedFields>
+              <AgentDropdown
+                label={'Model'}
+                fieldName={'team_model'}
+                setFieldValue={setFieldValue}
+                fieldValue={team_model}
+                options={modelOptions}
+                optionSize={'small'}
+              />
+            </StyledCombinedFields>
+            <CustomField formik={formik} formikField={'team_goals'} placeholder={'Goal'} />
+            <CustomField
+              formik={formik}
+              formikField={'team_instructions'}
+              placeholder={'Instruction'}
+            />
+            <CustomField
+              formik={formik}
+              formikField={'team_constraints'}
+              placeholder={'Constraint'}
+            />
+          </>
+        )}
+
+        <div ref={advancedRef} />
       </StyledInputWrapper>
     </StyledFormContainer>
   )
