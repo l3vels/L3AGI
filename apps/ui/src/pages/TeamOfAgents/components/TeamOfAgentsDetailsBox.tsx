@@ -30,6 +30,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useTeamOfAgents } from '../useTeamOfAgents'
+import { useModelsService } from 'services'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -44,9 +45,15 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
 
   const { closeModal } = useModal()
 
-  const { name, description, team_type, id, created_by } = teamData
+  const { data: models } = useModelsService()
 
+  const { name, description, team_type, id, created_by, configs } = teamData
+  const { model, temperature } = configs
   const isCreator = user?.id === created_by
+
+  const teamModel = models
+    ?.filter((modelData: any) => modelData.id === model)
+    .map((model: any) => model.name)
 
   const handleEdit = () => {
     closeModal('team-of-agent-view-modal')
@@ -120,6 +127,8 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
 
       <StyledWrapper>
         {team_type && <TagsRow title='Team Type' items={[team_type]} />}
+        {model && <TagsRow title='Model' items={teamModel} />}
+        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
       </StyledWrapper>
     </StyledDetailsBox>
   )

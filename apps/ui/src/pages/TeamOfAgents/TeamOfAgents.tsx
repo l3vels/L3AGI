@@ -20,7 +20,7 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
   const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
 
   const navigate = useNavigate()
-  console.log('teamOfAgentsArray', teamOfAgentsArray)
+
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>

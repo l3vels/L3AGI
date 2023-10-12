@@ -29,6 +29,9 @@ import { useModal } from 'hooks'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledEyeOpenIcon } from './TeamOfAgentsCard/TeamOfAgentsCard'
+import AdditionalInfoBox from 'pages/Agents/AgentView/components/AdditionalInfoBox'
+import AgentToolkits from 'pages/Agents/AgentView/components/AgentToolkits'
+import AgentDatasources from 'pages/Agents/AgentView/components/AgentDatasources'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()
@@ -38,7 +41,10 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
   if (!data && !teamOfAgentsData) return <div />
 
-  const { team_agents } = data || teamOfAgentsData
+  const { team_agents, configs } = data || teamOfAgentsData
+
+  const { tools, goals, constraints, instructions, datasources, suggestions, greeting, text } =
+    configs
 
   return (
     <StyledSectionWrapper>
@@ -133,6 +139,46 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                 )
               })}
             </StyledAgentsWrapper>
+
+            {tools.length > 0 && <AgentToolkits tools={tools} />}
+
+            {datasources.length > 0 && <AgentDatasources datasources={datasources} />}
+
+            {goals.length > 0 && (
+              <AdditionalInfoBox
+                items={goals}
+                title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
+              />
+            )}
+
+            {constraints.length > 0 && (
+              <AdditionalInfoBox
+                items={constraints}
+                title={
+                  constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
+                }
+              />
+            )}
+            {instructions.length > 0 && (
+              <AdditionalInfoBox
+                items={instructions}
+                title={
+                  instructions.length === 1
+                    ? '1 Instruction'
+                    : `${instructions.length} Instructions`
+                }
+              />
+            )}
+            {suggestions.length > 0 && (
+              <AdditionalInfoBox
+                items={suggestions}
+                title={
+                  suggestions.length === 1 ? '1 Suggestion' : `${suggestions.length} Suggestions`
+                }
+              />
+            )}
+            {greeting.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
+            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={'Advanced'} />}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>
