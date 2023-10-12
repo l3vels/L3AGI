@@ -41,6 +41,7 @@ const darkTheme: DefaultTheme = {
     textareaBorder: 'none',
     textAreaBgColor: 'rgba(255, 255, 255, 0.2)',
     dropdownBgColor: 'transparent',
+    dataLoaderCardBorder: '#48ecf0',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -99,6 +100,7 @@ const lightTheme: DefaultTheme = {
     textareaBorder: 'rgba(0, 0, 0, 0.1)',
     textAreaBgColor: 'rgba(255, 255, 255, 1)',
     dropdownBgColor: 'rgba(255, 255, 255, 1)',
+    dataLoaderCardBorder: 'rgba(0, 0, 0, 0.1)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
