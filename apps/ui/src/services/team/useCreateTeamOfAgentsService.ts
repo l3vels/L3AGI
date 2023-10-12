@@ -8,7 +8,6 @@ export type TeamOfAgentsInput = {
   team_type: string
   team_agents: { role: string; agent_id: string }[]
   is_memory: boolean
-
   greeting: string
   temperature: number
   goals: string[]
@@ -18,6 +17,7 @@ export type TeamOfAgentsInput = {
   instructions: string[]
   suggestions: string[]
   text: string
+  model: string
 }
 
 export const useCreateTeamOfAgentsService = () => {
@@ -40,6 +40,7 @@ export const useCreateTeamOfAgentsService = () => {
       temperature,
       text,
       tools,
+      model,
     } = input
 
     const {
@@ -62,6 +63,7 @@ export const useCreateTeamOfAgentsService = () => {
             temperature,
             text,
             tools,
+            model,
           },
         },
       },

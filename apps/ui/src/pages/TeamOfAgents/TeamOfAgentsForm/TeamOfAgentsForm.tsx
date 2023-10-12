@@ -5,7 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
+import { StyledCombinedFields, StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import { useTeamOfAgentsForm } from './useTeamOfAgentsForm'
 import UploadButton from './components/UploadButton'
 import UploadedFile from 'components/UploadedFile'
@@ -50,6 +50,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
     team_text,
     team_tools,
     team_datasources,
+    team_model,
   } = values
 
   const onDescriptionChange = (value: string) => {
@@ -225,6 +226,17 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             onChange={(value: string) => onTextareaChange('team_greeting', value)}
           />
         </StyledTextareaWrapper>
+
+        <StyledCombinedFields>
+          <AgentDropdown
+            label={'Model'}
+            fieldName={'team_model'}
+            setFieldValue={setFieldValue}
+            fieldValue={team_model}
+            options={modelOptions}
+            optionSize={'small'}
+          />
+        </StyledCombinedFields>
 
         <AgentSlider
           onChange={(value: number) => setFieldValue('team_temperature', value / 10)}

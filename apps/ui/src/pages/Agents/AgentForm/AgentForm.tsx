@@ -247,7 +247,7 @@ const StyledCheckboxWrapper = styled.div`
     color: ${({ theme }) => theme.typography.contentPrimary};
   }
 `
-const StyledCombinedFields = styled.div`
+export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

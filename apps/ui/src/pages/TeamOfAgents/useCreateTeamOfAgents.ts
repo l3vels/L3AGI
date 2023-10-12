@@ -37,6 +37,7 @@ export const useCreateTeamOfAgents = () => {
     team_temperature: 0.2,
     team_text: '',
     team_tools: [],
+    team_model: '',
   }
 
   const formik = useFormik({
@@ -89,6 +90,7 @@ export const useCreateTeamOfAgents = () => {
         temperature: values.team_temperature,
         text: values.team_text,
         tools: values.team_tools,
+        model: values.team_model,
       }
 
       const teamOfAgents = await createTeamOfAgents(teamOfAgentsInput)

@@ -21,6 +21,7 @@ export const useUpdateTeamOfAgentsService = () => {
       temperature,
       text,
       tools,
+      model,
     } = input
 
     const { data } = await mutation({
@@ -42,6 +43,7 @@ export const useUpdateTeamOfAgentsService = () => {
             temperature,
             text,
             tools,
+            model,
           },
         },
       },

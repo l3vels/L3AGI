@@ -62,6 +62,7 @@ export const useEditTeamOfAgents = () => {
     team_temperature: teamOfAgentsById?.configs.temperature,
     team_text: teamOfAgentsById?.configs.text,
     team_tools: teamOfAgentsById?.configs.tools,
+    team_model: teamOfAgentsById?.configs.model,
   }
 
   const handleSubmit = async (values: any) => {
@@ -84,6 +85,7 @@ export const useEditTeamOfAgents = () => {
       temperature: values.team_temperature,
       text: values.team_text,
       tools: values.team_tools,
+      model: values.team_model,
     }
 
     const promises = [
