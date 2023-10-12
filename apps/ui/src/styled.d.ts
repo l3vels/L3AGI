@@ -42,6 +42,7 @@ declare module 'styled-components' {
       dataLoaderCardBorder: string
       textColorTertiary: string
       tableBackgroundColor: string
+      sliderBackgroundColor: string
     }
     typography: {
       contentPrimary: string
