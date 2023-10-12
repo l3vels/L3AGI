@@ -72,8 +72,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
       onMouseLeave={handleMouseLeave}
       onClick={() => setShowSwitcher(true)}
     >
-      <StyledChatSwitcher>
-        {/* <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
+      {/* <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
           <StyledIcon
             picked={!isChatOpen}
             onClick={() => {
@@ -84,12 +83,12 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             <StyledCollectionIcon />
           </StyledIcon>
         </Tooltip> */}
-        {/* <Tooltip content={() => <span>Chat</span>} position={Tooltip.positions.BOTTOM}>
+      {/* <Tooltip content={() => <span>Chat</span>} position={Tooltip.positions.BOTTOM}>
           <StyledIcon picked={isChatOpen} onClick={handleChatButton}>
             <StyledMentionIcon size='46' />
           </StyledIcon>
         </Tooltip> */}
-
+      {/* <StyledChatSwitcher>
         <Tooltip
           content={() => <span>Home</span>}
           position={Tooltip.positions.RIGHT}
@@ -148,8 +147,8 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
             <StyledSearchOutlineIcon />
           </StyledIcon>
         </Tooltip>
-      </StyledChatSwitcher>
-      {/* <MainNavigation /> */}
+      </StyledChatSwitcher> */}
+      <MainNavigation />
     </StyledRoot>
   )
 }
@@ -157,61 +156,21 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
 export default ChatSwitcher
 
 // for different version
-// const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
-//   padding: 0 10px;
-//   position: absolute;
-//   top: 70px;
-//   left: 0;
-//   z-index: 2147483647;
-//   /* transform: translateY(-50%); */
-//   overflow: auto;
-//   display: flex;
-//   flex-direction: column;
-//   /* justify-content: center; */
-
-//   height: calc(100% - 150px);
-//   width: 110px;
-
-//   @keyframes slideAnimation {
-//     from {
-//       left: 0; /* Element slides to the right and is fully visible */
-//     }
-//     to {
-//       left: -100px; /* Element starts from the left and is off the screen */
-//     }
-//   }
-
-//   transition: left 0.1s ease-in-out;
-
-//   ${p =>
-//     p.collapsed &&
-//     css`
-//       /* width: 10px; */
-//       left: -100px;
-//       overflow: hidden;
-//       /* animation: slideAnimation 0.2s ease-in-out; */
-
-//       cursor: pointer;
-//       :hover {
-//         background: rgba(255, 255, 255, 0.1);
-//       }
-//     `};
-// `
 const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
+  padding: 0 10px;
   position: absolute;
-  top: 50%;
+  top: 70px;
   left: 0;
-  z-index: 2000000;
-  transform: translateY(-50%);
-  /* background: red; */
+  z-index: 2147483647;
+  /* transform: translateY(-50%); */
+  overflow: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
 
-  /* height: 80%; */
-  /* width: 110px; */
-  padding-right: 10px;
-  /* margin-left: 20px; */
+  height: calc(100% - 150px);
+  width: 110px;
+
   @keyframes slideAnimation {
     from {
       left: 0; /* Element slides to the right and is fully visible */
@@ -227,7 +186,7 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
     p.collapsed &&
     css`
       /* width: 10px; */
-      left: -80px;
+      left: -100px;
       overflow: hidden;
       /* animation: slideAnimation 0.2s ease-in-out; */
 
@@ -237,6 +196,46 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
       }
     `};
 `
+// const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
+//   position: absolute;
+//   top: 50%;
+//   left: 0;
+//   z-index: 2000000;
+//   transform: translateY(-50%);
+//   /* background: red; */
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+
+//   /* height: 80%; */
+//   /* width: 110px; */
+//   padding-right: 10px;
+//   /* margin-left: 20px; */
+//   @keyframes slideAnimation {
+//     from {
+//       left: 0; /* Element slides to the right and is fully visible */
+//     }
+//     to {
+//       left: -100px; /* Element starts from the left and is off the screen */
+//     }
+//   }
+
+//   transition: left 0.1s ease-in-out;
+
+//   ${p =>
+//     p.collapsed &&
+//     css`
+//       /* width: 10px; */
+//       left: -80px;
+//       overflow: hidden;
+//       /* animation: slideAnimation 0.2s ease-in-out; */
+
+//       cursor: pointer;
+//       :hover {
+//         background: rgba(255, 255, 255, 0.1);
+//       }
+//     `};
+// `
 
 const StyledChatSwitcher = styled.div`
   display: inline-flex;
@@ -294,31 +293,31 @@ const StyledCollectionIcon = styled(Collection)`
   }
 `
 
-const StyledMentionIcon = styled(Mention)`
+export const StyledMentionIcon = styled(Mention)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledGamesIcon = styled(Games)`
+export const StyledGamesIcon = styled(Games)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledAboutIcon = styled(About)`
+export const StyledAboutIcon = styled(About)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledValueOutlineIcon = styled(ValueOutline)`
+export const StyledValueOutlineIcon = styled(ValueOutline)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
 
-const StyledSearchOutlineIcon = styled(SearchOutline)`
+export const StyledSearchOutlineIcon = styled(SearchOutline)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }

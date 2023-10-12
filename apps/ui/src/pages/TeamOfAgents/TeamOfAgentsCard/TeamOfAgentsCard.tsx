@@ -175,8 +175,8 @@ export default TeamOfAgentCard
 
 const StyledCard = styled.div`
   position: relative;
-  width: 345px;
-  min-width: 345px;
+  width: 335px;
+  min-width: 335px;
   height: 370px;
   min-height: 370px;
 
@@ -184,7 +184,9 @@ const StyledCard = styled.div`
   /* padding-top: 30px; */
 
   border-radius: 22px;
-  border: ${({ theme }) => theme.body.border};
+  border: 1px solid transparent;
+  /* border: ${({ theme }) => theme.body.border}; */
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
   background: ${({ theme }) => theme.body.cardBgColor};
   display: flex;
   flex-direction: column;

@@ -14,6 +14,7 @@ import { toolLogos } from './constants'
 import { useNavigate } from 'react-router-dom'
 import { useToolView } from './ToolView/useToolView'
 import { useEffect, useState } from 'react'
+import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: tools } = useToolsService()
@@ -82,18 +83,3 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
 }
 
 export default Toolkit
-
-const StyledCardsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-
-  max-height: calc(100vh - 250px);
-  padding-left: 20px;
-
-  gap: 10px;
-`

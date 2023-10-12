@@ -10,6 +10,12 @@ import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import includes from 'lodash/includes'
+import {
+  StyledGamesIcon,
+  StyledMentionIcon,
+  StyledSearchOutlineIcon,
+  StyledValueOutlineIcon,
+} from 'components/ChatSwitcher/ChatSwitcher'
 
 const MainNavigation = () => {
   const navigate = useNavigate()
@@ -33,39 +39,36 @@ const MainNavigation = () => {
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
         <StyledAboutIcon />
-
         <span>Home</span>
       </StyledLi>
-      <StyledLi isActive={includes(active, 'agents')} onClick={() => onHandleClick('/agents')}>
-        <StyledCollectionIcon />
+
+      <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
+        <StyledMentionIcon size={46} />
+        <span>Chat</span>
+      </StyledLi>
+
+      {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
+        <StyledValueIcon>
+          <StyledValueOutLineIcon size={38} />
+        </StyledValueIcon>
         <span>Agents</span>
-      </StyledLi>
-      <StyledLi
-        isActive={includes(active, 'team-of-agents')}
-        onClick={() => onHandleClick('/team-of-agents')}
-      >
-        <StyledIconWrapper>
-          <StyledTeamIcon size={30} />
-        </StyledIconWrapper>
-        <span>Team</span>
-      </StyledLi>
+      </StyledLi> */}
+
       <StyledLi
         isActive={includes(active, 'datasources')}
         onClick={() => onHandleClick('/datasources')}
       >
-        <StyledValueIcon>
-          <StyledValueOutLineIcon size={38} />
-        </StyledValueIcon>
+        <StyledValueOutlineIcon />
         <span>Data sources</span>
       </StyledLi>
+
       <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
-        <StyledAddIcon size={40} />
+        <StyledGamesIcon />
         <span>Toolkits</span>
       </StyledLi>
+
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
-        <StyledIconWrapper>
-          <StyledLaunchIcon size={30} />
-        </StyledIconWrapper>
+        <StyledSearchOutlineIcon />
         <span>Discover</span>
       </StyledLi>
     </StyledUl>
@@ -75,6 +78,8 @@ const MainNavigation = () => {
 export default MainNavigation
 
 const StyledUl = styled.ul`
+  backdrop-filter: blur(100px);
+
   list-style: none;
   margin: 0;
   padding: 0;
@@ -85,13 +90,14 @@ const StyledUl = styled.ul`
   padding-bottom: 10px;
 `
 const StyledLi = styled.li<{ isActive?: boolean }>`
-  width: 90px;
-  height: 64px;
+  color: transparent;
   display: flex;
-  justify-content: center;
+  padding: 4px 2px;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 5px;
+
   cursor: pointer;
   span {
     font-size: 14px;
@@ -104,7 +110,8 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     isActive &&
     `
     opacity: 1;
-    border-radius: 6px;
+    
+    border-radius: 8px;
     background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.10));
     span{
       color: ${theme.body.mainNavColorActive};

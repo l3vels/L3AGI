@@ -2,5 +2,6 @@ query account @api(name: account) {
   account {
     id
     name
+    configs
   }
 }

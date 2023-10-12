@@ -178,8 +178,8 @@ export default AgentCard
 
 export const StyledAgentCard = styled.div`
   position: relative;
-  width: 345px;
-  min-width: 345px;
+  width: 335px;
+  min-width: 335px;
   height: 190px;
   min-height: 190px;
 
@@ -190,7 +190,9 @@ export const StyledAgentCard = styled.div`
 
   /* background: rgba(0, 0, 0, 0.5); */
   background: ${({ theme }) => theme.body.cardBgColor};
-  border: ${({ theme }) => theme.body.border};
+  /* border: ${({ theme }) => theme.body.border}; */
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+
   display: flex;
   flex-direction: column;
   align-items: center;
