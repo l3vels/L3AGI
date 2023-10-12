@@ -11,11 +11,11 @@ type MemberTextProps = {
 }
 
 const MemberText = ({ name, role }: MemberTextProps) => {
-  const { shortText: shortName } = textSlicer(name, 14)
+  const { shortText: shortName } = textSlicer(name, 30)
 
   let shortRole
   if (role) {
-    const { shortText } = textSlicer(role, 30)
+    const { shortText } = textSlicer(role, 35)
     shortRole = shortText
   }
 
