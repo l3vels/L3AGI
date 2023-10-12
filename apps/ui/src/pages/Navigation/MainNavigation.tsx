@@ -89,7 +89,11 @@ const MainNavigation = () => {
 
       <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
         <StyledBasicIcon size={30} />
-        <span>Models</span>
+        <TypographySecondary
+          value={'Models'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
