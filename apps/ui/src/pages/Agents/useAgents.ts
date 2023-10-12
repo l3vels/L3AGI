@@ -128,7 +128,7 @@ export const useAgents = () => {
             await refetchAgents()
             closeModal('delete-confirmation-modal')
             closeModal('agent-view-modal')
-            navigate('/chat')
+
             setToast({
               message: 'Agent was deleted!',
               type: 'positive',
