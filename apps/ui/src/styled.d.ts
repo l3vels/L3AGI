@@ -41,6 +41,7 @@ declare module 'styled-components' {
       dropdownBgColor: string
       dataLoaderCardBorder: string
       textColorTertiary: string
+      tableBackgroundColor: string
     }
     typography: {
       contentPrimary: string
