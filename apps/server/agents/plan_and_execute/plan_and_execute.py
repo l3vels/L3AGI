@@ -1,29 +1,29 @@
-from langchain.chat_models import ChatOpenAI
 from typing import Dict, List
-from fastapi_sqlalchemy import db
 from uuid import UUID
 
-from postgres import PostgresChatMessageHistory
+from fastapi_sqlalchemy import db
+
 from agents.base_agent import BaseAgent
-from agents.plan_and_execute.chat_planner import initialize_chat_planner
+from agents.handle_agent_errors import handle_agent_error
 from agents.plan_and_execute.agent_executor import initialize_executor
+from agents.plan_and_execute.chat_planner import initialize_chat_planner
 from agents.plan_and_execute.plan_and_execute_chain import PlanAndExecuteChain
-from memory.zep.zep_memory import ZepMemory
 from config import Config
-from utils.agent import convert_model_to_response
-from utils.system_message import SystemMessageBuilder
-from models.datasource import DatasourceModel
+from exceptions import PlannerEmptyTasksException
+from memory.zep.zep_memory import ZepMemory
 from models.agent import AgentModel
-from models.team import TeamModel
-from models.team import TeamAgentModel
-from typings.team_agent import TeamAgentRole
+from models.datasource import DatasourceModel
+from models.team import TeamAgentModel, TeamModel
+from postgres import PostgresChatMessageHistory
+from services.pubsub import ChatPubSubService
+from tools.datasources.get_datasource_tools import get_datasource_tools
+from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from tools.get_tools import get_agent_tools
-from tools.datasources.get_datasource_tools import get_datasource_tools
-from services.pubsub import ChatPubSubService
-from agents.handle_agent_errors import handle_agent_error
-from exceptions import PlannerEmptyTasksException
+from typings.team_agent import TeamAgentRole
+from utils.agent import convert_model_to_response
+from utils.model import get_llm
+from utils.system_message import SystemMessageBuilder
 
 
 class PlanAndExecute(BaseAgent):
@@ -39,10 +39,14 @@ class PlanAndExecute(BaseAgent):
             .all()
         )
         datasource_tools = get_datasource_tools(
-            datasources, settings, self.provider_account
+            datasources, settings, self.provider_account, agent_with_configs
         )
         agent_tools = get_agent_tools(
-            agent_with_configs.configs.tools, db, self.provider_account, settings
+            agent_with_configs.configs.tools,
+            db,
+            self.provider_account,
+            settings,
+            agent_with_configs,
         )
         return datasource_tools + agent_tools
 
@@ -92,10 +96,9 @@ class PlanAndExecute(BaseAgent):
         memory.human_name = self.user.name
         memory.ai_name = team.name
 
-        planner_llm = ChatOpenAI(
-            openai_api_key=settings.openai_api_key,
-            temperature=planner_agent_with_configs.configs.temperature,
-            model_name=planner_agent_with_configs.configs.model_version,
+        planner_llm = get_llm(
+            settings,
+            planner_agent_with_configs,
         )
         planner_system_message = SystemMessageBuilder(
             planner_agent_with_configs
@@ -103,11 +106,7 @@ class PlanAndExecute(BaseAgent):
 
         planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
 
-        executor_llm = ChatOpenAI(
-            openai_api_key=settings.openai_api_key,
-            temperature=executor_agent_with_configs.configs.temperature,
-            model_name=executor_agent_with_configs.configs.model_version,
-        )
+        executor_llm = get_llm(settings, executor_agent_with_configs)
         executor_system_message = SystemMessageBuilder(
             executor_agent_with_configs
         ).build()

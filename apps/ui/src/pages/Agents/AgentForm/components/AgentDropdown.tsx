@@ -45,6 +45,8 @@ const AgentDropdown = ({
         setFieldValue(fieldName, [...values])
       }
     }
+  } else {
+    value = options?.find((option: any) => option.value === fieldValue)?.label
   }
 
   const onOptionRemove = (removedValue: any) => {

@@ -1,5 +1,6 @@
-from pydantic import BaseModel, UUID4
 from typing import Optional
+
+from pydantic import UUID4, BaseModel
 
 
 class ConfigInput(BaseModel):
@@ -48,7 +49,8 @@ class ConfigQueryParams(BaseModel):
 
 class AccountSettings(BaseModel):
     openai_api_key: Optional[str]
-    hugging_face_auth_token: Optional[str]
+    hugging_face_access_token: Optional[str]
+    replicate_api_token: Optional[str]
     pinecone_api_key: Optional[str]
     pinecone_environment: Optional[str]
     weaviate_url: Optional[str]

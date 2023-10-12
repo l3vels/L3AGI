@@ -1,5 +1,7 @@
-from pydantic import BaseModel, UUID4
 from typing import List, Optional
+
+from pydantic import UUID4, BaseModel
+
 from typings.user import UserOutput
 
 
@@ -19,8 +21,7 @@ class ConfigInput(BaseModel):
     constraints: List[str]
     tools: List[str]
     datasources: List[str]
-    model_provider: str
-    model_version: str
+    model: Optional[str]
     temperature: float
     instructions: List[str]
     suggestions: Optional[List[str]]
@@ -38,8 +39,7 @@ class ConfigsOutput(BaseModel):
     constraints: List[str]
     tools: List[str]
     datasources: List[str]
-    model_provider: str
-    model_version: str
+    model: Optional[str]
     temperature: float
     instructions: List[str]
     suggestions: Optional[List[str]]

@@ -1,18 +1,18 @@
-from typing import Optional, Type
+import base64
+import io
 import json
 import uuid
-import io
-import base64
+from typing import Optional, Type
 
 import sentry_sdk
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from pydantic import BaseModel, Field
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
-from tools.base import BaseTool
-from tools.chart.chart_generator_runner import chart_generator_runner
-from tools.chart.chart_generator_helper import generate_chart_code_chain, extract_code
+
 from services.aws_s3 import AWSS3Service
+from tools.base import BaseTool
+from tools.chart.chart_generator_helper import (extract_code,
+                                                generate_chart_code_chain)
+from tools.chart.chart_generator_runner import chart_generator_runner
 
 
 class ChartGeneratorSchema(BaseModel):
@@ -50,7 +50,7 @@ class ChartGeneratorTool(BaseTool):
         try:
             action = json.loads(query)
 
-            chain = generate_chart_code_chain(self.settings.openai_api_key)
+            chain = generate_chart_code_chain(self.settings, self.agent_with_configs)
             code = chain.run(data=action)
             code = extract_code(code)
 

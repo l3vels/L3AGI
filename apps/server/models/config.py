@@ -1,16 +1,18 @@
 from __future__ import annotations
-from typing import List
-import uuid
-from fastapi_sqlalchemy.middleware import DBSessionMeta
 
-from sqlalchemy import Column, String, Boolean, UUID, ForeignKey, Index
+import uuid
+from typing import List
+
+from fastapi_sqlalchemy.middleware import DBSessionMeta
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import and_, or_
-from models.base_model import BaseModel
-from typings.config import ConfigInput, ConfigQueryParams, AccountSettings
-from typings.account import AccountOutput
+
 from exceptions import ConfigNotFoundException
-from utils.encyption import encrypt_data, decrypt_data, is_encrypted
+from models.base_model import BaseModel
+from typings.account import AccountOutput
+from typings.config import AccountSettings, ConfigInput, ConfigQueryParams
+from utils.encyption import decrypt_data, encrypt_data, is_encrypted
 
 
 class ConfigModel(BaseModel):
@@ -197,7 +199,8 @@ class ConfigModel(BaseModel):
                 ConfigModel.id == config_id,
                 or_(
                     or_(
-                        ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None
+                        ConfigModel.is_deleted.is_(False),
+                        ConfigModel.is_deleted is None,
                     ),
                     ConfigModel.is_deleted is None,
                 ),
@@ -231,7 +234,8 @@ class ConfigModel(BaseModel):
                 ConfigModel.account_id == account.id,
                 or_(
                     or_(
-                        ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None
+                        ConfigModel.is_deleted.is_(False),
+                        ConfigModel.is_deleted is None,
                     ),
                     ConfigModel.is_deleted is None,
                 ),
@@ -245,7 +249,8 @@ class ConfigModel(BaseModel):
     def get_account_settings(cls, db, account) -> AccountSettings:
         keys = [
             "open_api_key",
-            "hugging_face_token",
+            "hugging_face_access_token",
+            "replicate_api_token",
             "pinecone_api_key",
             "pinecone_environment",
             "weaviate_url",
@@ -259,7 +264,8 @@ class ConfigModel(BaseModel):
                 ConfigModel.account_id == account.id,
                 or_(
                     or_(
-                        ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None
+                        ConfigModel.is_deleted.is_(False),
+                        ConfigModel.is_deleted is None,
                     ),
                     ConfigModel.is_deleted is None,
                 ),
@@ -276,7 +282,8 @@ class ConfigModel(BaseModel):
 
         return AccountSettings(
             openai_api_key=config.get("open_api_key"),
-            hugging_face_auth_token=config.get("hugging_face_token"),
+            hugging_face_access_token=config.get("hugging_face_access_token"),
+            replicate_api_token=config.get("replicate_api_token"),
             pinecone_api_key=config.get("pinecone_api_key"),
             pinecone_environment=config.get("pinecone_environment"),
             weaviate_url=config.get("weaviate_url"),

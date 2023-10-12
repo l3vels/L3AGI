@@ -12,6 +12,14 @@ export const SETTINGS_FIELDS = [
     label: 'OpenAI API key',
   },
   {
+    key: 'hugging_face_access_token',
+    label: 'Hugging Face Access Token',
+  },
+  {
+    key: 'replicate_api_token',
+    label: 'Replicate API Token',
+  },
+  {
     key: 'pinecone_api_key',
     label: 'Pinecone API key',
   },
@@ -27,10 +35,6 @@ export const SETTINGS_FIELDS = [
     key: 'weaviate_api_key',
     label: 'Weaviate Api Key',
   },
-  // {
-  //   key: 'hugging_face_token',
-  //   label: 'Hugging Face token',
-  // }
 ]
 
 export const useSettings = () => {

@@ -1,13 +1,12 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
-from fastapi_sqlalchemy import db
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
 
-from tools.datasources.sql_query_engine import SQLQueryEngine
-from tools.base import BaseTool
+from fastapi_sqlalchemy import db
+from langchain.callbacks.manager import CallbackManagerForToolRun
+from pydantic import BaseModel, Field
+
 from models.config import ConfigModel
+from tools.base import BaseTool
+from tools.datasources.sql_query_engine import SQLQueryEngine
 from utils.encyption import decrypt_data, is_encrypted
 
 
@@ -60,5 +59,7 @@ class MySQLDatabaseTool(BaseTool):
 
         uri = f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
-        result = SQLQueryEngine(self.settings, uri).run(question)
+        result = SQLQueryEngine(self.settings, self.agent_with_configs, uri).run(
+            question
+        )
         return result

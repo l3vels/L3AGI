@@ -31,8 +31,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const { setFieldValue, values } = formik
   const {
     agent_datasources,
-    agent_model_provider,
-    agent_model_version,
+    agent_model,
     agent_description,
     agent_is_memory,
     agent_tools,
@@ -46,7 +45,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     formik.setFieldValue(field, value)
   }
 
-  const { providerOptions, modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
+  const { modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
 
   return (
     <StyledRoot>
@@ -82,7 +81,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <AgentDropdown
             isMulti
-            label={'Datasource'}
+            label={'Data source'}
             fieldName={'agent_datasources'}
             fieldValue={agent_datasources}
             setFieldValue={setFieldValue}
@@ -112,22 +111,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <StyledCombinedFields>
             <AgentDropdown
-              label={'Mode Provider'}
-              fieldName={'agent_model_provider'}
+              label={'Model'}
+              fieldName={'agent_model'}
               setFieldValue={setFieldValue}
-              fieldValue={agent_model_provider}
-              options={providerOptions}
-              onChange={() => {
-                setFieldValue('agent_model_version', '')
-              }}
-              optionSize={'small'}
-            />
-            <AgentDropdown
-              label={'Model Version'}
-              fieldName={'agent_model_version'}
-              setFieldValue={setFieldValue}
-              fieldValue={agent_model_version}
+              fieldValue={agent_model}
               options={modelOptions}
+              onChange={() => {
+                setFieldValue('agent_model', '')
+              }}
               optionSize={'small'}
             />
           </StyledCombinedFields>
