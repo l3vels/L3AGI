@@ -8,13 +8,39 @@ export type TeamOfAgentsInput = {
   team_type: string
   team_agents: { role: string; agent_id: string }[]
   is_memory: boolean
+
+  greeting: string
+  temperature: number
+  goals: string[]
+  constraints: string[]
+  tools: string[]
+  datasources: string[]
+  instructions: string[]
+  suggestions: string[]
+  text: string
 }
 
 export const useCreateTeamOfAgentsService = () => {
   const [mutation] = useMutation(createTeamOfAgentsGql)
 
   const createTeamOfAgentsService = async (input: TeamOfAgentsInput) => {
-    const { name, description, team_type, team_agents, is_memory } = input
+    const {
+      name,
+      description,
+      team_type,
+      team_agents,
+      is_memory,
+
+      constraints,
+      datasources,
+      goals,
+      greeting,
+      instructions,
+      suggestions,
+      temperature,
+      text,
+      tools,
+    } = input
 
     const {
       data: { createTeamOfAgents },
@@ -26,6 +52,17 @@ export const useCreateTeamOfAgentsService = () => {
           team_type,
           team_agents,
           is_memory,
+          configs: {
+            constraints,
+            datasources,
+            goals,
+            greeting,
+            instructions,
+            suggestions,
+            temperature,
+            text,
+            tools,
+          },
         },
       },
     })

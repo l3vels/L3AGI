@@ -2,9 +2,29 @@ import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
 import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
 import { useContext, useState } from 'react'
+import { useModelsService } from 'services'
+import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { useTeamTypesService } from 'services/team/useTeamTypesService'
+import { useToolsService } from 'services/tool/useToolsService'
 
 export const useTeamOfAgentsForm = (formik: any) => {
+  const { data: datasourcesData } = useDatasourcesService()
+  const { data: tools } = useToolsService()
+  const { data: models } = useModelsService()
+
+  const modelOptions = models.map(({ id, name, provider }) => ({
+    value: id,
+    label: `${name} (${provider})`,
+  }))
+  const datasourceOptions = datasourcesData?.map((datasource: any) => {
+    return { value: datasource.id, label: datasource.name }
+  })
+  const toolOptions = tools
+    ?.filter((tool: any) => tool.is_active)
+    .map((tool: any) => {
+      return { value: tool.toolkit_id, label: tool.name }
+    })
+
   const { data: teamTypes } = useTeamTypesService()
 
   const pickedLoaderFields = teamTypes
@@ -12,8 +32,6 @@ export const useTeamOfAgentsForm = (formik: any) => {
     .map((loader: any) => {
       return { fields: loader.fields, category: loader.category }
     })[0] || { category: '', fields: [] }
-
-
 
   const { setToast } = useContext(ToastContext)
 
@@ -56,5 +74,8 @@ export const useTeamOfAgentsForm = (formik: any) => {
     handleUploadFile,
     fileLoading,
     teamTypes,
+    modelOptions,
+    datasourceOptions,
+    toolOptions,
   }
 }
