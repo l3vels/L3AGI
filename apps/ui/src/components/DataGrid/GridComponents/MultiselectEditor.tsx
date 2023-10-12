@@ -92,7 +92,6 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         onOptionRemove={optionRemoveHandler}
         value={value as any}
         menuPlacement={'auto'}
-        menuIsOpen={true}
       />
     </StyledDiv>
   )
