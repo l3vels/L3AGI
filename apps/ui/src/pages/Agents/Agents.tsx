@@ -14,6 +14,9 @@ import AgentCard from './AgentCard'
 import { useAgents } from './useAgents'
 import { ButtonPrimary } from 'components/Button/Button'
 
+import HeadingPrimary from 'components/Heading/Primary'
+import Heading from '@l3-lib/ui-core/dist/Heading'
+
 const Agents = ({ isHome }: { isHome?: boolean }) => {
   const { agentsData, deleteAgentHandler } = useAgents()
 
@@ -22,12 +25,19 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
+        <StyledMainHeaderWrapper>
+          <HeadingPrimary type={Heading.types.h1} size='medium' value='AGENTS' />
+          <StyledSectionDescription>
+            Here are all your agents, managing tasks and operations.
+          </StyledSectionDescription>
+        </StyledMainHeaderWrapper>
+        {/* <div>
+
           <StyledSectionTitle>Agents</StyledSectionTitle>
           <StyledSectionDescription>
             Here are all your agents, managing tasks and operations.
           </StyledSectionDescription>
-        </div>
+        </div> */}
 
         <div>
           {!isHome && (
@@ -80,4 +90,11 @@ export const StyledCardsWrapper = styled.div`
   height: 100%;
   overflow-y: auto;
   padding: 5px;
+`
+const StyledMainHeaderWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `
