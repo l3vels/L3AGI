@@ -5,6 +5,7 @@ import uuid
 from exceptions import AccountNotFoundException
 from typings.account import AccountInput
 from models.user_account import UserAccountModel
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 class AccountModel(BaseModel):
@@ -37,6 +38,7 @@ class AccountModel(BaseModel):
         index=True,
     )
     creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
+    configs = Column(JSONB)
 
     # user_accounts = relationship("UserAccountModel", back_populates="account")
     # projects = relationship("WorkspaceModel", back_populates="account")
@@ -172,3 +174,4 @@ class AccountModel(BaseModel):
 
         db_account.is_deleted = True
         db.session.commit()
+        

@@ -3,10 +3,59 @@ from typing import List
 from typings.account import AccountOutput
 from utils.type import convert_value_to_type
 
-
+default_configs = {
+    "modules" : {
+        "home": {
+            "active" : True,
+            "showAgents": False,
+            "showTeams": False                    
+        },
+        "chat": {
+            "active" : True,
+            "name": "Team",
+            "actions" : {
+                "addAgent": True,
+                "addTeam": True,
+                "createTeamChannel": True,
+                "createAgentChannel": True
+            }
+        },
+        "datasource": {
+            "active" : True,
+            "name": "Data sources"
+        },
+        "toolkit": {
+            "active" : True,
+            "name": "Toolkits"
+        },
+        "model" : {
+            "active" : True,
+            "name": "Models"
+        },
+        "contact": {
+            "active" : False,
+            "name": "Contact"
+        },
+        "group": {
+            "active" : False,
+            "name": "Group"
+        },
+        "schedule": {
+            "active" : False,
+            "name": "Campaign"
+        },
+        "discovery": {
+            "active" : False,
+            "name": "Discovery"
+        }
+    }
+}
+    
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
     account_data = {}
-
+    if not account_model.configs:
+        account_model.configs = default_configs
+        
     # Extract attributes from AccountModel using annotations of Account
     for key in AccountOutput.__annotations__.keys():
         if hasattr(account_model, key):
@@ -14,7 +63,7 @@ def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
             account_data[key] = convert_value_to_type(
                 value=getattr(account_model, key), target_type=target_type
             )
-
+            
     return AccountOutput(**account_data)
 
 

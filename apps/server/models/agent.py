@@ -192,7 +192,8 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id).filter(
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
+            .filter(
                 AgentModel.account_id == account.id,
                 or_(
                     or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None),
@@ -228,7 +229,7 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
                 AgentModel.is_public.is_(True),
@@ -256,8 +257,8 @@ class AgentModel(BaseModel):
         """
         agent = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(AgentModel.AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.id == agent_id,
                 or_(
@@ -289,8 +290,8 @@ class AgentModel(BaseModel):
         """
         agent = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.parent_id == parent_id,
                 AgentModel.account_id == account.id,
@@ -324,8 +325,8 @@ class AgentModel(BaseModel):
         # return db.session.query(AgentModel).filter(AgentModel.account_id == account.id, or_(or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None), AgentModel.is_deleted is None)).all()
         agents = (
             db.session.query(AgentModel)
-            .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .join(UserModel, AgentModel.created_by == UserModel.id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.id == agent_id,
                 or_(
