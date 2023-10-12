@@ -38,6 +38,7 @@ declare module 'styled-components' {
       textareaBorder: string
       textAreaBgColor: string
       tertiaryIconColor: string
+      dropdownBgColor: string
     }
     typography: {
       contentPrimary: string

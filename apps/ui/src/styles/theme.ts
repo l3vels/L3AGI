@@ -40,6 +40,7 @@ const darkTheme: DefaultTheme = {
     componentsSecondaryWrapperBg: 'rgba(255, 255, 255, 0.1)',
     textareaBorder: 'none',
     textAreaBgColor: 'rgba(255, 255, 255, 0.2)',
+    dropdownBgColor: 'transparent',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -97,6 +98,7 @@ const lightTheme: DefaultTheme = {
     componentsSecondaryWrapperBg: 'rgb(253,252,250)',
     textareaBorder: 'rgba(0, 0, 0, 0.1)',
     textAreaBgColor: 'rgba(255, 255, 255, 1)',
+    dropdownBgColor: 'rgba(255, 255, 255, 1)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
