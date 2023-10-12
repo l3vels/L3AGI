@@ -41,7 +41,7 @@ const MainNavigation = () => {
   return (
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-        <StyledAboutIcon />
+        <StyledAboutIcon size={40} />
         <TypographySecondary
           value={'Home'}
           type={Typography.types.LABEL}
@@ -50,7 +50,7 @@ const MainNavigation = () => {
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-        <StyledMentionIcon size={46} />
+        <StyledMentionIcon size={40} />
         <TypographySecondary
           value={'Chat'}
           type={Typography.types.LABEL}
@@ -69,7 +69,7 @@ const MainNavigation = () => {
         isActive={includes(active, 'datasources')}
         onClick={() => onHandleClick('/datasources')}
       >
-        <StyledValueOutlineIcon />
+        <StyledValueOutlineIcon size={40} />
         <TypographySecondary
           value={'Data sources'}
           type={Typography.types.LABEL}
@@ -78,7 +78,7 @@ const MainNavigation = () => {
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
-        <StyledGamesIcon />
+        <StyledGamesIcon size={40} />
         <TypographySecondary
           value={'Toolkits'}
           type={Typography.types.LABEL}
@@ -87,7 +87,7 @@ const MainNavigation = () => {
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
-        <StyledSearchOutlineIcon />
+        <StyledSearchOutlineIcon size={40} />
         <TypographySecondary
           value={'Discover'}
           type={Typography.types.LABEL}
