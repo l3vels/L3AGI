@@ -20,7 +20,7 @@ from config import Config
 from services.aws_s3 import AWSS3Service
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from utils.llm import get_llm
+from utils.model import get_llm
 
 s3 = s3fs.S3FileSystem(
     key=Config.AWS_ACCESS_KEY_ID,
@@ -159,9 +159,7 @@ class FileDatasourceRetriever:
         llm = LangChainLLM(
             llm=get_llm(
                 self.settings,
-                self.agent_with_configs.configs.model_provider,
-                self.agent_with_configs.configs.model_version,
-                0,
+                self.agent_with_configs,
             ),
         )
 

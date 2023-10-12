@@ -21,7 +21,7 @@ from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput
 from typings.chat import ChatStatus
 from typings.config import AccountSettings
-from utils.llm import get_llm
+from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
 
@@ -134,9 +134,7 @@ class AgentDebates(BaseAgent):
                 ),
                 model=get_llm(
                     self.settings,
-                    agent_with_config.configs.model_provider,
-                    agent_with_config.configs.model_version,
-                    agent_with_config.configs.temperature,
+                    agent_with_config,
                 ),
                 tools=self.get_tools(agent_with_config, self.settings),
                 top_k_results=2,

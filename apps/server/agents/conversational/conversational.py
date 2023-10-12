@@ -9,7 +9,7 @@ from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from utils.llm import get_llm
+from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
 
@@ -37,33 +37,27 @@ class ConversationalAgent(BaseAgent):
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
-        model_provider = agent_with_configs.configs.model_provider
-        model_name = agent_with_configs.configs.model_version or "gpt-3.5-turbo"
-        temperature = agent_with_configs.configs.temperature
-
         llm = get_llm(
             settings,
-            model_provider,
-            model_name,
-            temperature,
-        )
-
-        agent = initialize_agent(
-            tools,
-            llm,
-            agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
-            verbose=True,
-            memory=memory,
-            handle_parsing_errors="Check your output and make sure it conforms!",
-            agent_kwargs={
-                "system_message": system_message,
-                "output_parser": ConvoOutputParser(),
-            },
+            agent_with_configs,
         )
 
         res: str
 
         try:
+            agent = initialize_agent(
+                tools,
+                llm,
+                agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+                verbose=True,
+                memory=memory,
+                handle_parsing_errors="Check your output and make sure it conforms!",
+                agent_kwargs={
+                    "system_message": system_message,
+                    "output_parser": ConvoOutputParser(),
+                },
+            )
+
             res = agent.run(prompt)
         except Exception as err:
             res = handle_agent_error(err)

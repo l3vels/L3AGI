@@ -12,7 +12,7 @@ from sqlalchemy import MetaData, create_engine
 
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from utils.llm import get_llm
+from utils.model import get_llm
 
 
 class SQLQueryEngine:
@@ -73,9 +73,7 @@ class SQLQueryEngine:
         llm = LangChainLLM(
             llm=get_llm(
                 self.settings,
-                self.agent_with_configs.configs.model_provider,
-                self.agent_with_configs.configs.model_version,
-                0,
+                self.agent_with_configs,
             ),
         )
         llm_predictor = LLMPredictor(llm=llm)

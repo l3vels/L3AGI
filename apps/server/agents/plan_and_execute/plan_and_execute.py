@@ -22,7 +22,7 @@ from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from typings.team_agent import TeamAgentRole
 from utils.agent import convert_model_to_response
-from utils.llm import get_llm
+from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
 
@@ -98,9 +98,7 @@ class PlanAndExecute(BaseAgent):
 
         planner_llm = get_llm(
             settings,
-            planner_agent_with_configs.configs.model_provider,
-            planner_agent_with_configs.configs.model_version,
-            planner_agent_with_configs.configs.temperature,
+            planner_agent_with_configs,
         )
         planner_system_message = SystemMessageBuilder(
             planner_agent_with_configs
@@ -108,12 +106,7 @@ class PlanAndExecute(BaseAgent):
 
         planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
 
-        executor_llm = get_llm(
-            settings,
-            executor_agent_with_configs.configs.model_provider,
-            executor_agent_with_configs.configs.model_version,
-            executor_agent_with_configs.configs.temperature,
-        )
+        executor_llm = get_llm(settings, executor_agent_with_configs)
         executor_system_message = SystemMessageBuilder(
             executor_agent_with_configs
         ).build()

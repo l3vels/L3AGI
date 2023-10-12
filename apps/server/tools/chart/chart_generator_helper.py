@@ -5,7 +5,7 @@ from langchain.prompts import PromptTemplate
 
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
-from utils.llm import get_llm
+from utils.model import get_llm
 
 TEMPLATE = """
 You are expert at generating charts.
@@ -49,9 +49,7 @@ def generate_chart_code_chain(
     """Generate code for chart generation."""
     llm = get_llm(
         settings,
-        agent_with_configs.configs.model_provider,
-        agent_with_configs.configs.model_version,
-        0,
+        agent_with_configs,
     )
 
     prompt = PromptTemplate(input_variables=["data"], template=TEMPLATE)

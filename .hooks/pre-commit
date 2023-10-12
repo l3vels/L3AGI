@@ -7,7 +7,7 @@ cd apps/ui && yarn lint-staged && cd ../..
 # FastAPI formatting with black and linting with ruff
 cd apps/server
 
-staged_files=$(git diff --cached --name-only)
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
 python_files=""
 
 # Accumulate staged python files

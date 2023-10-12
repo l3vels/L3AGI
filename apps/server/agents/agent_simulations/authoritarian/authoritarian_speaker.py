@@ -25,7 +25,7 @@ from typings.chat import ChatStatus
 from typings.config import AccountSettings
 from typings.team_agent import TeamAgentRole
 from utils.agent import convert_model_to_response
-from utils.llm import get_llm
+from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
 
@@ -173,12 +173,7 @@ class AuthoritarianSpeaker(BaseAgent):
             system_message=SystemMessage(
                 content=SystemMessageBuilder(director_agent).build()
             ),
-            model=get_llm(
-                self.settings,
-                director_agent.configs.model_provider,
-                director_agent.configs.model_version,
-                director_agent.configs.temperature,
-            ),
+            model=get_llm(self.settings, director_agent),
             speakers=[
                 agent_with_config
                 for agent_with_config in agents_with_configs
@@ -203,9 +198,7 @@ class AuthoritarianSpeaker(BaseAgent):
                         ),
                         model=get_llm(
                             self.settings,
-                            agent_with_configs.configs.model_provider,
-                            agent_with_configs.configs.model_version,
-                            0.2,
+                            agent_with_configs,
                         ),
                         session_id=self.session_id,
                         sender_name=self.sender_name,
