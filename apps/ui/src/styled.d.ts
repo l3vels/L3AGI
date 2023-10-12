@@ -40,6 +40,7 @@ declare module 'styled-components' {
       tertiaryIconColor: string
       dropdownBgColor: string
       dataLoaderCardBorder: string
+      textColorTertiary: string
     }
     typography: {
       contentPrimary: string
