@@ -54,7 +54,7 @@ class BaseTool(LangchainBaseTool):
     settings: Optional[AccountSettings] = None
     toolkit_slug: Optional[str] = None
     account: Optional[AccountOutput] = None
-    agent_with_configs: AgentWithConfigsOutput
+    agent_with_configs: Optional[AgentWithConfigsOutput] = None
 
     def get_env_key(self, key: str):
         return self.configs.get(key)

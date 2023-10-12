@@ -1,7 +1,14 @@
+import base64  # noqa: F401
+import io  # noqa: F401
 import json
 import traceback
+from io import BytesIO  # noqa: F401
 from types import FunctionType
 from typing import Dict
+
+import matplotlib.pyplot as plt  # noqa: F401
+import pandas as pd  # noqa: F401
+from PIL import Image  # noqa: F401
 
 
 def chart_generator_runner(code: str) -> Dict:
