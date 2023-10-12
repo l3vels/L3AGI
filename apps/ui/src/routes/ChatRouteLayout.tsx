@@ -85,6 +85,10 @@ const ChatRouteLayout = () => {
         navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
       }
     }
+
+    if (teamOfAgentsArray?.length === 0 && agentsData?.length === 0) {
+      navigate('/agents/create-agent-template')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamOfAgentsArray, agentsData])
 
