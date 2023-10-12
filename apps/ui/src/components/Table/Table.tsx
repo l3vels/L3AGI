@@ -63,9 +63,9 @@ const StyledTable = styled.table`
 
   width: 100%;
   min-height: 300px;
-  color: #fff;
+  color: ${({ theme }) => theme.typography.contentPrimary};
 
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.body.tableBackgroundColor};
   border-radius: 24px;
 
   overflow: hidden;

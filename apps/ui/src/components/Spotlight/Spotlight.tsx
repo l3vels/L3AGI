@@ -6,7 +6,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyQuaternary from 'components/Typography/Quaternary'
 import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
-import SendIconSvg from 'assets/icons/send_icon.svg'
+import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
@@ -258,7 +258,7 @@ const Spotlight = () => {
                   onClick={postHandler}
                   disabled={formValue.length === 0 || typingEffectText}
                 >
-                  <img src={SendIconSvg} alt='sen' />
+                  <StyledSenIcon size={27} />
                 </StyledRightIcon>
               )}
             </>
@@ -497,5 +497,12 @@ const StyledIconWrapper = styled.div`
 const StyledSearchIcon = styled(Search)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledSenIcon = styled(SendIcon)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `

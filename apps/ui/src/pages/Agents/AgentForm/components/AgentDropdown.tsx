@@ -109,4 +109,14 @@ const StyledWrapper = styled.div`
       fill:${({ theme }) => theme.body.iconColor}}
     }
   }
+  .components-Tags-Tags-module__tags--qonKr {
+     background: ${({ theme }) => theme.body.textColorPrimary}!important;
+    path{
+       fill:${({ theme }) => theme.body.toolkitCardBgColorTertiary}}
+    }
+  }
+  .components-Tags-Tags-module__tags--qonKr .components-Tags-Tags-module__label--gC1wk{
+   
+     color: ${({ theme }) => theme.body.textColorTertiary}!important;
+  }
 `

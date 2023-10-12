@@ -35,13 +35,16 @@ const StyledSliderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  .l3-slider__base--positive .l3-slider__track {
+    background: ${({ theme }) => theme.body.sliderBackgroundColor} !important;
+  }
 `
 const StyledSliderHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  color: #fff;
+  color: ${({ theme }) => theme.body.textColorPrimary};
 `
 const StyledSlide = styled(Slider)`
   max-width: 100%;
