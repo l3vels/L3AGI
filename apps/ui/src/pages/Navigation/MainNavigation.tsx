@@ -17,6 +17,9 @@ import {
   StyledValueOutlineIcon,
 } from 'components/ChatSwitcher/ChatSwitcher'
 
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographySecondary from 'components/Typography/Secondary'
+
 const MainNavigation = () => {
   const navigate = useNavigate()
 
@@ -39,12 +42,20 @@ const MainNavigation = () => {
     <StyledUl>
       <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
         <StyledAboutIcon />
-        <span>Home</span>
+        <TypographySecondary
+          value={'Home'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
         <StyledMentionIcon size={46} />
-        <span>Chat</span>
+        <TypographySecondary
+          value={'Chat'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       </StyledLi>
 
       {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
@@ -59,17 +70,29 @@ const MainNavigation = () => {
         onClick={() => onHandleClick('/datasources')}
       >
         <StyledValueOutlineIcon />
-        <span>Data sources</span>
+        <TypographySecondary
+          value={'Data sources'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
         <StyledGamesIcon />
-        <span>Toolkits</span>
+        <TypographySecondary
+          value={'Toolkits'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
         <StyledSearchOutlineIcon />
-        <span>Discover</span>
+        <TypographySecondary
+          value={'Discover'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       </StyledLi>
     </StyledUl>
   )
