@@ -8,11 +8,11 @@ import HeadingPrimary from 'components/Heading/Primary'
 const HeaderText = () => {
   return (
     <StyledHeadingWrapper>
-      <HeadingPrimary type={Heading.types.h1} value='BUILD TEAMS OF AI AGENTS' />
+      <StyledHeadingPrimary type={Heading.types.h1} value='BUILD TEAMS OF AI AGENTS' />
       <TypographySecondary
         value='Open-source tool that enables AI agents to collaborate as effectively as human teams'
         type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
+        size={Typography.sizes.lg}
       />
     </StyledHeadingWrapper>
   )
@@ -26,4 +26,7 @@ const StyledHeadingWrapper = styled.div`
   align-items: center;
 
   padding: 16px 10px;
+`
+const StyledHeadingPrimary = styled(HeadingPrimary)`
+  font-size: 40px;
 `
