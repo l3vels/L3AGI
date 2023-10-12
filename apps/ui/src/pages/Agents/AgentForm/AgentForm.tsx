@@ -245,6 +245,12 @@ export const StyledTextareaWrapper = styled.div`
 const StyledCheckboxWrapper = styled.div`
   height: fit-content;
   padding-bottom: 5px;
+  .l3-style-checkbox--kind-secondary .l3-style-checkbox__checkbox {
+    border-color: ${({ theme }) => theme.typography.contentPrimary};
+  }
+  .l3-style-checkbox--kind-secondary .l3-style-checkbox__label {
+    color: ${({ theme }) => theme.typography.contentPrimary};
+  }
 `
 const StyledCombinedFields = styled.div`
   width: 100%;
