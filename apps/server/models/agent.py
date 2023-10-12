@@ -257,7 +257,7 @@ class AgentModel(BaseModel):
         """
         agent = (
             db.session.query(AgentModel)
-            .outerjoin(AgentModel.AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
             .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.id == agent_id,
@@ -290,7 +290,7 @@ class AgentModel(BaseModel):
         """
         agent = (
             db.session.query(AgentModel)
-            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
+            .outerjoin(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)  # Corrected line
             .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.parent_id == parent_id,
