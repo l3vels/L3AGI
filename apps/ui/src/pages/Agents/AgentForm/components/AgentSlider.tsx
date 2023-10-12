@@ -4,7 +4,7 @@ import Slider from '@l3-lib/ui-core/dist/Slider'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 
-const AgentSlider = ({ formik }: { formik: any }) => {
+const AgentSlider = ({ onChange, value }: { value: number; onChange: (value: number) => void }) => {
   return (
     <StyledSliderWrapper>
       <StyledSliderHeader>
@@ -13,15 +13,15 @@ const AgentSlider = ({ formik }: { formik: any }) => {
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
         />
-        {formik?.values.agent_temperature ? formik?.values.agent_temperature : 0}/{1}
+        {value ? value : 0}/{1}
       </StyledSliderHeader>
       <StyledSlide
         className='slider'
         color={Slider.colors.POSITIVE}
-        defaultValue={2}
+        defaultValue={value * 10 || 2}
         min={0}
         max={10}
-        onChange={(value: number) => formik?.setFieldValue('agent_temperature', value / 10)}
+        onChange={onChange}
       />
     </StyledSliderWrapper>
   )
