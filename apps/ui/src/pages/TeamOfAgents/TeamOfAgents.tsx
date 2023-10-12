@@ -25,10 +25,10 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
+          {/* <StyledSectionTitle>Team Of Agents</StyledSectionTitle>
           <StyledSectionDescription>
             Create and manage your team of AI agents for interactive experiences
-          </StyledSectionDescription>
+          </StyledSectionDescription> */}
         </div>
         <div>
           {!isHome && (

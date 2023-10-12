@@ -23,11 +23,11 @@ const DiscoverTeamAgents = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Discover Team of Agents</StyledSectionTitle>
+          {/* <StyledSectionTitle>Discover Team of Agents</StyledSectionTitle>
 
           <StyledSectionDescription>
             Create and manage your team of AI agents for interactive experiences
-          </StyledSectionDescription>
+          </StyledSectionDescription> */}
         </div>
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
