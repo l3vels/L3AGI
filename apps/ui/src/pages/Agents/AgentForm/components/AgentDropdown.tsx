@@ -70,7 +70,7 @@ const AgentDropdown = ({
         multiline
         size={Dropdown.size.MEDIUM}
         value={value}
-        placeholder={value}
+        placeholder={value ? value : 'model'}
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}
@@ -89,6 +89,9 @@ const StyledWrapper = styled.div`
   width: 100%;
   .css-xrcw8y-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    &::placeholder {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+    }
   }
   .menu.dropdown-menu-wrapper.css-19zapvn-menu {
     background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
