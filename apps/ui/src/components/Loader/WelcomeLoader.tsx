@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-import Logo from 'assets/icons/2.svg'
+import logo from 'assets/images/l3_logo.png'
 import { useEffect } from 'react'
 
 export const WelcomeLoader = () => {
@@ -17,7 +17,7 @@ export const WelcomeLoader = () => {
       <StyledSecondFigure />
       <StyledThirdFigure />
       <StyledCenterContainer>
-        <img src={Logo} alt='' />
+        <img src={logo} alt='' />
         <Heading
           value={'Welcome to L3AGI'}
           type={Heading.types.h1}

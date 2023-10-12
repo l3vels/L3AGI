@@ -39,7 +39,7 @@ const HomeRouteLayout = () => {
             Login / Sign Up
           </ButtonPrimary>
 
-          <TermsAndPrivacyButtons isPublic />
+          <TermsAndPrivacyButtons />
         </StyledLoginWrapper>
       )}
       {!user && <StyledSpace />}

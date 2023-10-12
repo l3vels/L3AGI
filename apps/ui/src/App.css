@@ -108,8 +108,8 @@ button {
 
 /* mozilla */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: #fff rgba(255, 255, 255, 0.1);
+  /* scrollbar-width: 4px; */
+  scrollbar-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Thin scrollbar */
@@ -124,7 +124,7 @@ button {
 
 /* Handle (thumb) of the scrollbar */
 ::-webkit-scrollbar-thumb {
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px; /* You can adjust the border-radius for rounded corners */
 }
 

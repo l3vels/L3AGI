@@ -2,9 +2,11 @@ import React from 'react'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import {
+  StyledButtonsWrapper,
   StyledDetailsBox,
   StyledDivider,
   StyledInnerButtonWrapper,
+  StyledMenuButtonsWrapper,
   StyledNameWrapper,
   StyledWrapper,
 } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
@@ -21,9 +23,13 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
-import { ButtonPrimary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyTertiary from 'components/Typography/Tertiary'
+
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import { useTeamOfAgents } from '../useTeamOfAgents'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -31,6 +37,8 @@ type TeamOfAgentsDetailsBoxProps = {
 
 const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
   const { user } = React.useContext(AuthContext)
+
+  const { deleteTeamOfAgentsHandler } = useTeamOfAgents()
 
   const navigate = useNavigate()
 
@@ -54,15 +62,29 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
             type={Typography.types.Heading}
             size={Typography.sizes.md}
           />
-          {isCreator && (
-            <IconButton
-              onClick={handleEdit}
-              icon={() => <StyledEditIcon />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
-              ariaLabel='Edit'
-            />
-          )}
+
+          <StyledButtonsWrapper>
+            {isCreator && (
+              <IconButton
+                onClick={handleEdit}
+                icon={() => <StyledEditIcon />}
+                size={IconButton.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                ariaLabel='Edit'
+              />
+            )}
+
+            {isCreator && (
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  {/* <ButtonTertiary onClick={handleCreateChat}>Create Channel</ButtonTertiary> */}
+                  <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
+                    Delete Team
+                  </ButtonTertiary>
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
+            )}
+          </StyledButtonsWrapper>
         </StyledNameWrapper>
 
         {!isCreator && (

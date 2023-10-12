@@ -187,7 +187,7 @@ export const StyledNameWrapper = styled.div`
   justify-content: space-between;
   gap: 5px;
 `
-const StyledMenuButtonsWrapper = styled.div`
+export const StyledMenuButtonsWrapper = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorSecondary};
   border: ${({ theme }) => theme.body.secondaryBorder};
   backdrop-filter: blur(100px);
@@ -200,7 +200,7 @@ const StyledMenuButtonsWrapper = styled.div`
   flex-direction: column;
   gap: 5px;
 `
-const StyledButtonsWrapper = styled.div`
+export const StyledButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 2px;
