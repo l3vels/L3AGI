@@ -92,15 +92,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         onOptionRemove={optionRemoveHandler}
         value={value as any}
         menuPlacement={'auto'}
-        // menuPortalTarget={document.body}
-        multi={props.isMulti}
-        multiline={props.isMultiLine}
-        size={Dropdown.size.SMALL}
-        // insideOverflowContainer
-        insideOverflowWithTransformContainer
-        optionRenderer={OptionRenderer}
-        menuPortalTarget={document.body} // Render the dropdown outside the grid
-        menuPosition={'fixed'}
+        menuIsOpen={true}
       />
     </StyledDiv>
   )
@@ -116,4 +108,19 @@ const StyledDropDown = styled(Dropdown)`
   /* background: #5d6a7d !important; */
   /* backdrop-filter: blur(5px) !important; */
   width: 100%;
+  .menu.dropdown-menu-wrapper.css-wxpx7r-menu {
+    background: ${({ theme }) => theme.body.dropdownSecondaryBgColor} !important;
+  }
+  .dropdown-wrapper__option--reset.css-146p8mp-option {
+    color: ${({ theme }) => theme.body.textColorPrimary} !important;
+  }
+  .dropdown-wrapper__option--reset {
+    &:hover {
+      background: ${({ theme }) => theme.body.placeHolderColor} !important;
+    }
+  }
+  .css-dyamw3-option {
+    background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
+    color: ${({ theme }) => theme.body.textColorSecondary};
+  }
 `
