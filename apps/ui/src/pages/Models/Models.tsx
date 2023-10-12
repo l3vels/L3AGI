@@ -11,6 +11,10 @@ import ModelCard from './components/ModelCard'
 
 import { MODEL_PROVIDER_LOGOS } from './constants'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: models } = useModelsService()
@@ -24,6 +28,14 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
             Discover the complete range of models available for your agents and teams.
           </StyledSectionDescription>
         </div>
+        <ButtonTertiary size={Button.sizes.SMALL} disabled>
+          <TypographyPrimary
+            value='Add model'
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+          {/* Add model */}
+        </ButtonTertiary>
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
