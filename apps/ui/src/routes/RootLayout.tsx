@@ -10,7 +10,7 @@ import Spotlight from 'components/Spotlight'
 import styled, { css } from 'styled-components'
 import AvatarDropDown from 'components/AvatarDropDown'
 
-import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
+import MediaButtons from 'components/MediaButtons'
 
 const RootLayout = () => {
   const { user } = React.useContext(AuthContext)
@@ -31,7 +31,7 @@ const RootLayout = () => {
             <StyledFirstName>{user.name}</StyledFirstName>
           </StyledInnerWrapper>
 
-          <TermsAndPrivacyButtons />
+          <MediaButtons />
         </StyledAvatarContainer>
       )}
 
