@@ -13,6 +13,8 @@ import About from '@l3-lib/ui-core/dist/icons/About'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import ValueOutline from '@l3-lib/ui-core/dist/icons/ValueOutline'
+import Robot from '@l3-lib/ui-core/dist/icons/Robot'
+import Basic from '@l3-lib/ui-core/dist/icons/Basic'
 
 import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
@@ -293,7 +295,7 @@ const StyledCollectionIcon = styled(Collection)`
   }
 `
 
-export const StyledMentionIcon = styled(Mention)`
+export const StyledBasicIcon = styled(Basic)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
@@ -314,6 +316,12 @@ export const StyledAboutIcon = styled(About)`
 export const StyledValueOutlineIcon = styled(ValueOutline)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+export const StyledRobotIcon = styled(Robot)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 

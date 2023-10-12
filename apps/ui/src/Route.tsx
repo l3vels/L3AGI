@@ -64,6 +64,7 @@ import CreateTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/CreateTe
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import Toolkit from 'pages/Toolkit'
 import ToolView from 'pages/Toolkit/ToolView'
+import Models from 'pages/Models'
 import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
 import HomeRouteLayout from 'routes/HomeRouteLayout'
 import LoginModal from 'modals/LoginModal'
@@ -227,6 +228,10 @@ const Route = () => {
             <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
               <Router path={':slug'} element={<ToolView />} key={document.location.href} />
+            </Router>
+
+            <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Models />} key={document.location.href} />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
