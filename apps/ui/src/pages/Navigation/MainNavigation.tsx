@@ -53,7 +53,7 @@ const MainNavigation = () => {
       <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
         <StyledRobotIcon size={40} />
         <TypographySecondary
-          value={'Chat'}
+          value={'Multi-Agents'}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />
