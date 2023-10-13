@@ -128,12 +128,11 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               }}
               optionSize={'small'}
             />
+            <AgentSlider
+              onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
+              value={agent_temperature}
+            />
           </StyledCombinedFields>
-
-          <AgentSlider
-            onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
-            value={agent_temperature}
-          />
 
           <StyledCheckboxWrapper>
             <Checkbox
@@ -259,7 +258,7 @@ const StyledCheckboxWrapper = styled.div`
 export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
 
   gap: 20px;
