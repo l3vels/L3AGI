@@ -45,6 +45,7 @@ const darkTheme: DefaultTheme = {
     dataLoaderCardBorder: '#48ecf0',
     tableBackgroundColor: 'rgba(0, 0, 0, 0.1)',
     sliderBackgroundColor: 'var(--color-transparent-white-01)',
+    dropdownSecondaryBgColor: 'rgba(0, 0, 0, 0.7)',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -107,6 +108,7 @@ const lightTheme: DefaultTheme = {
     dataLoaderCardBorder: 'rgba(0, 0, 0, 0.1)',
     tableBackgroundColor: 'rgb(220,220,220)',
     sliderBackgroundColor: 'rgba(0, 0, 0, 0.1)',
+    dropdownSecondaryBgColor: 'rgb(253,252,250)',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
