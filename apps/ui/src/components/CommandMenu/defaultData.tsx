@@ -16,6 +16,7 @@ import Sun from '@l3-lib/ui-core/dist/icons/Sun'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
 import StarVector from 'assets/svgComponents/StarVector'
 import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
+import styled from 'styled-components'
 
 export const defaultData = (path_id?: any) => {
   return [
@@ -25,7 +26,7 @@ export const defaultData = (path_id?: any) => {
       url: '/',
       option: 'link',
       group_name: 'go_to',
-      icon: <HomeIconSvg />,
+      icon: <StyledHomeIcon />,
     },
 
     {
@@ -34,7 +35,7 @@ export const defaultData = (path_id?: any) => {
       url: '/agents',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Collection />,
+      icon: <StyledCollectionIcon />,
     },
     {
       id: uuidv4(),
@@ -54,7 +55,7 @@ export const defaultData = (path_id?: any) => {
       url: '/team-of-agents',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Teams />,
+      icon: <StyledTeamsIcon />,
     },
     {
       id: uuidv4(),
@@ -62,7 +63,7 @@ export const defaultData = (path_id?: any) => {
       url: '/toolkits',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Add />,
+      icon: <StyledAddIcon />,
     },
     // {
     //   id: uuidv4(),
@@ -79,7 +80,7 @@ export const defaultData = (path_id?: any) => {
       url: '/agents/create-agent',
       option: 'link',
       group_name: ['go_to'],
-      icon: <Collection />,
+      icon: <StyledCollectionIcon />,
     },
 
     {
@@ -136,29 +137,70 @@ export const defaultData = (path_id?: any) => {
       url: '/account',
       option: 'modal',
       group_name: 'go_to',
-      icon: <About />,
+      icon: <StyledAboutIcon />,
     },
     {
       id: uuidv4(),
       name: 'Logout',
       url: 'create',
       option: 'modal',
-      group_name: 'go_to',
-      icon: <About />,
+      // group_name: 'go_to',
+      icon: <StyledAboutIcon />,
     },
     {
       id: uuidv4(),
-      name: 'Set blue theme',
+      name: 'Set-blue-theme',
       option: 'theme',
-      group_name: 'go_to',
-      icon: <Sun />,
+      // group_name: '',
+      icon: <StyledSunIcon />,
     },
     {
       id: uuidv4(),
       name: 'Set light theme',
       option: 'theme',
-      group_name: 'go_to',
-      icon: <Sun />,
+      // group_name: '',
+      icon: <StyledSunIcon />,
     },
   ]
 }
+
+const StyledSunIcon = styled(Sun)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledAboutIcon = styled(About)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledHomeIcon = styled(HomeIconSvg)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledCollectionIcon = styled(Collection)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledAddIcon = styled(Add)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledTeamsIcon = styled(Teams)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledIcon = styled(Value)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
