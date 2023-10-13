@@ -23,9 +23,9 @@ const StyledCommandInput = styled(Command.Input)`
   // background-color: rgba(255, 255, 255, 0.2);
   // background: rgba(255, 255, 255, 0.2);
   // border-radius: 100px;
-  color: #fff;
+  color: ${({ theme }) => theme.body.textColorPrimary};
   ::placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    color: ${({ theme }) => theme.body.textColorPrimary};
   }
 `
 
@@ -77,6 +77,7 @@ const StyledCommandItemName = styled.div`
   display: flex;
   align-items: center;
   gap: 13px;
+  color: ${({ theme }) => theme.body.textColorPrimary};
   svg {
     width: 27px;
   }
@@ -87,7 +88,7 @@ const StyledCommandList = styled(Command.List)`
   max-height: calc(100vh - 220px);
   overflow: scroll;
   padding: 10px 15px;
-  border-top: 1px solid var(--basic-foreground-white-1, rgba(255, 255, 255, 0.1));
+  border-top: ${({ theme }) => theme.body.commandBorderColor};
   ::-webkit-scrollbar {
     display: none;
   }
