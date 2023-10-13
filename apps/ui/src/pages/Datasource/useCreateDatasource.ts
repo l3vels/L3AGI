@@ -24,7 +24,7 @@ export const useCreateDatasource = () => {
   const initialValues = {
     datasource_name: '',
     datasource_description: '',
-    datasource_source_type: 'Postgres',
+    datasource_source_type: 'File',
     configs: {},
     files: [],
     index_type: 'summary',
