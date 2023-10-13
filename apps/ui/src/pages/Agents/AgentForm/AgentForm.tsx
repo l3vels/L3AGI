@@ -168,14 +168,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           {showAdvanced && (
             <StyledTextareaWrapper>
-              {/* <TypographyPrimary
-                value='Advanced text'
+              <TypographyPrimary
+                value='Script'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-              /> */}
+              />
               <Textarea
                 hint=''
-                placeholder='text'
+                rows={8}
                 value={agent_text}
                 name='agent_text'
                 onChange={(value: string) => onTextareaChange('agent_text', value)}
@@ -229,7 +229,7 @@ export const StyledTextareaWrapper = styled.div`
   line-height: 22px;
   font-size: 10px;
 
-  height: 200px;
+  height: fit-content;
 
   display: flex;
   flex-direction: column;

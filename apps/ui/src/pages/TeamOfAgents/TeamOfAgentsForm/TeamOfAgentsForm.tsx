@@ -264,21 +264,6 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         {showAdvanced && (
           <>
-            <StyledTextareaWrapper>
-              {/* <TypographyPrimary
-                value='Advanced text'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              /> */}
-              <Textarea
-                hint=''
-                placeholder='text'
-                value={team_text}
-                name='team_text'
-                onChange={(value: string) => onTextareaChange('team_text', value)}
-              />
-            </StyledTextareaWrapper>
-
             <CustomField formik={formik} formikField={'team_goals'} placeholder={'Goal'} />
             <CustomField
               formik={formik}
@@ -290,6 +275,21 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
               formikField={'team_constraints'}
               placeholder={'Constraint'}
             />
+            <StyledTextareaWrapper>
+              <TypographyPrimary
+                value='Script'
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+              <Textarea
+                hint=''
+                rows={8}
+                placeholder='text'
+                value={team_text}
+                name='team_text'
+                onChange={(value: string) => onTextareaChange('team_text', value)}
+              />
+            </StyledTextareaWrapper>
           </>
         )}
 
