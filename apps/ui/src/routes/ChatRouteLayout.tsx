@@ -36,8 +36,8 @@ const ChatRouteLayout = () => {
   const [showInfo, setShowInfo] = useState(false)
 
   const outlet = useOutlet()
-  const { agentsData } = useAgents()
-  const { teamOfAgents: teamOfAgentsArray } = useTeamOfAgents()
+  const { agentsData, deleteAgentHandler } = useAgents()
+  const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
   const { data: chatsData, refetch: refetchChat } = useChatsService()
 
   const navigate = useNavigate()
@@ -160,6 +160,7 @@ const ChatRouteLayout = () => {
                     onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                     onViewClick={handleView}
                     onEditClick={isCreator ? handleEdit : undefined}
+                    onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
                     picked={teamId === teamOfAgents.id}
                     team={teamOfAgents}
                     agents={team_agents}
@@ -199,6 +200,7 @@ const ChatRouteLayout = () => {
                     key={index}
                     onClick={() => navigate(`/chat?agent=${agent.id}`)}
                     onViewClick={handleView}
+                    onDeleteClick={() => deleteAgentHandler(agent.id)}
                     onEditClick={isCreator ? handleEdit : undefined}
                     picked={agentId === agent.id}
                     agent={agent}

@@ -11,6 +11,7 @@ import {
   StyledIconWrapper,
 } from 'components/ChatCards/TeamChatCard'
 import {
+  StyledDeleteIcon,
   StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
@@ -19,6 +20,7 @@ type AgentChatCardProps = {
   onClick: () => void
   onViewClick: () => void
   onEditClick?: () => void
+  onDeleteClick?: () => void
   picked: boolean
   agent: any
 }
@@ -27,6 +29,7 @@ const AgentChatCard = ({
   onClick,
   onViewClick,
   onEditClick,
+  onDeleteClick,
   picked,
   agent,
 }: AgentChatCardProps) => {
@@ -42,12 +45,29 @@ const AgentChatCard = ({
     onViewClick()
   }
 
+  const handleDelete = (event: any) => {
+    event.stopPropagation()
+    if (onDeleteClick) {
+      onDeleteClick()
+    }
+  }
+
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
       <MemberText name={agent?.name} role={agent?.role} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
+        {onDeleteClick && (
+          <IconButton
+            onClick={handleDelete}
+            icon={() => <StyledDeleteIcon />}
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            // ariaLabel='Delete'
+          />
+        )}
+
         <IconButton
           onClick={handleView}
           icon={() => (
