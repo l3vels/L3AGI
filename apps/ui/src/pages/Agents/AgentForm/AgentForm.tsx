@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -48,6 +48,12 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
   const { modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
 
+  useEffect(() => {
+    if (agent_model === '') {
+      setFieldValue('agent_model', modelOptions[2].value)
+    }
+  }, [values])
+
   return (
     <StyledRoot>
       <StyledForm>
@@ -64,6 +70,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
             <Textarea
               hint=''
+              rows={6}
               placeholder='Description'
               value={agent_description}
               name='agent_description'
@@ -103,6 +110,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
             <Textarea
               hint=''
+              rows={6}
               placeholder='Greeting'
               value={agent_greeting}
               name='agent_greeting'
@@ -122,12 +130,11 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               }}
               optionSize={'small'}
             />
+            <AgentSlider
+              onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
+              value={agent_temperature}
+            />
           </StyledCombinedFields>
-
-          <AgentSlider
-            onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
-            value={agent_temperature}
-          />
 
           <StyledCheckboxWrapper>
             <Checkbox
@@ -163,14 +170,14 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           {showAdvanced && (
             <StyledTextareaWrapper>
-              {/* <TypographyPrimary
-                value='Advanced text'
+              <TypographyPrimary
+                value='Script'
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
-              /> */}
+              />
               <Textarea
                 hint=''
-                placeholder='text'
+                rows={6}
                 value={agent_text}
                 name='agent_text'
                 onChange={(value: string) => onTextareaChange('agent_text', value)}
@@ -224,7 +231,7 @@ export const StyledTextareaWrapper = styled.div`
   line-height: 22px;
   font-size: 10px;
 
-  height: 200px;
+  height: fit-content;
 
   display: flex;
   flex-direction: column;
@@ -253,7 +260,7 @@ const StyledCheckboxWrapper = styled.div`
 export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
 
   gap: 20px;

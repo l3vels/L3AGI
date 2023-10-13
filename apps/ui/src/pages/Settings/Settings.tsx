@@ -84,6 +84,9 @@ const StyledForm = styled.div<{ isModal: boolean }>`
   flex-direction: column;
   align-items: center;
 
+  width: 100%;
+  overflow-y: auto;
+
   padding: 30px 20px;
 
   ${props =>
@@ -101,7 +104,7 @@ const StyledWrapper = styled.div<{ isModal: boolean }>`
   max-width: 600px;
 
   height: 100vh;
-  max-height: calc(100vh - 370px);
+  max-height: calc(100vh - 300px);
 
   ${props =>
     props.isModal &&

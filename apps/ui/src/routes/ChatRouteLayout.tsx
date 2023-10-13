@@ -36,8 +36,8 @@ const ChatRouteLayout = () => {
   const [showInfo, setShowInfo] = useState(false)
 
   const outlet = useOutlet()
-  const { agentsData } = useAgents()
-  const { teamOfAgents: teamOfAgentsArray } = useTeamOfAgents()
+  const { agentsData, deleteAgentHandler } = useAgents()
+  const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
   const { data: chatsData, refetch: refetchChat } = useChatsService()
 
   const navigate = useNavigate()
@@ -78,17 +78,18 @@ const ChatRouteLayout = () => {
   // }, [])
 
   useEffect(() => {
+    if (!urlParams || !params) return
+
     if (!teamId && !chatId && !agentId) {
       if (teamOfAgentsArray?.length > 0) {
-        navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
+        return navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
       } else if (agentsData?.length > 0) {
-        navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
+        return navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
+      } else {
+        return navigate('/agents/create-agent-template')
       }
     }
 
-    if (teamOfAgentsArray?.length === 0 && agentsData?.length === 0) {
-      navigate('/agents/create-agent-template')
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamOfAgentsArray, agentsData])
 
@@ -160,6 +161,7 @@ const ChatRouteLayout = () => {
                     onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                     onViewClick={handleView}
                     onEditClick={isCreator ? handleEdit : undefined}
+                    onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
                     picked={teamId === teamOfAgents.id}
                     team={teamOfAgents}
                     agents={team_agents}
@@ -199,6 +201,7 @@ const ChatRouteLayout = () => {
                     key={index}
                     onClick={() => navigate(`/chat?agent=${agent.id}`)}
                     onViewClick={handleView}
+                    onDeleteClick={() => deleteAgentHandler(agent.id)}
                     onEditClick={isCreator ? handleEdit : undefined}
                     picked={agentId === agent.id}
                     agent={agent}

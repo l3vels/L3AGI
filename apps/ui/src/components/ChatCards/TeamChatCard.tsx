@@ -6,6 +6,7 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import styled, { css } from 'styled-components'
 import {
+  StyledDeleteIcon,
   StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
@@ -14,6 +15,7 @@ type TeamChatCardProps = {
   onClick: () => void
   onViewClick: () => void
   onEditClick?: () => void
+  onDeleteClick?: () => void
   picked: boolean
   team: any
   agents: any
@@ -24,6 +26,7 @@ const TeamChatCard = ({
   picked,
   onViewClick,
   onEditClick,
+  onDeleteClick,
   team,
   agents,
 }: TeamChatCardProps) => {
@@ -37,6 +40,13 @@ const TeamChatCard = ({
   const handleView = (event: any) => {
     event.stopPropagation()
     onViewClick()
+  }
+
+  const handleDelete = (event: any) => {
+    event.stopPropagation()
+    if (onDeleteClick) {
+      onDeleteClick()
+    }
   }
 
   return (
@@ -55,6 +65,16 @@ const TeamChatCard = ({
       </StyledTeamAgents>
 
       <StyledIconButtonWrapper className='hiddenButton'>
+        {onDeleteClick && (
+          <IconButton
+            onClick={handleDelete}
+            icon={() => <StyledDeleteIcon />}
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            // ariaLabel='Delete'
+          />
+        )}
+
         <IconButton
           onClick={handleView}
           icon={() => (

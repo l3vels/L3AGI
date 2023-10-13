@@ -32,6 +32,7 @@ export const useDatasourceForm = (formik: any) => {
       const isFormatSupported = FILE_TYPES.includes(file.type)
 
       if (!isFormatSupported) {
+        setFileLoading(false)
         return setToast({
           message: 'Format is not supported!',
           type: 'negative',

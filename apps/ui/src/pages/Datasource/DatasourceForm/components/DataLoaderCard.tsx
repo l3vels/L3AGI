@@ -37,7 +37,7 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
   min-height: 45px;
 
   border-radius: 8px;
-  // border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
 
   /* box-shadow: inset 0px 1px 20px rgba(8, 8, 16, 0.1); */
 
@@ -62,7 +62,7 @@ const StyledDataLoaderCard = styled.div<{ isSelected: boolean; isActive: boolean
   ${p =>
     p.isSelected &&
     css`
-      border: 3px solid ${({ theme }) => theme.body.dataLoaderCardBorder};
+      border: 2px solid ${({ theme }) => theme.body.dataLoaderCardBorder};
     `};
 `
 const StyledIcon = styled.img`

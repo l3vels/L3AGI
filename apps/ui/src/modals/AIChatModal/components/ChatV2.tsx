@@ -80,19 +80,28 @@ const ChatV2 = () => {
     chatId,
   })
 
+  const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
+
   const { data: chatById } = useChatByIdService({ id: chatId || '' })
 
   const { data: configs } = useConfigsService()
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
-  const agentName = agentById?.agent?.name
+
+  const agentName =
+    agentById?.agent?.name || teamOfAgents?.name || chatById?.agent?.agent?.name || ''
 
   const chatSuggestions =
-    agentById?.configs?.suggestions || chatById?.agent?.configs?.suggestions || []
+    agentById?.configs?.suggestions ||
+    chatById?.agent?.configs?.suggestions ||
+    teamOfAgents?.configs?.suggestions ||
+    []
 
-  const chatGreeting = agentById?.configs?.greeting || chatById?.agent?.configs?.greeting || ''
-
-  const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
+  const chatGreeting =
+    agentById?.configs?.greeting ||
+    chatById?.agent?.configs?.greeting ||
+    teamOfAgents?.configs?.greeting ||
+    `Hello ${user?.name || ''} , you can chat with agents and teams on your dashboard.`
 
   const [createChatMessageService] = useCreateChatMessageService()
   const { stopChatService, loading: stopChatLoading } = useStopChatService()
@@ -296,16 +305,8 @@ const ChatV2 = () => {
             setIsNewMessage={socket?.setIsNewMessage}
             setReply={setReply}
             reply={reply}
-            agentName={agentName || 'Agent'}
-            greeting={
-              chatMessages &&
-              chatMessages?.length === 0 &&
-              (!agentId
-                ? `Hello ${
-                    user?.name || ''
-                  } , you can chat with agents and teams on your dashboard.`
-                : chatGreeting)
-            }
+            agentName={agentName}
+            greeting={chatMessages && chatMessages?.length === 0 && chatGreeting}
           />
         </StyledChatWrapper>
       </StyledMessages>

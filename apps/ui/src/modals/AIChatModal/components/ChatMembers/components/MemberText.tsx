@@ -15,7 +15,7 @@ const MemberText = ({ name, role }: MemberTextProps) => {
 
   let shortRole
   if (role) {
-    const { shortText } = textSlicer(role, 35)
+    const { shortText } = textSlicer(role, 25)
     shortRole = shortText
   }
 
