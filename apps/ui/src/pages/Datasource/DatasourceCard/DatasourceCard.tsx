@@ -126,6 +126,12 @@ const StyledButtonsWrapper = styled.div`
   justify-content: flex-end;
   gap: 2px;
   margin-top: auto;
+  .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+      border-radius: 50%;
+    }
+  }
 `
 
 const StyledBodyWrapper = styled.div`
