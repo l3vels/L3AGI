@@ -44,6 +44,7 @@ declare module 'styled-components' {
       tableBackgroundColor: string
       sliderBackgroundColor: string
       dropdownSecondaryBgColor: string
+      commandMenuBackgroundColor: string
     }
     typography: {
       contentPrimary: string
