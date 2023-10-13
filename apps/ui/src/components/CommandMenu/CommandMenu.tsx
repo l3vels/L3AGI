@@ -55,10 +55,12 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
     }
     if (item.option === 'theme') {
       if (theme === 'dark' && item.name === 'Dark') {
+        setSearch('')
         setCmdkOpen(false)
         return
       }
       if (theme === 'light' && item.name === 'Light') {
+        setSearch('')
         setCmdkOpen(false)
         return
       }
@@ -127,6 +129,7 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   useEffect(() => {
     // Function to handle outside click
     const handleClickOutside = (event: any) => {
+      setSearch('')
       if (componentRef.current) {
         setCmdkOpen(false)
         //       // Clicked outside the component
@@ -185,6 +188,7 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
           }
           if (pages.length === 0 && e.key === 'Escape') {
             setCmdkOpen(false)
+            setSearch('') // Clear the search when the menu is closed
           }
         }}
         filter={(value, search) => {
