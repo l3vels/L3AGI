@@ -233,6 +233,12 @@ const StyledButtonWrapper = styled.div`
   opacity: 0;
 
   transition: opacity 300ms;
+  .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+      border-radius: 50%;
+    }
+  }
 `
 const StyledIconWrapper = styled.div`
   /* color: #000; */
