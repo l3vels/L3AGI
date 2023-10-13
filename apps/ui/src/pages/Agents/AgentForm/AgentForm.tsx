@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -47,6 +47,12 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   }
 
   const { modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
+
+  useEffect(() => {
+    if (agent_model === '') {
+      setFieldValue('agent_model', modelOptions[2].value)
+    }
+  }, [values])
 
   return (
     <StyledRoot>
