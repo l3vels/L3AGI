@@ -205,7 +205,7 @@ export const StyledButtonsWrapper = styled.div`
   align-items: center;
   gap: 2px;
 `
-const StyledMenuDots = styled.div`
+export const StyledMenuDots = styled.div`
   .menu-button--wrapper.menu-button--wrapper--size-32 {
     &:hover {
       background: ${({ theme }) => theme.body.humanMessageBgColor};
@@ -215,7 +215,7 @@ const StyledMenuDots = styled.div`
     }
   }
 `
-const StyledIconButton = styled.div`
+export const StyledIconButton = styled.div`
   .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
     &:hover {
       background: ${({ theme }) => theme.body.humanMessageBgColor};
