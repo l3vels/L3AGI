@@ -200,4 +200,7 @@ export const StyledLaunchIcon = styled(Launch)`
 export const StyledValueIcon = styled.div`
   color: transparent;
   background: transparent;
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
 `
