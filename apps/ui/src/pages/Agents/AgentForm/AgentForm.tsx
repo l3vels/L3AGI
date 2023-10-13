@@ -235,6 +235,9 @@ export const StyledTextareaWrapper = styled.div`
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
     color: ${({ theme }) => theme.body.textColorPrimary};
     background: ${({ theme }) => theme.body.textAreaBgColor};
+    &::placeholder {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+    }
   }
 `
 const StyledCheckboxWrapper = styled.div`
@@ -256,6 +259,7 @@ export const StyledCombinedFields = styled.div`
   gap: 20px;
   .dropdown-wrapper.primary__wrapper.css-7xl64p-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    height: auto;
   }
   .css-ugu73m-placeholder {
     color: ${({ theme }) => theme.body.textColorPrimary};
