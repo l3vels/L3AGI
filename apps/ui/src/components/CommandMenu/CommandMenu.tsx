@@ -210,9 +210,9 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
           {!page && (
             <>
               {groupedItems &&
-                Object.entries(groupedItems).map(([groupName, items]: [string, any[]], index) => (
+                Object.entries(groupedItems)?.map(([groupName, items]: [string, any[]], index) => (
                   <Command.Group key={index}>
-                    {items.map((item, itemIndex) => (
+                    {items?.map((item, itemIndex) => (
                       <CommandItem
                         key={item.id}
                         index={itemIndex}
