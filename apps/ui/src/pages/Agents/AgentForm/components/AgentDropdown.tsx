@@ -70,7 +70,7 @@ const AgentDropdown = ({
         multiline
         size={Dropdown.size.MEDIUM}
         value={value}
-        placeholder={value ? value : 'model'}
+        placeholder={value.length >= 1 ? value : 'Please enter value'}
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}
@@ -89,39 +89,52 @@ const StyledWrapper = styled.div`
   width: 100%;
   .css-xrcw8y-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
-    &::placeholder {
-      color: ${({ theme }) => theme.body.placeHolderColor};
-    }
-  }
+   
+}
+
+.css-ugu73m-placeholder {
+  color: ${({ theme }) => theme.body.placeHolderColor};
+}
+
   .menu.dropdown-menu-wrapper.css-19zapvn-menu {
     background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
     color: ${({ theme }) => theme.body.textColorPrimary};
     border: ${({ theme }) => theme.body.border};
   }
+
   .dropdown-wrapper__option--reset {
     &:hover {
       color: ${({ theme }) => theme.body.placeHolderColor};
       background: ${({ theme }) => theme.body.placeHolderColor};
-    }
+    } 
   }
+
   .clear-indicator.css-1rycjgo {
     path {
       fill: ${({ theme }) => theme.body.iconColor};
-    }
+    } 
   }
+
   .dropdown-indicator.css-12prnvf-indicatorContainer{
     path{
       fill:${({ theme }) => theme.body.iconColor}}
-    }
+    } 
   }
+
   .components-Tags-Tags-module__tags--qonKr {
      background: ${({ theme }) => theme.body.textColorPrimary}!important;
     path{
        fill:${({ theme }) => theme.body.toolkitCardBgColorTertiary}}
-    }
+    } 
   }
-  .components-Tags-Tags-module__tags--qonKr .components-Tags-Tags-module__label--gC1wk{
-   
+
+  .components-Tags-Tags-module__tags--qonKr .components-Tags-Tags-module__label--gC1wk{ 
      color: ${({ theme }) => theme.body.textColorTertiary}!important;
+  }  
+
+  .l3-dropdown_scrollable-wrapper {
+    &::placeholder {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+    }
   }
 `
