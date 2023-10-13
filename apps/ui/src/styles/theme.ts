@@ -105,7 +105,7 @@ const lightTheme: DefaultTheme = {
     textareaBorder: 'rgba(0, 0, 0, 0.1)',
     textAreaBgColor: 'rgba(255, 255, 255, 1)',
     dropdownBgColor: 'rgba(255, 255, 255, 1)',
-    dataLoaderCardBorder: 'rgba(0, 0, 0, 0.1)',
+    dataLoaderCardBorder: '#000',
     tableBackgroundColor: 'rgb(220,220,220)',
     sliderBackgroundColor: 'rgba(0, 0, 0, 0.1)',
     dropdownSecondaryBgColor: 'rgb(253,252,250)',
