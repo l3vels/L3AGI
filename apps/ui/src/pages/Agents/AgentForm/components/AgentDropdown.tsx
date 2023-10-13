@@ -70,7 +70,7 @@ const AgentDropdown = ({
         multiline
         size={Dropdown.size.MEDIUM}
         value={value}
-        placeholder={value.length >= 1 ? value : 'Please enter value'}
+        placeholder={value?.length >= 1 ? value : 'Please enter value'}
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}
