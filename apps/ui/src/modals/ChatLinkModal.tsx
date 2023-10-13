@@ -19,6 +19,9 @@ import { FormikProvider, useFormik } from 'formik'
 import { useState } from 'react'
 import FormikTextField from 'components/TextFieldFormik'
 import { useChatsService } from 'services/chat/useChatsService'
+import TypographyPrimary from 'components/Typography/Primary'
+import HeadingPrimary from 'components/Heading/Primary'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 type ChatLinkModalProps = {
   data: {
@@ -69,7 +72,21 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
       show
       backgroundColor='dark'
       hideCloseButton={true}
-      title={chatLink ? 'Create Channel' : 'Create Channel'}
+      title={
+        chatLink ? (
+          <HeadingPrimary
+            value={'Create Channel'}
+            type={Typography.types.P}
+            size={Typography.sizes.md}
+          />
+        ) : (
+          <HeadingPrimary
+            value={'Create Channel'}
+            type={Typography.types.P}
+            size={Typography.sizes.md}
+          />
+        )
+      }
     >
       <FormikProvider value={formik}>
         <StyledBody>
@@ -81,7 +98,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
                     openLinkTab(chatLink)
                   }}
                 >
-                  <TypographySecondary
+                  <TypographyPrimary
                     value={chatLink}
                     type={Typography.types.P}
                     size={Typography.sizes.md}
@@ -96,23 +113,18 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
         </StyledBody>
       </FormikProvider>
       <StyledModalFooter>
-        <Button
-          onClick={() => closeModal('chat-link-modal')}
-          kind={Button.kinds.TERTIARY}
-          size={Button.sizes.MEDIUM}
-        >
+        <ButtonTertiary onClick={() => closeModal('chat-link-modal')} size={Button.sizes.MEDIUM}>
           <Typography value='Cancel' type={Typography.types.LABEL} size={Typography.sizes.sm} />
-        </Button>
+        </ButtonTertiary>
 
         {!chatLink && (
-          <Button
+          <ButtonPrimary
             onClick={formik?.handleSubmit}
-            kind={Button.kinds.PRIMARY}
             size={Button.sizes.MEDIUM}
             disabled={isLoading}
           >
             {isLoading ? <Loader size={20} /> : 'Confirm'}
-          </Button>
+          </ButtonPrimary>
         )}
       </StyledModalFooter>
     </StyledChatLinkModal>
@@ -159,4 +171,8 @@ const StyledLinkWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+
+const StyledDiv = styled.div`
+  color: ${({ theme }) => theme.body.textColorPrimary} !important;
 `
