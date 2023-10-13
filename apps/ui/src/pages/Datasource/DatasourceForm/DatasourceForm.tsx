@@ -69,7 +69,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   }, [isEdit, isDatabase])
 
   const onDescriptionChange = (value: string) => {
-    formik.setFieldValue('datasource_description', value)
+    setFieldValue('datasource_description', value)
   }
 
   useEffect(() => {
@@ -144,7 +144,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                           hasDeleteIcon
                           onClick={id => {
                             const filteredFiles = files.filter((file: any) => file.url !== id)
-                            setFieldValue('configs.files', filteredFiles)
+                            setFieldValue('files', filteredFiles)
                           }}
                           name={file.name}
                         />
