@@ -70,6 +70,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
             <Textarea
               hint=''
+              rows={6}
               placeholder='Description'
               value={agent_description}
               name='agent_description'
@@ -109,6 +110,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
             <Textarea
               hint=''
+              rows={6}
               placeholder='Greeting'
               value={agent_greeting}
               name='agent_greeting'
@@ -175,7 +177,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               />
               <Textarea
                 hint=''
-                rows={8}
+                rows={6}
                 value={agent_text}
                 name='agent_text'
                 onChange={(value: string) => onTextareaChange('agent_text', value)}

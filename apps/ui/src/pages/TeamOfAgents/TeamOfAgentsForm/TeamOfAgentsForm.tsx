@@ -95,6 +95,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
           />
           <Textarea
             hint=''
+            rows={6}
             placeholder='Description'
             name='teamOfAgents_description'
             value={teamOfAgents_description}
@@ -162,6 +163,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
                 <StyledTextareaWrapper>
                   <Textarea
                     hint=''
+                    rows={6}
                     placeholder='Text'
                     name='config_value'
                     value={config_value}
@@ -283,7 +285,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
               />
               <Textarea
                 hint=''
-                rows={8}
+                rows={6}
                 placeholder='text'
                 value={team_text}
                 name='team_text'

@@ -92,6 +92,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
           />
           <Textarea
             hint=''
+            rows={6}
             placeholder='Description'
             name='datasource_description'
             value={datasource_description}
@@ -219,6 +220,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                 <StyledTextareaWrapper>
                   <Textarea
                     hint=''
+                    rows={6}
                     placeholder='Text'
                     name='config_value'
                     value={config_value}
