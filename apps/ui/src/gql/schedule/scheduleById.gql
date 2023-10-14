@@ -1,0 +1,18 @@
+query scheduleById($id: id!) @api(name: "ai") {
+  scheduleById(id: $id)
+    @rest(type: "schedule", path: "/schedule/{args.id}", method: "GET", endpoint: "ai") {
+    schedule {
+      id
+      is_active
+      name
+      schedule_type
+      description
+      max_daily_budget
+      cron_expression
+    }
+    configs {
+      agent_id
+      group_id
+    }
+  }
+}

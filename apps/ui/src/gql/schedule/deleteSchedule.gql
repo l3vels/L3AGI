@@ -1,0 +1,12 @@
+mutation deleteSchedule($id: id!) @api(name: ai) {
+  deleteSchedule(id: $id)
+    @rest(
+      type: "Schedule"
+      path: "/schedule/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    schedule
+  }
+}

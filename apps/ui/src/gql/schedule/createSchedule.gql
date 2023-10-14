@@ -1,0 +1,18 @@
+mutation createSchedule($input: input!) @api(name: ai) {
+  createSchedule(input: $input)
+    @rest(type: "Schedule", path: "/schedule", method: "POST", bodyKey: "input", endpoint: "ai") {
+    schedule {
+      id
+      is_active
+      name
+      schedule_type
+      description
+      max_daily_budget
+      cron_expression
+    }
+    configs {
+      agent_id
+      group_id
+    }
+  }
+}
