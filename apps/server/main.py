@@ -28,6 +28,7 @@ from resolvers.account import AccountMutation, AccountQuery
 from resolvers.context import get_context
 from resolvers.user import UserMutation, UserQuery
 from typings.auth import AuthJWTSettings
+from controllers.schedule import router as schedule_router
 
 app = FastAPI()
 
@@ -103,6 +104,7 @@ app.include_router(llm_router, prefix="/llm")
 app.include_router(chat_router, prefix="/chat")
 app.include_router(file_router, prefix="/file")
 app.include_router(model_router, prefix="/model")
+app.include_router(schedule_router, prefix="/schedule")
 
 
 @app.get("/")
