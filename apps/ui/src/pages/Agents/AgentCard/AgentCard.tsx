@@ -203,6 +203,13 @@ export const StyledAgentCard = styled.div`
       opacity: 1;
     }
   }
+
+  .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+      border-radius: 50%;
+    }
+  }
 `
 const StyledCardHeader = styled.div`
   width: 100%;

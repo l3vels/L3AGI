@@ -9,6 +9,8 @@ import {
   StyledMenuButtonsWrapper,
   StyledNameWrapper,
   StyledWrapper,
+  StyledMenuDots,
+  StyledIconButton,
 } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
 
@@ -72,24 +74,28 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
 
           <StyledButtonsWrapper>
             {isCreator && (
-              <IconButton
-                onClick={handleEdit}
-                icon={() => <StyledEditIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                ariaLabel='Edit'
-              />
+              <StyledIconButton>
+                <IconButton
+                  onClick={handleEdit}
+                  icon={() => <StyledEditIcon />}
+                  size={IconButton.sizes.SMALL}
+                  kind={IconButton.kinds.TERTIARY}
+                  ariaLabel='Edit'
+                />
+              </StyledIconButton>
             )}
 
             {isCreator && (
-              <MenuButton component={MenuDots}>
-                <StyledMenuButtonsWrapper>
-                  {/* <ButtonTertiary onClick={handleCreateChat}>Create Channel</ButtonTertiary> */}
-                  <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
-                    Delete Team
-                  </ButtonTertiary>
-                </StyledMenuButtonsWrapper>
-              </MenuButton>
+              <StyledMenuDots>
+                <MenuButton component={MenuDots}>
+                  <StyledMenuButtonsWrapper>
+                    {/* <ButtonTertiary onClick={handleCreateChat}>Create Channel</ButtonTertiary> */}
+                    <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
+                      Delete Team
+                    </ButtonTertiary>
+                  </StyledMenuButtonsWrapper>
+                </MenuButton>
+              </StyledMenuDots>
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>

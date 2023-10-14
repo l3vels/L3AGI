@@ -265,7 +265,7 @@ const StyledDropDownMenuItem = styled(Item)`
   font-weight: 500;
   line-height: 16px;
   :hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: ${({ theme }) => theme.body.humanMessageBgColor};
   }
 `
 const DropdownMenuSubTriggerGroup = styled.div`

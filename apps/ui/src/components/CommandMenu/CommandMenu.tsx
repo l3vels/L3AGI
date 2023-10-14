@@ -55,10 +55,12 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
     }
     if (item.option === 'theme') {
       if (theme === 'dark' && item.name === 'Dark') {
+        setSearch('')
         setCmdkOpen(false)
         return
       }
       if (theme === 'light' && item.name === 'Light') {
+        setSearch('')
         setCmdkOpen(false)
         return
       }
@@ -127,6 +129,7 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   useEffect(() => {
     // Function to handle outside click
     const handleClickOutside = (event: any) => {
+      setSearch('')
       if (componentRef.current) {
         setCmdkOpen(false)
         //       // Clicked outside the component
@@ -169,7 +172,7 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   // }, [])
 
   const groupedItems = groupBy(defaultData(path_id), data => {
-    return get(data, 'group_name', 'other_data')
+    return get(data, 'group_name', '')
   })
 
   return (
@@ -185,17 +188,20 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
           }
           if (pages.length === 0 && e.key === 'Escape') {
             setCmdkOpen(false)
+            setSearch('') // Clear the search when the menu is closed
           }
         }}
         filter={(value, search) => {
-          if (value.includes(search)) return 1
-          return 0
+          if (search.trim() === '') {
+            return 1
+          }
+          return value.toLowerCase().startsWith(search.toLowerCase().slice(0, 3)) ? 1 : 0
         }}
       >
         {/* <TextField /> */}
         <StyledCommandInput
           value={search}
-          onValueChange={setSearch}
+          onValueChange={value => setSearch(value)}
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           placeholder='Search, create or ask anything'
@@ -203,103 +209,21 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
         <StyledCommandList>
           {!page && (
             <>
-              {has(groupedItems, 'go_to') && (
-                <Command.Group>
-                  {/* <StyledCommandItemHeader>
-                    <StyledSvgContainer type='go_to'>
-                      <StarVector />
-                    </StyledSvgContainer>
-                    <h2>Go To</h2>
-                  </StyledCommandItemHeader> */}
-                  {search ? (
-                    <>
-                      {groupedItems?.go_to.map((item, index) => (
-                        <div key={item.id}>
-                          <CommandItem
-                            index={index}
-                            name={item.name}
-                            handleSelect={() => onHandleSelect(item)}
-                            groupName={'Go To'}
-                            itemIcon={item.icon}
-                          />
-                        </div>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {slice(groupedItems.go_to, 1, 11)?.map((item, index) => (
-                        <>
-                          <CommandItem
-                            index={index}
-                            name={item.name}
-                            handleSelect={() => onHandleSelect(item)}
-                            groupName={'Go To'}
-                            itemIcon={item.icon}
-                          />
-                        </>
-                      ))}
-                    </>
-                  )}
-                </Command.Group>
-              )}
-
-              {has(groupedItems, 'create') && (
-                <Command.Group>
-                  {/* <StyledCommandItemHeader marginTop={32}>
-                    <StyledSvgContainer type='create'>
-                      <StarVector />
-                    </StyledSvgContainer>
-                    <h2>Create</h2>
-                  </StyledCommandItemHeader> */}
-                  {search ? (
-                    <>
-                      {groupedItems?.create.map((item, index) => (
-                        <>
-                          <CommandItem
-                            index={index}
-                            name={item.name}
-                            handleSelect={() => onHandleSelect(item)}
-                            groupName={'Create'}
-                            itemIcon={item.icon}
-                          />
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {slice(groupedItems.create, 0, 6)?.map((item, index) => (
-                        <>
-                          <CommandItem
-                            index={index}
-                            name={item.name}
-                            handleSelect={() => onHandleSelect(item)}
-                            groupName={'Create'}
-                            itemIcon={item.icon}
-                          />
-                        </>
-                      ))}
-                    </>
-                  )}
-                </Command.Group>
-              )}
-
-              {has(groupedItems, 'chat') && (
-                <Command.Group>
-                  <>
-                    {groupedItems?.['chat'].map((item, index) => (
-                      <>
-                        <CommandItem
-                          index={index}
-                          name={item.name}
-                          handleSelect={() => onHandleSelect(item)}
-                          groupName={'chat'}
-                          itemIcon={item.icon}
-                        />
-                      </>
+              {groupedItems &&
+                Object.entries(groupedItems)?.map(([groupName, items]: [string, any[]], index) => (
+                  <Command.Group key={index}>
+                    {items?.map((item, itemIndex) => (
+                      <CommandItem
+                        key={item.id}
+                        index={itemIndex}
+                        name={item.name}
+                        handleSelect={() => onHandleSelect(item)}
+                        groupName={groupName}
+                        itemIcon={item.icon}
+                      />
                     ))}
-                  </>
-                </Command.Group>
-              )}
+                  </Command.Group>
+                ))}
             </>
           )}
 

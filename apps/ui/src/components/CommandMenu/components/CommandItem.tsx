@@ -8,6 +8,8 @@ import { StyledCommandItem, StyleEnterGroup } from '../CommandMenuStyles'
 import { enterIcon } from 'assets/icons'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import TypographyQuaternary from 'components/Typography/Quaternary'
+import TypographySecondary from 'components/Typography/Secondary'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type CommandItemProps = {
   index: number
@@ -15,7 +17,7 @@ type CommandItemProps = {
   name: string
   subTitle?: string
   handleSelect: () => void
-  groupName: string
+  groupName?: string
 }
 
 const CommandItem = ({
@@ -43,7 +45,7 @@ const CommandItem = ({
         {/* <StyleEnterGroup>
           <img src={enterIcon} alt='click enter' />
         </StyleEnterGroup> */}
-        <TypographyQuaternary
+        <TypographyPrimary
           value={groupName}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
