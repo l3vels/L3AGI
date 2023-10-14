@@ -96,6 +96,15 @@ const MainNavigation = () => {
         />
       </StyledLi>
 
+      <StyledLi isActive={includes(active, 'schedule')} onClick={() => onHandleClick('/schedules')}>
+        <StyledBasicIcon size={30} />
+        <TypographySecondary
+          value={'Schedules'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+      </StyledLi>
+
       <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
         <StyledSearchOutlineIcon size={40} />
         <TypographySecondary

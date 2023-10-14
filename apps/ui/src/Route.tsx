@@ -79,6 +79,10 @@ import ChatRouteLayout from 'routes/ChatRouteLayout'
 
 import ClientChat from 'modals/AIChatModal/components/ClientChat'
 import ChatLinkModal from 'modals/ChatLinkModal'
+import Schedule from 'pages/Schedule'
+import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
+import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
+
 
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
@@ -232,6 +236,20 @@ const Route = () => {
 
             <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Models />} key={document.location.href} />
+            </Router>
+
+            <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Schedule />} key={document.location.href} />
+              <Router
+                path={'create-schedule'}
+                element={<CreateScheduleForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':scheduleId/edit-schedule'}
+                element={<EditScheduleForm />}
+                key={document.location.href}
+              />
             </Router>
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
