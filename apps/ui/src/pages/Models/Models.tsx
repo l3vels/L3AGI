@@ -28,7 +28,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
             Discover the complete range of models available for your agents and teams.
           </StyledSectionDescription>
         </div>
-        <ButtonPrimary size={Button.sizes.SMALL}>Add model</ButtonPrimary>
+        {/* <ButtonPrimary size={Button.sizes.SMALL}>Add model</ButtonPrimary> */}
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>

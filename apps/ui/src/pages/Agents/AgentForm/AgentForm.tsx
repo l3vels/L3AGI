@@ -49,10 +49,10 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const { modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
 
   useEffect(() => {
-    if (agent_model === '') {
+    if (agent_model === '' && modelOptions?.length > 1) {
       setFieldValue('agent_model', modelOptions[2].value)
     }
-  }, [values])
+  }, [values, modelOptions])
 
   return (
     <StyledRoot>

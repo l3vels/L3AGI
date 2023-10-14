@@ -10,15 +10,20 @@ default_configs = {
             "showAgents": False,
             "showTeams": False                    
         },
-        "chat": {
+        "agent": {
             "active" : True,
             "name": "Team",
             "actions" : {
                 "addAgent": True,
                 "addTeam": True,
                 "createTeamChannel": True,
-                "createAgentChannel": True
-            }
+                "createAgentChannel": True,
+            },
+            "display" : {
+                "teams": True,
+                "agents": True,
+                "channels": True                
+            }           
         },
         "datasource": {
             "active" : True,
@@ -30,7 +35,11 @@ default_configs = {
         },
         "model" : {
             "active" : True,
-            "name": "Models"
+            "name": "Models",
+            "display": {
+                "models": True,
+                "fine-tuning": True
+            }            
         },
         "contact": {
             "active" : False,
@@ -46,7 +55,12 @@ default_configs = {
         },
         "discovery": {
             "active" : False,
-            "name": "Discovery"
+            "name": "Discovery",
+            "display" : {
+                "team": True,
+                "agents": True,             
+            }        
+            
         }
     }
 }
