@@ -124,3 +124,9 @@ class ChatException(AppBaseException):
 
 class ChatNotFoundException(DatasourceException):
     pass
+
+class ScheduleException(AppBaseException):
+    pass
+
+class ScheduleNotFoundException(DatasourceException):
+    pass
