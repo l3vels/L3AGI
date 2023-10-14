@@ -4,6 +4,10 @@ from typings.account import AccountOutput
 from utils.type import convert_value_to_type
 
 default_configs = {
+    "info": {
+        "logo": '',
+        "welcomeMessage": "Welcome to L3AGI"
+    },
     "modules" : {
         "home": {
             "active" : True,
