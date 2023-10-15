@@ -60,6 +60,8 @@ class DatasourceType(Enum):
     WEB_PAGE = "Web Page"
     NOTION = "Notion"
     SHOPIFY = "Shopify"
+    GOOGLE_ANALYTICS = "Google Analytics"
+    FIREBASE = "Firebase"
 
     def __str__(self):
         return self.value

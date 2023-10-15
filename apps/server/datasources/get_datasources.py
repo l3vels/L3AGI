@@ -32,7 +32,7 @@ COMING_SOON = [
         "name": "Google Analytics",
         "description": "Google Analytics",
         "category": DatasourceCategory.APPLICATION,
-        "source_type": DatasourceType.SHOPIFY,
+        "source_type": DatasourceType.GOOGLE_ANALYTICS,
     },
     {
         "is_public": True,
@@ -40,7 +40,7 @@ COMING_SOON = [
         "name": "Firebase",
         "description": "Firebase",
         "category": DatasourceCategory.APPLICATION,
-        "source_type": DatasourceType.SHOPIFY,
+        "source_type": DatasourceType.FIREBASE,
     },
 ]
 
