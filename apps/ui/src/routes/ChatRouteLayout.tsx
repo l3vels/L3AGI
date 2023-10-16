@@ -28,7 +28,7 @@ import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const ChatRouteLayout = () => {
   const { chatModuleAddAgent, chatModuleAddTeam } = useGetAccountModule()
-  console.log('chatModuleAddTeam', chatModuleAddTeam)
+
   const { expand } = useContext(LayoutContext)
 
   const { user } = React.useContext(AuthContext)

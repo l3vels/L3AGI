@@ -2,7 +2,6 @@ import { useAccountService } from 'services'
 
 export const useGetAccountModule = () => {
   const { data: account } = useAccountService()
-  console.log(account)
 
   const modules = account?.configs?.modules
 
