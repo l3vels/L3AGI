@@ -8,9 +8,24 @@ default_configs = {
         "logo": '',
         "welcomeMessage": "Welcome to L3AGI"
     },
+    "mainNavigation" :{
+        "home": True,
+        "agent": True,
+        "datasource": True        
+    },
+    "naming": {
+        "home": 'Home',
+        "agent": "Agent",
+        "team": "Teams",
+        "datasource": "Data sources",
+        "models": "Models",
+        "discovery": "Discovery"
+        
+    },
+    "actions":{""}
     "modules" : {
         "home": {
-            "active" : True,
+            "active" : False,
              "display" : {
               "showAgents": True,
               "showTeams": True ,  
@@ -22,8 +37,13 @@ default_configs = {
             "active" : True,
             "name": "Team",
             "actions" : {
-                "addAgent": True,
-                "addTeam": True,
+                "addAgent": {
+                    "active": True
+                 },
+                "addTeam": {
+                     "active": True,
+                     "name" : "Add Team"
+                 },
                 "createTeamSession": True,
                 "createAgentSession": True,
             },
@@ -58,25 +78,27 @@ default_configs = {
             "name": "Group"
         },
         "schedule": {
-            "active" : False,
+            "active" : True,
             "name": "Campaign"
         },
         "discovery": {
-            "active" : False,
+            "active" : True,
             "name": "Discovery",
             "display" : {
                 "team": True,
                 "agents": True,             
-            }        
-            
+            }  
+        },
+        "auth": {
+            "loginWithGithub": True
         }
     }
 }
     
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
     account_data = {}
-    if not account_model.configs:
-        account_model.configs = default_configs
+    # if not account_model.configs:
+    account_model.configs = default_configs
         
     # Extract attributes from AccountModel using annotations of Account
     for key in AccountOutput.__annotations__.keys():
