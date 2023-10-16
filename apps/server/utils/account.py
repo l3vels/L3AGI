@@ -3,29 +3,83 @@ from typing import List
 from typings.account import AccountOutput
 from utils.type import convert_value_to_type
 
+new_config = default_configs = {
+    "info": {
+        "logo": '',
+        "welcomeMessage": "Welcome to L3AGI"
+    },
+    "naming": {
+        "home": 'Home',
+        "agent": "Agent",
+        "team": "Team",
+        "datasource": "Data sources",
+        "models": "Models",
+        "discovery": "Discovery"
+    },
+    "modules": {
+        "home": {
+            "welcome_message": "Build your ",
+            "submodules": {
+                "team": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True,
+                        "delete": True
+                    }
+                },
+                "agent": False,
+                "discovery": False,
+            }
+        },
+        "chat" :{
+            "active: True"
+            "label": "Multi-Agent",
+            "submodules": {
+                "team": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True
+                    }
+                },
+                "agent": False,
+                "session": {
+                    "operations": True
+                }
+            }
+        },
+        "model" : {
+            "active" : True,
+            "label": "Models",
+            "submodules": {
+                "models": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True
+                    }
+                },
+                "fine-tuning": {
+                    "operations": True
+                }
+            }
+        },
+        "toolkit": False, #True
+        "datasource": False,
+        "discovery": False,
+        "Session": False
+    },
+}
+
 default_configs = {
     "info": {
         "logo": '',
         "welcomeMessage": "Welcome to L3AGI"
     },
-    "mainNavigation" :{
-        "home": True,
-        "agent": True,
-        "datasource": True        
-    },
-    "naming": {
-        "home": 'Home',
-        "agent": "Agent",
-        "team": "Teams",
-        "datasource": "Data sources",
-        "models": "Models",
-        "discovery": "Discovery"
-        
-    },
-    "actions":{""}
     "modules" : {
         "home": {
-            "active" : False,
+            "active" : True,
              "display" : {
               "showAgents": True,
               "showTeams": True ,  
@@ -37,13 +91,8 @@ default_configs = {
             "active" : True,
             "name": "Team",
             "actions" : {
-                "addAgent": {
-                    "active": True
-                 },
-                "addTeam": {
-                     "active": True,
-                     "name" : "Add Team"
-                 },
+                "addAgent": True,
+                "addTeam": True,
                 "createTeamSession": True,
                 "createAgentSession": True,
             },
@@ -78,7 +127,7 @@ default_configs = {
             "name": "Group"
         },
         "schedule": {
-            "active" : True,
+            "active" : False,
             "name": "Campaign"
         },
         "discovery": {
@@ -87,14 +136,12 @@ default_configs = {
             "display" : {
                 "team": True,
                 "agents": True,             
-            }  
-        },
-        "auth": {
-            "loginWithGithub": True
+            }        
+            
         }
     }
 }
-    
+
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
     account_data = {}
     # if not account_model.configs:

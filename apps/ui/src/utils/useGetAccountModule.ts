@@ -5,8 +5,8 @@ export const useGetAccountModule = () => {
 
   const modules = account?.configs?.modules
 
-  const homeModuleAgents = modules?.home?.showAgents
-  const homeModuleTeams = modules?.home?.showAgents
+  const homeModuleAgents = true // modules?.home?.showAgents
+  const homeModuleTeams = true // modules?.home?.showAgents
 
   const chatModuleAddTeam = modules?.chat?.actions?.addTeam
   const chatModuleAddAgent = modules?.chat?.actions?.addAgent
