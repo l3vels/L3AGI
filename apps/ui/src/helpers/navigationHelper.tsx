@@ -10,10 +10,8 @@ import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
 const HEADER_DATA = [
   { name: 'home', routeLink: '/', icon: <HomeIconSvg /> },
-  // { name: "channels", routeLink: "/channels", icon: <ChannelsIconSvg /> },
+  // { name: "sessions", routeLink: "/sessions", icon: <SessionsIconSvg /> },
   // { name: "saved", routeLink: "/saved", icon: <SavedIconSvg /> },
-  { name: 'Games', routeLink: '/game', icon: <WalletIconSvg /> },
-  { name: 'Wallets', routeLink: '/wallets', icon: <WalletIconSvg /> },
   { name: 'Settings', routeLink: '/settings', icon: <WalletIconSvg /> },
 ]
 

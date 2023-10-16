@@ -75,13 +75,13 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
       title={
         chatLink ? (
           <HeadingPrimary
-            value={'Create Channel'}
+            value={'Create Session'}
             type={Typography.types.P}
             size={Typography.sizes.md}
           />
         ) : (
           <HeadingPrimary
-            value={'Create Channel'}
+            value={'Create Session'}
             type={Typography.types.P}
             size={Typography.sizes.md}
           />

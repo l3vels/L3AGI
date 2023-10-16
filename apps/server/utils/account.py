@@ -24,13 +24,13 @@ default_configs = {
             "actions" : {
                 "addAgent": True,
                 "addTeam": True,
-                "createTeamChannel": True,
-                "createAgentChannel": True,
+                "createTeamSession": True,
+                "createAgentSession": True,
             },
             "display" : {
                 "teams": True,
                 "agents": True,
-                "channels": True                
+                "sessions": True                
             }           
         },
         "datasource": {

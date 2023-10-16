@@ -2,17 +2,17 @@ import styled from 'styled-components'
 
 import { useTranslation } from 'react-i18next'
 
-const Channels = () => {
+const Sessions = () => {
   const { t } = useTranslation()
 
   return (
     <StyledContainer>
-      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('channels')}</h1>
+      <h1 style={{ color: 'white', textAlign: 'center' }}>{t('sessions')}</h1>
     </StyledContainer>
   )
 }
 
-export default Channels
+export default Sessions
 
 const StyledContainer = styled.div`
   display: grid;

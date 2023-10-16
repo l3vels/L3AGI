@@ -1,7 +1,7 @@
 import { Navigate, Route as Router, Routes } from 'react-router-dom'
 import About from './pages/About'
 
-import Channels from './pages/Channels'
+import Sessions from './pages/Sessions'
 import Create from './pages/Create'
 
 import Home from './pages/Home'
@@ -133,7 +133,7 @@ const Route = () => {
               {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
 
               <Router path='teams' element={<Teams />} key={document.location.href} />
-              <Router path='channels' element={<Channels />} key={document.location.href} />
+              <Router path='sessions' element={<Sessions />} key={document.location.href} />
 
               {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 

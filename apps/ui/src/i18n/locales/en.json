@@ -49,7 +49,7 @@
   "resend-password": "Resend password",
   "Are-you-sure-you-want-to-resend-the-password": "Are you sure you want to resend the password?",
   "api-keys": "API Keys",
-  "channels": "Channels",
+  "sessions": "Sessions",
   "create": "Create",
   "create-game": "Create Game",
   "deploy": "Deploy",
