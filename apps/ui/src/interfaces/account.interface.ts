@@ -6,4 +6,5 @@ export interface IAccount {
   user: IUserQuery
   name: string
   deleted: boolean
+  configs: any
 }

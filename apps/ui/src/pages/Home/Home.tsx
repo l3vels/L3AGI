@@ -19,6 +19,7 @@ import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { useAgents } from 'pages/Agents/useAgents'
 
 import HeaderText from './HomeComponents/HeaderText'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -26,6 +27,8 @@ const Home = () => {
 
   const { teamOfAgents } = useTeamOfAgents()
   const { agentsData } = useAgents()
+
+  const { homeModuleAgents, homeModuleTeams } = useGetAccountModule()
 
   return (
     <>
@@ -35,9 +38,10 @@ const Home = () => {
           <>
             {/* <GetStartedComponent /> */}
             <StyledWrapper>
-              {teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />}
+              {homeModuleTeams &&
+                (teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />)}
 
-              {agentsData?.length > 0 && <Agents isHome />}
+              {homeModuleAgents && agentsData?.length > 0 && <Agents isHome />}
             </StyledWrapper>
           </>
         ) : (
