@@ -7,6 +7,7 @@ import ValueOutline from '@l3-lib/ui-core/dist/icons/ValueOutline'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
+import MyWeek from '@l3-lib/ui-core/dist/icons/MyWeek'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import includes from 'lodash/includes'
@@ -119,10 +120,10 @@ const MainNavigation = () => {
 
       {scheduleModule && (
         <StyledLi
-          isActive={includes(active, 'schedule')}
+          isActive={includes(active, 'schedules')}
           onClick={() => onHandleClick('/schedules')}
         >
-          <StyledBasicIcon size={30} />
+          <StyledMyWeekIcon size={30} />
           <TypographySecondary
             value={'Schedules'}
             type={Typography.types.LABEL}
@@ -242,5 +243,10 @@ export const StyledValueIcon = styled.div`
   background: transparent;
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledMyWeekIcon = styled(MyWeek)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
