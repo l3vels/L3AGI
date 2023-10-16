@@ -11,8 +11,12 @@ default_configs = {
     "modules" : {
         "home": {
             "active" : True,
-            "showAgents": False,
-            "showTeams": False                    
+             "display" : {
+              "showAgents": True,
+              "showTeams": True ,  
+              "showDiscoveryTeams": True,             
+              "showDiscoveryAgents": True,          
+            }                
         },
         "agent": {
             "active" : True,
