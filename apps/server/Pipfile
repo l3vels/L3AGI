@@ -67,6 +67,7 @@ ruff = "*"
 isort = "*"
 huggingface-hub = "*"
 replicate = "*"
+sendgrid = "*"
 
 [dev-packages]
 
