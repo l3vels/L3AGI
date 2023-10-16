@@ -31,13 +31,13 @@ TOOLKITS: List[BaseToolkit] = [
     OpenWeatherMapToolkit(),
     YoutubeSearchToolkit(),
     TwilioSearchToolkit(),
+    SendGridToolkit(),
     ChartToolkit(),
     TwitterToolkit(),
     InstagramToolkit(),
     SlackToolkit(),
     GmailToolkit(),
     GoogleCalendarToolkit(),
-    SendGridToolkit(),
 ]
 
 

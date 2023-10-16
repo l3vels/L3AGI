@@ -13,6 +13,7 @@ import SlackLogo from 'assets/tools/slack.png'
 import GmailLogo from 'assets/tools/gmail.png'
 import GoogleCalendarLogo from 'assets/tools/googleCalendar.png'
 import ChartLogo from 'assets/tools/chart.png'
+import SendGridLogo from 'assets/tools/sendGridLogo.png'
 
 export const toolLogos = [
   {
@@ -74,5 +75,9 @@ export const toolLogos = [
   {
     logoSrc: ChartLogo,
     toolName: 'Chart Toolkit',
+  },
+  {
+    logoSrc: SendGridLogo,
+    toolName: 'SendGrid Toolkit',
   },
 ]
