@@ -24,8 +24,11 @@ import ChatMembers from 'modals/AIChatModal/components/ChatMembers'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const ChatRouteLayout = () => {
+  const { chatModuleAddAgent, chatModuleAddTeam } = useGetAccountModule()
+
   const { expand } = useContext(LayoutContext)
 
   const { user } = React.useContext(AuthContext)
@@ -86,6 +89,7 @@ const ChatRouteLayout = () => {
       } else if (agentsData?.length > 0) {
         return navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
       } else {
+        if (!chatModuleAddAgent || !chatModuleAddTeam) return
         return navigate('/agents/create-agent-template')
       }
     }
@@ -137,7 +141,12 @@ const ChatRouteLayout = () => {
         >
           {user && (
             <>
-              <ListHeader title='Team' onAddClick={() => navigate('/team-of-agents/create-team')} />
+              <ListHeader
+                title='Team'
+                onAddClick={
+                  chatModuleAddTeam ? () => navigate('/team-of-agents/create-team') : undefined
+                }
+              />
 
               {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
                 const { team_agents } = teamOfAgents
@@ -175,7 +184,9 @@ const ChatRouteLayout = () => {
             <>
               <ListHeader
                 title='Agent'
-                onAddClick={() => navigate('/agents/create-agent-template')}
+                onAddClick={
+                  chatModuleAddAgent ? () => navigate('/agents/create-agent-template') : undefined
+                }
               />
 
               {agentsData?.map((agentObj: any, index: number) => {
