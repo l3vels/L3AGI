@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
-import LogList from '../LogList'
+// import LogList from '../LogList'
 
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
@@ -15,6 +15,7 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
   const [is_open, setIsOpen] = React.useState(false)
   const ref = useRef(null)
   const [gqlName, setGqlName] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [filteredLogs, setFilteredLogs] = useState([])
 
   const handleFilter = () => {

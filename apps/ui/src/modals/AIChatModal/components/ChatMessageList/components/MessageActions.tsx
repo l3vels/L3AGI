@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 import ReplyIcon from '@l3-lib/ui-core/dist/icons/Replay'
-import Copy from '@l3-lib/ui-core/dist/icons/Copy'
-import Check from '@l3-lib/ui-core/dist/icons/Check'
 import CopyButton, { StyledActionButton } from 'components/CopyButton/CopyButton'
 
 type MessageActionsProps = {

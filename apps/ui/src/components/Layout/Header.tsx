@@ -1,11 +1,9 @@
-import { Link } from 'react-router-dom'
 import logo from 'assets/images/l3_logo.png'
 
 import { StyledHeader, StyledLogoWrapper, StyledNavigationColumn } from './LayoutStyle'
 
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
-import Breadcrumbs from 'components/BreadCrumbs/BreadCrumbs'
-import HeaderShare from 'components/HeaderShare/HeaderShare'
+
 import HeaderButtons from 'components/HeaderButtons'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 

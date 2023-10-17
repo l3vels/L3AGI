@@ -1,5 +1,4 @@
 import { useMutation } from '@apollo/client'
-import { truncate } from 'lodash/fp'
 
 import CREATE_SCHEDULE_GQL from '../../gql/schedule/createSchedule.gql'
 

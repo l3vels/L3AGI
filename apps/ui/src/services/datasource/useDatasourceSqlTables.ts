@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import DATASOURCE_SQL_TABLES from '../../gql/ai/datasource/datasourceSqlTables.gql'
 
 export type IDatasourceSqlTables = {

@@ -8,20 +8,20 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import styled from 'styled-components'
 import BackButton from 'components/BackButton'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useAgents()
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   return (
     <FormikProvider value={formik}>

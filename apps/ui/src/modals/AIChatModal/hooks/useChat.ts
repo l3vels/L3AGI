@@ -1,11 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { useContext, useState } from 'react'
+
 import { ChatContext } from '../context/ChatContext'
 import { useChatSocket } from './useChatSocket'
-
-type UseChatProps = {
-
-}
 
 const useChat = () => {
   const socket = useChatSocket()
