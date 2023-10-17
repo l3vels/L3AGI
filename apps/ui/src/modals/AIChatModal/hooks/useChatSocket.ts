@@ -196,7 +196,7 @@ const useChatSocket = () => {
       example: false,
       additional_kwargs: {
         chat_id: 'chat_id',
-        user_id: user.id,
+        user_id: user.id || '',
       },
     })
   }
@@ -211,7 +211,7 @@ const useChatSocket = () => {
         example: false,
         additional_kwargs: {
           chat_id: 'chat_id', //todo need to validate
-          user_id: user.id,
+          user_id: user.id || '',
         },
       },
       client,

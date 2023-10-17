@@ -92,7 +92,7 @@ export const useSettings = () => {
         open: true,
       })
     } catch (e) {
-      console.log(e)
+      // console.log(e)
 
       setToast({
         message: 'Failed to save!',

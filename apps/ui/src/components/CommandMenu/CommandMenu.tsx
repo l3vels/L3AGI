@@ -133,7 +133,7 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
       if (componentRef.current) {
         setCmdkOpen(false)
         //       // Clicked outside the component
-        console.log('Clicked outside the component')
+        // console.log('Clicked outside the component')
         //     }
       }
     }

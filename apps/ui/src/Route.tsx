@@ -168,7 +168,7 @@ const Route = () => {
             </Router>
 
             <Router
-              path={'/chat/client'}
+              path={'/chat/session'}
               element={<ChatRouteLayout />}
               key={document.location.href}
             />

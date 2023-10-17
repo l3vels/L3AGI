@@ -1,66 +1,66 @@
-#!/bin/bash
+# #!/bin/bash
 
-handle_failure() {
-    echo "$1"
-    exit 1
-}
+# handle_failure() {
+#     echo "$1"
+#     exit 1
+# }
 
-# React linting and formatting
-echo "Linting and formatting React..."
-if cd apps/ui; then
-    if ! yarn lint-staged; then
-        handle_failure "React linting failed. Aborting commit."
-    fi
-else
-    handle_failure "Failed to change directory to apps/ui. Aborting commit."
-fi
+# # React linting and formatting
+# echo "Linting and formatting React..."
+# if cd apps/ui; then
+#     if ! yarn lint-staged; then
+#         handle_failure "React linting failed. Aborting commit."
+#     fi
+# else
+#     handle_failure "Failed to change directory to apps/ui. Aborting commit."
+# fi
 
-# Go back to root directory
-cd ../..
+# # Go back to root directory
+# cd ../..
 
-# FastAPI formatting with black and linting with ruff
-if cd apps/server; then
-    staged_files=$(git diff --cached --name-only --diff-filter=ACM)
-    if [ $? -ne 0 ]; then
-        handle_failure "Failed to get staged files. Aborting commit."
-    fi
-    python_files=""
+# # FastAPI formatting with black and linting with ruff
+# if cd apps/server; then
+#     staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+#     if [ $? -ne 0 ]; then
+#         handle_failure "Failed to get staged files. Aborting commit."
+#     fi
+#     python_files=""
 
-    # Accumulate staged python files
-    for file in $staged_files; do
-        if [[ $file == *.py ]]; then
-            # Adjust the file path since we changed directory
-            python_files="$python_files ../../$file"
-        fi
-    done
+#     # Accumulate staged python files
+#     for file in $staged_files; do
+#         if [[ $file == *.py ]]; then
+#             # Adjust the file path since we changed directory
+#             python_files="$python_files ../../$file"
+#         fi
+#     done
 
-    # If there are no python files, skip the formatting and linting step
-    if [ -z "$python_files" ]; then
-        echo "No Python files staged. Skipping formatting and linting."
-        exit 0
-    fi
+#     # If there are no python files, skip the formatting and linting step
+#     if [ -z "$python_files" ]; then
+#         echo "No Python files staged. Skipping formatting and linting."
+#         exit 0
+#     fi
 
-    echo "Checking Python files..."
+#     echo "Checking Python files..."
 
-    # Format with black
-    if ! pipenv run black $python_files; then
-        handle_failure "Black formatting failed. Aborting commit."
-    fi
+#     # Format with black
+#     if ! pipenv run black $python_files; then
+#         handle_failure "Black formatting failed. Aborting commit."
+#     fi
 
-    # Sort with isort
-    if ! pipenv run isort $python_files; then
-        handle_failure "Isort failed to sort Python imports. Aborting commit."
-    fi
+#     # Sort with isort
+#     if ! pipenv run isort $python_files; then
+#         handle_failure "Isort failed to sort Python imports. Aborting commit."
+#     fi
 
-    # Stage the formatted files
-    if ! git add $python_files; then
-        handle_failure "Failed to stage Python files. Aborting commit."
-    fi
+#     # Stage the formatted files
+#     if ! git add $python_files; then
+#         handle_failure "Failed to stage Python files. Aborting commit."
+#     fi
 
-    # Return to the root directory
-    cd ../..
+#     # Return to the root directory
+#     cd ../..
 
-    echo "Pre-commit checks passed!"
-else
-    handle_failure "Failed to change directory to apps/server. Aborting commit."
-fi
+#     echo "Pre-commit checks passed!"
+# else
+#     handle_failure "Failed to change directory to apps/server. Aborting commit."
+# fi

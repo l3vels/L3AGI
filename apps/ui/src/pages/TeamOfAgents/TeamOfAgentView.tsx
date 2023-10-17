@@ -140,18 +140,18 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
               })}
             </StyledAgentsWrapper>
 
-            {tools.length > 0 && <AgentToolkits tools={tools} />}
+            {tools?.length > 0 && <AgentToolkits tools={tools} />}
 
-            {datasources.length > 0 && <AgentDatasources datasources={datasources} />}
+            {datasources?.length > 0 && <AgentDatasources datasources={datasources} />}
 
-            {goals.length > 0 && (
+            {goals?.length > 0 && (
               <AdditionalInfoBox
                 items={goals}
                 title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
               />
             )}
 
-            {constraints.length > 0 && (
+            {constraints?.length > 0 && (
               <AdditionalInfoBox
                 items={constraints}
                 title={
@@ -159,7 +159,8 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                 }
               />
             )}
-            {instructions.length > 0 && (
+
+            {instructions?.length > 0 && (
               <AdditionalInfoBox
                 items={instructions}
                 title={
@@ -169,7 +170,8 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                 }
               />
             )}
-            {suggestions.length > 0 && (
+
+            {suggestions?.length > 0 && (
               <AdditionalInfoBox
                 items={suggestions}
                 title={
@@ -177,7 +179,9 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                 }
               />
             )}
-            {greeting.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
+
+            {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
+
             {text?.length > 0 && <AdditionalInfoBox items={[text]} title={'Advanced'} />}
           </StyledRightColumn>
         </StyledInnerWrapper>

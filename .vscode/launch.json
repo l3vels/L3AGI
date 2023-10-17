@@ -20,7 +20,7 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "cwd": "${workspaceFolder}/apps/server",
-      "pythonPath": "${workspaceFolder}/.venv/bin/python",
+      "python": "${workspaceFolder}/.venv/bin/python",
       "env": {"PYTHONPATH": "${workspaceFolder}"}
     },
     {
