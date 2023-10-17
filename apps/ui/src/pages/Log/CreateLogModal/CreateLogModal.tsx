@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+// import IconButton from '@l3-lib/ui-core/dist/IconButton'
+// import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Heading from '@l3-lib/ui-core/dist/Heading'
@@ -9,7 +9,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 
 // import useFilter from '../useFilter'
 import Button from '@l3-lib/ui-core/dist/Button'
-import useFilter from '../Components/useFilter'
+// import useFilter from '../Components/useFilter'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
