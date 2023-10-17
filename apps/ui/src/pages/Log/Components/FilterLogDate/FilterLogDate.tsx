@@ -1,15 +1,14 @@
 import styled from 'styled-components'
 
 import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
-import outsideClick from 'helpers/outsideClick'
-import React, { useEffect, useRef, useState } from 'react'
-import useLog from 'pages/Log/useLog'
-import axios from 'axios'
 
-const FilterLogDate = ({ onClose, start_date, end_date, onChange }: any) => {
+import { useState } from 'react'
+// import useLog from 'pages/Log/useLog'
+
+const FilterLogDate = () => {
   const [date, setDate] = useState<any>([])
 
-  const { log_list, filter } = useLog()
+  // const { log_list, filter } = useLog()
 
   return (
     <>
