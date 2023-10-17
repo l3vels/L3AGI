@@ -1,5 +1,4 @@
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
-import Tags from '@l3-lib/ui-core/dist/Tags'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 import TypographyPrimary from 'components/Typography/Primary'
