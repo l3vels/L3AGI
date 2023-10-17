@@ -130,8 +130,8 @@ const ChatV2 = () => {
       id: uuid(),
       session_id: '',
       thoughts: null,
-      sender_user_id: user?.id,
-      sender_account_id: account?.id,
+      sender_user_id: user?.id || '',
+      sender_account_id: account?.id || '',
       sender_name: '',
       parent_id: null,
       parent: null,
@@ -145,7 +145,7 @@ const ChatV2 = () => {
         type: message_type || 'human',
       },
       created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
-      sender_user: user,
+      sender_user: user || '',
     }
 
     upsertChatMessageInCache(message, {

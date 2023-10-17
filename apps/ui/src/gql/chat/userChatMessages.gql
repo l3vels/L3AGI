@@ -1,13 +1,6 @@
-query chatMessages(
-  $agent_id: String!
-  $team_id: String!
-  $chat_id: String!
-) @api(name: "ai") {
-  chatMessages(
-    agent_id: $agent_id
-    team_id: $team_id
-    chat_id: $chat_id
-  ) @rest(type: "ChatMessage", path: "/chat/messages?{args}", method: "GET", endpoint: "ai") {
+query chatMessages($agent_id: String!, $team_id: String!, $chat_id: String!) @api(name: "ai") {
+  chatMessages(agent_id: $agent_id, team_id: $team_id, chat_id: $chat_id)
+    @rest(type: "ChatMessage", path: "/chat/messages?{args}", method: "GET", endpoint: "ai") {
     id
     session_id
     sender_user_id
@@ -22,5 +15,6 @@ query chatMessages(
     team_id
     team
     sender_user
+    sender_name
   }
 }

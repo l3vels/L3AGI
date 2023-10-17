@@ -11,10 +11,12 @@ const HumanReply = ({
   messageText,
   avatarImg,
   userId,
+  userName,
 }: {
   messageText: string
   avatarImg: string
   userId: string
+  userName: string
 }) => {
   const { wordArray, authorName } = useHumanMessage({
     userId,
@@ -28,11 +30,11 @@ const HumanReply = ({
       </StyledReplyLineWrapper>
       <StyledReplyInfoWrapper>
         <StyledSmallAvatarWrapper>
-          <AvatarGenerator name={authorName} size={16} textSizeRatio={1.5} />
+          <AvatarGenerator name={userName} size={16} textSizeRatio={1.5} avatar={avatarImg} />
         </StyledSmallAvatarWrapper>
 
         <TypographyPrimary
-          value={`@${authorName}`}
+          value={`@${userName}`}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />
