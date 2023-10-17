@@ -31,8 +31,8 @@ default_configs = {
                         "delete": True
                     }
                 },
-                "agent": False,
-                "discovery": False,
+                "agent": True,
+                "discovery": True,
             }
         },
         "chat" :{
@@ -47,9 +47,7 @@ default_configs = {
                     }
                 },
                 "agent": True,
-                "session": {
-                    "operations": True
-                }
+                "session": True
             }
         },
         "model" : {
@@ -68,11 +66,11 @@ default_configs = {
                 }
             }
         },
-        "toolkit": False, #True
-        "datasource": False,
+        "toolkit": True, #True
+        "datasource": True,
         "discovery": False,
         "Session": False,
-        "schedule": True
+        "schedule": False
     },
 }
 
