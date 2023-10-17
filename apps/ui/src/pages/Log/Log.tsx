@@ -4,7 +4,6 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import styled from 'styled-components'
 import Filter from './Components/Filter'
@@ -17,7 +16,7 @@ import useLog from './useLog'
 import HeaderWrapper from 'components/HeaderWrapper'
 import {
   StyledHeaderGroup,
-  StyledContainerWrapper,
+  // StyledContainerWrapper,
   StyledInnerWrapper,
 } from 'styles/globalStyle.css'
 import SuccessfulPage from './Components/SuccessfulPage/SuccessfulPage'
