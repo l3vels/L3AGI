@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styled, { DefaultTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import About from '@l3-lib/ui-core/dist/icons/About'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
@@ -195,12 +195,6 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
       }
     }
 `}/* background: red; */
-`
-const StyledIconWrapper = styled.div`
-  color: #fff;
-  background: transparent;
-  /* margin-bottom: 10px; */
-  margin-top: 10px;
 `
 export const StyledAboutIcon = styled(About)`
   path {
