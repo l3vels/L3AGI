@@ -397,7 +397,7 @@ const ChatV2 = () => {
               >
                 <StyledSenIcon size={27} />
               </StyledButton>
-              <CommandIcon />
+              {user && <CommandIcon />}
             </StyledTextareaWrapper>
           </StyledForm>
           <StyledChatBottom>

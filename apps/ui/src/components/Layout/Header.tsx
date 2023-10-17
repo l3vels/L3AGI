@@ -27,19 +27,17 @@ const Header = ({ expandMode = false, isPublicRoute }: HeaderTypes) => {
           </>
         )}
       </StyledNavigationColumn>
-      {!expandMode && (
-        <StyledLogoWrapper to='/'>
-          <StyledLogo src={logo} alt='Logo' />
-          <StyledTags label='BETA' readOnly color={'gradient_yellow'} size={'small'} noAnimation />
-        </StyledLogoWrapper>
-      )}
-      {!expandMode && (
-        <>
-          <StyledHeaderButtonWrapper>
-            <HeaderButtons />
-          </StyledHeaderButtonWrapper>
-        </>
-      )}
+
+      <StyledLogoWrapper to='/'>
+        <StyledLogo src={logo} alt='Logo' />
+        <StyledTags label='BETA' readOnly color={'gradient_yellow'} size={'small'} noAnimation />
+      </StyledLogoWrapper>
+
+      <>
+        <StyledHeaderButtonWrapper>
+          <HeaderButtons />
+        </StyledHeaderButtonWrapper>
+      </>
     </StyledHeader>
   )
 }
