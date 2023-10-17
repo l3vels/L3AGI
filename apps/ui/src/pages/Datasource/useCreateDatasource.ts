@@ -27,9 +27,10 @@ export const useCreateDatasource = () => {
     datasource_source_type: 'File',
     configs: {},
     files: [],
-    index_type: 'summary',
+    index_type: 'vector_store',
     response_mode: 'compact',
     vector_store: 'zep',
+    chunk_size: '1024',
   }
 
   const formik = useFormik({
@@ -86,11 +87,12 @@ export const useCreateDatasource = () => {
         if (cfg.key_type === 'int') {
           value = parseInt(cfg.value)
         } else if (cfg.key_type === 'files') {
-          const { index_type, response_mode, vector_store, files } = values
+          const { index_type, response_mode, vector_store, chunk_size, files } = values
           value = JSON.stringify({
             index_type,
             response_mode,
             vector_store,
+            chunk_size: parseInt(chunk_size),
             files,
           })
         }

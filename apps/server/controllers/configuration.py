@@ -33,6 +33,7 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
         index_type = value["index_type"]
         response_mode = value["response_mode"]
         vector_store = value["vector_store"]
+        chunk_size = value["chunk_size"]
 
         file_urls = [file["url"] for file in files]
         retriever = FileDatasourceRetriever(
@@ -43,6 +44,7 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
             str(account.id),
             str(datasource_id),
             None,
+            chunk_size,
         )
         retriever.index_documents(file_urls)
 
