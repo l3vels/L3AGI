@@ -34,7 +34,7 @@ const ChatHistory = () => {
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
 
-  const { data: chatHistory } = useChatMessagesHistoryService({
+  const { data: chatHistory, loading: historyLoading } = useChatMessagesHistoryService({
     agentId,
     teamId,
   })
@@ -98,6 +98,7 @@ const ChatHistory = () => {
             isHuman: undefined,
           }}
           greeting={
+            !historyLoading &&
             chatHistory &&
             chatHistory?.length === 0 &&
             (!agentId
