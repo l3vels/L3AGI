@@ -142,86 +142,90 @@ const ChatRouteLayout = () => {
             isHidden={expand && !showChats && location.pathname.includes('/chat')}
             hasChat={hasChat}
           >
-            <>
-              <ListHeader
-                title='Team'
-                onAddClick={
-                  teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
-                }
-              />
+            {teamModule?.list && (
+              <>
+                <ListHeader
+                  title='Team'
+                  onAddClick={
+                    teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
+                  }
+                />
 
-              {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
-                const { team_agents } = teamOfAgents
+                {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
+                  const { team_agents } = teamOfAgents
 
-                const isCreator = user?.id === teamOfAgents?.created_by
+                  const isCreator = user?.id === teamOfAgents?.created_by
 
-                const handleView = () => {
-                  openModal({
-                    name: 'team-of-agent-view-modal',
-                    data: { teamOfAgents: teamOfAgents },
-                  })
-                }
+                  const handleView = () => {
+                    openModal({
+                      name: 'team-of-agent-view-modal',
+                      data: { teamOfAgents: teamOfAgents },
+                    })
+                  }
 
-                const handleEdit = () => {
-                  navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
-                }
+                  const handleEdit = () => {
+                    navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
+                  }
 
-                return (
-                  <TeamChatCard
-                    key={index}
-                    onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
-                    onViewClick={handleView}
-                    onEditClick={isCreator ? handleEdit : undefined}
-                    onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
-                    picked={teamId === teamOfAgents.id}
-                    team={teamOfAgents}
-                    agents={team_agents}
-                  />
-                )
-              })}
-            </>
+                  return (
+                    <TeamChatCard
+                      key={index}
+                      onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
+                      onViewClick={handleView}
+                      onEditClick={isCreator ? handleEdit : undefined}
+                      onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
+                      picked={teamId === teamOfAgents.id}
+                      team={teamOfAgents}
+                      agents={team_agents}
+                    />
+                  )
+                })}
+              </>
+            )}
 
-            <>
-              <ListHeader
-                title='Agent'
-                onAddClick={
-                  agentModule.create ? () => navigate('/agents/create-agent-template') : undefined
-                }
-              />
+            {agentModule.list && (
+              <>
+                <ListHeader
+                  title='Agent'
+                  onAddClick={
+                    agentModule.create ? () => navigate('/agents/create-agent-template') : undefined
+                  }
+                />
 
-              {agentsData?.map((agentObj: any, index: number) => {
-                const { agent } = agentObj
+                {agentsData?.map((agentObj: any, index: number) => {
+                  const { agent } = agentObj
 
-                const isCreator = user?.id === agent?.created_by
+                  const isCreator = user?.id === agent?.created_by
 
-                const handleEdit = () => {
-                  navigate(`/agents/${agent?.id}/edit-agent`)
-                }
+                  const handleEdit = () => {
+                    navigate(`/agents/${agent?.id}/edit-agent`)
+                  }
 
-                const handleView = () => {
-                  openModal({
-                    name: 'agent-view-modal',
-                    data: {
-                      agent: agentObj,
-                    },
-                  })
-                }
+                  const handleView = () => {
+                    openModal({
+                      name: 'agent-view-modal',
+                      data: {
+                        agent: agentObj,
+                      },
+                    })
+                  }
 
-                return (
-                  <AgentChatCard
-                    key={index}
-                    onClick={() => navigate(`/chat?agent=${agent.id}`)}
-                    onViewClick={handleView}
-                    onDeleteClick={() => deleteAgentHandler(agent.id)}
-                    onEditClick={isCreator ? handleEdit : undefined}
-                    picked={agentId === agent.id}
-                    agent={agent}
-                  />
-                )
-              })}
-            </>
+                  return (
+                    <AgentChatCard
+                      key={index}
+                      onClick={() => navigate(`/chat?agent=${agent.id}`)}
+                      onViewClick={handleView}
+                      onDeleteClick={() => deleteAgentHandler(agent.id)}
+                      onEditClick={isCreator ? handleEdit : undefined}
+                      picked={agentId === agent.id}
+                      agent={agent}
+                    />
+                  )
+                })}
+              </>
+            )}
 
-            {chatsData?.length > 0 && (
+            {sessionModule?.list && chatsData?.length > 0 && (
               <>
                 <ListHeader title='Session' />
 
