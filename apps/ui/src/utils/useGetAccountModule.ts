@@ -4,6 +4,7 @@ export const useGetAccountModule = () => {
   const { data: account } = useAccountService()
 
   const modules = account?.configs?.modules
+  const naming = account?.configs?.naming
 
   const getMainModule = (moduleName: string) => {
     let values
@@ -106,6 +107,22 @@ export const useGetAccountModule = () => {
     const values = getMainModule('Session')
     return values
   }
+  const getScheduleModules = () => {
+    const values = getMainModule('schedule')
+    return values
+  }
+
+  const moduleNames = {
+    chat: naming?.chat,
+    home: naming?.home,
+    agent: naming?.agent,
+    team: naming?.team,
+    datasource: naming?.datasource,
+    discovery: naming?.discovery,
+    models: naming?.models,
+    schedule: naming?.schedules,
+    toolkits: naming?.toolkits,
+  }
 
   return {
     getHomeModules,
@@ -115,5 +132,7 @@ export const useGetAccountModule = () => {
     getDatasourceModules,
     getDiscoveryModules,
     getSessionModules,
+    getScheduleModules,
+    moduleNames,
   }
 }

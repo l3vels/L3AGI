@@ -31,7 +31,8 @@ const MainNavigation = () => {
     getToolkitModules,
     getDiscoveryModules,
     getDatasourceModules,
-    getSessionModules,
+    getScheduleModules,
+    moduleNames,
   } = useGetAccountModule()
 
   const isHome = getHomeModules('active')
@@ -40,7 +41,9 @@ const MainNavigation = () => {
   const isToolkit = getToolkitModules()
   const isDiscover = getDiscoveryModules()
   const isDatasource = getDatasourceModules()
-  const isSession = getSessionModules()
+  const isSchedule = getScheduleModules()
+
+  const { chat, home, datasource, models, discovery, schedule, toolkits } = moduleNames
 
   const navigate = useNavigate()
 
@@ -65,7 +68,7 @@ const MainNavigation = () => {
         <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
           <StyledAboutIcon size={40} />
           <TypographySecondary
-            value={'Home'}
+            value={home || 'Home'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -76,7 +79,7 @@ const MainNavigation = () => {
         <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
           <StyledRobotIcon size={40} />
           <TypographySecondary
-            value={'Multi-Agents'}
+            value={chat || 'Multi-Agents'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -97,7 +100,7 @@ const MainNavigation = () => {
         >
           <StyledValueOutlineIcon size={40} />
           <TypographySecondary
-            value={'Data sources'}
+            value={datasource || 'Data sources'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -111,7 +114,7 @@ const MainNavigation = () => {
         >
           <StyledGamesIcon size={40} />
           <TypographySecondary
-            value={'Toolkits'}
+            value={toolkits || 'Toolkits'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -122,24 +125,26 @@ const MainNavigation = () => {
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
           <TypographySecondary
-            value={'Models'}
+            value={models || 'Models'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      <StyledLi
-        isActive={includes(active, 'schedules')}
-        onClick={() => onHandleClick('/schedules')}
-      >
-        <StyledMyWeekIcon size={30} />
-        <TypographySecondary
-          value={'Schedules'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isSchedule && (
+        <StyledLi
+          isActive={includes(active, 'schedules')}
+          onClick={() => onHandleClick('/schedules')}
+        >
+          <StyledMyWeekIcon size={30} />
+          <TypographySecondary
+            value={schedule || 'Schedules'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
       {isDiscover && (
         <StyledLi
@@ -148,7 +153,7 @@ const MainNavigation = () => {
         >
           <StyledSearchOutlineIcon size={40} />
           <TypographySecondary
-            value={'Discover'}
+            value={discovery || 'Discover'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

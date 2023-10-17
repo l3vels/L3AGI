@@ -14,7 +14,10 @@ default_configs = {
         "team": "Team",
         "datasource": "Data sources",
         "models": "Models",
-        "discovery": "Discovery"
+        "discovery": "Discovery",
+        "chat": "Multi-Agent",
+        "toolkits": "Toolkits",
+        "schedules": "Schedules"
     },
     "modules": {
         "home": {
@@ -68,7 +71,8 @@ default_configs = {
         "toolkit": False, #True
         "datasource": False,
         "discovery": False,
-        "Session": False
+        "Session": False,
+        "schedule": True
     },
 }
 
