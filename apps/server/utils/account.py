@@ -3,7 +3,7 @@ from typing import List
 from typings.account import AccountOutput
 from utils.type import convert_value_to_type
 
-new_config = default_configs = {
+default_configs = {
     "info": {
         "logo": '',
         "welcomeMessage": "Welcome to L3AGI"
@@ -14,7 +14,10 @@ new_config = default_configs = {
         "team": "Team",
         "datasource": "Data sources",
         "models": "Models",
-        "discovery": "Discovery"
+        "discovery": "Discovery",
+        "chat": "Multi-Agent",
+        "toolkits": "Toolkits",
+        "schedules": "Schedules"
     },
     "modules": {
         "home": {
@@ -33,7 +36,7 @@ new_config = default_configs = {
             }
         },
         "chat" :{
-            "active: True"
+            "active": True,
             "label": "Multi-Agent",
             "submodules": {
                 "team": {
@@ -43,7 +46,7 @@ new_config = default_configs = {
                         "edit": True
                     }
                 },
-                "agent": False,
+                "agent": True,
                 "session": {
                     "operations": True
                 }
@@ -57,7 +60,7 @@ new_config = default_configs = {
                     "operations": {
                         "create": True,
                         "list": True,
-                        "edit": True
+                        "edit": True,
                     }
                 },
                 "fine-tuning": {
@@ -68,79 +71,12 @@ new_config = default_configs = {
         "toolkit": False, #True
         "datasource": False,
         "discovery": False,
-        "Session": False
+        "Session": False,
+        "schedule": True
     },
 }
 
-default_configs = {
-    "info": {
-        "logo": '',
-        "welcomeMessage": "Welcome to L3AGI"
-    },
-    "modules" : {
-        "home": {
-            "active" : True,
-             "display" : {
-              "showAgents": True,
-              "showTeams": True ,  
-              "showDiscoveryTeams": True,             
-              "showDiscoveryAgents": True,          
-            }                
-        },
-        "agent": {
-            "active" : True,
-            "name": "Team",
-            "actions" : {
-                "addAgent": True,
-                "addTeam": True,
-                "createTeamSession": True,
-                "createAgentSession": True,
-            },
-            "display" : {
-                "teams": True,
-                "agents": True,
-                "sessions": True                
-            }           
-        },
-        "datasource": {
-            "active" : True,
-            "name": "Data sources"
-        },
-        "toolkit": {
-            "active" : True,
-            "name": "Toolkits"
-        },
-        "model" : {
-            "active" : True,
-            "name": "Models",
-            "display": {
-                "models": True,
-                "fine-tuning": True
-            }            
-        },
-        "contact": {
-            "active" : False,
-            "name": "Contact"
-        },
-        "group": {
-            "active" : False,
-            "name": "Group"
-        },
-        "schedule": {
-            "active" : False,
-            "name": "Campaign"
-        },
-        "discovery": {
-            "active" : True,
-            "name": "Discovery",
-            "display" : {
-                "team": True,
-                "agents": True,             
-            }        
-            
-        }
-    }
-}
+
 
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
     account_data = {}

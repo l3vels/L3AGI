@@ -83,7 +83,6 @@ import Schedule from 'pages/Schedule'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
 
-
 const Route = () => {
   const { user, loading } = useContext(AuthContext)
   const [cmdkOpen, setCmdkOpen] = useState(false)
@@ -169,7 +168,7 @@ const Route = () => {
             </Router>
 
             <Router
-              path={'/chat/client'}
+              path={'/chat/session'}
               element={<ChatRouteLayout />}
               key={document.location.href}
             />

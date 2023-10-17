@@ -45,6 +45,7 @@ class FileDatasourceTool(BaseTool):
         index_type = value["index_type"]
         response_mode = value["response_mode"]
         vector_store = value["vector_store"]
+        chunk_size = value["chunk_size"]
 
         retriever = FileDatasourceRetriever(
             self.settings,
@@ -54,6 +55,7 @@ class FileDatasourceTool(BaseTool):
             str(self.account.id),
             datasource_id,
             self.agent_with_configs,
+            chunk_size,
         )
         retriever.load_index()
         result = retriever.query(question)

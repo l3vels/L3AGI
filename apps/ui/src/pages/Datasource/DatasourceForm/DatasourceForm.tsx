@@ -202,6 +202,12 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                       { label: 'Compact Accumulate', value: 'compact_accumulate' },
                     ]}
                   />
+
+                  <FormikTextField
+                    name='chunk_size'
+                    placeholder='Chunk Size'
+                    label='Enter Chunk Size'
+                  />
                 </StyledUploadFileWrapper>
               )}
 

@@ -49,6 +49,7 @@ class FileDatasourceRetriever:
     index_type: str
     response_mode: str
     vector_store: str
+    chunk_size: int
     agent_with_configs: AgentWithConfigsOutput
 
     def __init__(
@@ -60,6 +61,7 @@ class FileDatasourceRetriever:
         account_id: str,
         datasource_id: str,
         agent_with_configs: Optional[AgentWithConfigsOutput] = None,
+        chunk_size: Optional[int] = 1024,
     ) -> None:
         self.settings = settings
         self.datasource_id = datasource_id
@@ -67,6 +69,7 @@ class FileDatasourceRetriever:
         self.index_type = index_type
         self.response_mode = response_mode
         self.vector_store = vector_store
+        self.chunk_size = chunk_size
         self.agent_with_configs = agent_with_configs
 
         self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
@@ -117,19 +120,26 @@ class FileDatasourceRetriever:
         self.download_documents(file_urls)
         documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
 
+        service_context = ServiceContext.from_defaults(chunk_size=self.chunk_size)
+
         # Create index from documents
         if self.index_type == IndexType.SUMMARY.value:
-            self.index = SummaryIndex.from_documents(documents)
+            self.index = SummaryIndex.from_documents(
+                documents, service_context=service_context
+            )
         elif self.index_type == IndexType.VECTOR_STORE.value:
             vector_store = self.get_vector_store()
             storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
             self.index = VectorStoreIndex.from_documents(
                 documents,
+                service_context=service_context,
                 storage_context=storage_context,
             )
         elif self.index_type == IndexType.TREE.value:
-            self.index = TreeIndex.from_documents()
+            self.index = TreeIndex.from_documents(
+                documents, service_context=service_context
+            )
 
         # Persist index to S3
         self.index.set_index_id(self.datasource_id)
@@ -163,7 +173,9 @@ class FileDatasourceRetriever:
             ),
         )
 
-        service_context = ServiceContext.from_defaults(llm=llm)
+        service_context = ServiceContext.from_defaults(
+            llm=llm, chunk_size=self.chunk_size
+        )
 
         query_engine = self.index.as_query_engine(
             response_mode=self.response_mode, service_context=service_context

@@ -25,13 +25,25 @@ import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const MainNavigation = () => {
   const {
-    homeModule,
-    datasourceModule,
-    toolkitModule,
-    modelModule,
-    scheduleModule,
-    discoveryModule,
+    getHomeModules,
+    getChatModules,
+    getModelModules,
+    getToolkitModules,
+    getDiscoveryModules,
+    getDatasourceModules,
+    getScheduleModules,
+    moduleNames,
   } = useGetAccountModule()
+
+  const isHome = getHomeModules('active')
+  const isChat = getChatModules('active')
+  const isModel = getModelModules('active')
+  const isToolkit = getToolkitModules()
+  const isDiscover = getDiscoveryModules()
+  const isDatasource = getDatasourceModules()
+  const isSchedule = getScheduleModules()
+
+  const { chat, home, datasource, models, discovery, schedule, toolkits } = moduleNames
 
   const navigate = useNavigate()
 
@@ -52,25 +64,27 @@ const MainNavigation = () => {
 
   return (
     <StyledUl>
-      {homeModule && (
+      {isHome && (
         <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
           <StyledAboutIcon size={40} />
           <TypographySecondary
-            value={'Home'}
+            value={home || 'Home'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-        <StyledRobotIcon size={40} />
-        <TypographySecondary
-          value={'Multi-Agents'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isChat && (
+        <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
+          <StyledRobotIcon size={40} />
+          <TypographySecondary
+            value={chat || 'Multi-Agents'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
       {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
         <StyledValueIcon>
@@ -79,67 +93,67 @@ const MainNavigation = () => {
         <span>Agents</span>
       </StyledLi> */}
 
-      {datasourceModule && (
+      {isDatasource && (
         <StyledLi
           isActive={includes(active, 'datasources')}
           onClick={() => onHandleClick('/datasources')}
         >
           <StyledValueOutlineIcon size={40} />
           <TypographySecondary
-            value={'Data sources'}
+            value={datasource || 'Data sources'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      {toolkitModule && (
+      {isToolkit && (
         <StyledLi
           isActive={includes(active, 'toolkits')}
           onClick={() => onHandleClick('/toolkits')}
         >
           <StyledGamesIcon size={40} />
           <TypographySecondary
-            value={'Toolkits'}
+            value={toolkits || 'Toolkits'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      {modelModule && (
+      {isModel && (
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
           <TypographySecondary
-            value={'Models'}
+            value={models || 'Models'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      {scheduleModule && (
+      {isSchedule && (
         <StyledLi
           isActive={includes(active, 'schedules')}
           onClick={() => onHandleClick('/schedules')}
         >
           <StyledMyWeekIcon size={30} />
           <TypographySecondary
-            value={'Schedules'}
+            value={schedule || 'Schedules'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      {discoveryModule && (
+      {isDiscover && (
         <StyledLi
           isActive={includes(active, 'discover')}
           onClick={() => onHandleClick('/discover')}
         >
           <StyledSearchOutlineIcon size={40} />
           <TypographySecondary
-            value={'Discover'}
+            value={discovery || 'Discover'}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

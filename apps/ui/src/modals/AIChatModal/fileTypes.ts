@@ -15,4 +15,5 @@ export const FILE_TYPES = [
   'application/x-ipynb+json',
   'audio/mpeg',
   'video/mp4',
+  'text/plain',
 ]
