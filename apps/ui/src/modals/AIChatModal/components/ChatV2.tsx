@@ -74,7 +74,7 @@ const ChatV2 = () => {
 
   const { thinking, setThinking, socket } = useChatState()
 
-  const { data: chatMessages } = useChatMessagesService({
+  const { data: chatMessages, loading: messagesLoading } = useChatMessagesService({
     agentId,
     teamId,
     chatId,
@@ -132,7 +132,7 @@ const ChatV2 = () => {
       thoughts: null,
       sender_user_id: user?.id || '',
       sender_account_id: account?.id || '',
-      sender_name: '',
+      sender_name: user?.name || 'Guest',
       parent_id: null,
       parent: null,
       agent_id: agentId,
@@ -306,7 +306,9 @@ const ChatV2 = () => {
             setReply={setReply}
             reply={reply}
             agentName={agentName}
-            greeting={chatMessages && chatMessages?.length === 0 && chatGreeting}
+            greeting={
+              !messagesLoading && chatMessages && chatMessages?.length === 0 && chatGreeting
+            }
           />
         </StyledChatWrapper>
       </StyledMessages>
