@@ -110,7 +110,7 @@ const ChatRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header isPublicRoute={!user} />
+      <Header isPublicRoute={!user} hideButtons={!user && chatId ? true : false} />
       <StyledContainer>
         {expand && !showChats && location.pathname.includes('/chat') && (
           <StyledShowButton
