@@ -132,7 +132,7 @@ const ChatMessageListV2 = ({
 
     // eslint-disable-next-line
   }, [data])
-  console.log('messages', data)
+  // console.log('messages', data)
   return (
     <StyledRoot show={true}>
       <Virtuoso

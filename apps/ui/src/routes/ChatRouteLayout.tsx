@@ -259,7 +259,7 @@ const ChatRouteLayout = () => {
                       key={id}
                       picked={id === chatId}
                       name={name}
-                      onClick={() => navigate(`/chat/client?chat=${id}`)}
+                      onClick={() => navigate(`/chat/session?chat=${id}`)}
                       onDeleteClick={deleteChatHandler}
                     />
                   )

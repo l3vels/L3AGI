@@ -35,9 +35,9 @@ const RootLayout = () => {
         </StyledAvatarContainer>
       )}
 
-      <StyledChatInputWrapper isHidden={isCheckedRoute}>
+      {/* <StyledChatInputWrapper isHidden={isCheckedRoute}>
         {user && <Spotlight />}
-      </StyledChatInputWrapper>
+      </StyledChatInputWrapper> */}
 
       {user && <ChatSwitcher isChatOpen={isCheckedRoute} />}
     </>

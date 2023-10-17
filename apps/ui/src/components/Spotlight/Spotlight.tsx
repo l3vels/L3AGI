@@ -137,9 +137,9 @@ const Spotlight = () => {
   return (
     <>
       <div ref={outsideClickRef}>
-        <StyledPluginsContainer showPlugins={showPlugins}>
+        {/* <StyledPluginsContainer showPlugins={showPlugins}>
           <SpotlightPlugins />
-        </StyledPluginsContainer>
+        </StyledPluginsContainer> */}
 
         <StyledChatOptionsContainer expanded={showSuggestion}>
           <StyledRow>

@@ -27,9 +27,9 @@ export const CheatCode = () => {
     },
   })
 
-  useEffect(() => {
-    watch((value, { name, type }) => console.log(value, name, type))
-  }, [watch])
+  // useEffect(() => {
+  //   watch((value, { name, type }) => console.log(value, name, type))
+  // }, [watch])
 
   return (
     <StyledCenterFormContainer>

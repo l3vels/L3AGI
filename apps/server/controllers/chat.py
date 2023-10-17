@@ -196,7 +196,7 @@ def negotiate(id: str):
     return NegotiateOutput(url=token["url"])
 
 
-@router.post("/client/messages", status_code=201)
+@router.post("/session/messages", status_code=201)
 def create_chat_message(request: Request, response: Response, body: ChatMessageInput):
     """
     Create new chat message
