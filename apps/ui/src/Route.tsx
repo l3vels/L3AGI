@@ -84,7 +84,7 @@ import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
 
 const Route = () => {
-  const { user, loading } = useContext(AuthContext)
+  const { loading } = useContext(AuthContext)
   const [cmdkOpen, setCmdkOpen] = useState(false)
   const [theme, setTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem('theme')
