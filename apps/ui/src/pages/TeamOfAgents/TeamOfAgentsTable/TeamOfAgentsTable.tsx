@@ -77,7 +77,3 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 }
 
 export default TeamOfAgentsTable
-
-const StyledTextWrapper = styled.div`
-  padding: 5px 10px;
-`
