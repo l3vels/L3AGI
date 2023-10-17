@@ -63,7 +63,7 @@ default_configs = {
         },
         "toolkit": True, #True
         "datasource": True,
-        "discovery": False,
+        "discovery": True,
         "Session": False,
         "schedule": False
     },
