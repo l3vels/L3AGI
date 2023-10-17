@@ -5,7 +5,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import File from '@l3-lib/ui-core/dist/icons/File'
 import Loader from '@l3-lib/ui-core/dist/Loader'
-import { FILE_TYPES } from 'modals/AIChatModal/fileTypes'
+import { SUPPORTED_FILE_EXTENSIONS } from 'modals/AIChatModal/fileTypes'
 import TypographySecondary from 'components/Typography/Secondary'
 
 type UploadButtonProps = {
@@ -27,7 +27,7 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
         ref={uploadRef}
         onChange={onChange}
         multiple
-        accept={FILE_TYPES.join(', ')}
+        accept={SUPPORTED_FILE_EXTENSIONS.join(', ')}
       />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>
@@ -37,7 +37,7 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
           <>
             <StyledFileIcon />
             <TypographySecondary
-              value='txt, pdf, csv, docx, pptx, md, jpg, png, jpeg, epub, mbox, ipynb, mp3, mp4'
+              value={SUPPORTED_FILE_EXTENSIONS.join(', ')}
               type={Typography.types.LABEL}
               size={Typography.sizes.xss}
             />
@@ -63,7 +63,6 @@ const StyledUploadButton = styled.div<{ disabled?: boolean }>`
   cursor: pointer;
   border: ${({ theme }) => theme.body.border};
   background: ${({ theme }) => theme.body.textAreaBgColor};
-  // Use the default value for disabled if it's not provided
   pointer-events: ${props => (props.disabled === true ? 'none' : 'auto')};
 `
 
