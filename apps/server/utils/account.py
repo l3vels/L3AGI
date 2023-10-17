@@ -9,7 +9,7 @@ from utils.configs.scrapper import scrapper_configs
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
     account_data = {}
     # if not account_model.configs:
-    if account_model.name == 'scraper':
+    if account_model.name == 'scrapper':
         account_model.configs = scrapper_configs
     elif account_model.name == 'heyyou':
         account_model.configs = scrapper_configs

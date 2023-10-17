@@ -5,12 +5,12 @@ scrapper_configs = {
     },
     "naming": {
         "home": 'Home',
-        "agent": "Agent",
+        "agent": "Scrappers",
         "team": "Team",
         "datasource": "Data sources",
         "models": "Models",
         "discovery": "Discovery",
-        "chat": "Multi-Agent",
+        "chat": "Scrappers",
         "toolkits": "Toolkits",
         "schedules": "Schedules"
     },
@@ -32,7 +32,7 @@ scrapper_configs = {
         },
         "chat" :{
             "active": True,
-            "label": "Multi-Agent",
+            "label": "Scrappers",
             "submodules": {
                 "team": {
                     "operations": {
@@ -45,24 +45,9 @@ scrapper_configs = {
                 "session": True
             }
         },
-        "model" : {
-            "active" : True,
-            "label": "Models",
-            "submodules": {
-                "models": {
-                    "operations": {
-                        "create": True,
-                        "list": True,
-                        "edit": True,
-                    }
-                },
-                "fine-tuning": {
-                    "operations": True
-                }
-            }
-        },
-        "toolkit": True, #True
-        "datasource": True,
+        "model" : False,
+        "toolkit": False,
+        "datasource": False,
         "discovery": False,
         "Session": False,
         "schedule": False
