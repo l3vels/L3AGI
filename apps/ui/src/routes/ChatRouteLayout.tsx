@@ -110,7 +110,7 @@ const ChatRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header />
+      <Header isPublicRoute={!user} hideButtons={!user && chatId ? true : false} />
       <StyledContainer>
         {expand && !showChats && location.pathname.includes('/chat') && (
           <StyledShowButton
@@ -135,11 +135,11 @@ const ChatRouteLayout = () => {
           />
         )}
 
-        <StyledLeftColumn
-          isHidden={expand && !showChats && location.pathname.includes('/chat')}
-          hasChat={hasChat}
-        >
-          {user && (
+        {user && (
+          <StyledLeftColumn
+            isHidden={expand && !showChats && location.pathname.includes('/chat')}
+            hasChat={hasChat}
+          >
             <>
               <ListHeader
                 title='Team'
@@ -178,9 +178,7 @@ const ChatRouteLayout = () => {
                 )
               })}
             </>
-          )}
 
-          {user && (
             <>
               <ListHeader
                 title='Agent'
@@ -220,56 +218,56 @@ const ChatRouteLayout = () => {
                 )
               })}
             </>
-          )}
 
-          {user && chatsData?.length > 0 && (
-            <>
-              <ListHeader title='Session' />
+            {chatsData?.length > 0 && (
+              <>
+                <ListHeader title='Session' />
 
-              {chatsData?.map((chat: any) => {
-                const { agent, name, id } = chat
+                {chatsData?.map((chat: any) => {
+                  const { agent, name, id } = chat
 
-                const deleteChatHandler = () => {
-                  openModal({
-                    name: 'delete-confirmation-modal',
-                    data: {
-                      deleteItem: async () => {
-                        try {
-                          await deleteChat(id)
-                          await refetchChat()
-                          navigate('/chat')
-                          setToast({
-                            message: 'Chat was deleted!',
-                            type: 'positive',
-                            open: true,
-                          })
-                        } catch (e) {
-                          setToast({
-                            message: 'Failed to delete Chat!',
-                            type: 'negative',
-                            open: true,
-                          })
-                        }
-                        closeModal('delete-confirmation-modal')
+                  const deleteChatHandler = () => {
+                    openModal({
+                      name: 'delete-confirmation-modal',
+                      data: {
+                        deleteItem: async () => {
+                          try {
+                            await deleteChat(id)
+                            await refetchChat()
+                            navigate('/chat')
+                            setToast({
+                              message: 'Chat was deleted!',
+                              type: 'positive',
+                              open: true,
+                            })
+                          } catch (e) {
+                            setToast({
+                              message: 'Failed to delete Chat!',
+                              type: 'negative',
+                              open: true,
+                            })
+                          }
+                          closeModal('delete-confirmation-modal')
+                        },
+                        label: 'Delete Chat?',
                       },
-                      label: 'Delete Chat?',
-                    },
-                  })
-                }
+                    })
+                  }
 
-                return (
-                  <CustomerChatCard
-                    key={id}
-                    picked={id === chatId}
-                    name={name}
-                    onClick={() => navigate(`/chat/client?chat=${id}`)}
-                    onDeleteClick={deleteChatHandler}
-                  />
-                )
-              })}
-            </>
-          )}
-        </StyledLeftColumn>
+                  return (
+                    <CustomerChatCard
+                      key={id}
+                      picked={id === chatId}
+                      name={name}
+                      onClick={() => navigate(`/chat/client?chat=${id}`)}
+                      onDeleteClick={deleteChatHandler}
+                    />
+                  )
+                })}
+              </>
+            )}
+          </StyledLeftColumn>
+        )}
 
         <StyledMainWrapper>
           {location.pathname.includes('/chat') ? (
@@ -281,9 +279,13 @@ const ChatRouteLayout = () => {
           )}
         </StyledMainWrapper>
 
-        <StyledRightColumn isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}>
-          <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
-        </StyledRightColumn>
+        {user && (
+          <StyledRightColumn
+            isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}
+          >
+            <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
+          </StyledRightColumn>
+        )}
       </StyledContainer>
     </StyledAppContainer>
   )

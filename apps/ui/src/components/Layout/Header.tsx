@@ -14,9 +14,10 @@ import styled from 'styled-components'
 interface HeaderTypes {
   expandMode?: boolean
   isPublicRoute?: boolean
+  hideButtons?: boolean
 }
 
-const Header = ({ expandMode = false, isPublicRoute }: HeaderTypes) => {
+const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes) => {
   return (
     <StyledHeader id='main_header'>
       <StyledNavigationColumn>
@@ -27,13 +28,13 @@ const Header = ({ expandMode = false, isPublicRoute }: HeaderTypes) => {
           </>
         )}
       </StyledNavigationColumn>
-      {!expandMode && (
-        <StyledLogoWrapper to='/'>
-          <StyledLogo src={logo} alt='Logo' />
-          <StyledTags label='BETA' readOnly color={'gradient_yellow'} size={'small'} noAnimation />
-        </StyledLogoWrapper>
-      )}
-      {!expandMode && (
+
+      <StyledLogoWrapper to='/'>
+        <StyledLogo src={logo} alt='Logo' />
+        <StyledTags label='BETA' readOnly color={'gradient_yellow'} size={'small'} noAnimation />
+      </StyledLogoWrapper>
+
+      {!hideButtons && (
         <>
           <StyledHeaderButtonWrapper>
             <HeaderButtons />

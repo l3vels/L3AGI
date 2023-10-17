@@ -63,6 +63,7 @@ const ChatMessageListV2 = ({
       teamName: chat.team?.name,
       avatar: chat?.agent?.avatar,
       sender_user: chat?.sender_user,
+      sender_name: chat?.sender_name,
     }
   })
 
@@ -131,7 +132,7 @@ const ChatMessageListV2 = ({
 
     // eslint-disable-next-line
   }, [data])
-
+  console.log('messages', data)
   return (
     <StyledRoot show={true}>
       <Virtuoso
@@ -160,8 +161,9 @@ const ChatMessageListV2 = ({
                     (chat.parent.message.type === 'human' ? (
                       <HumanReply
                         messageText={chat.parent.message.data.content}
-                        avatarImg={Avatar_3}
+                        avatarImg={chat.parent.sender_user.avatar}
                         userId={chat.parent.sender_user_id}
+                        userName={chat.parent.sender_name}
                       />
                     ) : (
                       <AiReply
@@ -174,7 +176,7 @@ const ChatMessageListV2 = ({
                     ))}
                 </StyledReplyMessageContainer>
                 <HumanMessage
-                  userName={chat.sender_user?.name}
+                  userName={chat.sender_name}
                   avatarImg={chat.sender_user?.avatar}
                   userId={chat.sender_user_id}
                   messageDate={chat.date}
@@ -197,8 +199,9 @@ const ChatMessageListV2 = ({
                   {chat?.parent && (
                     <HumanReply
                       messageText={chat.parent.message.data.content}
-                      avatarImg={Avatar_3}
+                      avatarImg={chat.parent.sender_user.avatar}
                       userId={chat.parent.sender_user_id}
+                      userName={chat.parent.sender_name}
                     />
                   )}
                 </StyledReplyMessageContainer>
