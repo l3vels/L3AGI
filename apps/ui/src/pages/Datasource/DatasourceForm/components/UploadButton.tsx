@@ -27,7 +27,7 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
         ref={uploadRef}
         onChange={onChange}
         multiple
-        accept='.txt .pdf, .csv, .docx, .pptx, .md, .jpg, .png, .jpeg, .epub, .mbox, .ipynb, .mp3, .mp4'
+        accept={FILE_TYPES.join(', ')}
       />
 
       <StyledUploadButton onClick={handleUploadButton} disabled={isLoading}>

@@ -1,9 +1,9 @@
 from typing import Optional, Type
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
+from langchain.utilities.serpapi import SerpAPIWrapper
 from pydantic import BaseModel, Field
-from langchain import SerpAPIWrapper
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
+
 from exceptions import ToolEnvKeyException
 from tools.base import BaseTool
 
