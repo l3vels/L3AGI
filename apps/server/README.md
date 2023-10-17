@@ -14,7 +14,8 @@ pipenv install
 ## Running with Uvicorn (without Docker)
 
 ```commandline
-uvicorn main:app --reload --port 4000
+uvicorn main:app --reload --port 4000 (Need to remove)
+poetry run uvicorn main:app --port 4000
 ```
 
 ## Running with Docker

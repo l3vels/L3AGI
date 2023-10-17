@@ -12,6 +12,18 @@
       "cwd": "${workspaceFolder}/apps/server"
     },
     {
+      "name": "Poetry: Uvicorn",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["main:app", "--host", "0.0.0.0", "--port", "4000", "--reload"],
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/apps/server",
+      "pythonPath": "${workspaceFolder}/.venv/bin/python",
+      "env": {"PYTHONPATH": "${workspaceFolder}"}
+    },
+    {
       "name": "Python: PDF",
       "type": "python",
       "request": "launch",
