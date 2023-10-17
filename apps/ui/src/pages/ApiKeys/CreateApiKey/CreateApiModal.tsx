@@ -1,10 +1,9 @@
-import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
 import useCreateApiKey from './useCreateApiKey'
 
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
@@ -26,10 +25,12 @@ type CreateApiModalProps = {
 }
 
 const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
-  const { t } = useTranslation()
-  const { formik, formHook, handleSubmit } = useCreateApiKey()
+  // const { t } = useTranslation()
 
-  const apiKeysName = formHook.watch('name')
+  /* temporarily removed "formHook, handleSubmit" from "useCreateApiKey" */
+  const { formik } = useCreateApiKey()
+
+  // const apiKeysName = formHook.watch('name')
 
   return (
     <>
