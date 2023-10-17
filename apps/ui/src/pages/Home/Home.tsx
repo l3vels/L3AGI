@@ -28,7 +28,9 @@ const Home = () => {
   const { teamOfAgents } = useTeamOfAgents()
   const { agentsData } = useAgents()
 
-  const { homeModuleAgents, homeModuleTeams } = useGetAccountModule()
+  const { getHomeModules } = useGetAccountModule()
+  const teamModules = getHomeModules('team')
+  const agentModules = getHomeModules('agent')
 
   return (
     <>
@@ -38,10 +40,10 @@ const Home = () => {
           <>
             {/* <GetStartedComponent /> */}
             <StyledWrapper>
-              {homeModuleTeams &&
+              {teamModules?.list &&
                 (teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />)}
 
-              {homeModuleAgents && agentsData?.length > 0 && <Agents isHome />}
+              {agentModules?.list && agentsData?.length > 0 && <Agents isHome />}
             </StyledWrapper>
           </>
         ) : (

@@ -5,26 +5,6 @@ export const useGetAccountModule = () => {
 
   const modules = account?.configs?.modules
 
-  const configs = account?.configs
-
-  const homeModuleAgents = true // modules?.home?.showAgents
-  const homeModuleTeams = true // modules?.home?.showAgents
-
-  const chatModuleAddTeam = true //modules?.chat?.actions?.addTeam
-  const chatModuleAddAgent = true //modules?.chat?.actions?.addAgent
-  const chatModuleCreateAgentChannel = true //modules?.chat?.actions?.createAgentChannel
-  const chatModuleCreateTeamChannel = true //modules?.chat?.actions?.createTeamChannel
-
-  const chatModule = modules?.chat?.active
-  const contactModule = modules?.contact?.active
-  const datasourceModule = modules?.datasource?.active
-  const discoveryModule = modules?.discovery?.active
-  const groupModule = modules?.group?.active
-  const homeModule = modules?.home?.active
-  const modelModule = modules?.model?.active
-  const scheduleModule = modules?.schedule?.active
-  const toolkitModule = modules?.toolkit?.active
-
   const getSubModules = (mainModule: string, moduleName: string) => {
     const module = modules?.[mainModule]?.submodules[moduleName]
 
@@ -59,11 +39,18 @@ export const useGetAccountModule = () => {
     return values
   }
 
+  const getHomeModules = (subModuleName: 'team' | 'agent' | 'discovery') => {
+    const values = getSubModules('home', subModuleName)
+
+    return values
+  }
+
   const getChatModules = (subModuleName: 'team' | 'agent' | 'session') => {
     const values = getSubModules('chat', subModuleName)
 
     return values
   }
+
   const getModelModules = (subModuleName: 'models' | 'fine-tuning') => {
     const values = getSubModules('model', subModuleName)
 
@@ -79,20 +66,8 @@ export const useGetAccountModule = () => {
   // const modelModelsModule = getModelModules('models')
   // console.log('modelModelsModule', modelModelsModule)
   return {
-    homeModuleAgents,
-    homeModuleTeams,
-    chatModuleAddAgent,
-    chatModuleAddTeam,
-    chatModule,
-    contactModule,
-    datasourceModule,
-    discoveryModule,
-    groupModule,
-    homeModule,
-    modelModule,
-    scheduleModule,
-    toolkitModule,
-    chatModuleCreateAgentChannel,
-    chatModuleCreateTeamChannel,
+    getHomeModules,
+    getChatModules,
+    getModelModules,
   }
 }

@@ -27,7 +27,10 @@ import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const ChatRouteLayout = () => {
-  const { chatModuleAddAgent, chatModuleAddTeam } = useGetAccountModule()
+  const { getChatModules } = useGetAccountModule()
+  const teamModule = getChatModules('team')
+  const agentModule = getChatModules('agent')
+  const sessionModule = getChatModules('session')
 
   const { expand } = useContext(LayoutContext)
 
@@ -89,7 +92,6 @@ const ChatRouteLayout = () => {
       } else if (agentsData?.length > 0) {
         return navigate(`/chat?agent=${agentsData?.[0].agent.id}`)
       } else {
-        if (!chatModuleAddAgent || !chatModuleAddTeam) return
         return navigate('/agents/create-agent-template')
       }
     }
@@ -144,7 +146,7 @@ const ChatRouteLayout = () => {
               <ListHeader
                 title='Team'
                 onAddClick={
-                  chatModuleAddTeam ? () => navigate('/team-of-agents/create-team') : undefined
+                  teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
                 }
               />
 
@@ -183,7 +185,7 @@ const ChatRouteLayout = () => {
               <ListHeader
                 title='Agent'
                 onAddClick={
-                  chatModuleAddAgent ? () => navigate('/agents/create-agent-template') : undefined
+                  agentModule.create ? () => navigate('/agents/create-agent-template') : undefined
                 }
               />
 
