@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import styled from 'styled-components'
 
 import ReplyIcon from '@l3-lib/ui-core/dist/icons/Replay'
@@ -35,17 +33,6 @@ const StyledWrapper = styled.div`
 `
 
 const StyledReplyIcon = styled(ReplyIcon)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
-
-const StyledCopyIcon = styled(Copy)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
-const StyledCheckIcon = styled(Check)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
