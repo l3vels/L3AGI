@@ -9,7 +9,7 @@ type PluginListProps = {
   isNew?: boolean
   title: string
   description: string
-  children: any
+  children?: React.ReactNode
 }
 
 const PluginList = ({ title, description, isNew = false, children }: PluginListProps) => {
