@@ -19,6 +19,7 @@ const useForgotPassword = () => {
     initialValues: initialValues,
     validationSchema,
     onSubmit: async values => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       const response = await forgotPassword(values.email, () => {})
 
       if (!response) {
