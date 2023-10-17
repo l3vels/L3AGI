@@ -77,8 +77,6 @@ class FileDatasourceRetriever:
     def get_vector_store(self):
         vector_store: VectorStore
 
-        index_name = f"Idx_{UUID(self.datasource_id).hex}"
-
         if self.vector_store == VectorStoreProvider.ZEP.value:
             # Zep only supports alphanumeric characters. Max length 40
             index_name = UUID(self.datasource_id).hex
@@ -90,6 +88,9 @@ class FileDatasourceRetriever:
                 embedding_dimensions=1536,
             )
         elif self.vector_store == VectorStoreProvider.PINECONE.value:
+            # Pinecone only supports alphanumeric characters. Max length 40
+            index_name = UUID(self.datasource_id).hex
+
             pinecone.init(
                 api_key=self.settings.pinecone_api_key,
                 environment=self.settings.pinecone_environment,
@@ -102,6 +103,9 @@ class FileDatasourceRetriever:
             )
         elif self.vector_store == VectorStoreProvider.WEAVIATE.value:
             auth_config = weaviate.AuthApiKey(api_key=self.settings.weaviate_api_key)
+
+            # Weaviate requires index name to start with uppercase letter
+            index_name = f"Idx_{UUID(self.datasource_id).hex}"
 
             client = weaviate.Client(
                 self.settings.weaviate_url,

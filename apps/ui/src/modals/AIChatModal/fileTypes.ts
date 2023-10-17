@@ -2,7 +2,6 @@ export const FILE_TYPES = [
   'application/pdf',
   'text/csv',
   'application/msword',
-  'text/plain',
   'application/vnd.ms-excel',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -16,4 +15,21 @@ export const FILE_TYPES = [
   'audio/mpeg',
   'video/mp4',
   'text/plain',
+]
+
+export const SUPPORTED_FILE_EXTENSIONS = [
+  'txt',
+  'pdf',
+  'csv',
+  'docx',
+  'pptx',
+  'md',
+  'jpg',
+  'png',
+  'jpeg',
+  'epub',
+  'mbox',
+  'ipynb',
+  'mp3',
+  'mp4',
 ]
