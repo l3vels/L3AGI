@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { FormikProvider } from 'formik'
+// import { FormikProvider } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 // import useFilter from './useFilter'
-import DatePicker from 'components/DatePicker'
+// import DatePicker from 'components/DatePicker'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
-import AdditionalFilters from './AdditionalFilters'
+// import AdditionalFilters from './AdditionalFilters'
 import CreateLogModal from '../CreateLogModal/CreateLogModal'
-import { useModal } from 'hooks'
+// import { useModal } from 'hooks'
 import CreateEndPoint from './CreateEndpoint/CreateEndPoint'
 import CreateLogMethod from './CreateLogMethod/CreateLogMethod'
 import FilterLogDate from './FilterLogDate/FilterLogDate'
-import outsideClick from 'helpers/outsideClick'
-import useLog from 'pages/Log/useLog'
+// import outsideClick from 'helpers/outsideClick'
+// import useLog from 'pages/Log/useLog'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonTertiary } from 'components/Button/Button'
 
@@ -22,7 +22,7 @@ const Filter = ({ filter }: any) => {
   const [showDate, setShowDate] = useState<any>(false)
   const [showEndpoint, setShowEndpoint] = useState<boolean>(false)
   const [showMethod, setShowMethod] = useState<boolean>(false)
-  const [is_open, setIsOpen] = React.useState(false)
+  // const [is_open, setIsOpen] = React.useState(false)
   const ref = useRef(null as any)
 
   useEffect(() => {
@@ -76,17 +76,18 @@ const Filter = ({ filter }: any) => {
     }
   }, [showEndpoint])
 
-  const { log_list } = useLog()
+  // const { log_list } = useLog()
 
-  const { control, onClick } = filter
+  // const { control, onClick } = filter
 
-  const { openModal } = useModal()
+  // const { openModal } = useModal()
 
-  const openCreateLogModal = () => {
-    openModal({
-      name: 'add-log-modal',
-    })
-  }
+  // const openCreateLogModal = () => {
+  //   openModal({
+  //     name: 'add-log-modal',
+  //   })
+  // }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [query, setQuery] = useState('')
 
   return (
