@@ -24,6 +24,24 @@ import TypographySecondary from 'components/Typography/Secondary'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const MainNavigation = () => {
+  const {
+    getHomeModules,
+    getChatModules,
+    getModelModules,
+    getToolkitModules,
+    getDiscoveryModules,
+    getDatasourceModules,
+    getSessionModules,
+  } = useGetAccountModule()
+
+  const isHome = getHomeModules('active')
+  const isChat = getChatModules('active')
+  const isModel = getModelModules('active')
+  const isToolkit = getToolkitModules()
+  const isDiscover = getDiscoveryModules()
+  const isDatasource = getDatasourceModules()
+  const isSession = getSessionModules()
+
   const navigate = useNavigate()
 
   const { pathname } = useLocation()
@@ -43,23 +61,27 @@ const MainNavigation = () => {
 
   return (
     <StyledUl>
-      <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-        <StyledAboutIcon size={40} />
-        <TypographySecondary
-          value={'Home'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isHome && (
+        <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
+          <StyledAboutIcon size={40} />
+          <TypographySecondary
+            value={'Home'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
-      <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-        <StyledRobotIcon size={40} />
-        <TypographySecondary
-          value={'Multi-Agents'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isChat && (
+        <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
+          <StyledRobotIcon size={40} />
+          <TypographySecondary
+            value={'Multi-Agents'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
       {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
         <StyledValueIcon>
@@ -68,35 +90,44 @@ const MainNavigation = () => {
         <span>Agents</span>
       </StyledLi> */}
 
-      <StyledLi
-        isActive={includes(active, 'datasources')}
-        onClick={() => onHandleClick('/datasources')}
-      >
-        <StyledValueOutlineIcon size={40} />
-        <TypographySecondary
-          value={'Data sources'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isDatasource && (
+        <StyledLi
+          isActive={includes(active, 'datasources')}
+          onClick={() => onHandleClick('/datasources')}
+        >
+          <StyledValueOutlineIcon size={40} />
+          <TypographySecondary
+            value={'Data sources'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
-      <StyledLi isActive={includes(active, 'toolkits')} onClick={() => onHandleClick('/toolkits')}>
-        <StyledGamesIcon size={40} />
-        <TypographySecondary
-          value={'Toolkits'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isToolkit && (
+        <StyledLi
+          isActive={includes(active, 'toolkits')}
+          onClick={() => onHandleClick('/toolkits')}
+        >
+          <StyledGamesIcon size={40} />
+          <TypographySecondary
+            value={'Toolkits'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
-      <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
-        <StyledBasicIcon size={30} />
-        <TypographySecondary
-          value={'Models'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isModel && (
+        <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
+          <StyledBasicIcon size={30} />
+          <TypographySecondary
+            value={'Models'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
       <StyledLi
         isActive={includes(active, 'schedules')}
@@ -110,14 +141,19 @@ const MainNavigation = () => {
         />
       </StyledLi>
 
-      <StyledLi isActive={includes(active, 'discover')} onClick={() => onHandleClick('/discover')}>
-        <StyledSearchOutlineIcon size={40} />
-        <TypographySecondary
-          value={'Discover'}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isDiscover && (
+        <StyledLi
+          isActive={includes(active, 'discover')}
+          onClick={() => onHandleClick('/discover')}
+        >
+          <StyledSearchOutlineIcon size={40} />
+          <TypographySecondary
+            value={'Discover'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
     </StyledUl>
   )
 }

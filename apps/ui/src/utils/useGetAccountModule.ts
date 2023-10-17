@@ -5,12 +5,43 @@ export const useGetAccountModule = () => {
 
   const modules = account?.configs?.modules
 
-  const getSubModules = (mainModule: string, moduleName: string) => {
-    const module = modules?.[mainModule]?.submodules[moduleName]
+  const getMainModule = (moduleName: string) => {
+    let values
+
+    if (typeof modules?.[moduleName] === 'object') {
+      values = modules?.[moduleName]?.active === undefined ? true : modules?.[moduleName]?.active
+    } else if (typeof modules?.[moduleName] === 'boolean') {
+      values = modules?.[moduleName]
+    }
+
+    return values
+  }
+
+  const getSubModules = (mainModuleName: string, moduleName: string) => {
+    const trueValues = {
+      create: true,
+      list: true,
+      edit: true,
+      delete: true,
+    }
+    const falseValues = {
+      create: false,
+      list: false,
+      edit: false,
+      delete: false,
+    }
 
     let values
 
-    if (typeof module?.operations === 'object') {
+    const mainModule = modules?.[mainModuleName]
+
+    const module = modules?.[mainModuleName]?.submodules?.[moduleName]
+
+    if (typeof mainModule === 'boolean' && mainModule) {
+      values = trueValues
+    } else if (typeof mainModule === 'boolean' && !mainModule) {
+      values = falseValues
+    } else if (typeof module?.operations === 'object') {
       values = {
         create: module?.operations?.create === undefined ? true : module?.operations?.create,
         list: module?.operations?.list === undefined ? true : module?.operations?.list,
@@ -21,53 +52,68 @@ export const useGetAccountModule = () => {
       (typeof module === 'boolean' && module) ||
       (typeof module?.operations === 'boolean' && module?.operations)
     ) {
-      values = {
-        create: true,
-        list: true,
-        edit: true,
-        delete: true,
-      }
+      values = trueValues
     } else {
-      values = {
-        create: false,
-        list: false,
-        edit: false,
-        delete: false,
-      }
+      values = falseValues
     }
 
     return values
   }
 
-  const getHomeModules = (subModuleName: 'team' | 'agent' | 'discovery') => {
-    const values = getSubModules('home', subModuleName)
-
+  const getHomeModules = (search: 'team' | 'agent' | 'discovery' | 'active') => {
+    let values
+    if (search === 'active') {
+      values = getMainModule('home')
+    } else {
+      values = getSubModules('home', search)
+    }
     return values
   }
 
-  const getChatModules = (subModuleName: 'team' | 'agent' | 'session') => {
-    const values = getSubModules('chat', subModuleName)
-
+  const getChatModules = (search: 'team' | 'agent' | 'session' | 'active') => {
+    let values
+    if (search === 'active') {
+      values = getMainModule('chat')
+    } else {
+      values = getSubModules('chat', search)
+    }
     return values
   }
 
-  const getModelModules = (subModuleName: 'models' | 'fine-tuning') => {
-    const values = getSubModules('model', subModuleName)
-
+  const getModelModules = (search: 'models' | 'fine-tuning' | 'active') => {
+    let values
+    if (search === 'active') {
+      values = getMainModule('model')
+    } else {
+      values = getSubModules('model', search)
+    }
     return values
   }
 
-  // const chatTeamModule = getChatModules('team')
-  // console.log('chatTeamModule', chatTeamModule)
-  // const chatAgentModule = getChatModules('agent')
-  // console.log('chatAgentModule', chatAgentModule)
-  // const chatSessionModule = getChatModules("session")
-  // console.log('chatSessionModule', chatSessionModule)
-  // const modelModelsModule = getModelModules('models')
-  // console.log('modelModelsModule', modelModelsModule)
+  const getToolkitModules = () => {
+    const values = getMainModule('toolkit')
+    return values
+  }
+  const getDatasourceModules = () => {
+    const values = getMainModule('datasource')
+    return values
+  }
+  const getDiscoveryModules = () => {
+    const values = getMainModule('discovery')
+    return values
+  }
+  const getSessionModules = () => {
+    const values = getMainModule('Session')
+    return values
+  }
+
   return {
     getHomeModules,
     getChatModules,
     getModelModules,
+    getToolkitModules,
+    getDatasourceModules,
+    getDiscoveryModules,
+    getSessionModules,
   }
 }

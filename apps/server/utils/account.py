@@ -33,7 +33,7 @@ default_configs = {
             }
         },
         "chat" :{
-            "active: True"
+            "active": True,
             "label": "Multi-Agent",
             "submodules": {
                 "team": {
@@ -43,7 +43,7 @@ default_configs = {
                         "edit": True
                     }
                 },
-                "agent": False,
+                "agent": True,
                 "session": {
                     "operations": True
                 }
