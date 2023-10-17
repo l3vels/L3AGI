@@ -4,7 +4,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
