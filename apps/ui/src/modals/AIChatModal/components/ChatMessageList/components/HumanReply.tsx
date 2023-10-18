@@ -60,6 +60,10 @@ export const StyledReplyWrapper = styled.div`
   height: 20px;
   /* background: red; */
   gap: 10px;
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 
 export const StyledReplyInfoWrapper = styled.div`

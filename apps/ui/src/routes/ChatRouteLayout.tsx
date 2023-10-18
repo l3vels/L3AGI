@@ -32,7 +32,7 @@ const ChatRouteLayout = () => {
   const agentModule = getChatModules('agent')
   const sessionModule = getChatModules('session')
 
-  const { expand } = useContext(LayoutContext)
+  const { expand, onChangeLayout } = useContext(LayoutContext)
 
   const { user } = React.useContext(AuthContext)
 
@@ -68,24 +68,6 @@ const ChatRouteLayout = () => {
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
   const { data: chatById } = useChatByIdService({ id: chatId || '' })
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     // Check the window width and update the state accordingly
-  //     onChangeLayout(window.innerWidth <= 1400) // Adjust the breakpoint as needed
-  //   }
-
-  //   // Set the initial state on component mount
-  //   handleResize()
-
-  //   // Add a resize event listener to handle changes
-  //   window.addEventListener('resize', handleResize)
-
-  //   // Remove the event listener on component unmount to avoid memory leaks
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize)
-  //   }
-  // }, [])
 
   useEffect(() => {
     if (!urlParams || !params) return
@@ -336,14 +318,13 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasCh
   gap: 5px;
 
   padding: 20px 10px;
+  padding-top: 0px;
   padding-left: 120px;
 
   height: 100%;
   min-width: 450px;
 
   max-height: calc(100vh - 185px);
-
-  margin-top: 10px;
 
   transition: margin-left 0.3s ease-in-out;
 

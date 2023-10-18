@@ -466,6 +466,10 @@ const StyledForm = styled.form`
   min-height: 48px;
   height: fit-content;
   max-height: 250px;
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 
 const StyledTextareaWrapper = styled.div`
@@ -544,6 +548,10 @@ const StyledSuggestionsContainer = styled.div`
   }
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 
 const StyledStopGeneratingButton = styled.div`
