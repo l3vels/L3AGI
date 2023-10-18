@@ -156,5 +156,6 @@
   "this-email-is-already-added": "This email is already added.",
   "email": "Email",
   "edit-team-of-agents": "Edit Team Of Agents",
-  "edit-and-mange-team": "Edit and manage your team of AI agents for interactive experiences"
+  "edit-and-mange-team": "Edit and manage your team of AI agents for interactive experiences",
+  "edit-agent": "Edit Agent"
 }

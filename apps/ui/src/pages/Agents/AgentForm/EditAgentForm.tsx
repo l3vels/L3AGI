@@ -1,4 +1,5 @@
 import { FormikProvider } from 'formik'
+import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -16,6 +17,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const EditAgentForm = () => {
+  const { t } = useTranslation()
   const { formik, isLoading } = useEditAgent()
 
   return (
@@ -23,9 +25,9 @@ const EditAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Edit Agent</StyledSectionTitle>
+            <StyledSectionTitle>{t('edit-agent')}</StyledSectionTitle>
             <StyledSectionDescription>
-              Here are all your agents, managing tasks and operations.
+              {t('here-are-all-your-agents-managing-tasks-and-operations')}
             </StyledSectionDescription>
           </div>
 
@@ -36,7 +38,7 @@ const EditAgentForm = () => {
               disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {isLoading ? <Loader size={32} /> : 'Save'}
+              {isLoading ? <Loader size={32} /> : `${t('save')}`}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>
