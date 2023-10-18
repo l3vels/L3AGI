@@ -1,10 +1,7 @@
-import React from 'react'
-
 import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import useLog from 'pages/Log/useLog'
 import TypographyPrimary from 'components/Typography/Primary'

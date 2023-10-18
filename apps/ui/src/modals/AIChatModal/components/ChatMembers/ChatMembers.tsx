@@ -9,8 +9,6 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import AgentViewDetailBox from 'pages/Agents/AgentView/components/AgentViewDetailBox'
@@ -18,7 +16,6 @@ import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDe
 
 import { AuthContext } from 'contexts'
 
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import { useModal } from 'hooks'
 import MemberText from './components/MemberText'
 import {

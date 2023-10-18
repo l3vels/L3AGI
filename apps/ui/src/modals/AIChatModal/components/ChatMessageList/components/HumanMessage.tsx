@@ -30,7 +30,7 @@ const HumanMessage = ({
   userName,
   onReplyClick,
 }: HumanMessageProps) => {
-  const { wordArray, handleFileClick, authorName, fileUrlMatch, fileName } = useHumanMessage({
+  const { wordArray, handleFileClick, fileUrlMatch, fileName } = useHumanMessage({
     userId,
     messageText,
   })

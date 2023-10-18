@@ -1,12 +1,12 @@
 import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+// import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
-import TypographyPrimary from 'components/Typography/Primary'
+// import TypographyPrimary from 'components/Typography/Primary'
 
-type OptionRendererProps = {
-  label: string
-}
+// type OptionRendererProps = {
+//   label: string
+// }
 
 // eslint-disable-next-line react/display-name
 const MultiselectEditor = forwardRef((props: any, ref) => {
@@ -76,11 +76,11 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
     setValue(newValues)
   }
 
-  const OptionRenderer = ({ label }: OptionRendererProps) => {
-    return (
-      <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
-    )
-  }
+  // const OptionRenderer = ({ label }: OptionRendererProps) => {
+  //   return (
+  //     <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
+  //   )
+  // }
 
   return (
     <StyledDiv>

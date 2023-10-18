@@ -2,13 +2,9 @@ import styled from 'styled-components'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
-import Tags from '@l3-lib/ui-core/dist/Tags'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
-import Delete from '@l3-lib/ui-core/dist/icons/Delete'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
@@ -42,7 +38,7 @@ type AgentCardProps = {
 const AgentCard = ({
   name,
   description,
-  headerText,
+  // headerText,
   headerTag,
   onDeleteClick,
   onEditClick,

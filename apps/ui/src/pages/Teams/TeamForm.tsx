@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { FormikProvider } from 'formik'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'

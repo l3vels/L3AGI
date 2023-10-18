@@ -1,13 +1,8 @@
-import { useMemo } from 'react'
-
-import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
-import TextCellRenderer from './TextCellRenderer'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import AgentRenderer from './AgentRenderer'
 import Table from 'components/Table'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 
 type TeamOfAgentsTableProps = {
@@ -82,7 +77,3 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 }
 
 export default TeamOfAgentsTable
-
-const StyledTextWrapper = styled.div`
-  padding: 5px 10px;
-`

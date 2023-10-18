@@ -16,7 +16,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const EditAgentForm = () => {
-  const { formik, handleSubmit, isLoading } = useEditAgent()
+  const { formik, isLoading } = useEditAgent()
 
   return (
     <FormikProvider value={formik}>
