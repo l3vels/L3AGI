@@ -1,5 +1,5 @@
 import { FormikProvider } from 'formik'
-
+import { useTranslation } from 'react-i18next'
 import TeamOfAgentsForm from './TeamOfAgentsForm'
 import { useEditTeamOfAgents } from '../useEditTeamOfAgents'
 
@@ -19,6 +19,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const EditTeamOfAgentsForm = () => {
+  const { t } = useTranslation()
   const { formik, handleSubmit, isLoading } = useEditTeamOfAgents()
 
   return (
@@ -27,10 +28,8 @@ const EditTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Edit Team Of Agents</StyledSectionTitle>
-              <StyledSectionDescription>
-                Edit and manage your team of AI agents for interactive experiences
-              </StyledSectionDescription>
+              <StyledSectionTitle>{t('edit-team-of-agents')}</StyledSectionTitle>
+              <StyledSectionDescription>{t('edit-and-mange-team')}</StyledSectionDescription>
             </div>
 
             <StyledButtonWrapper>
@@ -40,7 +39,7 @@ const EditTeamOfAgentsForm = () => {
                 size={Button.sizes.SMALL}
                 disabled={isLoading}
               >
-                {isLoading ? <Loader size={32} /> : 'Save'}
+                {isLoading ? <Loader size={32} /> : `${t('save')}`}
               </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>
