@@ -5,12 +5,11 @@ import { ToastContext } from 'contexts'
 import { useEffect, useContext } from 'react'
 import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
-import useCreateApiKey from '../CreateApiKey/useCreateApiKey'
 import moment from 'moment'
 
 const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
   const { t } = useTranslation()
-  const { closeModal, openModal } = useModal()
+  const { closeModal } = useModal()
   const { setToast } = useContext(ToastContext)
   const { id, refetchApiList } = props
   const { data: apiKey, refetch: apiKeyRefetch } = useApiKeyByIdService({ id })

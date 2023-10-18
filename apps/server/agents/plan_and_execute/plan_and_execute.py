@@ -96,35 +96,40 @@ class PlanAndExecute(BaseAgent):
         memory.human_name = self.user.name
         memory.ai_name = team.name
 
-        planner_llm = get_llm(
-            settings,
-            planner_agent_with_configs,
-        )
-        planner_system_message = SystemMessageBuilder(
-            planner_agent_with_configs
-        ).build()
-
-        planner = initialize_chat_planner(planner_llm, planner_system_message, memory)
-
-        executor_llm = get_llm(settings, executor_agent_with_configs)
-        executor_system_message = SystemMessageBuilder(
-            executor_agent_with_configs
-        ).build()
-        executor_tools = self.get_tools(executor_agent_with_configs, settings)
-
-        executor = initialize_executor(
-            executor_llm,
-            executor_tools,
-            executor_system_message,
-        )
-
-        agent = PlanAndExecuteChain(
-            planner=planner, executor=executor, on_thoughts=on_thoughts
-        )
-
         res: str
 
         try:
+            planner_llm = get_llm(
+                settings,
+                planner_agent_with_configs,
+            )
+
+            planner_system_message = SystemMessageBuilder(
+                planner_agent_with_configs
+            ).build()
+
+            planner = initialize_chat_planner(
+                planner_llm, planner_system_message, memory
+            )
+
+            executor_llm = get_llm(settings, executor_agent_with_configs)
+
+            executor_system_message = SystemMessageBuilder(
+                executor_agent_with_configs
+            ).build()
+
+            executor_tools = self.get_tools(executor_agent_with_configs, settings)
+
+            executor = initialize_executor(
+                executor_llm,
+                executor_tools,
+                executor_system_message,
+            )
+
+            agent = PlanAndExecuteChain(
+                planner=planner, executor=executor, on_thoughts=on_thoughts
+            )
+
             res = agent.run(
                 {
                     "input": prompt,
@@ -134,7 +139,8 @@ class PlanAndExecute(BaseAgent):
         except Exception as err:
             res = handle_agent_error(err)
             history.delete_message(ai_message_id)
-            ai_message = history.create_ai_message(res)
+            ai_message = history.create_ai_message(str(res))
+            memory.save_ai_message(str(err))
             chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return res

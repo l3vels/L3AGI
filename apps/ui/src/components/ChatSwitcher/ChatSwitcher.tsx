@@ -2,27 +2,27 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import styled, { DefaultTheme, css } from 'styled-components'
 
-import Mention from '@l3-lib/ui-core/dist/icons/Mention'
+// import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+// import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import { useChatSwitcher } from './useChatSwitcher'
 import MainNavigation from 'pages/Navigation/MainNavigation'
 
 import About from '@l3-lib/ui-core/dist/icons/About'
-import Add from '@l3-lib/ui-core/dist/icons/Add'
+// import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Games from '@l3-lib/ui-core/dist/icons/Games'
 import ValueOutline from '@l3-lib/ui-core/dist/icons/ValueOutline'
 import Robot from '@l3-lib/ui-core/dist/icons/Robot'
 import Basic from '@l3-lib/ui-core/dist/icons/Basic'
 
-import Team from '@l3-lib/ui-core/dist/icons/Team'
-import Launch from '@l3-lib/ui-core/dist/icons/Launch'
+// import Team from '@l3-lib/ui-core/dist/icons/Team'
+// import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import { useEffect, useState } from 'react'
 
-import includes from 'lodash/includes'
+// import includes from 'lodash/includes'
 
 type ChatSwitcherProps = {
   isChatOpen?: boolean

@@ -1,11 +1,10 @@
 import sentry_sdk
-from openai.error import (
-    RateLimitError,
-    AuthenticationError,
-    Timeout as TimeoutError,
-    ServiceUnavailableError,
-)
-from exceptions import ToolEnvKeyException, PlannerEmptyTasksException
+from openai.error import (AuthenticationError, RateLimitError,
+                          ServiceUnavailableError)
+from openai.error import Timeout as TimeoutError
+
+from exceptions import (InvalidLLMApiKeyException, PlannerEmptyTasksException,
+                        ToolEnvKeyException)
 
 
 def handle_agent_error(err: Exception) -> str:
@@ -23,6 +22,8 @@ def handle_agent_error(err: Exception) -> str:
         return str(err)
     elif isinstance(err, PlannerEmptyTasksException):
         return "There are no tasks to execute."
+    elif isinstance(err, InvalidLLMApiKeyException):
+        return str(err)
     else:
         sentry_sdk.capture_exception(err)
-        return f"{err}"
+        return str(err)

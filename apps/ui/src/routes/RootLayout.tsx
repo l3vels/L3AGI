@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthContext } from 'contexts'
-import { Navigate, useOutlet, useParams } from 'react-router-dom'
+import { useOutlet } from 'react-router-dom'
 
 import useCheckRoute from 'hooks/useCheckRoute'
 

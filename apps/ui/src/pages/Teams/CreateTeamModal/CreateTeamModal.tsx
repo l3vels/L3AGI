@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import useTeams from '../useTeams'
@@ -17,7 +17,7 @@ import BgWrapper from 'modals/components/BgWrapper'
 const CreateTeamModal = () => {
   const { formik, closeModal, assignedUserList } = useTeams()
 
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   return (
     <Modal fullscreen show isClean>

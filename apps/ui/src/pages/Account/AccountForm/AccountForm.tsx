@@ -1,4 +1,3 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'

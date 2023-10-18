@@ -1,4 +1,4 @@
-import { Navigate, Route as Router, Routes } from 'react-router-dom'
+import { Route as Router, Routes } from 'react-router-dom'
 import About from './pages/About'
 
 import Sessions from './pages/Sessions'
@@ -12,7 +12,7 @@ import Teams from './pages/Teams'
 import {
   ForgotPassword,
   Login,
-  Register,
+  // Register,
   ResetPassword,
   TwoFAuthentication,
   GithubLogin,
@@ -77,14 +77,14 @@ import SettingsModal from 'modals/SettingsModal'
 import ToolkitModal from 'modals/ToolkitModal'
 import ChatRouteLayout from 'routes/ChatRouteLayout'
 
-import ClientChat from 'modals/AIChatModal/components/ClientChat'
+// import ClientChat from 'modals/AIChatModal/components/ClientChat'
 import ChatLinkModal from 'modals/ChatLinkModal'
 import Schedule from 'pages/Schedule'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
 
 const Route = () => {
-  const { user, loading } = useContext(AuthContext)
+  const { loading } = useContext(AuthContext)
   const [cmdkOpen, setCmdkOpen] = useState(false)
   const [theme, setTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem('theme')

@@ -1,10 +1,8 @@
-import { useAgents } from '../useAgents'
-
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
@@ -20,9 +18,10 @@ import CreateAgentButtonCard from './components/CreateAgentButtonCard'
 import { useModal } from 'hooks'
 import { useAgentTemplatesService } from 'services/discover/useAgentTemplatesService'
 import TypographyPrimary from 'components/Typography/Primary'
+import { useCreateAgent } from '../useCreateAgent'
 
 const CreateAgentTemplate = () => {
-  const { refetchAgent } = useAgents()
+  const { refetchAgent } = useCreateAgent()
 
   const { data: agentsData } = useAgentTemplatesService()
 

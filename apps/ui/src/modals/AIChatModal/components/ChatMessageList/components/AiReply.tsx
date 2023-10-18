@@ -11,15 +11,15 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import AiMessageMarkdown from './AiMessageMarkdown'
 import { ChatMessageVersionEnum } from 'services'
-import { useAiMessage } from './useAiMessage'
+// import { useAiMessage } from './useAiMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const AiReply = ({
-  avatarImg,
+  // avatarImg,
   messageText,
   thoughts,
-  version,
+  // version,
   author,
 }: {
   avatarImg: string
@@ -47,6 +47,7 @@ const AiReply = ({
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
         <AiMessageMarkdown
+          // eslint-disable-next-line react/no-children-prop
           children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
         />
       </StyledReplyTextWrapper>
