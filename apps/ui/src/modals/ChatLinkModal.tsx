@@ -108,7 +108,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
               </StyledLinkWrapper>
             </>
           ) : (
-            <FormikTextField name='chat_name' placeholder='Name' label='Name' />
+            <FormikTextField focus name='chat_name' placeholder='Name' label='Name' />
           )}
         </StyledBody>
       </FormikProvider>
