@@ -25,7 +25,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Home',
       url: '/',
       option: 'link',
-      group_name: 'go_to',
+      group_name: 'Go to',
       icon: <StyledHomeIcon />,
     },
 
@@ -34,7 +34,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Agents',
       url: '/agents',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: ['Go to'],
       icon: <StyledCollectionIcon />,
     },
     {
@@ -42,7 +42,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Datasources',
       url: '/datasources',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: ['Go to'],
       icon: (
         <StyledValueIcon>
           <Value />
@@ -54,7 +54,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Team Of Agents',
       url: '/team-of-agents',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: ['Go to'],
       icon: <StyledTeamsIcon />,
     },
     {
@@ -62,7 +62,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Toolkits',
       url: '/toolkits',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: ['Go to'],
       icon: <StyledAddIcon />,
     },
     // {
@@ -70,7 +70,7 @@ export const defaultData = (path_id?: any) => {
     //   name: 'Teams',
     //   url: '/teams',
     //   option: 'link',
-    //   group_name: ['go_to'],
+    //   group_name: ['Go to'],
     //   icon: <Teams />,
     // },
 
@@ -79,7 +79,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Create agent',
       url: '/agents/create-agent',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: ['Go to'],
       icon: <StyledCollectionIcon />,
     },
 
@@ -88,7 +88,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Add datasource',
       url: '/datasources/create-datasource',
       option: 'link',
-      group_name: ['go_to'],
+      group_name: ['Go to'],
       icon: (
         <StyledValueIcon>
           <Value />
@@ -110,7 +110,7 @@ export const defaultData = (path_id?: any) => {
     //   name: 'Agents List',
     //   url: '/agents',
     //   option: 'show-agents',
-    //   group_name: 'go_to',
+    //   group_name: 'Go to',
     //   icon: <Players />,
     // },
 
@@ -119,7 +119,7 @@ export const defaultData = (path_id?: any) => {
     //   name: 'Collections',
     //   url: '/collections',
     //   option: 'show-collections',
-    //   group_name: 'go_to',
+    //   group_name: 'Go to',
     //   icon: <Contracts />,
     // },
 
@@ -128,7 +128,7 @@ export const defaultData = (path_id?: any) => {
     //   name: 'Change Password',
     //   url: '/change-password',
     //   option: 'modal',
-    //   group_name: 'go_to',
+    //   group_name: 'Go to',
     //   icon: <Players />,
     // },
     {
@@ -136,7 +136,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Profile',
       url: '/account',
       option: 'modal',
-      group_name: 'go_to',
+      group_name: 'Go to',
       icon: <StyledAboutIcon />,
     },
     {
@@ -144,7 +144,7 @@ export const defaultData = (path_id?: any) => {
       name: 'Logout',
       url: 'create',
       option: 'modal',
-      // group_name: 'go_to',
+      // group_name: 'Go to',
       icon: <StyledAboutIcon />,
     },
     {
