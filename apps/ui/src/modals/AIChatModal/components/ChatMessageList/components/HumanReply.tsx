@@ -10,6 +10,7 @@ const HumanReply = ({
   messageText,
   userId,
   userName,
+  avatarImg,
 }: {
   messageText: string
   avatarImg: string

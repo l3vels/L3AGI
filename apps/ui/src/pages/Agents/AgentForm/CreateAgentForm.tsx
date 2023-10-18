@@ -1,6 +1,5 @@
 import { FormikProvider } from 'formik'
 
-import { useAgents } from '../useAgents'
 import AgentForm from './AgentForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -17,9 +16,10 @@ import styled from 'styled-components'
 import BackButton from 'components/BackButton'
 // import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
+import { useCreateAgent } from '../useCreateAgent'
 
 const CreateAgentForm = () => {
-  const { formik, isLoading } = useAgents()
+  const { formik, isLoading } = useCreateAgent()
 
   // const navigate = useNavigate()
 
