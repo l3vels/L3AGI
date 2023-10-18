@@ -162,5 +162,7 @@
   "info": "Info",
   "members": "Members",
   "delete-team": "Delete Team",
-  "team-type": "Team Type"
+  "team-type": "Team Type",
+  "delete-agent": "Delete Agent",
+  "provider": "Provider"
 }

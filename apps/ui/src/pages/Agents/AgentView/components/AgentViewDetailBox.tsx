@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TagsRow from './TagsRow'
@@ -29,6 +30,7 @@ type AgentViewDetailBoxProps = {
 }
 
 const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
+  const { t } = useTranslation()
   const { user } = React.useContext(AuthContext)
 
   const { deleteAgentHandler } = useAgents()
@@ -82,7 +84,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                   <StyledMenuButtonsWrapper>
                     <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary>
                     <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
-                      Delete Agent
+                      {t('delete-agent')}
                     </ButtonTertiary>
                   </StyledMenuButtonsWrapper>
                 </MenuButton>
@@ -108,7 +110,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             >
               <StyledInnerButtonWrapper>
                 <Download size={28} />
-                Add
+                {t('add')}
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
@@ -131,13 +133,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
-        {role && <TagsRow title='Role' items={[role]} />}
+        {role && <TagsRow title={t('role')} items={[role]} />}
 
-        {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
+        {model_provider && <TagsRow title={t('provider')} items={[model_provider]} />}
 
-        {model_version && <TagsRow title='Model' items={[model_version]} />}
+        {model_version && <TagsRow title={t('model')} items={[model_version]} />}
 
-        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
+        {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
       </StyledWrapper>
     </StyledDetailsBox>
   )
