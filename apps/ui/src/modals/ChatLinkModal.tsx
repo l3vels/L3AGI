@@ -70,7 +70,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
     <StyledChatLinkModal
       onClose={() => closeModal('chat-link-modal')}
       show
-      backgroundColor='dark'
+      backgroundColor='light'
       hideCloseButton={true}
       title={
         chatLink ? (
