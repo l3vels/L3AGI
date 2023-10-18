@@ -114,6 +114,10 @@ class ApiKeyNotFoundException(DatasourceException):
     pass
 
 
+class InvalidLLMApiKeyException(AppBaseException):
+    pass
+
+
 class PlannerEmptyTasksException(AppBaseException):
     pass
 
@@ -125,8 +129,10 @@ class ChatException(AppBaseException):
 class ChatNotFoundException(DatasourceException):
     pass
 
+
 class ScheduleException(AppBaseException):
     pass
+
 
 class ScheduleNotFoundException(DatasourceException):
     pass
