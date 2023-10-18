@@ -1,6 +1,6 @@
 import { FormikProvider } from 'formik'
 import TeamOfAgentsForm from './TeamOfAgentsForm'
-
+import { useTranslation } from 'react-i18next'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const CreateTeamOfAgentsForm = () => {
+  const { t } = useTranslation()
   const { formik, handleSubmit, isLoading } = useCreateTeamOfAgents()
 
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ const CreateTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Add Team</StyledSectionTitle>
+              <StyledSectionTitle>{t('addTeam')}</StyledSectionTitle>
               {/* <StyledSectionDescription>
                 Create and manage your team of AI agents for interactive experiences.
               </StyledSectionDescription> */}
@@ -43,7 +44,7 @@ const CreateTeamOfAgentsForm = () => {
                 size={Button.sizes.SMALL}
                 disabled={isLoading}
               >
-                {isLoading ? <Loader size={32} /> : 'Save'}
+                {isLoading ? <Loader size={32} /> : `${t('save')}`}
               </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>
