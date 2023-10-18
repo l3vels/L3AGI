@@ -43,6 +43,7 @@ import { ButtonSecondary } from 'components/Button/Button'
 import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
+import { textSlicer } from 'utils/textSlicer'
 
 const ChatV2 = () => {
   const navigate = useNavigate()
@@ -318,6 +319,8 @@ const ChatV2 = () => {
           <StyledButtonGroup>
             <StyledSuggestionsContainer>
               {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
+
                 return (
                   <StyledOption
                     key={index}
@@ -325,7 +328,7 @@ const ChatV2 = () => {
                       handlePickedSuggestion(chatSuggestion)
                     }}
                   >
-                    {chatSuggestion}
+                    {shortSuggestion}
                   </StyledOption>
                 )
               })}
@@ -467,6 +470,10 @@ const StyledForm = styled.form`
   min-height: 48px;
   height: fit-content;
   max-height: 250px;
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 
 const StyledTextareaWrapper = styled.div`
@@ -545,6 +552,10 @@ const StyledSuggestionsContainer = styled.div`
   }
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 
 const StyledStopGeneratingButton = styled.div`

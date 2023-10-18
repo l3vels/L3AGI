@@ -24,6 +24,7 @@ import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -31,6 +32,9 @@ type AgentViewDetailBoxProps = {
 
 const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { t } = useTranslation()
+  const { getChatModules } = useGetAccountModule()
+  const agentModule = getChatModules('agent')
+
   const { user } = React.useContext(AuthContext)
 
   const { deleteAgentHandler } = useAgents()
@@ -66,7 +70,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
           />
 
           <StyledButtonsWrapper>
-            {isCreator && (
+            {agentModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
                   onClick={handleEdit}
@@ -78,7 +82,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               </StyledIconButton>
             )}
 
-            {isCreator && (
+            {agentModule?.delete && isCreator && (
               <StyledMenuDots>
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>

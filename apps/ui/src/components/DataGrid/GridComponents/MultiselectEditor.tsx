@@ -92,6 +92,11 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         onOptionRemove={optionRemoveHandler}
         value={value as any}
         menuPlacement={'auto'}
+        multi={props.isMulti}
+        multiline={props.isMultiLine}
+        insideOverflowWithTransformContainer
+        menuPortalTarget={document.body}
+        menuIsOpen={true}
       />
     </StyledDiv>
   )
@@ -121,5 +126,9 @@ const StyledDropDown = styled(Dropdown)`
   .css-dyamw3-option {
     background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
     color: ${({ theme }) => theme.body.textColorSecondary};
+  }
+
+  .components-Dropdown-components-ChildrenContent-ChildrenContent-module__valueContainer--Tblnq {
+    color: ${({ theme }) => theme.body.textColorPrimary} !important;
   }
 `

@@ -31,6 +31,24 @@ export const LayoutProvider = ({ children }: any) => {
     }
   }, [expand])
 
+  useEffect(() => {
+    // Function to update the 'show' state based on screen width
+    const handleResize = () => {
+      setExpand(window.innerWidth < 1500)
+    }
+
+    // Initial setup
+    handleResize()
+
+    // Listen for window resize events
+    window.addEventListener('resize', handleResize)
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   const onChangeLayout = () => setExpand(prevValue => !prevValue)
 
   const contextValue = {

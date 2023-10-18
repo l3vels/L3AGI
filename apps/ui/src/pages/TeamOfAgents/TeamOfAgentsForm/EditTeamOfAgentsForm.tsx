@@ -20,7 +20,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const EditTeamOfAgentsForm = () => {
   const { t } = useTranslation()
-  const { formik, handleSubmit, isLoading } = useEditTeamOfAgents()
+  const { formik, handleSubmit, isLoading, handleNavigation } = useEditTeamOfAgents()
 
   return (
     <>
@@ -33,7 +33,7 @@ const EditTeamOfAgentsForm = () => {
             </div>
 
             <StyledButtonWrapper>
-              <BackButton />
+              <BackButton customOnClick={handleNavigation} />
               <ButtonPrimary
                 onClick={() => handleSubmit(formik?.values)}
                 size={Button.sizes.SMALL}

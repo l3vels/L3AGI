@@ -33,6 +33,7 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useTeamOfAgents } from '../useTeamOfAgents'
 import { useModelsService } from 'services'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -40,6 +41,9 @@ type TeamOfAgentsDetailsBoxProps = {
 
 const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
   const { t } = useTranslation()
+  const { getChatModules } = useGetAccountModule()
+  const teamModule = getChatModules('team')
+
   const { user } = React.useContext(AuthContext)
 
   const { deleteTeamOfAgentsHandler } = useTeamOfAgents()
@@ -74,7 +78,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
           />
 
           <StyledButtonsWrapper>
-            {isCreator && (
+            {teamModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
                   onClick={handleEdit}
@@ -86,7 +90,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
               </StyledIconButton>
             )}
 
-            {isCreator && (
+            {teamModule?.delete && isCreator && (
               <StyledMenuDots>
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>

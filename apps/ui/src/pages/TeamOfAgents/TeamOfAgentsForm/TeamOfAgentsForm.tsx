@@ -246,21 +246,6 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
           options={toolOptions}
         />
 
-        <StyledCombinedFields>
-          <AgentDropdown
-            label={t('model')}
-            fieldName={'team_model'}
-            setFieldValue={setFieldValue}
-            fieldValue={team_model}
-            options={modelOptions}
-            optionSize={'small'}
-          />
-          <AgentSlider
-            onChange={(value: number) => setFieldValue('team_temperature', value / 10)}
-            value={team_temperature}
-          />
-        </StyledCombinedFields>
-
         <ShowAdvancedButton
           isShow={showAdvanced}
           onClick={() => {
@@ -297,6 +282,21 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
                 onChange={(value: string) => onTextareaChange('team_text', value)}
               />
             </StyledTextareaWrapper>
+
+            <StyledCombinedFields>
+              <AgentDropdown
+                label={t('model')}
+                fieldName={'team_model'}
+                setFieldValue={setFieldValue}
+                fieldValue={team_model}
+                options={modelOptions}
+                optionSize={'small'}
+              />
+              <AgentSlider
+                onChange={(value: number) => setFieldValue('team_temperature', value / 10)}
+                value={team_temperature}
+              />
+            </StyledCombinedFields>
           </>
         )}
 

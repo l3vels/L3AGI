@@ -41,6 +41,10 @@ export const useEditTeamOfAgents = () => {
     return prev
   }, {})
 
+  const handleNavigation = () => {
+    navigate(`/chat?team=${teamId}`)
+  }
+
   const defaultValues = {
     teamOfAgents_name: teamOfAgentsById?.name,
     teamOfAgents_description: teamOfAgentsById?.description,
@@ -114,7 +118,7 @@ export const useEditTeamOfAgents = () => {
     await Promise.all(promises)
     await Promise.all([refetchTeamOfAgents(), refetchConfigs()])
 
-    navigate(`/chat?team=${teamId}`)
+    handleNavigation()
 
     setToast({
       message: 'Team was updated!',
@@ -135,5 +139,6 @@ export const useEditTeamOfAgents = () => {
     formik,
     handleSubmit,
     isLoading,
+    handleNavigation,
   }
 }

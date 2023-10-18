@@ -104,6 +104,10 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
     css`
       flex-direction: row-reverse;
     `};
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 
 export const StyledMessageText = styled.div<{ secondary?: boolean }>`

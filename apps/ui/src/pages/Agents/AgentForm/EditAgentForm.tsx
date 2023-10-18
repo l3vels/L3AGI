@@ -18,7 +18,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const EditAgentForm = () => {
   const { t } = useTranslation()
-  const { formik, isLoading } = useEditAgent()
+  const { formik, isLoading, handleNavigation } = useEditAgent()
 
   return (
     <FormikProvider value={formik}>
@@ -32,7 +32,7 @@ const EditAgentForm = () => {
           </div>
 
           <StyledButtonWrapper>
-            <BackButton />
+            <BackButton customOnClick={handleNavigation} />
             <ButtonPrimary
               onClick={formik?.handleSubmit}
               disabled={isLoading}

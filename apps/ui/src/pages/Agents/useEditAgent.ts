@@ -24,6 +24,10 @@ export const useEditAgent = () => {
 
   const [updateAgent] = useUpdateAgentService()
 
+  const handleNavigation = () => {
+    navigate(`/chat?agent=${agentId}`)
+  }
+
   const defaultValues = {
     agent_name: agentById?.agent?.name,
     agent_role: agentById?.agent?.role,
@@ -68,7 +72,7 @@ export const useEditAgent = () => {
     })
     await refetchAgents()
 
-    navigate(`/chat?agent=${agentId}`)
+    handleNavigation()
 
     setToast({
       message: 'Agent was updated!',
@@ -90,5 +94,7 @@ export const useEditAgent = () => {
     formik,
     handleSubmit,
     isLoading,
+    agentId,
+    handleNavigation,
   }
 }

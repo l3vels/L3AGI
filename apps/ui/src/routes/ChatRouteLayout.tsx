@@ -42,8 +42,12 @@ const ChatRouteLayout = () => {
   const [showInfo, setShowInfo] = useState(false)
 
   const outlet = useOutlet()
-  const { agentsData, deleteAgentHandler } = useAgents()
-  const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
+  const { agentsData, deleteAgentHandler, agentsLoading } = useAgents()
+  const {
+    teamOfAgents: teamOfAgentsArray,
+    deleteTeamOfAgentsHandler,
+    teamsLoading,
+  } = useTeamOfAgents()
   const { data: chatsData, refetch: refetchChat } = useChatsService()
 
   const navigate = useNavigate()
@@ -65,28 +69,17 @@ const ChatRouteLayout = () => {
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
   const { data: chatById } = useChatByIdService({ id: chatId || '' })
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     // Check the window width and update the state accordingly
-  //     onChangeLayout(window.innerWidth <= 1400) // Adjust the breakpoint as needed
-  //   }
-
-  //   // Set the initial state on component mount
-  //   handleResize()
-
-  //   // Add a resize event listener to handle changes
-  //   window.addEventListener('resize', handleResize)
-
-  //   // Remove the event listener on component unmount to avoid memory leaks
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize)
-  //   }
-  // }, [])
-
   useEffect(() => {
     if (!urlParams || !params) return
 
-    if (!teamId && !chatId && !agentId) {
+    if (
+      (teamsLoading || agentsLoading) &&
+      teamOfAgentsArray?.length === 0 &&
+      agentsData?.length === 0
+    )
+      return
+
+    if (location.pathname.includes('/chat') && !teamId && !chatId && !agentId) {
       if (teamOfAgentsArray?.length > 0) {
         return navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
       } else if (agentsData?.length > 0) {
@@ -97,7 +90,7 @@ const ChatRouteLayout = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamOfAgentsArray, agentsData])
+  }, [teamsLoading, agentsLoading])
 
   useEffect(() => {
     if (!expand) {
@@ -167,13 +160,17 @@ const ChatRouteLayout = () => {
                     navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
                   }
 
+                  const handleDelete = () => {
+                    deleteTeamOfAgentsHandler(teamOfAgents.id)
+                  }
+
                   return (
                     <TeamChatCard
                       key={index}
                       onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                       onViewClick={handleView}
-                      onEditClick={isCreator ? handleEdit : undefined}
-                      onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
+                      onEditClick={teamModule?.edit && isCreator && handleEdit}
+                      onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                       picked={teamId === teamOfAgents.id}
                       team={teamOfAgents}
                       agents={team_agents}
@@ -210,13 +207,17 @@ const ChatRouteLayout = () => {
                     })
                   }
 
+                  const handleDelete = () => {
+                    deleteAgentHandler(agent.id)
+                  }
+
                   return (
                     <AgentChatCard
                       key={index}
                       onClick={() => navigate(`/chat?agent=${agent.id}`)}
                       onViewClick={handleView}
-                      onDeleteClick={() => deleteAgentHandler(agent.id)}
-                      onEditClick={isCreator ? handleEdit : undefined}
+                      onEditClick={agentModule?.edit && isCreator && handleEdit}
+                      onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                       picked={agentId === agent.id}
                       agent={agent}
                     />
@@ -325,14 +326,13 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasCh
   gap: 5px;
 
   padding: 20px 10px;
+  padding-top: 0px;
   padding-left: 120px;
 
   height: 100%;
   min-width: 450px;
 
   max-height: calc(100vh - 185px);
-
-  margin-top: 10px;
 
   transition: margin-left 0.3s ease-in-out;
 

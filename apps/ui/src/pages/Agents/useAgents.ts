@@ -9,7 +9,7 @@ export const useAgents = () => {
 
   const { openModal, closeModal } = useModal()
 
-  const { data: agentsData, refetch: refetchAgents } = useAgentsService()
+  const { data: agentsData, refetch: refetchAgents, loading: agentsLoading } = useAgentsService()
 
   const { deleteAgentById } = useDeleteAgentByIdService()
 
@@ -47,5 +47,6 @@ export const useAgents = () => {
     agentsData,
     deleteAgentHandler,
     refetchAgents,
+    agentsLoading,
   }
 }
