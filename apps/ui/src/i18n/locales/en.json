@@ -130,5 +130,6 @@
   "import-csv": "Import CSV",
   "remove-selected": "Remove Selected",
   "show-custom-props": "Show Custom Props",
-  "update-token-id": "Update Token ID"
+  "update-token-id": "Update Token ID",
+  "createAgent": "Create Agent"
 }
