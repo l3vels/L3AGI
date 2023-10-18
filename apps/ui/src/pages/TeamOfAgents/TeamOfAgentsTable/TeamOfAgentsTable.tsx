@@ -1,4 +1,5 @@
 import { useAgentsService } from 'services/agent/useAgentsService'
+import { useTranslation } from 'react-i18next'
 import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEditor'
 import AgentRenderer from './AgentRenderer'
 import Table from 'components/Table'
@@ -11,6 +12,7 @@ type TeamOfAgentsTableProps = {
 }
 
 const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps) => {
+  const { t } = useTranslation()
   const { data: agents } = useAgentsService()
 
   const { setFieldValue } = formik
@@ -28,11 +30,11 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
 
   const columns = [
     {
-      Header: 'Role',
+      Header: `${t('role')}`,
       accessor: 'role',
     },
     {
-      Header: 'Agent',
+      Header: `${t('agent')}`,
       accessor: 'agent_id',
       isEdit: true,
       Cell: ({ cell }: any) => {

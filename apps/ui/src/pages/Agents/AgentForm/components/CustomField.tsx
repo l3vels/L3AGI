@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { useTranslation } from 'react-i18next'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -19,6 +19,7 @@ type CustomFieldProps = {
 }
 
 const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => {
+  const { t } = useTranslation()
   return (
     <FieldArray name={formikField}>
       {({ insert, remove }) => (
@@ -45,7 +46,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
               onClick={() => insert(formik?.values[formikField].length, '')}
               size={Button.sizes.SMALL}
             >
-              + Add
+              + {t('add')}
             </ButtonSecondary>
           </StyledButtonWrapper>
         </StyledFieldsWrapper>

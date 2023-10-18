@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
@@ -27,6 +27,7 @@ type TeamOfAgentsFormProps = {
 }
 
 const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
+  const { t } = useTranslation()
   const advancedRef = useRef(null as any)
   const scrollToAdvancedRef = () => {
     if (advancedRef) {
@@ -85,18 +86,18 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
   return (
     <StyledFormContainer>
       <StyledInputWrapper>
-        <FormikTextField name='teamOfAgents_name' placeholder='Name' label='Name' />
+        <FormikTextField name='teamOfAgents_name' placeholder={t('name')} label={t('name')} />
 
         <StyledTextareaWrapper>
           <TypographyPrimary
-            value='Description'
+            value={t('description')}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
           <Textarea
             hint=''
             rows={6}
-            placeholder='Description'
+            placeholder={t('description')}
             name='teamOfAgents_description'
             value={teamOfAgents_description}
             onChange={onDescriptionChange}
@@ -105,7 +106,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <StyledSourceTypeWrapper>
           <TypographyPrimary
-            value='Type'
+            value={t('type')}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
@@ -174,9 +175,9 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
                 </StyledTextareaWrapper>
               )}
 
-              <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
-              <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
-              <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+              <>{category === 'Social' && <StyledText>{t('comingSoon')}</StyledText>}</>
+              <>{category === 'Web Page' && <StyledText>{t('comingSoon')}</StyledText>}</>
+              <>{category === 'Application' && <StyledText>{t('comingSoon')}</StyledText>}</>
             </>
           )}
         </StyledSourceTypeWrapper>
@@ -196,7 +197,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
         </StyledFields>
         <StyledCheckbox>
           <Checkbox
-            label='Memory'
+            label={t('memory')}
             kind='secondary'
             name='is_memory'
             checked={is_memory}
@@ -206,17 +207,21 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
 
-        <CustomField formik={formik} formikField={'team_suggestions'} placeholder={'Suggestion'} />
+        <CustomField
+          formik={formik}
+          formikField={'team_suggestions'}
+          placeholder={t('suggestions')}
+        />
 
         <StyledTextareaWrapper>
           <TypographyPrimary
-            value='Greeting'
+            value={t('greeting')}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
           <Textarea
             hint=''
-            placeholder='Greeting'
+            placeholder={t('greeting')}
             value={team_greeting}
             name='team_greeting'
             onChange={(value: string) => onTextareaChange('team_greeting', value)}
@@ -225,7 +230,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <AgentDropdown
           isMulti
-          label={'Data source'}
+          label={t('dataSource')}
           fieldName={'team_datasources'}
           fieldValue={team_datasources}
           setFieldValue={setFieldValue}
@@ -234,7 +239,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <AgentDropdown
           isMulti
-          label={'Tools'}
+          label={t('tools')}
           fieldName={'team_tools'}
           fieldValue={team_tools}
           setFieldValue={setFieldValue}
@@ -251,27 +256,27 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         {showAdvanced && (
           <>
-            <CustomField formik={formik} formikField={'team_goals'} placeholder={'Goal'} />
+            <CustomField formik={formik} formikField={'team_goals'} placeholder={t('goals')} />
             <CustomField
               formik={formik}
               formikField={'team_instructions'}
-              placeholder={'Instruction'}
+              placeholder={t('instructions')}
             />
             <CustomField
               formik={formik}
               formikField={'team_constraints'}
-              placeholder={'Constraint'}
+              placeholder={t('constraints')}
             />
             <StyledTextareaWrapper>
               <TypographyPrimary
-                value='Script'
+                value={t('script')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
               <Textarea
                 hint=''
                 rows={6}
-                placeholder='text'
+                placeholder={t('text')}
                 value={team_text}
                 name='team_text'
                 onChange={(value: string) => onTextareaChange('team_text', value)}
@@ -280,7 +285,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
             <StyledCombinedFields>
               <AgentDropdown
-                label={'Model'}
+                label={t('model')}
                 fieldName={'team_model'}
                 setFieldValue={setFieldValue}
                 fieldValue={team_model}
