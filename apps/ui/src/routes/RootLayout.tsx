@@ -71,11 +71,11 @@ const StyledAvatarContainer = styled.div`
   display: flex;
   /* align-items: center; */
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
 
   position: absolute;
   left: 40px;
-  bottom: 5px;
+  bottom: 0px;
 
   @media (max-width: 900px) {
     display: none;
