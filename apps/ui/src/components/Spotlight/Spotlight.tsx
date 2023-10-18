@@ -457,6 +457,7 @@ export const StyledOption = styled.div`
   font-size: 12px;
   line-height: 16px;
   text-align: center;
+  font-family: 'Circular', 'Roboto';
   cursor: pointer;
 
   :hover {
