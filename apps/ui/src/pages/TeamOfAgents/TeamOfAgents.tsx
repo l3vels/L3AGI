@@ -15,8 +15,12 @@ import { useNavigate } from 'react-router-dom'
 import TeamOfAgentsCard from './TeamOfAgentsCard'
 import { useTeamOfAgents } from './useTeamOfAgents'
 import { ButtonPrimary } from 'components/Button/Button'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
+  const { getChatModules } = useGetAccountModule()
+  const teamModule = getChatModules('team')
+
   const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
 
   const navigate = useNavigate()
@@ -44,6 +48,14 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {teamOfAgentsArray?.map((teamOfAgents: any) => {
+            const handleEdit = () => {
+              navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
+            }
+
+            const handleDelete = () => {
+              deleteTeamOfAgentsHandler(teamOfAgents.id)
+            }
+
             return (
               <TeamOfAgentsCard
                 key={teamOfAgents.id}
@@ -51,8 +63,8 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
                 description={teamOfAgents.description}
                 teamAgents={teamOfAgents.team_agents}
                 onViewClick={() => navigate(`/team-of-agents/${teamOfAgents.id}`)}
-                onEditClick={() => navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)}
-                onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
+                onEditClick={teamModule?.edit && handleEdit}
+                onDeleteClick={teamModule?.delete && handleDelete}
                 onChatClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                 creator={teamOfAgents.creator}
                 avatar={teamOfAgents.avatar}

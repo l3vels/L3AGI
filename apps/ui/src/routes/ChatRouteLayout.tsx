@@ -160,13 +160,17 @@ const ChatRouteLayout = () => {
                     navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
                   }
 
+                  const handleDelete = () => {
+                    deleteTeamOfAgentsHandler(teamOfAgents.id)
+                  }
+
                   return (
                     <TeamChatCard
                       key={index}
                       onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
                       onViewClick={handleView}
-                      onEditClick={isCreator ? handleEdit : undefined}
-                      onDeleteClick={() => deleteTeamOfAgentsHandler(teamOfAgents.id)}
+                      onEditClick={teamModule?.edit && isCreator && handleEdit}
+                      onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                       picked={teamId === teamOfAgents.id}
                       team={teamOfAgents}
                       agents={team_agents}
@@ -203,13 +207,17 @@ const ChatRouteLayout = () => {
                     })
                   }
 
+                  const handleDelete = () => {
+                    deleteAgentHandler(agent.id)
+                  }
+
                   return (
                     <AgentChatCard
                       key={index}
                       onClick={() => navigate(`/chat?agent=${agent.id}`)}
                       onViewClick={handleView}
-                      onDeleteClick={() => deleteAgentHandler(agent.id)}
-                      onEditClick={isCreator ? handleEdit : undefined}
+                      onEditClick={agentModule?.edit && isCreator && handleEdit}
+                      onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                       picked={agentId === agent.id}
                       agent={agent}
                     />
