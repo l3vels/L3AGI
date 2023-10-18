@@ -37,14 +37,14 @@ class ConversationalAgent(BaseAgent):
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
 
-        llm = get_llm(
-            settings,
-            agent_with_configs,
-        )
-
         res: str
 
         try:
+            llm = get_llm(
+                settings,
+                agent_with_configs,
+            )
+
             agent = initialize_agent(
                 tools,
                 llm,
@@ -75,6 +75,7 @@ class ConversationalAgent(BaseAgent):
         ai_message = history.create_ai_message(
             res, human_message_id, agent_with_configs.agent.id
         )
+
         chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
         return res

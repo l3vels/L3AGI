@@ -144,7 +144,8 @@ const ChatV2 = () => {
         data: { content: prompt, example: false, additional_kwargs: {} },
         type: message_type || 'human',
       },
-      created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket
+      // created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket for team collaboration
+      created_on: new Date().toISOString(),
       sender_user: user || '',
     }
 

@@ -2,6 +2,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.llms.huggingface_hub import HuggingFaceHub
 from langchain.llms.replicate import Replicate
 
+from exceptions import InvalidLLMApiKeyException
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from typings.model import ModelProviders
@@ -63,6 +64,8 @@ def get_model(model_id: str):
         if model["id"] == model_id:
             return model
 
+    return MODELS[0]  # Default
+
 
 def get_llm(
     settings: AccountSettings,
@@ -75,12 +78,22 @@ def get_llm(
     temperature = agent_with_configs.configs.temperature
 
     if provider == ModelProviders.OPEN_AI:
+        if not settings.openai_api_key:
+            raise InvalidLLMApiKeyException(
+                "Please set OpenAI API Key in [Settings](/settings)"
+            )
+
         return ChatOpenAI(
             openai_api_key=settings.openai_api_key,
             temperature=temperature,
             model_name=model_name,
         )
     elif provider == ModelProviders.HUGGING_FACE:
+        if not settings.hugging_face_access_token:
+            raise InvalidLLMApiKeyException(
+                "Please set Hugging Face Access Token in [Settings](/settings)"
+            )
+
         return HuggingFaceHub(
             huggingfacehub_api_token=settings.hugging_face_access_token,
             repo_id=model_name,
@@ -89,6 +102,11 @@ def get_llm(
             },
         )
     elif provider == ModelProviders.REPLICATE:
+        if not settings.replicate_api_token:
+            raise InvalidLLMApiKeyException(
+                "Please set Replicate API Token in [Settings](/settings)"
+            )
+
         return Replicate(
             replicate_api_token=settings.replicate_api_token,
             model=model_name,

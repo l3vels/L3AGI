@@ -12,6 +12,7 @@ from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools i
     DirectorDialogueAgentWithTools
 from agents.base_agent import BaseAgent
 from config import Config
+from exceptions import InvalidLLMApiKeyException
 from memory.zep.zep_memory import ZepMemory
 from models.config import ConfigModel
 from models.datasource import DatasourceModel
@@ -166,78 +167,83 @@ class AuthoritarianSpeaker(BaseAgent):
         director_name = director_agent.agent.name
         director_id = director_agent.agent.id
 
-        director = DirectorDialogueAgentWithTools(
-            name=director_name,
-            agent_with_configs=director_agent,
-            tools=self.get_tools(director_agent, self.settings),
-            system_message=SystemMessage(
-                content=SystemMessageBuilder(director_agent).build()
-            ),
-            model=get_llm(self.settings, director_agent),
-            speakers=[
-                agent_with_config
-                for agent_with_config in agents_with_configs
-                if agent_with_config.agent.id != director_agent.agent.id
-            ],
-            stopping_probability=self.stopping_probability,
-            session_id=self.session_id,
-            sender_name=self.sender_name,
-            is_memory=team.is_memory,
-        )
-
-        agents = [director]
-        for agent_with_configs in agents_with_configs:
-            if agent_with_configs.agent.id != director_id:
-                agents.append(
-                    DialogueAgentWithTools(
-                        name=agent_with_configs.agent.name,
-                        agent_with_configs=agent_with_configs,
-                        tools=self.get_tools(agent_with_configs, self.settings),
-                        system_message=SystemMessage(
-                            content=SystemMessageBuilder(agent_with_configs).build()
-                        ),
-                        model=get_llm(
-                            self.settings,
-                            agent_with_configs,
-                        ),
-                        session_id=self.session_id,
-                        sender_name=self.sender_name,
-                        is_memory=team.is_memory,
-                    )
-                )
-
-        simulator = DialogueSimulator(
-            agents=agents,
-            selection_function=functools.partial(
-                self.select_next_speaker, director=director
-            ),
-            is_memory=team.is_memory,
-        )
-        simulator.reset()
-        simulator.inject("Audience member", specified_topic)
-
-        while True:
-            status_config = ConfigModel.get_config_by_session_id(
-                db, self.session_id, self.provider_account
+        try:
+            director = DirectorDialogueAgentWithTools(
+                name=director_name,
+                agent_with_configs=director_agent,
+                tools=self.get_tools(director_agent, self.settings),
+                system_message=SystemMessage(
+                    content=SystemMessageBuilder(director_agent).build()
+                ),
+                model=get_llm(self.settings, director_agent),
+                speakers=[
+                    agent_with_config
+                    for agent_with_config in agents_with_configs
+                    if agent_with_config.agent.id != director_agent.agent.id
+                ],
+                stopping_probability=self.stopping_probability,
+                session_id=self.session_id,
+                sender_name=self.sender_name,
+                is_memory=team.is_memory,
             )
 
-            if status_config.value == ChatStatus.STOPPED.value:
-                break
+            agents = [director]
+            for agent_with_configs in agents_with_configs:
+                if agent_with_configs.agent.id != director_id:
+                    agents.append(
+                        DialogueAgentWithTools(
+                            name=agent_with_configs.agent.name,
+                            agent_with_configs=agent_with_configs,
+                            tools=self.get_tools(agent_with_configs, self.settings),
+                            system_message=SystemMessage(
+                                content=SystemMessageBuilder(agent_with_configs).build()
+                            ),
+                            model=get_llm(
+                                self.settings,
+                                agent_with_configs,
+                            ),
+                            session_id=self.session_id,
+                            sender_name=self.sender_name,
+                            is_memory=team.is_memory,
+                        )
+                    )
 
-            agent_id, agent_name, message = simulator.step()
+            simulator = DialogueSimulator(
+                agents=agents,
+                selection_function=functools.partial(
+                    self.select_next_speaker, director=director
+                ),
+                is_memory=team.is_memory,
+            )
+            simulator.reset()
+            simulator.inject("Audience member", specified_topic)
 
-            db.session.refresh(status_config)
+            while True:
+                status_config = ConfigModel.get_config_by_session_id(
+                    db, self.session_id, self.provider_account
+                )
 
-            if status_config.value == ChatStatus.STOPPED.value:
-                break
+                if status_config.value == ChatStatus.STOPPED.value:
+                    break
 
-            ai_message = history.create_ai_message(message, None, agent_id)
+                agent_id, agent_name, message = simulator.step()
 
-            if team.is_memory:
-                memory.ai_name = agent_name
-                memory.save_ai_message(message)
+                db.session.refresh(status_config)
 
+                if status_config.value == ChatStatus.STOPPED.value:
+                    break
+
+                ai_message = history.create_ai_message(message, None, agent_id)
+
+                if team.is_memory:
+                    memory.ai_name = agent_name
+                    memory.save_ai_message(message)
+
+                self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+
+                if director.stop:
+                    break
+        except InvalidLLMApiKeyException as err:
+            ai_message = history.create_ai_message(str(err))
+            memory.save_ai_message(str(err))
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
-
-            if director.stop:
-                break
