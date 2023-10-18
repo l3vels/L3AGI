@@ -42,8 +42,12 @@ const ChatRouteLayout = () => {
   const [showInfo, setShowInfo] = useState(false)
 
   const outlet = useOutlet()
-  const { agentsData, deleteAgentHandler } = useAgents()
-  const { teamOfAgents: teamOfAgentsArray, deleteTeamOfAgentsHandler } = useTeamOfAgents()
+  const { agentsData, deleteAgentHandler, agentsLoading } = useAgents()
+  const {
+    teamOfAgents: teamOfAgentsArray,
+    deleteTeamOfAgentsHandler,
+    teamsLoading,
+  } = useTeamOfAgents()
   const { data: chatsData, refetch: refetchChat } = useChatsService()
 
   const navigate = useNavigate()
@@ -86,7 +90,14 @@ const ChatRouteLayout = () => {
   useEffect(() => {
     if (!urlParams || !params) return
 
-    if (!teamId && !chatId && !agentId) {
+    if (
+      (teamsLoading || agentsLoading) &&
+      teamOfAgentsArray?.length === 0 &&
+      agentsData?.length === 0
+    )
+      return
+
+    if (location.pathname.includes('/chat') && !teamId && !chatId && !agentId) {
       if (teamOfAgentsArray?.length > 0) {
         return navigate(`/chat?team=${teamOfAgentsArray?.[0].id}`)
       } else if (agentsData?.length > 0) {
@@ -97,7 +108,7 @@ const ChatRouteLayout = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamOfAgentsArray, agentsData])
+  }, [teamsLoading, agentsLoading])
 
   useEffect(() => {
     if (!expand) {

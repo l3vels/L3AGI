@@ -7,7 +7,11 @@ import { useDeleteTeamOfAgentstByIdService } from 'services/team/useDeleteTeamOf
 export const useTeamOfAgents = () => {
   const { setToast } = useContext(ToastContext)
 
-  const { data: teamOfAgents, refetch: refetchTeamOfAgents } = useTeamOfAgentsService()
+  const {
+    data: teamOfAgents,
+    refetch: refetchTeamOfAgents,
+    loading: teamsLoading,
+  } = useTeamOfAgentsService()
   const { deleteTeamOfAgentsById } = useDeleteTeamOfAgentstByIdService()
 
   const { openModal, closeModal } = useModal()
@@ -44,5 +48,6 @@ export const useTeamOfAgents = () => {
     teamOfAgents,
     deleteTeamOfAgentsHandler,
     refetchTeamOfAgents,
+    teamsLoading,
   }
 }
