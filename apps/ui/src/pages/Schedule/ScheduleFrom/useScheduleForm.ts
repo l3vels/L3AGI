@@ -13,7 +13,7 @@ export const useScheduleForm = () => {
   //   return { label: group.name, value: group.id }
   // })
 
-  const scheduleTypeOptions = [{ label: 'Outbound Calling', value: 'Outbound Calling' }]
+  const scheduleTypeOptions = [{ label: 'Run tasks', value: 'Run tasks' }]
 
   return {
     agentOptions,

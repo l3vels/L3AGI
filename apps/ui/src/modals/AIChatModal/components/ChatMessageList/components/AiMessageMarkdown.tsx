@@ -93,10 +93,15 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
 export default memo(AiMessageMarkdown)
 
 const StyledReactMarkdown = styled(ReactMarkdown)`
-  color: ${({ theme }) => theme.typography.contentPrimary};
+  color: ${({ theme }) => theme.body.textColorPrimary};
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-family: 'Circular', 'Roboto';
+  font-weight: 500;
+
+  font-style: normal;
+  font-size: 14px;
 `
 
 const StyledTable = styled.table`

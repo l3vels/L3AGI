@@ -10,6 +10,7 @@ from agents.agent_simulations.agent.dialogue_agent_with_tools import \
     DialogueAgentWithTools
 from agents.base_agent import BaseAgent
 from config import Config
+from exceptions import InvalidLLMApiKeyException
 from memory.zep.zep_memory import ZepMemory
 from models.config import ConfigModel
 from models.datasource import DatasourceModel
@@ -125,58 +126,63 @@ class AgentDebates(BaseAgent):
         # specified_topic_ai_message = history.create_ai_message(specified_topic)
         # self.chat_pubsub_service.send_chat_message(chat_message=specified_topic_ai_message)
 
-        dialogue_agents = [
-            DialogueAgentWithTools(
-                name=agent_with_config.agent.name,
-                agent_with_configs=agent_with_config,
-                system_message=SystemMessage(
-                    content=SystemMessageBuilder(agent_with_config).build()
-                ),
-                model=get_llm(
-                    self.settings,
-                    agent_with_config,
-                ),
-                tools=self.get_tools(agent_with_config, self.settings),
-                top_k_results=2,
-                session_id=self.session_id,
-                sender_name=self.sender_name,
+        try:
+            dialogue_agents = [
+                DialogueAgentWithTools(
+                    name=agent_with_config.agent.name,
+                    agent_with_configs=agent_with_config,
+                    system_message=SystemMessage(
+                        content=SystemMessageBuilder(agent_with_config).build()
+                    ),
+                    model=get_llm(
+                        self.settings,
+                        agent_with_config,
+                    ),
+                    tools=self.get_tools(agent_with_config, self.settings),
+                    top_k_results=2,
+                    session_id=self.session_id,
+                    sender_name=self.sender_name,
+                    is_memory=team.is_memory,
+                )
+                for agent_with_config in agents_with_configs
+            ]
+
+            max_iters = 6
+            n = 0
+
+            simulator = DialogueSimulator(
+                agents=dialogue_agents,
+                selection_function=self.select_next_speaker,
                 is_memory=team.is_memory,
             )
-            for agent_with_config in agents_with_configs
-        ]
+            simulator.reset()
+            simulator.inject("Moderator", specified_topic)
 
-        max_iters = 6
-        n = 0
+            while n < max_iters:
+                status_config = ConfigModel.get_config_by_session_id(
+                    db, self.session_id, self.provider_account
+                )
 
-        simulator = DialogueSimulator(
-            agents=dialogue_agents,
-            selection_function=self.select_next_speaker,
-            is_memory=team.is_memory,
-        )
-        simulator.reset()
-        simulator.inject("Moderator", specified_topic)
+                if status_config.value == ChatStatus.STOPPED.value:
+                    break
 
-        while n < max_iters:
-            status_config = ConfigModel.get_config_by_session_id(
-                db, self.session_id, self.provider_account
-            )
+                agent_id, agent_name, message = simulator.step()
 
-            if status_config.value == ChatStatus.STOPPED.value:
-                break
+                db.session.refresh(status_config)
 
-            agent_id, agent_name, message = simulator.step()
+                if status_config.value == ChatStatus.STOPPED.value:
+                    break
 
-            db.session.refresh(status_config)
+                ai_message = history.create_ai_message(message, None, agent_id)
 
-            if status_config.value == ChatStatus.STOPPED.value:
-                break
+                if team.is_memory:
+                    memory.ai_name = agent_name
+                    memory.save_ai_message(message)
 
-            ai_message = history.create_ai_message(message, None, agent_id)
+                self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
-            if team.is_memory:
-                memory.ai_name = agent_name
-                memory.save_ai_message(message)
-
+                n += 1
+        except InvalidLLMApiKeyException as err:
+            ai_message = history.create_ai_message(str(err))
+            memory.save_ai_message(str(err))
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
-
-            n += 1

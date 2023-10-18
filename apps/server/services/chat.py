@@ -170,15 +170,6 @@ def process_chat_message(
 
     settings = ConfigModel.get_account_settings(db, provider_account)
 
-    if not settings.openai_api_key:
-        message_text = "Please add OpenAI API key in [Settings](/settings)"
-        ai_message = history.create_ai_message(message_text, human_message_id)
-        memory.save_human_message(prompt)
-        memory.save_ai_message(message_text)
-        chat_pubsub_service.send_chat_message(chat_message=ai_message)
-
-        return message_text
-
     if len(agents) > 0:
         for agent_with_configs in agents:
             run_conversational_agent(
