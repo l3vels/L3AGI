@@ -32,7 +32,7 @@ const ChatRouteLayout = () => {
   const agentModule = getChatModules('agent')
   const sessionModule = getChatModules('session')
 
-  const { expand, onChangeLayout } = useContext(LayoutContext)
+  const { expand } = useContext(LayoutContext)
 
   const { user } = React.useContext(AuthContext)
 
