@@ -121,6 +121,11 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   border-radius: 4px 18px 18px 18px;
   background: ${({ theme }) => theme.body.humanMessageBgColor};
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+  font-family: 'Circular', 'Roboto';
+  font-weight: 500;
+
+  font-style: normal;
+  font-size: 14px;
 
   ${props =>
     props.secondary &&
