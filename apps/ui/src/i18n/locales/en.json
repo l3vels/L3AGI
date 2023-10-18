@@ -152,5 +152,7 @@
   "type": "Type",
   "text": "Text",
   "comingSoon": "Coming Soon",
-  "agent": "Agent"
+  "agent": "Agent",
+  "this-email-is-already-added": "This email is already added.",
+  "email": "Email"
 }
