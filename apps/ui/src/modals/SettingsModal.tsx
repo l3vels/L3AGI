@@ -41,7 +41,7 @@ export default withRenderModal('settings-modal')(SettingsModal)
 
 const StyledModalBody = styled.div`
   max-width: 1000px;
-  width: 400px;
+  width: 500px;
 `
 const StyledModal = styled(Modal)`
   .components-Modal-Modal-module__overlay--OO00T {

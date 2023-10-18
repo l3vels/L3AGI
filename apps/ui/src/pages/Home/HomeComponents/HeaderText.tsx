@@ -4,13 +4,14 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import HeadingPrimary from 'components/Heading/Primary'
+import { t } from 'i18next'
 
 const HeaderText = () => {
   return (
     <StyledHeadingWrapper>
-      <StyledHeadingPrimary type={Heading.types.h1} value='BUILD TEAMS OF AI AGENTS' />
+      <StyledHeadingPrimary type={Heading.types.h1} value={t('welcome-message')} />
       <TypographySecondary
-        value='Open-source tool that enables AI agents to collaborate as effectively as human teams'
+        value={t('welcome-message-description')}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
       />

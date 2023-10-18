@@ -64,7 +64,7 @@ export const StyledFormWrapper = styled.div`
 
   height: calc(100vh - 250px);
 
-  max-height: 1000px;
+  max-height: 1500px;
 `
 export const StyledButtonWrapper = styled.div`
   display: flex;

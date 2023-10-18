@@ -16,7 +16,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 const EditAgentForm = () => {
-  const { formik, isLoading } = useEditAgent()
+  const { formik, isLoading, handleNavigation } = useEditAgent()
 
   return (
     <FormikProvider value={formik}>
@@ -30,7 +30,7 @@ const EditAgentForm = () => {
           </div>
 
           <StyledButtonWrapper>
-            <BackButton />
+            <BackButton customOnClick={handleNavigation} />
             <ButtonPrimary
               onClick={formik?.handleSubmit}
               disabled={isLoading}

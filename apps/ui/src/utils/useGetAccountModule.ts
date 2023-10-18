@@ -9,6 +9,8 @@ export const useGetAccountModule = () => {
   const getMainModule = (moduleName: string) => {
     let values
 
+    if (modules?.[moduleName] === undefined) return true
+
     if (typeof modules?.[moduleName] === 'object') {
       values = modules?.[moduleName]?.active === undefined ? true : modules?.[moduleName]?.active
     } else if (typeof modules?.[moduleName] === 'boolean') {
@@ -37,6 +39,10 @@ export const useGetAccountModule = () => {
     const mainModule = modules?.[mainModuleName]
 
     const module = modules?.[mainModuleName]?.submodules?.[moduleName]
+
+    if (mainModule === undefined) return trueValues
+
+    if (module === undefined) return trueValues
 
     if (typeof mainModule === 'boolean' && mainModule) {
       values = trueValues

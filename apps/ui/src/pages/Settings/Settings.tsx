@@ -50,7 +50,7 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
           </StyledHeaderGroup>
         )}
         <ComponentsWrapper noPadding hideBox={isModal}>
-          <StyledForm isModal={isModal}>
+          <StyledForm>
             <StyledWrapper isModal={isModal}>
               {SETTINGS_FIELDS.map(({ key, label }) => (
                 <FormikTextField key={key} name={key} placeholder='' label={label} />
@@ -79,21 +79,17 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
 
 export default Settings
 
-const StyledForm = styled.div<{ isModal: boolean }>`
+const StyledForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 100%;
+
   overflow-y: auto;
 
-  padding: 30px 20px;
-
-  ${props =>
-    props.isModal &&
-    css`
-      padding: 0;
-    `}
+  padding: 30px 10px;
+  padding-bottom: 0px;
 `
 const StyledWrapper = styled.div<{ isModal: boolean }>`
   display: flex;
@@ -103,22 +99,15 @@ const StyledWrapper = styled.div<{ isModal: boolean }>`
   width: 100%;
   max-width: 600px;
 
-  height: 100vh;
-  max-height: calc(100vh - 300px);
+  height: calc(100vh - 265px);
+  max-height: 1500px;
 
   ${props =>
     props.isModal &&
     css`
-      height: 100%;
-      padding-top: 30px;
-      justify-content: center;
+      max-height: 650px;
     `}
 `
 const StyledModalButton = styled.div`
-  position: absolute;
-
-  bottom: 0px;
-  right: 0px;
-
-  padding: 8px;
+  margin-left: auto;
 `
