@@ -127,4 +127,8 @@ const StyledDropDown = styled(Dropdown)`
     background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
     color: ${({ theme }) => theme.body.textColorSecondary};
   }
+
+  .components-Dropdown-components-ChildrenContent-ChildrenContent-module__valueContainer--Tblnq {
+    color: ${({ theme }) => theme.body.textColorPrimary} !important;
+  }
 `
