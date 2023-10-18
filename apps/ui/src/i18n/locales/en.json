@@ -148,5 +148,8 @@
   "script": "Script",
   "add": "Add",
   "here-are-all-your-agents-managing-tasks-and-operations": "Here are all your agents, managing tasks and operations.",
-  "addTeam": "Add Team"
+  "addTeam": "Add Team",
+  "type": "Type",
+  "text": "Text",
+  "comingSoon": "Coming Soon"
 }
