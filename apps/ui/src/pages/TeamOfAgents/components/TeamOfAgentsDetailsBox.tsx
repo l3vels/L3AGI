@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
+import { useTranslation } from 'react-i18next'
 import {
   StyledButtonsWrapper,
   StyledDetailsBox,
@@ -39,6 +39,7 @@ type TeamOfAgentsDetailsBoxProps = {
 }
 
 const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
+  const { t } = useTranslation()
   const { user } = React.useContext(AuthContext)
 
   const { deleteTeamOfAgentsHandler } = useTeamOfAgents()
@@ -91,7 +92,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                   <StyledMenuButtonsWrapper>
                     {/* <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary> */}
                     <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
-                      Delete Team
+                      {t('delete-team')}
                     </ButtonTertiary>
                   </StyledMenuButtonsWrapper>
                 </MenuButton>
@@ -108,7 +109,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
             >
               <StyledInnerButtonWrapper>
                 <Download size={28} />
-                Add
+                {t('add')}
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
@@ -132,9 +133,9 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
-        {team_type && <TagsRow title='Team Type' items={[team_type]} />}
-        {model && <TagsRow title='Model' items={teamModel} />}
-        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
+        {team_type && <TagsRow title={t('team-type')} items={[team_type]} />}
+        {model && <TagsRow title={t('model')} items={teamModel} />}
+        {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
       </StyledWrapper>
     </StyledDetailsBox>
   )
