@@ -46,8 +46,8 @@ scrapper_configs = {
             }
         },
         "model" : False,
-        "toolkit": False,
-        "datasource": False,
+        "toolkit": True,
+        "datasource": True,
         "discovery": False,
         "Session": False,
         "schedule": False
