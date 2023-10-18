@@ -43,6 +43,7 @@ import { ButtonSecondary } from 'components/Button/Button'
 import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
+import { textSlicer } from 'utils/textSlicer'
 
 const ChatV2 = () => {
   const navigate = useNavigate()
@@ -317,6 +318,8 @@ const ChatV2 = () => {
           <StyledButtonGroup>
             <StyledSuggestionsContainer>
               {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
+
                 return (
                   <StyledOption
                     key={index}
@@ -324,7 +327,7 @@ const ChatV2 = () => {
                       handlePickedSuggestion(chatSuggestion)
                     }}
                   >
-                    {chatSuggestion}
+                    {shortSuggestion}
                   </StyledOption>
                 )
               })}
