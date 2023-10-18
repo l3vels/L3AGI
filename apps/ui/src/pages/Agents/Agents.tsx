@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
@@ -18,6 +19,7 @@ import HeadingPrimary from 'components/Heading/Primary'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
+  const { t } = useTranslation()
   const { agentsData, deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
@@ -28,7 +30,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
         <StyledMainHeaderWrapper>
           <HeadingPrimary type={Heading.types.h1} size='medium' value='AGENTS' />
           <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
+            {t('here-are-all-your-agents-managing-tasks-and-operations')}
           </StyledSectionDescription>
         </StyledMainHeaderWrapper>
         {/* <div>
@@ -45,7 +47,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
-              Create Agent
+              {t('createAgent')}
             </ButtonPrimary>
           )}
         </div>
