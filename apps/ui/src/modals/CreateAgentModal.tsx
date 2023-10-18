@@ -10,7 +10,6 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import styled from 'styled-components'
 
-import { useAgents } from 'pages/Agents/useAgents'
 import AgentForm from 'pages/Agents/AgentForm'
 import {
   StyledBody,
@@ -25,7 +24,7 @@ import { Footer } from 'components/Layout'
 import Spotlight from 'components/Spotlight'
 
 const CreateAgentModal = () => {
-  const { formik, handleSubmit, isLoading } = useAgents()
+  // const { formik, handleSubmit, isLoading } = useAgents()
 
   return (
     // <Modal show isClean fullscreen onClose={closeCreateAgentModal}>

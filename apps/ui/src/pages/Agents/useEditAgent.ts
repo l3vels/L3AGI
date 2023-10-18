@@ -4,14 +4,15 @@ import { useFormik } from 'formik'
 import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
+import { useAgentsService } from 'services/agent/useAgentsService'
 import { useUpdateAgentService } from 'services/agent/useUpdateAgentService'
 import { agentValidationSchema } from 'utils/validationsSchema'
-import { useAgents } from './useAgents'
 
 export const useEditAgent = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { refetchAgents } = useAgents()
+
+  const { refetch: refetchAgents } = useAgentsService()
 
   const { setToast } = useContext(ToastContext)
 
