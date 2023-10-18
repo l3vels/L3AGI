@@ -1,5 +1,5 @@
 import { FormikProvider } from 'formik'
-
+import { useTranslation } from 'react-i18next'
 import AgentForm from './AgentForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -20,7 +20,7 @@ import { useCreateAgent } from '../useCreateAgent'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useCreateAgent()
-
+  const { t } = useTranslation()
   // const navigate = useNavigate()
 
   return (
@@ -28,7 +28,7 @@ const CreateAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Create Agent</StyledSectionTitle>
+            <StyledSectionTitle>{t('createAgent')}</StyledSectionTitle>
             {/* <StyledSectionDescription>
               Here are all your agents, managing tasks and operations.
             </StyledSectionDescription> */}
@@ -42,7 +42,7 @@ const CreateAgentForm = () => {
               disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {isLoading ? <Loader size={32} /> : 'Save'}
+              {isLoading ? <Loader size={32} /> : `${t('save')}`}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>
