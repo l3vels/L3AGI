@@ -160,5 +160,7 @@
   "edit-agent": "Edit Agent",
   "back": "Back",
   "info": "Info",
-  "members": "Members"
+  "members": "Members",
+  "delete-team": "Delete Team",
+  "team-type": "Team Type"
 }
