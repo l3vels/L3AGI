@@ -1,19 +1,15 @@
 heyyou_configs = {
-    "info": {
-        "logo": '',
-        "welcomeMessage": "Welcome to L3AGI"
-    },
     "naming": {
         "home": 'Home',
         "agent": "Influencers",
         "team": "Team",
         "datasource": "Knowledges",
-        "models": "Models",
+        "models": "Fine-Tuning",
         "discovery": "Discovery",
         "chat": "Influencers",
         "toolkits": "Toolkits",
         "schedules": "Schedules",
-        "welcome_message": "BUILD AI AGENTS FOR INFLUENCERS",
+        "welcome_message": "BUILD AI BOT FOR INFLUENCERS",
         "description": "Open-source tool that enables AI agents to collaborate as effectively as human teams",
     },
     "modules": {
