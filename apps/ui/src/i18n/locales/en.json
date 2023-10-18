@@ -145,5 +145,6 @@
   "instructions": "Instructions",
   "constraints": "Constraints",
   "advanced-options": "Advanced Options",
-  "script": "Script"
+  "script": "Script",
+  "add": "Add"
 }
