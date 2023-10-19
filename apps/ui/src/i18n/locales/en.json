@@ -13,6 +13,7 @@
   "add-agent": "Add $t(agent)",
   "add-team": "Add $t(team)",
   "add-datasource": "Add $t(datasource)",
+  "add-member": "Add member",
   "agent": "Agent",
   "agent-description": "Here are all your $t(agent)s, managing tasks and operations.",
   "are-you-sure-you-want-to-delete-this-wallet?": "Are you sure you want to delete this wallet?",
