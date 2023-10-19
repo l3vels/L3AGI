@@ -76,6 +76,9 @@ def update_schedule(
             user=auth.user,
             account=auth.account,
         )
+
+        db_schedule.next_run_date = schedule_with_configs.schedule.start_date
+
         db.session.commit()
         return convert_model_to_response(
             ScheduleModel.get_schedule_by_id(db, db_schedule.id, auth.account)

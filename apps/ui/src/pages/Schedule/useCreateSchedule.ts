@@ -8,7 +8,11 @@ import { useSchedulesService } from 'services/schedule/useSchedulesService'
 import { useCreateScheduleService } from 'services/schedule/useCreateScheduleService'
 import { scheduleValidationSchema } from 'utils/validationsSchema'
 
-export const useCreateSchedule = () => {
+type UseCreateScheduleProps = {
+  initialValues: Record<string, unknown>
+}
+
+export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => {
   const navigate = useNavigate()
 
   const { setToast } = useContext(ToastContext)
@@ -19,7 +23,7 @@ export const useCreateSchedule = () => {
 
   const { data: schedule, refetch: refetchSchedule } = useSchedulesService()
 
-  const initialValues = {
+  const defaultValues = {
     schedule_name: '',
     schedule_description: '',
     schedule_is_active: true,
@@ -36,6 +40,8 @@ export const useCreateSchedule = () => {
     start_date: new Date(),
     interval: '',
     interval_unit: '',
+
+    ...initialValues,
   }
 
   const handleSubmit = async (values: any) => {
@@ -82,7 +88,7 @@ export const useCreateSchedule = () => {
   }
 
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: defaultValues,
     validationSchema: scheduleValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })

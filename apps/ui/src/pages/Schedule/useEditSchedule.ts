@@ -24,19 +24,40 @@ export const useEditSchedule = () => {
 
   const [updateSchedule] = useUpdateScheduleService()
 
+  const schedule = scheduleById?.schedule
+  const configs = scheduleById?.configs
+
+  const getAgentType = (schedule: any) => {
+    if (schedule.agent_id) return 'agent'
+    if (schedule.team_id) return 'team'
+    if (schedule.chat_id) return 'chat'
+    return ''
+  }
+
   const defaultValues = {
-    schedule_name: scheduleById?.schedule.name,
-    schedule_description: scheduleById?.schedule.description,
-    schedule_is_active: scheduleById?.schedule.is_active,
-    schedule_max_daily_budget: scheduleById?.schedule.max_daily_budget,
-    schedule_cron_expression: scheduleById?.schedule.cron_expression,
-    schedule_type: scheduleById?.schedule.schedule_type,
-    schedule_agent_id: scheduleById?.configs.agent_id,
-    schedule_group_id: scheduleById?.configs.group_id,
+    schedule_name: schedule?.name,
+    schedule_description: schedule?.description,
+    schedule_is_active: schedule?.is_active,
+    schedule_max_daily_budget: schedule?.max_daily_budget,
+    schedule_cron_expression: schedule?.cron_expression,
+    schedule_type: schedule?.schedule_type,
+    schedule_agent_id: configs?.agent_id,
+    schedule_group_id: configs?.group_id,
+
+    agent_type: getAgentType(schedule),
+    tasks: configs?.tasks,
+    is_recurring: configs?.is_recurring,
+    create_session_on_run: configs?.create_session_on_run,
+    start_date: configs?.start_date?.split('T')[0],
+    interval: schedule?.interval?.split(' ')[0],
+    interval_unit: schedule?.interval?.split(' ')[1],
   }
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
+
+    const { agent_type } = values
+
     try {
       const updatedValues = {
         name: values.schedule_name,
@@ -45,8 +66,17 @@ export const useEditSchedule = () => {
         max_daily_budget: values.schedule_max_daily_budget,
         cron_expression: values.schedule_cron_expression,
         schedule_type: values.schedule_type,
-        agent_id: values.schedule_agent_id,
         group_id: values.schedule_group_id,
+
+        agent_id: agent_type === 'agent' ? values.schedule_agent_id : null,
+        team_id: agent_type === 'team' ? values.schedule_agent_id : null,
+        chat_id: agent_type === 'chat' ? values.schedule_agent_id : null,
+
+        create_session_on_run: values.create_session_on_run,
+        is_recurring: values.is_recurring,
+        tasks: values.tasks,
+        start_date: values.start_date,
+        interval: values.is_recurring ? `${values.interval} ${values.interval_unit}` : undefined,
       }
 
       await updateSchedule(scheduleId || '', updatedValues)

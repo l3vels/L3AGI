@@ -13,7 +13,14 @@ export const useUpdateScheduleService = () => {
       cron_expression,
       schedule_type,
       agent_id,
+      team_id,
+      chat_id,
       group_id,
+      is_recurring,
+      create_session_on_run,
+      tasks,
+      start_date,
+      interval,
     } = input
 
     const { data } = await mutation({
@@ -27,10 +34,17 @@ export const useUpdateScheduleService = () => {
             description,
             max_daily_budget,
             cron_expression,
+            start_date,
+            interval,
           },
           configs: {
             agent_id,
             group_id,
+            team_id,
+            chat_id,
+            create_session_on_run,
+            is_recurring,
+            tasks,
           },
         },
       },

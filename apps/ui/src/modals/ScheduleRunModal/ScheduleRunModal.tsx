@@ -6,7 +6,14 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 
-const ScheduleRunModal = () => {
+type ScheduleRunModalProps = {
+  data: {
+    id: string
+    type: 'agent' | 'team' | 'chat'
+  }
+}
+
+const ScheduleRunModal = ({ data }: ScheduleRunModalProps) => {
   const { closeModal } = useModal()
 
   return (
@@ -17,7 +24,12 @@ const ScheduleRunModal = () => {
       hideCloseButton
     >
       <StyledModalBody>
-        <CreateScheduleForm />
+        <CreateScheduleForm
+          initialValues={{
+            schedule_agent_id: data.id,
+            agent_type: data.type,
+          }}
+        />
       </StyledModalBody>
 
       <StyledButtonWrapper>
@@ -41,7 +53,6 @@ const StyledModal = styled(Modal)`
 
   display: flex;
   flex-direction: column;
-  /* padding: 12px; */
   width: fit-content;
   height: fit-content;
   color: ${({ theme }) => theme.body.textColorPrimary} !important;
@@ -51,8 +62,9 @@ const StyledModal = styled(Modal)`
 
 const StyledModalBody = styled.div`
   max-width: 1000px;
-  width: 500px;
+  width: 100%;
   margin: 0 auto;
+  padding-top: 32px;
 `
 export const StyledButtonWrapper = styled.div`
   position: absolute;

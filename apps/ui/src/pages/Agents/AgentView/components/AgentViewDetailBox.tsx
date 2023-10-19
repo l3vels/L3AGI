@@ -11,7 +11,7 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
@@ -37,6 +37,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
   const { user } = React.useContext(AuthContext)
 
+  const location = useLocation()
+
   const { deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
@@ -60,8 +62,9 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   }
 
   const handleScheduleRun = () => {
-    navigate('/schedules/create-schedule')
-    // openModal({ name: 'schedule-run-modal', data: { agentId: agent.id } })
+    const chatId = new URLSearchParams(location.search).get('chat')
+
+    openModal({ name: 'schedule-run-modal', data: { id: chatId || agent.id, type: 'agent' } })
   }
 
   return (

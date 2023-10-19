@@ -50,7 +50,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
 
   const navigate = useNavigate()
 
-  const { closeModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { data: models } = useModelsService()
 
@@ -68,8 +68,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
   }
 
   const handleScheduleRun = () => {
-    navigate('/schedules/create-schedule')
-    // openModal({ name: 'schedule-run-modal', data: { agentId: agent.id } })
+    openModal({ name: 'schedule-run-modal', data: { id, type: 'team' } })
   }
 
   return (

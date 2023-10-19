@@ -62,6 +62,8 @@ class ScheduleOutput(BaseModel):
     creator: Optional[UserOutput]
     account: Optional[AccountOutput]
     modified_by: Optional[UUID4]
+    interval: Optional[str]
+    start_date: str
 
 
 class ScheduleWithConfigsOutput(BaseModel):

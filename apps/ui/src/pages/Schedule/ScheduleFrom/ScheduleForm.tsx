@@ -86,7 +86,6 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
             label='Select date and time'
             size={TextField.sizes.SMALL}
             type='datetime-local'
-            value={start_date}
           />
 
           {/* <StyledCronDescriptionWrapper>
