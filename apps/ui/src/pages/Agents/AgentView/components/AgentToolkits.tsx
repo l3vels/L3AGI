@@ -22,7 +22,7 @@ const AgentToolkits = ({ tools }: { tools: string[] }) => {
   return (
     <StyledWrapper>
       <TypographyPrimary
-        value={`${t('toolkit')}s`}
+        value={`${t('toolkit')}`}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
       />
