@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi import APIRouter, HTTPException, Request, Response, Depends
 from fastapi_jwt_auth import AuthJWT
 import requests
 from typings.auth import LoginInput, RegisterInput, AuthHandlerInput
@@ -8,7 +8,8 @@ from utils.auth import (
 )
 from exceptions import UserException
 from config import Config
-
+from typings.auth import UserAccount
+from utils.auth import authenticate
 import services.auth as auth_service
 
 router = APIRouter()
@@ -124,3 +125,12 @@ def resend_verify_email(body: RegisterInput):
     """
     Reset password
     """
+
+@router.get("/account", response_model=UserAccount)
+def get_agents(
+    auth: UserAccount = Depends(authenticate),
+) -> UserAccount:
+    """
+    Get User and account.
+    """
+    return auth
