@@ -2,9 +2,7 @@ import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import FormikTextField from 'components/TextFieldFormik'
-import {
-  StyledTextareaWrapper,
-} from 'pages/Agents/AgentForm/AgentForm'
+import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import TypographyPrimary from 'components/Typography/Primary'
 import styled from 'styled-components'
 
@@ -30,6 +28,7 @@ const GroupForm = ({ formik }: { formik: any }) => {
             />
             <Textarea
               hint=''
+              rows={6}
               placeholder='Description'
               name='group_description'
               value={group_description}
@@ -43,7 +42,6 @@ const GroupForm = ({ formik }: { formik: any }) => {
 }
 
 export default GroupForm
-
 
 const StyledDoubleRow = styled.div`
   display: flex;
@@ -83,14 +81,12 @@ export const StyledForm = styled.div`
   justify-content: center;
 `
 
-
 export const StyledRoot = styled.div`
   width: 100%;
 
   height: 100%;
   overflow-y: scroll;
 `
-
 
 export const StyledInputWrapper = styled.div`
   display: flex;

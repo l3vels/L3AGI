@@ -6,6 +6,7 @@ import { useUpdateGroupService } from 'plugins/contact/services/group/useUpdateG
 
 import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { groupValidationSchema } from './useCreateGroup'
 
 export const useEditGroup = () => {
   const { setToast } = useContext(ToastContext)
@@ -57,7 +58,7 @@ export const useEditGroup = () => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    // validationSchema: groupValidationSchema,
+    validationSchema: groupValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

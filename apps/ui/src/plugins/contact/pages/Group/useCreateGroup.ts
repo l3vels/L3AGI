@@ -7,6 +7,11 @@ import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useCreateGroupService } from 'plugins/contact/services/group/useCreateGroupService'
 import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
+import * as yup from 'yup'
+
+export const groupValidationSchema = yup.object().shape({
+  group_name: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Please enter name'),
+})
 
 export const useCreateGroup = () => {
   const navigate = useNavigate()
@@ -54,7 +59,7 @@ export const useCreateGroup = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: groupValidationSchema,
+    validationSchema: groupValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 
