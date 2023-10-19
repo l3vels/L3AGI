@@ -146,6 +146,24 @@ const MainNavigation = () => {
         </StyledLi>
       )}
 
+      <StyledLi isActive={includes(active, 'contacts')} onClick={() => onHandleClick('/contacts')}>
+        <StyledMyWeekIcon size={30} />
+        <TypographySecondary
+          value={'Contacts'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+      </StyledLi>
+
+      <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
+        <StyledMyWeekIcon size={30} />
+        <TypographySecondary
+          value={'Groups'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+      </StyledLi>
+
       {isDiscover && (
         <StyledLi
           isActive={includes(active, 'discover')}
