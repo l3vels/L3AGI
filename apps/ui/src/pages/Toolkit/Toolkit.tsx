@@ -44,7 +44,7 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>{`${t('toolkit')}s`}</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('toolkit')}`}</StyledSectionTitle>
           <StyledSectionDescription>{t('toolkit-description')}</StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
