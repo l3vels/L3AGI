@@ -117,6 +117,14 @@ export const useGetAccountModule = () => {
     const values = getMainModule('schedule')
     return values
   }
+  const getContactModules = () => {
+    const values = getMainModule('contact')
+    return values
+  }
+  const getGroupModules = () => {
+    const values = getMainModule('group')
+    return values
+  }
 
   const moduleNames = {
     chat: naming?.chat,
@@ -139,6 +147,8 @@ export const useGetAccountModule = () => {
     getDiscoveryModules,
     getSessionModules,
     getScheduleModules,
+    getContactModules,
+    getGroupModules,
     moduleNames,
   }
 }
