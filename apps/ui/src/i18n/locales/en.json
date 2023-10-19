@@ -201,5 +201,7 @@
   "no-text": "No $t(text)",
   "accumulate": "Accumulate",
   "compact-accumulate": "$t(compact) $t(accumulate)",
-  "chunk-size": "Enter Chunk Size"
+  "chunk-size": "Enter Chunk Size",
+  "confirm": "Confirm",
+  "processing": "Processing..."
 }
