@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { toolLogos } from 'pages/Toolkit/constants'
@@ -7,6 +8,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 
 const AgentToolkits = ({ tools }: { tools: string[] }) => {
+  const { t } = useTranslation()
   const { data: toolsData } = useToolsService()
 
   const filteredTools = toolsData?.filter((tool: any) => {
@@ -20,7 +22,7 @@ const AgentToolkits = ({ tools }: { tools: string[] }) => {
   return (
     <StyledWrapper>
       <TypographyPrimary
-        value={'Toolkits'}
+        value={t('toolkits')}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
       />
