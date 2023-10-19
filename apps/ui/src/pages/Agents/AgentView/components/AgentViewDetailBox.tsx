@@ -60,7 +60,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   }
 
   const handleScheduleRun = () => {
-    openModal({ name: 'schedule-run-modal', data: { agentId: agent.id } })
+    navigate('/schedules/create-schedule')
+    // openModal({ name: 'schedule-run-modal', data: { agentId: agent.id } })
   }
 
   return (
@@ -91,7 +92,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
                     <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary>
-                    <ButtonTertiary onClick={handleScheduleRun}>Schedule Run</ButtonTertiary>
+                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
                     <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
                       {t('delete-agent')}
                     </ButtonTertiary>

@@ -4,6 +4,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import { useModal } from 'hooks'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
+import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 
 const ScheduleRunModal = () => {
   const { closeModal } = useModal()
@@ -15,7 +16,9 @@ const ScheduleRunModal = () => {
       backgroundColor='light'
       hideCloseButton
     >
-      <StyledModalBody></StyledModalBody>
+      <StyledModalBody>
+        <CreateScheduleForm />
+      </StyledModalBody>
 
       <StyledButtonWrapper>
         <IconButton

@@ -68,6 +68,9 @@ isort = "*"
 huggingface-hub = "*"
 replicate = "*"
 sendgrid = "*"
+celery = "*"
+croniter = "*"
+redis = "*"
 
 [dev-packages]
 

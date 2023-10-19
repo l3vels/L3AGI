@@ -67,6 +67,11 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
     navigate(`/team-of-agents/${id}/edit-team`)
   }
 
+  const handleScheduleRun = () => {
+    navigate('/schedules/create-schedule')
+    // openModal({ name: 'schedule-run-modal', data: { agentId: agent.id } })
+  }
+
   return (
     <StyledDetailsBox>
       <StyledWrapper>
@@ -98,6 +103,8 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                     <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
                       {t('delete-team')}
                     </ButtonTertiary>
+
+                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
                   </StyledMenuButtonsWrapper>
                 </MenuButton>
               </StyledMenuDots>

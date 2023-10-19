@@ -166,5 +166,6 @@
   "delete-agent": "Delete Agent",
   "provider": "Provider",
   "welcome-message": "BUILD TEAMS OF AI AGENTS",
-  "welcome-message-description": "Open-source tool that enables AI agents to collaborate as effectively as human teams"
+  "welcome-message-description": "Open-source tool that enables AI agents to collaborate as effectively as human teams",
+  "schedule-run": "Schedule Run"
 }

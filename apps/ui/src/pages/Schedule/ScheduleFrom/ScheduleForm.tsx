@@ -32,7 +32,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
     setFieldValue('schedule_description', value)
   }
 
-  const { agentOptions, groupOptions, scheduleTypeOptions } = useScheduleForm()
+  const { options, groupOptions, scheduleTypeOptions } = useScheduleForm()
 
   const [cronDescription, setCronDescription] = useState('')
 
@@ -52,7 +52,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
         <StyledInputWrapper>
           <FormikTextField name='schedule_name' placeholder='Name' label='Name' />
 
-          <StyledTextareaWrapper>
+          {/* <StyledTextareaWrapper>
             <TypographyPrimary
               value='Description'
               type={Typography.types.LABEL}
@@ -65,7 +65,9 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
               value={schedule_description}
               onChange={onDescriptionChange}
             />
-          </StyledTextareaWrapper>
+          </StyledTextareaWrapper> */}
+
+          <CustomField formik={formik} formikField={'tasks'} placeholder={'Task'} />
 
           <StyledDoubleRow>
             <FormikTextField
@@ -85,12 +87,15 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
           <StyledDoubleRow>
             <AgentDropdown
-              label={'Agent'}
+              label={'Agent or Team'}
               fieldName={'schedule_agent_id'}
               setFieldValue={setFieldValue}
               fieldValue={schedule_agent_id}
-              options={agentOptions}
+              options={options}
               optionSize={'small'}
+              onChange={option => {
+                setFieldValue('agent_type', option.type)
+              }}
             />
 
             {/* <AgentDropdown
@@ -112,6 +117,16 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
           <StyledCheckboxWrapper>
             <Checkbox
+              label='Active'
+              kind='secondary'
+              name='schedule_is_active'
+              checked={schedule_is_active}
+              onChange={() => setFieldValue('schedule_is_active', !schedule_is_active)}
+            />
+          </StyledCheckboxWrapper>
+
+          <StyledCheckboxWrapper>
+            <Checkbox
               label='Create session for each run'
               kind='secondary'
               name='create_session_on_run'
@@ -122,7 +137,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
           <StyledCheckboxWrapper>
             <Checkbox
-              label='Run Immediately'
+              label='Recurring'
               kind='secondary'
               name='run_immediately'
               checked={run_immediately}
@@ -130,15 +145,13 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
             />
           </StyledCheckboxWrapper>
 
-          <CustomField formik={formik} formikField={'tasks'} placeholder={'Task'} />
-
           <StyledCheckboxWrapper>
             <Checkbox
-              label='Active'
+              label='Run Immediately'
               kind='secondary'
-              name='schedule_is_active'
-              checked={schedule_is_active}
-              onChange={() => setFieldValue('schedule_is_active', !schedule_is_active)}
+              name='run_immediately'
+              checked={run_immediately}
+              onChange={() => setFieldValue('run_immediately', !run_immediately)}
             />
           </StyledCheckboxWrapper>
         </StyledInputWrapper>

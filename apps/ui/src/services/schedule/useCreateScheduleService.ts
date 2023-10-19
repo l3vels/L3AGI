@@ -10,8 +10,9 @@ export interface ScheduleInput {
   cron_expression?: string
   schedule_type?: string
   agent_id?: string
-  group_id?: string
+  team_id?: string
   chat_id?: string
+  group_id?: string
   create_session_on_run: boolean
   run_immediately: boolean
   tasks: string[]
@@ -29,8 +30,9 @@ export const useCreateScheduleService = () => {
       cron_expression,
       schedule_type,
       agent_id,
-      group_id,
+      team_id,
       chat_id,
+      group_id,
       run_immediately,
       create_session_on_run,
       tasks,
@@ -51,8 +53,9 @@ export const useCreateScheduleService = () => {
           },
           configs: {
             agent_id,
-            group_id,
+            team_id,
             chat_id,
+            group_id,
             create_session_on_run,
             run_immediately,
             tasks,

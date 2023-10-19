@@ -1,5 +1,7 @@
-from pydantic import BaseModel, UUID4
 from typing import List, Optional
+
+from pydantic import UUID4, BaseModel
+
 from typings.user import UserOutput
 
 
@@ -20,7 +22,9 @@ class ConfigInput(BaseModel):
     create_session_on_run: Optional[bool]
 
     agent_id: Optional[UUID4]
-    # group_id: Optional[UUID4]
+    team_id: Optional[UUID4]
+    chat_id: Optional[UUID4]
+    group_id: Optional[UUID4]
 
 
 class ScheduleConfigInput(BaseModel):
@@ -35,7 +39,9 @@ class ConfigsOutput(BaseModel):
     create_session_on_run: Optional[bool]
 
     agent_id: Optional[UUID4]
-    # group_id: Optional[UUID4]
+    team_id: Optional[UUID4]
+    chat_id: Optional[UUID4]
+    group_id: Optional[UUID4]
 
 
 class ScheduleOutput(BaseModel):
