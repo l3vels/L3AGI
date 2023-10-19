@@ -1,13 +1,11 @@
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
+import { useGroupByIdService } from 'plugins/contact/services/group/useGroupByIdService'
+import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
+import { useUpdateGroupService } from 'plugins/contact/services/group/useUpdateGroupService'
 
 import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-
-import { useGroupByIdService } from 'services/group/useGroupByIdService'
-import { useGroupsService } from 'services/group/useGroupsService'
-import { useUpdateGroupService } from 'services/group/useUpdateGroupService'
-import { groupValidationSchema } from 'utils/validationsSchema'
 
 export const useEditGroup = () => {
   const { setToast } = useContext(ToastContext)
@@ -59,7 +57,7 @@ export const useEditGroup = () => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    validationSchema: groupValidationSchema,
+    // validationSchema: groupValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

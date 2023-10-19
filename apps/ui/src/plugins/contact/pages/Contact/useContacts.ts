@@ -1,9 +1,8 @@
-import { useContactsService } from 'services/contact/useContactsService'
-
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
+import { useContactsService } from 'plugins/contact/services/contact/useContactsService'
+import { useDeleteContactByIdService } from 'plugins/contact/services/contact/useDeleteContactService'
 import { useContext } from 'react'
-import { useDeleteContactByIdService } from 'services/contact/useDeleteContactService'
 
 export const useContacts = () => {
   const { data: contacts, refetch: refetchContacts } = useContactsService()

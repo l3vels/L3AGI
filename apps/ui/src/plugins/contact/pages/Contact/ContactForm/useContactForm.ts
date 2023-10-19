@@ -1,4 +1,4 @@
-import { useGroupsService } from 'services/group/useGroupsService'
+import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
 
 export const useContactForm = () => {
   const { data: groups, refetch: refetchGroups } = useGroupsService()

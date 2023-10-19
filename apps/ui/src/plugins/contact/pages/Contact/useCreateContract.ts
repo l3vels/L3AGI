@@ -1,13 +1,12 @@
 import { useContext, useState } from 'react'
 
-import { useContactsService } from 'services/contact/useContactsService'
-
 import { ToastContext } from 'contexts'
 
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import { useCreateContactService } from 'services/contact/useCreateContactService'
-import { contactValidationSchema } from 'utils/validationsSchema'
+
+import { useCreateContactService } from 'plugins/contact/services/contact/useCreateContactService'
+import { useContactsService } from 'plugins/contact/services/contact/useContactsService'
 
 export const useCreateContact = () => {
   const navigate = useNavigate()
@@ -60,7 +59,7 @@ export const useCreateContact = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    validationSchema: contactValidationSchema,
+    // validationSchema: contactValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

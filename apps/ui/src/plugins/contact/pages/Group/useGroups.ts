@@ -1,9 +1,8 @@
-import { useGroupsService } from 'services/group/useGroupsService'
-
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
+import { useDeleteGroupByIdService } from 'plugins/contact/services/group/useDeleteGroupService'
+import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
 import { useContext } from 'react'
-import { useDeleteGroupByIdService } from 'services/group/useDeleteGroupService'
 
 export const useGroups = () => {
   const { setToast } = useContext(ToastContext)

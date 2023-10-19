@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
-import { useCreateGroupService } from 'services/group/useCreateGroupService'
-import { useGroupsService } from 'services/group/useGroupsService'
 
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import { groupValidationSchema } from 'utils/validationsSchema'
+import { useCreateGroupService } from 'plugins/contact/services/group/useCreateGroupService'
+import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
 
 export const useCreateGroup = () => {
   const navigate = useNavigate()
@@ -55,7 +54,7 @@ export const useCreateGroup = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    validationSchema: groupValidationSchema,
+    // validationSchema: groupValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

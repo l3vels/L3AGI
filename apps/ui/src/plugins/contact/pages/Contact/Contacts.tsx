@@ -12,8 +12,6 @@ import {
 } from 'pages/Home/homeStyle.css'
 import { useContacts } from './useContacts'
 
-import { StyledTableButtons } from 'pages/Group/Groups'
-
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -21,6 +19,7 @@ import {
 
 import { useMemo } from 'react'
 import Table from 'components/Table'
+import { StyledTableButtons } from '../Group/Groups'
 
 const Contacts = () => {
   const navigate = useNavigate()
