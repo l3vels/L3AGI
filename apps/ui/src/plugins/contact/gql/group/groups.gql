@@ -1,0 +1,7 @@
+query getGroups @api(name: "ai") {
+  getGroups @rest(type: "Group", path: "/group", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+  }
+}

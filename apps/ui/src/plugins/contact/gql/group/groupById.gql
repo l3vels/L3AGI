@@ -1,0 +1,7 @@
+query groupById($id: id!) @api(name: "ai") {
+  groupById(id: $id) @rest(type: "Group", path: "/group/{args.id}", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+  }
+}

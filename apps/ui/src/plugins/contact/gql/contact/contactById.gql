@@ -1,0 +1,11 @@
+query contactById($id: id!) @api(name: "ai") {
+  contactById(id: $id)
+    @rest(type: "Contact", path: "/contact/{args.id}", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+    group_id
+    email
+    phone
+  }
+}
