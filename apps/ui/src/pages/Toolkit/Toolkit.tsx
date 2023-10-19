@@ -1,4 +1,5 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -17,6 +18,7 @@ import { useEffect, useState } from 'react'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
+  const { t } = useTranslation()
   const { data: tools } = useToolsService()
 
   const { refetchConfigs, configsData } = useToolView({})
@@ -42,10 +44,8 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Toolkits</StyledSectionTitle>
-          <StyledSectionDescription>
-            Discover the complete range of tools available for your agents and teams.
-          </StyledSectionDescription>
+          <StyledSectionTitle>{`${t('toolkit')}`}</StyledSectionTitle>
+          <StyledSectionDescription>{t('toolkit-description')}</StyledSectionDescription>
         </div>
       </StyledHeaderGroup>
 
@@ -65,7 +65,7 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
                   isReadOnly={isPublic}
                   isDisabled={!tool.is_active && !isPublic}
                   title={tool.name}
-                  subTitle={!tool.is_active && !isPublic ? 'Coming Soon' : ''}
+                  subTitle={!tool.is_active && !isPublic ? `${t('comingSoon')}` : ''}
                   onClick={() => {
                     if (isPublic) return
                     navigate(`/toolkits/${tool.slug}`)

@@ -26,7 +26,7 @@ const Datasource = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>{`${t('datasource')}s`}</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('datasource')}`}</StyledSectionTitle>
           <StyledSectionDescription>{`${t('datasource-description')}`}</StyledSectionDescription>
         </div>
         <div>
