@@ -65,7 +65,7 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
                   isReadOnly={isPublic}
                   isDisabled={!tool.is_active && !isPublic}
                   title={tool.name}
-                  subTitle={!tool.is_active && !isPublic ? 'Coming Soon' : ''}
+                  subTitle={!tool.is_active && !isPublic ? `${t('comingSoon')}` : ''}
                   onClick={() => {
                     if (isPublic) return
                     navigate(`/toolkits/${tool.slug}`)
