@@ -5,6 +5,7 @@ from utils.type import convert_value_to_type
 from utils.configs.default import default_configs
 from utils.configs.scrapper import scrapper_configs
 from utils.configs.heyyou import heyyou_configs
+from utils.configs.heyyou import levanion_configs
 
 
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
@@ -14,6 +15,8 @@ def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
         account_model.configs = scrapper_configs
     elif account_model.name == 'heyyou':
         account_model.configs = heyyou_configs
+    elif account_model.name == 'levan':
+        account_model.configs = levanion_configs
     else:
         account_model.configs = default_configs
         
