@@ -17,6 +17,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
+import { t } from 'i18next'
 
 const EditDatasourceForm = () => {
   const { formik, isLoading } = useEditDatasource()
@@ -27,9 +28,9 @@ const EditDatasourceForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Edit Datasource</StyledSectionTitle>
+              <StyledSectionTitle>{`${t('edit-datasource')}`}</StyledSectionTitle>
               <StyledSectionDescription>
-                Here is your datasource, a collection of databases, APIs, files, and more.
+                {`${t('datasource-description')}`}
               </StyledSectionDescription>
             </div>
 
