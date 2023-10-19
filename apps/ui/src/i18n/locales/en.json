@@ -136,9 +136,18 @@
   "home": "Home",
   "chat": "Chat",
   "discovery": "Discovery",
-  "models": "Models",
+  "model": "Model",
   "schedule": "Schedule",
-  "toolkits": "Toolkits",
+  "toolkit": "Toolkit",
   "welcome-message": "BUILD TEAMS OF AI AGENTS",
-  "welcome-message-description": "Open-source tool that enables AI agents to collaborate as effectively as human teams"
+  "welcome-message-description": "Open-source tool that enables AI $t(agent)s to collaborate as effectively as human $t(team)s",
+  "agent-description": "Here are all your $t(agent)s, managing tasks and operations.",
+  "team-description": "Here are all your $t(agent)s, managing tasks and operations.",
+  "datasource-description": "Here is your $t(datasource), a collection of databases, APIs, files, and more.",
+  "add-agent": "Add $t(agent)",
+  "add-team": "Add $t(team)",
+  "add-datasource": "Add $t(datasource)",
+  "edit-agent": "Edit $t(agent)",
+  "edit-team": "Edit $t(team)",
+  "edit-datasource": "Edit $t(datasource)"
 }

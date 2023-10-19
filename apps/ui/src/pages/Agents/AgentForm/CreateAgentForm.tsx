@@ -7,7 +7,7 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import {
   StyledHeaderGroup,
-  // StyledSectionDescription,
+  StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
@@ -17,6 +17,7 @@ import BackButton from 'components/BackButton'
 // import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 import { useCreateAgent } from '../useCreateAgent'
+import { t } from 'i18next'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useCreateAgent()
@@ -28,10 +29,8 @@ const CreateAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Create Agent</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-              Here are all your agents, managing tasks and operations.
-            </StyledSectionDescription> */}
+            <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
+            {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
           </div>
 
           <StyledButtonWrapper>

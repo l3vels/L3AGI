@@ -22,6 +22,7 @@ import {
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { t } from 'i18next'
 
 const MainNavigation = () => {
   const {
@@ -68,7 +69,7 @@ const MainNavigation = () => {
         <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
           <StyledAboutIcon size={40} />
           <TypographySecondary
-            value={home || 'Home'}
+            value={t('home')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -79,7 +80,7 @@ const MainNavigation = () => {
         <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
           <StyledRobotIcon size={40} />
           <TypographySecondary
-            value={chat || 'Multi-Agents'}
+            value={t('chat')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -100,7 +101,7 @@ const MainNavigation = () => {
         >
           <StyledValueOutlineIcon size={40} />
           <TypographySecondary
-            value={datasource || 'Data sources'}
+            value={t('datasource')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -114,7 +115,7 @@ const MainNavigation = () => {
         >
           <StyledGamesIcon size={40} />
           <TypographySecondary
-            value={toolkits || 'Toolkits'}
+            value={t('toolkit')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -125,7 +126,7 @@ const MainNavigation = () => {
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
           <TypographySecondary
-            value={models || 'Models'}
+            value={t('model')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -139,7 +140,7 @@ const MainNavigation = () => {
         >
           <StyledMyWeekIcon size={30} />
           <TypographySecondary
-            value={schedule || 'Schedules'}
+            value={t('schedule')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -153,7 +154,7 @@ const MainNavigation = () => {
         >
           <StyledSearchOutlineIcon size={40} />
           <TypographySecondary
-            value={discovery || 'Discover'}
+            value={t('discovery')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

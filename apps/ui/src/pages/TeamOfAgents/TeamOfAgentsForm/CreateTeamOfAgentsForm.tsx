@@ -17,6 +17,7 @@ import { useCreateTeamOfAgents } from '../useCreateTeamOfAgents'
 import BackButton from 'components/BackButton'
 import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
+import { t } from 'i18next'
 
 const CreateTeamOfAgentsForm = () => {
   const { formik, handleSubmit, isLoading } = useCreateTeamOfAgents()
@@ -29,7 +30,7 @@ const CreateTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Add Team</StyledSectionTitle>
+              <StyledSectionTitle>{`${t('add-team')}`}</StyledSectionTitle>
               {/* <StyledSectionDescription>
                 Create and manage your team of AI agents for interactive experiences.
               </StyledSectionDescription> */}

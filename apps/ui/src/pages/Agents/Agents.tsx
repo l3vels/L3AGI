@@ -36,10 +36,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
             size='medium'
             value={`${t('agent').toUpperCase()}S`}
           />
-          <StyledSectionDescription>
-            {` Here are all your ${t('agent')}s, managing tasks and
-            operations.`}
-          </StyledSectionDescription>
+          <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription>
         </StyledMainHeaderWrapper>
         {/* <div>
 
@@ -55,7 +52,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
-              Create {t('agent')}
+              {t('add-agent')}
             </ButtonPrimary>
           )}
         </div>

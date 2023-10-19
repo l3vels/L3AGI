@@ -17,6 +17,7 @@ import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/C
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { t } from 'i18next'
 
 const EditTeamOfAgentsForm = () => {
   const { formik, handleSubmit, isLoading, handleNavigation } = useEditTeamOfAgents()
@@ -27,10 +28,10 @@ const EditTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Edit Team Of Agents</StyledSectionTitle>
-              <StyledSectionDescription>
+              <StyledSectionTitle>{`${t('edit-team')}`}</StyledSectionTitle>
+              {/* <StyledSectionDescription>
                 Edit and manage your team of AI agents for interactive experiences
-              </StyledSectionDescription>
+              </StyledSectionDescription> */}
             </div>
 
             <StyledButtonWrapper>

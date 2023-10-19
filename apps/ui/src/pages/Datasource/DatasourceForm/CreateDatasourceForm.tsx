@@ -16,6 +16,7 @@ import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/C
 import { useCreateDatasource } from '../useCreateDatasource'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
+import { t } from 'i18next'
 
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()
@@ -26,9 +27,9 @@ const CreateDatasourceForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Add Datasource</StyledSectionTitle>
+              <StyledSectionTitle>{`${t('add-datasource')}`}</StyledSectionTitle>
               <StyledSectionDescription>
-                Here is your datasource, a collection of databases, APIs, files, and more.
+                {`${t('datasource-description')}`}
               </StyledSectionDescription>
             </div>
 
