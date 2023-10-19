@@ -49,8 +49,12 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     navigate(`/agents/${agent?.id}/edit-agent`)
   }
 
-  const handleCreateChat = async () => {
+  const handleCreateChat = () => {
     openModal({ name: 'chat-link-modal', data: { agentId: agent.id } })
+  }
+
+  const handleScheduleRun = () => {
+    openModal({ name: 'schedule-run-modal', data: { agentId: agent.id } })
   }
 
   return (
@@ -81,6 +85,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
                     <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary>
+                    <ButtonTertiary onClick={handleScheduleRun}>Schedule Run</ButtonTertiary>
                     <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
                       Delete Agent
                     </ButtonTertiary>

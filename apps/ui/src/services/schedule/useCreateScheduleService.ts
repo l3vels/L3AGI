@@ -4,13 +4,17 @@ import CREATE_SCHEDULE_GQL from '../../gql/schedule/createSchedule.gql'
 
 export interface ScheduleInput {
   name: string
-  description: string
-  is_active: boolean
-  max_daily_budget: number
-  cron_expression: string
-  schedule_type: string
-  agent_id: string
-  group_id: string
+  description?: string
+  is_active?: boolean
+  max_daily_budget?: number
+  cron_expression?: string
+  schedule_type?: string
+  agent_id?: string
+  group_id?: string
+  chat_id?: string
+  create_session_on_run: boolean
+  run_immediately: boolean
+  tasks: string[]
 }
 
 export const useCreateScheduleService = () => {
@@ -26,6 +30,10 @@ export const useCreateScheduleService = () => {
       schedule_type,
       agent_id,
       group_id,
+      chat_id,
+      run_immediately,
+      create_session_on_run,
+      tasks,
     } = input
 
     const {
@@ -44,6 +52,10 @@ export const useCreateScheduleService = () => {
           configs: {
             agent_id,
             group_id,
+            chat_id,
+            create_session_on_run,
+            run_immediately,
+            tasks,
           },
         },
       },

@@ -34,7 +34,7 @@ const CreateScheduleForm = () => {
           <StyledButtonWrapper>
             <BackButton />
             <ButtonPrimary
-              onClick={formik?.handleSubmit}
+              onClick={formik.handleSubmit}
               size={Button.sizes.SMALL}
               disabled={isLoading}
             >

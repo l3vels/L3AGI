@@ -28,14 +28,18 @@ export const useCreateSchedule = () => {
     schedule_max_daily_budget: 0.1,
     schedule_cron_expression: '* * * * *',
     schedule_type: 'Outbound Calling',
-    schedule_agent_id: '',
-    schedule_group_id: '',
+    schedule_agent_id: undefined,
+    schedule_group_id: undefined,
+
+    tasks: [],
+    run_immediately: false,
+    create_session_on_run: true,
   }
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
     try {
-      const scheduleInput = {
+      await createScheduleService({
         name: values.schedule_name,
         description: values.schedule_description,
         is_active: values.schedule_is_active,
@@ -44,9 +48,11 @@ export const useCreateSchedule = () => {
         schedule_type: values.schedule_type,
         agent_id: values.schedule_agent_id,
         group_id: values.schedule_group_id,
-      }
-
-      await createScheduleService(scheduleInput)
+        create_session_on_run: values.create_session_on_run,
+        run_immediately: values.run_immediately,
+        // chat_id: values.chat_id,
+        tasks: values.tasks,
+      })
 
       await refetchSchedule()
       setToast({

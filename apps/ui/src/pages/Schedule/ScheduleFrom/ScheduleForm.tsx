@@ -3,9 +3,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
 import FormikTextField from 'components/TextFieldFormik'
-import {
-  StyledTextareaWrapper,
-} from 'pages/Agents/AgentForm/AgentForm'
+import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import TypographyPrimary from 'components/Typography/Primary'
 import { useScheduleForm } from './useScheduleForm'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
@@ -13,6 +11,8 @@ import styled from 'styled-components'
 
 import cronstrue from 'cronstrue'
 import { useEffect, useState } from 'react'
+import CustomField from 'pages/Agents/AgentForm/components/CustomField'
+import DatePickerField from 'components/DatePicker/DatePicker'
 
 const ScheduleForm = ({ formik }: { formik: any }) => {
   const { values, setFieldValue } = formik
@@ -23,6 +23,9 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
     schedule_type,
     schedule_is_active,
     schedule_cron_expression,
+    tasks,
+    run_immediately,
+    create_session_on_run,
   } = values
 
   const onDescriptionChange = (value: string) => {
@@ -48,15 +51,6 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
       <StyledForm>
         <StyledInputWrapper>
           <FormikTextField name='schedule_name' placeholder='Name' label='Name' />
-
-          <AgentDropdown
-            label={'Schedule Type'}
-            fieldName={'schedule_type'}
-            setFieldValue={setFieldValue}
-            fieldValue={schedule_type}
-            options={scheduleTypeOptions}
-            optionSize={'small'}
-          />
 
           <StyledTextareaWrapper>
             <TypographyPrimary
@@ -98,22 +92,45 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
               options={agentOptions}
               optionSize={'small'}
             />
-            <AgentDropdown
+
+            {/* <AgentDropdown
               label={'Group'}
               fieldName={'schedule_group_id'}
               setFieldValue={setFieldValue}
               fieldValue={schedule_group_id}
               options={groupOptions}
               optionSize={'small'}
-            />
+            /> */}
           </StyledDoubleRow>
 
-          <FormikTextField
+          {/* <FormikTextField
             type='number'
             name='schedule_max_daily_budget'
             placeholder='$0.00'
             label='Max Daily Budget'
-          />
+          /> */}
+
+          <StyledCheckboxWrapper>
+            <Checkbox
+              label='Create session for each run'
+              kind='secondary'
+              name='create_session_on_run'
+              checked={create_session_on_run}
+              onChange={() => setFieldValue('create_session_on_run', !create_session_on_run)}
+            />
+          </StyledCheckboxWrapper>
+
+          <StyledCheckboxWrapper>
+            <Checkbox
+              label='Run Immediately'
+              kind='secondary'
+              name='run_immediately'
+              checked={run_immediately}
+              onChange={() => setFieldValue('run_immediately', !run_immediately)}
+            />
+          </StyledCheckboxWrapper>
+
+          <CustomField formik={formik} formikField={'tasks'} placeholder={'Task'} />
 
           <StyledCheckboxWrapper>
             <Checkbox
@@ -170,14 +187,12 @@ export const StyledForm = styled.div`
   justify-content: center;
 `
 
-
 export const StyledRoot = styled.div`
   width: 100%;
 
   height: 100%;
   overflow-y: scroll;
 `
-
 
 export const StyledInputWrapper = styled.div`
   display: flex;
@@ -191,4 +206,9 @@ export const StyledInputWrapper = styled.div`
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
+`
+
+const StyledDatePicker = styled(DatePickerField)`
+  width: 400px;
+  position: relative;
 `

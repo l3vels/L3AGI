@@ -82,6 +82,7 @@ import ChatLinkModal from 'modals/ChatLinkModal'
 import Schedule from 'pages/Schedule'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
+import ScheduleRunModal from 'modals/ScheduleRunModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -288,6 +289,8 @@ const Route = () => {
       <SettingsModal />
       <ToolkitModal />
       <ChatLinkModal />
+      <ScheduleRunModal />
+
       <CommandMenu
         open={cmdkOpen}
         setCmdkOpen={setCmdkOpen}
