@@ -12,6 +12,7 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import AiMessageMarkdown from './AiMessageMarkdown'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -69,7 +70,8 @@ const HumanMessage = ({
           <StyledMessageText>
             {fileUrlMatch && <UploadedFile name={fileName} onClick={handleFileClick} />}
 
-            <HumanMessageText textArray={wordArray} />
+            {/* <HumanMessageText textArray={wordArray} /> */}
+            <AiMessageMarkdown children={messageText} />
           </StyledMessageText>
         </StyledMainContent>
       </StyledMessageWrapper>
