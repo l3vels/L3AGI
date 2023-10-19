@@ -175,6 +175,7 @@
   "agent-description": "Here are all your $t(agent)s, managing tasks and operations.",
   "team-description": "Here are all your $t(team)s, managing tasks and operations.",
   "datasource-description": "Here is your $t(datasource), a collection of databases, APIs, files, and more.",
+  "toolkit-description": "Discover the complete range of tools available for your agents and teams.",
   "add-agent": "Add $t(agent)",
   "add-team": "Add $t(team)",
   "add-datasource": "Add $t(datasource)",
@@ -203,6 +204,5 @@
   "compact-accumulate": "$t(compact) $t(accumulate)",
   "chunk-size": "Enter Chunk Size",
   "confirm": "Confirm",
-  "processing": "Processing...",
-  "toolkits": "$t(toolkit)s"
+  "processing": "Processing..."
 }
