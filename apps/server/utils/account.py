@@ -5,7 +5,7 @@ from utils.type import convert_value_to_type
 from utils.configs.default import default_configs
 from utils.configs.scrapper import scrapper_configs
 from utils.configs.heyyou import heyyou_configs
-from utils.configs.heyyou import levanion_configs
+from utils.configs.levanion_configs import levanion_configs
 
 
 def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
