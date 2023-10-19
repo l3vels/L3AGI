@@ -1,4 +1,5 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -17,16 +18,15 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
+  const { t } = useTranslation()
   const { data: models } = useModelsService()
 
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Models</StyledSectionTitle>
-          <StyledSectionDescription>
-            Discover the complete range of models available for your agents and teams.
-          </StyledSectionDescription>
+          <StyledSectionTitle>{`${t('model')}`}</StyledSectionTitle>
+          <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
         </div>
         {/* <ButtonPrimary size={Button.sizes.SMALL}>Add model</ButtonPrimary> */}
       </StyledHeaderGroup>
