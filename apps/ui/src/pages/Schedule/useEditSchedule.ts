@@ -20,18 +20,20 @@ export const useEditSchedule = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const { refetch: refetchSchedules } = useSchedulesService()
-  const { data: scheduleById } = useScheduleByIdService({ id: scheduleId || '' })
+
+  const { data: scheduleById } = useScheduleByIdService({ id: scheduleId })
 
   const [updateSchedule] = useUpdateScheduleService()
 
   const schedule = scheduleById?.schedule
   const configs = scheduleById?.configs
 
-  const getAgentType = (schedule: any) => {
-    if (schedule.agent_id) return 'agent'
-    if (schedule.team_id) return 'team'
-    if (schedule.chat_id) return 'chat'
-    return ''
+  const getAgentType = () => {
+    if (!configs) return
+
+    if (configs.agent_id) return 'agent'
+    if (configs.team_id) return 'team'
+    if (configs.chat_id) return 'chat'
   }
 
   const defaultValues = {
@@ -44,11 +46,11 @@ export const useEditSchedule = () => {
     schedule_agent_id: configs?.agent_id,
     schedule_group_id: configs?.group_id,
 
-    agent_type: getAgentType(schedule),
+    agent_type: getAgentType(),
     tasks: configs?.tasks,
     is_recurring: configs?.is_recurring,
     create_session_on_run: configs?.create_session_on_run,
-    start_date: configs?.start_date?.split('T')[0],
+    start_date: schedule?.start_date?.split('T')[0],
     interval: schedule?.interval?.split(' ')[0],
     interval_unit: schedule?.interval?.split(' ')[1],
   }
