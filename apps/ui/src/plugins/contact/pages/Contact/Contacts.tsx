@@ -42,19 +42,19 @@ const Contacts = () => {
         accessor: 'name',
       },
       {
-        Header: 'Description',
-        accessor: 'description',
+        Header: 'Phone',
+        accessor: 'phone',
       },
       {
         Header: 'Email',
         accessor: 'email',
       },
       {
-        Header: 'Phone',
-        accessor: 'phone',
+        Header: 'Description',
+        accessor: 'description',
       },
       {
-        Header: () => <div />,
+        Header: 'Actions',
         accessor: 'id',
         maxWidth: 100,
         Cell: ({ cell }: any) => {
