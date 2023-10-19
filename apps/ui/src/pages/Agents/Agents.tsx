@@ -18,6 +18,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { t } from 'i18next'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
   const { t } = useTranslation()
@@ -32,10 +33,12 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <StyledMainHeaderWrapper>
-          <HeadingPrimary type={Heading.types.h1} size='medium' value='AGENTS' />
-          <StyledSectionDescription>
-            {t('here-are-all-your-agents-managing-tasks-and-operations')}
-          </StyledSectionDescription>
+          <HeadingPrimary
+            type={Heading.types.h1}
+            size='medium'
+            value={`${t('agent').toUpperCase()}S`}
+          />
+          <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription>
         </StyledMainHeaderWrapper>
         {/* <div>
 
@@ -51,7 +54,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
-              {t('createAgent')}
+              {t('add-agent')}
             </ButtonPrimary>
           )}
         </div>

@@ -17,6 +17,7 @@ import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/C
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { t } from 'i18next'
 
 const EditTeamOfAgentsForm = () => {
   const { t } = useTranslation()
@@ -28,8 +29,10 @@ const EditTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>{t('edit-team-of-agents')}</StyledSectionTitle>
-              <StyledSectionDescription>{t('edit-and-mange-team')}</StyledSectionDescription>
+              <StyledSectionTitle>{`${t('edit-team')}`}</StyledSectionTitle>
+              {/* <StyledSectionDescription>
+                Edit and manage your team of AI agents for interactive experiences
+              </StyledSectionDescription> */}
             </div>
 
             <StyledButtonWrapper>

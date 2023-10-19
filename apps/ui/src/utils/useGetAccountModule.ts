@@ -5,6 +5,7 @@ export const useGetAccountModule = () => {
 
   const modules = account?.configs?.modules
   const naming = account?.configs?.naming
+  const welcomeMessage = modules?.home?.welcome_message
 
   const getMainModule = (moduleName: string) => {
     let values
@@ -119,6 +120,7 @@ export const useGetAccountModule = () => {
   }
 
   const moduleNames = {
+    welcome: welcomeMessage,
     chat: naming?.chat,
     home: naming?.home,
     agent: naming?.agent,

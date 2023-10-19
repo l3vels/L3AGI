@@ -4,9 +4,7 @@ from pathlib import Path
 from typing import List, Optional
 from uuid import UUID, uuid4
 
-import pinecone
 import s3fs
-import weaviate
 from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
                          SummaryIndex, TreeIndex, VectorStoreIndex,
                          load_index_from_storage)
@@ -88,6 +86,8 @@ class FileDatasourceRetriever:
                 embedding_dimensions=1536,
             )
         elif self.vector_store == VectorStoreProvider.PINECONE.value:
+            import pinecone
+
             # Pinecone only supports alphanumeric characters. Max length 40
             index_name = UUID(self.datasource_id).hex
 
@@ -102,6 +102,8 @@ class FileDatasourceRetriever:
                 pinecone_index=pinecone_index,
             )
         elif self.vector_store == VectorStoreProvider.WEAVIATE.value:
+            import weaviate
+
             auth_config = weaviate.AuthApiKey(api_key=self.settings.weaviate_api_key)
 
             # Weaviate requires index name to start with uppercase letter
