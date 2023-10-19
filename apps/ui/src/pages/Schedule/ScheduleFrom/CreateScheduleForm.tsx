@@ -18,10 +18,10 @@ import { useCreateSchedule } from '../useCreateSchedule'
 import ScheduleForm from './ScheduleForm'
 
 type CreateScheduleFormProps = {
-  initialValues: Record<string, unknown>
+  initialValues?: Record<string, unknown>
 }
 
-const CreateScheduleForm = ({ initialValues }: CreateScheduleFormProps) => {
+const CreateScheduleForm = ({ initialValues = {} }: CreateScheduleFormProps) => {
   const { formik, isLoading } = useCreateSchedule({ initialValues })
 
   return (
