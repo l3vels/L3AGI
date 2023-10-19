@@ -176,101 +176,51 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
   })
 
   return (
-    <StyledCommandDialog open={open} className='cmdk_root' ref={componentRef}>
-      <StyledCommandWrapper
-        className='cmdk_wrapper'
-        onKeyDown={e => {
-          // Escape goes to previous page
-          // Backspace goes to previous page when search is empty
-          if (e.key === 'Escape' || (e.key === 'Backspace' && !search)) {
-            e.preventDefault()
-            setPages((pages: any) => pages.slice(0, -1))
-          }
-          if (pages.length === 0 && e.key === 'Escape') {
-            setCmdkOpen(false)
-            setSearch('') // Clear the search when the menu is closed
-          }
-        }}
-        filter={(value, search) => {
-          if (search.trim() === '') {
-            return 1
-          }
-          return value.toLowerCase().startsWith(search.toLowerCase().slice(0, 3)) ? 1 : 0
-        }}
-      >
-        {/* <TextField /> */}
-        <StyledCommandInput
-          value={search}
-          onValueChange={value => setSearch(value)}
-          // eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus
-          placeholder='Search, create or ask anything'
-        />
-        <StyledCommandList>
-          {!page && (
-            <>
-              {groupedItems &&
-                Object.entries(groupedItems)?.map(([groupName, items]: [string, any[]], index) => (
-                  <Command.Group key={index}>
-                    {items?.map((item, itemIndex) => (
-                      <CommandItem
-                        key={item.id}
-                        index={itemIndex}
-                        name={item.name}
-                        handleSelect={() => onHandleSelect(item)}
-                        groupName={groupName}
-                        itemIcon={item.icon}
-                      />
-                    ))}
-                  </Command.Group>
-                ))}
-            </>
-          )}
-
-          {page === 'agents' && (
-            <Command.Group>
-              <StyledCommandItemHeader marginTop={32}>
-                <StyledSvgContainer type='games'>
-                  <Games />
-                </StyledSvgContainer>
-                <h2>Games</h2>
-              </StyledCommandItemHeader>
-            </Command.Group>
-          )}
-          {page === 'games' && (
-            <Command.Group>
-              <StyledCommandItemHeader marginTop={32}>
-                <StyledSvgContainer type='games'>
-                  <Games />
-                </StyledSvgContainer>
-                <h2>Games</h2>
-              </StyledCommandItemHeader>
-            </Command.Group>
-          )}
-
-          {page === 'collections' && (
-            <Command.Group>
-              <StyledCommandItemHeader marginTop={32}>
-                <StyledSvgContainer type='games'>
-                  <Games />
-                </StyledSvgContainer>
-                <h2>Collections</h2>
-              </StyledCommandItemHeader>
-            </Command.Group>
-          )}
-
-          {page === 'assets' && (
-            <Command.Group>
-              <StyledCommandItemHeader marginTop={32}>
-                <StyledSvgContainer type='games'>
-                  <Games />
-                </StyledSvgContainer>
-                <h2>Assets</h2>
-              </StyledCommandItemHeader>
-            </Command.Group>
-          )}
-        </StyledCommandList>
-      </StyledCommandWrapper>
+    <StyledCommandDialog
+      open={open}
+      className='cmdk_root'
+      ref={componentRef}
+      onKeyDown={e => {
+        // Escape goes to previous page
+        // Backspace goes to previous page when search is empty
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          setPages((pages: any) => pages.slice(0, -1))
+        }
+        if (pages.length === 0 && e.key === 'Escape') {
+          setCmdkOpen(false)
+          setSearch('') // Clear the search when the menu is closed
+        }
+      }}
+    >
+      <StyledCommandInput
+        // value={search}
+        // onValueChange={value => setSearch(value)}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus
+        placeholder='Search, create or ask anything'
+      />
+      <StyledCommandList>
+        <>
+          <Command.Group>
+            {groupedItems &&
+              Object.entries(groupedItems)?.map(([groupName, items]: [string, any[]], index) => (
+                <>
+                  {items?.map((item, itemIndex) => (
+                    <CommandItem
+                      key={item.id}
+                      index={itemIndex}
+                      name={item.name}
+                      handleSelect={() => onHandleSelect(item)}
+                      groupName={groupName}
+                      itemIcon={item.icon}
+                    />
+                  ))}
+                </>
+              ))}
+          </Command.Group>
+        </>
+      </StyledCommandList>
     </StyledCommandDialog>
   )
 }

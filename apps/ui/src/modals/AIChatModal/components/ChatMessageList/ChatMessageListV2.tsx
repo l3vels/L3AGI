@@ -297,6 +297,6 @@ const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
   /* width: 100%; */
   opacity: 0;
-  height: 30px;
-  max-height: 30px;
+  height: 20px;
+  max-height: 20px;
 `
