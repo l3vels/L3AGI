@@ -3,10 +3,11 @@ import { useContext, useState } from 'react'
 import { ToastContext } from 'contexts'
 
 import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useSchedulesService } from 'services/schedule/useSchedulesService'
 import { useCreateScheduleService } from 'services/schedule/useCreateScheduleService'
 import { scheduleValidationSchema } from 'utils/validationsSchema'
+import { useModal } from 'hooks'
 
 type UseCreateScheduleProps = {
   initialValues: Record<string, unknown>
@@ -14,6 +15,8 @@ type UseCreateScheduleProps = {
 
 export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { closeModal } = useModal()
 
   const { setToast } = useContext(ToastContext)
 
@@ -76,7 +79,12 @@ export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => 
         type: 'positive',
         open: true,
       })
-      navigate('/schedules')
+
+      if (location.pathname.includes('schedules')) {
+        navigate('/schedules')
+      } else {
+        closeModal('schedule-run-modal')
+      }
     } catch (e) {
       setToast({
         message: 'Failed To Add Schedule!',
