@@ -1,4 +1,5 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
@@ -22,6 +23,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
+  const { t } = useTranslation()
   const { tool, formik, handleSubmit, isLoading } = useToolView({
     toolSlug: toolSlug,
   })
@@ -40,7 +42,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
         {!toolSlug && (
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Toolkit</StyledSectionTitle>
+              <StyledSectionTitle>{t('toolkit')}</StyledSectionTitle>
               {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
             </div>
             <StyledButtonWrapper>
@@ -51,7 +53,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                   disabled={isLoading}
                   size={Button.sizes.SMALL}
                 >
-                  {isLoading ? <Loader size={22} /> : 'Save'}
+                  {isLoading ? <Loader size={22} /> : `${t('save')}`}
                 </ButtonPrimary>
               )}
             </StyledButtonWrapper>
@@ -62,13 +64,13 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
             <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
             <StyledTextWrapper>
               <TypographySecondary
-                value={`By`}
+                value={t('by')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
               />
 
               <TypographySecondary
-                value={`L3`}
+                value={t('l3')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
                 style={{ textDecoration: 'underline' }}
@@ -111,7 +113,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                   disabled={isLoading}
                   size={Button.sizes.SMALL}
                 >
-                  {isLoading ? <Loader size={22} /> : 'Save'}
+                  {isLoading ? <Loader size={22} /> : `${t('save')}`}
                 </ButtonPrimary>
               </StyledModalButton>
             )}

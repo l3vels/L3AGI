@@ -204,5 +204,7 @@
   "compact-accumulate": "$t(compact) $t(accumulate)",
   "chunk-size": "Enter Chunk Size",
   "confirm": "Confirm",
-  "processing": "Processing..."
+  "processing": "Processing...",
+  "l3": "L3",
+  "by": "By"
 }
