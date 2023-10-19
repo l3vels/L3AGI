@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -23,13 +24,14 @@ const ModelCard = ({
   isDisabled,
   isReadOnly = false,
 }: ModelCardProps) => {
+  const { t } = useTranslation()
   return (
     <StyledRoot onClick={onClick} bgImg={''} isDisabled={isDisabled} isReadOnly={isReadOnly}>
       <StyledWrapper>
         <StyledImg src={logoSrc} />
         <StyledTextWrapper>
           <TypographySecondary
-            value={`By`}
+            value={t('by')}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
           />
