@@ -70,7 +70,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
     <StyledChatLinkModal
       onClose={() => closeModal('chat-link-modal')}
       show
-      backgroundColor='dark'
+      backgroundColor='light'
       hideCloseButton={true}
       title={
         chatLink ? (
@@ -108,7 +108,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
               </StyledLinkWrapper>
             </>
           ) : (
-            <FormikTextField name='chat_name' placeholder='Name' label='Name' />
+            <FormikTextField focus name='chat_name' placeholder='Name' label='Name' />
           )}
         </StyledBody>
       </FormikProvider>

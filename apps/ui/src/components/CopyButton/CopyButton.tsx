@@ -39,11 +39,11 @@ export const StyledActionButton = styled.div`
 
 const StyledCopyIcon = styled(Copy)`
   path {
-    fill: ${({ theme }) => theme.body.secondaryIconColor};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
 const StyledCheckIcon = styled(Check)`
   path {
-    fill: ${({ theme }) => theme.body.secondaryIconColor};
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
-
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
@@ -19,6 +19,7 @@ type AgentFormProps = {
 }
 
 const AgentForm = ({ formik }: AgentFormProps) => {
+  const { t } = useTranslation()
   const advancedRef = useRef(null as any)
   const scrollToAdvancedRef = () => {
     if (advancedRef) {
@@ -58,20 +59,20 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     <StyledRoot>
       <StyledForm>
         <StyledInputWrapper>
-          <FormikTextField name='agent_name' placeholder='Name' label='Name' />
+          <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
 
-          <FormikTextField name='agent_role' placeholder='Role' label='Role' />
+          <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
 
           <StyledTextareaWrapper>
             <TypographyPrimary
-              value='Description'
+              value={t('description')}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />
             <Textarea
               hint=''
               rows={6}
-              placeholder='Description'
+              placeholder={t('description')}
               value={agent_description}
               name='agent_description'
               onChange={(value: string) => onTextareaChange('agent_description', value)}
@@ -80,7 +81,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <AgentDropdown
             isMulti
-            label={'Tools'}
+            label={t('tools')}
             fieldName={'agent_tools'}
             fieldValue={agent_tools}
             setFieldValue={setFieldValue}
@@ -89,7 +90,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <AgentDropdown
             isMulti
-            label={'Data source'}
+            label={t('dataSource')}
             fieldName={'agent_datasources'}
             fieldValue={agent_datasources}
             setFieldValue={setFieldValue}
@@ -99,46 +100,28 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           <CustomField
             formik={formik}
             formikField={'agent_suggestions'}
-            placeholder={'Suggestion'}
+            placeholder={t('suggestions')}
           />
 
           <StyledTextareaWrapper>
             <TypographyPrimary
-              value='Greeting'
+              value={t('greeting')}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />
             <Textarea
               hint=''
               rows={6}
-              placeholder='Greeting'
+              placeholder={t('greeting')}
               value={agent_greeting}
               name='agent_greeting'
               onChange={(value: string) => onTextareaChange('agent_greeting', value)}
             />
           </StyledTextareaWrapper>
 
-          <StyledCombinedFields>
-            <AgentDropdown
-              label={'Model'}
-              fieldName={'agent_model'}
-              setFieldValue={setFieldValue}
-              fieldValue={agent_model}
-              options={modelOptions}
-              onChange={() => {
-                setFieldValue('agent_model', '')
-              }}
-              optionSize={'small'}
-            />
-            <AgentSlider
-              onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
-              value={agent_temperature}
-            />
-          </StyledCombinedFields>
-
           <StyledCheckboxWrapper>
             <Checkbox
-              label='Memory'
+              label={t('memory')}
               kind='secondary'
               name='agent_is_memory'
               checked={agent_is_memory}
@@ -146,18 +129,18 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             />
           </StyledCheckboxWrapper>
 
-          <CustomField formik={formik} formikField={'agent_goals'} placeholder={'Goal'} />
+          <CustomField formik={formik} formikField={'agent_goals'} placeholder={t('goals')} />
 
           <CustomField
             formik={formik}
             formikField={'agent_instructions'}
-            placeholder={'Instruction'}
+            placeholder={t('instructions')}
           />
 
           <CustomField
             formik={formik}
             formikField={'agent_constraints'}
-            placeholder={'Constraint'}
+            placeholder={t('constraints')}
           />
 
           <ShowAdvancedButton
@@ -169,22 +152,42 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           />
 
           {showAdvanced && (
-            <StyledTextareaWrapper>
-              <TypographyPrimary
-                value='Script'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-              <Textarea
-                hint=''
-                rows={6}
-                value={agent_text}
-                name='agent_text'
-                onChange={(value: string) => onTextareaChange('agent_text', value)}
-              />
-              <div ref={advancedRef} />
-            </StyledTextareaWrapper>
+            <>
+              <StyledTextareaWrapper>
+                <TypographyPrimary
+                  value={t('script')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                />
+                <Textarea
+                  hint=''
+                  rows={6}
+                  value={agent_text}
+                  name='agent_text'
+                  onChange={(value: string) => onTextareaChange('agent_text', value)}
+                />
+              </StyledTextareaWrapper>
+
+              <StyledCombinedFields>
+                <AgentDropdown
+                  label={t('model')}
+                  fieldName={'agent_model'}
+                  setFieldValue={setFieldValue}
+                  fieldValue={agent_model}
+                  options={modelOptions}
+                  onChange={() => {
+                    setFieldValue('agent_model', '')
+                  }}
+                  optionSize={'small'}
+                />
+                <AgentSlider
+                  onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
+                  value={agent_temperature}
+                />
+              </StyledCombinedFields>
+            </>
           )}
+          <div ref={advancedRef} />
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>

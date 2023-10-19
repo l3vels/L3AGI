@@ -1,6 +1,6 @@
 import React from 'react'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-
+import { useTranslation } from 'react-i18next'
 import {
   StyledButtonsWrapper,
   StyledDetailsBox,
@@ -33,12 +33,17 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useTeamOfAgents } from '../useTeamOfAgents'
 import { useModelsService } from 'services'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
 }
 
 const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
+  const { t } = useTranslation()
+  const { getChatModules } = useGetAccountModule()
+  const teamModule = getChatModules('team')
+
   const { user } = React.useContext(AuthContext)
 
   const { deleteTeamOfAgentsHandler } = useTeamOfAgents()
@@ -73,7 +78,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
           />
 
           <StyledButtonsWrapper>
-            {isCreator && (
+            {teamModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
                   onClick={handleEdit}
@@ -85,13 +90,13 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
               </StyledIconButton>
             )}
 
-            {isCreator && (
+            {teamModule?.delete && isCreator && (
               <StyledMenuDots>
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
                     {/* <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary> */}
                     <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
-                      Delete Team
+                      {t('delete-team')}
                     </ButtonTertiary>
                   </StyledMenuButtonsWrapper>
                 </MenuButton>
@@ -108,7 +113,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
             >
               <StyledInnerButtonWrapper>
                 <Download size={28} />
-                Add
+                {t('add')}
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
@@ -132,9 +137,9 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
-        {team_type && <TagsRow title='Team Type' items={[team_type]} />}
-        {model && <TagsRow title='Model' items={teamModel} />}
-        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
+        {team_type && <TagsRow title={t('team-type')} items={[team_type]} />}
+        {model && <TagsRow title={t('model')} items={teamModel} />}
+        {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
       </StyledWrapper>
     </StyledDetailsBox>
   )

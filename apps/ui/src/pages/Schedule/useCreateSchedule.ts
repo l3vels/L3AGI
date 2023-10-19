@@ -27,7 +27,7 @@ export const useCreateSchedule = () => {
     schedule_is_active: true,
     schedule_max_daily_budget: 0.1,
     schedule_cron_expression: '* * * * *',
-    schedule_type: 'Outbound Calling',
+    schedule_type: 'Run tasks',
     schedule_agent_id: undefined,
     schedule_group_id: undefined,
 

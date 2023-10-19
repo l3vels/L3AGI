@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
@@ -16,8 +17,13 @@ import { ButtonPrimary } from 'components/Button/Button'
 
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from '@l3-lib/ui-core/dist/Heading'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
+  const { t } = useTranslation()
+  const { getChatModules } = useGetAccountModule()
+  const agentModule = getChatModules('agent')
+
   const { agentsData, deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
@@ -28,7 +34,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
         <StyledMainHeaderWrapper>
           <HeadingPrimary type={Heading.types.h1} size='medium' value='AGENTS' />
           <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
+            {t('here-are-all-your-agents-managing-tasks-and-operations')}
           </StyledSectionDescription>
         </StyledMainHeaderWrapper>
         {/* <div>
@@ -45,7 +51,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
-              Create Agent
+              {t('createAgent')}
             </ButtonPrimary>
           )}
         </div>
@@ -55,13 +61,21 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
           {agentsData?.map((agentObj: any, index: number) => {
             const { agent } = agentObj
 
+            const handleEdit = () => {
+              navigate(`/agents/${agent.id}/edit-agent`)
+            }
+
+            const handleDelete = () => {
+              deleteAgentHandler(agent.id)
+            }
+
             return (
               <AgentCard
                 key={index}
                 name={agent.name}
                 description={agent.description}
-                onEditClick={() => navigate(`/agents/${agent.id}/edit-agent`)}
-                onDeleteClick={() => deleteAgentHandler(agent.id)}
+                onEditClick={agentModule?.edit && handleEdit}
+                onDeleteClick={agentModule?.delete && handleDelete}
                 onViewClick={() => navigate(`/agents/${agent.id}`)}
                 headerTag={agent.role}
                 onChatClick={() => navigate(`/chat?agent=${agent.id}`)}

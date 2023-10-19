@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TagsRow from './TagsRow'
@@ -23,12 +24,17 @@ import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 type AgentViewDetailBoxProps = {
   agentData: any
 }
 
 const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
+  const { t } = useTranslation()
+  const { getChatModules } = useGetAccountModule()
+  const agentModule = getChatModules('agent')
+
   const { user } = React.useContext(AuthContext)
 
   const { deleteAgentHandler } = useAgents()
@@ -68,7 +74,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
           />
 
           <StyledButtonsWrapper>
-            {isCreator && (
+            {agentModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
                   onClick={handleEdit}
@@ -80,14 +86,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               </StyledIconButton>
             )}
 
-            {isCreator && (
+            {agentModule?.delete && isCreator && (
               <StyledMenuDots>
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
                     <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary>
                     <ButtonTertiary onClick={handleScheduleRun}>Schedule Run</ButtonTertiary>
                     <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
-                      Delete Agent
+                      {t('delete-agent')}
                     </ButtonTertiary>
                   </StyledMenuButtonsWrapper>
                 </MenuButton>
@@ -113,7 +119,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             >
               <StyledInnerButtonWrapper>
                 <Download size={28} />
-                Add
+                {t('add')}
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
@@ -136,13 +142,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
-        {role && <TagsRow title='Role' items={[role]} />}
+        {role && <TagsRow title={t('role')} items={[role]} />}
 
-        {model_provider && <TagsRow title='Provider' items={[model_provider]} />}
+        {model_provider && <TagsRow title={t('provider')} items={[model_provider]} />}
 
-        {model_version && <TagsRow title='Model' items={[model_version]} />}
+        {model_version && <TagsRow title={t('model')} items={[model_version]} />}
 
-        {temperature && <TagsRow title='Temperature' items={[temperature]} />}
+        {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
       </StyledWrapper>
     </StyledDetailsBox>
   )

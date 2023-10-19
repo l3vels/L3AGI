@@ -1,6 +1,7 @@
 import { Field } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled, { useTheme } from 'styled-components'
+import { useEffect, useRef } from 'react'
 
 const FormikTextField = ({
   field_name,
@@ -14,6 +15,7 @@ const FormikTextField = ({
   onBlur,
   onChange,
   value,
+  focus,
   ...props
 }: {
   value?: string
@@ -27,11 +29,21 @@ const FormikTextField = ({
   iconName?: any
   onIconClick?: any
   disabled?: boolean
+  focus?: boolean
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange?: (event: React.FocusEvent<HTMLInputElement>) => void
 }) => {
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const input_name = field_name || name
   const theme = useTheme()
+
+  useEffect(() => {
+    if (focus) {
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 1)
+    }
+  }, [])
 
   return (
     <Field name={input_name}>
@@ -43,6 +55,7 @@ const FormikTextField = ({
 
         return (
           <TextField
+            ref={inputRef}
             value={value}
             name={field.name}
             {...field}
