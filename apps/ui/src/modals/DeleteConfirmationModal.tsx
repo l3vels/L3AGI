@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+
 //eslint-disable-next-line
 import PropTypes from 'prop-types'
 import withRenderModal from 'hocs/withRenderModal'
@@ -44,7 +45,7 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
       show
       backgroundColor='dark'
       hideCloseButton={true}
-      title={isLoading ? 'Processing...' : label}
+      title={isLoading ? `${t('processing')}` : label}
     >
       <StyledModalFooter>
         {isLoading ? (
@@ -59,7 +60,11 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
               size={Button.sizes.LARGE}
               disabled={isLoading}
             >
-              <Typography value='Cancel' type={Typography.types.LABEL} size={Typography.sizes.md} />
+              <Typography
+                value={t('cancel')}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
             </Button>
 
             <Button
@@ -69,7 +74,7 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
               disabled={isLoading}
             >
               <StyledLabelTypography
-                value='Confirm'
+                value={t('confirm')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
