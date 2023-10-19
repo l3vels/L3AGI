@@ -102,6 +102,8 @@ const StyledReactMarkdown = styled(ReactMarkdown)`
 
   font-style: normal;
   font-size: 14px;
+
+  white-space: pre-line;
 `
 
 const StyledTable = styled.table`
