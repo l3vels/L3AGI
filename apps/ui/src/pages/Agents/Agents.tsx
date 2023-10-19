@@ -17,6 +17,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { t } from 'i18next'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
   const { getChatModules } = useGetAccountModule()
@@ -30,9 +31,14 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <StyledMainHeaderWrapper>
-          <HeadingPrimary type={Heading.types.h1} size='medium' value='AGENTS' />
+          <HeadingPrimary
+            type={Heading.types.h1}
+            size='medium'
+            value={`${t('agent').toUpperCase()}S`}
+          />
           <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
+            {` Here are all your ${t('agent')}s, managing tasks and
+            operations.`}
           </StyledSectionDescription>
         </StyledMainHeaderWrapper>
         {/* <div>
@@ -49,7 +55,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
-              Create Agent
+              Create {t('agent')}
             </ButtonPrimary>
           )}
         </div>
