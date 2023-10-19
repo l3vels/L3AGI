@@ -1,25 +1,8 @@
+#import "./scheduleFragment.gql"
+
 query scheduleById($id: id!) @api(name: "ai") {
   scheduleById(id: $id)
-    @rest(type: "schedule", path: "/schedule/{args.id}", method: "GET", endpoint: "ai") {
-    schedule {
-      id
-      is_active
-      name
-      schedule_type
-      description
-      max_daily_budget
-      cron_expression
-      start_date
-      interval
-    }
-    configs {
-      agent_id
-      team_id
-      chat_id
-      group_id
-      is_recurring
-      create_session_on_run
-      tasks
-    }
+    @rest(type: "Schedule", path: "/schedule/{args.id}", method: "GET", endpoint: "ai") {
+    ...ScheduleFragment
   }
 }
