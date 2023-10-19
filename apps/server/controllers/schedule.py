@@ -1,26 +1,15 @@
-from datetime import datetime
-from typing import Dict, List
+from typing import List
 
-from croniter import croniter
-# Third-party imports
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel
 
 from exceptions import ScheduleNotFoundException
-# Local application imports
 from models.schedule import ScheduleModel
-from services.schedule import run_schedule
 from typings.auth import UserAccount
-from typings.schedule import (ScheduleConfigInput, ScheduleOutput,
-                              ScheduleWithConfigsOutput)
+from typings.schedule import ScheduleConfigInput, ScheduleWithConfigsOutput
 from utils.auth import authenticate
 from utils.schedule import (convert_model_to_response,
                             convert_schedules_to_schedule_list)
-
-# Standard library imports
-
-
 
 router = APIRouter()
 
@@ -40,9 +29,6 @@ def create_schedule(
     Returns:
         ScheduleWithConfigsOutput: Created schedule object.
     """
-    # Consider adding try-except for error handling during creation if needed
-
-    # get agent, team or session id
 
     db_schedule = ScheduleModel.create_schedule(
         db,
@@ -52,17 +38,12 @@ def create_schedule(
         account=auth.account,
     )
 
-    iter = croniter(db_schedule.cron_expression, datetime.now())
-    next_run = iter.get_next(datetime)
-    db_schedule.next_run_time = next_run
+    db_schedule.next_run_date = schedule_with_configs.schedule.start_date
     db.session.commit()
 
     schedule_with_configs = convert_model_to_response(
         ScheduleModel.get_schedule_by_id(db, db_schedule.id, auth.account)
     )
-
-    if schedule_with_configs.configs.run_immediately:
-        run_schedule(schedule_with_configs, auth)
 
     return schedule_with_configs
 

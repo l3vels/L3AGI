@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { ToastContext } from 'contexts'
-import { useModal } from 'hooks'
 
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
@@ -32,8 +31,11 @@ export const useCreateSchedule = () => {
 
     agent_type: '',
     tasks: ['Enter you task'],
-    run_immediately: false,
+    is_recurring: false,
     create_session_on_run: false,
+    start_date: new Date(),
+    interval: '',
+    interval_unit: '',
   }
 
   const handleSubmit = async (values: any) => {
@@ -49,13 +51,17 @@ export const useCreateSchedule = () => {
         max_daily_budget: values.schedule_max_daily_budget,
         cron_expression: values.schedule_cron_expression,
         schedule_type: values.schedule_type,
+        group_id: values.schedule_group_id,
+
         agent_id: agent_type === 'agent' ? values.schedule_agent_id : null,
         team_id: agent_type === 'team' ? values.schedule_agent_id : null,
         chat_id: agent_type === 'chat' ? values.schedule_agent_id : null,
-        group_id: values.schedule_group_id,
+
         create_session_on_run: values.create_session_on_run,
-        run_immediately: values.run_immediately,
+        is_recurring: values.is_recurring,
         tasks: values.tasks,
+        start_date: values.start_date,
+        interval: values.is_recurring ? `${values.interval} ${values.interval_unit}` : undefined,
       })
 
       await refetchSchedule()

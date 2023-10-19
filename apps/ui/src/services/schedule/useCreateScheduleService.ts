@@ -14,8 +14,10 @@ export interface ScheduleInput {
   chat_id?: string
   group_id?: string
   create_session_on_run: boolean
-  run_immediately: boolean
+  is_recurring: boolean
   tasks: string[]
+  start_date: string
+  interval?: string
 }
 
 export const useCreateScheduleService = () => {
@@ -33,9 +35,11 @@ export const useCreateScheduleService = () => {
       team_id,
       chat_id,
       group_id,
-      run_immediately,
+      is_recurring,
       create_session_on_run,
       tasks,
+      start_date,
+      interval,
     } = input
 
     const {
@@ -50,6 +54,8 @@ export const useCreateScheduleService = () => {
             description,
             max_daily_budget,
             cron_expression,
+            start_date,
+            interval,
           },
           configs: {
             agent_id,
@@ -57,7 +63,7 @@ export const useCreateScheduleService = () => {
             chat_id,
             group_id,
             create_session_on_run,
-            run_immediately,
+            is_recurring,
             tasks,
           },
         },

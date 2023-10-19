@@ -1,6 +1,7 @@
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import FormikTextField from 'components/TextFieldFormik'
 import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
@@ -23,9 +24,11 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
     schedule_type,
     schedule_is_active,
     schedule_cron_expression,
-    tasks,
-    run_immediately,
+    is_recurring,
     create_session_on_run,
+    start_date,
+    interval,
+    interval_unit,
   } = values
 
   const onDescriptionChange = (value: string) => {
@@ -34,17 +37,17 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
   const { options, groupOptions, scheduleTypeOptions } = useScheduleForm()
 
-  const [cronDescription, setCronDescription] = useState('')
+  // const [cronDescription, setCronDescription] = useState('')
 
-  useEffect(() => {
-    try {
-      const cronDescription = cronstrue.toString(schedule_cron_expression)
-      setCronDescription(cronDescription)
-    } catch (error) {
-      // Handle invalid cron expressions here
-      setCronDescription('Invalid cron expression')
-    }
-  }, [schedule_cron_expression])
+  // useEffect(() => {
+  //   try {
+  //     const cronDescription = cronstrue.toString(schedule_cron_expression)
+  //     setCronDescription(cronDescription)
+  //   } catch (error) {
+  //     // Handle invalid cron expressions here
+  //     setCronDescription('Invalid cron expression')
+  //   }
+  // }, [schedule_cron_expression])
 
   return (
     <StyledRoot>
@@ -69,21 +72,60 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
           <CustomField formik={formik} formikField={'tasks'} placeholder={'Task'} />
 
-          <StyledDoubleRow>
-            <FormikTextField
+          {/* <StyledDoubleRow> */}
+          {/* <FormikTextField
               name='schedule_cron_expression'
               placeholder='Cron expression'
               label='Cron expression'
-            />
+            /> */}
 
-            <StyledCronDescriptionWrapper>
+          <FormikTextField
+            name='start_date'
+            field_name='start_date'
+            placeholder='Run Date'
+            label='Select date and time'
+            size={TextField.sizes.SMALL}
+            type='datetime-local'
+            value={start_date}
+          />
+
+          {/* <StyledCronDescriptionWrapper>
               <TypographyPrimary
                 value={cronDescription}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
-            </StyledCronDescriptionWrapper>
-          </StyledDoubleRow>
+            </StyledCronDescriptionWrapper> */}
+          {/* </StyledDoubleRow> */}
+
+          <StyledCheckboxWrapper>
+            <Checkbox
+              label='Recurring'
+              kind='secondary'
+              name='is_recurring'
+              checked={is_recurring}
+              onChange={() => setFieldValue('is_recurring', !is_recurring)}
+            />
+          </StyledCheckboxWrapper>
+
+          {is_recurring && (
+            <StyledRepeatFields>
+              <FormikTextField type='number' name='interval' placeholder='0' label='Repeat every' />
+
+              <AgentDropdown
+                label={'Repeat every'}
+                fieldName={'interval_unit'}
+                setFieldValue={setFieldValue}
+                fieldValue={interval_unit}
+                options={[
+                  { label: 'Minutes', value: 'minutes' },
+                  { label: 'Hours', value: 'hours' },
+                  { label: 'Days', value: 'days' },
+                ]}
+                optionSize={'small'}
+              />
+            </StyledRepeatFields>
+          )}
 
           <StyledDoubleRow>
             <AgentDropdown
@@ -132,26 +174,6 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
               name='create_session_on_run'
               checked={create_session_on_run}
               onChange={() => setFieldValue('create_session_on_run', !create_session_on_run)}
-            />
-          </StyledCheckboxWrapper>
-
-          <StyledCheckboxWrapper>
-            <Checkbox
-              label='Recurring'
-              kind='secondary'
-              name='run_immediately'
-              checked={run_immediately}
-              onChange={() => setFieldValue('run_immediately', !run_immediately)}
-            />
-          </StyledCheckboxWrapper>
-
-          <StyledCheckboxWrapper>
-            <Checkbox
-              label='Run Immediately'
-              kind='secondary'
-              name='run_immediately'
-              checked={run_immediately}
-              onChange={() => setFieldValue('run_immediately', !run_immediately)}
             />
           </StyledCheckboxWrapper>
         </StyledInputWrapper>
@@ -221,7 +243,8 @@ export const StyledInputWrapper = styled.div`
   /* max-height: 800px; */
 `
 
-const StyledDatePicker = styled(DatePickerField)`
-  width: 400px;
-  position: relative;
+const StyledRepeatFields = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
 `

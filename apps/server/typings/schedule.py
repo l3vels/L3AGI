@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from pydantic import UUID4, BaseModel
 
+from typings.account import AccountOutput
 from typings.user import UserOutput
 
 
@@ -13,12 +14,14 @@ class ScheduleInput(BaseModel):
     max_daily_budget: Optional[float]
     workspace_id: Optional[UUID4]
     is_active: Optional[bool]
+    start_date: str
+    interval: Optional[str]
 
 
 class ConfigInput(BaseModel):
     tasks: Optional[List[str]]
 
-    run_immediately: Optional[bool]
+    is_recurring: Optional[bool]
     create_session_on_run: Optional[bool]
 
     agent_id: Optional[UUID4]
@@ -35,7 +38,7 @@ class ScheduleConfigInput(BaseModel):
 class ConfigsOutput(BaseModel):
     tasks: Optional[List[str]]
 
-    run_immediately: Optional[bool]
+    is_recurring: Optional[bool]
     create_session_on_run: Optional[bool]
 
     agent_id: Optional[UUID4]
@@ -57,6 +60,7 @@ class ScheduleOutput(BaseModel):
     account_id: UUID4
     created_by: Optional[UUID4]
     creator: Optional[UserOutput]
+    account: Optional[AccountOutput]
     modified_by: Optional[UUID4]
 
 

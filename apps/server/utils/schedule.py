@@ -3,6 +3,8 @@ from typing import List
 from models.schedule import ScheduleModel
 from typings.schedule import (ConfigsOutput, ScheduleOutput,
                               ScheduleWithConfigsOutput)
+from utils.account import \
+    convert_model_to_response as account_convert_model_to_response
 from utils.type import convert_value_to_type
 from utils.user import \
     convert_model_to_response as user_convert_model_to_response
@@ -42,6 +44,11 @@ def convert_model_to_response(
     if hasattr(schedule_model, "creator") and schedule_model.creator:
         schedule_data["creator"] = user_convert_model_to_response(
             schedule_model.creator
+        )
+
+    if hasattr(schedule_model, "account") and schedule_model.creator:
+        schedule_data["account"] = account_convert_model_to_response(
+            schedule_model.account
         )
 
     return ScheduleWithConfigsOutput(

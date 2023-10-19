@@ -1,16 +1,16 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
-from typing import List, Optional
+from datetime import datetime, timedelta
+from typing import List
 
 from sqlalchemy import (UUID, Boolean, Column, DateTime, ForeignKey, Index,
-                        Numeric, String, func, or_)
+                        Numeric, String, or_)
 from sqlalchemy.orm import Session, joinedload, relationship
 from sqlalchemy.sql import and_
 
 from exceptions import ScheduleNotFoundException
-from models.base_model import BaseModel, RootBaseModel
+from models.base_model import BaseModel
 from models.schedule_config import ScheduleConfigModel
 from models.user import UserModel
 from typings.schedule import ConfigInput, ScheduleInput
@@ -42,7 +42,9 @@ class ScheduleModel(BaseModel):
     # status = Column(String, nullable=True)
     schedule_type = Column(String)  # `Outbound & Inbound`
     cron_expression = Column(String)
-    next_run_time = Column(DateTime, nullable=True)
+    start_date = Column(DateTime, nullable=True)
+    interval = Column(String, nullable=True)
+    next_run_date = Column(DateTime, nullable=True, index=True)
     max_daily_budget = Column(Numeric(precision=5, scale=2), nullable=True)
     is_active = Column(Boolean, default=True, index=True)
     is_deleted = Column(Boolean, default=False, index=True)
@@ -69,6 +71,7 @@ class ScheduleModel(BaseModel):
         index=True,
     )
     creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
+    account = relationship("AccountModel", foreign_keys=[account_id], lazy="select")
 
     # Define indexes
     Index("ix_schedule_model_workspace_id_is_deleted", "workspace_id", "is_deleted")
@@ -216,7 +219,8 @@ class ScheduleModel(BaseModel):
         schedules = (
             db.session.query(ScheduleModel)
             # .join(ScheduleConfigModel, ScheduleModel.id == ScheduleConfigModel.schedule_id)
-            .join(UserModel, ScheduleModel.created_by == UserModel.id).filter(
+            .join(UserModel, ScheduleModel.created_by == UserModel.id)
+            .filter(
                 ScheduleModel.account_id == account.id,
                 or_(
                     or_(
@@ -228,6 +232,7 @@ class ScheduleModel(BaseModel):
             )
             # .options(joinedload(ScheduleModel.configs))  # if you have a relationship set up named "configs"
             .options(joinedload(ScheduleModel.creator))
+            .options(joinedload(ScheduleModel.account))
             # .options(joinedload(ScheduleModel.configs))  # if you have a relationship set up named "configs"
             # .options(joinedload(UserModel.schedules))
             .all()
@@ -236,17 +241,21 @@ class ScheduleModel(BaseModel):
 
     @classmethod
     def get_due_schedules(cls, session: Session):
+        two_minutes_ago = datetime.now() - timedelta(minutes=2)
+
         schedules = (
             session.query(ScheduleModel)
             .join(UserModel, ScheduleModel.created_by == UserModel.id)
             .filter(
                 and_(
-                    ScheduleModel.next_run_time <= datetime.now(),
+                    ScheduleModel.next_run_date >= two_minutes_ago,
+                    ScheduleModel.next_run_date <= datetime.now(),
                     ScheduleModel.is_active == True,
                     ScheduleModel.is_deleted == False,
                 ),
             )
             .options(joinedload(ScheduleModel.creator))
+            .options(joinedload(ScheduleModel.account))
             .all()
         )
         return schedules
@@ -324,6 +333,7 @@ class ScheduleModel(BaseModel):
                 joinedload(ScheduleModel.configs)
             )  # if you have a relationship set up named "configs"
             .options(joinedload(ScheduleModel.creator))
+            .options(joinedload(ScheduleModel.account))
             # .options(joinedload(ScheduleModel.configs))  # if you have a relationship set up named "configs"
             # .options(joinedload(UserModel.schedules))
             .first()

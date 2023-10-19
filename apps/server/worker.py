@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from celery import Celery
 
-from config import Config
+from config import Config  # noqa: F401
 from models import *  # noqa: F403
 from services.schedule import run_scheduled_agents
 
@@ -18,7 +18,7 @@ app.conf.accept_content = ["application/x-python-serialize", "application/json"]
 CELERY_BEAT_SCHEDULE = {
     "run-scheduled-agents": {
         "task": "run-scheduled-agents",
-        "schedule": timedelta(seconds=5),
+        "schedule": timedelta(minutes=2),
     },
 }
 
@@ -34,10 +34,7 @@ app.conf.beat_schedule = CELERY_BEAT_SCHEDULE
 )
 def run_scheduled_agents_task():
     print("Running scheduled agents")
-
-    print(run_scheduled_agents)
-
-    # run_scheduled_agents()
+    run_scheduled_agents()
 
 
 if __name__ == "__main__":
