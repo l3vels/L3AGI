@@ -1,9 +1,7 @@
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikTextField from 'components/TextFieldFormik'
-import {
-  StyledTextareaWrapper,
-} from 'pages/Agents/AgentForm/AgentForm'
+import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import TypographyPrimary from 'components/Typography/Primary'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import { useContactForm } from './useContactForm'
@@ -25,25 +23,7 @@ const ContactForm = ({ formik }: { formik: any }) => {
         <StyledInputWrapper>
           <FormikTextField name='contact_name' placeholder='Name' label='Name' size='small' />
 
-          <StyledTextareaWrapper>
-            <TypographyPrimary
-              value='Description'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-
-            <Textarea
-              hint=''
-              placeholder='Description'
-              name='contact_description'
-              value={contact_description}
-              onChange={onDescriptionChange}
-            />
-          </StyledTextareaWrapper>
-
           <FormikTextField name='contact_phone' placeholder='Phone' label='Phone' size='small' />
-
-          <FormikTextField name='contact_email' placeholder='Email' label='Email' size='small' />
 
           <AgentDropdown
             label={'Group'}
@@ -53,6 +33,25 @@ const ContactForm = ({ formik }: { formik: any }) => {
             options={groupOptions}
             optionSize={'small'}
           />
+
+          <FormikTextField name='contact_email' placeholder='Email' label='Email' size='small' />
+
+          <StyledTextareaWrapper>
+            <TypographyPrimary
+              value='Description'
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
+
+            <Textarea
+              hint=''
+              rows={6}
+              placeholder='Description'
+              name='contact_description'
+              value={contact_description}
+              onChange={onDescriptionChange}
+            />
+          </StyledTextareaWrapper>
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -60,7 +59,6 @@ const ContactForm = ({ formik }: { formik: any }) => {
 }
 
 export default ContactForm
-
 
 const StyledDoubleRow = styled.div`
   display: flex;
@@ -100,14 +98,12 @@ export const StyledForm = styled.div`
   justify-content: center;
 `
 
-
 export const StyledRoot = styled.div`
   width: 100%;
 
   height: 100%;
   overflow-y: scroll;
 `
-
 
 export const StyledInputWrapper = styled.div`
   display: flex;

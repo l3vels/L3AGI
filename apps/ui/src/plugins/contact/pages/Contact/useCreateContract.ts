@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useCreateContactService } from 'plugins/contact/services/contact/useCreateContactService'
 import { useContactsService } from 'plugins/contact/services/contact/useContactsService'
+import { contactValidationSchema } from './ContactForm/useContactForm'
 
 export const useCreateContact = () => {
   const navigate = useNavigate()
@@ -59,7 +60,7 @@ export const useCreateContact = () => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    // validationSchema: contactValidationSchema,
+    validationSchema: contactValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 

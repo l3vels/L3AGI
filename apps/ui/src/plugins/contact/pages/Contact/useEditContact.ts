@@ -6,6 +6,7 @@ import { useUpdateContactService } from 'plugins/contact/services/contact/useUpd
 
 import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { contactValidationSchema } from './ContactForm/useContactForm'
 
 export const useEditContact = () => {
   const { setToast } = useContext(ToastContext)
@@ -63,7 +64,7 @@ export const useEditContact = () => {
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,
-    // validationSchema: contactValidationSchema,
+    validationSchema: contactValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })
 
