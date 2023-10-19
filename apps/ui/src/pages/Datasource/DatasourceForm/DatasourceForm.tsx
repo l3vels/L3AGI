@@ -84,7 +84,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   return (
     <StyledFormContainer>
       <StyledInputWrapper>
-        <FormikTextField name='datasource_name' placeholder='Name' label='Name' />
+        <FormikTextField name='datasource_name' placeholder={t('name')} label={t('name')} />
 
         <StyledTextareaWrapper>
           <TypographyPrimary
