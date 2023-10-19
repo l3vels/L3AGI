@@ -8,6 +8,8 @@ import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 import MyWeek from '@l3-lib/ui-core/dist/icons/MyWeek'
+import Mobile from '@l3-lib/ui-core/dist/icons/Mobile'
+import Group from '@l3-lib/ui-core/dist/icons/Group'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import includes from 'lodash/includes'
@@ -147,7 +149,7 @@ const MainNavigation = () => {
       )}
 
       <StyledLi isActive={includes(active, 'contacts')} onClick={() => onHandleClick('/contacts')}>
-        <StyledMyWeekIcon size={30} />
+        <StyledMobileIcon size={30} />
         <TypographySecondary
           value={'Contacts'}
           type={Typography.types.LABEL}
@@ -156,7 +158,7 @@ const MainNavigation = () => {
       </StyledLi>
 
       <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
-        <StyledMyWeekIcon size={30} />
+        <StyledGroupIcon size={30} />
         <TypographySecondary
           value={'Groups'}
           type={Typography.types.LABEL}
@@ -272,6 +274,17 @@ export const StyledValueIcon = styled.div`
   }
 `
 const StyledMyWeekIcon = styled(MyWeek)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledMobileIcon = styled(Mobile)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledGroupIcon = styled(Group)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
