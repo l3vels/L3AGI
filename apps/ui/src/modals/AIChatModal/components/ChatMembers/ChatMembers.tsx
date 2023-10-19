@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-
+import { useTranslation } from 'react-i18next'
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
@@ -32,6 +32,7 @@ const ChatMembers = ({
   teamOfAgents?: any
   isHistory?: boolean
 }) => {
+  const { t } = useTranslation()
   const { user } = React.useContext(AuthContext)
 
   const [activeTab, setActiveTab] = useState(0)
@@ -52,10 +53,10 @@ const ChatMembers = ({
         <StyledDiv>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>
-              <StyledSpan>Info</StyledSpan>
+              <StyledSpan>{t('info')}</StyledSpan>
             </Tab>
             <Tab onClick={() => setActiveTab(1)}>
-              <StyledSpan>Members</StyledSpan>
+              <StyledSpan>{t('members')}</StyledSpan>
             </Tab>
           </TabList>
         </StyledDiv>
@@ -130,10 +131,10 @@ const ChatMembers = ({
         <StyledDiv>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>
-              <StyledSpan>Info</StyledSpan>
+              <StyledSpan>{t('info')}</StyledSpan>
             </Tab>
             <Tab onClick={() => setActiveTab(1)}>
-              <StyledSpan>Members</StyledSpan>
+              <StyledSpan>{t('members')}</StyledSpan>
             </Tab>
           </TabList>
         </StyledDiv>

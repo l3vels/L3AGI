@@ -1,4 +1,5 @@
 import { FormikProvider } from 'formik'
+import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -17,6 +18,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { t } from 'i18next'
 
 const EditAgentForm = () => {
+  const { t } = useTranslation()
   const { formik, isLoading, handleNavigation } = useEditAgent()
 
   return (
@@ -37,7 +39,7 @@ const EditAgentForm = () => {
               disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {isLoading ? <Loader size={32} /> : 'Save'}
+              {isLoading ? <Loader size={32} /> : `${t('save')}`}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>

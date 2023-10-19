@@ -1,6 +1,6 @@
 import { FormikProvider } from 'formik'
 import TeamOfAgentsForm from './TeamOfAgentsForm'
-
+import { useTranslation } from 'react-i18next'
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
@@ -20,6 +20,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
 
 const CreateTeamOfAgentsForm = () => {
+  const { t } = useTranslation()
   const { formik, handleSubmit, isLoading } = useCreateTeamOfAgents()
 
   const navigate = useNavigate()
@@ -44,7 +45,7 @@ const CreateTeamOfAgentsForm = () => {
                 size={Button.sizes.SMALL}
                 disabled={isLoading}
               >
-                {isLoading ? <Loader size={32} /> : 'Save'}
+                {isLoading ? <Loader size={32} /> : `${t('save')}`}
               </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>

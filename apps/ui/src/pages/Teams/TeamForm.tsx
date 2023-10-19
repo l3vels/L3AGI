@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { FormikProvider } from 'formik'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -18,6 +19,7 @@ type TeamFormProps = {
 }
 
 const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
+  const { t } = useTranslation()
   const { closeModal } = useTeams()
   const [error, setError] = useState<string>('')
   const [emailExists, setEmailExists] = useState<boolean>(false)
@@ -29,7 +31,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
     )
     setEmailExists(emailExists)
     if (emailExists) {
-      setError('This email is already added.')
+      setError(`${t('this-email-is-already-added')}`)
     } else {
       setError('')
     }
@@ -42,7 +44,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
     )
     setEmailExists(emailExists)
     if (emailExists) {
-      setError('This email is already added.')
+      setError(`${t('this-email-is-already-added')}`)
     } else {
       setError('')
     }
@@ -55,7 +57,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
       (user: { assigned_user_email: string }) => user.assigned_user_email === sharedEmail,
     )
     if (emailExists) {
-      setError('This email is already added.')
+      setError(`${t('this-email-is-already-added')}`)
     } else {
       setError('')
       await formik.handleSubmit()
@@ -71,7 +73,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
         </StyledHeaderWrapper>
         <StyledEmailWrapper>
           <TypographyPrimary
-            value='Email'
+            value={t('email')}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
@@ -89,7 +91,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
         <StyledButtonsWrapper>
           <ButtonTertiary onClick={() => closeModal('create-team-modal')} size={Button.sizes.LARGE}>
             <TypographySecondary
-              value='Cancel'
+              value={t('cancel')}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />
@@ -101,7 +103,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
             size={Button.sizes.LARGE}
           >
             <TypographyPrimary
-              value='Add'
+              value={t('add')}
               type={Typography.types.LABEL}
               size={Typography.sizes.md}
             />

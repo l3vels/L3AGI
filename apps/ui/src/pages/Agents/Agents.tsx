@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
@@ -20,6 +21,7 @@ import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { t } from 'i18next'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
+  const { t } = useTranslation()
   const { getChatModules } = useGetAccountModule()
   const agentModule = getChatModules('agent')
 

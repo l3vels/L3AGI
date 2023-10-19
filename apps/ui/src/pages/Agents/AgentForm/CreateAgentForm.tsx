@@ -1,5 +1,5 @@
 import { FormikProvider } from 'formik'
-
+import { useTranslation } from 'react-i18next'
 import AgentForm from './AgentForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -41,7 +41,7 @@ const CreateAgentForm = () => {
               disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {isLoading ? <Loader size={32} /> : 'Save'}
+              {isLoading ? <Loader size={32} /> : `${t('save')}`}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>
