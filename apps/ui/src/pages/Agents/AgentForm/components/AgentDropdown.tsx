@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
@@ -24,6 +25,7 @@ const AgentDropdown = ({
   isMulti,
   optionSize = 'medium',
 }: AgentDropdownProps) => {
+  const { t } = useTranslation()
   let value = fieldValue
 
   let onChangeFunction = (option: any) => {
@@ -70,7 +72,7 @@ const AgentDropdown = ({
         multiline
         size={Dropdown.size.MEDIUM}
         value={value}
-        placeholder={value?.length >= 1 ? value : 'Please enter value'}
+        placeholder={value?.length >= 1 ? value : `${t('please-enter-value')}`}
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}

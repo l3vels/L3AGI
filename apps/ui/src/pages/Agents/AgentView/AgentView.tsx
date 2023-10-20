@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
@@ -20,6 +21,7 @@ import AgentDatasources from './components/AgentDatasources'
 import AgentVIewDetailBox from './components/AgentViewDetailBox'
 
 const AgentView = ({ agentData }: { agentData?: any }) => {
+  const { t } = useTranslation()
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
@@ -38,11 +40,8 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
           <>
             <div>
               <>
-                <StyledSectionTitle>Agent</StyledSectionTitle>
-                <StyledSectionDescription>
-                  Witness the growth of exceptional AI talents, nurtured by collective community
-                  contributions.
-                </StyledSectionDescription>
+                <StyledSectionTitle>{t('agent')}</StyledSectionTitle>
+                <StyledSectionDescription>{t('agent-view-description')}</StyledSectionDescription>
               </>
             </div>
 

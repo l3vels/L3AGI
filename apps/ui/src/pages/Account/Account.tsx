@@ -3,6 +3,7 @@ import { FormikProvider } from 'formik'
 
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -20,6 +21,7 @@ import HeadingPrimary from 'components/Heading/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const Account = () => {
+  const { t } = useTranslation()
   const { openCreateChangePasswordModal } = useChangePassword()
 
   return (
@@ -35,7 +37,7 @@ const Account = () => {
               size={Button.sizes.MEDIUM}
             >
               <TypographyPrimary
-                value='Change password'
+                value={t('changePassword')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />

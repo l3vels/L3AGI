@@ -1,5 +1,6 @@
 import { StyledAgentCard } from 'pages/Agents/AgentCard/AgentCard'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -12,11 +13,12 @@ type CreateAgentButtonCardProps = {
 }
 
 const CreateAgentButtonCard = ({ onClick }: CreateAgentButtonCardProps) => {
+  const { t } = useTranslation()
   return (
     <StyledAgentCard onClick={onClick}>
       <StyledInnerWrapper>
         <TypographyPrimary
-          value='From Scratch'
+          value={t('from-scratch')}
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
         />

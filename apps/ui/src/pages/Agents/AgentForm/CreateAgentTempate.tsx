@@ -52,7 +52,7 @@ const CreateAgentTemplate = () => {
 
             {agentsData?.length > 0 && (
               <TypographyPrimary
-                value='Choose Template'
+                value={t('choose-template')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
               />

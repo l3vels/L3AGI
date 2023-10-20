@@ -1,12 +1,14 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 type TypingUsersProps = {
   usersData: any
 }
 
 const TypingUsers = ({ usersData }: TypingUsersProps) => {
+  const { t } = useTranslation()
   return (
     <StyledTypingUsersWrapper>
       {usersData?.map((data: any, index: number) => {
@@ -22,7 +24,7 @@ const TypingUsers = ({ usersData }: TypingUsersProps) => {
               index !== usersData.length - 1 &&
               index === usersData.length - 2 && (
                 <TypographySecondary
-                  value='and'
+                  value={t('and')}
                   type={Typography.types.P}
                   size={Typography.sizes.sm}
                 />
@@ -32,14 +34,14 @@ const TypingUsers = ({ usersData }: TypingUsersProps) => {
       })}
       {usersData.length > 1 && (
         <TypographySecondary
-          value='are typing...'
+          value={t('are-typing')}
           type={Typography.types.P}
           size={Typography.sizes.sm}
         />
       )}
       {usersData.length === 1 && (
         <TypographySecondary
-          value='is typing...'
+          value={t('is-typing')}
           type={Typography.types.P}
           size={Typography.sizes.sm}
         />

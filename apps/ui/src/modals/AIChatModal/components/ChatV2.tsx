@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { useState, useRef, useEffect, useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 // TODO: remove react icons after adding our icons
 
@@ -46,6 +47,7 @@ import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { textSlicer } from 'utils/textSlicer'
 
 const ChatV2 = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -168,7 +170,7 @@ const ChatV2 = () => {
 
     if (!FILE_TYPES.includes(files[0].type)) {
       setToast({
-        message: 'Format is not supported!',
+        message: `${t('format-is-not-supported')}`,
         type: 'negative',
         open: true,
       })
@@ -238,7 +240,7 @@ const ChatV2 = () => {
       setThinking(false)
     } catch (e) {
       setToast({
-        message: 'Something went wrong',
+        message: `${t('toast-negative-message')}`,
         type: 'negative',
         open: true,
       })
@@ -341,7 +343,7 @@ const ChatV2 = () => {
                   size={Button.sizes.SMALL}
                   disabled={stopChatLoading}
                 >
-                  Stop Generating
+                  {t('stop-generating')}
                 </ButtonSecondary>
               </StyledStopGeneratingButton>
             )}
