@@ -111,7 +111,7 @@ const HeaderButtons = () => {
             </StyledImageWrapper>
             {!location.pathname.includes('/chat') && (
               <TypographyPrimary
-                value={t('start-us-on-github')}
+                value={t('star-us-on-github')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />
