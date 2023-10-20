@@ -18,6 +18,21 @@ from services.schedule import execute_scheduled_run
 router = APIRouter()
 
 
+@router.post("/{schedule_id}/run", status_code=200)
+def run_schedule(schedule_id: str):
+    schedule = ScheduleModel.get_schedule_by_id(db, schedule_id, None)
+
+    if not schedule:
+        raise HTTPException(status_code=404, detail="Schedule not found")
+
+    if schedule.status == ScheduleStatus.PROCESSING.value:
+        raise HTTPException(status_code=400, detail="Schedule already is processing")
+
+    execute_scheduled_run(db.session, schedule)
+
+    return {"message": "Schedule run successfully"}
+
+
 @router.post("", status_code=201, response_model=ScheduleWithConfigsOutput)
 def create_schedule(
     schedule_with_configs: ScheduleConfigInput,
@@ -139,21 +154,6 @@ def get_schedule_by_id(
         )  # Ensure consistent case in error messages
 
     return convert_model_to_response(db_schedule)
-
-
-@router.post("{schedule_id}/run", status_code=200)
-def run_schedule(schedule_id: str):
-    schedule = ScheduleModel.get_schedule_by_id(db, schedule_id, None)
-
-    if not schedule:
-        raise HTTPException(status_code=404, detail="Schedule not found")
-
-    if schedule.status == ScheduleStatus.PROCESSING.value:
-        raise HTTPException(status_code=400, detail="Schedule already is processing")
-
-    execute_scheduled_run(db.session, schedule)
-
-    return {"message": "Schedule run successfully"}
 
 
 @router.delete("/{schedule_id}", status_code=200)

@@ -42,6 +42,8 @@ def execute_scheduled_run(
     user = schedule.creator
     account = schedule.account
 
+    chat: ChatModel = None
+
     if configs.create_session_on_run:
         chat = ChatModel.create_chat(
             db,
@@ -61,7 +63,7 @@ def execute_scheduled_run(
         prompt += f"- {task}\n"
 
     create_client_message(
-        body=ChatMessageInput(prompt=prompt, chat_id=chat.id),
+        body=ChatMessageInput(prompt=prompt, chat_id=chat.id if chat else None),
         auth=UserAccount(user=user, account=account),
     )
 

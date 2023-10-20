@@ -7,8 +7,6 @@ load_dotenv(override=False)
 class Config:
     """Config class for the application."""
 
-    ENV = os.environ.get("ENV")
+    REDIS_URL = os.environ.get("REDIS_URL")
 
     SERVER_URL = os.environ.get("SERVER_URL")
-
-    SENTRY_DSN = os.environ.get("SENTRY_DSN")

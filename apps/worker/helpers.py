@@ -1,20 +1,28 @@
-import requests
+import asyncio
+import httpx
 from config import Config
 
 
-def fetch_scheduled_runs():
-    schedules = requests.get(f"{Config.SERVER_URL}/schedule/due").json()
-    return schedules
+async def fetch_scheduled_runs():
+    async with httpx.AsyncClient() as client:
+        res = await client.get(f"{Config.SERVER_URL}/schedule/due")
+
+    return res.json()
 
 
-def run_schedule(schedule_id: str):
-    res = requests.post(f"{Config.SERVER_URL}/schedule/{schedule_id}/run")
+async def run_schedule(schedule_id: str):
+    async with httpx.AsyncClient() as client:
+        res = await client.post(f"{Config.SERVER_URL}/schedule/{schedule_id}/run")
+
     return res
 
 
-def execute_scheduled_runs():
-    schedules = fetch_scheduled_runs()
+async def execute_scheduled_runs():
+    schedules_with_configs = await fetch_scheduled_runs()
 
-    for schedule in schedules:
-        # run_schedule(schedule.schedule.id)
-        print(f"{schedule['schedule']['name']} is due to run.")
+    await asyncio.gather(
+        *(
+            run_schedule(schedule["schedule"]["id"])
+            for schedule in schedules_with_configs
+        )
+    )
