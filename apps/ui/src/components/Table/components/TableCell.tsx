@@ -102,7 +102,7 @@ const StyledTd = styled.td<{ maxWidth: number; noPadding: boolean }>`
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 
   :hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 
   max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')};

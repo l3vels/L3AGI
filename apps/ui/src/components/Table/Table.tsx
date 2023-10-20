@@ -111,7 +111,7 @@ const StyledTr = styled.tr<{ bodyRow?: boolean }>`
     ${p =>
       p.bodyRow &&
       css`
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: rgba(255, 255, 255, 0.2);
       `};
   }
 `
@@ -128,19 +128,6 @@ const StyledTh = styled.th<{ maxWidth: number }>`
 
   overflow: hidden;
   :hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-`
-const StyledTd = styled.td`
-  width: 100%;
-
-  /* padding: 10px 20px; */
-
-  /* text-align: center; */
-
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-
-  :hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 `
