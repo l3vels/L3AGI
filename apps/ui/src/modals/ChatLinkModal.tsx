@@ -128,7 +128,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
             size={Button.sizes.MEDIUM}
             disabled={isLoading}
           >
-            {isLoading ? <Loader size={20} /> : `${t('confirm')}`}
+            {isLoading ? <Loader size={20} /> : t('confirm')}
           </ButtonPrimary>
         )}
       </StyledModalFooter>

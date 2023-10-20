@@ -37,7 +37,7 @@ const Account = () => {
               size={Button.sizes.MEDIUM}
             >
               <TypographyPrimary
-                value={t('changePassword')}
+                value={t('change-password')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />

@@ -170,7 +170,7 @@ const ChatV2 = () => {
 
     if (!FILE_TYPES.includes(files[0].type)) {
       setToast({
-        message: `${t('format-is-not-supported')}`,
+        message: t('format-is-not-supported'),
         type: 'negative',
         open: true,
       })
@@ -240,7 +240,7 @@ const ChatV2 = () => {
       setThinking(false)
     } catch (e) {
       setToast({
-        message: `${t('toast-negative-message')}`,
+        message: t('toast-negative-message'),
         type: 'negative',
         open: true,
       })

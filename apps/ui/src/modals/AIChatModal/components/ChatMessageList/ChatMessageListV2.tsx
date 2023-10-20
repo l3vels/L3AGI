@@ -96,7 +96,7 @@ const ChatMessageListV2 = ({
           id: uuidv4(),
           ai: true,
           createdOn: Date.now(),
-          text: `${t('thinking')}`,
+          text: t('thinking'),
           loader_type: 'video',
           type: MessageTypeEnum.AI_MANUAL,
         }}
