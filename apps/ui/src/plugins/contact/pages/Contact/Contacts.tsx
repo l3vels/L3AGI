@@ -32,6 +32,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
+import { useCreateCallService } from 'plugins/contact/services/call/useCreateCallService'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -42,6 +43,8 @@ const Contacts = () => {
   const { agentsData } = useAgents()
 
   const { openModal } = useModal()
+
+  const [createCallService] = useCreateCallService()
 
   const gridData =
     contacts?.map((contact: any) => ({
@@ -84,7 +87,7 @@ const Contacts = () => {
                       return (
                         <AgentChatCard
                           key={index}
-                          onClick={() => {}}
+                          onClick={() => createCallService()}
                           onViewClick={handleView}
                           picked={false}
                           agent={agent}
