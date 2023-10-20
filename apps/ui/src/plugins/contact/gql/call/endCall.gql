@@ -1,0 +1,4 @@
+mutation endCall($input: input!) @api(name: pro) {
+  endCall(input: $input)
+    @rest(type: "Call", path: "/call/close", method: "POST", bodyKey: "input", endpoint: "pro")
+}

@@ -33,6 +33,7 @@ import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
 import { useCreateCallService } from 'plugins/contact/services/call/useCreateCallService'
+import { useEndCallService } from 'plugins/contact/services/call/useEndCallService'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -45,6 +46,7 @@ const Contacts = () => {
   const { openModal } = useModal()
 
   const [createCallService] = useCreateCallService()
+  const [endCallService] = useEndCallService()
 
   const gridData =
     contacts?.map((contact: any) => ({
@@ -97,13 +99,13 @@ const Contacts = () => {
                   </StyledMenuList>
                 </MenuButton>
 
-                {/* <IconButton
-                  onClick={() => deleteContactHandler(cell.value)}
+                <IconButton
+                  onClick={() => endCallService()}
                   icon={() => <StyledCloseIcon size={25} />}
                   size={IconButton.sizes.SMALL}
                   kind={IconButton.kinds.TERTIARY}
                   ariaLabel='Hung up'
-                /> */}
+                />
               </StyledTableButtons>
             </StyledPhoneCell>
           )
