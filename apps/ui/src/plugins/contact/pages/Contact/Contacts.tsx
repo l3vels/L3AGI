@@ -31,11 +31,13 @@ import { StyledMenuDots } from 'pages/Agents/AgentView/components/AgentViewDetai
 import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
+import { useContactForm } from './ContactForm/useContactForm'
 
 const Contacts = () => {
   const navigate = useNavigate()
 
   const { contacts, deleteContactHandler } = useContacts()
+  const { groupOptions } = useContactForm()
 
   const { agentsData } = useAgents()
 
@@ -48,6 +50,7 @@ const Contacts = () => {
       description: contact.description,
       email: contact.email,
       phone: contact.phone,
+      group_id: contact.group_id,
     })) || []
 
   const columns = useMemo(
@@ -106,6 +109,20 @@ const Contacts = () => {
       {
         Header: 'Email',
         accessor: 'email',
+      },
+      {
+        Header: 'Group',
+        accessor: 'group_id',
+
+        Cell: ({ cell }: any) => {
+          return (
+            <span>
+              {groupOptions
+                ?.filter((group: any) => group.value === cell.value)
+                .map((group: any) => group.label)}
+            </span>
+          )
+        },
       },
       {
         Header: 'Description',
