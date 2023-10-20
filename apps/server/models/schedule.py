@@ -4,8 +4,17 @@ import uuid
 from datetime import datetime, timedelta
 from typing import List
 
-from sqlalchemy import (UUID, Boolean, Column, DateTime, ForeignKey, Index,
-                        Numeric, String, or_)
+from sqlalchemy import (
+    UUID,
+    Boolean,
+    Column,
+    DateTime,
+    ForeignKey,
+    Index,
+    Numeric,
+    String,
+    or_,
+)
 from sqlalchemy.orm import Session, joinedload, relationship
 from sqlalchemy.sql import and_
 
@@ -13,7 +22,7 @@ from exceptions import ScheduleNotFoundException
 from models.base_model import BaseModel
 from models.schedule_config import ScheduleConfigModel
 from models.user import UserModel
-from typings.schedule import ConfigInput, ScheduleInput
+from typings.schedule import ConfigInput, ScheduleInput, ScheduleStatus
 
 
 class ScheduleModel(BaseModel):
@@ -39,10 +48,11 @@ class ScheduleModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     description = Column(String, nullable=True)
-    # status = Column(String, nullable=True)
+    status = Column(String, nullable=True, default=ScheduleStatus.PENDING.value)
     schedule_type = Column(String)  # `Outbound & Inbound`
     cron_expression = Column(String)
     start_date = Column(DateTime, nullable=True)
+    end_date = Column(DateTime, nullable=True)
     interval = Column(String, nullable=True)
     next_run_date = Column(DateTime, nullable=True, index=True)
     max_daily_budget = Column(Numeric(precision=5, scale=2), nullable=True)
@@ -248,6 +258,7 @@ class ScheduleModel(BaseModel):
             .join(UserModel, ScheduleModel.created_by == UserModel.id)
             .filter(
                 and_(
+                    ScheduleModel.status == ScheduleStatus.PENDING.value,
                     ScheduleModel.next_run_date >= two_minutes_ago,
                     ScheduleModel.next_run_date <= datetime.now(),
                     ScheduleModel.is_active == True,

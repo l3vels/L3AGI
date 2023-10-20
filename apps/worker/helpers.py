@@ -17,4 +17,4 @@ def execute_scheduled_runs():
 
     for schedule in schedules:
         # run_schedule(schedule.schedule.id)
-        print(f"{schedule.schedule.name} is due to run.")
+        print(f"{schedule['schedule']['name']} is due to run.")

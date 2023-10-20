@@ -18,12 +18,12 @@ import DatePickerField from 'components/DatePicker/DatePicker'
 const ScheduleForm = ({ formik }: { formik: any }) => {
   const { values, setFieldValue } = formik
   const {
-    schedule_description,
-    schedule_group_id,
-    schedule_agent_id,
-    schedule_type,
-    schedule_is_active,
-    schedule_cron_expression,
+    // schedule_description,
+    // schedule_group_id,
+    agent_id,
+    // schedule_type,
+    is_active,
+    // schedule_cron_expression,
     is_recurring,
     create_session_on_run,
     start_date,
@@ -31,9 +31,9 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
     interval_unit,
   } = values
 
-  const onDescriptionChange = (value: string) => {
-    setFieldValue('schedule_description', value)
-  }
+  // const onDescriptionChange = (value: string) => {
+  //   setFieldValue('schedule_description', value)
+  // }
 
   const { options, groupOptions, scheduleTypeOptions } = useScheduleForm()
 
@@ -53,7 +53,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
     <StyledRoot>
       <StyledForm>
         <StyledInputWrapper>
-          <FormikTextField name='schedule_name' placeholder='Name' label='Name' />
+          <FormikTextField name='name' placeholder='Name' label='Name' />
 
           {/* <StyledTextareaWrapper>
             <TypographyPrimary
@@ -82,9 +82,9 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
           <StyledDoubleRow>
             <AgentDropdown
               label={'Runner'}
-              fieldName={'schedule_agent_id'}
+              fieldName={'agent_id'}
               setFieldValue={setFieldValue}
-              fieldValue={schedule_agent_id}
+              fieldValue={agent_id}
               options={options}
               optionSize={'small'}
               onChange={option => {
@@ -143,8 +143,19 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
                   { label: 'Minutes', value: 'minutes' },
                   { label: 'Hours', value: 'hours' },
                   { label: 'Days', value: 'days' },
+                  { label: 'Weeks', value: 'weeks' },
+                  { label: 'Months', value: 'months' },
                 ]}
                 optionSize={'small'}
+              />
+
+              <FormikTextField
+                name='end_date'
+                field_name='end_date'
+                placeholder='Recurring End Date'
+                label='Recurring End Date'
+                size={TextField.sizes.SMALL}
+                type='datetime-local'
               />
             </StyledRepeatFields>
           )}
@@ -160,9 +171,9 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
             <Checkbox
               label='Active'
               kind='secondary'
-              name='schedule_is_active'
-              checked={schedule_is_active}
-              onChange={() => setFieldValue('schedule_is_active', !schedule_is_active)}
+              name='is_active'
+              checked={is_active}
+              onChange={() => setFieldValue('is_active', !is_active)}
             />
           </StyledCheckboxWrapper>
 

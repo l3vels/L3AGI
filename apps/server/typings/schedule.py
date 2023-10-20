@@ -4,6 +4,15 @@ from pydantic import UUID4, BaseModel
 
 from typings.account import AccountOutput
 from typings.user import UserOutput
+from enum import Enum
+
+
+class ScheduleStatus(Enum):
+    PENDING = "Pending"
+    PROCESSING = "Processing"
+
+    def __str__(self):
+        return self.value
 
 
 class ScheduleInput(BaseModel):
@@ -15,6 +24,7 @@ class ScheduleInput(BaseModel):
     workspace_id: Optional[UUID4]
     is_active: Optional[bool]
     start_date: str
+    end_date: Optional[str]
     interval: Optional[str]
 
 
@@ -64,6 +74,7 @@ class ScheduleOutput(BaseModel):
     modified_by: Optional[UUID4]
     interval: Optional[str]
     start_date: str
+    end_date: Optional[str]
 
 
 class ScheduleWithConfigsOutput(BaseModel):

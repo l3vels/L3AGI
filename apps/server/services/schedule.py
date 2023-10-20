@@ -11,6 +11,7 @@ from services.chat import create_client_message
 from typings.auth import UserAccount
 from typings.chat import ChatInput, ChatMessageInput
 from utils.schedule import convert_model_to_response
+from typings.schedule import ScheduleStatus
 
 
 def parse_interval_to_seconds(interval: str) -> int:
@@ -28,20 +29,13 @@ def parse_interval_to_seconds(interval: str) -> int:
     return int(value) * units[unit]
 
 
-def run_scheduled_agents():
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    schedules = ScheduleModel.get_due_schedules(session)
-
-    for schedule in schedules:
-        run_schedule(session, schedule)
-
-
-def run_schedule(
+def execute_scheduled_run(
     session,
     schedule: ScheduleModel,
 ):
+    schedule.status = ScheduleStatus.PROCESSING.value
+    session.commit()
+
     schedule_with_configs = convert_model_to_response(schedule)
     configs = schedule_with_configs.configs
 
@@ -71,11 +65,16 @@ def run_schedule(
         auth=UserAccount(user=user, account=account),
     )
 
+    # Check if the schedule is recurring and the end date is not exceeded
     if schedule_with_configs.configs.is_recurring:
         interval_in_seconds = parse_interval_to_seconds(schedule.interval)
 
-        schedule.next_run_date = schedule.next_run_date + timedelta(
-            seconds=interval_in_seconds
-        )
+        next_run_date = schedule.next_run_date + timedelta(seconds=interval_in_seconds)
 
+        if next_run_date <= schedule.end_date:
+            schedule.next_run_date = next_run_date
+        else:
+            schedule.next_run_date = None
+
+    schedule.status = ScheduleStatus.PENDING.value
     session.commit()

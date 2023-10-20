@@ -6,10 +6,14 @@ from fastapi_sqlalchemy import db
 from exceptions import ScheduleNotFoundException
 from models.schedule import ScheduleModel
 from typings.auth import UserAccount
-from typings.schedule import ScheduleConfigInput, ScheduleWithConfigsOutput
+from typings.schedule import (
+    ScheduleConfigInput,
+    ScheduleWithConfigsOutput,
+    ScheduleStatus,
+)
 from utils.auth import authenticate
-from utils.schedule import (convert_model_to_response,
-                            convert_schedules_to_schedule_list)
+from utils.schedule import convert_model_to_response, convert_schedules_to_schedule_list
+from services.schedule import execute_scheduled_run
 
 router = APIRouter()
 
@@ -105,6 +109,12 @@ def get_schedules(
     return convert_schedules_to_schedule_list(db_schedules)
 
 
+@router.get("/due")
+def get_due_schedules():
+    schedules = ScheduleModel.get_due_schedules(db.session)
+    return convert_schedules_to_schedule_list(schedules)
+
+
 @router.get("/{id}", response_model=ScheduleWithConfigsOutput)
 def get_schedule_by_id(
     id: str, auth: UserAccount = Depends(authenticate)
@@ -129,6 +139,21 @@ def get_schedule_by_id(
         )  # Ensure consistent case in error messages
 
     return convert_model_to_response(db_schedule)
+
+
+@router.post("{schedule_id}/run", status_code=200)
+def run_schedule(schedule_id: str):
+    schedule = ScheduleModel.get_schedule_by_id(db, schedule_id, None)
+
+    if not schedule:
+        raise HTTPException(status_code=404, detail="Schedule not found")
+
+    if schedule.status == ScheduleStatus.PROCESSING.value:
+        raise HTTPException(status_code=400, detail="Schedule already is processing")
+
+    execute_scheduled_run(db.session, schedule)
+
+    return {"message": "Schedule run successfully"}
 
 
 @router.delete("/{schedule_id}", status_code=200)

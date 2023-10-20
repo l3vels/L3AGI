@@ -8,6 +8,7 @@ fragment ScheduleFragment on Schedule {
     max_daily_budget
     cron_expression
     start_date
+    end_date
     interval
   }
 

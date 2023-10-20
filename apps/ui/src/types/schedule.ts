@@ -14,6 +14,7 @@ export interface Schedule {
   max_daily_budget: number
   cron_expression: string
   start_date: string
+  end_date: Nullable<string>
   interval: string
 }
 
