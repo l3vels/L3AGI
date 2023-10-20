@@ -71,6 +71,7 @@
   "delete-row": "Delete Row",
   "delete-agent": "Delete $t(agent)",
   "discovery": "Discovery",
+  "discord": "Discord",
   "doc": "Doc",
   "edit-agent": "Edit $t(agent)",
   "edit-team": "Edit $t(team)",
@@ -180,6 +181,7 @@
   "toolkit-description": "Discover the complete range of tools available for your agents and teams.",
   "tree-index": "Tree Index",
   "tree-summarize": "Tree Summarize",
+  "twitter": "Twitter",
   "update-token-id": "Update Token ID",
   "upload": "Upload",
   "user-successfully-deleted": "User successfully deleted",
@@ -204,5 +206,6 @@
   "weight": "pound",
   "year": "Year",
   "yes": "Yes",
+  "youtube": "YouTube",
   "zep": "Zep"
 }
