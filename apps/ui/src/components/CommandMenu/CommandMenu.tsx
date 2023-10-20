@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import { v4 as uuidv4 } from 'uuid'
 import { useModal } from 'hooks'
@@ -23,6 +24,7 @@ import CommandItem from './components/CommandItem'
 import { useHotkeys } from 'react-hotkeys-hook'
 
 const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
+  const { t } = useTranslation()
   const { openModal, closeModal } = useModal()
   const componentRef = useRef<HTMLDivElement>(null)
 
@@ -198,7 +200,7 @@ const CommandMenu = ({ open, setCmdkOpen, theme, toggleTheme }: any) => {
         // onValueChange={value => setSearch(value)}
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
-        placeholder='Search, create or ask anything'
+        placeholder={t('search-placeholder')}
       />
       <StyledCommandList>
         <>
