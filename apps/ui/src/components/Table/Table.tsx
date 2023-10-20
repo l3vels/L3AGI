@@ -25,55 +25,71 @@ const Table = ({ columns, data }: TableProps) => {
   })
 
   return (
-    <StyledTable {...getTableProps()}>
-      <StyledThead>
-        {headerGroups.map((headerGroup: any, index: number) => (
-          <StyledTr key={index} {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column: any, index: number) => (
-              <StyledTh key={index} {...column.getHeaderProps()} maxWidth={column.maxWidth}>
-                {column.render('Header')}
-              </StyledTh>
-            ))}
-          </StyledTr>
-        ))}
-      </StyledThead>
-      <StyledTbody {...getTableBodyProps()}>
-        {rows.map((row: any, index: number) => {
-          prepareRow(row)
-          return (
-            <StyledTr {...row.getRowProps()} key={index} bodyRow>
-              {row.cells.map((cell: any, index: number) => {
-                const { column } = cell
-                const { isEdit, cellEditor } = column
-
-                return <TableCell key={index} cell={cell} />
-              })}
+    <StyledRoot>
+      <StyledTable {...getTableProps()}>
+        <StyledThead>
+          {headerGroups.map((headerGroup: any, index: number) => (
+            <StyledTr key={index} {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column: any, index: number) => (
+                <StyledTh key={index} {...column.getHeaderProps()} maxWidth={column.maxWidth}>
+                  {column.render('Header')}
+                </StyledTh>
+              ))}
             </StyledTr>
-          )
-        })}
-      </StyledTbody>
-    </StyledTable>
+          ))}
+        </StyledThead>
+        <StyledTbody {...getTableBodyProps()}>
+          {rows.map((row: any, index: number) => {
+            prepareRow(row)
+            return (
+              <StyledTr {...row.getRowProps()} key={index} bodyRow>
+                {row.cells.map((cell: any, index: number) => {
+                  const { column } = cell
+                  const { isEdit, cellEditor } = column
+
+                  return <TableCell key={index} cell={cell} />
+                })}
+              </StyledTr>
+            )
+          })}
+        </StyledTbody>
+      </StyledTable>
+    </StyledRoot>
   )
 }
 
 export default Table
 
-const StyledTable = styled.table`
-  margin-top: 20px;
-
+const StyledRoot = styled.div`
   width: 100%;
-  min-height: 300px;
+  height: 100%;
+  overflow: auto;
+
+  /* height: 100vh; */
+  border-radius: 24px;
+  max-height: calc(100vh - 300px);
+`
+
+const StyledTable = styled.table`
+  min-height: 200px;
+  width: 100%;
+
   color: ${({ theme }) => theme.typography.contentPrimary};
 
   background-color: ${({ theme }) => theme.body.tableBackgroundColor};
-  border-radius: 24px;
 
   overflow: hidden;
 `
 const StyledThead = styled.thead`
+  background-color: ${({ theme }) => theme.body.tableBackgroundColor};
+
   width: 100%;
 
   display: flex;
+
+  position: sticky;
+  top: 0px;
+  margin: 0 0 0 0;
 `
 const StyledTbody = styled.tbody`
   width: 100%;
@@ -101,7 +117,7 @@ const StyledTr = styled.tr<{ bodyRow?: boolean }>`
 `
 const StyledTh = styled.th<{ maxWidth: number }>`
   width: 100%;
-  max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')};
+  /* max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')}; */
 
   text-align: center;
 
@@ -110,6 +126,7 @@ const StyledTh = styled.th<{ maxWidth: number }>`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 
+  overflow: hidden;
   :hover {
     background-color: rgba(0, 0, 0, 0.2);
   }

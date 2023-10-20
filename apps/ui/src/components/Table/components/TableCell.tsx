@@ -91,13 +91,12 @@ export default TableCell
 
 const StyledTd = styled.td<{ maxWidth: number; noPadding: boolean }>`
   width: 100%;
-
   padding: ${p => (p.noPadding ? `0px` : `10px`)};
 
   display: flex;
   align-items: center;
   /* padding: 10px 20px; */
-
+  overflow: hidden;
   /* text-align: center; */
 
   border-right: 1px solid rgba(0, 0, 0, 0.2);
@@ -105,5 +104,8 @@ const StyledTd = styled.td<{ maxWidth: number; noPadding: boolean }>`
   :hover {
     background-color: rgba(0, 0, 0, 0.2);
   }
+
   max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')};
+  min-width: 200px;
+  /* min-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100px')}; */
 `

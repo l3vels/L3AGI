@@ -70,7 +70,7 @@ const Contacts = () => {
         Cell: ({ cell }: any) => {
           return (
             <StyledPhoneCell>
-              <span>{cell.value}</span>
+              <StyledPhoneText>{cell.value}</StyledPhoneText>
               <StyledTableButtons>
                 <MenuButton component={StyledCallIcon} closeDialogOnContentClick={false} zIndex={1}>
                   <StyledMenuList>
@@ -189,10 +189,12 @@ const Contacts = () => {
 export default Contacts
 
 const StyledPhoneCell = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 100%;
 `
 const StyledCallIcon = styled(Microphone)`
   path {
@@ -215,4 +217,8 @@ const StyledMenuList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+`
+const StyledPhoneText = styled.span`
+  max-width: 60%;
+  overflow: hidden;
 `
