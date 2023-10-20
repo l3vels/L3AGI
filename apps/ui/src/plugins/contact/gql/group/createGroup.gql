@@ -1,6 +1,6 @@
-mutation createGroup($input: input!) @api(name: ai) {
+mutation createGroup($input: input!) @api(name: pro) {
   createGroup(input: $input)
-    @rest(type: "Group", path: "/group", method: "POST", bodyKey: "input", endpoint: "ai") {
+    @rest(type: "Group", path: "/group", method: "POST", bodyKey: "input", endpoint: "pro") {
     id
     name
     description

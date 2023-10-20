@@ -1,6 +1,6 @@
-query contactById($id: id!) @api(name: "ai") {
+query contactById($id: id!) @api(name: "pro") {
   contactById(id: $id)
-    @rest(type: "Contact", path: "/contact/{args.id}", method: "GET", endpoint: "ai") {
+    @rest(type: "Contact", path: "/contact/{args.id}", method: "GET", endpoint: "pro") {
     id
     name
     description
