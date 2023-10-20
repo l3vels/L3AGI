@@ -1,0 +1,7 @@
+.venv
+
+.env
+
+*.bak
+*.dat
+*.dir
