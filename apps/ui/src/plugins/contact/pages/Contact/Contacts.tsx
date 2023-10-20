@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
 import { ButtonPrimary } from 'components/Button/Button'
@@ -20,6 +21,10 @@ import {
 import { useMemo } from 'react'
 import Table from 'components/Table'
 import { StyledTableButtons } from '../Group/Groups'
+
+import Microphone from '@l3-lib/ui-core/dist/icons/Microphone'
+import Close from '@l3-lib/ui-core/dist/icons/Close'
+import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -44,6 +49,29 @@ const Contacts = () => {
       {
         Header: 'Phone',
         accessor: 'phone',
+        Cell: ({ cell }: any) => {
+          return (
+            <StyledPhoneCell>
+              <span>{cell.value}</span>
+              <StyledTableButtons>
+                <IconButton
+                  onClick={() => deleteContactHandler(cell.value)}
+                  icon={() => <StyledCallIcon />}
+                  size={IconButton.sizes.SMALL}
+                  kind={IconButton.kinds.TERTIARY}
+                  ariaLabel='Call'
+                />
+                {/* <IconButton
+                  onClick={() => deleteContactHandler(cell.value)}
+                  icon={() => <StyledCloseIcon size={25} />}
+                  size={IconButton.sizes.SMALL}
+                  kind={IconButton.kinds.TERTIARY}
+                  ariaLabel='Hung up'
+                /> */}
+              </StyledTableButtons>
+            </StyledPhoneCell>
+          )
+        },
       },
       {
         Header: 'Email',
@@ -107,3 +135,15 @@ const Contacts = () => {
 }
 
 export default Contacts
+
+const StyledPhoneCell = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`
+const StyledCallIcon = styled(Microphone)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
