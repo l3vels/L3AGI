@@ -150,6 +150,7 @@
   "script": "Script",
   "sessions": "Sessions",
   "settings": "Settings",
+  "search-placeholder": "Search, create or ask anything",
   "show-custom-props": "Show Custom Props",
   "simple-summarize": "Simple Summarize",
   "source-type": "Source Type",
