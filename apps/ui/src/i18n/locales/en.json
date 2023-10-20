@@ -53,6 +53,7 @@
   "create-asset": "Create Asset",
   "createAgent": "Create Agent",
   "custom-fields": "Custom Fields",
+  "date": "Date",
   "datasource": "Datasource",
   "datasource-description": "Here is your $t(datasource), a collection of databases, APIs, files, and more.",
   "description": "Description",
