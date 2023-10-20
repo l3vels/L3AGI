@@ -6,6 +6,8 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
@@ -25,11 +27,19 @@ import { StyledTableButtons } from '../Group/Groups'
 import Microphone from '@l3-lib/ui-core/dist/icons/Microphone'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
+import { StyledMenuDots } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import { useAgents } from 'pages/Agents/useAgents'
+import AgentChatCard from 'components/ChatCards/AgentChatCard'
+import { useModal } from 'hooks'
 
 const Contacts = () => {
   const navigate = useNavigate()
 
   const { contacts, deleteContactHandler } = useContacts()
+
+  const { agentsData } = useAgents()
+
+  const { openModal } = useModal()
 
   const gridData =
     contacts?.map((contact: any) => ({
@@ -54,13 +64,33 @@ const Contacts = () => {
             <StyledPhoneCell>
               <span>{cell.value}</span>
               <StyledTableButtons>
-                <IconButton
-                  onClick={() => deleteContactHandler(cell.value)}
-                  icon={() => <StyledCallIcon />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
-                  ariaLabel='Call'
-                />
+                <MenuButton component={StyledCallIcon} closeDialogOnContentClick={false} zIndex={1}>
+                  <StyledMenuList>
+                    {agentsData?.map((agentObj: any, index: number) => {
+                      const { agent } = agentObj
+
+                      const handleView = () => {
+                        openModal({
+                          name: 'agent-view-modal',
+                          data: {
+                            agent: agentObj,
+                          },
+                        })
+                      }
+
+                      return (
+                        <AgentChatCard
+                          key={index}
+                          onClick={() => {}}
+                          onViewClick={handleView}
+                          picked={false}
+                          agent={agent}
+                        />
+                      )
+                    })}
+                  </StyledMenuList>
+                </MenuButton>
+
                 {/* <IconButton
                   onClick={() => deleteContactHandler(cell.value)}
                   icon={() => <StyledCloseIcon size={25} />}
@@ -146,4 +176,21 @@ const StyledCallIcon = styled(Microphone)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledMenuList = styled.div`
+  /* width: 100px;
+  height: 100px; */
+  padding: 10px;
+  overflow: auto;
+
+  max-height: 300px;
+
+  background: ${({ theme }) => theme.body.backgroundColorSecondary};
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  backdrop-filter: blur(100px);
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `
