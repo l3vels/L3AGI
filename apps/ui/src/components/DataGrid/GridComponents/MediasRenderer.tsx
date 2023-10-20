@@ -1,6 +1,7 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import { useRef, useState } from 'react'
@@ -8,6 +9,7 @@ import TypographySecondary from 'components/Typography/Secondary'
 // import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'
 
 const MediasRenderer = (p: any) => {
+  const { t } = useTranslation()
   const [item, setItem] = useState<string | null>(null)
   const uploadRef = useRef<HTMLInputElement>(null)
 
@@ -63,7 +65,7 @@ const MediasRenderer = (p: any) => {
             </StyledOutlineIcon>
 
             <TypographySecondary
-              value={'Upload'}
+              value={t('upload')}
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
             />
