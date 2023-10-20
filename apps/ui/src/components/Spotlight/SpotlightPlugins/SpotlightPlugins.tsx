@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Search from '@l3-lib/ui-core/dist/Search'
 
@@ -14,6 +15,7 @@ import MediaPlugins from './PluginGroups/MediaPlugins'
 import CommunityPlugins from './PluginGroups/CommunityPlugins'
 
 const SpotlightPlugins = () => {
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState(0)
 
   return (
@@ -21,10 +23,10 @@ const SpotlightPlugins = () => {
       <StyledHeader>
         <Search />
         <TabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>All</Tab>
-          <Tab onClick={() => setActiveTab(1)}>Web3</Tab>
-          <Tab onClick={() => setActiveTab(2)}>Media</Tab>
-          <Tab onClick={() => setActiveTab(3)}>Community</Tab>
+          <Tab onClick={() => setActiveTab(0)}>{t('all')}</Tab>
+          <Tab onClick={() => setActiveTab(1)}>{t('web3')}</Tab>
+          <Tab onClick={() => setActiveTab(2)}>{t('media')}</Tab>
+          <Tab onClick={() => setActiveTab(3)}>{t('community')}</Tab>
         </TabList>
       </StyledHeader>
 
