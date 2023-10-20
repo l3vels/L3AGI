@@ -101,7 +101,7 @@ const MainNavigation = () => {
         >
           <StyledValueOutlineIcon size={40} />
           <TypographySecondary
-            value={t('datasource')}
+            value={t('data-source')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

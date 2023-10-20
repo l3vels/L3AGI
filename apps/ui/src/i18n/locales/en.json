@@ -60,7 +60,7 @@
   "ctrl+f": "Ctrl+F",
   "ctrl+shift+f": "Ctrl+Shift+F",
   "date": "Date",
-  "datasource": "Datasource",
+  "data-source": "Data source",
   "datasource-description": "Here is your $t(datasource), a collection of databases, APIs, files, and more.",
   "description": "Description",
   "deleteUser": "Delete user",
