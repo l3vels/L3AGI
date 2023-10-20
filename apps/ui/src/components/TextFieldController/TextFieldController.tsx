@@ -1,4 +1,5 @@
 import { Controller } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 type ITypes = {
@@ -8,6 +9,7 @@ type ITypes = {
 }
 
 const TextFieldController = ({ field_name, control, placeholder }: ITypes) => {
+  const { t } = useTranslation()
   return (
     <Controller
       render={({ field, fieldState: { error } }) => {
@@ -19,7 +21,7 @@ const TextFieldController = ({ field_name, control, placeholder }: ITypes) => {
               error
                 ? {
                     status: 'error',
-                    text: 'Please enter correct url',
+                    text: `${t('please-enter-correct-url')}`,
                   }
                 : {}
             }
