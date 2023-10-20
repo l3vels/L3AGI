@@ -198,6 +198,7 @@
   "wallet-delete-failed": "Wallet delete failed",
   "wallet-successfully-deleted": "Wallet successfully deleted",
   "weaviate": "Weaviate",
+  "welcome-l3agi": "Welcome to L3AGI",
   "welcome-message": "BUILD TEAMS OF AI AGENTS",
   "welcome-message-description": "Open-source tool that enables AI $t(agent)s to collaborate as effectively as human $t(team)s",
   "weight": "pound",
