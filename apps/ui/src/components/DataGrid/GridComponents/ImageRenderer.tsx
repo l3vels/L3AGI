@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { StyledLoaderWrapper, StyledUploadDiv } from './MediasRenderer'
 
@@ -12,6 +13,7 @@ import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import TypographySecondary from 'components/Typography/Secondary'
 
 const ImageRenderer = (p: any) => {
+  const { t } = useTranslation()
   const [item, setItem] = useState<string | null>(null)
   const uploadRef = useRef<HTMLInputElement>(null)
 
@@ -59,7 +61,7 @@ const ImageRenderer = (p: any) => {
             </StyledOutlineIcon>
 
             <TypographySecondary
-              value={'Upload'}
+              value={t('upload')}
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
             />
