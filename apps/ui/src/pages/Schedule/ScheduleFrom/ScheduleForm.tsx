@@ -79,11 +79,34 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
               label='Cron expression'
             /> */}
 
+          <StyledDoubleRow>
+            <AgentDropdown
+              label={'Runner'}
+              fieldName={'schedule_agent_id'}
+              setFieldValue={setFieldValue}
+              fieldValue={schedule_agent_id}
+              options={options}
+              optionSize={'small'}
+              onChange={option => {
+                setFieldValue('agent_type', option.type)
+              }}
+            />
+
+            {/* <AgentDropdown
+              label={'Group'}
+              fieldName={'schedule_group_id'}
+              setFieldValue={setFieldValue}
+              fieldValue={schedule_group_id}
+              options={groupOptions}
+              optionSize={'small'}
+            /> */}
+          </StyledDoubleRow>
+
           <FormikTextField
             name='start_date'
             field_name='start_date'
             placeholder='Run Date'
-            label='Select date and time'
+            label='Start Date'
             size={TextField.sizes.SMALL}
             type='datetime-local'
           />
@@ -125,29 +148,6 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
               />
             </StyledRepeatFields>
           )}
-
-          <StyledDoubleRow>
-            <AgentDropdown
-              label={'Agent or Team'}
-              fieldName={'schedule_agent_id'}
-              setFieldValue={setFieldValue}
-              fieldValue={schedule_agent_id}
-              options={options}
-              optionSize={'small'}
-              onChange={option => {
-                setFieldValue('agent_type', option.type)
-              }}
-            />
-
-            {/* <AgentDropdown
-              label={'Group'}
-              fieldName={'schedule_group_id'}
-              setFieldValue={setFieldValue}
-              fieldValue={schedule_group_id}
-              options={groupOptions}
-              optionSize={'small'}
-            /> */}
-          </StyledDoubleRow>
 
           {/* <FormikTextField
             type='number'
