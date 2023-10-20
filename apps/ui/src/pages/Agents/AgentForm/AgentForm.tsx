@@ -90,7 +90,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <AgentDropdown
             isMulti
-            label={t('dataSource')}
+            label={t('datasource')}
             fieldName={'agent_datasources'}
             fieldValue={agent_datasources}
             setFieldValue={setFieldValue}
