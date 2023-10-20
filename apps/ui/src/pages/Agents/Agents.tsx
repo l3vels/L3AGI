@@ -18,7 +18,6 @@ import { ButtonPrimary } from 'components/Button/Button'
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
-import { t } from 'i18next'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
   const { t } = useTranslation()
