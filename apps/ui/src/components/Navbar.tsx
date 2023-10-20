@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import 'react-pro-sidebar/dist/css/styles.css'
+import { useTranslation } from 'react-i18next'
 
 import includes from 'lodash/includes'
 
@@ -52,6 +53,7 @@ const Navbar = ({
   backText = 'back',
   currentRouteName,
 }: NavbarProps) => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
 
@@ -123,7 +125,7 @@ const Navbar = ({
                   {!showMenu && (
                     <StyledEditableHeading
                       value={navbarTitle}
-                      placeholder={'Name'}
+                      placeholder={t('name')}
                       type={EditableHeading.types.h1}
                       onCancelEditing={() => navigate(-1)}
                       onFinishEditing={(value: any) => {

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -48,6 +49,7 @@ const AgentCard = ({
   creator,
   avatar,
 }: AgentCardProps) => {
+  const { t } = useTranslation()
   const { shortText: shortDescription } = textSlicer(description, 130)
   const { shortText: shortName } = textSlicer(name, 25)
 
@@ -151,14 +153,14 @@ const AgentCard = ({
           )}
           {onCreateClick && (
             <ButtonPrimary size={Button.sizes.SMALL} onClick={onCreateClick}>
-              Create
+              {t('create')}
             </ButtonPrimary>
           )}
           {onChatClick && (
             <StyledChatButtonWrapper>
               <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper secondary>
-                  Chat
+                  {t('chat')}
                   <MoveArrowRight size={14} />
                 </StyledInnerButtonWrapper>
               </ButtonPrimary>

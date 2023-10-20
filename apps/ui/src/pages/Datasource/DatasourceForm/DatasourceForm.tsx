@@ -257,7 +257,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   disabled={loading || data}
                   size={Button.sizes.SMALL}
                 >
-                  {loading ? <Loader size={32} /> : `${t('save')}`}
+                  {loading ? <Loader size={32} /> : t('save')}
                 </ButtonPrimary>
               </div>
             )}

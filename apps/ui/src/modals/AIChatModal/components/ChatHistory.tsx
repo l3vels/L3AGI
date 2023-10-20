@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesService'
 
@@ -21,6 +22,7 @@ import { useDiscoverAgentByIdService } from 'services/discover/useDiscoverAgentB
 import { useDiscoverTeamByIdService } from 'services/discover/useDiscoverTeamById'
 
 const ChatHistory = () => {
+  const { t } = useTranslation()
   const { user } = useContext(AuthContext)
 
   const { openModal } = useModal()
@@ -101,9 +103,7 @@ const ChatHistory = () => {
             !historyLoading &&
             chatHistory &&
             chatHistory?.length === 0 &&
-            (!agentId
-              ? `Hello, you can chat with agents and teams on your dashboard.`
-              : chatGreeting)
+            (!agentId ? `${t('greeting-description')}` : chatGreeting)
           }
           agentName={agentName || 'Agent'}
         />
@@ -111,7 +111,7 @@ const ChatHistory = () => {
 
       <StyledButtonWrapper>
         <StyledButton onClick={handleCreate} disabled={isLoading} size={Button.sizes.MEDIUM}>
-          {isLoading ? <Loader size={32} /> : 'Start Your Chat'}
+          {isLoading ? <Loader size={32} /> : `${t('start-your-chat')}`}
         </StyledButton>
       </StyledButtonWrapper>
     </StyledRoot>

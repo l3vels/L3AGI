@@ -41,7 +41,7 @@ const CreateAgentForm = () => {
               disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {isLoading ? <Loader size={32} /> : `${t('save')}`}
+              {isLoading ? <Loader size={32} /> : t('save')}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>

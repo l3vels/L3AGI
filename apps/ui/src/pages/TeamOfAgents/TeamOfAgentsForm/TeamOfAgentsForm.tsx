@@ -230,7 +230,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <AgentDropdown
           isMulti
-          label={t('dataSource')}
+          label={t('data-source')}
           fieldName={'team_datasources'}
           fieldValue={team_datasources}
           setFieldValue={setFieldValue}
@@ -269,7 +269,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             />
             <StyledTextareaWrapper>
               <TypographyPrimary
-                value={t('script')}
+                value={t('base-system-message')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />

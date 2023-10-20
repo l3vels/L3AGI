@@ -1,6 +1,7 @@
 import useResetPassword from 'pages/Auth/ResetPassword/useResetPassword'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Button from '@l3-lib/ui-core/dist/Button'
 import TextFieldFormik from 'components/TextFieldFormik'
 
@@ -11,29 +12,34 @@ import HeadingTertiary from 'components/Heading/Tertiary'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const ResetPassword = () => {
+  const { t } = useTranslation()
   const { formik, alertMessage } = useResetPassword()
 
   return (
     <StyledCenterFormContainer>
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <HeadingTertiary
-        value={'Forgot password'}
+        value={t('forgot-password')}
         type={Heading.types.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextFieldFormik field_name='password' placeholder='New password*' size='large' />
+          <TextFieldFormik
+            field_name='password'
+            placeholder={`${t('new-password')}*`}
+            size='large'
+          />
           <TextFieldFormik
             field_name='confirm_password'
-            placeholder='Confirm password*'
+            placeholder={`${t('confirm-password')}*`}
             size='large'
           />
           <StyledColumnContainer>
             <Checkbox
               size='small'
               kind='secondary'
-              label='Accept you will not forget it again 🤨'
+              label={`${t('accept-you-will-not-forget-it-again')}🤨`}
               labelClassName='checkbox_label'
             />
           </StyledColumnContainer>
@@ -43,7 +49,7 @@ const ResetPassword = () => {
           onClick={() => formik.handleSubmit()}
           size={Button.sizes.LARGE}
         >
-          Update
+          {t('update')}
         </ButtonPrimary>
       </StyledFormContainer>
     </StyledCenterFormContainer>

@@ -1,10 +1,12 @@
 import styled, { keyframes } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import logo from 'assets/images/l3_logo.png'
 import { useEffect } from 'react'
 
 export const WelcomeLoader = () => {
+  const { t } = useTranslation()
   // useEffect(() => {
   //   setTimeout(() => {
   //     window.location.href = '/'
@@ -19,7 +21,7 @@ export const WelcomeLoader = () => {
       <StyledCenterContainer>
         <img src={logo} alt='' />
         <Heading
-          value={'Welcome to L3AGI'}
+          value={t('welcome-l3agi')}
           type={Heading.types.h1}
           customColor='#fff'
           style={{ fontSize: 90, lineHeight: 'normal' }}

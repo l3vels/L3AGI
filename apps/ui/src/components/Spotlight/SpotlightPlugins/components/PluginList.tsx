@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
@@ -13,6 +14,7 @@ type PluginListProps = {
 }
 
 const PluginList = ({ title, description, isNew = false, children }: PluginListProps) => {
+  const { t } = useTranslation()
   return (
     <StyledPluginList>
       <StyledListHeader>
@@ -22,7 +24,7 @@ const PluginList = ({ title, description, isNew = false, children }: PluginListP
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
-          {isNew && <Tags label='New' readOnly color='gradient_yellow' size='small' />}
+          {isNew && <Tags label={t('new')} readOnly color='gradient_yellow' size='small' />}
         </StyledListTitle>
         <TypographySecondary
           value={description}

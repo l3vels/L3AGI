@@ -1,6 +1,7 @@
 import { FormikProvider } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Button from '@l3-lib/ui-core/dist/Button'
 import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
@@ -13,6 +14,7 @@ import TypographySecondary from 'components/Typography/Secondary'
 import { ButtonTertiary } from 'components/Button/Button'
 
 const AccountForm = () => {
+  const { t } = useTranslation()
   const { formik } = useAccount()
   const [logout] = useLogoutService()
 
@@ -36,7 +38,7 @@ const AccountForm = () => {
           <StyledCustomTextField>
             <StyledTypographyWrapper>
               <TypographyTertiary
-                value='Full Name'
+                value={t('full-name')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
@@ -44,14 +46,14 @@ const AccountForm = () => {
             <TextField
               name='first_name'
               value={`${formik.values.first_name} ${formik.values.last_name}`}
-              placeholder={'value'}
+              placeholder={t('value')}
               size={TextField.sizes.SMALL}
             />
           </StyledCustomTextField>
           <StyledCustomTextField>
             <StyledTypographyWrapper>
               <TypographyTertiary
-                value='Company name'
+                value={t('company-name')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
@@ -59,7 +61,7 @@ const AccountForm = () => {
             <TextField
               name='name'
               value={`${formik.values.name}`}
-              placeholder={'value'}
+              placeholder={t('value')}
               size={TextField.sizes.SMALL}
             />
           </StyledCustomTextField>
@@ -67,7 +69,7 @@ const AccountForm = () => {
           <StyledCustomTextField>
             <StyledTypographyWrapper>
               <TypographyTertiary
-                value='Email'
+                value={t('email')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
@@ -75,7 +77,7 @@ const AccountForm = () => {
             <TextField
               name='email'
               value={`${formik.values.email}`}
-              placeholder={'value'}
+              placeholder={t('value')}
               size={TextField.sizes.SMALL}
             />
           </StyledCustomTextField>
@@ -83,7 +85,7 @@ const AccountForm = () => {
           <StyledButton>
             <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes.SMALL}>
               <TypographySecondary
-                value='Log out'
+                value={t('log-out')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />

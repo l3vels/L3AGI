@@ -45,7 +45,7 @@ const CreateTeamOfAgentsForm = () => {
                 size={Button.sizes.SMALL}
                 disabled={isLoading}
               >
-                {isLoading ? <Loader size={32} /> : `${t('save')}`}
+                {isLoading ? <Loader size={32} /> : t('save')}
               </ButtonPrimary>
             </StyledButtonWrapper>
           </StyledHeaderGroup>

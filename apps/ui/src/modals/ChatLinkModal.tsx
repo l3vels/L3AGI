@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 //eslint-disable-next-line
 import PropTypes from 'prop-types'
 import withRenderModal from 'hocs/withRenderModal'
@@ -75,13 +76,13 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
       title={
         chatLink ? (
           <HeadingPrimary
-            value={'Create Session'}
+            value={t('create-session')}
             type={Typography.types.P}
             size={Typography.sizes.md}
           />
         ) : (
           <HeadingPrimary
-            value={'Create Session'}
+            value={t('create-session')}
             type={Typography.types.P}
             size={Typography.sizes.md}
           />
@@ -108,13 +109,17 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
               </StyledLinkWrapper>
             </>
           ) : (
-            <FormikTextField focus name='chat_name' placeholder='Name' label='Name' />
+            <FormikTextField focus name='chat_name' placeholder={t('name')} label={t('name')} />
           )}
         </StyledBody>
       </FormikProvider>
       <StyledModalFooter>
         <ButtonTertiary onClick={() => closeModal('chat-link-modal')} size={Button.sizes.MEDIUM}>
-          <Typography value='Cancel' type={Typography.types.LABEL} size={Typography.sizes.sm} />
+          <Typography
+            value={t('cancel')}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
         </ButtonTertiary>
 
         {!chatLink && (
@@ -123,7 +128,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
             size={Button.sizes.MEDIUM}
             disabled={isLoading}
           >
-            {isLoading ? <Loader size={20} /> : 'Confirm'}
+            {isLoading ? <Loader size={20} /> : t('confirm')}
           </ButtonPrimary>
         )}
       </StyledModalFooter>

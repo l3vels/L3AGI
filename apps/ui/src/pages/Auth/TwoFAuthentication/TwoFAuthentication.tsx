@@ -4,6 +4,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 // import useResetPassword from './useResetPassword'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 
@@ -11,25 +12,26 @@ import useTwoFA from './useTwoFA'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const TwoFAuthentication = () => {
+  const { t } = useTranslation()
   const { formik, handleResendCode, alertMessage } = useTwoFA()
   return (
     <StyledContainer>
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
-      <span>Authentication code:</span>
+      <span>{t('authentication-code')}:</span>
       <br />
-      <span>An authentication code has been sent to your email. Please enter it below:</span>
+      <span>{t('authentication-send')}:</span>
       <br />
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextField name='code' placeholder='Authentication code' />
+          <TextField name='code' placeholder={t('authentication-code')} />
         </FormikProvider>
         <ButtonContainer>
-          <ButtonPrimary onClick={formik.handleSubmit}>Submit</ButtonPrimary>
+          <ButtonPrimary onClick={formik.handleSubmit}>{t('submit')}</ButtonPrimary>
         </ButtonContainer>
 
         <ButtonContainer>
-          <span>Didn’t receive the code or code expired?</span>
-          <ButtonPrimary onClick={handleResendCode}>Resend code?</ButtonPrimary>
+          <span>{t('receive-code')}</span>
+          <ButtonPrimary onClick={handleResendCode}>{t('resend-code')}</ButtonPrimary>
         </ButtonContainer>
       </StyledFormContainer>
     </StyledContainer>

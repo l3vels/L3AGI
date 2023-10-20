@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyQuaternary from 'components/Typography/Quaternary'
@@ -19,6 +20,7 @@ import CommandIcon from './CommandIcon'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
 
 const Spotlight = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const { setToast } = useContext(ToastContext)
@@ -105,7 +107,7 @@ const Spotlight = () => {
       setFormValue('')
     } catch (e) {
       setToast({
-        message: 'Something went wrong',
+        message: `${t('toast-negative-message')}`,
         type: 'negative',
         open: true,
       })
@@ -177,7 +179,7 @@ const Spotlight = () => {
             <>
               <ChatLoader />
               <TypographyQuaternary
-                value={'Thinking...'}
+                value={t('thinking')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
                 style={{ color: 'red' }}
@@ -197,7 +199,7 @@ const Spotlight = () => {
               <StyledInputWrapper onClick={handleChatClick}>
                 {!expanded && (
                   <TypographyQuaternary
-                    value={'Search'}
+                    value={t('search')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.sm}
                   />

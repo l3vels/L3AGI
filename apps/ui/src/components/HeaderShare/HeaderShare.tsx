@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { useAssignedUserListService } from 'services'
 import { RandomAvatar } from 'helpers/RandomImage'
@@ -15,6 +16,7 @@ type HeaderShareProps = {
 }
 
 const HeaderShare = ({ activeUsers = [] }: HeaderShareProps) => {
+  const { t } = useTranslation()
   const { data: assignedUserList } = useAssignedUserListService()
 
   return (
@@ -50,7 +52,7 @@ const HeaderShare = ({ activeUsers = [] }: HeaderShareProps) => {
         </StyledIconWrapper>
 
         <TypographySecondary
-          value={'Share'}
+          value={t('share')}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />

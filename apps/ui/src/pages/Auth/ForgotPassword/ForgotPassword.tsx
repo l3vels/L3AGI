@@ -1,6 +1,7 @@
 import useForgotPassword from 'pages/Auth/ForgotPassword/useForgotPassword'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
@@ -10,17 +11,18 @@ import HeadingTertiary from 'components/Heading/Tertiary'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const ForgotPassword = () => {
+  const { t } = useTranslation()
   const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
   return (
     <StyledCenterFormContainer>
       <HeadingTertiary
-        value={'Add email'}
+        value={t('add-email')}
         type={Heading.types.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
         <FormikProvider value={formik}>
-          <TextFieldFormik field_name='email' placeholder='Email*' size='large' />
+          <TextFieldFormik field_name='email' placeholder={`${t('email')}*`} size='large' />
         </FormikProvider>
 
         <ButtonPrimary
@@ -28,7 +30,7 @@ const ForgotPassword = () => {
           onClick={() => formik.handleSubmit()}
           size={Button.sizes.LARGE}
         >
-          Send
+          {t('send')}
         </ButtonPrimary>
       </StyledFormContainer>
     </StyledCenterFormContainer>

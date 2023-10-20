@@ -1,5 +1,6 @@
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import useRegister from 'pages/Auth/Register/useRegister'
 import TextFieldFormik from 'components/TextFieldFormik'
@@ -26,6 +27,7 @@ import HeadingSecondary from 'components/Heading/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const Register = () => {
+  const { t } = useTranslation()
   const { formik, alertMessage } = useRegister()
   const { openModal } = useModal()
 
@@ -37,14 +39,14 @@ const Register = () => {
 
       <StyledHeaderWrapper>
         <HeadingSecondary
-          value={'Join our community today! Sign up'}
+          value={t('join-our-community')}
           type={Heading.types.h2}
           customColor='rgba(255, 255, 255, 0.9)'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
 
         <TypographyTertiary
-          value={`AI agents' team collaboration as effective as human collaboration.`}
+          value={t('ai-agents-description')}
           type={Typography.types.label}
           size={Typography.sizes.sm}
         />
@@ -60,7 +62,7 @@ const Register = () => {
             <StyledImageWrapper secondary>
               <StyledImg src={githubIcon} />
             </StyledImageWrapper>
-            Sign up with Github
+            {t('sign-up-with-github')}
           </StyledInnerButtonWrapper>
         </ButtonPrimary>
 
@@ -68,13 +70,17 @@ const Register = () => {
 
         <FormikProvider value={formik}>
           <StyledInputWrapper>
-            <TextFieldFormik name='name' placeholder='Full name' label='First name' />
-            <TextFieldFormik name='account_name' placeholder='Company name' label='Company name' />
-            <TextFieldFormik name='email' placeholder='Email' label='Email' />
+            <TextFieldFormik name='name' placeholder='Full name' label={t('first-name')} />
+            <TextFieldFormik
+              name='account_name'
+              placeholder='Company name'
+              label={t('company-name')}
+            />
+            <TextFieldFormik name='email' placeholder='Email' label={t('email')} />
             <TextFieldFormik
               name='password'
-              placeholder='Password'
-              label='Password'
+              placeholder={t('password')}
+              label={t('password')}
               type='password'
             />
             {/* <TextFieldFormik
@@ -86,11 +92,11 @@ const Register = () => {
           </StyledInputWrapper>
         </FormikProvider>
 
-        <ButtonPrimary onClick={formik.handleSubmit}>Sign up</ButtonPrimary>
+        <ButtonPrimary onClick={formik.handleSubmit}>{t('sign-up')}</ButtonPrimary>
 
         <StyledLoginWrapper>
           <TypographyTertiary
-            value={`Already have an account?`}
+            value={t('already-have-an-account')}
             type={Typography.types.label}
             size={Typography.sizes.md}
           />
@@ -100,7 +106,7 @@ const Register = () => {
             }}
           >
             <TypographyPrimary
-              value='Login'
+              value={t('login')}
               type={Typography.types.label}
               size={Typography.sizes.md}
               as={'a'}

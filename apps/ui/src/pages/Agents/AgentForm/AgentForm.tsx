@@ -90,7 +90,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
           <AgentDropdown
             isMulti
-            label={t('dataSource')}
+            label={t('data-source')}
             fieldName={'agent_datasources'}
             fieldValue={agent_datasources}
             setFieldValue={setFieldValue}
@@ -155,7 +155,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             <>
               <StyledTextareaWrapper>
                 <TypographyPrimary
-                  value={t('script')}
+                  value={t('base-system-message')}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
                 />
