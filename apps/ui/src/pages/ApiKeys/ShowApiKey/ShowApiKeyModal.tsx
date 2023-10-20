@@ -4,6 +4,7 @@ import Toast from '@l3-lib/ui-core/dist/Toast'
 import withRenderModal from 'hocs/withRenderModal'
 
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -26,6 +27,7 @@ type ShowApiKeyModalProps = {
 }
 
 const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
+  const { t } = useTranslation()
   const [isCopied, setIsCopied] = useState(false)
 
   return (
@@ -35,7 +37,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
         title={
           <StyledTextContainer>
             <TypographyPrimary
-              value='Your new API token is displayed below. Treat this token like a password, as it can be used to access your account without a username, password, or two-factor authentication.'
+              value={t('show-api-key-description')}
               type={Typography.types.Paragraph}
               size={Typography.sizes.md}
             />
@@ -74,7 +76,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           label={
             <StyledToastLabel>
               <TypographySecondary
-                value='Note'
+                value={t('note')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
@@ -83,7 +85,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           paragraph={
             <StyledToastParagraph>
               <TypographySecondary
-                value='This token will not be displayed again, so make sure to save it to a safe place.'
+                value={t('api-key-token-description')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
@@ -100,7 +102,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
         />
         <StyledApiModalFooter>
           <Button kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE} onClick={closeModal}>
-            Done
+            {t('done')}
           </Button>
         </StyledApiModalFooter>
       </StyledModal>

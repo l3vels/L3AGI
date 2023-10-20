@@ -122,7 +122,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
               <StyledModalHeading
                 type={Heading.types.h1}
                 size={Heading.sizes.md}
-                value='Edit API keys'
+                value={t('edit-api-keys')}
               />
             }
             backgroundColor='dark'
@@ -131,7 +131,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
               <StyledCreateModalForm>
                 <StyledNameTextWrapper>
                   <TypographySecondary
-                    value='Name'
+                    value={t('name')}
                     type={Typography.types.P}
                     size={Typography.sizes.md}
                   />
@@ -140,7 +140,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                 <StyledTextFieldDate>
                   <StyledExpirationTextWrapper>
                     <TypographySecondary
-                      value='Expiration'
+                      value={t('expiration')}
                       type={Typography.types.LABEL}
                       size={Typography.sizes.lg}
                     />
@@ -150,7 +150,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
 
                 <StyledTextWrapper>
                   <TypographySecondary
-                    value='Choose games'
+                    value={t('choose-games')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
@@ -159,7 +159,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                   </StyledImgWrapper>
                 </StyledTextWrapper>
                 <DropDown
-                  placeholder='Select'
+                  placeholder={t('select')}
                   multi
                   multiLine
                   options={gamesOptions}
@@ -173,7 +173,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                 />
                 <StyledTextWrapper>
                   <TypographySecondary
-                    value='Note'
+                    value={t('note')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
@@ -182,7 +182,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                   <TextareaFormik
                     color='#FFFFFF'
                     field_name='note'
-                    placeholder='An optional description of what this webhook endpoint is used for.'
+                    placeholder={t('api-key-placeholder-description')}
                   />
                 </StyledTextAreaWrapper>
               </StyledCreateModalForm>
@@ -194,7 +194,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                   kind={Button.kinds.TERTIARY}
                   size={Button.sizes.MEDIUM}
                 >
-                  <StyledLabelTypography value='Cancel' type={Typography.types.P} />
+                  <StyledLabelTypography value={t('cancel')} type={Typography.types.P} />
                 </Button>
 
                 <Button
@@ -203,7 +203,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                   kind={Button.kinds.PRIMARY}
                   size={Button.sizes.MEDIUM}
                 >
-                  <StyledLabelTypography value='Update' type={Typography.types.P} />
+                  <StyledLabelTypography value={t('update')} type={Typography.types.P} />
                 </Button>
               </StyledActionsContainer>
             </StyledModalFooter>

@@ -12,7 +12,7 @@ const ShowAdvancedButton = ({ onClick, isShow }: { onClick: () => void; isShow: 
   return (
     <StyledAdvancedButton onClick={onClick}>
       <TypographyPrimary
-        value={t('Advanced-options')}
+        value={t('advanced-options')}
         type={Typography.types.LABEL}
         size={Typography.sizes.md}
       />

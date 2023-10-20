@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 // import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
@@ -22,6 +23,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 const ApiKeys = () => {
+  const { t } = useTranslation()
   const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
   const gridRef = useRef({})
 
@@ -41,12 +43,12 @@ const ApiKeys = () => {
           <StyledColumnContainer>
             <div>
               <StyledHeaderGroup>
-                <StyledTableValue>Standard keys</StyledTableValue>
+                <StyledTableValue>{t('standard-keys')}</StyledTableValue>
               </StyledHeaderGroup>
               <StyledGroupContainer mt='20'>
                 <StyledTypography>
                   <TypographyTertiary
-                    value='These keys will allow you to authenticate API request. '
+                    value={t('api-keys-authenticate')}
                     type={Typography.types.P}
                     size={Typography.sizes.lg}
                   />
@@ -56,7 +58,7 @@ const ApiKeys = () => {
                       size={Button.sizes.SMALL}
                     >
                       <TypographyTertiary
-                        value=' Learn more'
+                        value={t('learn-more')}
                         type={Typography.types.P}
                         size={Typography.sizes.lg}
                       />
@@ -66,7 +68,7 @@ const ApiKeys = () => {
               </StyledGroupContainer>
             </div>
             <ButtonPrimary onClick={openCreateAPIModal} leftIcon={Add} size={Button.sizes.LARGE}>
-              Create secret key
+              {t('create-secret-key')}
             </ButtonPrimary>
           </StyledColumnContainer>
         </div>
