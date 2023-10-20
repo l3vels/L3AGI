@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -21,6 +22,7 @@ export const openLinkTab = (url: string) => {
 }
 
 const HeaderButtons = () => {
+  const { t } = useTranslation()
   const { expand, onChangeLayout } = useContext(LayoutContext)
   const location = useLocation()
 
@@ -28,7 +30,11 @@ const HeaderButtons = () => {
     <StyledButtonsWrapper>
       {location.pathname.includes('/chat') && (
         <Tooltip
-          content={() => <span>Focus: {isMacOS ? 'Ctrl+F' : 'Ctrl+Shift+F'}</span>}
+          content={() => (
+            <span>
+              {t('focus')} {isMacOS ? `${t('ctrl+f')}` : `${t('ctrl+shift+f')}`}
+            </span>
+          )}
           position={Tooltip.positions.BOTTOM}
           tooltipSize='small'
         >
@@ -39,7 +45,7 @@ const HeaderButtons = () => {
       )}
 
       <Tooltip
-        content={() => <span>Docs</span>}
+        content={() => <span>{`${t('doc')}s`}</span>}
         position={Tooltip.positions.BOTTOM}
         tooltipSize='small'
       >
@@ -49,7 +55,7 @@ const HeaderButtons = () => {
         >
           <StyledInnerButtonWrapper>
             <TypographyPrimary
-              value='Docs'
+              value={`${t('doc')}s`}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
             />
@@ -91,7 +97,7 @@ const HeaderButtons = () => {
       </Tooltip> */}
 
       <Tooltip
-        content={() => <span>Github</span>}
+        content={() => <span>{t('github')}</span>}
         position={Tooltip.positions.BOTTOM}
         tooltipSize='small'
       >
@@ -105,7 +111,7 @@ const HeaderButtons = () => {
             </StyledImageWrapper>
             {!location.pathname.includes('/chat') && (
               <TypographyPrimary
-                value='Star us on Github!'
+                value={t('start-us-on-github')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.sm}
               />
