@@ -1,6 +1,7 @@
 import { Field } from 'formik'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled, { useTheme } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { useEffect, useRef } from 'react'
 
 const FormikTextField = ({
@@ -33,6 +34,7 @@ const FormikTextField = ({
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange?: (event: React.FocusEvent<HTMLInputElement>) => void
 }) => {
+  const { t } = useTranslation()
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const input_name = field_name || name
   const theme = useTheme()
@@ -59,7 +61,7 @@ const FormikTextField = ({
             value={value}
             name={field.name}
             {...field}
-            placeholder={placeholder ?? 'Please enter value'}
+            placeholder={placeholder ?? `${t('please-enter-value')}`}
             size={size}
             onChange={onHandleChange}
             title={<StyledTitle>{title || label}</StyledTitle>}
