@@ -1,6 +1,7 @@
 import { ChangeEvent, useRef } from 'react'
 
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import File from '@l3-lib/ui-core/dist/icons/File'
@@ -14,6 +15,7 @@ type UploadButtonProps = {
 }
 
 const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
+  const { t } = useTranslation()
   const uploadRef = useRef(null as any)
   const handleUploadButton = async () => {
     uploadRef.current.click()
@@ -29,7 +31,7 @@ const UploadButton = ({ onChange, isLoading, hasValue }: UploadButtonProps) => {
           <>
             <StyledFileIcon />
             <TypographySecondary
-              value='csv, pdf, txt, ms-excel, etc.'
+              value={t('csv-pdf-txt-ms-excel-etc')}
               type={Typography.types.LABEL}
               size={Typography.sizes.xss}
             />

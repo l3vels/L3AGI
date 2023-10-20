@@ -1,6 +1,7 @@
 import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import useLogin from 'pages/Auth/Login/useLogin'
@@ -36,6 +37,7 @@ const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
 )
 
 const Login = () => {
+  const { t } = useTranslation()
   const { formik, alertMessage, showResendAlert, resendVerifyEmailHandle } = useLogin()
   const { githubLogin } = useGithubLogin()
   const { openModal } = useModal()
@@ -48,12 +50,12 @@ const Login = () => {
 
       <StyledHeaderWrapper>
         <HeadingSecondary
-          value={'Complete your mission'}
+          value={t('complete-your-mission')}
           type={Heading.types.h2}
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
         <TypographyTertiary
-          value={`AI agents' team collaboration as effective as human collaboration.`}
+          value={t('ai-agents-description')}
           type={Typography.types.label}
           size={Typography.sizes.sm}
         />
@@ -92,7 +94,7 @@ const Login = () => {
             <StyledImageWrapper secondary>
               <StyledImg src={githubIcon} />
             </StyledImageWrapper>
-            Login with Github
+            {t('log-in-with-github')}
           </StyledInnerButtonWrapper>
         </ButtonPrimary>
 
@@ -103,13 +105,13 @@ const Login = () => {
             <TextFieldFormik
               label='Email'
               field_name='email'
-              placeholder='Enter email...'
+              placeholder={t('enter-email')}
               size='small'
             />
             <TextFieldFormik
               label='Password'
               field_name='password'
-              placeholder='Enter password...'
+              placeholder={t('enter-password')}
               type='password'
               size='small'
             />
@@ -117,12 +119,12 @@ const Login = () => {
         </FormikProvider>
 
         <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
-          Start
+          {t('start')}
         </ButtonPrimary>
 
         <StyledSignUpWrapper>
           <TypographyTertiary
-            value={`Don't have an account?`}
+            value={t('dont-have-account')}
             type={Typography.types.label}
             size={Typography.sizes.md}
           />
@@ -132,7 +134,7 @@ const Login = () => {
             }}
           >
             <TypographyPrimary
-              value='Sign up'
+              value={t('sign-up')}
               type={Typography.types.label}
               size={Typography.sizes.md}
               as={'a'}

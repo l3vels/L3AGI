@@ -53,7 +53,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                   disabled={isLoading}
                   size={Button.sizes.SMALL}
                 >
-                  {isLoading ? <Loader size={22} /> : `${t('save')}`}
+                  {isLoading ? <Loader size={22} /> : t('save')}
                 </ButtonPrimary>
               )}
             </StyledButtonWrapper>
@@ -113,7 +113,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                   disabled={isLoading}
                   size={Button.sizes.SMALL}
                 >
-                  {isLoading ? <Loader size={22} /> : `${t('save')}`}
+                  {isLoading ? <Loader size={22} /> : t('save')}
                 </ButtonPrimary>
               </StyledModalButton>
             )}

@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import { useEffect } from 'react'
@@ -13,6 +14,7 @@ type commandInputs = {
 }
 
 export const CheatCode = () => {
+  const { t } = useTranslation()
   const {
     register,
     handleSubmit,
@@ -34,7 +36,7 @@ export const CheatCode = () => {
   return (
     <StyledCenterFormContainer>
       <HeadingTertiary
-        value={'Cheat Code'}
+        value={t('cheat-code')}
         type={Heading.types.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />

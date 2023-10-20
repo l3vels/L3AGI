@@ -269,7 +269,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             />
             <StyledTextareaWrapper>
               <TypographyPrimary
-                value={t('script')}
+                value={t('base-system-message')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.md}
               />
