@@ -1,6 +1,6 @@
-from typing import Union
 import ast
 import uuid
+from typing import Union
 
 
 def convert_value_to_type(value, target_type):
@@ -22,7 +22,12 @@ def convert_value_to_type(value, target_type):
             return value
 
     if target_type == bool:
-        return bool(value)
+        if value == "True":
+            return True
+        elif value == "False":
+            return False
+
+        return value
     elif target_type == int:
         return int(value)
     elif target_type == float:

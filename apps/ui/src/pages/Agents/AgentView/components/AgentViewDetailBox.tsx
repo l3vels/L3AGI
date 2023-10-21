@@ -11,7 +11,7 @@ import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
@@ -37,6 +37,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
   const { user } = React.useContext(AuthContext)
 
+  const location = useLocation()
+
   const { deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
@@ -55,8 +57,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     navigate(`/agents/${agent?.id}/edit-agent`)
   }
 
-  const handleCreateChat = async () => {
+  const handleCreateChat = () => {
     openModal({ name: 'chat-link-modal', data: { agentId: agent.id } })
+  }
+
+  const handleScheduleRun = () => {
+    const chatId = new URLSearchParams(location.search).get('chat')
+
+    openModal({ name: 'schedule-run-modal', data: { id: chatId || agent.id, type: 'agent' } })
   }
 
   return (
@@ -87,6 +95,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
                     <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary>
+                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
                     <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
                       {t('delete-agent')}
                     </ButtonTertiary>

@@ -50,7 +50,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
 
   const navigate = useNavigate()
 
-  const { closeModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { data: models } = useModelsService()
 
@@ -65,6 +65,10 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
   const handleEdit = () => {
     closeModal('team-of-agent-view-modal')
     navigate(`/team-of-agents/${id}/edit-team`)
+  }
+
+  const handleScheduleRun = () => {
+    openModal({ name: 'schedule-run-modal', data: { id, type: 'team' } })
   }
 
   return (
@@ -98,6 +102,8 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                     <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
                       {t('delete-team')}
                     </ButtonTertiary>
+
+                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
                   </StyledMenuButtonsWrapper>
                 </MenuButton>
               </StyledMenuDots>

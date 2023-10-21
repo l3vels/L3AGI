@@ -32,6 +32,9 @@ class ChatMessage(BaseModel):
     chat_id = Column(
         UUID, ForeignKey("chat.id", ondelete="CASCADE"), nullable=True, index=True
     )
+
+    # schedule_id = Column(UUID, ForeignKey("schedule.id"), nullable=True, index=True)
+
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
     sender_name = Column(String, nullable=True)

@@ -1,0 +1,24 @@
+fragment ScheduleFragment on Schedule {
+  schedule {
+    id
+    is_active
+    name
+    schedule_type
+    description
+    max_daily_budget
+    cron_expression
+    start_date
+    end_date
+    interval
+  }
+
+  configs {
+    agent_id
+    team_id
+    chat_id
+    group_id
+    is_recurring
+    create_session_on_run
+    tasks
+  }
+}

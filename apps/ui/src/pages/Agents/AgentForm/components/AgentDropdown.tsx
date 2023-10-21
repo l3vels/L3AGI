@@ -10,7 +10,7 @@ type AgentDropdownProps = {
   fieldValue: string | string[]
   options: any
   setFieldValue: any
-  onChange?: () => void
+  onChange?: (option: any) => void
   optionSize?: 'large' | 'medium' | 'small'
   isMulti?: boolean
 }
@@ -29,7 +29,7 @@ const AgentDropdown = ({
   let value = fieldValue
 
   let onChangeFunction = (option: any) => {
-    onChange()
+    onChange(option)
     setFieldValue(fieldName, option.value)
   }
 
@@ -37,7 +37,7 @@ const AgentDropdown = ({
     value = options?.filter((option: any) => fieldValue?.includes(option.value))
 
     onChangeFunction = (option: any) => {
-      onChange()
+      onChange(option)
       if (option === null) {
         setFieldValue(fieldName, [])
       } else {
