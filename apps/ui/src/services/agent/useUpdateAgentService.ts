@@ -22,6 +22,7 @@ export const useUpdateAgentService = () => {
       suggestions,
       greeting,
       text,
+      avatar,
     } = input
 
     const { data } = await mutation({
@@ -34,6 +35,7 @@ export const useUpdateAgentService = () => {
             role: role,
             is_template: is_template,
             is_memory: is_memory,
+            avatar: avatar,
           },
           configs: {
             goals: goals,

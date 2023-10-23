@@ -147,7 +147,7 @@ const ChatMessageListV2 = ({
           Footer: () => {
             return (
               <>
-                <StyledWrapper isHidden={thinking}>
+                <StyledWrapper isHidden={!thinking}>
                   <StyledLoaderWrapper>{loader}</StyledLoaderWrapper>
                 </StyledWrapper>
               </>

@@ -19,6 +19,8 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
+import UploadAvatar from 'components/UploadAvatar'
+
 type AgentFormProps = {
   formik: any
 }
@@ -37,13 +39,15 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_text,
     agent_temperature,
     agent_is_template,
+    agent_avatar,
   } = values
 
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
   }
 
-  const { modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
+  const { modelOptions, datasourceOptions, toolOptions, handleUploadAvatar, avatarIsLoading } =
+    useAgentForm(formik)
 
   useEffect(() => {
     if (agent_model === '' && modelOptions?.length > 0) {
@@ -80,6 +84,12 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             <TabPanels noAnimation>
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
+                  <UploadAvatar
+                    onChange={handleUploadAvatar}
+                    isLoading={avatarIsLoading}
+                    avatarSrc={agent_avatar}
+                  />
+
                   <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
 
                   <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
