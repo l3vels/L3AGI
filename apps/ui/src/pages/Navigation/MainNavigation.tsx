@@ -100,6 +100,32 @@ const MainNavigation = () => {
         <span>Agents</span>
       </StyledLi> */}
 
+
+      {isContact && (
+        <StyledLi
+          isActive={includes(active, 'contacts')}
+          onClick={() => onHandleClick('/contacts')}
+        >
+          <StyledMobileIcon size={30} />
+          <TypographySecondary
+            value={'Contacts'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
+
+      {isGroup && (
+        <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
+          <StyledGroupIcon size={30} />
+          <TypographySecondary
+            value={'Groups'}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}  
+
       {isDatasource && (
         <StyledLi
           isActive={includes(active, 'datasources')}
@@ -153,30 +179,6 @@ const MainNavigation = () => {
         </StyledLi>
       )}
 
-      {isContact && (
-        <StyledLi
-          isActive={includes(active, 'contacts')}
-          onClick={() => onHandleClick('/contacts')}
-        >
-          <StyledMobileIcon size={30} />
-          <TypographySecondary
-            value={'Contacts'}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          />
-        </StyledLi>
-      )}
-
-      {isGroup && (
-        <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
-          <StyledGroupIcon size={30} />
-          <TypographySecondary
-            value={'Groups'}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          />
-        </StyledLi>
-      )}
 
       {isDiscover && (
         <StyledLi
