@@ -16,7 +16,6 @@ scrapper_configs = {
     },
     "modules": {
         "home": {
-            "welcome_message": "Build your ",
             "submodules": {
                 "team": {
                     "operations": {

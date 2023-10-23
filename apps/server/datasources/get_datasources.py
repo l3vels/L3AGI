@@ -20,6 +20,14 @@ COMING_SOON = [
     },
     {
         "is_public": True,
+        "is_active": False, 
+        "name": "Shopify",
+        "description": "Notion",
+        "category": DatasourceCategory.APPLICATION,
+        "source_type": DatasourceType.SHOPIFY,
+    },
+    {
+        "is_public": True,
         "is_active": False,
         "name": "Notion",
         "description": "Notion",
@@ -42,6 +50,7 @@ COMING_SOON = [
         "category": DatasourceCategory.APPLICATION,
         "source_type": DatasourceType.FIREBASE,
     },
+    
 ]
 
 
