@@ -154,7 +154,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
         {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
 
-        <TagsRow title={'Template'} items={[is_template ? 'True' : 'False']} />
+        <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
       </StyledWrapper>
     </StyledDetailsBox>
   )
