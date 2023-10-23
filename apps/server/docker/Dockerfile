@@ -8,8 +8,11 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 
 # Install dependencies
-COPY Pipfile Pipfile.lock /code/
-RUN pip install pipenv && pipenv sync --system
+COPY pyproject.toml poetry.lock /code/
+
+RUN pip install poetry \
+    && poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi
 
 # Copy project
 COPY ./ /code/
