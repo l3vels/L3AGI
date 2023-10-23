@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
-import styled from 'styled-components'
+import { useState, useEffect } from 'react'
+import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
@@ -12,7 +12,14 @@ import AgentSlider from './components/AgentSlider'
 import { useAgentForm } from './useAgentForm'
 import AgentDropdown from './components/AgentDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
-import ShowAdvancedButton from './components/ShowAdvancedButton'
+
+import Tab from '@l3-lib/ui-core/dist/Tab'
+import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+
+import UploadAvatar from 'components/UploadAvatar'
 
 type AgentFormProps = {
   formik: any
@@ -20,14 +27,6 @@ type AgentFormProps = {
 
 const AgentForm = ({ formik }: AgentFormProps) => {
   const { t } = useTranslation()
-  const advancedRef = useRef(null as any)
-  const scrollToAdvancedRef = () => {
-    if (advancedRef) {
-      setTimeout(function () {
-        advancedRef.current?.scrollIntoView({ behavior: 'smooth' })
-      }, 1)
-    }
-  }
 
   const { setFieldValue, values } = formik
   const {
@@ -39,15 +38,16 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_greeting,
     agent_text,
     agent_temperature,
+    agent_is_template,
+    agent_avatar,
   } = values
-
-  const [showAdvanced, setShowAdvanced] = useState(agent_text?.length > 0 ? true : false)
 
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
   }
 
-  const { modelOptions, datasourceOptions, toolOptions } = useAgentForm(formik)
+  const { modelOptions, datasourceOptions, toolOptions, handleUploadAvatar, avatarIsLoading } =
+    useAgentForm(formik)
 
   useEffect(() => {
     if (agent_model === '' && modelOptions?.length > 0) {
@@ -55,139 +55,197 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     }
   }, [agent_model])
 
+  const [activeTab, setActiveTab] = useState(0)
+
   return (
     <StyledRoot>
+      <StyledTabsWrapper>
+        <StyledTabList size='small'>
+          <StyledTab onClick={() => setActiveTab(0)}>
+            <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(1)}>
+            <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(2)}>
+            <StyledSpan isActive={activeTab === 2}>Training Details</StyledSpan>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(3)}>
+            <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
+          </StyledTab>
+          {/* <StyledTab onClick={() => setActiveTab(4)}>
+            <StyledSpan>Voice Preferences</StyledSpan>
+          </StyledTab> */}
+        </StyledTabList>
+      </StyledTabsWrapper>
       <StyledForm>
         <StyledInputWrapper>
-          <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
+          <TabsContext activeTabId={activeTab}>
+            <TabPanels noAnimation>
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
 
-          <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
+                  <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
 
-          <StyledTextareaWrapper>
-            <TypographyPrimary
-              value={t('description')}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-            <Textarea
-              hint=''
-              rows={6}
-              placeholder={t('description')}
-              value={agent_description}
-              name='agent_description'
-              onChange={(value: string) => onTextareaChange('agent_description', value)}
-            />
-          </StyledTextareaWrapper>
+                  <StyledTextareaWrapper>
+                    <TypographyPrimary
+                      value={t('description')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+                    <Textarea
+                      hint=''
+                      rows={6}
+                      placeholder={t('description')}
+                      value={agent_description}
+                      name='agent_description'
+                      onChange={(value: string) => onTextareaChange('agent_description', value)}
+                    />
+                  </StyledTextareaWrapper>
 
-          <AgentDropdown
-            isMulti
-            label={t('tools')}
-            fieldName={'agent_tools'}
-            fieldValue={agent_tools}
-            setFieldValue={setFieldValue}
-            options={toolOptions}
-          />
+                  <StyledCheckboxWrapper>
+                    <Checkbox
+                      label={t('template-label')}
+                      kind='secondary'
+                      name='agent_is_template'
+                      checked={agent_is_template}
+                      onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
+                    />
+                  </StyledCheckboxWrapper>
 
-          <AgentDropdown
-            isMulti
-            label={t('data-source')}
-            fieldName={'agent_datasources'}
-            fieldValue={agent_datasources}
-            setFieldValue={setFieldValue}
-            options={datasourceOptions}
-          />
+                  <StyledTextareaWrapper>
+                    <TypographyPrimary
+                      value={t('avatar')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+                    <UploadAvatar
+                      onChange={handleUploadAvatar}
+                      isLoading={avatarIsLoading}
+                      avatarSrc={agent_avatar}
+                    />
+                  </StyledTextareaWrapper>
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
 
-          <CustomField
-            formik={formik}
-            formikField={'agent_suggestions'}
-            placeholder={t('suggestions')}
-          />
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <AgentDropdown
+                    isMulti
+                    label={t('tools')}
+                    fieldName={'agent_tools'}
+                    fieldValue={agent_tools}
+                    setFieldValue={setFieldValue}
+                    options={toolOptions}
+                  />
 
-          <StyledTextareaWrapper>
-            <TypographyPrimary
-              value={t('greeting')}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-            <Textarea
-              hint=''
-              rows={6}
-              placeholder={t('greeting')}
-              value={agent_greeting}
-              name='agent_greeting'
-              onChange={(value: string) => onTextareaChange('agent_greeting', value)}
-            />
-          </StyledTextareaWrapper>
+                  <AgentDropdown
+                    isMulti
+                    label={t('data-source')}
+                    fieldName={'agent_datasources'}
+                    fieldValue={agent_datasources}
+                    setFieldValue={setFieldValue}
+                    options={datasourceOptions}
+                  />
 
-          <StyledCheckboxWrapper>
-            <Checkbox
-              label={t('memory')}
-              kind='secondary'
-              name='agent_is_memory'
-              checked={agent_is_memory}
-              onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
-            />
-          </StyledCheckboxWrapper>
+                  <StyledCombinedFields>
+                    <AgentDropdown
+                      label={t('model')}
+                      fieldName={'agent_model'}
+                      setFieldValue={setFieldValue}
+                      fieldValue={agent_model}
+                      options={modelOptions}
+                      onChange={() => {
+                        setFieldValue('agent_model', '')
+                      }}
+                      optionSize={'small'}
+                    />
 
-          <CustomField formik={formik} formikField={'agent_goals'} placeholder={t('goals')} />
+                    <AgentSlider
+                      onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
+                      value={agent_temperature}
+                    />
+                  </StyledCombinedFields>
 
-          <CustomField
-            formik={formik}
-            formikField={'agent_instructions'}
-            placeholder={t('instructions')}
-          />
+                  <StyledCheckboxWrapper>
+                    <Checkbox
+                      label={t('memory')}
+                      kind='secondary'
+                      name='agent_is_memory'
+                      checked={agent_is_memory}
+                      onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
+                    />
+                  </StyledCheckboxWrapper>
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
 
-          <CustomField
-            formik={formik}
-            formikField={'agent_constraints'}
-            placeholder={t('constraints')}
-          />
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_instructions'}
+                    placeholder={t('instructions')}
+                  />
 
-          <ShowAdvancedButton
-            isShow={showAdvanced}
-            onClick={() => {
-              setShowAdvanced(!showAdvanced)
-              scrollToAdvancedRef()
-            }}
-          />
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_goals'}
+                    placeholder={t('goals')}
+                  />
 
-          {showAdvanced && (
-            <>
-              <StyledTextareaWrapper>
-                <TypographyPrimary
-                  value={t('base-system-message')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                />
-                <Textarea
-                  hint=''
-                  rows={6}
-                  value={agent_text}
-                  name='agent_text'
-                  onChange={(value: string) => onTextareaChange('agent_text', value)}
-                />
-              </StyledTextareaWrapper>
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_constraints'}
+                    placeholder={t('constraints')}
+                  />
 
-              <StyledCombinedFields>
-                <AgentDropdown
-                  label={t('model')}
-                  fieldName={'agent_model'}
-                  setFieldValue={setFieldValue}
-                  fieldValue={agent_model}
-                  options={modelOptions}
-                  onChange={() => {
-                    setFieldValue('agent_model', '')
-                  }}
-                  optionSize={'small'}
-                />
-                <AgentSlider
-                  onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
-                  value={agent_temperature}
-                />
-              </StyledCombinedFields>
-            </>
-          )}
-          <div ref={advancedRef} />
+                  <StyledTextareaWrapper>
+                    <TypographyPrimary
+                      value={t('base-system-message')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+                    <Textarea
+                      hint=''
+                      rows={6}
+                      value={agent_text}
+                      name='agent_text'
+                      onChange={(value: string) => onTextareaChange('agent_text', value)}
+                    />
+                  </StyledTextareaWrapper>
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
+
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_suggestions'}
+                    placeholder={t('suggestions')}
+                  />
+
+                  <StyledTextareaWrapper>
+                    <TypographyPrimary
+                      value={t('greeting')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+                    <Textarea
+                      hint=''
+                      rows={6}
+                      placeholder={t('greeting')}
+                      value={agent_greeting}
+                      name='agent_greeting'
+                      onChange={(value: string) => onTextareaChange('agent_greeting', value)}
+                    />
+                  </StyledTextareaWrapper>
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
+
+              <TabPanel>5</TabPanel>
+            </TabPanels>
+          </TabsContext>
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -201,6 +259,8 @@ const StyledRoot = styled.div`
 
   height: 100%;
   overflow-y: scroll;
+
+  display: flex;
 `
 
 const StyledForm = styled.div`
@@ -273,5 +333,48 @@ export const StyledCombinedFields = styled.div`
   }
   .css-ugu73m-placeholder {
     color: ${({ theme }) => theme.body.textColorPrimary};
+  }
+`
+const StyledTabsWrapper = styled.div`
+  position: sticky;
+  top: 0;
+`
+
+const StyledTabList = styled(TabList)`
+  .tabs-list {
+    display: flex;
+    flex-direction: column;
+    /* border: ${({ theme }) => theme.body.secondaryBorder}; */
+    padding: 20px 5px;
+    border-radius: 10px;
+  }
+`
+
+const StyledSpan = styled.span<{ isActive: boolean }>`
+  width: 150px;
+  color: ${({ theme }) => theme.body.textColorSecondary};
+
+  ${p =>
+    p.isActive &&
+    css`
+      color: ${({ theme }) => theme.body.textColorPrimary};
+    `};
+`
+const StyledTabPanelInnerWrapper = styled(TabPanel)`
+  display: flex;
+  flex-direction: column;
+
+  /* padding: 0 20px; */
+
+  gap: 20px;
+  width: 100%;
+  /* max-width: 800px; */
+  /* margin: auto; */
+  height: 100%;
+  /* max-height: 800px; */
+`
+const StyledTab = styled(Tab)`
+  &.active .tab-inner {
+    background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
   }
 `

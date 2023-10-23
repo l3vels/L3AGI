@@ -96,7 +96,6 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
         multiline={props.isMultiLine}
         insideOverflowWithTransformContainer
         menuPortalTarget={document.body}
-        menuIsOpen={true}
       />
     </StyledDiv>
   )

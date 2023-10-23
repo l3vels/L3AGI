@@ -294,6 +294,10 @@ const StyledLoaderWrapper = styled.div`
 
   width: calc(100% - 50px);
   max-width: 800px;
+
+  @media only screen and (max-width: 1750px) {
+    max-width: 600px;
+  }
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;

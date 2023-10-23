@@ -267,6 +267,7 @@ const ChatRouteLayout = () => {
                       key={id}
                       picked={id === chatId}
                       name={name}
+                      subTitle={agent.agent.name}
                       onClick={() => navigate(`/chat/session?chat=${id}`)}
                       onDeleteClick={deleteChatHandler}
                     />
@@ -393,14 +394,14 @@ const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
     `}
 `
 const StyledOutletWrapper = styled.div`
-  width: calc(100% - 450px);
+  width: calc(100% - 500px);
   padding: 0 30px;
   margin-left: 450px;
   max-width: 1500px;
 `
 const StyledShowButton = styled.div<{ isRight?: boolean }>`
   height: 100vh;
-  width: calc(20% - 120px);
+  width: calc(30% - 120px);
 
   cursor: pointer;
 
@@ -417,7 +418,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean }>`
 `
 const StyledMiddleArea = styled.div`
   height: 100%;
-  width: calc(0% + 800px);
+  width: calc(30% + 200px);
 
   cursor: pointer;
 
