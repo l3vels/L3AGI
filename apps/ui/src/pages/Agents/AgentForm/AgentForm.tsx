@@ -39,6 +39,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_greeting,
     agent_text,
     agent_temperature,
+    agent_is_template,
   } = values
 
   const [showAdvanced, setShowAdvanced] = useState(agent_text?.length > 0 ? true : false)
@@ -126,6 +127,15 @@ const AgentForm = ({ formik }: AgentFormProps) => {
               name='agent_is_memory'
               checked={agent_is_memory}
               onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
+            />
+          </StyledCheckboxWrapper>
+          <StyledCheckboxWrapper>
+            <Checkbox
+              label={t('template-label')}
+              kind='secondary'
+              name='agent_is_template'
+              checked={agent_is_template}
+              onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
             />
           </StyledCheckboxWrapper>
 

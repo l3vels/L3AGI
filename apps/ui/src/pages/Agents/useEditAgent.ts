@@ -55,7 +55,7 @@ export const useEditAgent = () => {
       description: values.agent_description,
       temperature: values.agent_temperature,
       goals: values.agent_goals,
-      is_template: false,
+      is_template: values.agent_is_template,
       is_memory: values.agent_is_memory,
       constraints: values.agent_constraints,
       tools: values.agent_tools,

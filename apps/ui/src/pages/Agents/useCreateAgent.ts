@@ -71,7 +71,7 @@ export const useCreateAgent = () => {
         description: values.agent_description,
         temperature: values.agent_temperature,
         goals: values.agent_goals,
-        is_template: false,
+        is_template: values.agent_is_template,
         constraints: values.agent_constraints,
         tools: values.agent_tools,
         datasources: values.agent_datasources,
