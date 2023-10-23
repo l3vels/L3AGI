@@ -12,7 +12,8 @@ default_configs = {
         "discovery": "Discovery",
         "chat": "Multi-Agent",
         "toolkits": "Toolkits",
-        "schedules": "Schedules"
+        "schedules": "Schedules",
+        "integrations": "Integrations"
     },
     "modules": {
         "home": {
@@ -65,7 +66,22 @@ default_configs = {
         "datasource": True,
         "discovery": True,
         "Session": False,
-        "schedule": False
+        "schedule": False,
+        "integration" : {
+            "active" : True,
+            "label": "Integrations",
+            "submodules": {
+                "toolkit": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True,
+                    }
+                },
+                "voices": False,
+                "telephony": False
+            }
+        },
     },
 }
 

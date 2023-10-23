@@ -4,7 +4,7 @@ heyyou_configs = {
         "agent": "Influencers",
         "team": "Team",
         "datasource": "Knowledges",
-        "models": "Fine-Tuning",
+        "models": "Models",
         "discovery": "Discovery",
         "chat": "Influencers",
         "toolkits": "Toolkits",
