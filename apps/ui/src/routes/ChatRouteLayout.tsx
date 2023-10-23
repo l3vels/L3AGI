@@ -267,6 +267,7 @@ const ChatRouteLayout = () => {
                       key={id}
                       picked={id === chatId}
                       name={name}
+                      subTitle={agent.agent.name}
                       onClick={() => navigate(`/chat/session?chat=${id}`)}
                       onDeleteClick={deleteChatHandler}
                     />
