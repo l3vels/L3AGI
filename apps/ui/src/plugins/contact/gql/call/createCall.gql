@@ -1,0 +1,4 @@
+mutation createCall($input: input!) @api(name: pro) {
+  createCall(input: $input)
+    @rest(type: "Call", path: "/call", method: "POST", bodyKey: "input", endpoint: "pro")
+}

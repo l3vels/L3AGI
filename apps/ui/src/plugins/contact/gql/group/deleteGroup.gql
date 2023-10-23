@@ -1,0 +1,12 @@
+mutation deleteGroup($id: id!) @api(name: pro) {
+  deleteGroup(id: $id)
+    @rest(
+      type: "Group"
+      path: "/group/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "pro"
+    ) {
+    agent
+  }
+}

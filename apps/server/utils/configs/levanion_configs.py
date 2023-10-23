@@ -1,21 +1,22 @@
-scrapper_configs = {
+levanion_configs = {
     "info": {
         "logo": '',
         "welcomeMessage": "Welcome to L3AGI"
     },
     "naming": {
         "home": 'Home',
-        "agent": "Scrappers",
+        "agent": "Agent",
         "team": "Team",
         "datasource": "Data sources",
         "models": "Models",
         "discovery": "Discovery",
-        "chat": "Scrappers",
+        "chat": "Multi-Agent",
         "toolkits": "Toolkits",
         "schedules": "Schedules"
     },
     "modules": {
         "home": {
+            "welcome_message": "Build your ",
             "submodules": {
                 "team": {
                     "operations": {
@@ -31,7 +32,7 @@ scrapper_configs = {
         },
         "chat" :{
             "active": True,
-            "label": "Scrappers",
+            "label": "Multi-Agent",
             "submodules": {
                 "team": {
                     "operations": {
@@ -44,12 +45,29 @@ scrapper_configs = {
                 "session": True
             }
         },
-        "model" : False,
-        "toolkit": True,
+        "model" : {
+            "active" : True,
+            "label": "Models",
+            "submodules": {
+                "models": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True,
+                    }
+                },
+                "fine-tuning": {
+                    "operations": True
+                }
+            }
+        },
+        "toolkit": True, #True
         "datasource": True,
-        "discovery": False,
-        "Session": False,
-        "schedule": False
+        "discovery": True,
+        "Session": True,
+        "schedule": True,
+        "contact": True,
+        "group": True
     },
 }
 

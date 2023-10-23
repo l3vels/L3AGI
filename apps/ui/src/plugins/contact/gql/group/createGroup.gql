@@ -1,0 +1,8 @@
+mutation createGroup($input: input!) @api(name: pro) {
+  createGroup(input: $input)
+    @rest(type: "Group", path: "/group", method: "POST", bodyKey: "input", endpoint: "pro") {
+    id
+    name
+    description
+  }
+}

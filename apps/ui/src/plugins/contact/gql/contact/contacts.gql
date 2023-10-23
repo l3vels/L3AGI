@@ -1,0 +1,10 @@
+query getContacts @api(name: "pro") {
+  getContacts @rest(type: "Contact", path: "/contact", method: "GET", endpoint: "pro") {
+    id
+    name
+    description
+    group_id
+    email
+    phone
+  }
+}

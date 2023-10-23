@@ -65,7 +65,9 @@ default_configs = {
         "datasource": True,
         "discovery": True,
         "Session": False,
-        "schedule": False
+        "schedule": False,
+        "contact": False,
+        "group": False
     },
 }
 
