@@ -394,7 +394,7 @@ const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
     `}
 `
 const StyledOutletWrapper = styled.div`
-  width: calc(100% - 450px);
+  width: calc(100% - 500px);
   padding: 0 30px;
   margin-left: 450px;
   max-width: 1500px;
