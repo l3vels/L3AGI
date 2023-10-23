@@ -13,6 +13,8 @@ import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import AiMessageMarkdown from './AiMessageMarkdown'
+import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
+import { useModal } from 'hooks'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -36,7 +38,8 @@ const HumanMessage = ({
     messageText,
   })
 
-  //@[Mario](game__3b141a56-9787-47b3-860b-9f4b006922b3)__mention__
+  const { openModal } = useModal()
+
   return (
     <>
       <StyledMessageWrapper>
@@ -62,6 +65,7 @@ const HumanMessage = ({
 
             <StyledMessageActionsWrapper className='actions'>
               <MessageActions
+                onLogsClick={() => openModal({ name: RUN_LOGS_MODAL_NAME, data: { userId } })}
                 onReplyClick={onReplyClick}
                 onCopyClick={() => copyMessageText(messageText)}
               />

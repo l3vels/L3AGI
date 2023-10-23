@@ -1,7 +1,9 @@
 from abc import abstractmethod
 from enum import Enum
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
+from uuid import UUID
 
+from langchain.callbacks.base import BaseCallbackHandler
 from langchain.tools import BaseTool as LangchainBaseTool
 from pydantic import BaseModel, Field, validator
 
@@ -60,6 +62,56 @@ class BaseTool(LangchainBaseTool):
         return self.configs.get(key)
 
 
+class ToolCallbackHandler(BaseCallbackHandler):
+    def on_tool_start(
+        self,
+        serialized: Dict[str, Any],
+        input_str: str,
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        tags: List[str] | None = None,
+        metadata: Dict[str, Any] | None = None,
+        **kwargs: Any,
+    ) -> Any:
+        # create run log model
+        return super().on_tool_start(
+            serialized,
+            input_str,
+            run_id=run_id,
+            parent_run_id=parent_run_id,
+            tags=tags,
+            metadata=metadata,
+            **kwargs,
+        )
+
+    def on_tool_error(
+        self,
+        error: BaseException,
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> Any:
+        # update run log model and include error
+        return super().on_tool_error(
+            error, run_id=run_id, parent_run_id=parent_run_id, **kwargs
+        )
+
+    def on_tool_end(
+        self,
+        output: str,
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> Any:
+        #
+        return super().on_tool_end(
+            output, run_id=run_id, parent_run_id=parent_run_id, **kwargs
+        )
+
+
 class BaseToolkit(BaseModel):
     toolkit_id: str
     name: str
@@ -82,6 +134,7 @@ class BaseToolkit(BaseModel):
             tool.settings = settings
             tool.account = account
             tool.agent_with_configs = agent_with_configs
+            tool.callbacks = [ToolCallbackHandler()]
 
         return tools
 

@@ -1,17 +1,26 @@
 import styled from 'styled-components'
 
 import ReplyIcon from '@l3-lib/ui-core/dist/icons/Replay'
+import LogsIcon from '@l3-lib/ui-core/dist/icons/Logs'
 import CopyButton, { StyledActionButton } from 'components/CopyButton/CopyButton'
 
 type MessageActionsProps = {
+  onLogsClick?: () => void
   onReplyClick?: () => void
   onCopyClick?: () => void
 }
 
-const MessageActions = ({ onReplyClick, onCopyClick }: MessageActionsProps) => {
+const MessageActions = ({ onLogsClick, onReplyClick, onCopyClick }: MessageActionsProps) => {
   return (
     <StyledWrapper>
+      {onLogsClick && (
+        <StyledActionButton onClick={onLogsClick}>
+          <StyledLogsIcon size={20} />
+        </StyledActionButton>
+      )}
+
       {onCopyClick && <CopyButton onCopyClick={onCopyClick} />}
+
       {onReplyClick && (
         <StyledActionButton onClick={onReplyClick}>
           <StyledReplyIcon />
@@ -31,6 +40,12 @@ const StyledWrapper = styled.div`
 `
 
 const StyledReplyIcon = styled(ReplyIcon)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledLogsIcon = styled(LogsIcon)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
