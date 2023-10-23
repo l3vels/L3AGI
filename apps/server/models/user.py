@@ -1,11 +1,13 @@
-from sqlalchemy import Column, String, Boolean, UUID, or_, Index
-from models.base_model import RootBaseModel
-import uuid
-from exceptions import UserNotFoundException
-from typings.user import UserInput
-import hashlib
 import binascii
+import hashlib
 import os
+import uuid
+
+from sqlalchemy import UUID, Boolean, Column, Index, String, or_
+
+from exceptions import UserNotFoundException
+from models.base_model import RootBaseModel
+from typings.user import UserInput
 
 
 class UserModel(RootBaseModel):
@@ -154,7 +156,7 @@ class UserModel(RootBaseModel):
             )
             .first()
         )
-        
+
         # users = (
         #     db.session.query(UserModel)
         #     .filter(UserModel.email == email, or_(or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None), UserModel.is_deleted is None))

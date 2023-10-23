@@ -1,11 +1,13 @@
-from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey, Index
-from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
 import uuid
-from exceptions import AccountNotFoundException
-from typings.account import AccountInput
-from models.user_account import UserAccountModel
+
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String, or_
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import relationship
+
+from exceptions import AccountNotFoundException
+from models.base_model import BaseModel
+from models.user_account import UserAccountModel
+from typings.account import AccountInput
 
 
 class AccountModel(BaseModel):
@@ -174,4 +176,3 @@ class AccountModel(BaseModel):
 
         db_account.is_deleted = True
         db.session.commit()
-        

@@ -1,11 +1,13 @@
 from __future__ import annotations
+
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, String, or_
 from sqlalchemy.orm import relationship
+
+from exceptions import ApiKeyNotFoundException
 from models.base_model import BaseModel
 from typings.api_key import ApiKeyInput
-from exceptions import ApiKeyNotFoundException
 
 
 class ApiKeyModel(BaseModel):
@@ -122,7 +124,8 @@ class ApiKeyModel(BaseModel):
                 ApiKeyModel.account_id == account.id,
                 or_(
                     or_(
-                        ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None
+                        ApiKeyModel.is_deleted.is_(False),
+                        ApiKeyModel.is_deleted is None,
                     ),
                     ApiKeyModel.is_deleted is None,
                 ),
@@ -150,7 +153,8 @@ class ApiKeyModel(BaseModel):
                 ApiKeyModel.id == api_key_id,
                 or_(
                     or_(
-                        ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None
+                        ApiKeyModel.is_deleted.is_(False),
+                        ApiKeyModel.is_deleted is None,
                     ),
                     ApiKeyModel.is_deleted is None,
                 ),

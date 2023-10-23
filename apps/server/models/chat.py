@@ -1,23 +1,16 @@
-from sqlalchemy import (
-    Column,
-    String,
-    Boolean,
-    UUID,
-    or_,
-    ForeignKey,
-    Integer,
-)
-from sqlalchemy.orm import relationship, joinedload
-from models.base_model import BaseModel
 import uuid
-from typings.account import AccountOutput
-from typings.chat import ChatInput
-from models.user import UserModel
+
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, Integer, String, or_
+from sqlalchemy.orm import joinedload, relationship
+
+from exceptions import ChatNotFoundException
 from models.account import AccountModel
 from models.agent import AgentModel
+from models.base_model import BaseModel
 from models.team import TeamModel
-from exceptions import ChatNotFoundException
-
+from models.user import UserModel
+from typings.account import AccountOutput
+from typings.chat import ChatInput
 
 
 class ChatModel(BaseModel):
