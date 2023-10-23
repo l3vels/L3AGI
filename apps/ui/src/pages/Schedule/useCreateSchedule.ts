@@ -1,19 +1,24 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { ToastContext } from 'contexts'
-import { useModal } from 'hooks'
 
 import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useSchedulesService } from 'services/schedule/useSchedulesService'
 import { useCreateScheduleService } from 'services/schedule/useCreateScheduleService'
 import { scheduleValidationSchema } from 'utils/validationsSchema'
+import { useModal } from 'hooks'
 
-export const useCreateSchedule = () => {
+type UseCreateScheduleProps = {
+  initialValues: Record<string, unknown>
+}
+
+export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { closeModal } = useModal()
 
   const { setToast } = useContext(ToastContext)
-  const { openModal, closeModal } = useModal()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -21,40 +26,70 @@ export const useCreateSchedule = () => {
 
   const { data: schedule, refetch: refetchSchedule } = useSchedulesService()
 
-  const initialValues = {
-    schedule_name: '',
-    schedule_description: '',
-    schedule_is_active: true,
-    schedule_max_daily_budget: 0.1,
-    schedule_cron_expression: '* * * * *',
+  const defaultValues = {
+    name: '',
+    description: '',
+    is_active: true,
+    max_daily_budget: 0.1,
+    cron_expression: '* * * * *',
     schedule_type: 'Run tasks',
-    schedule_agent_id: '',
-    schedule_group_id: '',
+    agent_id: null,
+    group_id: null,
+
+    agent_type: '',
+    tasks: ['Enter you task'],
+    is_recurring: false,
+    create_session_on_run: false,
+    start_date: new Date().toISOString().split('T')[0],
+    end_date: null,
+    interval: '',
+    interval_unit: '',
+
+    ...initialValues,
   }
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
-    try {
-      const scheduleInput = {
-        name: values.schedule_name,
-        description: values.schedule_description,
-        is_active: values.schedule_is_active,
-        max_daily_budget: values.schedule_max_daily_budget,
-        cron_expression: values.schedule_cron_expression,
-        schedule_type: values.schedule_type,
-        agent_id: values.schedule_agent_id,
-        group_id: values.schedule_group_id,
-      }
 
-      await createScheduleService(scheduleInput)
+    const { agent_type } = values
+
+    try {
+      await createScheduleService({
+        schedule: {
+          name: values.name,
+          description: values.description,
+          schedule_type: values.schedule_type,
+          start_date: values.start_date,
+          end_date: values.end_date,
+          interval: values.is_recurring ? `${values.interval} ${values.interval_unit}` : undefined,
+          is_active: values.is_active,
+          cron_expression: values.cron_expression,
+          max_daily_budget: values.max_daily_budget,
+        },
+        configs: {
+          agent_id: agent_type === 'agent' ? values.agent_id : null,
+          team_id: agent_type === 'team' ? values.agent_id : null,
+          chat_id: agent_type === 'chat' ? values.agent_id : null,
+          group_id: values.group_id,
+          create_session_on_run: values.create_session_on_run,
+          is_recurring: values.is_recurring,
+          tasks: values.tasks,
+        },
+      })
 
       await refetchSchedule()
+
       setToast({
         message: 'New Schedule was Created!',
         type: 'positive',
         open: true,
       })
-      navigate('/schedules')
+
+      if (location.pathname.includes('schedules')) {
+        navigate('/schedules')
+      } else {
+        closeModal('schedule-run-modal')
+      }
     } catch (e) {
       setToast({
         message: 'Failed To Add Schedule!',
@@ -66,7 +101,7 @@ export const useCreateSchedule = () => {
   }
 
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: defaultValues,
     validationSchema: scheduleValidationSchema,
     onSubmit: async values => handleSubmit(values),
   })

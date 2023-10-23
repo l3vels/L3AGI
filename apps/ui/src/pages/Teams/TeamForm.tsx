@@ -69,7 +69,7 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
     <StyledContainer>
       <FormikProvider value={formik}>
         <StyledHeaderWrapper>
-          <StyledHeading type={Heading.types.h1} size={Heading.sizes.sm} value='Add member' />
+          <StyledHeading type={Heading.types.h1} size={Heading.sizes.sm} value={t('add-member')} />
         </StyledHeaderWrapper>
         <StyledEmailWrapper>
           <TypographyPrimary

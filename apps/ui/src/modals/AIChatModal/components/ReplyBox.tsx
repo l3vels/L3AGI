@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
@@ -30,6 +31,7 @@ export const defaultReplyState = {
 }
 
 const ReplyBox = ({ onClose, reply }: ReplyBoxProps) => {
+  const { t } = useTranslation()
   const { wordArray, authorName } = useHumanMessage({
     messageText: reply.messageText || '',
     userId: reply.userId || '',
@@ -42,7 +44,7 @@ const ReplyBox = ({ onClose, reply }: ReplyBoxProps) => {
       <StyledReplyText>
         <StyledWidth>
           <TypographyTertiary
-            value={'Replying to'}
+            value={t('replying-to')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

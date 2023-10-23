@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useForgotPasswordService } from 'services/useAuthService'
@@ -12,6 +13,7 @@ const initialValues = {
 }
 
 const useForgotPassword = () => {
+  const { t } = useTranslation()
   const [alertMessage, setAlertMessage] = React.useState({ type: '', message: '' })
   const [forgotPassword] = useForgotPasswordService()
 
@@ -28,7 +30,7 @@ const useForgotPassword = () => {
 
       setAlertMessage({
         type: 'success',
-        message: 'Reset password email has been sent successfully.',
+        message: t('forget-password-message'),
       })
     },
   })

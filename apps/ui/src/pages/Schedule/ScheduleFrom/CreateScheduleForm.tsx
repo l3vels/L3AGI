@@ -17,8 +17,12 @@ import { FormikProvider } from 'formik'
 import { useCreateSchedule } from '../useCreateSchedule'
 import ScheduleForm from './ScheduleForm'
 
-const CreateScheduleForm = () => {
-  const { formik, isLoading } = useCreateSchedule()
+type CreateScheduleFormProps = {
+  initialValues?: Record<string, unknown>
+}
+
+const CreateScheduleForm = ({ initialValues = {} }: CreateScheduleFormProps) => {
+  const { formik, isLoading } = useCreateSchedule({ initialValues })
 
   return (
     <FormikProvider value={formik}>
@@ -26,15 +30,12 @@ const CreateScheduleForm = () => {
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle>Add Schedule</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-        Here is your datasource, a collection of databases, APIs, files, and more.
-      </StyledSectionDescription> */}
           </div>
 
           <StyledButtonWrapper>
             <BackButton />
             <ButtonPrimary
-              onClick={formik?.handleSubmit}
+              onClick={formik.handleSubmit}
               size={Button.sizes.SMALL}
               disabled={isLoading}
             >

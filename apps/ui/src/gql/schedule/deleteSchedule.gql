@@ -1,3 +1,5 @@
+#import "./scheduleFragment.gql"
+
 mutation deleteSchedule($id: id!) @api(name: ai) {
   deleteSchedule(id: $id)
     @rest(
@@ -7,6 +9,6 @@ mutation deleteSchedule($id: id!) @api(name: ai) {
       bodyKey: "input"
       endpoint: "ai"
     ) {
-    schedule
+    ...ScheduleFragment
   }
 }

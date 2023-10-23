@@ -1,5 +1,3 @@
-import { useSchedulesService } from 'services/schedule/useSchedulesService'
-
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
@@ -25,9 +23,6 @@ const Schedules = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>Schedules</StyledSectionTitle>
-          {/* <StyledSectionDescription>
-        Here is your datasource, a collection of databases, APIs, files, and more.
-      </StyledSectionDescription> */}
         </div>
         <div>
           <ButtonPrimary onClick={() => navigate('/schedules/create-schedule')} size={'small'}>
@@ -38,9 +33,7 @@ const Schedules = () => {
 
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {schedules?.map((scheduleObj: any) => {
-            const { schedule } = scheduleObj
-
+          {schedules?.map(({ schedule }) => {
             return (
               <TempCard
                 key={schedule.id}

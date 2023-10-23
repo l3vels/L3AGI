@@ -32,10 +32,12 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <StyledMainHeaderWrapper>
-          <HeadingPrimary type={Heading.types.h1} size='medium' value='AGENTS' />
-          <StyledSectionDescription>
-            {t('here-are-all-your-agents-managing-tasks-and-operations')}
-          </StyledSectionDescription>
+          <HeadingPrimary
+            type={Heading.types.h1}
+            size='medium'
+            value={`${t('agent').toUpperCase()}S`}
+          />
+          <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription>
         </StyledMainHeaderWrapper>
         {/* <div>
 
@@ -51,7 +53,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
               onClick={() => navigate('/agents/create-agent-template')}
               size={Button.sizes.SMALL}
             >
-              {t('createAgent')}
+              {t('add-agent')}
             </ButtonPrimary>
           )}
         </div>

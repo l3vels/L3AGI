@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "worker"
+version = "0.1.0"
+description = ""
+authors = ["Mirian Okradze <okradzemirian@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+celery = "^5.3.4"
+requests = "^2.31.0"
+python-dotenv = "^1.0.0"
+redis = "^5.0.1"
+httpx = "^0.25.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

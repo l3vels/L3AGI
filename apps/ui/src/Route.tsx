@@ -88,6 +88,7 @@ import EditContactForm from 'plugins/contact/pages/Contact/ContactForm/EditConta
 import Group from 'plugins/contact/pages/Group'
 import CreateGroupForm from 'plugins/contact/pages/Group/GroupForm/CreateGroupForm'
 import EditGroupForm from 'plugins/contact/pages/Group/GroupForm/EditGroupForm'
+import ScheduleRunModal from 'modals/ScheduleRunModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -322,6 +323,8 @@ const Route = () => {
       <SettingsModal />
       <ToolkitModal />
       <ChatLinkModal />
+      <ScheduleRunModal />
+
       <CommandMenu
         open={cmdkOpen}
         setCmdkOpen={setCmdkOpen}

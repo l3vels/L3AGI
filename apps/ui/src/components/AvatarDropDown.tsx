@@ -95,7 +95,7 @@ const AvatarDropDown = () => {
           <StyledSettingsIcon size={20} />
 
           <TypographyPrimary
-            value={'Settings'}
+            value={t('settings')}
             type={Typography.types.P}
             size={Typography.sizes.xss}
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}

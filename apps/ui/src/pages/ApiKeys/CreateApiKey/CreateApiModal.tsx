@@ -42,7 +42,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
               <StyledModalHeading
                 type={Heading.types.h1}
                 size={Heading.sizes.md}
-                value='Create a new secret key'
+                value={t('create-new-secret-key')}
               />
             }
             backgroundColor='dark'
@@ -63,7 +63,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
               <StyledActionsContainer>
                 <ButtonTertiary onClick={closeModal} size={Button.sizes.LARGE}>
                   <TypographyPrimary
-                    value='Cancel'
+                    value={t('cancel')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                   />
@@ -71,7 +71,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
 
                 <ButtonPrimary onClick={formik?.handleSubmit} size={Button.sizes.LARGE}>
                   <StyledLabelTypography
-                    value='Create'
+                    value={t('create')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.md}
                   />

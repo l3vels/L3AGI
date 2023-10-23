@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -9,6 +10,7 @@ import Logs from '@l3-lib/ui-core/dist/icons/Logs'
 import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
 
 const DevelopersNavigation = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const { pathname } = useLocation()
@@ -33,15 +35,15 @@ const DevelopersNavigation = () => {
         onClick={() => onHandleClick('')}
       >
         <Games />
-        <span>API keys</span>
+        <span>{t('api-keys')}</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'logs')} onClick={() => onHandleClick('logs')}>
         <Logs />
-        <span>Logs</span>
+        <span>{t('logs')}</span>
       </StyledLi>
       <StyledLi isActive={includes(active, 'webhook')} onClick={() => onHandleClick('webhook')}>
         <TagsOutline />
-        <span>Webhooks</span>
+        <span>{t('webhooks')}</span>
       </StyledLi>
       {/* <StyledLi isActive={includes(active, 'players')} onClick={() => onHandleClick('players')}>
         <Doc />

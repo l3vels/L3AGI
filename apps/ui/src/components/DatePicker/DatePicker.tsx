@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
 import Button from '@l3-lib/ui-core/dist/Button'
 import styled from 'styled-components'
@@ -7,6 +8,7 @@ import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
 import { ButtonSecondary } from 'components/Button/Button'
 
 const DatePickerField = ({ start_date, end_date, onChange }: any) => {
+  const { t } = useTranslation()
   const [is_open, setIsOpen] = React.useState(false)
 
   const ref = useRef(null)
@@ -18,7 +20,7 @@ const DatePickerField = ({ start_date, end_date, onChange }: any) => {
   return (
     <StyledContainer ref={ref}>
       <ButtonSecondary leftIcon={() => <Calendar />} onClick={() => setIsOpen(true)}>
-        Date
+        {t('date')}
       </ButtonSecondary>
       {is_open && (
         <StyledPickerContainer>

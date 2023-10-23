@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
@@ -9,7 +10,7 @@ type AgentDropdownProps = {
   fieldValue: string | string[]
   options: any
   setFieldValue: any
-  onChange?: () => void
+  onChange?: (option: any) => void
   optionSize?: 'large' | 'medium' | 'small'
   isMulti?: boolean
 }
@@ -24,10 +25,11 @@ const AgentDropdown = ({
   isMulti,
   optionSize = 'medium',
 }: AgentDropdownProps) => {
+  const { t } = useTranslation()
   let value = fieldValue
 
   let onChangeFunction = (option: any) => {
-    onChange()
+    onChange(option)
     setFieldValue(fieldName, option.value)
   }
 
@@ -35,7 +37,7 @@ const AgentDropdown = ({
     value = options?.filter((option: any) => fieldValue?.includes(option.value))
 
     onChangeFunction = (option: any) => {
-      onChange()
+      onChange(option)
       if (option === null) {
         setFieldValue(fieldName, [])
       } else {
@@ -70,7 +72,7 @@ const AgentDropdown = ({
         multiline
         size={Dropdown.size.MEDIUM}
         value={value}
-        placeholder={value?.length >= 1 ? value : 'Please enter value'}
+        placeholder={value?.length >= 1 ? value : `${t('please-enter-value')}`}
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}

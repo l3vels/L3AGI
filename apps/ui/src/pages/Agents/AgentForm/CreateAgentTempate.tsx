@@ -19,6 +19,7 @@ import { useModal } from 'hooks'
 import { useAgentTemplatesService } from 'services/discover/useAgentTemplatesService'
 import TypographyPrimary from 'components/Typography/Primary'
 import { useCreateAgent } from '../useCreateAgent'
+import { t } from 'i18next'
 
 const CreateAgentTemplate = () => {
   const { refetchAgent } = useCreateAgent()
@@ -33,7 +34,7 @@ const CreateAgentTemplate = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Create Agent</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
           {/* <StyledSectionDescription>
             Here are all your agents, managing tasks and operations.
           </StyledSectionDescription> */}
@@ -51,7 +52,7 @@ const CreateAgentTemplate = () => {
 
             {agentsData?.length > 0 && (
               <TypographyPrimary
-                value='Choose Template'
+                value={t('choose-template')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
               />

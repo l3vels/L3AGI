@@ -1,13 +1,22 @@
 import { useQuery } from '@apollo/client'
 import SCHEDULE_BY_ID_GQL from '../../gql/schedule/scheduleById.gql'
+import { ScheduleWithConfigs } from 'types'
 
-export const useScheduleByIdService = ({ id }: { id: string }) => {
+type UseScheduleByIdServiceData = {
+  scheduleById: ScheduleWithConfigs
+}
+
+type UseScheduleByIdServiceVariables = {
+  id?: string
+}
+
+export const useScheduleByIdService = ({ id }: UseScheduleByIdServiceVariables) => {
   const {
     data: { scheduleById } = {},
     error,
     loading,
     refetch,
-  } = useQuery(SCHEDULE_BY_ID_GQL, {
+  } = useQuery<UseScheduleByIdServiceData, UseScheduleByIdServiceVariables>(SCHEDULE_BY_ID_GQL, {
     variables: { id },
     skip: !id,
   })

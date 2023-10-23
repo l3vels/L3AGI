@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
@@ -24,6 +25,7 @@ type OptionRendererProps = {
 }
 
 const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
+  const { t } = useTranslation()
   const { setFieldValue } = formik
   const [dropdownValue, setDropdownValue] = useState<any>()
 
@@ -83,7 +85,7 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
     <StyledCreateModalForm>
       <StyledNameTextWrapper>
         <TypographySecondary
-          value='Name'
+          value={t('name')}
           type={Typography.types.LABEL}
           size={Typography.sizes.lg}
         />
@@ -92,7 +94,7 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
       <StyledTextFieldDate>
         <StyledExpirationTextWrapper>
           <TypographySecondary
-            value='Expiration'
+            value={t('expiration')}
             type={Typography.types.LABEL}
             size={Typography.sizes.lg}
           />
@@ -102,7 +104,7 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
 
       <StyledTextWrapper>
         <TypographySecondary
-          value='Choose games'
+          value={t('choose-games')}
           type={Typography.types.LABEL}
           size={Typography.sizes.lg}
         />
@@ -114,7 +116,7 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
 
       <StyledTextWrapper>
         <TypographySecondary
-          value='Note'
+          value={t('note')}
           type={Typography.types.LABEL}
           size={Typography.sizes.lg}
         />
@@ -123,7 +125,7 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
         <TextareaFormik
           color='#FFFFFF'
           field_name='note'
-          placeholder='An optional description of what this webhook endpoint is used for.'
+          placeholder={t('api-key-placeholder-description')}
         />
       </StyledTextAreaWrapper>
     </StyledCreateModalForm>

@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
@@ -20,6 +21,7 @@ import AgentDatasources from './components/AgentDatasources'
 import AgentVIewDetailBox from './components/AgentViewDetailBox'
 
 const AgentView = ({ agentData }: { agentData?: any }) => {
+  const { t } = useTranslation()
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
@@ -38,11 +40,8 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
           <>
             <div>
               <>
-                <StyledSectionTitle>Agent</StyledSectionTitle>
-                <StyledSectionDescription>
-                  Witness the growth of exceptional AI talents, nurtured by collective community
-                  contributions.
-                </StyledSectionDescription>
+                <StyledSectionTitle>{t('agent')}</StyledSectionTitle>
+                <StyledSectionDescription>{t('agent-view-description')}</StyledSectionDescription>
               </>
             </div>
 
@@ -66,7 +65,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
             {goals?.length > 0 && (
               <AdditionalInfoBox
                 items={goals}
-                title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
+                title={goals.length === 1 ? `${t('goal')}` : `${goals.length} ${t('goals')}`}
               />
             )}
 
@@ -74,7 +73,9 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
               <AdditionalInfoBox
                 items={constraints}
                 title={
-                  constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
+                  constraints.length === 1
+                    ? `${t('constraint')}`
+                    : `${constraints.length} ${t('constraint')}`
                 }
               />
             )}
@@ -84,8 +85,8 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
                 items={instructions}
                 title={
                   instructions.length === 1
-                    ? '1 Instruction'
-                    : `${instructions.length} Instructions`
+                    ? `${t('instruction')}`
+                    : `${instructions.length} ${t('instructions')}`
                 }
               />
             )}
@@ -94,14 +95,16 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
               <AdditionalInfoBox
                 items={suggestions}
                 title={
-                  suggestions.length === 1 ? '1 Suggestion' : `${suggestions.length} Suggestions`
+                  suggestions.length === 1
+                    ? `${t('suggestion')}`
+                    : `${suggestions.length} ${t('suggestions')}`
                 }
               />
             )}
 
-            {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
+            {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={t('greeting')} />}
 
-            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={'Advanced'} />}
+            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={t('advanced')} />}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>

@@ -25,6 +25,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { t } from 'i18next'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -138,7 +139,7 @@ const ChatRouteLayout = () => {
             {teamModule?.list && (
               <>
                 <ListHeader
-                  title='Team'
+                  title={t('team')}
                   onAddClick={
                     teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
                   }
@@ -183,7 +184,7 @@ const ChatRouteLayout = () => {
             {agentModule.list && (
               <>
                 <ListHeader
-                  title='Agent'
+                  title={t('agent')}
                   onAddClick={
                     agentModule.create ? () => navigate('/agents/create-agent-template') : undefined
                   }

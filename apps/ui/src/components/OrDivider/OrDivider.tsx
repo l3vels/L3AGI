@@ -1,13 +1,19 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyTertiary from 'components/Typography/Tertiary'
 
 const OrDivider = () => {
+  const { t } = useTranslation()
   return (
     <StyledOrDivider>
       <StyledLine />
-      <TypographyTertiary value={'OR'} type={Typography.types.label} size={Typography.sizes.md} />
+      <TypographyTertiary
+        value={t('or')}
+        type={Typography.types.label}
+        size={Typography.sizes.md}
+      />
       <StyledLine />
     </StyledOrDivider>
   )

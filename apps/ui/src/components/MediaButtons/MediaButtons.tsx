@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import {
   StyledDivider,
@@ -14,13 +15,14 @@ import YoutubeLogo from 'assets/tools/youtube.svg'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const MediaButtons = () => {
+  const { t } = useTranslation()
   return (
     <StyledWrapper>
       <button onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}>
         <StyledInnerButtonWrapper>
           <StyledImg src={TwitterLogo} />
           <TypographyPrimary
-            value='Twitter'
+            value={t('twitter')}
             type={Typography.types.label}
             size={Typography.sizes.xss}
             as={'a'}
@@ -38,7 +40,7 @@ const MediaButtons = () => {
         <StyledInnerButtonWrapper>
           <StyledDiscordIcon />
           <TypographyPrimary
-            value='Discord'
+            value={t('discord')}
             type={Typography.types.label}
             size={Typography.sizes.xss}
             as={'a'}
@@ -56,7 +58,7 @@ const MediaButtons = () => {
         <StyledInnerButtonWrapper>
           <StyledImg src={YoutubeLogo} />
           <TypographyPrimary
-            value='Youtube'
+            value={t('youtube')}
             type={Typography.types.label}
             size={Typography.sizes.xss}
             as={'a'}

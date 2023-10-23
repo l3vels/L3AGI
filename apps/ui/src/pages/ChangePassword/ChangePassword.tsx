@@ -2,6 +2,7 @@ import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
@@ -23,6 +24,7 @@ type CreateChangePasswordModalProps = {
 }
 
 const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
+  const { t } = useTranslation()
   const { formik } = useChangePassword()
 
   return (
@@ -49,13 +51,13 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
             <HeadingPrimary
               type={Heading.types.h1}
               size={Heading.sizes.lg}
-              value='Change password'
+              value={t('change-password')}
             />
           </StyledTextWrapper>
           <StyledPasswordDetailsWrapper>
             <StyledPassword>
               <TypographySecondary
-                value='Password must contain:'
+                value={t('password-must-contain')}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.lg}
               />
@@ -64,28 +66,28 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
               <StyledPasswordRequirementsList>
                 <StyledPasswordRequirement>
                   <TypographySecondary
-                    value='At least 6 characters'
+                    value={t('at-least-6-characters')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
                 </StyledPasswordRequirement>
                 <StyledPasswordRequirement>
                   <TypographySecondary
-                    value='At least 1 upper case letter ( A-Z ) '
+                    value={t('at-least-1-upper-case-letter')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
                 </StyledPasswordRequirement>
                 <StyledPasswordRequirement>
                   <TypographySecondary
-                    value='At least 1 lower case letter ( a-z )'
+                    value={t('at-least-1-lower-case-letter')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
                 </StyledPasswordRequirement>
                 <StyledPasswordRequirement>
                   <TypographySecondary
-                    value='At least 1 number ( 0..9 )'
+                    value={t('at-least-1-number')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.lg}
                   />
@@ -100,28 +102,28 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
               <FormikTextField
                 field_name='current_password'
                 type={Typography.types.LABEL}
-                placeholder={'Current password'}
+                placeholder={t('current-password')}
                 size={Typography.sizes.sm}
               />
 
               <FormikTextField
                 field_name='new_password'
                 type={Typography.types.LABEL}
-                placeholder={'Create password'}
+                placeholder={t('create-password')}
                 size={Typography.sizes.sm}
               />
 
               <FormikTextField
                 field_name='confirm_password'
                 type={Typography.types.LABEL}
-                placeholder={'Confirm password'}
+                placeholder={t('confirm-password')}
                 size={Typography.sizes.sm}
               />
 
               <StyledButtonWrapper>
                 <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
                   <TypographySecondary
-                    value='Update Password'
+                    value={t('update-password')}
                     type={Typography.types.LABEL}
                     size={Typography.sizes.sm}
                   />

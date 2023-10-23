@@ -15,6 +15,7 @@ import AgentForm from './AgentForm'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { t } from 'i18next'
 
 const EditAgentForm = () => {
   const { t } = useTranslation()
@@ -25,10 +26,10 @@ const EditAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>{t('edit-agent')}</StyledSectionTitle>
-            <StyledSectionDescription>
-              {t('here-are-all-your-agents-managing-tasks-and-operations')}
-            </StyledSectionDescription>
+            <StyledSectionTitle>{`${t('edit-agent')}`}</StyledSectionTitle>
+            {/* <StyledSectionDescription>
+              Here are all your agents, managing tasks and operations.
+            </StyledSectionDescription> */}
           </div>
 
           <StyledButtonWrapper>
@@ -38,7 +39,7 @@ const EditAgentForm = () => {
               disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {isLoading ? <Loader size={32} /> : `${t('save')}`}
+              {isLoading ? <Loader size={32} /> : t('save')}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>

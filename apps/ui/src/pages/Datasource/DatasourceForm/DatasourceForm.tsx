@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
@@ -29,6 +30,7 @@ type DatasourceFormProps = {
 }
 
 const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormProps) => {
+  const { t } = useTranslation()
   const { dataLoaders, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
 
@@ -82,18 +84,18 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   return (
     <StyledFormContainer>
       <StyledInputWrapper>
-        <FormikTextField name='datasource_name' placeholder='Name' label='Name' />
+        <FormikTextField name='datasource_name' placeholder={t('name')} label={t('name')} />
 
         <StyledTextareaWrapper>
           <TypographyPrimary
-            value='Description'
+            value={t('description')}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
           <Textarea
             hint=''
             rows={6}
-            placeholder='Description'
+            placeholder={t('description')}
             name='datasource_description'
             value={datasource_description}
             onChange={onDescriptionChange}
@@ -102,7 +104,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
 
         <StyledSourceTypeWrapper>
           <TypographyPrimary
-            value='Source Type'
+            value={t('source-type')}
             type={Typography.types.LABEL}
             size={Typography.sizes.md}
           />
@@ -156,14 +158,14 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                     onHelpClick={() =>
                       window.open(import.meta.env.REACT_APP_INDEX_TYPES_LINK, '_blank')
                     }
-                    label={'Index Type'}
+                    label={t('index-type')}
                     fieldName={'index_type'}
                     fieldValue={index_type}
                     setFieldValue={setFieldValue}
                     options={[
-                      { label: 'Summarize Index', value: 'summary' },
-                      { label: 'Vector Store Index', value: 'vector_store' },
-                      { label: 'Tree Index', value: 'tree' },
+                      { label: `${t('summarize-index')}`, value: 'summary' },
+                      { label: `${t('vector-store-index')}`, value: 'vector_store' },
+                      { label: `${t('tree-index')}`, value: 'tree' },
                     ]}
                   />
 
@@ -172,14 +174,14 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                       onHelpClick={() =>
                         window.open(import.meta.env.REACT_APP_VECTOR_STORES_LINK, '_blank')
                       }
-                      label={'Vector Store Provider'}
+                      label={t('vector-store-provider')}
                       fieldName={'vector_store'}
                       fieldValue={vector_store}
                       setFieldValue={setFieldValue}
                       options={[
-                        { label: 'Zep', value: 'zep' },
-                        { label: 'Pinecone', value: 'pinecone' },
-                        { label: 'Weaviate', value: 'weaviate' },
+                        { label: `${t('zep')}`, value: 'zep' },
+                        { label: `${t('pinecone')}`, value: 'pinecone' },
+                        { label: `${t('weaviate')}`, value: 'weaviate' },
                       ]}
                     />
                   )}
@@ -188,25 +190,25 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                     onHelpClick={() =>
                       window.open(import.meta.env.REACT_APP_RESPONSE_MODES_LINK, '_blank')
                     }
-                    label={'Response Mode'}
+                    label={t('response-mode')}
                     fieldName={'response_mode'}
                     fieldValue={response_mode}
                     setFieldValue={setFieldValue}
                     options={[
-                      { label: 'Refine', value: 'refine' },
-                      { label: 'Compact', value: 'compact' },
-                      { label: 'Tree Summarize', value: 'tree_summarize' },
-                      { label: 'Simple Summarize', value: 'simple_summarize' },
-                      { label: 'No Text', value: 'no_text' },
-                      { label: 'Accumulate', value: 'accumulate' },
-                      { label: 'Compact Accumulate', value: 'compact_accumulate' },
+                      { label: `${t('refine')}`, value: 'refine' },
+                      { label: `${t('compact')}`, value: 'compact' },
+                      { label: `${t('tree-summarize')}`, value: 'tree_summarize' },
+                      { label: `${t('simple-summarize')}`, value: 'simple_summarize' },
+                      { label: `${t('no-text')}`, value: 'no_text' },
+                      { label: `${t('accumulate')}`, value: 'accumulate' },
+                      { label: `${t('compact-accumulate')}`, value: 'compact_accumulate' },
                     ]}
                   />
 
                   <FormikTextField
                     name='chunk_size'
                     placeholder='Chunk Size'
-                    label='Enter Chunk Size'
+                    label={t('chunk-size')}
                   />
                 </StyledUploadFileWrapper>
               )}
@@ -227,7 +229,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   <Textarea
                     hint=''
                     rows={6}
-                    placeholder='Text'
+                    placeholder={t('text')}
                     name='config_value'
                     value={config_value}
                     onChange={(text: string) => {
@@ -237,9 +239,9 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                 </StyledTextareaWrapper>
               )}
 
-              <>{category === 'Social' && <StyledText>Coming Soon</StyledText>}</>
-              <>{category === 'Web Page' && <StyledText>Coming Soon</StyledText>}</>
-              <>{category === 'Application' && <StyledText>Coming Soon</StyledText>}</>
+              <>{category === 'Social' && <StyledText>{t('comingSoon')}</StyledText>}</>
+              <>{category === 'Web Page' && <StyledText>{t('comingSoon')}</StyledText>}</>
+              <>{category === 'Application' && <StyledText>{t('comingSoon')}</StyledText>}</>
             </>
           )}
         </StyledSourceTypeWrapper>
@@ -255,7 +257,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                   disabled={loading || data}
                   size={Button.sizes.SMALL}
                 >
-                  {loading ? <Loader size={32} /> : 'Connect'}
+                  {loading ? <Loader size={32} /> : t('save')}
                 </ButtonPrimary>
               </div>
             )}

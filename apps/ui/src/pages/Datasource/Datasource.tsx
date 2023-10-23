@@ -15,6 +15,7 @@ import { DATA_LOADER_IMAGES } from './constants'
 import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 import { ButtonPrimary } from 'components/Button/Button'
+import { t } from 'i18next'
 
 const Datasource = () => {
   const { datasources, deleteDatasourceHandler } = useDatasource()
@@ -25,17 +26,15 @@ const Datasource = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Datasource</StyledSectionTitle>
-          <StyledSectionDescription>
-            Here is your datasource, a collection of databases, APIs, files, and more.
-          </StyledSectionDescription>
+          <StyledSectionTitle>{`${t('datasource')}`}</StyledSectionTitle>
+          <StyledSectionDescription>{`${t('datasource-description')}`}</StyledSectionDescription>
         </div>
         <div>
           <ButtonPrimary
             onClick={() => navigate('/datasources/create-datasource')}
             size={Button.sizes.SMALL}
           >
-            Add Datasource
+            {t('add-datasource')}
           </ButtonPrimary>
         </div>
       </StyledHeaderGroup>

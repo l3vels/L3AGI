@@ -2,6 +2,7 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso'
 
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import moment from 'moment'
 
@@ -42,6 +43,7 @@ const ChatMessageListV2 = ({
   greeting,
   agentName,
 }: ChatMessageListV2Props) => {
+  const { t } = useTranslation()
   const [listIsReady, setListIsReady] = useState(false)
 
   const virtuoso = useRef<VirtuosoHandle>(null)
@@ -94,7 +96,7 @@ const ChatMessageListV2 = ({
           id: uuidv4(),
           ai: true,
           createdOn: Date.now(),
-          text: 'Thinking ...',
+          text: t('thinking'),
           loader_type: 'video',
           type: MessageTypeEnum.AI_MANUAL,
         }}
@@ -297,6 +299,6 @@ const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
   /* width: 100%; */
   opacity: 0;
-  height: 30px;
-  max-height: 30px;
+  height: 20px;
+  max-height: 20px;
 `

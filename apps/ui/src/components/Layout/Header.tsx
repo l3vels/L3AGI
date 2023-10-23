@@ -1,4 +1,5 @@
 import logo from 'assets/images/l3_logo.png'
+import { useTranslation } from 'react-i18next'
 
 import { StyledHeader, StyledLogoWrapper, StyledNavigationColumn } from './LayoutStyle'
 
@@ -16,6 +17,7 @@ interface HeaderTypes {
 }
 
 const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes) => {
+  const { t } = useTranslation()
   return (
     <StyledHeader id='main_header'>
       <StyledNavigationColumn>
@@ -29,7 +31,13 @@ const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes)
 
       <StyledLogoWrapper to='/'>
         <StyledLogo src={logo} alt='Logo' />
-        <StyledTags label='BETA' readOnly color={'gradient_yellow'} size={'small'} noAnimation />
+        <StyledTags
+          label={t('beta')}
+          readOnly
+          color={'gradient_yellow'}
+          size={'small'}
+          noAnimation
+        />
       </StyledLogoWrapper>
 
       {!hideButtons && (

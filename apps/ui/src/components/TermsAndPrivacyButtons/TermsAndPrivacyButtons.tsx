@@ -1,15 +1,17 @@
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import TypographyQuaternary from 'components/Typography/Quaternary'
 
 const TermsAndPrivacyButtons = () => {
+  const { t } = useTranslation()
   return (
     <StyledWrapper>
       <>
         <button onClick={() => openLinkTab(import.meta.env.REACT_APP_TERMS_LINK)}>
           <TypographyQuaternary
-            value='Terms of Use'
+            value={t('terms-of-use')}
             type={Typography.types.label}
             size={Typography.sizes.xss}
             as={'a'}
@@ -24,7 +26,7 @@ const TermsAndPrivacyButtons = () => {
 
         <button onClick={() => openLinkTab(import.meta.env.REACT_APP_PRIVACY)}>
           <TypographyQuaternary
-            value='Privacy Policy'
+            value={t('privacy-policy')}
             type={Typography.types.label}
             size={Typography.sizes.xss}
             as={'a'}
