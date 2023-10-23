@@ -84,12 +84,6 @@ const AgentForm = ({ formik }: AgentFormProps) => {
             <TabPanels noAnimation>
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <UploadAvatar
-                    onChange={handleUploadAvatar}
-                    isLoading={avatarIsLoading}
-                    avatarSrc={agent_avatar}
-                  />
-
                   <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
 
                   <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
@@ -119,6 +113,19 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
                     />
                   </StyledCheckboxWrapper>
+
+                  <StyledTextareaWrapper>
+                    <TypographyPrimary
+                      value={t('avatar')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+                    <UploadAvatar
+                      onChange={handleUploadAvatar}
+                      isLoading={avatarIsLoading}
+                      avatarSrc={agent_avatar}
+                    />
+                  </StyledTextareaWrapper>
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
