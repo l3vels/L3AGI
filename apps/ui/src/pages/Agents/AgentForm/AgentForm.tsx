@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
@@ -61,21 +61,21 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     <StyledRoot>
       <StyledTabsWrapper>
         <StyledTabList size='small'>
-          <Tab onClick={() => setActiveTab(0)}>
-            <StyledSpan>General</StyledSpan>
-          </Tab>
-          <Tab onClick={() => setActiveTab(1)}>
-            <StyledSpan>Configuration</StyledSpan>
-          </Tab>
-          <Tab onClick={() => setActiveTab(2)}>
-            <StyledSpan>Training Details</StyledSpan>
-          </Tab>
-          <Tab onClick={() => setActiveTab(3)}>
-            <StyledSpan>Onboarding</StyledSpan>
-          </Tab>
-          {/* <Tab onClick={() => setActiveTab(4)}>
+          <StyledTab onClick={() => setActiveTab(0)}>
+            <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(1)}>
+            <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(2)}>
+            <StyledSpan isActive={activeTab === 2}>Training Details</StyledSpan>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(3)}>
+            <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
+          </StyledTab>
+          {/* <StyledTab onClick={() => setActiveTab(4)}>
             <StyledSpan>Voice Preferences</StyledSpan>
-          </Tab> */}
+          </StyledTab> */}
         </StyledTabList>
       </StyledTabsWrapper>
       <StyledForm>
@@ -350,9 +350,15 @@ const StyledTabList = styled(TabList)`
   }
 `
 
-const StyledSpan = styled.span`
+const StyledSpan = styled.span<{ isActive: boolean }>`
   width: 150px;
-  color: ${({ theme }) => theme.body.textColorPrimary};
+  color: ${({ theme }) => theme.body.textColorSecondary};
+
+  ${p =>
+    p.isActive &&
+    css`
+      color: ${({ theme }) => theme.body.textColorPrimary};
+    `};
 `
 const StyledTabPanelInnerWrapper = styled(TabPanel)`
   display: flex;
@@ -366,4 +372,9 @@ const StyledTabPanelInnerWrapper = styled(TabPanel)`
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
+`
+const StyledTab = styled(Tab)`
+  &.active .tab-inner {
+    background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
+  }
 `
