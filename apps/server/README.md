@@ -2,43 +2,29 @@
 
 # Setup
 
-We use pipenv for package management
+We use `Poetry` for package management
+
+First install `Poetry` by following [their installation instructions](https://python-poetry.org/docs/#installing-with-the-official-installer)
+
+Then install dependencies
 
 ```commandline
-pipenv shell
-pipenv install
+poetry install
 ```
 
-**When you change .env file you need to re-run script above**
+**When you change .env file you need to restart server**
 
-## Running with Uvicorn (without Docker)
+## Running with Uvicorn
 
 ```commandline
-uvicorn main:app --reload --port 4000 (Need to remove)
-poetry run uvicorn main:app --port 4000
+poetry run uvicorn main:app --reload --port 4000
 ```
 
 ## Running with Docker
 
-### Using Docker Compose
-
 ```commandline
 cd docker
 docker compose up --build
-```
-
-### Without Docker Compose
-
-You should build Docker image if you're running it first time or when you add new package to Pipenv
-
-```commandline
-docker build -t l3_ai_api -f docker/Dockerfile .
-```
-
-Run server with hot reload
-
-```commandline
-docker run -p 4000:4000 -v .:/code l3_ai_api
 ```
 
 ## Linting
@@ -46,7 +32,7 @@ docker run -p 4000:4000 -v .:/code l3_ai_api
 We use `Ruff` for linting and we run it periodically. To run it locally:
 
 ```commandline
-ruff check . --ignore E501
+poetry run ruff check . --ignore E501
 ```
 
 ## Formatting
@@ -55,7 +41,7 @@ We use `Black` formatter for Python. We format files before committing.
 To run it locally:
 
 ```commandline
-black .
+poetry run black .
 ```
 
 ## Migrations
@@ -63,13 +49,13 @@ black .
 We use `Alembic` for migrations. To create new migration run:
 
 ```commandline
-alembic revision --autogenerate -m "Migration name"
+poetry run alembic revision --autogenerate -m "Migration name"
 ```
 
 Update database manually
 
 ```commandline
-alembic upgrade head
+poetry run alembic upgrade head
 ```
 
 This will result in creating new migration file in `migrations/versions` folder.

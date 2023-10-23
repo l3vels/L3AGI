@@ -1,0 +1,11 @@
+mutation updateContact($id: id!, $input: input!) @api(name: "pro") {
+  updateContact(id: $id, input: $input)
+    @rest(type: "Contact", path: "/contact/{args.id}", method: "PUT", endpoint: "pro") {
+    id
+    name
+    description
+    group_id
+    email
+    phone
+  }
+}

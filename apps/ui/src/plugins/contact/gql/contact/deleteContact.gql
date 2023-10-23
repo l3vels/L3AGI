@@ -1,0 +1,12 @@
+mutation deleteContact($id: id!) @api(name: pro) {
+  deleteContact(id: $id)
+    @rest(
+      type: "Group"
+      path: "/contact/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "pro"
+    ) {
+    id
+  }
+}

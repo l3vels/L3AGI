@@ -164,7 +164,8 @@ const StyledCommandDialog = styled(Command.Dialog)`
   top: 50%;
   left: 50%;
   width: 50%;
-  min-height: 82%;
+  height: 82%;
+  max-height: 1000px;
   // overflow: scroll;
   transform: translate(-50%, -50%);
   border-radius: 16px;

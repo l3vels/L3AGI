@@ -34,7 +34,7 @@ export const LayoutProvider = ({ children }: any) => {
   useEffect(() => {
     // Function to update the 'show' state based on screen width
     const handleResize = () => {
-      setExpand(window.innerWidth < 1500)
+      setExpand(window.innerWidth < 1600)
     }
 
     // Initial setup

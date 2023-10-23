@@ -25,38 +25,32 @@ const useApollo = () => {
     // credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'account_id': accountId,
+      account_id: accountId,
     },
   }
 
   authConfig = {
     headers: {
       // 'x-refresh-token': refreshToken,
-      authorization : `Bearer ${authorization}`,
-      'account_id': accountId,
+      authorization: `Bearer ${authorization}`,
+      account_id: accountId,
     },
   }
 
   const apollo = React.useMemo(
     () => {
       const logout = async () => {
-
         //todo add logout later
-        
         // const request: AxiosRequestConfig = {
         //   method: 'POST',
         //   url: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/auth/logout`,
         //   withCredentials: true,
         // }
-
         // // if (import.meta.env.REACT_APP_AUTH_BY_HEADER === 'true') {
-         
         // // }
         // request.headers = authConfig.headers
-
         // await axios(request)
         // cleanCookie()
-
         // //todo need review when redirect to login page
         // if (!locations.includes(window.location.pathname)) {
         //   window.location.href = '/login'
@@ -66,12 +60,10 @@ const useApollo = () => {
       const errorLink = onError(context => {
         const { graphQLErrors, networkError } = context
 
-
         if (graphQLErrors) {
           graphQLErrors.map(({ extensions }: any) => {
             if (extensions?.exception?.status === 401) {
               logout()
-              
             }
 
             //eslint-disable-next-line
@@ -97,6 +89,7 @@ const useApollo = () => {
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
+          pro: `http://localhost:7000`,
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
@@ -133,6 +126,7 @@ const useApollo = () => {
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
+          pro: `http://localhost:7000`,
         },
         ...authConfig,
       })

@@ -18,6 +18,7 @@ export type AgentInput = {
   is_memory: boolean
   suggestions: string[]
   text: string
+  avatar: string
 }
 
 export const useCreateAgentService = () => {
@@ -40,6 +41,7 @@ export const useCreateAgentService = () => {
       suggestions,
       greeting,
       text,
+      avatar,
     } = input
 
     const {
@@ -53,6 +55,7 @@ export const useCreateAgentService = () => {
             role: role,
             is_template: is_template,
             is_memory: is_memory,
+            avatar: avatar,
           },
           configs: {
             goals: goals,

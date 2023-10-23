@@ -40,6 +40,7 @@ export const useCreateAgent = () => {
     agent_model: '',
     agent_is_memory: true,
     agent_text: '',
+    agent_avatar: '',
   }
 
   if (agentById) {
@@ -49,6 +50,7 @@ export const useCreateAgent = () => {
       agent_description: agentById.agent?.description,
       agent_is_template: agentById.agent?.is_template,
       agent_is_memory: agentById.agent?.is_memory,
+      agent_avatar: agentById.agent?.avatar,
       agent_temperature: agentById.configs?.temperature,
       agent_goals: agentById.configs?.goals,
       agent_constraints: agentById.configs?.constraints,
@@ -71,7 +73,7 @@ export const useCreateAgent = () => {
         description: values.agent_description,
         temperature: values.agent_temperature,
         goals: values.agent_goals,
-        is_template: false,
+        is_template: values.agent_is_template,
         constraints: values.agent_constraints,
         tools: values.agent_tools,
         datasources: values.agent_datasources,
@@ -81,7 +83,9 @@ export const useCreateAgent = () => {
         suggestions: values.agent_suggestions,
         greeting: values.agent_greeting,
         text: values.agent_text,
+        avatar: values.agent_avatar,
       }
+
       const newAgent = await createAgentService(agentInput)
       await refetchAgents()
       setToast({
@@ -89,6 +93,7 @@ export const useCreateAgent = () => {
         type: 'positive',
         open: true,
       })
+
       navigate(`/chat?agent=${newAgent.agent.id}`)
     } catch (e) {
       console.log('rrorr', e)
@@ -102,7 +107,6 @@ export const useCreateAgent = () => {
     }
     setIsLoading(false)
   }
-
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
