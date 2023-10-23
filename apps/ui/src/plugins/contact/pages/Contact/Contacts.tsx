@@ -32,21 +32,16 @@ import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
-import { useCreateCallService } from 'plugins/contact/services/call/useCreateCallService'
-import { useEndCallService } from 'plugins/contact/services/call/useEndCallService'
 
 const Contacts = () => {
   const navigate = useNavigate()
 
-  const { contacts, deleteContactHandler } = useContacts()
+  const { contacts, deleteContactHandler, handleCall, handleEndCall } = useContacts()
   const { groupOptions } = useContactForm()
 
   const { agentsData } = useAgents()
 
   const { openModal } = useModal()
-
-  const [createCallService] = useCreateCallService()
-  const [endCallService] = useEndCallService()
 
   const gridData =
     contacts?.map((contact: any) => ({
@@ -89,7 +84,7 @@ const Contacts = () => {
                       return (
                         <AgentChatCard
                           key={index}
-                          onClick={() => createCallService()}
+                          onClick={handleCall}
                           onViewClick={handleView}
                           picked={false}
                           agent={agent}
@@ -100,7 +95,7 @@ const Contacts = () => {
                 </MenuButton>
 
                 <IconButton
-                  onClick={() => endCallService()}
+                  onClick={handleEndCall}
                   icon={() => <StyledCloseIcon size={25} />}
                   size={IconButton.sizes.SMALL}
                   kind={IconButton.kinds.TERTIARY}

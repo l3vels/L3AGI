@@ -45,9 +45,9 @@ const Groups = () => {
       },
 
       {
-        Header: () => <div />,
+        Header: 'Actions',
         accessor: 'id',
-        maxWidth: 100,
+        // maxWidth: 100,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
