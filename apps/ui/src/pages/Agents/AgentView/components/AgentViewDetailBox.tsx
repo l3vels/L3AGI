@@ -45,8 +45,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { closeModal, openModal } = useModal()
 
   const { agent, configs } = agentData
-
-  const { name, description, role, creator } = agent
+  console.log('agent', agent)
+  const { name, description, role, creator, is_template } = agent
 
   const { model_version, model_provider, temperature } = configs
 
@@ -153,6 +153,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         {model_version && <TagsRow title={t('model')} items={[model_version]} />}
 
         {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
+
+        <TagsRow title={'Template'} items={[is_template ? 'True' : 'False']} />
       </StyledWrapper>
     </StyledDetailsBox>
   )
