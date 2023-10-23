@@ -62,56 +62,6 @@ class BaseTool(LangchainBaseTool):
         return self.configs.get(key)
 
 
-class ToolCallbackHandler(BaseCallbackHandler):
-    def on_tool_start(
-        self,
-        serialized: Dict[str, Any],
-        input_str: str,
-        *,
-        run_id: UUID,
-        parent_run_id: UUID | None = None,
-        tags: List[str] | None = None,
-        metadata: Dict[str, Any] | None = None,
-        **kwargs: Any,
-    ) -> Any:
-        # create run log model
-        return super().on_tool_start(
-            serialized,
-            input_str,
-            run_id=run_id,
-            parent_run_id=parent_run_id,
-            tags=tags,
-            metadata=metadata,
-            **kwargs,
-        )
-
-    def on_tool_error(
-        self,
-        error: BaseException,
-        *,
-        run_id: UUID,
-        parent_run_id: UUID | None = None,
-        **kwargs: Any,
-    ) -> Any:
-        # update run log model and include error
-        return super().on_tool_error(
-            error, run_id=run_id, parent_run_id=parent_run_id, **kwargs
-        )
-
-    def on_tool_end(
-        self,
-        output: str,
-        *,
-        run_id: UUID,
-        parent_run_id: UUID | None = None,
-        **kwargs: Any,
-    ) -> Any:
-        #
-        return super().on_tool_end(
-            output, run_id=run_id, parent_run_id=parent_run_id, **kwargs
-        )
-
-
 class BaseToolkit(BaseModel):
     toolkit_id: str
     name: str
@@ -120,7 +70,7 @@ class BaseToolkit(BaseModel):
     is_active: bool = Field(default=True)
 
     def get_tools_with_configs(
-        self, db, account, settings, agent_with_configs
+        self, db, account, settings, agent_with_configs, callback_handler
     ) -> List[BaseTool]:
         configs = ConfigModel.get_configs(
             db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account
@@ -134,7 +84,7 @@ class BaseToolkit(BaseModel):
             tool.settings = settings
             tool.account = account
             tool.agent_with_configs = agent_with_configs
-            tool.callbacks = [ToolCallbackHandler()]
+            tool.callbacks = [callback_handler]
 
         return tools
 

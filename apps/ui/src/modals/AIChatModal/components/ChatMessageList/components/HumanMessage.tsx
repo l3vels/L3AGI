@@ -22,6 +22,7 @@ type HumanMessageProps = {
   messageText: string
   userId: string
   userName: string
+  runId: string
   onReplyClick?: () => void
 }
 
@@ -31,6 +32,7 @@ const HumanMessage = ({
   messageText,
   userId,
   userName,
+  runId,
   onReplyClick,
 }: HumanMessageProps) => {
   const { wordArray, handleFileClick, fileUrlMatch, fileName } = useHumanMessage({
@@ -39,6 +41,8 @@ const HumanMessage = ({
   })
 
   const { openModal } = useModal()
+
+  const handleLogsClick = () => openModal({ name: RUN_LOGS_MODAL_NAME, data: { runId } })
 
   return (
     <>
@@ -65,7 +69,7 @@ const HumanMessage = ({
 
             <StyledMessageActionsWrapper className='actions'>
               <MessageActions
-                onLogsClick={() => openModal({ name: RUN_LOGS_MODAL_NAME, data: { userId } })}
+                onLogsClick={runId ? handleLogsClick : undefined}
                 onReplyClick={onReplyClick}
                 onCopyClick={() => copyMessageText(messageText)}
               />

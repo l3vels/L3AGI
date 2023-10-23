@@ -1,0 +1,12 @@
+query runLogs($run_id: run_id!) @api(name: "ai") {
+  runLogs(run_id: $run_id)
+    @rest(type: "RunLog", path: "/run/{args.run_id}/log", method: "GET", endpoint: "ai") {
+    id
+    name
+    type
+    input
+    output
+    error
+    created_on
+  }
+}

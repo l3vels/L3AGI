@@ -136,3 +136,7 @@ class ScheduleException(AppBaseException):
 
 class ScheduleNotFoundException(DatasourceException):
     pass
+
+
+class RunNotFoundException(AppBaseException):
+    pass

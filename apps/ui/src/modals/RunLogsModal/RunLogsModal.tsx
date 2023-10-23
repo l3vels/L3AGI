@@ -8,7 +8,13 @@ import RunLogs from './RunLogs'
 
 export const RUN_LOGS_MODAL_NAME = 'run-logs-modal'
 
-const RunLogsModal = () => {
+type RunLogsModalProps = {
+  data: {
+    runId: string
+  }
+}
+
+const RunLogsModal = ({ data }: RunLogsModalProps) => {
   const { closeModal } = useModal()
 
   return (
@@ -19,7 +25,7 @@ const RunLogsModal = () => {
       hideCloseButton
     >
       <StyledModalBody>
-        <RunLogs />
+        <RunLogs runId={data.runId} />
       </StyledModalBody>
 
       <StyledButtonWrapper>
@@ -43,6 +49,8 @@ const StyledModal = styled(Modal)`
 `
 
 const StyledModalBody = styled.div`
+  min-height: 400px;
+
   max-width: 1000px;
   max-height: 800px;
   width: 100vw;

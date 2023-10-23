@@ -16,5 +16,6 @@ query chatMessages($agent_id: String!, $team_id: String!, $chat_id: String!) @ap
     team
     sender_user
     sender_name
+    run_id
   }
 }

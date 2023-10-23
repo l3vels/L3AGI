@@ -48,6 +48,8 @@ const ChatMessageListV2 = ({
 
   const virtuoso = useRef<VirtuosoHandle>(null)
 
+  console.log(data)
+
   const filteredData = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
 
@@ -66,6 +68,7 @@ const ChatMessageListV2 = ({
       avatar: chat?.agent?.avatar,
       sender_user: chat?.sender_user,
       sender_name: chat?.sender_name,
+      run_id: chat?.run_id,
     }
   })
 
@@ -183,6 +186,7 @@ const ChatMessageListV2 = ({
                   userId={chat.sender_user_id}
                   messageDate={chat.date}
                   messageText={chat.message}
+                  runId={chat.run_id}
                   onReplyClick={() => {
                     setReply({
                       isReply: true,
@@ -216,6 +220,7 @@ const ChatMessageListV2 = ({
                   thoughts={chat.thoughts}
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
+                  runId={chat.run_id}
                   onReplyClick={
                     chat.isGreeting
                       ? undefined

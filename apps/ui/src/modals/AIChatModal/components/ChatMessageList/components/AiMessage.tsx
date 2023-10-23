@@ -21,6 +21,8 @@ import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { copyMessageText } from 'modals/AIChatModal/utils/copyMessageText'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import { useModal } from 'hooks'
+import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
 
 type AiMessageProps = {
   agentName?: string
@@ -31,6 +33,7 @@ type AiMessageProps = {
   version?: ChatMessageVersionEnum
   thoughts?: any[]
   isNewMessage: boolean
+  runId: string
   setIsNewMessage: (state: boolean) => void
   onReplyClick?: () => void
 }
@@ -43,6 +46,7 @@ const AiMessage = ({
   messageText,
   thoughts,
   isNewMessage,
+  runId,
   setIsNewMessage,
   onReplyClick,
 }: AiMessageProps) => {
@@ -54,6 +58,10 @@ const AiMessage = ({
   const isTable = isMarkdownTable(messageText)
 
   const name = agentName || teamName
+
+  const { openModal } = useModal()
+
+  const handleLogsClick = () => openModal({ name: RUN_LOGS_MODAL_NAME, data: { runId } })
 
   return (
     <>
@@ -79,6 +87,7 @@ const AiMessage = ({
 
             <StyledMessageActionsWrapper className='actions'>
               <MessageActions
+                onLogsClick={runId ? handleLogsClick : undefined}
                 onReplyClick={onReplyClick}
                 onCopyClick={() => copyMessageText(messageText)}
               />

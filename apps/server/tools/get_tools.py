@@ -11,6 +11,7 @@ from tools.google_calendar.google_calendar_toolkit import GoogleCalendarToolkit
 from tools.instagram.instagram_toolkit import InstagramToolkit
 from tools.open_weather_map.open_weather_map_toolkit import \
     OpenWeatherMapToolkit
+from tools.sendgrid.sendgrid_toolkit import SendGridToolkit
 from tools.serp_google_search.serp_google_search_toolkit import \
     SerpGoogleSearchToolkit
 from tools.slack.slack_toolkit import SlackToolkit
@@ -19,7 +20,6 @@ from tools.twitter.twitter_toolkit import TwitterToolkit
 from tools.webscraper.webscraper_toolkit import WebScraperToolkit
 from tools.wikipedia.wikipedia_search_toolkit import WikipediaSearchToolkit
 from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
-from tools.sendgrid.sendgrid_toolkit import SendGridToolkit
 
 TOOLKITS: List[BaseToolkit] = [
     SerpGoogleSearchToolkit(),
@@ -79,7 +79,7 @@ def get_all_tools():
 
 
 def get_agent_tools(
-    toolkit_ids: List[str], db, account, settings, agent_with_configs
+    toolkit_ids: List[str], db, account, settings, agent_with_configs, callback_handler
 ) -> List[BaseTool]:
     """Return a list of tools."""
     tools = []
@@ -88,7 +88,7 @@ def get_agent_tools(
         if toolkit.toolkit_id in toolkit_ids:
             tools.extend(
                 toolkit.get_tools_with_configs(
-                    db, account, settings, agent_with_configs
+                    db, account, settings, agent_with_configs, callback_handler
                 )
             )
 
