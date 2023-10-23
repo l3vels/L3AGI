@@ -328,6 +328,8 @@ const StyledTabList = styled(TabList)`
     display: flex;
     flex-direction: column;
     /* border: ${({ theme }) => theme.body.secondaryBorder}; */
+    padding: 20px 5px;
+    border-radius: 10px;
   }
 `
 
