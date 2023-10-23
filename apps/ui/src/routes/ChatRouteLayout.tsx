@@ -400,7 +400,7 @@ const StyledOutletWrapper = styled.div`
 `
 const StyledShowButton = styled.div<{ isRight?: boolean }>`
   height: 100vh;
-  width: calc(20% - 120px);
+  width: calc(30% - 120px);
 
   cursor: pointer;
 
@@ -417,7 +417,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean }>`
 `
 const StyledMiddleArea = styled.div`
   height: 100%;
-  width: calc(0% + 800px);
+  width: calc(30% + 200px);
 
   cursor: pointer;
 
