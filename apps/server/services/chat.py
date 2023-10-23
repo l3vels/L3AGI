@@ -19,6 +19,7 @@ from models.chat import ChatModel
 from models.chat_message import ChatMessage as ChatMessageModel
 from models.config import ConfigModel
 from models.datasource import DatasourceModel
+from models.run import RunModel
 from models.team import TeamModel
 from models.user import UserModel
 from postgres import PostgresChatMessageHistory
@@ -29,6 +30,7 @@ from typings.agent import AgentWithConfigsOutput
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
 from typings.config import AccountSettings, ConfigInput
+from typings.run import RunInput
 from utils.agent import convert_model_to_response
 from utils.chat import get_chat_session_id, parse_agent_mention
 from utils.configuration import \
@@ -137,6 +139,15 @@ def process_chat_message(
     provider_user: UserModel,
     chat_id: str,
 ):
+    run = RunModel.create_run(
+        db.session,
+        RunInput(
+            agent_id=agent_id, team_id=team_id, chat_id=chat_id, session_id=session_id
+        ),
+        provider_user,
+        provider_account,
+    )
+
     agents: List[AgentWithConfigsOutput] = []
     agents, prompt = handle_agent_mentions(prompt, provider_account, agents)
     agents = append_agent_to_list(agent_id, provider_account, agents)
@@ -166,6 +177,7 @@ def process_chat_message(
         local_chat_message_ref_id=local_chat_message_ref_id,
         current_agent_id=current_agent_id,
         chat_id=chat_id,
+        run_id=run.id,
     )
 
     settings = ConfigModel.get_account_settings(db, provider_account)
@@ -502,6 +514,7 @@ def create_and_send_chat_message(
     parent_id: str,
     local_chat_message_ref_id: str,
     chat_id: str,
+    run_id: UUID,
     current_agent_id: Optional[str] = None,
 ):
     history = PostgresChatMessageHistory(
@@ -513,6 +526,7 @@ def create_and_send_chat_message(
         team_id=team_id,
         agent_id=current_agent_id,
         chat_id=chat_id,
+        run_id=run_id,
     )
 
     human_message = history.create_human_message(prompt)

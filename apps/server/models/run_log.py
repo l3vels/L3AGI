@@ -34,13 +34,17 @@
 #         is_deleted (Boolean): Whether the tool configuration is deleted.
 #     """
 
-#     __tablename__ = "config"
+#     __tablename__ = "run_log"
 
 #     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
 
 #     input = Column(String)
 #     output = Column(String)
 #     type = Column(String)  # Tool,
+
+#     run_id = Column(
+#         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
+#     )
 
 #     agent_id = Column(
 #         UUID, ForeignKey("agent.id", ondelete="CASCADE"), nullable=True, index=True
@@ -76,8 +80,8 @@
 #     creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
 
 #     # Define indexes
-#     Index("ix_config_model_created_by_is_deleted", "created_by", "is_deleted")
-#     Index("ix_config_model_id_is_deleted", "id", "is_deleted")
+#     # Index("ix_config_model_created_by_is_deleted", "created_by", "is_deleted")
+#     # Index("ix_config_model_id_is_deleted", "id", "is_deleted")
 
 #     def __repr__(self) -> str:
 #         return (
@@ -86,29 +90,3 @@
 #             f"key_type='{self.key_type}', is_secret={self.is_secret}, is_required={self.is_required}, "
 #             f"is_deleted={self.is_deleted}, account_id={self.account_id})"
 #         )
-
-#     @classmethod
-#     def create_config(cls, db, config, user, account):
-#         """
-#         Creates a new config with the provided configuration.
-
-#         Args:
-#             db: The database object.
-#             config_with_config: The object containing the config and configuration details.
-
-#         Returns:
-#             Config: The created config.
-
-#         """
-#         db_config = ConfigModel(
-#             created_by=user.id,
-#             account_id=account.id,
-#         )
-#         cls.update_model_from_input(db_config, config)
-#         if db_config.is_secret:
-#             db_config.value = encrypt_data(db_config.value)
-#         db.session.add(db_config)
-#         db.session.flush()  # Flush pending changes to generate the config's ID
-#         db.session.commit()
-
-#         return db_config
