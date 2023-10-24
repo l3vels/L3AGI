@@ -174,8 +174,10 @@ const Contacts = () => {
         </div>
       </StyledHeaderGroup>
 
-      <ComponentsWrapper>
-        <Table columns={columns} data={gridData} />
+      <ComponentsWrapper noPadding>
+        <StyledTableWrapper>
+          <Table columns={columns} data={gridData} />
+        </StyledTableWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
@@ -216,4 +218,9 @@ const StyledMenuList = styled.div`
 const StyledPhoneText = styled.span`
   max-width: 60%;
   overflow: hidden;
+`
+export const StyledTableWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 0 15px;
 `
