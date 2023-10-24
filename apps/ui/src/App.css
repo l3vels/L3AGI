@@ -112,9 +112,10 @@ button {
   scrollbar-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Thin scrollbar */
+/* For both horizontal and vertical scrollbars */
 ::-webkit-scrollbar {
-  width: 4px; /* You can adjust the width as needed */
+  width: 4px; /* You can adjust the width as needed for both */
+  height: 4px;
 }
 
 /* Track (background) of the scrollbar */
