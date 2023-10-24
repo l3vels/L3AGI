@@ -1,3 +1,5 @@
+import os
+
 from langchain.chat_models import ChatOpenAI
 from langchain.llms.huggingface_hub import HuggingFaceHub
 from langchain.llms.replicate import Replicate
@@ -106,6 +108,8 @@ def get_llm(
             raise InvalidLLMApiKeyException(
                 "Please set Replicate API Token in [Settings](/settings)"
             )
+
+        os.environ["REPLICATE_API_TOKEN"] = settings.replicate_api_token
 
         return Replicate(
             replicate_api_token=settings.replicate_api_token,
