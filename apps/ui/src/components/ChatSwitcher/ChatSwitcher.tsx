@@ -170,7 +170,7 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   flex-direction: column;
   /* justify-content: center; */
 
-  height: calc(100% - 170px);
+  height: calc(100% - 150px);
   width: 110px;
 
   @keyframes slideAnimation {
