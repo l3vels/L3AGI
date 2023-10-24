@@ -71,7 +71,7 @@ const StyledRoot = styled.div`
 `
 
 const StyledTable = styled.table`
-  min-height: 200px;
+  min-height: 400px;
   width: 100%;
 
   color: ${({ theme }) => theme.typography.contentPrimary};
