@@ -15,9 +15,6 @@ from typings.config import AccountSettings
 from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
-# from langchain.chat_models import ChatOpenAI
-# from langchain.schema import HumanMessage
-
 
 class ConversationalAgent(BaseAgent):
     def run(

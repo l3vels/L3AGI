@@ -16,16 +16,9 @@ class RunLogModel(BaseModel):
 
     Attributes:
         id (UUID): The primary key of the log.
-        key (String): The key of the tool configuration.
         agent_id (UUID): The ID of the agent associated with the configuration.
-        toolkit_id (UUID): The ID of the toolkit associated with the configuration.
         account_id (UUID): The ID of the account associated with the configuration.
         workspace_id (UUID): The ID of the project associated with the configuration.
-        datasource_id (UUID): The ID of the datasource associated with the configuration.
-        value (String): The value of the tool configuration.
-        key_type (String): The type of key used.
-        is_secret (Boolean): Whether the tool configuration is a secret.
-        is_required (Boolean): Whether the tool configuration is a required field.
         is_deleted (Boolean): Whether the tool configuration is deleted.
     """
 
@@ -36,7 +29,7 @@ class RunLogModel(BaseModel):
     name = Column(String)
     input = Column(String)
     output = Column(String)
-    type = Column(String)  # System, Tool, Final
+    type = Column(String)  # System, Tool, Final Answer
 
     run_id = Column(
         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True

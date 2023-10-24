@@ -20,13 +20,13 @@ def get_run_logs(
     run_id: UUID, auth: UserAccount = Depends(authenticate)
 ) -> List[RunLogOutput]:
     """
-    Get all teams by account ID.
+    Get all run logs by run ID.
 
     Args:
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[TeamOutput]: List of teams associated with the account.
+        List[RunLogOutput]: List of teams associated with the account.
     """
     run = RunModel.get_run_by_id(db.session, run_id)
 
