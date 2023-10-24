@@ -163,14 +163,14 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   position: absolute;
   top: 70px;
   left: 0;
-  z-index: 2147483647;
+  z-index: 100000;
   /* transform: translateY(-50%); */
   overflow: auto;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
 
-  height: calc(100% - 150px);
+  height: calc(100% - 170px);
   width: 110px;
 
   @keyframes slideAnimation {
