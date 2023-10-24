@@ -59,7 +59,7 @@ const StyledMainContainer = styled.main<{ expand?: boolean }>`
   max-width: unset;
   padding: 0 32px;
   `}
-  @media(max-width: 1440px) {
+  @media(max-width: 1000px) {
     padding: 0 75px;
   }
 `
