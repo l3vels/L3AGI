@@ -11,6 +11,7 @@ from strawberry.fastapi import GraphQLRouter
 
 from config import Config
 from controllers.agent import router as agent_router
+from controllers.api_key import router as api_key_router
 from controllers.auth import router as user_router
 from controllers.chat import router as chat_router
 from controllers.configuration import router as config_router
@@ -106,6 +107,7 @@ app.include_router(chat_router, prefix="/chat")
 app.include_router(file_router, prefix="/file")
 app.include_router(model_router, prefix="/model")
 app.include_router(schedule_router, prefix="/schedule")
+app.include_router(api_key_router, prefix="/api-key")
 
 
 @app.get("/")

@@ -1,13 +1,15 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends
+
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi_sqlalchemy import db
 
-from models.api_key import ApiKeyModel
-from typings.api_key import ApiKeyOutput, ApiKeyInput
-from utils.auth import authenticate
-from typings.auth import UserAccount
-from utils.api_key import convert_api_keys_to_api_key_list, convert_model_to_response
 from exceptions import ApiKeyNotFoundException
+from models.api_key import ApiKeyModel
+from typings.api_key import ApiKeyInput, ApiKeyOutput
+from typings.auth import UserAccount
+from utils.api_key import (convert_api_keys_to_api_key_list,
+                           convert_model_to_response)
+from utils.auth import authenticate
 
 router = APIRouter()
 
@@ -32,7 +34,7 @@ def create_api_key(
         db, api_key=api_key, user=auth.user, account=auth.account
     )
     return convert_model_to_response(
-        ApiKeyModel.get_api_key_by_id(db, db_api_key.id, auth.account)
+        ApiKeyModel.get_api_key_by_id(db, db_api_key.id, auth.account), False
     )
 
 
@@ -58,7 +60,7 @@ def update_api_key(
             db, id=id, api_key=api_key, user=auth.user, account=auth.account
         )
         return convert_model_to_response(
-            ApiKeyModel.get_api_key_by_id(db, db_api_key.id, auth.account)
+            ApiKeyModel.get_api_key_by_id(db, db_api_key.id, auth.account), True
         )
 
     except ApiKeyNotFoundException:
@@ -101,7 +103,7 @@ def get_api_key_by_id(
             status_code=404, detail="ApiKey not found"
         )  # Ensure consistent case in error messages
 
-    return convert_model_to_response(db_api_key)
+    return convert_model_to_response(db_api_key, True)
 
 
 @router.delete("/{api_key_id}", status_code=200)  # Changed status code to 204
