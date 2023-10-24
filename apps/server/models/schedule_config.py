@@ -1,13 +1,10 @@
 import uuid
-from typing import Union
 
 from sqlalchemy import UUID, Column, ForeignKey, Index, String, Text
-from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel
 from typings.schedule import ConfigInput
-from utils.encyption import decrypt_data
 
 
 class ScheduleConfigModel(BaseModel):

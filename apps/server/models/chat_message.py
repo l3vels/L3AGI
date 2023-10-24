@@ -1,8 +1,10 @@
-from sqlalchemy import Column, UUID, String, ForeignKey
+import uuid
+
+from sqlalchemy import UUID, Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
+
 from models.base_model import BaseModel
-import uuid
 from typings.account import AccountOutput
 
 
@@ -34,6 +36,10 @@ class ChatMessage(BaseModel):
     )
 
     # schedule_id = Column(UUID, ForeignKey("schedule.id"), nullable=True, index=True)
+
+    run_id = Column(
+        UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
+    )
 
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)

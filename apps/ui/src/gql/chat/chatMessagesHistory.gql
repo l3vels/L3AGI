@@ -1,5 +1,4 @@
-query chatMessages($agent_id: String!, $team_id: String!)
-@api(name: "ai") {
+query chatMessages($agent_id: String!, $team_id: String!) @api(name: "ai") {
   chatMessages(agent_id: $agent_id, team_id: $team_id)
     @rest(type: "ChatMessage", path: "/chat/history?{args}", method: "GET", endpoint: "ai") {
     id
@@ -16,5 +15,6 @@ query chatMessages($agent_id: String!, $team_id: String!)
     team_id
     team
     sender_user
+    run_id
   }
 }

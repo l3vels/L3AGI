@@ -20,5 +20,6 @@ query chatMessages($chat_id: chat_id!) @api(name: "ai") {
     team_id
     team
     sender_user
+    run_id
   }
 }

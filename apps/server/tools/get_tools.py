@@ -79,7 +79,7 @@ def get_all_tools():
 
 
 def get_agent_tools(
-    toolkit_ids: List[str], db, account, settings, agent_with_configs
+    toolkit_ids: List[str], db, account, settings, agent_with_configs, callback_handler
 ) -> List[BaseTool]:
     """Return a list of tools."""
     tools = []
@@ -88,7 +88,7 @@ def get_agent_tools(
         if toolkit.toolkit_id in toolkit_ids:
             tools.extend(
                 toolkit.get_tools_with_configs(
-                    db, account, settings, agent_with_configs
+                    db, account, settings, agent_with_configs, callback_handler
                 )
             )
 

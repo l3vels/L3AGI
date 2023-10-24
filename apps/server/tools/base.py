@@ -68,7 +68,7 @@ class BaseToolkit(BaseModel):
     is_active: bool = Field(default=True)
 
     def get_tools_with_configs(
-        self, db, account, settings, agent_with_configs
+        self, db, account, settings, agent_with_configs, callback_handler
     ) -> List[BaseTool]:
         configs = ConfigModel.get_configs(
             db=db, query=ConfigQueryParams(toolkit_id=self.toolkit_id), account=account
@@ -82,6 +82,7 @@ class BaseToolkit(BaseModel):
             tool.settings = settings
             tool.account = account
             tool.agent_with_configs = agent_with_configs
+            tool.callbacks = [callback_handler]
 
         return tools
 

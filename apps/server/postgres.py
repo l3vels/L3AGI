@@ -1,17 +1,15 @@
 import json
 import logging
-from typing import List, Optional, Dict
-from uuid import UUID
 from datetime import datetime
-from langchain.schema.messages import AIMessage, HumanMessage
-from models.chat_message import ChatMessage
-from fastapi_sqlalchemy import db
+from typing import Dict, List, Optional
+from uuid import UUID
 
-from langchain.schema import (
-    BaseChatMessageHistory,
-    BaseMessage,
-    _message_to_dict,
-)
+from fastapi_sqlalchemy import db
+from langchain.schema import (BaseChatMessageHistory, BaseMessage,
+                              _message_to_dict)
+from langchain.schema.messages import AIMessage, HumanMessage
+
+from models.chat_message import ChatMessage
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +37,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         team_id: Optional[str] = None,
         sender_name: Optional[str] = None,
         chat_id: Optional[str] = None,
+        run_id: Optional[UUID] = None,
     ):
         self.sender_account_id = sender_account_id
         self.sender_user_id = sender_user_id
@@ -49,6 +48,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         self.team_id = team_id
         self.sender_name = sender_name
         self.chat_id = chat_id
+        self.run_id = run_id
 
     @property
     def messages(self) -> List[BaseMessage]:  # type: ignore
@@ -69,6 +69,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             parent_id=parent_id,
             sender_name=self.sender_name,
             chat_id=self.chat_id,
+            run_id=self.run_id,
         )
 
         db.session.add(chat_message)

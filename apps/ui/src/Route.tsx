@@ -89,6 +89,7 @@ import Group from 'plugins/contact/pages/Group'
 import CreateGroupForm from 'plugins/contact/pages/Group/GroupForm/CreateGroupForm'
 import EditGroupForm from 'plugins/contact/pages/Group/GroupForm/EditGroupForm'
 import ScheduleRunModal from 'modals/ScheduleRunModal'
+import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -324,6 +325,7 @@ const Route = () => {
       <ToolkitModal />
       <ChatLinkModal />
       <ScheduleRunModal />
+      <RunLogsModal />
 
       <CommandMenu
         open={cmdkOpen}

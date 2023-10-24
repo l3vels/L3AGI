@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from langchain.agents import AgentType, initialize_agent
 
 from agents.base_agent import BaseAgent
@@ -7,6 +9,7 @@ from config import Config
 from memory.zep.zep_memory import ZepMemory
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
+from services.run_log import RunLogsManager
 from typings.agent import AgentWithConfigsOutput
 from typings.config import AccountSettings
 from utils.model import get_llm
@@ -23,6 +26,9 @@ class ConversationalAgent(BaseAgent):
         prompt: str,
         history: PostgresChatMessageHistory,
         human_message_id: str,
+        run_id: UUID,
+        sender_user_id: str,
+        run_logs_manager: RunLogsManager,
     ):
         memory = ZepMemory(
             session_id=str(self.session_id),
@@ -36,6 +42,8 @@ class ConversationalAgent(BaseAgent):
         memory.ai_name = agent_with_configs.agent.name
 
         system_message = SystemMessageBuilder(agent_with_configs).build()
+
+        run_logs_manager.create_system_run_log(system_message)
 
         res: str
 
@@ -56,6 +64,7 @@ class ConversationalAgent(BaseAgent):
                     "system_message": system_message,
                     "output_parser": ConvoOutputParser(),
                 },
+                callbacks=[run_logs_manager.get_agent_callback_handler()],
             )
 
             res = agent.run(prompt)

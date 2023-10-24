@@ -19,16 +19,19 @@ from models.chat import ChatModel
 from models.chat_message import ChatMessage as ChatMessageModel
 from models.config import ConfigModel
 from models.datasource import DatasourceModel
+from models.run import RunModel
 from models.team import TeamModel
 from models.user import UserModel
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
+from services.run_log import RunLogsManager
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
 from typings.config import AccountSettings, ConfigInput
+from typings.run import RunInput
 from utils.agent import convert_model_to_response
 from utils.chat import get_chat_session_id, parse_agent_mention
 from utils.configuration import \
@@ -137,6 +140,26 @@ def process_chat_message(
     provider_user: UserModel,
     chat_id: str,
 ):
+    run = RunModel.create_run(
+        db.session,
+        RunInput(
+            agent_id=agent_id, team_id=team_id, chat_id=chat_id, session_id=session_id
+        ),
+        provider_user,
+        provider_account,
+    )
+
+    run_logs_manager = RunLogsManager(
+        session=db.session,
+        run_id=run.id,
+        user_id=sender_user_id,
+        account_id=sender_account_id,
+        agent_id=agent_id,
+        team_id=team_id,
+        chat_id=chat_id,
+        session_id=session_id,
+    )
+
     agents: List[AgentWithConfigsOutput] = []
     agents, prompt = handle_agent_mentions(prompt, provider_account, agents)
     agents = append_agent_to_list(agent_id, provider_account, agents)
@@ -166,6 +189,7 @@ def process_chat_message(
         local_chat_message_ref_id=local_chat_message_ref_id,
         current_agent_id=current_agent_id,
         chat_id=chat_id,
+        run_id=run.id,
     )
 
     settings = ConfigModel.get_account_settings(db, provider_account)
@@ -185,6 +209,8 @@ def process_chat_message(
                 settings=settings,
                 team_id=team_id,
                 parent_id=parent_id,
+                run_id=run.id,
+                run_logs_manager=run_logs_manager,
             )
     elif team:
         handle_team_types(
@@ -446,6 +472,8 @@ def run_conversational_agent(
     human_message_id: UUID,
     chat_pubsub_service: ChatPubSubService,
     settings: AccountSettings,
+    run_id: UUID,
+    run_logs_manager: RunLogsManager,
     team_id: Optional[UUID] = None,
     parent_id: Optional[UUID] = None,
 ):
@@ -457,6 +485,8 @@ def run_conversational_agent(
         parent_id=parent_id,
         team_id=team_id,
         agent_id=agent_with_configs.agent.id,
+        chat_id=None,
+        run_id=run_id,
     )
 
     datasources = (
@@ -465,15 +495,23 @@ def run_conversational_agent(
         .all()
     )
 
+    tool_callback_handler = run_logs_manager.get_tool_callback_handler()
+
     datasource_tools = get_datasource_tools(
-        datasources, settings, provider_account, agent_with_configs
+        datasources,
+        settings,
+        provider_account,
+        agent_with_configs,
+        tool_callback_handler,
     )
+
     agent_tools = get_agent_tools(
         agent_with_configs.configs.tools,
         db,
         provider_account,
         settings,
         agent_with_configs,
+        tool_callback_handler,
     )
     tools = datasource_tools + agent_tools
 
@@ -486,6 +524,9 @@ def run_conversational_agent(
         prompt,
         history,
         human_message_id,
+        run_id,
+        sender_user_id,
+        run_logs_manager,
     )
 
 
@@ -502,6 +543,7 @@ def create_and_send_chat_message(
     parent_id: str,
     local_chat_message_ref_id: str,
     chat_id: str,
+    run_id: UUID,
     current_agent_id: Optional[str] = None,
 ):
     history = PostgresChatMessageHistory(
@@ -513,6 +555,7 @@ def create_and_send_chat_message(
         team_id=team_id,
         agent_id=current_agent_id,
         chat_id=chat_id,
+        run_id=run_id,
     )
 
     human_message = history.create_human_message(prompt)

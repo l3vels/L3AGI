@@ -19,6 +19,7 @@ from controllers.datasource import router as datasource_router
 from controllers.file import router as file_router
 from controllers.llm import router as llm_router
 from controllers.model import router as model_router
+from controllers.run import router as run_router
 from controllers.schedule import router as schedule_router
 from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
@@ -62,7 +63,6 @@ app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 
 # Base.metadata.create_all(bind=engine)
 
-
 origins = [
     "http://localhost:3000",
     "http://localhost:4000",
@@ -101,6 +101,7 @@ app.include_router(team_agent_router, prefix="/team-of-agents")
 app.include_router(agent_router, prefix="/agent")
 app.include_router(config_router, prefix="/config")
 app.include_router(datasource_router, prefix="/datasource")
+app.include_router(run_router, prefix="/run")
 app.include_router(tool_router, prefix="/tool")
 app.include_router(llm_router, prefix="/llm")
 app.include_router(chat_router, prefix="/chat")

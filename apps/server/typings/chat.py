@@ -1,8 +1,9 @@
-from typing import Optional, List, Dict
-from uuid import UUID
-from pydantic import BaseModel
 from datetime import datetime
 from enum import Enum
+from typing import Dict, List, Optional
+from uuid import UUID
+
+from pydantic import BaseModel
 
 
 class ChatStatus(Enum):
@@ -68,6 +69,7 @@ class ChatMessageOutput(BaseModel):
     created_on: datetime
     sender_name: Optional[str]
     chat_id: Optional[UUID]
+    run_id: Optional[UUID] = None
 
 
 class NegotiateOutput(BaseModel):

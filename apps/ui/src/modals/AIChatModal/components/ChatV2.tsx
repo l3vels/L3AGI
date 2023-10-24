@@ -150,6 +150,7 @@ const ChatV2 = () => {
       // created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket for team collaboration
       created_on: new Date().toISOString(),
       sender_user: user || '',
+      run_id: null,
     }
 
     upsertChatMessageInCache(message, {

@@ -2,16 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Uvicorn",
-      "type": "python",
-      "request": "launch",
-      "module": "uvicorn",
-      "args": ["main:app", "--host", "0.0.0.0", "--port", "4000", "--reload"],
-      "console": "integratedTerminal",
-      "justMyCode": false,
-      "cwd": "${workspaceFolder}/apps/server"
-    },
-    {
       "name": "Poetry: Uvicorn",
       "type": "python",
       "request": "launch",
@@ -20,26 +10,7 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "cwd": "${workspaceFolder}/apps/server",
-      "python": "${workspaceFolder}/.venv/bin/python",
-      "env": {"PYTHONPATH": "${workspaceFolder}"}
-    },
-    {
-      "name": "Python: PDF",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/apps/server/pdf/pdf.py",
-      "console": "integratedTerminal",
-      "justMyCode": false,
-      "cwd": "${workspaceFolder}/apps/server"
-    },
-    {
-      "name": "Python: PDF Async",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/apps/server/pdf/pdf_async.py",
-      "console": "integratedTerminal",
-      "justMyCode": false,
-      "cwd": "${workspaceFolder}/apps/server"
+      "python": "${workspaceFolder}/apps/server/.venv/bin/python"
     },
     {
       "name": "Python: Test",

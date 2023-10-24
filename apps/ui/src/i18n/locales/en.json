@@ -264,6 +264,7 @@
   "toast-negative-message": "Something went wrong",
   "toolkit": "Toolkit",
   "tools": "Tools",
+  "tool": "Tool",
   "toggle-group-panel": "Toggle Group Panel",
   "toolkit-description": "Discover the complete range of tools available for your agents and teams.",
   "tree-index": "Tree Index",
@@ -307,5 +308,10 @@
   "yes": "Yes",
   "youtube": "YouTube",
   "zep": "Zep",
-  "csv-pdf-txt-ms-excel-etc": "csv, pdf, txt, ms-excel, etc."
+  "csv-pdf-txt-ms-excel-etc": "csv, pdf, txt, ms-excel, etc.",
+  "system-prompt": "System Prompt",
+  "final-answer": "Final Answer",
+  "input": "Input",
+  "output": "Output",
+  "error": "Error"
 }
