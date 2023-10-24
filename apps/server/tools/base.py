@@ -82,7 +82,9 @@ class BaseToolkit(BaseModel):
             tool.settings = settings
             tool.account = account
             tool.agent_with_configs = agent_with_configs
-            tool.callbacks = [callback_handler]
+
+            if callback_handler:
+                tool.callbacks = [callback_handler]
 
         return tools
 

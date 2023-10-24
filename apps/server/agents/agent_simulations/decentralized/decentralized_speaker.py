@@ -98,6 +98,7 @@ class DecentralizedSpeaker(BaseAgent):
         print("\n")
         return idx
 
+    # TODO: reuse in conversational and teams
     def get_tools(
         self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings
     ):
@@ -107,7 +108,7 @@ class DecentralizedSpeaker(BaseAgent):
             .all()
         )
         datasource_tools = get_datasource_tools(
-            datasources, settings, self.provider_account, agent_with_configs
+            datasources, settings, self.provider_account, agent_with_configs, None
         )
         agent_tools = get_agent_tools(
             agent_with_configs.configs.tools,
@@ -115,6 +116,7 @@ class DecentralizedSpeaker(BaseAgent):
             self.provider_account,
             settings,
             agent_with_configs,
+            None,
         )
         return datasource_tools + agent_tools
 
