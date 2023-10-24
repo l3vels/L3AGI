@@ -4,17 +4,8 @@ import uuid
 from datetime import datetime, timedelta
 from typing import List
 
-from sqlalchemy import (
-    UUID,
-    Boolean,
-    Column,
-    DateTime,
-    ForeignKey,
-    Index,
-    Numeric,
-    String,
-    or_,
-)
+from sqlalchemy import (UUID, Boolean, Column, DateTime, ForeignKey, Index,
+                        Numeric, String, or_)
 from sqlalchemy.orm import Session, joinedload, relationship
 from sqlalchemy.sql import and_
 
@@ -215,14 +206,6 @@ class ScheduleModel(BaseModel):
         )
 
         return new_schedule
-
-    @classmethod
-    def update_model_from_input(
-        cls, schedule_model: ScheduleModel, schedule_input: ScheduleInput
-    ):
-        for field in ScheduleInput.__annotations__.keys():
-            setattr(schedule_model, field, getattr(schedule_input, field))
-        return schedule_model
 
     @classmethod
     def get_schedules(cls, db, account):

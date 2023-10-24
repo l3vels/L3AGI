@@ -3,8 +3,6 @@ from uuid import UUID
 
 from fastapi import HTTPException
 from fastapi_sqlalchemy import db
-from pydantic import BaseModel, Field
-from sqlalchemy.orm import Session
 
 from agents.agent_simulations.authoritarian.authoritarian_speaker import \
     AuthoritarianSpeaker
@@ -22,7 +20,6 @@ from models.chat_message import ChatMessage as ChatMessageModel
 from models.config import ConfigModel
 from models.datasource import DatasourceModel
 from models.run import RunModel
-from models.run_log import RunLogModel
 from models.team import TeamModel
 from models.user import UserModel
 from postgres import PostgresChatMessageHistory
@@ -34,7 +31,7 @@ from typings.agent import AgentWithConfigsOutput
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
 from typings.config import AccountSettings, ConfigInput
-from typings.run import RunInput, RunLogInput
+from typings.run import RunInput
 from utils.agent import convert_model_to_response
 from utils.chat import get_chat_session_id, parse_agent_mention
 from utils.configuration import \

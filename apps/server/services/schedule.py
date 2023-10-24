@@ -2,16 +2,14 @@ from datetime import datetime, timedelta
 
 import arrow
 from fastapi_sqlalchemy import db
-from sqlalchemy.orm import sessionmaker
 
 from models.chat import ChatModel
-from models.db import engine
 from models.schedule import ScheduleModel
 from services.chat import create_client_message
 from typings.auth import UserAccount
 from typings.chat import ChatInput, ChatMessageInput
-from utils.schedule import convert_model_to_response
 from typings.schedule import ScheduleStatus
+from utils.schedule import convert_model_to_response
 
 
 def parse_interval_to_seconds(interval: str) -> int:
