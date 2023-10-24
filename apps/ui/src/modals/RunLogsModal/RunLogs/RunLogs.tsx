@@ -22,29 +22,42 @@ const RunLogs = ({ runId }: RunLogsProps) => {
 
   return (
     <StyledWrapper>
-      {data?.map(({ id, input, output, name, type }, index: number) => {
-        const isFinalAnswer = name === 'Final Answer'
-
+      {data?.map(({ id, input, output, name, type, error }, index: number) => {
+        const isFinalAnswer = type === 'Final Answer'
         const isSystem = type === 'System'
         const isTool = type === 'Tool'
 
         return (
           <LogCard key={id}>
             <LogTitle>
-              {index + 1}. {name}
+              {index + 1}.{' '}
+              {isTool
+                ? `${name} ${t('tool')}`
+                : isSystem
+                ? t('system-prompt')
+                : isFinalAnswer
+                ? t('final-answer')
+                : ''}
             </LogTitle>
 
             {input && (
               <CodeCard>
-                <CodeTitle>{t('Input')}</CodeTitle>
+                <CodeTitle>{t('input')}</CodeTitle>
                 <CodeContent>{input}</CodeContent>
               </CodeCard>
             )}
 
             {output && (
               <CodeCard>
-                <CodeTitle>{t('Output')}</CodeTitle>
+                <CodeTitle>{t('output')}</CodeTitle>
                 <CodeContent>{output}</CodeContent>
+              </CodeCard>
+            )}
+
+            {error && (
+              <CodeCard>
+                <CodeTitle>{t('error')}</CodeTitle>
+                <CodeContent>{error}</CodeContent>
               </CodeCard>
             )}
           </LogCard>

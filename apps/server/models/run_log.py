@@ -1,19 +1,13 @@
 from __future__ import annotations
 
 import uuid
-from typing import List
 
-from fastapi_sqlalchemy.middleware import DBSessionMeta
-from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, String
 from sqlalchemy.orm import Session, relationship
-from sqlalchemy.sql import and_, or_
+from sqlalchemy.sql import or_
 
-from exceptions import ConfigNotFoundException
 from models.base_model import BaseModel
-from typings.account import AccountOutput
-from typings.config import AccountSettings, ConfigInput, ConfigQueryParams
 from typings.run import RunLogInput, UpdateRunLogInput
-from utils.encyption import decrypt_data, encrypt_data, is_encrypted
 
 
 class RunLogModel(BaseModel):
@@ -85,16 +79,10 @@ class RunLogModel(BaseModel):
     )
     creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
 
-    # Define indexes
-    # Index("ix_config_model_created_by_is_deleted", "created_by", "is_deleted")
-    # Index("ix_config_model_id_is_deleted", "id", "is_deleted")
-
     def __repr__(self) -> str:
         return (
-            f"Config(id={self.id}, "
-            # f"key='{self.key}', value='{self.value}', "
-            # f"key_type='{self.key_type}', is_secret={self.is_secret}, is_required={self.is_required}, "
-            # f"is_deleted={self.is_deleted}, account_id={self.account_id})"
+            f"RunLog(id={self.id}, "
+            f"is_deleted={self.is_deleted}, account_id={self.account_id})"
         )
 
     @classmethod
@@ -102,7 +90,7 @@ class RunLogModel(BaseModel):
         cls, session: Session, run: RunLogInput, user_id: UUID, account_id: UUID
     ):
         """
-        Creates a new run with the provided configuration.
+        Creates a new run log with the provided configuration.
 
         Args:
             db: The database object.

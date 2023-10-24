@@ -6,7 +6,7 @@ from langchain.schema.agent import AgentAction, AgentFinish
 from sqlalchemy.orm import Session
 
 from models.run_log import RunLogModel
-from typings.run import RunLogInput, UpdateRunLogInput
+from typings.run import RunLogInput, RunLogType, UpdateRunLogInput
 
 
 class RunLogsManager:
@@ -42,8 +42,9 @@ class RunLogsManager:
 
     def create_run_log(
         self,
-        name: str,
-        input: str,
+        type: RunLogType,
+        input: Optional[str] = None,
+        name: Optional[str] = None,
         output: Optional[str] = None,
         error: Optional[str] = None,
     ):
@@ -58,17 +59,20 @@ class RunLogsManager:
                 input=input,
                 output=output,
                 error=error,
-                type="test",
+                type=str(type),
             ),
             self.user_id,
             self.account_id,
         )
 
     def create_system_run_log(self, input: str):
-        return self.create_run_log(name="System Prompt", input=input)
+        return self.create_run_log(type=RunLogType.SYSTEM, input=input)
 
     def create_tool_run_log(self, input: str, tool_name: str):
-        return self.create_run_log(name=tool_name, input=input)
+        return self.create_run_log(type=RunLogType.TOOL, name=tool_name, input=input)
+
+    def create_final_answer_run_log(self, input: str):
+        return self.create_run_log(type=RunLogType.ANSWER, output=input)
 
     def update_run_log(
         self,
@@ -81,9 +85,6 @@ class RunLogsManager:
             UpdateRunLogInput(error=error, output=output),
             self.user_id,
         )
-
-    def create_final_answer_run_log(self, input: str):
-        return self.create_run_log(name="Final Answer", input=input)
 
 
 class AgentCallbackHandler(BaseCallbackHandler):
