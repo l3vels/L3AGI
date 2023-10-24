@@ -4,7 +4,7 @@ commit_message=$(cat "$1")
 regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|build)(\([a-zA-Z0-9_-]+\))?: .+'
 
 # Check if the commit message starts with "Merge branch"
-if [[ $commit_message =~ ^"Merge branch" ]]; then
+if [[ $commit_message =~ ^"Merge" ]]; then
   # Exit successfully without doing anything
   exit 0
 fi

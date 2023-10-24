@@ -7,6 +7,8 @@ from fastapi_sqlalchemy import db
 from agents.agent_simulations.authoritarian.authoritarian_speaker import \
     AuthoritarianSpeaker
 from agents.agent_simulations.debates.agent_debates import AgentDebates
+from agents.agent_simulations.decentralized.decentralized_speaker import \
+    DecentralizedSpeaker
 from agents.conversational.conversational import ConversationalAgent
 from agents.plan_and_execute.plan_and_execute import PlanAndExecute
 from agents.team_base import TeamOfAgentsType
@@ -359,6 +361,19 @@ def handle_team_types(
             provider_account=provider_account,
         )
 
+    if team.team_type == TeamOfAgentsType.DECENTRALIZED_SPEAKER.value:
+        handle_decentralized_speaker(
+            sender_name=sender_name,
+            session_id=session_id,
+            settings=settings,
+            chat_pubsub_service=chat_pubsub_service,
+            team=team,
+            prompt=prompt,
+            history=history,
+            team_configs=team_configs,
+            provider_account=provider_account,
+        )
+
     team_status_config.value = ChatStatus.IDLE.value
     db.session.add(team_status_config)
     db.session.commit()
@@ -418,6 +433,44 @@ def handle_authoritarian_speaker(
     )
 
     authoritarian_speaker.run(
+        topic=topic,
+        team=team,
+        agents_with_configs=agents,
+        history=history,
+    )
+
+
+def handle_decentralized_speaker(
+    sender_name: str,
+    session_id: str,
+    settings: AccountSettings,
+    chat_pubsub_service: ChatPubSubService,
+    team: TeamModel,
+    prompt: str,
+    history: ZepMemory,
+    team_configs: Dict[str, Union[str, int, float]],
+    provider_account: AccountModel,
+):
+    topic = prompt
+    agents = [
+        convert_model_to_response(item.agent)
+        for item in team.team_agents
+        if item.agent is not None
+    ]
+    stopping_probability = team_configs.get("stopping_probability", 0.2)
+    word_limit = team_configs.get("word_limit", 30)
+
+    decentralized_speaker = DecentralizedSpeaker(
+        settings=settings,
+        chat_pubsub_service=chat_pubsub_service,
+        sender_name=sender_name,
+        session_id=session_id,
+        stopping_probability=float(stopping_probability),
+        word_limit=int(word_limit),
+        provider_account=provider_account,
+    )
+
+    decentralized_speaker.run(
         topic=topic,
         team=team,
         agents_with_configs=agents,

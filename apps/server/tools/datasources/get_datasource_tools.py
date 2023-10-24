@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from datasources.base import DatasourceType
 from models.datasource import DatasourceModel
@@ -17,7 +17,7 @@ def get_datasource_tools(
     settings: AccountSettings,
     account: AccountOutput,
     agent_with_configs: AgentWithConfigsOutput,
-    callback_handler: ToolCallbackHandler,
+    callback_handler: Optional[ToolCallbackHandler] = None,
 ) -> List[BaseTool]:
     """Get tools needed for datasources. For example Postgres datasource needs SQL tool to execute queries."""
 
@@ -38,6 +38,8 @@ def get_datasource_tools(
         tool.settings = settings
         tool.account = account
         tool.agent_with_configs = agent_with_configs
-        tool.callbacks = [callback_handler]
+
+        if callback_handler:
+            tool.callbacks = [callback_handler]
 
     return tools

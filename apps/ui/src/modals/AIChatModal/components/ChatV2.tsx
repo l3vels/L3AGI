@@ -286,7 +286,8 @@ const ChatV2 = () => {
   const canStopGenerating =
     status === ChatStatus.Running &&
     (teamOfAgents?.team_type === TeamOfAgentsType.Debates ||
-      teamOfAgents?.team_type === TeamOfAgentsType.AuthoritarianSpeaker)
+      teamOfAgents?.team_type === TeamOfAgentsType.AuthoritarianSpeaker ||
+      teamOfAgents?.team_type === TeamOfAgentsType.DecentralizedSpeaker)
 
   const handleStopGenerating = async () => {
     await stopChatService({
