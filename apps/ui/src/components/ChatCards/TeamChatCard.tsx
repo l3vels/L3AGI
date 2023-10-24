@@ -54,7 +54,7 @@ const TeamChatCard = ({
       <AvatarGenerator name={team?.name} size={30} avatar={team.avatar} />
       <MemberText name={team?.name} role={team.team_type} />
 
-      <StyledTeamAgents>
+      {/* <StyledTeamAgents>
         {agents?.map((agent: any, index: number) => {
           return (
             <StyledAgent key={index}>
@@ -62,7 +62,7 @@ const TeamChatCard = ({
             </StyledAgent>
           )
         })}
-      </StyledTeamAgents>
+      </StyledTeamAgents> */}
 
       <StyledIconButtonWrapper className='hiddenButton'>
         {onDeleteClick && (

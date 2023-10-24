@@ -71,7 +71,7 @@ const StyledRoot = styled.div`
 `
 
 const StyledTable = styled.table`
-  min-height: 200px;
+  min-height: 400px;
   width: 100%;
 
   color: ${({ theme }) => theme.typography.contentPrimary};
@@ -130,4 +130,6 @@ const StyledTh = styled.th<{ maxWidth: number }>`
   :hover {
     background-color: rgba(255, 255, 255, 0.2);
   }
+
+  font-size: 14px;
 `

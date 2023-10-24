@@ -3,21 +3,23 @@ import { useRef } from 'react'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import styled from 'styled-components'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type UploadAvatarProps = {
   onChange: (event: any) => void
   isLoading: boolean
   avatarSrc: string
+  name?: string
 }
 
-const UploadAvatar = ({ onChange, isLoading, avatarSrc }: UploadAvatarProps) => {
+const UploadAvatar = ({ onChange, isLoading, avatarSrc, name = '' }: UploadAvatarProps) => {
   const uploadRef = useRef(null as any)
   const onUploadAvatarClick = async () => {
     uploadRef.current.click()
   }
 
   return (
-    <StyledAvatarInputWrapper>
+    <StyledAvatarInputWrapper onClick={onUploadAvatarClick}>
       <StyledAvatarInput
         type='file'
         ref={uploadRef}
@@ -27,9 +29,7 @@ const UploadAvatar = ({ onChange, isLoading, avatarSrc }: UploadAvatarProps) => 
       {isLoading ? (
         <Loader size={48} />
       ) : (
-        <>
-          <StyledImage src={avatarSrc} onClick={onUploadAvatarClick} />
-        </>
+        <AvatarGenerator name={name} size={65} avatar={avatarSrc} />
       )}
     </StyledAvatarInputWrapper>
   )
@@ -45,17 +45,10 @@ const StyledAvatarInputWrapper = styled.div`
   width: 64px;
   height: 64px;
 
+  border-radius: 100px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-`
-
-const StyledImage = styled.img`
-  width: 64px;
-  height: 64px;
-
-  background: black;
-  border-radius: 100px;
-
   cursor: pointer;
 `

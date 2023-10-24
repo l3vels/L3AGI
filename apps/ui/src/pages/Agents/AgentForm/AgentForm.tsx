@@ -30,6 +30,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
 
   const { setFieldValue, values } = formik
   const {
+    agent_name,
     agent_datasources,
     agent_model,
     agent_description,
@@ -124,6 +125,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       onChange={handleUploadAvatar}
                       isLoading={avatarIsLoading}
                       avatarSrc={agent_avatar}
+                      name={agent_name}
                     />
                   </StyledTextareaWrapper>
                 </StyledTabPanelInnerWrapper>

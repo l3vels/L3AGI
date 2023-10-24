@@ -20,6 +20,7 @@ import {
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import styled from 'styled-components'
 import Table from 'components/Table'
+import { StyledTableWrapper } from '../Contact/Contacts'
 
 const Groups = () => {
   const { groups, deleteGroupHandler } = useGroups()
@@ -90,8 +91,10 @@ const Groups = () => {
         </div>
       </StyledHeaderGroup>
 
-      <ComponentsWrapper>
-        <Table columns={columns} data={gridData} />
+      <ComponentsWrapper noPadding>
+        <StyledTableWrapper>
+          <Table columns={columns} data={gridData} />
+        </StyledTableWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )

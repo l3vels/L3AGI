@@ -167,7 +167,7 @@ const StyledDropdownContent = styled(Content)`
   border-radius: 8px;
   padding: 8px 0;
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
-  z-index: 102030;
+  z-index: 10203000;
   border-radius: 8px;
   background: ${({ theme }) => theme.body.avatarDropDownColor}
   /* background-color: white; */
