@@ -1,0 +1,8 @@
+mutation updateGroup($id: id!, $input: input!) @api(name: "pro") {
+  updateGroup(id: $id, input: $input)
+    @rest(type: "Group", path: "/group/{args.id}", method: "PUT", endpoint: "pro") {
+    id
+    name
+    description
+  }
+}

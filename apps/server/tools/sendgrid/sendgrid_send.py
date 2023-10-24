@@ -1,31 +1,33 @@
+import json
 from typing import Optional, Type
-from pydantic import BaseModel, Field
-from langchain.callbacks.manager import CallbackManagerForToolRun
-from tools.base import BaseTool
-from exceptions import ToolEnvKeyException
+
 import sendgrid
+from langchain.callbacks.manager import CallbackManagerForToolRun
+from pydantic import BaseModel, Field
 from sendgrid.helpers.mail import Mail
 
-import json
+from exceptions import ToolEnvKeyException
+from tools.base import BaseTool
 
 
 class SendGridSendSchema(BaseModel):
     query: str = Field(
         ...,
         description=(
-        "Parameter is JSON string representing action input.\n"
-        '"to" Python str, which is objective in natural language provided by user\n'
-        '"subject" Python str, which is objective in natural language provided by user\n'
-        '"content" Python str, which is objective in natural language provided by user\n'
+            "Parameter is JSON string representing action input.\n"
+            '"to" Python str, which is objective in natural language provided by user\n'
+            '"subject" Python str, which is objective in natural language provided by user\n'
+            '"content" Python str, which is objective in natural language provided by user\n'
         ),
     )
+
 
 class SendGridSendTool(BaseTool):
     """Tool that sends an email using SendGrid."""
 
     name = "SendGrid Send"
 
-    description=(
+    description = (
         "Parameter is JSON string representing action input.\n"
         '"to" Python str, which is objective in natural language provided by user\n'
         '"subject" Python str, which is objective in natural language provided by user\n'
@@ -55,8 +57,8 @@ class SendGridSendTool(BaseTool):
         sg = sendgrid.SendGridAPIClient(api_key=api_key)
 
         action = json.loads(query)
-     
-        subject = action["subject"] 
+
+        subject = action["subject"]
         if not subject:
             subject = "Empty Subject"
 

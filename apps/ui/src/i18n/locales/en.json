@@ -1,4 +1,5 @@
 {
+  "avatar": "Avatar",
   "about-page-title": "About",
   "accumulate": "Accumulate",
   "accept-you-will-not-forget-it-again": "Accept you will not forget it again",
@@ -269,6 +270,8 @@
   "tree-index": "Tree Index",
   "tree-summarize": "Tree Summarize",
   "twitter": "Twitter",
+  "template": "Template",
+  "template-label": "Save as Template",
   "unity": "Unity",
   "unity-description": "Support wallets into your games, airdrop user assets and more",
   "unreal": "Unreal",

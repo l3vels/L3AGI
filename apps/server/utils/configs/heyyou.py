@@ -1,10 +1,10 @@
 heyyou_configs = {
     "naming": {
-        "home": 'Home',
+        "home": "Home",
         "agent": "Influencers",
         "team": "Team",
         "datasource": "Knowledges",
-        "models": "Fine-Tuning",
+        "models": "Models",
         "discovery": "Discovery",
         "chat": "Influencers",
         "toolkits": "Toolkits",
@@ -20,21 +20,20 @@ heyyou_configs = {
                 "discovery": True,
             }
         },
-        "chat" :{
-            "name" : "Influencers",
+        "chat": {
+            "name": "Influencers",
             "active": True,
             "submodules": {
                 "agent": True,
                 "session": True,
-            }
+            },
         },
-        "model" : True,
+        "model": True,
         # "toolkit": True,
         "datasource": True,
         "discovery": False,
         "Session": False,
         "Discovery": False,
-        "schedule": True
+        "schedule": True,
     },
 }
-

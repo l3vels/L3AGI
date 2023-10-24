@@ -1,5 +1,7 @@
-from pydantic import BaseModel, UUID4
-from typing import Optional, List
+from typing import List, Optional
+
+from pydantic import UUID4, BaseModel
+
 from typings.team_agent import TeamAgentOutput
 from typings.user import UserOutput
 
@@ -8,10 +10,12 @@ class TeamAgentInput(BaseModel):
     agent_id: UUID4
     role: str
 
+
 class QueryParams(BaseModel):
     id: Optional[str]
     workspace_id: Optional[UUID4]
-    
+
+
 class ConfigInput(BaseModel):
     goals: Optional[List[str]]
     constraints: Optional[List[str]]
@@ -23,12 +27,14 @@ class ConfigInput(BaseModel):
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
-    
+
+
 # class TeamOfAgentsInput(TeamInput):
-    
-        
+
+
 # class TeamInput(TeamOfAgentsInput):
-   
+
+
 class TeamInput(BaseModel):
     name: str
     description: Optional[str]
@@ -37,6 +43,7 @@ class TeamInput(BaseModel):
     is_memory: Optional[bool]
     team_agents: Optional[List[TeamAgentInput]]
     configs: Optional[ConfigInput]
+
 
 class ConfigsOutput(BaseModel):
     goals: Optional[List[str]]
@@ -49,6 +56,7 @@ class ConfigsOutput(BaseModel):
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
+
 
 class TeamOutput(BaseModel):
     id: UUID4
@@ -68,4 +76,3 @@ class TeamOutput(BaseModel):
     avatar: Optional[str]
     is_memory: Optional[bool]
     configs: Optional[ConfigsOutput]
-

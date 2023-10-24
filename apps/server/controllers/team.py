@@ -1,22 +1,25 @@
 from typing import List
-from fastapi import APIRouter, HTTPException, Depends
+
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi_sqlalchemy import db
 
+from agents.team_base import TeamOfAgentsType
+from exceptions import TeamNotFoundException
 from models.team import TeamModel
 from models.team_agent import TeamAgentModel
-from utils.auth import authenticate
-from utils.team import convert_teams_to_team_list, convert_model_to_response
-from typings.team import TeamOutput, TeamInput
-from typings.team_agent import TeamAgentInput
 from typings.auth import UserAccount
-from exceptions import TeamNotFoundException
-from agents.team_base import TeamOfAgentsType
+from typings.team import TeamInput, TeamOutput
+from typings.team_agent import TeamAgentInput
+from utils.auth import authenticate
+from utils.team import convert_model_to_response, convert_teams_to_team_list
 
 router = APIRouter()
 
 
 @router.post("", status_code=201, response_model=TeamOutput)
-def create_team(team_with_configs: TeamInput, auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+def create_team(
+    team_with_configs: TeamInput, auth: UserAccount = Depends(authenticate)
+) -> TeamOutput:
     """
     Create a new team with configurations.
 
@@ -28,20 +31,29 @@ def create_team(team_with_configs: TeamInput, auth: UserAccount = Depends(authen
         TeamOutput: Created team object.
     """
     # Consider adding try-except for error handling during creation if needed
-    db_team = TeamModel.create_team(db, 
-                                    team=team_with_configs, 
-                                    configs=team_with_configs.configs,
-                                    user=auth.user, 
-                                    account=auth.account)
+    db_team = TeamModel.create_team(
+        db,
+        team=team_with_configs,
+        configs=team_with_configs.configs,
+        user=auth.user,
+        account=auth.account,
+    )
 
-    team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team_with_configs.team_agents]
+    team_agents = [
+        TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id)
+        for agent in team_with_configs.team_agents
+    ]
     TeamAgentModel.create_team_agents(db, db_team, team_agents, auth.user, auth.account)
 
     return convert_model_to_response(TeamModel.get_team_by_id(db, db_team.id))
 
 
-@router.put("/{id}", status_code=200, response_model=TeamOutput)  # Changed status code to 200
-def update_team(id: str, team_with_configs: TeamInput,  auth: UserAccount = Depends(authenticate)) -> TeamOutput:
+@router.put(
+    "/{id}", status_code=200, response_model=TeamOutput
+)  # Changed status code to 200
+def update_team(
+    id: str, team_with_configs: TeamInput, auth: UserAccount = Depends(authenticate)
+) -> TeamOutput:
     """
     Update an existing team with configurations.
 
@@ -54,14 +66,19 @@ def update_team(id: str, team_with_configs: TeamInput,  auth: UserAccount = Depe
         TeamOutput: Updated team object.
     """
     try:
-        db_team = TeamModel.update_team(db, 
-                                        id=id, 
-                                        team=team_with_configs, 
-                                        configs=team_with_configs.configs,
-                                        user=auth.user, 
-                                        account=auth.account)
-        
-        team_agents = [TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id) for agent in team_with_configs.team_agents]
+        db_team = TeamModel.update_team(
+            db,
+            id=id,
+            team=team_with_configs,
+            configs=team_with_configs.configs,
+            user=auth.user,
+            account=auth.account,
+        )
+
+        team_agents = [
+            TeamAgentInput(agent_id=agent.agent_id, role=agent.role, team_id=db_team.id)
+            for agent in team_with_configs.team_agents
+        ]
         TeamAgentModel.delete_by_team_id(db, id, auth.account)
         TeamAgentModel.create_team_agents(
             db, db_team, team_agents, auth.user, auth.account

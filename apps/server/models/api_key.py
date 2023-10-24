@@ -1,11 +1,14 @@
 from __future__ import annotations
+
+import secrets
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, String, or_
 from sqlalchemy.orm import relationship
+
+from exceptions import ApiKeyNotFoundException
 from models.base_model import BaseModel
 from typings.api_key import ApiKeyInput
-from exceptions import ApiKeyNotFoundException
 
 
 class ApiKeyModel(BaseModel):
@@ -73,6 +76,7 @@ class ApiKeyModel(BaseModel):
             created_by=user.id,
             account_id=account.id,
         )
+        db_api_key.token = f"""l3_${secrets.token_urlsafe(32)}"""
         cls.update_model_from_input(db_api_key, api_key)
         db.session.add(db_api_key)
         db.session.flush()  # Flush pending changes to generate the api_key's ID
@@ -122,7 +126,8 @@ class ApiKeyModel(BaseModel):
                 ApiKeyModel.account_id == account.id,
                 or_(
                     or_(
-                        ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None
+                        ApiKeyModel.is_deleted.is_(False),
+                        ApiKeyModel.is_deleted is None,
                     ),
                     ApiKeyModel.is_deleted is None,
                 ),
@@ -150,7 +155,8 @@ class ApiKeyModel(BaseModel):
                 ApiKeyModel.id == api_key_id,
                 or_(
                     or_(
-                        ApiKeyModel.is_deleted.is_(False), ApiKeyModel.is_deleted is None
+                        ApiKeyModel.is_deleted.is_(False),
+                        ApiKeyModel.is_deleted is None,
                     ),
                     ApiKeyModel.is_deleted is None,
                 ),

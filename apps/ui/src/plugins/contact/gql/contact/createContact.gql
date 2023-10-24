@@ -1,0 +1,11 @@
+mutation createContact($input: input!) @api(name: pro) {
+  createContact(input: $input)
+    @rest(type: "Contact", path: "/contact", method: "POST", bodyKey: "input", endpoint: "pro") {
+    id
+    name
+    description
+    group_id
+    email
+    phone
+  }
+}

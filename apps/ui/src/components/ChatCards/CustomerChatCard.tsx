@@ -9,10 +9,17 @@ type CustomerChatCardProps = {
   onClick: () => void
   picked: boolean
   name: string
+  subTitle?: string
   onDeleteClick?: () => void
 }
 
-const CustomerChatCard = ({ onClick, picked, name, onDeleteClick }: CustomerChatCardProps) => {
+const CustomerChatCard = ({
+  onClick,
+  picked,
+  name,
+  subTitle,
+  onDeleteClick,
+}: CustomerChatCardProps) => {
   const handleDelete = (event: any) => {
     event.stopPropagation()
     if (onDeleteClick) {
@@ -23,7 +30,7 @@ const CustomerChatCard = ({ onClick, picked, name, onDeleteClick }: CustomerChat
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <AvatarGenerator name={name} size={30} />
-      <MemberText name={name} />
+      <MemberText name={name} role={subTitle} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
         {onDeleteClick && (

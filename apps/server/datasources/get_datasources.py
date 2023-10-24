@@ -1,7 +1,7 @@
-from datasources.postgres.postgres import PostgresDatasource
-from datasources.mysql.mysql import MySQLDatasource
+from datasources.base import DatasourceCategory, DatasourceType
 from datasources.file.file import FileDatasource
-from datasources.base import DatasourceType, DatasourceCategory
+from datasources.mysql.mysql import MySQLDatasource
+from datasources.postgres.postgres import PostgresDatasource
 
 DATASOURCES = [
     FileDatasource(),
@@ -17,6 +17,14 @@ COMING_SOON = [
         "description": "Crawl the web page",
         "category": DatasourceCategory.CRAWLER,
         "source_type": DatasourceType.WEB_PAGE,
+    },
+    {
+        "is_public": True,
+        "is_active": False,
+        "name": "Shopify",
+        "description": "Notion",
+        "category": DatasourceCategory.APPLICATION,
+        "source_type": DatasourceType.SHOPIFY,
     },
     {
         "is_public": True,

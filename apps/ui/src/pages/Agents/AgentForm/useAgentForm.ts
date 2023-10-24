@@ -1,8 +1,14 @@
+import { useState } from 'react'
+import useUploadFile from 'hooks/useUploadFile'
 import { useModelsService } from 'services'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { useToolsService } from 'services/tool/useToolsService'
 
 export const useAgentForm = (formik: any) => {
+  const [avatarIsLoading, setAvatarLoader] = useState(false)
+
+  const { uploadFile } = useUploadFile()
+
   const { data: datasourcesData } = useDatasourcesService()
   const { data: tools } = useToolsService()
   const { data: models } = useModelsService()
@@ -22,9 +28,37 @@ export const useAgentForm = (formik: any) => {
       return { value: tool.toolkit_id, label: tool.name }
     })
 
+  const handleUploadAvatar = async (event: any) => {
+    setAvatarLoader(true)
+    const { files } = event.target
+    if (!files) return
+
+    const promises = []
+
+    for (const file of files) {
+      promises.push(
+        uploadFile(
+          {
+            name: file.name,
+            type: file.type,
+            size: file.size,
+          },
+          file,
+        ),
+      )
+    }
+
+    const uploadedFiles = await Promise.all(promises)
+
+    formik?.setFieldValue('agent_avatar', uploadedFiles?.[0].url)
+    setAvatarLoader(false)
+  }
+
   return {
     modelOptions,
     datasourceOptions,
     toolOptions,
+    handleUploadAvatar,
+    avatarIsLoading,
   }
 }

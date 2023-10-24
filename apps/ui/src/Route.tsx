@@ -82,6 +82,12 @@ import ChatLinkModal from 'modals/ChatLinkModal'
 import Schedule from 'pages/Schedule'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
+import Contact from 'plugins/contact/pages/Contact'
+import CreateContactForm from 'plugins/contact/pages/Contact/ContactForm/CreateContactForm'
+import EditContactForm from 'plugins/contact/pages/Contact/ContactForm/EditContactForm'
+import Group from 'plugins/contact/pages/Group'
+import CreateGroupForm from 'plugins/contact/pages/Group/GroupForm/CreateGroupForm'
+import EditGroupForm from 'plugins/contact/pages/Group/GroupForm/EditGroupForm'
 import ScheduleRunModal from 'modals/ScheduleRunModal'
 import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 
@@ -249,6 +255,34 @@ const Route = () => {
               <Router
                 path={':scheduleId/edit-schedule'}
                 element={<EditScheduleForm />}
+                key={document.location.href}
+              />
+            </Router>
+
+            <Router path={'contacts'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Contact />} key={document.location.href} />
+              <Router
+                path={'create-contact'}
+                element={<CreateContactForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':contactId/edit-contact'}
+                element={<EditContactForm />}
+                key={document.location.href}
+              />
+            </Router>
+
+            <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Group />} key={document.location.href} />
+              <Router
+                path={'create-group'}
+                element={<CreateGroupForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':groupId/edit-group'}
+                element={<EditGroupForm />}
                 key={document.location.href}
               />
             </Router>

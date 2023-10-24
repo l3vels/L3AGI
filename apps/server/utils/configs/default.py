@@ -1,10 +1,7 @@
 default_configs = {
-    "info": {
-        "logo": '',
-        "welcomeMessage": "Welcome to L3AGI"
-    },
+    "info": {"logo": "", "welcomeMessage": "Welcome to L3AGI"},
     "naming": {
-        "home": 'Home',
+        "home": "Home",
         "agent": "Agent",
         "team": "Team",
         "datasource": "Data sources",
@@ -12,7 +9,8 @@ default_configs = {
         "discovery": "Discovery",
         "chat": "Multi-Agent",
         "toolkits": "Toolkits",
-        "schedules": "Schedules"
+        "schedules": "Schedules",
+        "integrations": "Integrations",
     },
     "modules": {
         "home": {
@@ -23,30 +21,24 @@ default_configs = {
                         "create": True,
                         "list": True,
                         "edit": True,
-                        "delete": True
+                        "delete": True,
                     }
                 },
                 "agent": True,
                 "discovery": True,
-            }
+            },
         },
-        "chat" :{
+        "chat": {
             "active": True,
             "label": "Multi-Agent",
             "submodules": {
-                "team": {
-                    "operations": {
-                        "create": True,
-                        "list": True,
-                        "edit": True
-                    }
-                },
+                "team": {"operations": {"create": True, "list": True, "edit": True}},
                 "agent": True,
-                "session": True
-            }
+                "session": True,
+            },
         },
-        "model" : {
-            "active" : True,
+        "model": {
+            "active": True,
             "label": "Models",
             "submodules": {
                 "models": {
@@ -56,16 +48,30 @@ default_configs = {
                         "edit": True,
                     }
                 },
-                "fine-tuning": {
-                    "operations": True
-                }
-            }
+                "fine-tuning": {"operations": True},
+            },
         },
-        "toolkit": True, #True
+        "toolkit": True,  # True
         "datasource": True,
         "discovery": True,
         "Session": False,
-        "schedule": False
+        "schedule": False,
+        "integration": {
+            "active": True,
+            "label": "Integrations",
+            "submodules": {
+                "toolkit": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True,
+                    }
+                },
+                "voices": False,
+                "telephony": False,
+            },
+        },
+        "contact": False,
+        "group": False,
     },
 }
-

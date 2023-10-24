@@ -110,7 +110,7 @@ const StyledTypographyWrapper = styled.div`
   color: ${({ theme }) => theme.body.mainNavColor};
 `
 
-const StyledCloseIcon = styled(Close)`
+export const StyledCloseIcon = styled(Close)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
