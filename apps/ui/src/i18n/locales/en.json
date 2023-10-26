@@ -15,6 +15,7 @@
   "add-team": "Add $t(team)",
   "add-datasource": "Add $t(datasource)",
   "add-member": "Add member",
+  "add-fine-tuning": "Add Fine-Tuning",
   "advanced-options": "Advanced Options",
   "agent": "Agent",
   "agent-description": "Here are all your $t(agent)s, managing tasks and operations.",
