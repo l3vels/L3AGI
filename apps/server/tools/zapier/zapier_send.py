@@ -3,12 +3,12 @@ from typing import Optional, Type
 from langchain.agents import AgentType, initialize_agent
 from langchain.agents.agent_toolkits import ZapierToolkit
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from langchain.llms import OpenAI
 from langchain.utilities.zapier import ZapierNLAWrapper
 from pydantic import BaseModel, Field
 
 from exceptions import ToolEnvKeyException
 from tools.base import BaseTool
+from utils.model import get_llm
 
 
 class ZapierSendSchema(BaseModel):
@@ -34,14 +34,16 @@ class ZapierSendTool(BaseTool):
     ) -> str:
         """Send Zapier and return the results."""
         zapier_nla_api_key = self.get_env_key("ZAPIER_NLA_API_KEY")
-        print("zap key", zapier_nla_api_key)
 
         if not zapier_nla_api_key:
             raise ToolEnvKeyException(
                 "Please fill Zapier API Key in the [Zapier Toolkit](/toolkits/zapier)"
             )
 
-        llm = OpenAI(temperature=0)
+        llm = get_llm(
+            self.settings,
+            self.agent_with_configs,
+        )
         zapier = ZapierNLAWrapper(zapier_nla_api_key=zapier_nla_api_key)
         toolkit = ZapierToolkit.from_zapier_nla_wrapper(zapier)
         agent = initialize_agent(
