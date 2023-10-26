@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
+import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -25,7 +26,7 @@ const UploadButton = ({ onChange, isLoading }: UploadButtonProps) => {
       ) : (
         <IconButton
           size={IconButton.sizes.SMALL}
-          icon={Add}
+          icon={() => <StyledAddIcon />}
           kind={IconButton.kinds.TERTIARY}
           onClick={onAddButtonClick}
         />

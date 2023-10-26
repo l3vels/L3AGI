@@ -18,6 +18,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 import { useCreateFineTuningService } from 'services/fineTuning/useCreateFineTuningService'
 import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
+import ImportFile from 'components/ImportFile'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
@@ -47,7 +48,9 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <StyledCardsWrapper>
+        <ImportFile />
+
+        {/* <StyledCardsWrapper>
           {models?.map((model, index: number) => {
             const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
             const logoSrc = logo?.logoSrc || ''
@@ -75,7 +78,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
               />
             )
           })}
-        </StyledCardsWrapper>
+        </StyledCardsWrapper> */}
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
