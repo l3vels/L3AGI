@@ -1,0 +1,52 @@
+import { ToastContext } from 'contexts'
+import { useFormik } from 'formik'
+import { useContext, useState } from 'react'
+import { useCreateFineTuningService } from 'services/fineTuning/useCreateFineTuningService'
+
+export const useCreateFineTuning = () => {
+  const { setToast } = useContext(ToastContext)
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [createFineTuningService] = useCreateFineTuningService()
+
+  const initialValues = {
+    fine_tuning_name: '',
+    fine_tuning_file_url: '',
+  }
+
+  const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+
+    try {
+      const fineTuningInput = {
+        name: values.fine_tuning_name,
+        file_url: values.fine_tuning_file_url,
+      }
+
+      await createFineTuningService(fineTuningInput)
+
+      setToast({
+        message: 'Fine-tuning was Created!',
+        type: 'positive',
+        open: true,
+      })
+    } catch (e) {
+      setToast({
+        message: 'Failed to create Fine-tuning!',
+        type: 'negative',
+        open: true,
+      })
+    }
+    setIsLoading(false)
+  }
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: async values => handleSubmit(values),
+    // validationSchema: agentValidationSchema,
+    // enableReinitialize: true,
+  })
+
+  return { isLoading, formik }
+}

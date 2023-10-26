@@ -121,10 +121,6 @@ const StyledHeaderContainer = styled.div<{ itemLength?: number }>`
 const StyledContentWrapper = styled.div`
   width: 100%;
   overflow: auto;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  /* height: 500px; */
 
   display: flex;
   flex-direction: column;

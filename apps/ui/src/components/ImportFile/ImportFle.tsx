@@ -47,6 +47,6 @@ export default ImportFile
 export const StyledFormSection = styled.div<{ columns?: string }>`
   width: 100%;
   height: 100%;
-  padding: 20px;
+
   /* max-width: 800px; */
 `

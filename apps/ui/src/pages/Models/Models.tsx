@@ -19,20 +19,20 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { useCreateFineTuningService } from 'services/fineTuning/useCreateFineTuningService'
 import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
 import ImportFile from 'components/ImportFile'
+import { useModal } from 'hooks'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
+
+  const { openModal } = useModal()
+
   const { data: models } = useModelsService()
 
   const [createFineTuningService] = useCreateFineTuningService()
   const { data: fineTuningData } = useFineTuningsService()
 
   const handleCreate = () => {
-    createFineTuningService({
-      name: 'Test',
-      file_url:
-        'https://l3-data-dev.s3.amazonaws.com/account_97651e69-b90d-4b13-beca-114daeb94488/files/dwsample1-json-88840543-05ff-41c3-8cda-eaa384a5e8d3.json',
-    })
+    openModal({ name: 'create-fine-tuning-modal' })
   }
 
   return (

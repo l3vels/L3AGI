@@ -2,7 +2,6 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useGetDownloadUrl } from 'services'
-import { useParams } from 'react-router-dom'
 
 import useSnackbarAlert from 'hooks/useSnackbar'
 
@@ -39,10 +38,6 @@ const useReviewImport = (data: any) => {
   const [response, setResponse] = React.useState<any>(null)
   const [file_options, setFileOptions] = React.useState<any>([])
 
-  const params = useParams()
-  const collectionId: string = params?.collectionId!
-  // const { insertAssetsService } = useInsertAssetsService()
-  // const { data: collection } = useCollectionByIdService({ id: collectionId })
   const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
 
   // console.log('template:;', template)
