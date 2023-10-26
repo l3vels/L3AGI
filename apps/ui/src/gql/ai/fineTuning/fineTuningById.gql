@@ -4,5 +4,8 @@ query fineTuningById($id: id!) @api(name: "ai") {
     id
     name
     file_url
+    identifier
+    status
+    model_id
   }
 }
