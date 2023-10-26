@@ -1,0 +1,7 @@
+query getFineTunings @api(name: "ai") {
+  getFineTunings @rest(type: "FineTuning", path: "/fin-tuning", method: "GET", endpoint: "ai") {
+    id
+    name
+    file_url
+  }
+}
