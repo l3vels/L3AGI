@@ -1,15 +1,38 @@
+import useUploadFile from 'hooks/useUploadFile'
 import React from 'react'
 import { useGetDownloadUrl, useParseCsvToJsonService } from 'services'
 
-const useImportAsset = () => {
+const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
   const [step, setStep] = React.useState<number>(0)
   const [parsedCsvData, setParsedCsvData] = React.useState<any>([])
   const { parseCsvToJson } = useParseCsvToJsonService()
   const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
 
+  const { uploadFile } = useUploadFile()
+
   const handleFileChange = async (e: any) => {
     const { files } = e.target
-    console.log('files', files)
+
+    if (!files) return
+
+    const promises = []
+
+    for (const file of files) {
+      promises.push(
+        uploadFile(
+          {
+            name: file.name,
+            type: file.type,
+            size: file.size,
+          },
+          file,
+        ),
+      )
+    }
+
+    const uploadedFiles = await Promise.all(promises)
+
+    setFieldValue('fine_tuning_file_url', uploadedFiles?.[0].url)
 
     // const response = await parseCsvToJson(files[0], [])
     // console.log('response', response)

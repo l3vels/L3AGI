@@ -8,17 +8,22 @@ import ReviewImport, { StyledButtonContainer } from './ReviewImport'
 import useImportFile from './useImportFile'
 import Button from '@l3-lib/ui-core/dist/Button'
 import UploadButton from 'components/UploadButton'
+import { ButtonPrimary } from 'components/Button/Button'
 
-const ImportFile = () => {
-  const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } = useImportFile()
+const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
+  const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } = useImportFile({
+    setFieldValue: setFieldValue,
+  })
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
       case 0:
         return (
           <StyledButtonContainer>
-            <Button onClick={handleDownloadTemplate}>Download template</Button>
-            <br />
+            <ButtonPrimary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+              Download template
+            </ButtonPrimary>
+
             <UploadButton onChange={handleFileChange} isLoading={false} />
           </StyledButtonContainer>
         )

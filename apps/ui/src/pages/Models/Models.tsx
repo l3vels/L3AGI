@@ -12,13 +12,11 @@ import ModelCard from './components/ModelCard'
 
 import { MODEL_PROVIDER_LOGOS } from './constants'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
-import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+import { ButtonPrimary } from 'components/Button/Button'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographyPrimary from 'components/Typography/Primary'
-import { useCreateFineTuningService } from 'services/fineTuning/useCreateFineTuningService'
+
 import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
-import ImportFile from 'components/ImportFile'
+
 import { useModal } from 'hooks'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
@@ -28,13 +26,12 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
   const { data: models } = useModelsService()
 
-  const [createFineTuningService] = useCreateFineTuningService()
   const { data: fineTuningData } = useFineTuningsService()
 
-  const handleCreate = () => {
+  const handleAddFineTuning = () => {
     openModal({ name: 'create-fine-tuning-modal' })
   }
-
+  console.log(fineTuningData)
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
@@ -42,15 +39,13 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
           <StyledSectionTitle>{`${t('model')}`}</StyledSectionTitle>
           <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
         </div>
-        <ButtonPrimary size={Button.sizes.SMALL} onClick={handleCreate}>
+        <ButtonPrimary size={Button.sizes.SMALL} onClick={handleAddFineTuning}>
           {t('add-fine-tuning')}
         </ButtonPrimary>
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <ImportFile />
-
-        {/* <StyledCardsWrapper>
+        <StyledCardsWrapper>
           {models?.map((model, index: number) => {
             const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
             const logoSrc = logo?.logoSrc || ''
@@ -78,7 +73,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
               />
             )
           })}
-        </StyledCardsWrapper> */}
+        </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
