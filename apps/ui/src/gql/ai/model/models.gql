@@ -4,5 +4,7 @@ query models @api(name: "ai") {
     provider
     name
     value
+    fine_tuning
+    is_fine_tuned
   }
 }

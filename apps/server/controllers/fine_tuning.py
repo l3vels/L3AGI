@@ -1,11 +1,13 @@
 from typing import List
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi_sqlalchemy import db
 
 from exceptions import FineTuningNotFoundException
+from models.config import ConfigModel
 from models.fine_tuning import FineTuningModel
+from services.fine_tuning import fine_tune_openai_model
 from typings.auth import UserAccount
 from typings.fine_tuning import FineTuningInput, FineTuningOutput
 from utils.auth import authenticate
@@ -17,7 +19,9 @@ router = APIRouter()
 
 @router.post("", status_code=201, response_model=FineTuningOutput)
 def create_fine_tuning(
-    fine_tuning: FineTuningInput, auth: UserAccount = Depends(authenticate)
+    fine_tuning: FineTuningInput,
+    background_tasks: BackgroundTasks,
+    auth: UserAccount = Depends(authenticate),
 ):
     fine_tuning_model = FineTuningModel.create_fine_tuning(
         db.session,
@@ -25,6 +29,16 @@ def create_fine_tuning(
         auth.user.id,
         auth.account.id,
     )
+
+    settings = ConfigModel.get_account_settings(db, auth.account)
+
+    if not settings.openai_api_key:
+        raise HTTPException(
+            status_code=400,
+            detail="OpenAI API key not set. Please set it in your account settings.",
+        )
+
+    background_tasks.add_task(fine_tune_openai_model, fine_tuning_model, settings)
 
     return convert_model_to_response(
         FineTuningModel.get_fine_tuning_by_id(

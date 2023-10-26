@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -17,3 +18,5 @@ class ModelOutput(BaseModel):
     provider: ModelProviders
     name: str
     value: str
+    fine_tuning: bool
+    is_fine_tuned: Optional[bool]

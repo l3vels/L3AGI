@@ -33,21 +33,23 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {models?.map((model, index: number) => {
-            const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
-            const logoSrc = logo?.logoSrc || ''
+          {models
+            ?.filter(model => !model.is_fine_tuned)
+            ?.map((model, index: number) => {
+              const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
+              const logoSrc = logo?.logoSrc || ''
 
-            return (
-              <ModelCard
-                key={index}
-                isReadOnly={isPublic}
-                isDisabled={false}
-                title={model.name}
-                author={model.provider}
-                logoSrc={logoSrc}
-              />
-            )
-          })}
+              return (
+                <ModelCard
+                  key={index}
+                  isReadOnly={isPublic}
+                  isDisabled={false}
+                  title={model.name}
+                  author={model.provider}
+                  logoSrc={logoSrc}
+                />
+              )
+            })}
         </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
