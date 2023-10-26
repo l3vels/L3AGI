@@ -20,6 +20,7 @@ from tools.twitter.twitter_toolkit import TwitterToolkit
 from tools.webscraper.webscraper_toolkit import WebScraperToolkit
 from tools.wikipedia.wikipedia_search_toolkit import WikipediaSearchToolkit
 from tools.youtube.youtube_search_toolkit import YoutubeSearchToolkit
+from tools.zapier.zapier_toolkit import ZapierSendToolkit
 
 TOOLKITS: List[BaseToolkit] = [
     SerpGoogleSearchToolkit(),
@@ -32,6 +33,7 @@ TOOLKITS: List[BaseToolkit] = [
     YoutubeSearchToolkit(),
     TwilioSearchToolkit(),
     SendGridToolkit(),
+    ZapierSendToolkit(),
     ChartToolkit(),
     TwitterToolkit(),
     InstagramToolkit(),
