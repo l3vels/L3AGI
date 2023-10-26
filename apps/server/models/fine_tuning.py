@@ -8,7 +8,7 @@ from sqlalchemy.sql import or_
 
 from exceptions import FineTuningNotFoundException
 from models.base_model import BaseModel
-from typings.fine_tuning import FineTuningInput
+from typings.fine_tuning import FineTuningInput, FineTuningStatus
 
 
 class FineTuningModel(BaseModel):
@@ -26,13 +26,17 @@ class FineTuningModel(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
 
-    identifier = Column(String)  # fine-tuning identifier
+    model_identifier = Column(String)
+
+    openai_fine_tuning_id = Column(String)
 
     name = Column(String)
 
-    status = Column(String)
+    status = Column(String, default=FineTuningStatus.VALIDATING.value)
 
     file_url = Column(String)  # CSV or JSONL file
+
+    error = Column(String)
 
     model_id = Column(UUID)
 
@@ -69,17 +73,21 @@ class FineTuningModel(BaseModel):
 
     @classmethod
     def create_fine_tuning(
-        cls, session: Session, run: FineTuningInput, user_id: UUID, account_id: UUID
+        cls,
+        session: Session,
+        fine_tuning_input: FineTuningInput,
+        user_id: UUID,
+        account_id: UUID,
     ):
         """
         Creates a new fine-tuning model with the provided configuration.
 
         Args:
             db: The database object.
-            config_with_config: The object containing the run and configuration details.
+            config_with_config: The object containing the fine_tuning_input and configuration details.
 
         Returns:
-            Run: The created run.
+            FineTuning: The created fine-tuning.
 
         """
         db_fine_tuning = FineTuningModel(
@@ -87,7 +95,7 @@ class FineTuningModel(BaseModel):
             account_id=account_id,
         )
 
-        cls.update_model_from_input(db_fine_tuning, run)
+        cls.update_model_from_input(db_fine_tuning, fine_tuning_input)
 
         session.add(db_fine_tuning)
         session.flush()  # Flush pending changes to generate the config's ID
