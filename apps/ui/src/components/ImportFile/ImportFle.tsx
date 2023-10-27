@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 // import FileUploadField from 'atoms/FileUploadField'
@@ -12,16 +12,38 @@ import { ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
 
 const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
-  const { handleFileChange, step, parsedData, setStep, handleDownloadTemplate, handleUploadJson } =
-    useImportFile({
-      setFieldValue: setFieldValue,
-    })
+  const {
+    handleFileChange,
+    step,
+    parsedData,
+    setStep,
+    handleDownloadTemplate,
+    handleUploadJson,
+    handleConvertData,
+  } = useImportFile({
+    setFieldValue: setFieldValue,
+  })
 
   useEffect(() => {
     if (value.length > 0) {
-      setStep(1)
+      // Replace 'fileUrl' with the actual URL of the file you want to read.
+      const fileUrl = value
+
+      fetch(fileUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch file: ${response.status} ${response.statusText}`)
+          }
+          return response.text() // or response.json() for JSON files, response.blob() for binary files, etc.
+        })
+        .then(data => {
+          handleConvertData(data) // Update the state with the file content
+        })
+        .catch(error => {
+          console.error('Error fetching file:', error)
+        })
     }
-  }, [])
+  }, [value])
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
@@ -32,7 +54,7 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
               {t('download-template')}
             </ButtonTertiary>
 
-            <UploadButton onChange={handleFileChange} isLoading={false} label={t('upload-csv')} />
+            {/* <UploadButton onChange={handleFileChange} isLoading={false} label={t('upload-csv')} /> */}
             <UploadButton onChange={handleUploadJson} isLoading={false} label={t('upload-json')} />
           </StyledButtonContainer>
         )

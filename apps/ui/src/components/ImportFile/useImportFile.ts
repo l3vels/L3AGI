@@ -13,6 +13,17 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
 
   const { uploadFile } = useUploadFile()
 
+  const handleConvertData = (data: any) => {
+    const dataArray = JSON.parse(data)
+    const convertedData = dataArray.map((item: any) => ({
+      System: item.System,
+      User: item.User,
+      Assistant: item.Assistant,
+    }))
+    setParsedData(convertedData)
+    setStep(1)
+  }
+
   const handleUploadJson = async (e: any) => {
     const { files } = e.target
 
@@ -49,18 +60,11 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
     if (file) {
       const reader = new FileReader()
       reader.onload = (e: any) => {
-        const content = e.target.result
+        const data = e.target.result
 
-        const contentArray = JSON.parse(content)
-        const convertedData = contentArray.map((item: any) => ({
-          System: item.System,
-          User: item.User,
-          Assistant: item.Assistant,
-        }))
-        setParsedData(convertedData)
+        handleConvertData(data)
       }
       reader.readAsText(file)
-      setStep(1)
     }
   }
 
@@ -105,6 +109,7 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
     parsedData,
     setStep,
     handleDownloadTemplate,
+    handleConvertData,
   }
 }
 
