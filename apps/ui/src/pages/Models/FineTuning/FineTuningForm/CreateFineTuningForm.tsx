@@ -26,6 +26,7 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import { t } from 'i18next'
+import FineTuningForm from './FineTuningForm'
 
 const CreateFineTuningForm = () => {
   const { formik, isLoading } = useCreateFineTuning()
@@ -53,23 +54,7 @@ const CreateFineTuningForm = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <StyledRoot>
-              <StyledForm>
-                <StyledInputWrapper>
-                  <FormikTextField name='fine_tuning_name' placeholder='Name' label='Name' />
-
-                  <StyledTextAreaWrapper>
-                    <TypographyPrimary
-                      value={'Data'}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-
-                    <ImportFile setFieldValue={formik?.setFieldValue} />
-                  </StyledTextAreaWrapper>
-                </StyledInputWrapper>
-              </StyledForm>
-            </StyledRoot>
+            <FineTuningForm formik={formik} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
