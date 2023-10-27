@@ -125,7 +125,7 @@ const useApollo = () => {
       const restLink = new RestLink({
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          ui: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          ai: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           pro: `${import.meta.env.REACT_APP_PR_SERVICES_URL}`,
         },
         ...authConfig,
