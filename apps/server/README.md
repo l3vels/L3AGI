@@ -9,6 +9,7 @@ First install `Poetry` by following [their installation instructions](https://py
 Then install dependencies
 
 ```commandline
+poetry shell
 poetry install
 ```
 
