@@ -1,8 +1,11 @@
+import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useGetDownloadUrl, useParseCsvToJsonService } from 'services'
 
 const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
+  const { setToast } = useContext(ToastContext)
+
   const [step, setStep] = React.useState<number>(0)
   const [parsedData, setParsedData] = React.useState<any>([])
   const { parseCsvToJson } = useParseCsvToJsonService()
@@ -14,6 +17,15 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
     const { files } = e.target
 
     if (!files) return
+
+    const file = files[0]
+
+    if (file.type !== 'application/json')
+      return setToast({
+        message: 'File must be JSON!',
+        type: 'negative',
+        open: true,
+      })
 
     const promises = []
 
@@ -34,7 +46,6 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
 
     setFieldValue('fine_tuning_file_url', uploadedFiles?.[0].url)
 
-    const file = files[0]
     if (file) {
       const reader = new FileReader()
       reader.onload = (e: any) => {

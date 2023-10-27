@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useModal } from 'hooks'
-import { useDeleteFineTuningByIdService } from 'services/fineTuning/useDeleteFineTuning'
+import { useDeleteFineTuningByIdService } from 'services/fineTuning/useDeleteFineTuningService'
 import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
 import { ToastContext } from 'contexts'
 
