@@ -9,6 +9,7 @@ import useImportFile from './useImportFile'
 import Button from '@l3-lib/ui-core/dist/Button'
 import UploadButton from 'components/UploadButton'
 import { ButtonTertiary } from 'components/Button/Button'
+import { t } from 'i18next'
 
 const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   const { handleFileChange, step, parsedData, setStep, handleDownloadTemplate, handleUploadJson } =
@@ -22,11 +23,11 @@ const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
         return (
           <StyledButtonContainer>
             <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
-              Download template
+              {t('download-template')}
             </ButtonTertiary>
 
-            <UploadButton onChange={handleFileChange} isLoading={false} label={'Upload CSV'} />
-            <UploadButton onChange={handleUploadJson} isLoading={false} label={'Upload JSON'} />
+            <UploadButton onChange={handleFileChange} isLoading={false} label={t('upload-csv')} />
+            <UploadButton onChange={handleUploadJson} isLoading={false} label={t('upload-json')} />
           </StyledButtonContainer>
         )
 

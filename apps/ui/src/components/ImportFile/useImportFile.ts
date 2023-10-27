@@ -6,7 +6,7 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
   const [step, setStep] = React.useState<number>(0)
   const [parsedData, setParsedData] = React.useState<any>([])
   const { parseCsvToJson } = useParseCsvToJsonService()
-  const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
+  // const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
 
   const { uploadFile } = useUploadFile()
 
@@ -84,7 +84,7 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
   }
 
   const handleDownloadTemplate = () => {
-    window.open(template.url, '_blank')
+    window.open('template.url', '_blank')
   }
 
   return {

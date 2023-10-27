@@ -10,6 +10,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import Table from 'components/Table'
 import { ButtonTertiary } from 'components/Button/Button'
+import { t } from 'i18next'
 
 // import DataGrid from 'components/DataGrid'
 
@@ -50,13 +51,13 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
             <FormikProvider value={formik}>
               <StyledButtonContainer>
                 <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
-                  Download template
+                  {t('download-template')}
                 </ButtonTertiary>
                 {/* <ButtonTertiary onClick={formik.handleSubmit} size={Button.sizes.SMALL}>
                   Save
                 </ButtonTertiary> */}
                 <ButtonTertiary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
-                  Start over
+                  {t('start-over')}
                 </ButtonTertiary>
               </StyledButtonContainer>
               {/* <StyledHeaderContainer itemLength={itemLength}>
