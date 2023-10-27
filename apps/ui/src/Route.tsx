@@ -91,6 +91,7 @@ import EditGroupForm from 'plugins/contact/pages/Group/GroupForm/EditGroupForm'
 import ScheduleRunModal from 'modals/ScheduleRunModal'
 import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 import CreateFineTuningModal from 'modals/CreateFineTuningModal'
+import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -244,6 +245,11 @@ const Route = () => {
 
             <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Models />} key={document.location.href} />
+              <Router
+                path={'create-fine-tuning'}
+                element={<CreateFineTuningForm />}
+                key={document.location.href}
+              />
             </Router>
 
             <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
@@ -327,7 +333,6 @@ const Route = () => {
       <ChatLinkModal />
       <ScheduleRunModal />
       <RunLogsModal />
-      <CreateFineTuningModal />
 
       <CommandMenu
         open={cmdkOpen}

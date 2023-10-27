@@ -20,6 +20,7 @@ export const useCreateFineTuningService = () => {
         input: {
           name,
           file_url,
+          model_id: '8833a90e-86e4-4118-9e28-517de1a4def8',
         },
       },
     })

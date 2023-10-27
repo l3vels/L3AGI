@@ -8,7 +8,7 @@ import ReviewImport, { StyledButtonContainer } from './ReviewImport'
 import useImportFile from './useImportFile'
 import Button from '@l3-lib/ui-core/dist/Button'
 import UploadButton from 'components/UploadButton'
-import { ButtonPrimary } from 'components/Button/Button'
+import { ButtonTertiary } from 'components/Button/Button'
 
 const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } = useImportFile({
@@ -20,11 +20,11 @@ const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       case 0:
         return (
           <StyledButtonContainer>
-            <ButtonPrimary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+            <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
               Download template
-            </ButtonPrimary>
+            </ButtonTertiary>
 
-            <UploadButton onChange={handleFileChange} isLoading={false} />
+            <UploadButton onChange={handleFileChange} isLoading={false} label={'Upload CSV'} />
           </StyledButtonContainer>
         )
 

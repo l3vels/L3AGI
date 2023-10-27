@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Table from 'components/Table'
-import { ButtonPrimary } from 'components/Button/Button'
+import { ButtonTertiary } from 'components/Button/Button'
 
 // import DataGrid from 'components/DataGrid'
 
@@ -50,15 +50,15 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
           <StyledContentWrapper>
             <FormikProvider value={formik}>
               <StyledButtonContainer>
-                <ButtonPrimary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+                <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
                   Download template
-                </ButtonPrimary>
-                <ButtonPrimary onClick={formik.handleSubmit} size={Button.sizes.SMALL}>
+                </ButtonTertiary>
+                {/* <ButtonTertiary onClick={formik.handleSubmit} size={Button.sizes.SMALL}>
                   Save
-                </ButtonPrimary>
-                <ButtonPrimary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
+                </ButtonTertiary> */}
+                <ButtonTertiary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
                   Start over
-                </ButtonPrimary>
+                </ButtonTertiary>
               </StyledButtonContainer>
               {/* <StyledHeaderContainer itemLength={itemLength}>
                 {keys.map((item: any, index: number) => (

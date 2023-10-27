@@ -13,60 +13,68 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import FormikTextField from 'components/TextFieldFormik'
 import ImportFile from 'components/ImportFile'
-import styled from 'styled-components'
+
 import { StyledTextAreaWrapper } from 'pages/ApiKeys/EditApiKey/EditApiModal'
 import TypographyPrimary from 'components/Typography/Primary'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import { useModal } from 'hooks'
+
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import {
+  StyledHeaderGroup,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+} from 'pages/Home/homeStyle.css'
+import { t } from 'i18next'
 
 const CreateFineTuningForm = () => {
-  const { closeModal } = useModal()
-
   const { formik, isLoading } = useCreateFineTuning()
+
   return (
     <FormikProvider value={formik}>
-      <StyledFormWrapper>
-        <StyledRoot>
-          <StyledForm>
-            <StyledInputWrapper>
-              <FormikTextField name='fine_tuning_name' placeholder='Name' label='Name' />
+      <StyledSectionWrapper>
+        <StyledHeaderGroup className='header_group'>
+          <div>
+            <StyledSectionTitle>{`${t('add-fine-tuning')}`}</StyledSectionTitle>
+            {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
+          </div>
 
-              <StyledTextAreaWrapper>
-                <TypographyPrimary
-                  value={'Data'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                />
+          <StyledButtonWrapper>
+            <BackButton />
+            <ButtonPrimary
+              onClick={formik?.handleSubmit}
+              size={Button.sizes.SMALL}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader size={32} /> : 'Save'}
+            </ButtonPrimary>
+          </StyledButtonWrapper>
+        </StyledHeaderGroup>
 
-                <ImportFile setFieldValue={formik?.setFieldValue} />
-              </StyledTextAreaWrapper>
-            </StyledInputWrapper>
-          </StyledForm>
-        </StyledRoot>
-      </StyledFormWrapper>
-      <StyledFooter>
-        <StyledButtonWrapper>
-          <BackButton customOnClick={() => closeModal('create-fine-tuning-modal')} />
-          <ButtonPrimary
-            onClick={formik?.handleSubmit}
-            size={Button.sizes.SMALL}
-            disabled={isLoading}
-          >
-            {isLoading ? <Loader size={32} /> : 'Save'}
-          </ButtonPrimary>
-        </StyledButtonWrapper>
-      </StyledFooter>
+        <ComponentsWrapper noPadding>
+          <StyledFormWrapper>
+            <StyledRoot>
+              <StyledForm>
+                <StyledInputWrapper>
+                  <FormikTextField name='fine_tuning_name' placeholder='Name' label='Name' />
+
+                  <StyledTextAreaWrapper>
+                    <TypographyPrimary
+                      value={'Data'}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+
+                    <ImportFile setFieldValue={formik?.setFieldValue} />
+                  </StyledTextAreaWrapper>
+                </StyledInputWrapper>
+              </StyledForm>
+            </StyledRoot>
+          </StyledFormWrapper>
+        </ComponentsWrapper>
+      </StyledSectionWrapper>
     </FormikProvider>
   )
 }
 
 export default CreateFineTuningForm
-
-const StyledFooter = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-
-  padding-top: 40px;
-`
