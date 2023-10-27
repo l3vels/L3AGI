@@ -88,6 +88,7 @@ const useApollo = () => {
       const mLink = new MultiAPILink({
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          ai: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           pro: `${import.meta.env.REACT_APP_PR_SERVICES_URL}` 
         },
         createHttpLink: () => createHttpLink({}),
