@@ -17,6 +17,6 @@ class ModelOutput(BaseModel):
     id: str
     provider: ModelProviders
     name: str
-    value: str
+    value: Optional[str]
     fine_tuning: bool
     is_fine_tuned: Optional[bool]
