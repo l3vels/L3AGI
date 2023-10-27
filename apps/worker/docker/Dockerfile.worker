@@ -15,8 +15,31 @@ RUN pip install poetry \
     && poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
+
 # Copy project
 COPY ./ /app/
 
 # Run Celery worker
 ENTRYPOINT ["celery", "-A", "main", "worker", "--loglevel=info"]
+
+
+
+
+
+# # Install Flower
+# RUN pip install flower
+
+# # Find where flower is installed and add it to the PATH
+# ENV PATH=$PATH:$(dirname $(which flower))
+
+# # Install supervisord
+# RUN apt-get update && apt-get install -y supervisor
+
+# # Copy project
+# COPY ./ /app/
+
+# # Copy supervisor configuration
+# COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# # Run supervisord
+# CMD ["/usr/bin/supervisord"]
