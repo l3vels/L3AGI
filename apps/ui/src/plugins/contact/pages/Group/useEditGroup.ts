@@ -41,7 +41,7 @@ export const useEditGroup = () => {
       await refetchGroups()
 
       setToast({
-        message: 'New Group was Updated!',
+        message: 'Group was Updated!',
         type: 'positive',
         open: true,
       })
@@ -55,6 +55,7 @@ export const useEditGroup = () => {
     }
     setIsLoading(false)
   }
+
   const formik = useFormik({
     initialValues: defaultValues,
     enableReinitialize: true,

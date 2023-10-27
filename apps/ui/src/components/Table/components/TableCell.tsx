@@ -1,5 +1,8 @@
+import TypographySecondary from 'components/Typography/Secondary'
 import { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
+import styled, { css } from 'styled-components'
 
 type TableCellProps = {
   cell: any
@@ -73,15 +76,18 @@ const TableCell = ({ cell }: TableCellProps) => {
       {...cell.getCellProps()}
       onClick={handleEditMode}
       maxWidth={maxWidth}
-      noPadding={isEditing}
+      isEditing={isEditing}
     >
       {isEditing ? (
-        <>
-          {/* tst */}
+        <StyledWrapper>
           <Editor {...cellEditorParams} value={cellValue} ref={multiselectEditorRef} />
-        </>
+        </StyledWrapper>
       ) : (
-        cell.render('Cell')
+        <TypographySecondary
+          value={cell.render('Cell')}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
       )}
     </StyledTd>
   )
@@ -89,23 +95,30 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td<{ maxWidth: number; noPadding: boolean }>`
-  width: 100%;
-  padding: ${p => (p.noPadding ? `0px` : `10px`)};
+const StyledTd = styled.td<{ maxWidth: number; isEditing: boolean }>`
+  padding: 5px 10px;
+  position: relative;
 
   display: flex;
-  align-items: center;
-  /* padding: 10px 20px; */
-  overflow: hidden;
-  /* text-align: center; */
+  /* align-items: center; */
 
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: none;
+  border-top: none;
 
   :hover {
     background-color: rgba(255, 255, 255, 0.2);
   }
 
-  max-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100%')};
-  min-width: 200px;
-  /* min-width: ${p => (p.maxWidth ? `${p.maxWidth}px` : '100px')}; */
+  ${p =>
+    p.isEditing &&
+    css`
+      padding: 0;
+      overflow: visible;
+    `};
+`
+const StyledWrapper = styled.div`
+  border: 1px solid #000;
 `

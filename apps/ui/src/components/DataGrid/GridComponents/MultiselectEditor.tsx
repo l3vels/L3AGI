@@ -85,6 +85,7 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
   return (
     <StyledDiv>
       <StyledDropDown
+        size={'small'}
         ref={refInput}
         options={options}
         openMenuOnFocus={true}

@@ -1,36 +1,34 @@
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { FormikProvider } from 'formik'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
-import {
-  StyledHeaderGroup,
-  StyledSectionDescription,
-  StyledSectionTitle,
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
-import { FormikProvider } from 'formik'
-
-import { useCreateContact } from '../useCreateContract'
-
-import ContactForm from './ContactForm'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import {
+  StyledHeaderGroup,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+} from 'pages/Home/homeStyle.css'
+import { t } from 'i18next'
+import FineTuningForm from './FineTuningForm'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { useEditFineTuning } from '../useEditFineTuning'
 
-const CreateContactForm = () => {
-  const { formik, isLoading } = useCreateContact()
+const EditFineTuningForm = () => {
+  const { formik, isLoading } = useEditFineTuning()
+
+  if (!formik?.values) return <div />
 
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Add Contact</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-        Here is your datasource, a collection of databases, APIs, files, and more.
-      </StyledSectionDescription> */}
+            <StyledSectionTitle>{`${t('edit-fine-tuning')}`}</StyledSectionTitle>
+            {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
           </div>
 
           <StyledButtonWrapper>
@@ -47,7 +45,7 @@ const CreateContactForm = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <ContactForm formik={formik} />
+            <FineTuningForm formik={formik} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
@@ -55,4 +53,4 @@ const CreateContactForm = () => {
   )
 }
 
-export default CreateContactForm
+export default EditFineTuningForm
