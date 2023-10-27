@@ -12,75 +12,57 @@ import ModelCard from './components/ModelCard'
 
 import { MODEL_PROVIDER_LOGOS } from './constants'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
-import { ButtonPrimary } from 'components/Button/Button'
-import Button from '@l3-lib/ui-core/dist/Button'
 
-import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
-
-import { useNavigate } from 'react-router-dom'
+import FineTunings from './FineTuning/FineTunings'
+import styled from 'styled-components'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
 
-  const navigate = useNavigate()
-
   const { data: models } = useModelsService()
 
-  const { data: fineTuningData } = useFineTuningsService()
-
-  const handleAddFineTuning = () => {
-    // openModal({ name: 'create-fine-tuning-modal' })
-    navigate('/models/create-fine-tuning')
-  }
-
   return (
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <div>
-          <StyledSectionTitle>{`${t('model')}`}</StyledSectionTitle>
-          <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
-        </div>
-        <ButtonPrimary size={Button.sizes.SMALL} onClick={handleAddFineTuning}>
-          {t('add-fine-tuning')}
-        </ButtonPrimary>
-      </StyledHeaderGroup>
+    <StyledRoot>
+      <FineTunings />
 
-      <ComponentsWrapper noPadding>
-        <StyledCardsWrapper>
-          {models
-            ?.filter(model => !model.is_fine_tuned)
-            ?.map((model, index: number) => {
-              const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
-              const logoSrc = logo?.logoSrc || ''
+      <StyledSectionWrapper>
+        <StyledHeaderGroup className='header_group'>
+          <div>
+            <StyledSectionTitle>{`${t('model')}`}</StyledSectionTitle>
+            <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
+          </div>
+        </StyledHeaderGroup>
 
-              return (
-                <ModelCard
-                  key={index}
-                  isReadOnly={isPublic}
-                  isDisabled={false}
-                  title={model.name}
-                  author={model.provider}
-                  logoSrc={logoSrc}
-                />
-              )
-            })}
+        <ComponentsWrapper noPadding>
+          <StyledCardsWrapper>
+            {models
+              ?.filter(model => !model.is_fine_tuned)
+              ?.map((model, index: number) => {
+                const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
+                const logoSrc = logo?.logoSrc || ''
 
-          {fineTuningData?.map((fineTuning: any, index: number) => {
-            return (
-              <ModelCard
-                key={index}
-                isReadOnly={isPublic}
-                isDisabled={false}
-                title={fineTuning.name}
-                author={'levan'}
-                logoSrc={''}
-              />
-            )
-          })}
-        </StyledCardsWrapper>
-      </ComponentsWrapper>
-    </StyledSectionWrapper>
+                return (
+                  <ModelCard
+                    key={index}
+                    isReadOnly={isPublic}
+                    isDisabled={false}
+                    title={model.name}
+                    author={model.provider}
+                    logoSrc={logoSrc}
+                  />
+                )
+              })}
+          </StyledCardsWrapper>
+        </ComponentsWrapper>
+      </StyledSectionWrapper>
+    </StyledRoot>
   )
 }
 
 export default Models
+
+const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`
