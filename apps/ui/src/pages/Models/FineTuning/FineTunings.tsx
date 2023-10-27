@@ -14,6 +14,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import { useNavigate } from 'react-router-dom'
 import TempCard from 'pages/Schedule/TempCard'
 import { useFineTuning } from './useFineTuning'
+import { useFineTuningForm } from './FineTuningForm/useFineTuningForm'
 
 const FineTunings = () => {
   const { t } = useTranslation()
@@ -25,6 +26,7 @@ const FineTunings = () => {
   }
 
   const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
+  const { modelOptions } = useFineTuningForm()
 
   return (
     <StyledSectionWrapper>
@@ -45,11 +47,15 @@ const FineTunings = () => {
               deleteFineTuningHandler(fineTuning.id)
             }
 
+            const filteredModel = modelOptions?.filter(
+              (model: any) => model.value === fineTuning.model_id,
+            )[0]
+
             return (
               <TempCard
                 key={index}
                 name={fineTuning.name}
-                description={''}
+                description={filteredModel.label}
                 onDeleteClick={deleteHandler}
               />
             )
