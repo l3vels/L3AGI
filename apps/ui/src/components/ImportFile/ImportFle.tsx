@@ -10,19 +10,21 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import UploadButton from 'components/UploadButton'
 import { ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
+import { useDownloadTemplate } from './useDownloadTemplate'
 
 const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
   const {
-    handleFileChange,
+    // handleFileChange,
     step,
     parsedData,
     setStep,
-    handleDownloadTemplate,
     handleUploadJson,
     handleConvertData,
   } = useImportFile({
     setFieldValue: setFieldValue,
   })
+
+  const { handleDownloadTemplate } = useDownloadTemplate()
 
   useEffect(() => {
     if (value.length > 0) {

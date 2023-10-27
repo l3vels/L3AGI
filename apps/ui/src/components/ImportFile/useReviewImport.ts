@@ -164,10 +164,6 @@ const useReviewImport = (data: any) => {
       : {}),
   }))
 
-  const handleDownloadTemplate = () => {
-    window.open(template.url, '_blank')
-  }
-  console.log(formik?.errors)
   React.useEffect(() => {
     if (!formik.isSubmitting) return
     if (Object.keys(formik.errors).length > 0) {
@@ -189,7 +185,6 @@ const useReviewImport = (data: any) => {
     step,
     response,
     setStep,
-    handleDownloadTemplate,
   }
 }
 

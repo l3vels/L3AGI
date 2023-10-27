@@ -2,8 +2,9 @@ import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
 import React, { useContext } from 'react'
 import { useGetDownloadUrl, useParseCsvToJsonService } from 'services'
+import { templateData } from './constants'
 
-const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
+const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   const { setToast } = useContext(ToastContext)
 
   const [step, setStep] = React.useState<number>(0)
@@ -98,19 +99,14 @@ const useImportAsset = ({ setFieldValue }: { setFieldValue: any }) => {
     setStep(1)
   }
 
-  const handleDownloadTemplate = () => {
-    window.open('template.url', '_blank')
-  }
-
   return {
     handleFileChange,
     handleUploadJson,
     step,
     parsedData,
     setStep,
-    handleDownloadTemplate,
     handleConvertData,
   }
 }
 
-export default useImportAsset
+export default useImportFile

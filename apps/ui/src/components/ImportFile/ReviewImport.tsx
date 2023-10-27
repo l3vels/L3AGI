@@ -11,6 +11,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Table from 'components/Table'
 import { ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
+import { useDownloadTemplate } from './useDownloadTemplate'
 
 // import DataGrid from 'components/DataGrid'
 
@@ -23,8 +24,9 @@ const SelectHeader = ({ options, item, index }: any) =>
 const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any }) => {
   const itemLength = 11
 
-  const { formik, keys, options, step, response, setStep, handleDownloadTemplate } =
-    useReviewImport(data)
+  const { handleDownloadTemplate } = useDownloadTemplate()
+
+  const { formik, keys, options, step, response, setStep } = useReviewImport(data)
 
   const columns = [
     { Header: 'System', accessor: 'System' },
@@ -34,9 +36,6 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
   const renderTable = React.useMemo(
     () => (
       <>
-        {/* <DataGrid
-        data={data.map((item, index) => ({ ...item, id: index + 1 })) || []}
-        columnConfig={config} /> */}
         <Table columns={columns} data={data} />
       </>
     ),
