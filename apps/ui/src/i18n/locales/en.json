@@ -116,6 +116,7 @@
   "edit-team": "Edit $t(team)",
   "edit-datasource": "Edit $t(datasource)",
   "edit-team-of-agents": "Edit Team Of Agents",
+  "edit-fine-tuning": "Edit Fine-Tuning",
   "edit-and-mange-team": "Edit and manage your team of AI agents for interactive experiences",
   "email": "Email",
   "enter-email": "Enter email...",
