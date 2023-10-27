@@ -11,9 +11,10 @@ import UploadButton from 'components/UploadButton'
 import { ButtonTertiary } from 'components/Button/Button'
 
 const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
-  const { handleFileChange, step, parsedCsvData, setStep, handleDownloadTemplate } = useImportFile({
-    setFieldValue: setFieldValue,
-  })
+  const { handleFileChange, step, parsedData, setStep, handleDownloadTemplate, handleUploadJson } =
+    useImportFile({
+      setFieldValue: setFieldValue,
+    })
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {
@@ -25,13 +26,14 @@ const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
             </ButtonTertiary>
 
             <UploadButton onChange={handleFileChange} isLoading={false} label={'Upload CSV'} />
+            <UploadButton onChange={handleUploadJson} isLoading={false} label={'Upload JSON'} />
           </StyledButtonContainer>
         )
 
       case 1:
         return (
           <>
-            <ReviewImport data={parsedCsvData} setStep={setStep} />
+            <ReviewImport data={parsedData} setStep={setStep} />
           </>
         )
 

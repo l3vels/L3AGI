@@ -17,15 +17,12 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
 
-import { useModal } from 'hooks'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
 
   const navigate = useNavigate()
-
-  const { openModal } = useModal()
 
   const { data: models } = useModelsService()
 
@@ -35,7 +32,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
     // openModal({ name: 'create-fine-tuning-modal' })
     navigate('/models/create-fine-tuning')
   }
-  console.log(models)
+
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>

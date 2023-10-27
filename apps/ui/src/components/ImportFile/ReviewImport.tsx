@@ -26,9 +26,9 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
     useReviewImport(data)
 
   const columns = [
-    { Header: 'System', accessor: 'system' },
-    { Header: 'User', accessor: 'user' },
-    { Header: 'Assistant', accessor: 'assistant' },
+    { Header: 'System', accessor: 'System' },
+    { Header: 'User', accessor: 'User' },
+    { Header: 'Assistant', accessor: 'Assistant' },
   ]
   const renderTable = React.useMemo(
     () => (
