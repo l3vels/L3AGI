@@ -30,7 +30,7 @@ def create_fine_tuning(
         auth.account.id,
     )
 
-    settings = ConfigModel.get_account_settings(db, auth.account)
+    settings = ConfigModel.get_account_settings(db.session, auth.account)
 
     if not settings.openai_api_key:
         raise HTTPException(

@@ -5,9 +5,11 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 
 import s3fs
+from langchain.embeddings import OpenAIEmbeddings
 from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
                          SummaryIndex, TreeIndex, VectorStoreIndex,
                          load_index_from_storage)
+from llama_index.embeddings import LangchainEmbedding
 from llama_index.llms import LangChainLLM
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.vector_stores.types import VectorStore
@@ -126,12 +128,22 @@ class FileDatasourceRetriever:
         self.download_documents(file_urls)
         documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
 
-        service_context = ServiceContext.from_defaults(chunk_size=self.chunk_size)
+        embed_model = LangchainEmbedding(
+            OpenAIEmbeddings(
+                openai_api_key=self.settings.openai_api_key, show_progress_bar=True
+            )
+        )
+
+        service_context = ServiceContext.from_defaults(
+            chunk_size=self.chunk_size, embed_model=embed_model
+        )
+
+        # service_context = ServiceContext.from_defaults(chunk_size=self.chunk_size)
 
         # Create index from documents
         if self.index_type == IndexType.SUMMARY.value:
             self.index = SummaryIndex.from_documents(
-                documents, service_context=service_context
+                documents, service_context=service_context, show_progress=True
             )
         elif self.index_type == IndexType.VECTOR_STORE.value:
             vector_store = self.get_vector_store()
@@ -141,10 +153,11 @@ class FileDatasourceRetriever:
                 documents,
                 service_context=service_context,
                 storage_context=storage_context,
+                show_progress=True,
             )
         elif self.index_type == IndexType.TREE.value:
             self.index = TreeIndex.from_documents(
-                documents, service_context=service_context
+                documents, service_context=service_context, show_progress=True
             )
 
         # Persist index to S3

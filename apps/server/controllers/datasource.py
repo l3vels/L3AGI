@@ -1,26 +1,22 @@
-from typing import List, Optional
-from fastapi import APIRouter, HTTPException, Depends
-from fastapi_sqlalchemy import db
-from sqlalchemy import create_engine, MetaData, text
 from concurrent.futures import ThreadPoolExecutor
+from typing import List, Optional
 
-from models.datasource import DatasourceModel
-from models.config import ConfigModel
-from typings.datasource import (
-    DatasourceOutput,
-    DatasourceInput,
-    DatasourceSQLTableOutput,
-)
-from utils.auth import authenticate
-from typings.auth import UserAccount
-from utils.datasource import (
-    convert_datasources_to_datasource_list,
-    convert_model_to_response,
-)
-from exceptions import DatasourceNotFoundException
-from datasources.get_datasources import get_all_datasources
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi_sqlalchemy import db
+from sqlalchemy import MetaData, create_engine, text
+
 from datasources.base import DatasourceType
+from datasources.get_datasources import get_all_datasources
+from exceptions import DatasourceNotFoundException
+from models.config import ConfigModel
+from models.datasource import DatasourceModel
+from typings.auth import UserAccount
 from typings.config import ConfigQueryParams
+from typings.datasource import (DatasourceInput, DatasourceOutput,
+                                DatasourceSQLTableOutput)
+from utils.auth import authenticate
+from utils.datasource import (convert_datasources_to_datasource_list,
+                              convert_model_to_response)
 
 router = APIRouter()
 
@@ -44,7 +40,7 @@ def create_datasource(
         db, datasource=datasource, user=auth.user, account=auth.account
     )
     return convert_model_to_response(
-        DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account)
+        DatasourceModel.get_datasource_by_id(db.session, db_datasource.id, auth.account)
     )
 
 
@@ -70,7 +66,9 @@ def update_datasource(
             db, id=id, datasource=datasource, user=auth.user, account=auth.account
         )
         return convert_model_to_response(
-            DatasourceModel.get_datasource_by_id(db, db_datasource.id, auth.account)
+            DatasourceModel.get_datasource_by_id(
+                db.session, db_datasource.id, auth.account
+            )
         )
 
     except DatasourceNotFoundException:
@@ -126,7 +124,7 @@ def get_sql_tables(
 
     if id:
         datasource = DatasourceModel.get_datasource_by_id(
-            db, datasource_id=id, account=auth.account
+            db.session, datasource_id=id, account=auth.account
         )
 
         if not datasource or datasource.is_deleted:
@@ -203,7 +201,7 @@ def get_datasource_by_id(
         DatasourceOutput: Datasource associated with the given ID.
     """
     db_datasource = DatasourceModel.get_datasource_by_id(
-        db, datasource_id=id, account=auth.account
+        db.session, datasource_id=id, account=auth.account
     )
 
     if not db_datasource or db_datasource.is_deleted:

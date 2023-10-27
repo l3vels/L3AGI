@@ -24,8 +24,12 @@ router = APIRouter()
 
 # TODO: refactor update method in models to be flexible.
 def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
-    settings = ConfigModel.get_account_settings(db, account)
-    datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
+    from models.db import create_session
+
+    session = create_session()
+
+    settings = ConfigModel.get_account_settings(session, account)
+    datasource = DatasourceModel.get_datasource_by_id(session, datasource_id, account)
 
     try:
         value = json.loads(value)
@@ -50,15 +54,16 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
 
         datasource.status = DatasourceStatus.READY.value
     except Exception as err:
+        print(err)
         sentry_sdk.capture_exception(err)
         datasource.status = DatasourceStatus.FAILED.value
 
-    db.session.add(datasource)
-    db.session.commit()
+    session.add(datasource)
+    session.commit()
 
 
 @router.post("", status_code=201, response_model=ConfigOutput)
-def create_config(
+async def create_config(
     config: ConfigInput,
     background_tasks: BackgroundTasks,
     auth: UserAccount = Depends(authenticate),
