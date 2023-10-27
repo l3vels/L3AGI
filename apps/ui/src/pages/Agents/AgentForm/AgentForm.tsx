@@ -329,13 +329,6 @@ export const StyledCombinedFields = styled.div`
   justify-content: space-between;
 
   gap: 20px;
-  .dropdown-wrapper.primary__wrapper.css-7xl64p-container {
-    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
-    height: auto;
-  }
-  .css-ugu73m-placeholder {
-    color: ${({ theme }) => theme.body.textColorPrimary};
-  }
 `
 const StyledTabsWrapper = styled.div`
   position: sticky;

@@ -5,7 +5,7 @@ import { FineTuningInput } from './useCreateFineTuningService'
 export const useUpdateFineTuningService = () => {
   const [mutation] = useMutation(UPDATE_FINE_TUNING_GQL)
   const updateFineTuning = async (id: string, input: FineTuningInput) => {
-    const { name, file_url } = input
+    const { name, file_url, model_id } = input
 
     const { data } = await mutation({
       variables: {
@@ -13,6 +13,7 @@ export const useUpdateFineTuningService = () => {
         input: {
           name,
           file_url,
+          model_id,
         },
       },
     })

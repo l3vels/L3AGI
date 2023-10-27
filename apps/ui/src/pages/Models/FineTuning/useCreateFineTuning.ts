@@ -20,6 +20,7 @@ export const useCreateFineTuning = () => {
   const initialValues = {
     fine_tuning_name: '',
     fine_tuning_file_url: '',
+    fine_tuning_model: '',
   }
 
   const handleSubmit = async (values: any) => {
@@ -29,6 +30,7 @@ export const useCreateFineTuning = () => {
       const fineTuningInput = {
         name: values.fine_tuning_name,
         file_url: values.fine_tuning_file_url,
+        model_id: values.fine_tuning_model,
       }
 
       await createFineTuningService(fineTuningInput)
