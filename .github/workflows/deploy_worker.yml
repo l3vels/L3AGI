@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest -f apps/worker/docker/Dockerfile.beat apps/server
+           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest -f apps/worker/docker/Dockerfile.beat apps/worker
            docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest
            echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest -f apps/worker/docker/Dockerfile.worker apps/server
+           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest -f apps/worker/docker/Dockerfile.worker apps/worker
            docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest
            echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
   
