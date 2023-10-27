@@ -13,25 +13,27 @@ import { ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { useDownloadTemplate } from './useDownloadTemplate'
 
-// import DataGrid from 'components/DataGrid'
-
-const SelectHeader = ({ options, item, index }: any) =>
-  React.useMemo(
-    () => <Dropdown options={options} name={item} placeholder={item} label={item} key={index} />,
-    [options],
-  )
-
 const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any }) => {
-  const itemLength = 11
-
   const { handleDownloadTemplate } = useDownloadTemplate()
 
   const { formik, keys, options, step, response, setStep } = useReviewImport(data)
 
   const columns = [
-    { Header: 'System', accessor: 'System' },
-    { Header: 'User', accessor: 'User' },
-    { Header: 'Assistant', accessor: 'Assistant' },
+    {
+      Header: 'System',
+      accessor: 'System',
+      minWidth: 75,
+    },
+    {
+      Header: 'User',
+      accessor: 'User',
+      minWidth: 75,
+    },
+    {
+      Header: 'Assistant',
+      accessor: 'Assistant',
+      minWidth: 75,
+    },
   ]
   const renderTable = React.useMemo(
     () => (
