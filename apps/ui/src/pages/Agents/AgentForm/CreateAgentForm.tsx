@@ -18,6 +18,7 @@ import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import { useCreateAgent } from '../useCreateAgent'
 import { t } from 'i18next'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useCreateAgent()
@@ -58,13 +59,6 @@ const CreateAgentForm = () => {
 
 export default CreateAgentForm
 
-export const StyledFormWrapper = styled.div`
-  width: 100%;
-
-  height: calc(100vh - 250px);
-
-  max-height: 1500px;
-`
 export const StyledButtonWrapper = styled.div`
   display: flex;
   align-items: flex-end;

@@ -1,7 +1,7 @@
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import { FormikProvider } from 'formik'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import {
   StyledForm,
   StyledInputWrapper,
@@ -27,6 +27,7 @@ import {
 } from 'pages/Home/homeStyle.css'
 import { t } from 'i18next'
 import FineTuningForm from './FineTuningForm'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const CreateFineTuningForm = () => {
   const { formik, isLoading } = useCreateFineTuning()

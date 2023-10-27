@@ -12,10 +12,11 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
 import ContactForm from './ContactForm'
 import { useEditContact } from '../useEditContact'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const EditContactForm = () => {
   const { isLoading, formik } = useEditContact()
