@@ -1,16 +1,13 @@
 import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
 import React, { useContext } from 'react'
-import { useGetDownloadUrl, useParseCsvToJsonService } from 'services'
-import { templateData } from './constants'
 
 const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   const { setToast } = useContext(ToastContext)
 
   const [step, setStep] = React.useState<number>(0)
+  const [fileIsLoading, setFileIsLoading] = React.useState(false)
   const [parsedData, setParsedData] = React.useState<any>([])
-  const { parseCsvToJson } = useParseCsvToJsonService()
-  // const { data: template } = useGetDownloadUrl('template/Template_asset.csv')
 
   const { uploadFile } = useUploadFile()
 
@@ -26,6 +23,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   }
 
   const handleUploadJson = async (e: any) => {
+    setFileIsLoading(true)
     const { files } = e.target
 
     if (!files) return
@@ -67,6 +65,8 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       }
       reader.readAsText(file)
     }
+
+    setFileIsLoading(false)
   }
 
   const handleFileChange = async (e: any) => {
@@ -106,6 +106,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     parsedData,
     setStep,
     handleConvertData,
+    fileIsLoading,
   }
 }
 

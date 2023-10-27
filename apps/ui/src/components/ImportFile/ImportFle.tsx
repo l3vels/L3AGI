@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
-
-// import FileUploadField from 'atoms/FileUploadField'
 
 import ReviewImport, { StyledButtonContainer } from './ReviewImport'
 
 import useImportFile from './useImportFile'
+
 import Button from '@l3-lib/ui-core/dist/Button'
 import UploadButton from 'components/UploadButton'
 import { ButtonTertiary } from 'components/Button/Button'
-import { t } from 'i18next'
 import { useDownloadTemplate } from './useDownloadTemplate'
+
+import { t } from 'i18next'
 
 const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
   const {
@@ -20,6 +20,7 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     setStep,
     handleUploadJson,
     handleConvertData,
+    fileIsLoading,
   } = useImportFile({
     setFieldValue: setFieldValue,
   })
@@ -57,7 +58,11 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
             </ButtonTertiary>
 
             {/* <UploadButton onChange={handleFileChange} isLoading={false} label={t('upload-csv')} /> */}
-            <UploadButton onChange={handleUploadJson} isLoading={false} label={t('upload-json')} />
+            <UploadButton
+              onChange={handleUploadJson}
+              isLoading={fileIsLoading}
+              label={t('upload-json')}
+            />
           </StyledButtonContainer>
         )
 
@@ -85,6 +90,4 @@ export default ImportFile
 export const StyledFormSection = styled.div<{ columns?: string }>`
   width: 100%;
   height: 100%;
-
-  /* max-width: 800px; */
 `
