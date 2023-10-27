@@ -43,20 +43,25 @@ const FineTunings = () => {
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {fineTuningData?.map((fineTuning: any, index: number) => {
-            const deleteHandler = () => {
+            const handleDelete = () => {
               deleteFineTuningHandler(fineTuning.id)
+            }
+
+            const handleEdit = () => {
+              navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
             }
 
             const filteredModel = modelOptions?.filter(
               (model: any) => model.value === fineTuning.model_id,
-            )[0]
+            )?.[0]
 
             return (
               <TempCard
                 key={index}
                 name={fineTuning.name}
-                description={filteredModel.label}
-                onDeleteClick={deleteHandler}
+                description={filteredModel?.label || ''}
+                onDeleteClick={handleDelete}
+                onEditClick={handleEdit}
               />
             )
           })}

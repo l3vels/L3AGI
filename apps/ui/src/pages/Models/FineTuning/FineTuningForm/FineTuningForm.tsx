@@ -30,7 +30,7 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 const FineTuningForm = ({ formik }: { formik: any }) => {
   const { setFieldValue, values } = formik
-  const { fine_tuning_model } = values
+  const { fine_tuning_model, fine_tuning_file_url } = values
 
   const { modelOptions } = useFineTuningForm()
 
@@ -71,7 +71,7 @@ const FineTuningForm = ({ formik }: { formik: any }) => {
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
               <TabPanel>
-                <ImportFile setFieldValue={formik?.setFieldValue} />
+                <ImportFile setFieldValue={formik?.setFieldValue} value={fine_tuning_file_url} />
               </TabPanel>
             </TabPanels>
           </TabsContext>

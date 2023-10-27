@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 // import FileUploadField from 'atoms/FileUploadField'
@@ -11,11 +11,17 @@ import UploadButton from 'components/UploadButton'
 import { ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
 
-const ImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
+const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
   const { handleFileChange, step, parsedData, setStep, handleDownloadTemplate, handleUploadJson } =
     useImportFile({
       setFieldValue: setFieldValue,
     })
+
+  useEffect(() => {
+    if (value.length > 0) {
+      setStep(1)
+    }
+  }, [])
 
   function renderTabs(tabIndex: number) {
     switch (tabIndex) {

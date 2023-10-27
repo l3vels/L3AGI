@@ -92,6 +92,7 @@ import ScheduleRunModal from 'modals/ScheduleRunModal'
 import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 import CreateFineTuningModal from 'modals/CreateFineTuningModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
+import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -248,6 +249,11 @@ const Route = () => {
               <Router
                 path={'create-fine-tuning'}
                 element={<CreateFineTuningForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':fineTuningId/edit-fine-tuning'}
+                element={<EditFineTuningForm />}
                 key={document.location.href}
               />
             </Router>

@@ -3,8 +3,6 @@ import { ButtonPrimary } from 'components/Button/Button'
 import { FormikProvider } from 'formik'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
-import { useCreateFineTuning } from '../useCreateFineTuning'
-
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
@@ -17,16 +15,19 @@ import {
 import { t } from 'i18next'
 import FineTuningForm from './FineTuningForm'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { useEditFineTuning } from '../useEditFineTuning'
 
-const CreateFineTuningForm = () => {
-  const { formik, isLoading } = useCreateFineTuning()
+const EditFineTuningForm = () => {
+  const { formik, isLoading } = useEditFineTuning()
+
+  if (!formik?.values) return <div />
 
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>{`${t('add-fine-tuning')}`}</StyledSectionTitle>
+            <StyledSectionTitle>{`${t('edit-fine-tuning')}`}</StyledSectionTitle>
             {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
           </div>
 
@@ -52,4 +53,4 @@ const CreateFineTuningForm = () => {
   )
 }
 
-export default CreateFineTuningForm
+export default EditFineTuningForm
