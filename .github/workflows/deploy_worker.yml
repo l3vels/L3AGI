@@ -1,11 +1,11 @@
-name: Deploy Backend API
+name: Deoloy worker
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'apps/worker/**'
+    # paths:
+      # - 'apps/worker/**'
 
 
 env:
