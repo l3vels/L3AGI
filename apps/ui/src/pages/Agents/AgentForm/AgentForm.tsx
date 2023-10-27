@@ -20,6 +20,7 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import UploadAvatar from 'components/UploadAvatar'
+import { StyledFormRoot } from 'styles/formStyles.css'
 
 type AgentFormProps = {
   formik: any
@@ -59,9 +60,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <StyledRoot>
-      <StyledTabsWrapper>
-        <StyledTabList size='small'>
+    <StyledFormRoot>
+      <StyledFormTabsWrapper>
+        <StyledFormTabList size='small'>
           <StyledTab onClick={() => setActiveTab(0)}>
             <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
           </StyledTab>
@@ -77,8 +78,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           {/* <StyledTab onClick={() => setActiveTab(4)}>
             <StyledSpan>Voice Preferences</StyledSpan>
           </StyledTab> */}
-        </StyledTabList>
-      </StyledTabsWrapper>
+        </StyledFormTabList>
+      </StyledFormTabsWrapper>
       <StyledForm>
         <StyledInputWrapper>
           <TabsContext activeTabId={activeTab}>
@@ -250,20 +251,11 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           </TabsContext>
         </StyledInputWrapper>
       </StyledForm>
-    </StyledRoot>
+    </StyledFormRoot>
   )
 }
 
 export default AgentForm
-
-const StyledRoot = styled.div`
-  width: 100%;
-
-  height: 100%;
-  overflow-y: scroll;
-
-  display: flex;
-`
 
 const StyledForm = styled.div`
   width: 100%;
@@ -330,22 +322,21 @@ export const StyledCombinedFields = styled.div`
 
   gap: 20px;
 `
-const StyledTabsWrapper = styled.div`
+export const StyledFormTabsWrapper = styled.div`
   position: sticky;
   top: 0;
 `
 
-const StyledTabList = styled(TabList)`
+export const StyledFormTabList = styled(TabList)`
   .tabs-list {
     display: flex;
     flex-direction: column;
-    /* border: ${({ theme }) => theme.body.secondaryBorder}; */
     padding: 20px 5px;
     border-radius: 10px;
   }
 `
 
-const StyledSpan = styled.span<{ isActive: boolean }>`
+export const StyledSpan = styled.span<{ isActive: boolean }>`
   width: 150px;
   color: ${({ theme }) => theme.body.textColorSecondary};
 
@@ -355,7 +346,7 @@ const StyledSpan = styled.span<{ isActive: boolean }>`
       color: ${({ theme }) => theme.body.textColorPrimary};
     `};
 `
-const StyledTabPanelInnerWrapper = styled(TabPanel)`
+export const StyledTabPanelInnerWrapper = styled(TabPanel)`
   display: flex;
   flex-direction: column;
 
@@ -368,7 +359,7 @@ const StyledTabPanelInnerWrapper = styled(TabPanel)`
   height: 100%;
   /* max-height: 800px; */
 `
-const StyledTab = styled(Tab)`
+export const StyledTab = styled(Tab)`
   &.active .tab-inner {
     background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
   }

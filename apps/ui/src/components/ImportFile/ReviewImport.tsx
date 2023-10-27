@@ -41,7 +41,6 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
     ),
     [data],
   )
-  console.log('data', data)
 
   return (
     <>
