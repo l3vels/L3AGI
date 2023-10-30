@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import Table from 'components/Table'
-import { ButtonTertiary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { useDownloadTemplate } from './useDownloadTemplate'
 
@@ -57,9 +57,9 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
                 {/* <ButtonTertiary onClick={formik.handleSubmit} size={Button.sizes.SMALL}>
                   Save
                 </ButtonTertiary> */}
-                <ButtonTertiary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
+                <ButtonPrimary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
                   {t('start-over')}
-                </ButtonTertiary>
+                </ButtonPrimary>
               </StyledButtonContainer>
               {/* <StyledHeaderContainer itemLength={itemLength}>
                 {keys.map((item: any, index: number) => (
