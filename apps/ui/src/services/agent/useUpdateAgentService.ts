@@ -23,6 +23,7 @@ export const useUpdateAgentService = () => {
       greeting,
       text,
       avatar,
+      integrations,
     } = input
 
     const { data } = await mutation({
@@ -48,6 +49,7 @@ export const useUpdateAgentService = () => {
             suggestions: suggestions,
             greeting: greeting,
             text: text,
+            integrations: integrations,
           },
         },
       },

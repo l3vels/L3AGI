@@ -313,5 +313,8 @@
   "final-answer": "Final Answer",
   "input": "Input",
   "output": "Output",
-  "error": "Error"
+  "error": "Error",
+  "connect-telegram-bot": "Connect Telegram Bot",
+  "telegram-bot-api-token": "Telegram Bot API Token",
+  "telegram-bot-username": "Telegram Bot Username"
 }
