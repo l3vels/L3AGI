@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Mapping, Optional
 
 from pydantic import UUID4, BaseModel
 
@@ -27,6 +27,7 @@ class ConfigInput(BaseModel):
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
+    integrations: List[dict]
 
 
 class AgentConfigInput(BaseModel):
@@ -45,6 +46,7 @@ class ConfigsOutput(BaseModel):
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
+    integrations: List[dict]
 
 
 class AgentOutput(BaseModel):
