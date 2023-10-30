@@ -144,39 +144,37 @@ class FileDatasourceRetriever:
             chunk_size=self.chunk_size, embed_model=embed_model
         )
 
-        try:
-            self.load_index()
-        except FileNotFoundError:
-            # Create index from documents
-            if self.index_type == IndexType.SUMMARY.value:
-                self.index = SummaryIndex.from_documents(
-                    documents, service_context=service_context, show_progress=True
-                )
-            elif self.index_type == IndexType.VECTOR_STORE.value:
-                vector_store = self.get_vector_store()
-                storage_context = StorageContext.from_defaults(
-                    vector_store=vector_store
-                )
+        # try:
+        #     self.load_index()
+        # except FileNotFoundError:
+        # Create index from documents
+        if self.index_type == IndexType.SUMMARY.value:
+            self.index = SummaryIndex.from_documents(
+                documents, service_context=service_context, show_progress=True
+            )
+        elif self.index_type == IndexType.VECTOR_STORE.value:
+            vector_store = self.get_vector_store()
+            storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
-                self.index = VectorStoreIndex.from_documents(
-                    documents,
-                    service_context=service_context,
-                    storage_context=storage_context,
-                    show_progress=True,
-                )
-            elif self.index_type == IndexType.TREE.value:
-                self.index = TreeIndex.from_documents(
-                    documents, service_context=service_context, show_progress=True
-                )
+            self.index = VectorStoreIndex.from_documents(
+                documents,
+                service_context=service_context,
+                storage_context=storage_context,
+                show_progress=True,
+            )
+        elif self.index_type == IndexType.TREE.value:
+            self.index = TreeIndex.from_documents(
+                documents, service_context=service_context, show_progress=True
+            )
 
-            self.index.set_index_id(self.datasource_id)
+        self.index.set_index_id(self.datasource_id)
 
         # Refresh docs if re-indexing
-        self.index.refresh_ref_docs(
-            documents,
-            service_context=service_context,
-            update_kwargs={"delete_kwargs": {"delete_from_docstore": True}},
-        )
+        # self.index.refresh_ref_docs(
+        #     documents,
+        #     service_context=service_context,
+        #     update_kwargs={"delete_kwargs": {"delete_from_docstore": True}},
+        # )
 
         # Persist index to S3
         self.index.storage_context.persist(persist_dir=self.index_persist_dir, fs=s3)
