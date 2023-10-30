@@ -11,6 +11,7 @@ from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
                          load_index_from_storage)
 from llama_index.embeddings import LangchainEmbedding
 from llama_index.llms import LangChainLLM
+from llama_index.query_engine.pandas_query_engine import PandasQueryEngine
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.vector_stores.types import VectorStore
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
@@ -49,6 +50,7 @@ class FileDatasourceRetriever:
     index_type: str
     response_mode: str
     vector_store: str
+    similarity_top_k: int
     chunk_size: int
     agent_with_configs: AgentWithConfigsOutput
 
@@ -62,6 +64,7 @@ class FileDatasourceRetriever:
         datasource_id: str,
         agent_with_configs: Optional[AgentWithConfigsOutput] = None,
         chunk_size: Optional[int] = 1024,
+        similarity_top_k: Optional[int] = 2,
     ) -> None:
         self.settings = settings
         self.datasource_id = datasource_id
@@ -70,6 +73,7 @@ class FileDatasourceRetriever:
         self.response_mode = response_mode
         self.vector_store = vector_store
         self.chunk_size = chunk_size
+        self.similarity_top_k = similarity_top_k
         self.agent_with_configs = agent_with_configs
 
         self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
@@ -197,8 +201,17 @@ class FileDatasourceRetriever:
         )
 
         query_engine = self.index.as_query_engine(
-            response_mode=self.response_mode, service_context=service_context
+            response_mode=self.response_mode,
+            service_context=service_context,
+            similarity_top_k=self.similarity_top_k,
+            verbose=True,
         )
 
         result = query_engine.query(query_str)
-        return result
+
+        for source in result.source_nodes:
+            print("----------------------------------------------")
+            print(source.text)
+            print("----------------------------------------------")
+
+        return result.response

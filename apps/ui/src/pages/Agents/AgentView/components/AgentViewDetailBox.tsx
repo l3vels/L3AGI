@@ -45,7 +45,6 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { closeModal, openModal } = useModal()
 
   const { agent, configs } = agentData
-  console.log('agent', agent)
   const { name, description, role, creator, is_template } = agent
 
   const { model_version, model_provider, temperature } = configs

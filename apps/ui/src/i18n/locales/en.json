@@ -321,5 +321,6 @@
   "final-answer": "Final Answer",
   "input": "Input",
   "output": "Output",
-  "error": "Error"
+  "error": "Error",
+  "similarity-top-k": "Similarity Top K"
 }

@@ -46,6 +46,7 @@ class FileDatasourceTool(BaseTool):
         response_mode = value["response_mode"]
         vector_store = value["vector_store"]
         chunk_size = value["chunk_size"]
+        similarity_top_k = value["similarity_top_k"]
 
         retriever = FileDatasourceRetriever(
             self.settings,
@@ -56,6 +57,7 @@ class FileDatasourceTool(BaseTool):
             datasource_id,
             self.agent_with_configs,
             chunk_size,
+            similarity_top_k,
         )
         retriever.load_index()
         result = retriever.query(question)
