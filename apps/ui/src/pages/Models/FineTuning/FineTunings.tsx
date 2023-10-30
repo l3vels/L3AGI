@@ -52,13 +52,13 @@ const FineTunings = () => {
       {
         Header: 'Status',
         accessor: 'status',
-        width: 100,
+        width: 250,
       },
 
       {
         Header: 'Actions',
         accessor: 'id',
-        width: 100,
+        width: 250,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>

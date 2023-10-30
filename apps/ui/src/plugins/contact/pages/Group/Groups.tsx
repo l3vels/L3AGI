@@ -39,16 +39,17 @@ const Groups = () => {
       {
         Header: 'Name',
         accessor: 'name',
+        width: 400,
       },
       {
         Header: 'Description',
         accessor: 'description',
+        width: 400,
       },
-
       {
         Header: 'Actions',
         accessor: 'id',
-        // maxWidth: 100,
+        width: 300,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
