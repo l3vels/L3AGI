@@ -1,7 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import Route from './Route'
 
-import Wagmi from 'utils/wagmi'
 import { ApolloProvider } from '@apollo/client'
 import * as Sentry from '@sentry/react'
 
@@ -26,23 +25,21 @@ function App() {
 
   return (
     <Sentry.ErrorBoundary>
-      <Wagmi>
-        <ApolloProvider client={client}>
-          <ModalsProvider>
-            <BrowserRouter>
-              <SnackbarProvider>
-                <ToastProvider>
-                  <AuthProvider>
-                    <LayoutProvider>
-                      <Route />
-                    </LayoutProvider>
-                  </AuthProvider>
-                </ToastProvider>
-              </SnackbarProvider>
-            </BrowserRouter>
-          </ModalsProvider>
-        </ApolloProvider>
-      </Wagmi>
+      <ApolloProvider client={client}>
+        <ModalsProvider>
+          <BrowserRouter>
+            <SnackbarProvider>
+              <ToastProvider>
+                <AuthProvider>
+                  <LayoutProvider>
+                    <Route />
+                  </LayoutProvider>
+                </AuthProvider>
+              </ToastProvider>
+            </SnackbarProvider>
+          </BrowserRouter>
+        </ModalsProvider>
+      </ApolloProvider>
     </Sentry.ErrorBoundary>
   )
 }
