@@ -9,16 +9,19 @@ import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
+import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import {
   StyledDeleteIcon,
   StyledEditIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { textSlicer } from 'utils/textSlicer'
+import { Nullable } from 'types'
 
 type DatasourceCardProps = {
   name: string
   description: string
   status: string
+  error: Nullable<string>
   onEditClick: () => void
   onDeleteClick: () => void
   imageSrc: string
@@ -38,6 +41,7 @@ const DatasourceCard = ({
   name,
   description,
   status,
+  error,
   onEditClick,
   onDeleteClick,
   imageSrc,
@@ -63,15 +67,22 @@ const DatasourceCard = ({
       </StyledBodyWrapper>
 
       <StyledCardFooter>
-        <StyledStatus>
-          {statusIcon}
+        <Tooltip
+          content={() => (error ? <span>{error}</span> : null)}
+          position={Tooltip.positions.BOTTOM}
+          showDelay={100}
+          disabled
+        >
+          <StyledStatus>
+            {statusIcon}
 
-          <TypographyTertiary
-            value={status}
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
-          />
-        </StyledStatus>
+            <TypographyTertiary
+              value={status}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+            />
+          </StyledStatus>
+        </Tooltip>
 
         <StyledButtonsWrapper>
           <IconButton
