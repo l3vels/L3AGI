@@ -90,7 +90,8 @@ const FineTunings = () => {
       id: fineTuning.id,
       name: fineTuning.name,
       status: fineTuning.status,
-      model: modelOptions?.filter((model: any) => model.value === fineTuning.model_id)?.[0].label,
+      model: modelOptions?.filter((model: any) => model.value === fineTuning?.model_id).length > 0 ? 
+                modelOptions?.filter((model: any) => model.value === fineTuning?.model_id)?.[0].label: '',
     })) || []
 
   return (
