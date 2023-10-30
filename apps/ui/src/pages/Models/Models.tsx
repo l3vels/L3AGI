@@ -14,7 +14,8 @@ import { MODEL_PROVIDER_LOGOS } from './constants'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 import FineTunings from './FineTuning/FineTunings'
-import styled from 'styled-components'
+
+import { StyledRoot } from 'pages/Discover/Discover'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
@@ -60,9 +61,3 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 }
 
 export default Models
-
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-`
