@@ -92,6 +92,13 @@ const StyledRoot = styled.div`
   height: 100%;
   overflow: auto;
 
+  ::-webkit-scrollbar {
+    width: 0; /* This will hide the scrollbar */
+  }
+  body {
+    scrollbar-width: none; /* This will hide the scrollbar */
+  }
+
   border-radius: 24px;
   max-height: calc(100vh - 300px);
 `
