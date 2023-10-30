@@ -26,7 +26,7 @@ const Table = ({ columns, data }: TableProps) => {
   const defaultColumn = useMemo(
     () => ({
       width: 300,
-      minWidth: 100,
+      // minWidth: 100,
       // maxWidth: 100,
     }),
     [],
@@ -34,13 +34,13 @@ const Table = ({ columns, data }: TableProps) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
+      defaultColumn,
       columns,
       data,
-      defaultColumn,
     },
-    useResizeColumns,
     useFlexLayout,
     useBlockLayout,
+    useResizeColumns,
   )
 
   return (
@@ -55,6 +55,7 @@ const Table = ({ columns, data }: TableProps) => {
                   {...column.getHeaderProps()}
                   {...column.getResizerProps()}
                   minWidth={column.minWidth}
+                  maxWidth={column.maxWidth}
                   width={column.width}
                 >
                   <TypographyPrimary
