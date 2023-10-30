@@ -109,7 +109,7 @@ const StyledThead = styled.thead`
   background: #fff;
 
   display: flex;
-  z-index: 100000;
+  z-index: 1;
   position: sticky;
   top: 0px;
   margin: 0 0 0 0;

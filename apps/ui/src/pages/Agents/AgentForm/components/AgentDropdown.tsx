@@ -98,6 +98,9 @@ const StyledWrapper = styled.div`
   .css-ugu73m-placeholder {
     color: ${({ theme }) => theme.body.placeHolderColor};
   }
+  .menu {
+    z-index: 10;
+  }
 
   .menu.dropdown-menu-wrapper.css-19zapvn-menu {
     background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
