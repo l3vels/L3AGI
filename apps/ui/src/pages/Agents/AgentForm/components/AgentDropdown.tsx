@@ -144,4 +144,12 @@ const StyledWrapper = styled.div`
   .css-wxpx7r-menu {
     background-color: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
   }
+
+  .dropdown-wrapper.primary__wrapper.css-7xl64p-container {
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    height: auto;
+  }
+  .css-ugu73m-placeholder {
+    color: ${({ theme }) => theme.body.textColorPrimary};
+  }
 `

@@ -1,7 +1,7 @@
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
-import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 // TODO: fix after services types
 
@@ -19,29 +19,16 @@ const AgentRenderer = ({ params, options }: AgentRendererProps) => {
   const { agent } = agentWithConfigs
 
   return (
-    <StyledAgents>
-      <Tooltip content={agent.name}>
-        <TypographyPrimary
-          value={agent.role.length > 0 ? `${agent.name} - ${agent.role}` : agent.name}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </Tooltip>
-    </StyledAgents>
+    <Tooltip content={agent.name}>
+      <TypographySecondary
+        value={agent.role.length > 0 ? `${agent.name} - ${agent.role}` : agent.name}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.sm}
+      />
+    </Tooltip>
   )
 }
 
 export default AgentRenderer
 
-const StyledAgents = styled.div`
-  display: flex;
-  /* flex-wrap: wrap; */
-  justify-content: center;
-  gap: 5px;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-  min-width: fit-content;
-  max-height: 20px;
-`
+const StyledAgents = styled.div``

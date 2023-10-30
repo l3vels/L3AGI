@@ -29,10 +29,12 @@ const TempCard = ({
     <StyledCard>
       {/* <MemberText name={name} role={description} /> */}
 
-      <TypographyPrimary value={shortName} size={Typography.sizes.lg} />
-      <TypographySecondary value={shortdescription} size={Typography.sizes.sm} />
+      <StyledBody>
+        <TypographyPrimary value={shortName} size={Typography.sizes.lg} />
+        <TypographySecondary value={shortdescription} size={Typography.sizes.sm} />
+      </StyledBody>
 
-      <StyledButtonsWrapper className='hiddenButtons'>
+      <StyledFooter className='hiddenFooter'>
         {onDeleteClick && (
           <IconButton
             onClick={onDeleteClick}
@@ -51,7 +53,7 @@ const TempCard = ({
             // ariaLabel='Edit'
           />
         )}
-      </StyledButtonsWrapper>
+      </StyledFooter>
     </StyledCard>
   )
 }
@@ -61,12 +63,12 @@ export default TempCard
 const StyledCard = styled.div`
   position: relative;
 
-  width: 300px;
-  min-width: 300px;
-  height: 130px;
-  min-height: 130px;
+  width: 248px;
+  min-width: 248px;
+  height: 158px;
+  min-height: 158px;
 
-  padding: 0px 20px;
+  /* padding: 20px; */
 
   background: ${({ theme }) => theme.body.cardBgColor};
   border: ${({ theme }) => theme.body.border};
@@ -74,11 +76,12 @@ const StyledCard = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  justify-content: center;
+  justify-content: space-between;
 
   :hover {
-    .hiddenButtons {
+    .hiddenFooter {
       opacity: 1;
     }
   }
@@ -88,4 +91,22 @@ const StyledButtonsWrapper = styled.div`
   right: 5px;
 
   opacity: 0;
+`
+const StyledFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 40px;
+  width: 100%;
+
+  opacity: 0;
+`
+const StyledBody = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
 `

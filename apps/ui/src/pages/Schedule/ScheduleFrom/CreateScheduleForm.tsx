@@ -1,7 +1,7 @@
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import {
   StyledHeaderGroup,
   // StyledSectionDescription,
@@ -16,6 +16,7 @@ import { FormikProvider } from 'formik'
 
 import { useCreateSchedule } from '../useCreateSchedule'
 import ScheduleForm from './ScheduleForm'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 type CreateScheduleFormProps = {
   initialValues?: Record<string, unknown>

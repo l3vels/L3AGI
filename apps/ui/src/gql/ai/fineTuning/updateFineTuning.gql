@@ -1,0 +1,11 @@
+mutation updateFineTuning($id: id!, $input: input!) @api(name: "ai") {
+  updateFineTuning(id: $id, input: $input)
+    @rest(type: "FineTuning", path: "/fine-tuning/{args.id}", method: "PUT", endpoint: "ai") {
+    id
+    name
+    file_url
+    identifier
+    status
+    model_id
+  }
+}

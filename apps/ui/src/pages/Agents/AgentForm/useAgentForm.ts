@@ -13,7 +13,7 @@ export const useAgentForm = (formik: any) => {
   const { data: tools } = useToolsService()
   const { data: models } = useModelsService()
 
-  const modelOptions = models.map(({ id, name, provider }) => ({
+  const modelOptions = models?.map(({ id, name, provider }) => ({
     value: id,
     label: `${name} (${provider})`,
   }))
