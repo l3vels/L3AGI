@@ -14,12 +14,13 @@ import { t } from 'i18next'
 
 const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
   const {
-    // handleFileChange,
     step,
     parsedData,
     setStep,
     handleUploadJson,
-    handleConvertData,
+    handleConvertJson,
+    handleUploadCsv,
+    handleConvertCSVtoJSON,
     fileIsLoading,
   } = useImportFile({
     setFieldValue: setFieldValue,
@@ -29,7 +30,6 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
 
   useEffect(() => {
     if (value.length > 0) {
-      // Replace 'fileUrl' with the actual URL of the file you want to read.
       const fileUrl = value
 
       fetch(fileUrl)
@@ -37,10 +37,14 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
           if (!response.ok) {
             throw new Error(`Failed to fetch file: ${response.status} ${response.statusText}`)
           }
-          return response.text() // or response.json() for JSON files, response.blob() for binary files, etc.
+          return response.text()
         })
         .then(data => {
-          handleConvertData(data) // Update the state with the file content
+          if (fileUrl.endsWith('.json')) {
+            handleConvertJson(data)
+          } else if (fileUrl.endsWith('.csv')) {
+            handleConvertCSVtoJSON(data)
+          }
         })
         .catch(error => {
           console.error('Error fetching file:', error)
@@ -57,7 +61,7 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
               {t('download-template')}
             </ButtonTertiary>
 
-            {/* <UploadButton onChange={handleFileChange} isLoading={false} label={t('upload-csv')} /> */}
+            <UploadButton onChange={handleUploadCsv} isLoading={false} label={t('upload-csv')} />
             <UploadButton
               onChange={handleUploadJson}
               isLoading={fileIsLoading}

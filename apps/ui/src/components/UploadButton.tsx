@@ -6,7 +6,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
-import { ButtonSecondary, ButtonTertiary } from './Button/Button'
+import { ButtonPrimary } from './Button/Button'
 
 type UploadButtonProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -27,9 +27,9 @@ const UploadButton = ({ onChange, isLoading, label }: UploadButtonProps) => {
       {isLoading ? (
         <Loader size={20} />
       ) : label ? (
-        <ButtonTertiary onClick={onAddButtonClick} size={Button.sizes.SMALL}>
+        <ButtonPrimary onClick={onAddButtonClick} size={Button.sizes.SMALL}>
           {label}
-        </ButtonTertiary>
+        </ButtonPrimary>
       ) : (
         <IconButton
           size={IconButton.sizes.SMALL}

@@ -1,3 +1,6 @@
+import { useMemo } from 'react'
+import styled from 'styled-components'
+
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useTranslation } from 'react-i18next'
 import {
@@ -7,14 +10,22 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import { ButtonPrimary } from 'components/Button/Button'
+
 import Button from '@l3-lib/ui-core/dist/Button'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import { useNavigate } from 'react-router-dom'
-import TempCard from 'pages/Schedule/TempCard'
+
+import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import { useFineTuning } from './useFineTuning'
 import { useFineTuningForm } from './FineTuningForm/useFineTuningForm'
+
+import Table from 'components/Table'
+import {
+  StyledDeleteIcon,
+  StyledEditIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
 const FineTunings = () => {
   const { t } = useTranslation()
@@ -27,7 +38,61 @@ const FineTunings = () => {
 
   const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
   const { modelOptions } = useFineTuningForm()
-  console.log('fineTuningData', fineTuningData)
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'Model',
+        accessor: 'model',
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+        width: 250,
+      },
+
+      {
+        Header: 'Actions',
+        accessor: 'id',
+        width: 250,
+        Cell: ({ cell }: any) => {
+          return (
+            <StyledTableButtons>
+              <IconButton
+                onClick={() => deleteFineTuningHandler(cell.value)}
+                icon={() => <StyledDeleteIcon />}
+                size={IconButton.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='Delete'
+              />
+
+              <IconButton
+                onClick={() => navigate(`/models/${cell.value}/edit-fine-tuning`)}
+                icon={() => <StyledEditIcon />}
+                size={IconButton.sizes.SMALL}
+                kind={IconButton.kinds.TERTIARY}
+                // ariaLabel='Edit'
+              />
+            </StyledTableButtons>
+          )
+        },
+      },
+    ],
+    [],
+  )
+
+  const tableData =
+    fineTuningData?.map((fineTuning: any) => ({
+      id: fineTuning.id,
+      name: fineTuning.name,
+      status: fineTuning.status,
+      model: modelOptions?.filter((model: any) => model.value === fineTuning.model_id)?.[0].label,
+    })) || []
+
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
@@ -42,29 +107,7 @@ const FineTunings = () => {
 
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {fineTuningData?.map((fineTuning: any, index: number) => {
-            const handleDelete = () => {
-              deleteFineTuningHandler(fineTuning.id)
-            }
-
-            const handleEdit = () => {
-              navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
-            }
-
-            const filteredModel = modelOptions?.filter(
-              (model: any) => model.value === fineTuning.model_id,
-            )?.[0]
-
-            return (
-              <TempCard
-                key={index}
-                name={fineTuning.name}
-                description={filteredModel?.label || ''}
-                onDeleteClick={handleDelete}
-                onEditClick={handleEdit}
-              />
-            )
-          })}
+          <Table columns={columns} data={tableData} />
         </StyledCardsWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
@@ -72,3 +115,10 @@ const FineTunings = () => {
 }
 
 export default FineTunings
+
+const StyledTableButtons = styled.div`
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+`

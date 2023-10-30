@@ -5,6 +5,7 @@ import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCreateFineTuningService } from 'services/fineTuning/useCreateFineTuningService'
 import { useFineTuningsService } from 'services/fineTuning/useFIneTuningsService'
+import { fineTuningValidationSchema } from 'utils/validationsSchema'
 
 export const useCreateFineTuning = () => {
   const navigate = useNavigate()
@@ -20,6 +21,14 @@ export const useCreateFineTuning = () => {
     fine_tuning_name: '',
     fine_tuning_file_url: '',
     fine_tuning_model: '',
+  }
+
+  const handleErrorAlert = (errorMessage: string) => {
+    setToast({
+      message: errorMessage,
+      type: 'negative',
+      open: true,
+    })
   }
 
   const handleSubmit = async (values: any) => {
@@ -41,11 +50,7 @@ export const useCreateFineTuning = () => {
         open: true,
       })
     } catch (e) {
-      setToast({
-        message: 'Failed to create Fine-tuning!',
-        type: 'negative',
-        open: true,
-      })
+      handleErrorAlert('Failed to create Fine-tuning!')
     }
 
     setIsLoading(false)
@@ -54,9 +59,9 @@ export const useCreateFineTuning = () => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),
-    // validationSchema: agentValidationSchema,
+    validationSchema: fineTuningValidationSchema,
     // enableReinitialize: true,
   })
 
-  return { isLoading, formik }
+  return { isLoading, formik, handleErrorAlert }
 }
