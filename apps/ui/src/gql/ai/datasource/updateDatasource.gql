@@ -12,5 +12,6 @@ mutation updateDatasource($id: id!, $input: input!) @api(name: "ai") {
     account_id
     created_by
     modified_by
+    error
   }
 }

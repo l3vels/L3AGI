@@ -11,7 +11,6 @@ from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
                          load_index_from_storage)
 from llama_index.embeddings import LangchainEmbedding
 from llama_index.llms import LangChainLLM
-from llama_index.query_engine.pandas_query_engine import PandasQueryEngine
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.vector_stores.types import VectorStore
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
@@ -130,7 +129,10 @@ class FileDatasourceRetriever:
     def index_documents(self, file_urls: List[str]):
         # Read documents from S3 and store them in tmp directory
         self.download_documents(file_urls)
-        documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
+
+        documents = SimpleDirectoryReader(
+            self.datasource_path.resolve(), filename_as_id=True
+        ).load_data()
 
         embed_model = LangchainEmbedding(
             OpenAIEmbeddings(
@@ -142,30 +144,41 @@ class FileDatasourceRetriever:
             chunk_size=self.chunk_size, embed_model=embed_model
         )
 
-        # service_context = ServiceContext.from_defaults(chunk_size=self.chunk_size)
+        try:
+            self.load_index()
+        except FileNotFoundError:
+            # Create index from documents
+            if self.index_type == IndexType.SUMMARY.value:
+                self.index = SummaryIndex.from_documents(
+                    documents, service_context=service_context, show_progress=True
+                )
+            elif self.index_type == IndexType.VECTOR_STORE.value:
+                vector_store = self.get_vector_store()
+                storage_context = StorageContext.from_defaults(
+                    vector_store=vector_store
+                )
 
-        # Create index from documents
-        if self.index_type == IndexType.SUMMARY.value:
-            self.index = SummaryIndex.from_documents(
-                documents, service_context=service_context, show_progress=True
-            )
-        elif self.index_type == IndexType.VECTOR_STORE.value:
-            vector_store = self.get_vector_store()
-            storage_context = StorageContext.from_defaults(vector_store=vector_store)
+                self.index = VectorStoreIndex.from_documents(
+                    documents,
+                    service_context=service_context,
+                    storage_context=storage_context,
+                    show_progress=True,
+                )
+            elif self.index_type == IndexType.TREE.value:
+                self.index = TreeIndex.from_documents(
+                    documents, service_context=service_context, show_progress=True
+                )
 
-            self.index = VectorStoreIndex.from_documents(
-                documents,
-                service_context=service_context,
-                storage_context=storage_context,
-                show_progress=True,
-            )
-        elif self.index_type == IndexType.TREE.value:
-            self.index = TreeIndex.from_documents(
-                documents, service_context=service_context, show_progress=True
-            )
+            self.index.set_index_id(self.datasource_id)
+
+        # Refresh docs if re-indexing
+        self.index.refresh_ref_docs(
+            documents,
+            service_context=service_context,
+            update_kwargs={"delete_kwargs": {"delete_from_docstore": True}},
+        )
 
         # Persist index to S3
-        self.index.set_index_id(self.datasource_id)
         self.index.storage_context.persist(persist_dir=self.index_persist_dir, fs=s3)
 
         # Remove tmp directory
@@ -203,7 +216,9 @@ class FileDatasourceRetriever:
         query_engine = self.index.as_query_engine(
             response_mode=self.response_mode,
             service_context=service_context,
-            similarity_top_k=self.similarity_top_k,
+            similarity_top_k=self.similarity_top_k
+            if self.index_type == IndexType.VECTOR_STORE.value
+            else None,
             verbose=True,
         )
 

@@ -53,6 +53,7 @@ const Datasource = () => {
                 name={datasource.name}
                 description={datasource.description}
                 status={datasource.status}
+                error={datasource.error}
                 onEditClick={() => navigate(`/datasources/${datasource.id}/edit-datasource`)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
                 imageSrc={imageSrc}

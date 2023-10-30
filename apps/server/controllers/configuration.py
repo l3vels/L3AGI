@@ -55,10 +55,12 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
         retriever.index_documents(file_urls)
 
         datasource.status = DatasourceStatus.READY.value
+        datasource.error = None
     except Exception as err:
         print(err)
         sentry_sdk.capture_exception(err)
         datasource.status = DatasourceStatus.FAILED.value
+        datasource.error = str(err)
 
     session.add(datasource)
     session.commit()

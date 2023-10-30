@@ -34,7 +34,7 @@ class DatasourceModel(BaseModel):
     source_type = Column(String)  # Later add as Enum
     status = Column(String)  # Later add as Enum
     description = Column(String, nullable=True)
-    status = Column(String)
+    error = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
     workspace_id = Column(
