@@ -8,15 +8,16 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import { StyledWrapper } from './AgentToolkits'
 import TypographyPrimary from 'components/Typography/Primary'
 
-const AgentDatasources = ({ datasources }: any) => {
+type AgentDataSourcesProps = {
+  datasources: string[]
+}
+
+const AgentDatasources = ({ datasources }: AgentDataSourcesProps) => {
   const { t } = useTranslation()
-  const { data: datasourcesData } = useDatasourcesService()
-  const filteredDatasources = datasourcesData?.filter((datasource: any) => {
-    if (datasources?.includes(datasource.id)) {
-      return datasource
-    } else {
-      return
-    }
+  const { data: dataSources } = useDatasourcesService()
+
+  const filteredDatasources = dataSources?.filter(({ id }) => {
+    return datasources?.includes(id)
   })
 
   return (
@@ -28,9 +29,9 @@ const AgentDatasources = ({ datasources }: any) => {
       />
 
       <StyledInnerWrapper>
-        {filteredDatasources?.map((datasource: any, index: number) => {
+        {filteredDatasources?.map((datasource, index: number) => {
           const filteredLogos = DATA_LOADER_IMAGES.filter(
-            (loaderImages: any) => loaderImages.sourceName === datasource.source_type,
+            loaderImages => loaderImages.sourceName === datasource.source_type,
           )
 
           const imageSrc = filteredLogos?.[0]?.imageSrc || ''
