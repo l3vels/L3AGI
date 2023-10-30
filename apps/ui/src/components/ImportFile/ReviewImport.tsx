@@ -16,7 +16,7 @@ import { useDownloadTemplate } from './useDownloadTemplate'
 const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any }) => {
   const { handleDownloadTemplate } = useDownloadTemplate()
 
-  const { formik, keys, options, step, response, setStep } = useReviewImport(data)
+  const { formik, step, response, setStep } = useReviewImport(data)
 
   const columns = [
     {

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-import arrow
+# import arrow
 from fastapi_sqlalchemy import db
 
 from models.chat import ChatModel
