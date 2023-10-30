@@ -247,7 +247,7 @@ export const StyledInputWrapper = styled.div`
 
   gap: 20px;
   width: 100%;
-  max-width: 900px;
+  max-width: 800px;
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
