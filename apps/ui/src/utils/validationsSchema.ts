@@ -54,3 +54,13 @@ export const scheduleValidationSchema = yup.object().shape({
       }
     }),
 })
+
+export const fineTuningValidationSchema = yup.object().shape({
+  fine_tuning_name: yup
+    .string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Please enter name'),
+  fine_tuning_model: yup.string().required('Please pick Model'),
+  fine_tuning_file_url: yup.string().required('Please Upload File'),
+})

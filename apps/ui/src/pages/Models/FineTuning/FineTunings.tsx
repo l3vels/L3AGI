@@ -27,7 +27,7 @@ const FineTunings = () => {
 
   const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
   const { modelOptions } = useFineTuningForm()
-  console.log('fineTuningData', fineTuningData)
+
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
