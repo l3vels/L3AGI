@@ -5,15 +5,13 @@ import getSessionId from '../utils/getSessionId'
 import useUpdateChatCache from './useUpdateChatCache'
 import { useLocation } from 'react-router-dom'
 
-type UseChatSocketProps = {}
-
 const useChatSocket = () => {
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
   const [isNewMessage, setIsNewMessage] = useState(false)
 
-  const typingTimeoutRef: any = useRef(null)
+  const typingTimeoutRef = useRef<NodeJS.Timeout>()
 
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
@@ -38,11 +36,11 @@ const useChatSocket = () => {
   const getClientAccessUrl = useCallback(async () => {
     let url = ''
     if (user) {
-      url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${user.id}`
+      url = `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/chat/negotiate?id=${user.id}`
     }
 
     if (chatId) {
-      url = `${import.meta.env.REACT_APP_AI_SERVICES_URL}/chat/negotiate?id=${chatId}`
+      url = `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/chat/negotiate?id=${chatId}`
     }
 
     const response = await fetch(url)
