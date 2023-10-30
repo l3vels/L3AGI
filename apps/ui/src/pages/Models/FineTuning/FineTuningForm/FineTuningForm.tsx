@@ -8,12 +8,19 @@ import { t } from 'i18next'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 
 import { StyledFormRoot } from 'styles/formStyles.css'
+import { useEffect } from 'react'
 
 const FineTuningForm = ({ formik }: { formik: any }) => {
   const { setFieldValue, values } = formik
   const { fine_tuning_model, fine_tuning_file_url } = values
 
   const { modelOptions } = useFineTuningForm()
+
+  useEffect(() => {
+    if (fine_tuning_model === '' && modelOptions?.length > 0) {
+      setFieldValue('fine_tuning_model', modelOptions[0].value)
+    }
+  }, [fine_tuning_model])
 
   return (
     <StyledFormRoot>
