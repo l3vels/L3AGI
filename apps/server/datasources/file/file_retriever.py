@@ -216,7 +216,9 @@ class FileDatasourceRetriever:
         query_engine = self.index.as_query_engine(
             response_mode=self.response_mode,
             service_context=service_context,
-            similarity_top_k=self.similarity_top_k,
+            similarity_top_k=self.similarity_top_k
+            if self.index_type == IndexType.VECTOR_STORE.value
+            else None,
             verbose=True,
         )
 

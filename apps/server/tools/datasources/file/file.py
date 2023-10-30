@@ -42,11 +42,11 @@ class FileDatasourceTool(BaseTool):
         files_config = [config for config in configs if config.key == "files"][0]
 
         value = json.loads(files_config.value)
-        index_type = value["index_type"]
-        response_mode = value["response_mode"]
-        vector_store = value["vector_store"]
-        chunk_size = value["chunk_size"]
-        similarity_top_k = value["similarity_top_k"]
+        index_type = value.get("index_type")
+        response_mode = value.get("response_mode")
+        vector_store = value.get("vector_store")
+        chunk_size = value.get("chunk_size")
+        similarity_top_k = value.get("similarity_top_k", 2)
 
         retriever = FileDatasourceRetriever(
             self.settings,
