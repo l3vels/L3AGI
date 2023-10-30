@@ -208,10 +208,4 @@ class FileDatasourceRetriever:
         )
 
         result = query_engine.query(query_str)
-
-        for source in result.source_nodes:
-            print("----------------------------------------------")
-            print(source.text)
-            print("----------------------------------------------")
-
         return result.response
