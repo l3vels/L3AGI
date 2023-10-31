@@ -34,6 +34,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   }
 
   const handleUploadFile = async (files: any) => {
+    setFileIsLoading(true)
     const promises = []
 
     for (const file of files) {
@@ -52,15 +53,16 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     const uploadedFiles = await Promise.all(promises)
 
     setFieldValue('fine_tuning_file_url', uploadedFiles?.[0].url)
+    setFileIsLoading(false)
   }
 
-  const handleUploadJson = async (event: any) => {
+  const handleFileFormat = async (event: any) => {
     const { files } = event.target
     const file = files[0]
 
-    if (file.type !== 'application/json')
+    if (file.type !== 'text/csv' && file.type !== 'application/json')
       return setToast({
-        message: 'File must be JSON!',
+        message: 'File must be CSV or JSON format!',
         type: 'negative',
         open: true,
       })
@@ -72,37 +74,18 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     reader.onload = (event: any) => {
       const data = event.target.result
 
-      handleConvertJson(data)
-    }
-    reader.readAsText(file)
-  }
-
-  const handleUploadCsv = async (event: any) => {
-    const { files } = event.target
-    const file = files[0]
-
-    if (file.type !== 'text/csv')
-      return setToast({
-        message: 'File must be CSV!',
-        type: 'negative',
-        open: true,
-      })
-
-    handleUploadFile(files)
-
-    const reader = new FileReader()
-
-    reader.onload = (event: any) => {
-      const csvString = event.target.result
-      handleConvertCSVtoJSON(csvString)
+      if (file.type === 'text/csv') {
+        handleConvertCSVtoJSON(data)
+      } else if (file.type === 'application/json') {
+        handleConvertJson(data)
+      }
     }
 
     reader.readAsText(file)
   }
 
   return {
-    handleUploadCsv,
-    handleUploadJson,
+    handleFileFormat,
     step,
     parsedData,
     setStep,

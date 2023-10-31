@@ -46,58 +46,29 @@ const ReviewImport = ({ data, setStep: startOver }: { data: any[]; setStep: any 
 
   return (
     <>
-      {!response ? (
-        <>
-          <StyledContentWrapper>
-            <FormikProvider value={formik}>
-              <StyledButtonContainer>
-                <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
-                  {t('download-template')}
-                </ButtonTertiary>
-                {/* <ButtonTertiary onClick={formik.handleSubmit} size={Button.sizes.SMALL}>
+      <>
+        <StyledContentWrapper>
+          <FormikProvider value={formik}>
+            <StyledButtonContainer>
+              <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+                {t('download-template')}
+              </ButtonTertiary>
+              {/* <ButtonTertiary onClick={formik.handleSubmit} size={Button.sizes.SMALL}>
                   Save
                 </ButtonTertiary> */}
-                <ButtonPrimary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
-                  {t('start-over')}
-                </ButtonPrimary>
-              </StyledButtonContainer>
-              {/* <StyledHeaderContainer itemLength={itemLength}>
+              <ButtonPrimary onClick={() => startOver(0)} size={Button.sizes.SMALL}>
+                {t('start-over')}
+              </ButtonPrimary>
+            </StyledButtonContainer>
+            {/* <StyledHeaderContainer itemLength={itemLength}>
                 {keys.map((item: any, index: number) => (
                   <SelectHeader options={options} index={index} item={item} key={index} />
                 ))}
               </StyledHeaderContainer> */}
-              <StyledTableWrapper>{renderTable}</StyledTableWrapper>
-            </FormikProvider>
-          </StyledContentWrapper>
-        </>
-      ) : (
-        <>
-          <StyledButtonContainer>
-            <Button onClick={() => setStep(0)} disabled={step === 0}>
-              Imported
-            </Button>
-            <Button onClick={() => setStep(1)} disabled={step === 1}>
-              Not imported
-            </Button>
-            <Button onClick={() => window.open(response.error_record_download_url, '_blank')}>
-              Download error record
-            </Button>
-            <Button onClick={() => startOver(0)}>Start over</Button>
-          </StyledButtonContainer>
-          <StyledButtonContainer>
-            <div>Total imported: {response.total_imported}</div>
-            <div>Total not imported: {response?.not_imported.length}</div>
-          </StyledButtonContainer>
-          <StyledContentWrapper>
-            <StyledTableWrapper>
-              {/* <DataGrid
-                data={step === 0 ? response?.assets ?? [] : response?.not_imported ?? []}
-                columnConfig={step === 0 ? importedConfig : notImportedConfig}
-              /> */}
-            </StyledTableWrapper>
-          </StyledContentWrapper>
-        </>
-      )}
+            <StyledTableWrapper>{renderTable}</StyledTableWrapper>
+          </FormikProvider>
+        </StyledContentWrapper>
+      </>
     </>
   )
 }

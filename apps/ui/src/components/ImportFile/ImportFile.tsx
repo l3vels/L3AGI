@@ -17,9 +17,8 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     step,
     parsedData,
     setStep,
-    handleUploadJson,
+    handleFileFormat,
     handleConvertJson,
-    handleUploadCsv,
     handleConvertCSVtoJSON,
     fileIsLoading,
   } = useImportFile({
@@ -61,11 +60,10 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
               {t('download-template')}
             </ButtonTertiary>
 
-            <UploadButton onChange={handleUploadCsv} isLoading={false} label={t('upload-csv')} />
             <UploadButton
-              onChange={handleUploadJson}
+              onChange={handleFileFormat}
               isLoading={fileIsLoading}
-              label={t('upload-json')}
+              label={t('upload-file')}
             />
           </StyledButtonContainer>
         )
