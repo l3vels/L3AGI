@@ -45,7 +45,7 @@ export const useEditGroup = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/groups')
+      navigate('/contacts')
     } catch (e) {
       setToast({
         message: 'Failed To Update Group!',
