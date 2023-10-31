@@ -42,6 +42,8 @@ const ChatRouteLayout = () => {
   const [showChats, setShowChats] = useState(true)
   const [showInfo, setShowInfo] = useState(false)
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
+
   const outlet = useOutlet()
   const { agentsData, deleteAgentHandler, agentsLoading } = useAgents()
   const {
@@ -100,9 +102,25 @@ const ChatRouteLayout = () => {
     }
   }, [expand])
 
-  if (!user && !chatId) return <Navigate to='/' />
+  useEffect(() => {
+    // Function to update the 'show' state based on screen width
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1600 && window.innerWidth > 1050)
+    }
 
-  const hasChat = !!chatId
+    // Initial setup
+    handleResize()
+
+    // Listen for window resize events
+    window.addEventListener('resize', handleResize)
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  if (!user && !chatId) return <Navigate to='/' />
 
   return (
     <StyledAppContainer className='app_container'>
@@ -116,6 +134,7 @@ const ChatRouteLayout = () => {
         )}
         {expand && !showInfo && location.pathname.includes('/chat') && (
           <StyledShowButton
+            isSmallScreen={isSmallScreen}
             isRight
             onClick={() => setShowInfo(true)}
             onMouseEnter={() => setShowInfo(true)}
@@ -133,8 +152,8 @@ const ChatRouteLayout = () => {
 
         {user && (
           <StyledLeftColumn
+            isSmallScreen={isSmallScreen && location.pathname.includes('/chat')}
             isHidden={expand && !showChats && location.pathname.includes('/chat')}
-            hasChat={hasChat}
           >
             {teamModule?.list && (
               <>
@@ -310,7 +329,10 @@ const StyledContainer = styled.div`
 
   position: relative;
 `
-const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasChat: boolean }>`
+const StyledLeftColumn = styled.div<{
+  isHidden?: boolean
+  isSmallScreen: boolean
+}>`
   /* background: ${({ theme }) => theme.body.cardBgColor}; */
   border-right: ${({ theme }) =>
     location.pathname.includes('/chat') ? theme.body.secondaryBorder : 'none'};
@@ -332,7 +354,7 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasCh
   padding-left: 120px;
 
   height: 100%;
-  min-width: 450px;
+  min-width: 475px;
 
   max-height: calc(100vh - 185px);
 
@@ -345,8 +367,16 @@ const StyledLeftColumn = styled.div<{ right?: boolean; isHidden?: boolean; hasCh
       overflow: hidden;
       cursor: pointer;
     `}
+  ${props =>
+    props.isSmallScreen &&
+    css`
+      margin-left: 0;
+      overflow: auto;
+      cursor: pointer;
+      position: static;
+    `}
 `
-const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
+const StyledRightColumn = styled.div<{ isHidden: boolean }>`
   position: absolute;
   right: 0;
   z-index: 10000;
@@ -399,7 +429,7 @@ const StyledOutletWrapper = styled.div`
   margin-left: 450px;
   max-width: 1500px;
 `
-const StyledShowButton = styled.div<{ isRight?: boolean }>`
+const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean }>`
   height: 100vh;
   width: calc(30% - 120px);
 
@@ -414,6 +444,11 @@ const StyledShowButton = styled.div<{ isRight?: boolean }>`
     css`
       right: 0;
       margin-left: auto;
+    `}
+  ${props =>
+    props.isSmallScreen &&
+    css`
+      width: calc(15% - 150px);
     `}
 `
 const StyledMiddleArea = styled.div`
