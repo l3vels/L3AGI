@@ -1,15 +1,18 @@
 from typing import List, Optional
 
-from fastapi_sqlalchemy import db
-
-from models.datasource import DatasourceModel
 from typings.agent import AgentWithConfigsOutput
 
 
 class SystemMessageBuilder:
-    def __init__(self, agent_with_configs: AgentWithConfigsOutput):
+    def __init__(
+        self,
+        agent_with_configs: AgentWithConfigsOutput,
+        pre_retrieved_context: Optional[str] = "",
+    ):
         self.agent = agent_with_configs.agent
         self.configs = agent_with_configs.configs
+        self.data_source_pre_retrieval = False
+        self.pre_retrieved_context = pre_retrieved_context
 
     def build(self) -> str:
         base_system_message = self.build_base_system_message(self.configs.text)
@@ -18,9 +21,9 @@ class SystemMessageBuilder:
         goals = self.build_goals(self.configs.goals)
         instructions = self.build_instructions(self.configs.instructions)
         constraints = self.build_constraints(self.configs.constraints)
-        data_sources = self.build_data_sources(self.configs.datasources)
+        context = self.build_pre_retrieved_context(self.pre_retrieved_context)
 
-        result = f"{base_system_message}{role}{description}{goals}{instructions}{constraints}{data_sources}"
+        result = f"{base_system_message}{role}{description}{goals}{instructions}{constraints}{context}"
         return result
 
     def build_base_system_message(self, text: str) -> str:
@@ -70,26 +73,10 @@ class SystemMessageBuilder:
         )
         return constraints
 
-    def build_data_sources(self, datasource_ids: List[str]):
-        """Builds the data sources section of the system message."""
-        if len(datasource_ids) == 0:
+    def build_pre_retrieved_context(self, text: str):
+        if text is None or text == "":
             return ""
 
-        data_sources = (
-            db.session.query(DatasourceModel)
-            .filter(DatasourceModel.id.in_(datasource_ids))
-            .all()
-        )
-
-        result = (
-            "DATASOURCES:"
-            "Data sources can be: SQL databases and files. You can use tools to get data from them.\n"
-            "You can use the following data sources:\n"
-        )
-
-        for data_source in data_sources:
-            result += f"- Data source Type: {data_source.source_type}, Data source Name: {data_source.name}, Useful for: {data_source.description}, Data source Id for tool: {data_source.id}  \n"
-
-        result += "\n"
+        result = "CONTEXT DATA: \n" f"{text}\n"
 
         return result
