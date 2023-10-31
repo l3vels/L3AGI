@@ -5,7 +5,6 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
@@ -17,7 +16,6 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import { useNavigate } from 'react-router-dom'
 
-import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import { useFineTuning } from './useFineTuning'
 import { useFineTuningForm } from './FineTuningForm/useFineTuningForm'
 
@@ -26,6 +24,7 @@ import {
   StyledDeleteIcon,
   StyledEditIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
 
 const FineTunings = () => {
   const { t } = useTranslation()
@@ -44,21 +43,23 @@ const FineTunings = () => {
       {
         Header: 'Name',
         accessor: 'name',
+        width: 500,
       },
       {
         Header: 'Model',
         accessor: 'model',
+        width: 370,
       },
       {
         Header: 'Status',
         accessor: 'status',
-        width: 250,
+        width: 100,
       },
 
       {
         Header: 'Actions',
         accessor: 'id',
-        width: 250,
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
@@ -106,9 +107,9 @@ const FineTunings = () => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <StyledCardsWrapper>
+        <StyledTableWrapper>
           <Table columns={columns} data={tableData} />
-        </StyledCardsWrapper>
+        </StyledTableWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
