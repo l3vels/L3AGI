@@ -58,10 +58,12 @@ const Contacts = () => {
       {
         Header: 'Name',
         accessor: 'name',
+        width: 225,
       },
       {
         Header: 'Phone',
         accessor: 'phone',
+        width: 200,
         Cell: ({ cell }: any) => {
           return (
             <StyledPhoneCell>
@@ -109,11 +111,12 @@ const Contacts = () => {
       {
         Header: 'Email',
         accessor: 'email',
+        width: 200,
       },
       {
         Header: 'Group',
         accessor: 'group_id',
-
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <span>
@@ -127,11 +130,12 @@ const Contacts = () => {
       {
         Header: 'Description',
         accessor: 'description',
+        width: 250,
       },
       {
         Header: 'Actions',
         accessor: 'id',
-        maxWidth: 100,
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>

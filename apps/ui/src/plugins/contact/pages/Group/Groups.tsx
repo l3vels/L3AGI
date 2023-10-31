@@ -39,17 +39,17 @@ const Groups = () => {
       {
         Header: 'Name',
         accessor: 'name',
-        width: 400,
+        width: 485,
       },
       {
         Header: 'Description',
         accessor: 'description',
-        width: 400,
+        width: 485,
       },
       {
         Header: 'Actions',
         accessor: 'id',
-        width: 300,
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
@@ -106,4 +106,5 @@ export default Groups
 export const StyledTableButtons = styled.div`
   display: flex;
   align-items: center;
+  height: 100%;
 `
