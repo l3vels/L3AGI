@@ -16,10 +16,12 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
   const {
     step,
     parsedData,
+    setParsedData,
     setStep,
     handleFileFormat,
     handleConvertJson,
     handleConvertCSVtoJSON,
+
     fileIsLoading,
   } = useImportFile({
     setFieldValue: setFieldValue,
@@ -40,10 +42,13 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
         })
         .then(data => {
           if (fileUrl.endsWith('.json')) {
-            handleConvertJson(data)
+            const { data: convertedData } = handleConvertJson(data)
+            setParsedData(convertedData)
           } else if (fileUrl.endsWith('.csv')) {
-            handleConvertCSVtoJSON(data)
+            const { data: convertedData } = handleConvertCSVtoJSON(data)
+            setParsedData(convertedData)
           }
+          setStep(1)
         })
         .catch(error => {
           console.error('Error fetching file:', error)

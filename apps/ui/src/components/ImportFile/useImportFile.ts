@@ -12,6 +12,40 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
   const { uploadFile } = useUploadFile()
 
+  const validateJSON = (content: any) => {
+    const data = JSON.parse(content)
+
+    if (
+      Array.isArray(data) &&
+      data.every(
+        obj =>
+          typeof obj === 'object' &&
+          'System' in obj &&
+          'User' in obj &&
+          'Assistant' in obj &&
+          Object.keys(obj).length === 3,
+      )
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const validateCSV = (content: any) => {
+    const lines = content.split('\n')
+    const headers = lines[0].split(',').map((header: any) => header.trim())
+
+    if (
+      headers.length === 3 &&
+      headers.every((header: any) => ['System', 'User', 'Assistant'].includes(header))
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   const handleConvertJson = (data: any) => {
     const dataArray = JSON.parse(data)
     const convertedData = dataArray.map((item: any) => ({
@@ -19,8 +53,8 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       User: item.User,
       Assistant: item.Assistant,
     }))
-    setParsedData(convertedData)
-    setStep(1)
+
+    return { data: convertedData }
   }
 
   const handleConvertCSVtoJSON = (csvString: string) => {
@@ -29,11 +63,10 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       skipEmptyLines: true, // Skip empty lines in CSV
     })
 
-    setParsedData(data)
-    setStep(1)
+    return { data }
   }
 
-  const handleUploadFile = async (files: any) => {
+  const handleUploadFile = async (files: any, data: any) => {
     setFileIsLoading(true)
     const promises = []
 
@@ -54,6 +87,9 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
     setFieldValue('fine_tuning_file_url', uploadedFiles?.[0].url)
     setFileIsLoading(false)
+
+    setParsedData(data)
+    setStep(1)
   }
 
   const handleFileFormat = async (event: any) => {
@@ -67,17 +103,34 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
         open: true,
       })
 
-    handleUploadFile(files)
-
     const reader = new FileReader()
-
-    reader.onload = (event: any) => {
-      const data = event.target.result
+    reader.onload = async (event: any) => {
+      const fileData = event.target.result
 
       if (file.type === 'text/csv') {
-        handleConvertCSVtoJSON(data)
+        const isValid = validateCSV(fileData)
+        if (isValid) {
+          const { data } = handleConvertCSVtoJSON(fileData)
+          await handleUploadFile(files, data)
+        } else {
+          return setToast({
+            message: 'Data Fields are incorrect!',
+            type: 'negative',
+            open: true,
+          })
+        }
       } else if (file.type === 'application/json') {
-        handleConvertJson(data)
+        const isValid = validateJSON(fileData)
+        if (isValid) {
+          const { data } = handleConvertJson(fileData)
+          await handleUploadFile(files, data)
+        } else {
+          return setToast({
+            message: 'Data Fields are incorrect!',
+            type: 'negative',
+            open: true,
+          })
+        }
       }
     }
 
@@ -88,6 +141,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     handleFileFormat,
     step,
     parsedData,
+    setParsedData,
     setStep,
     handleConvertJson,
     handleConvertCSVtoJSON,
