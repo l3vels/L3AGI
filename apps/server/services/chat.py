@@ -96,7 +96,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     provider_account = chat.provider_account
     provider_user = chat.provider_user
 
-    sender_name = user.name
+    sender_name = user.name if auth else "Guest"
     sender_user_id = user.id
     sender_account_id = account.id
 
