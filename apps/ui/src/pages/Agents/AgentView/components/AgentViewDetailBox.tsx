@@ -25,6 +25,7 @@ import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { useModelsService } from 'services'
 
 type AgentViewDetailBoxProps = {
   agentData: any
@@ -42,15 +43,22 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   const { deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
+
   const { closeModal, openModal } = useModal()
 
+  const { data: models } = useModelsService()
+
   const { agent, configs } = agentData
-  console.log('agent', agent)
+
   const { name, description, role, creator, is_template } = agent
 
-  const { model_version, model_provider, temperature } = configs
+  const { model, temperature } = configs
 
   const isCreator = user?.id === agent?.created_by
+
+  const agentModel = models
+    ?.filter((modelData: any) => modelData.id === model)
+    .map((model: any) => model.name)
 
   const handleEdit = () => {
     closeModal('agent-view-modal')
@@ -66,7 +74,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
     openModal({ name: 'schedule-run-modal', data: { id: chatId || agent.id, type: 'agent' } })
   }
-
+  console.log(model)
   return (
     <StyledDetailsBox>
       <StyledWrapper>
@@ -148,9 +156,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledWrapper>
         {role && <TagsRow title={t('role')} items={[role]} />}
 
-        {model_provider && <TagsRow title={t('provider')} items={[model_provider]} />}
-
-        {model_version && <TagsRow title={t('model')} items={[model_version]} />}
+        {agentModel?.length > 0 && <TagsRow title={t('model')} items={agentModel} />}
 
         {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
 
