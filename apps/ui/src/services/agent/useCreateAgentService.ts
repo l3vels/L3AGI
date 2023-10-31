@@ -18,7 +18,8 @@ export type AgentInput = {
   is_memory: boolean
   suggestions: string[]
   text: string
-  avatar: string
+  avatar: string,
+  source_flow: string
 }
 
 export const useCreateAgentService = () => {
@@ -35,6 +36,7 @@ export const useCreateAgentService = () => {
       constraints,
       tools,
       datasources,
+      source_flow,
       instructions,
       model,
       is_memory,
@@ -68,6 +70,7 @@ export const useCreateAgentService = () => {
             suggestions: suggestions,
             greeting: greeting,
             text: text,
+            source_flow
           },
         },
       },

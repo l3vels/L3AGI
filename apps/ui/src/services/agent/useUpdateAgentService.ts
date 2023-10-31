@@ -16,6 +16,7 @@ export const useUpdateAgentService = () => {
       constraints,
       tools,
       datasources,
+      source_flow,
       instructions,
       model,
       is_memory,
@@ -48,6 +49,7 @@ export const useUpdateAgentService = () => {
             suggestions: suggestions,
             greeting: greeting,
             text: text,
+            source_flow
           },
         },
       },

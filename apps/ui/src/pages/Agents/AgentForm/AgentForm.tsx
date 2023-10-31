@@ -42,6 +42,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_temperature,
     agent_is_template,
     agent_avatar,
+    agent_source_flow,
   } = values
 
   const onTextareaChange = (field: string, value: string) => {
@@ -58,6 +59,11 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   }, [agent_model])
 
   const [activeTab, setActiveTab] = useState(0)
+
+  const data_process_flow = [
+    {label: 'Source Detection', value: 'source_detection'},
+    {label: 'Pre-Execution Data Retrieval', value: 'pre_execution'}
+  ]
 
   return (
     <StyledFormRoot>
@@ -143,14 +149,29 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     options={toolOptions}
                   />
 
-                  <AgentDropdown
-                    isMulti
-                    label={t('data-source')}
-                    fieldName={'agent_datasources'}
-                    fieldValue={agent_datasources}
-                    setFieldValue={setFieldValue}
-                    options={datasourceOptions}
-                  />
+
+                  <StyledCombinedFields>
+                    <AgentDropdown
+                      isMulti
+                      label={t('data-source')}
+                      fieldName={'agent_datasources'}
+                      fieldValue={agent_datasources}
+                      setFieldValue={setFieldValue}
+                      options={datasourceOptions}
+                    />
+
+                    <AgentDropdown
+                        label={'Data Process Flow'}
+                        fieldName={'agent_source_flow'}
+                        setFieldValue={setFieldValue}
+                        fieldValue={agent_source_flow}
+                        options={data_process_flow}
+                        onChange={() => {
+                          setFieldValue('agent_source_flow', '')
+                        }}
+                        optionSize={'small'}
+                      />
+                  </StyledCombinedFields>
 
                   <StyledCombinedFields>
                     <AgentDropdown

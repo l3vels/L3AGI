@@ -41,6 +41,7 @@ export const useCreateAgent = () => {
     agent_is_memory: true,
     agent_text: '',
     agent_avatar: '',
+    agent_source_flow: 'source_detection',
   }
 
   if (agentById) {
@@ -61,6 +62,7 @@ export const useCreateAgent = () => {
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
       agent_text: agentById.configs?.text,
+      agent_source_flow: agentById.configs?.source_flow,
     }
   }
 
@@ -77,6 +79,7 @@ export const useCreateAgent = () => {
         constraints: values.agent_constraints,
         tools: values.agent_tools,
         datasources: values.agent_datasources,
+        source_flow: values.agent_source_flow,
         instructions: values.agent_instructions,
         model: values.agent_model,
         is_memory: values.agent_is_memory,
