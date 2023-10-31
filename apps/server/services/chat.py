@@ -29,7 +29,7 @@ from services.pubsub import ChatPubSubService
 from services.run_log import RunLogsManager
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
-from typings.agent import AgentWithConfigsOutput
+from typings.agent import AgentWithConfigsOutput, DataSourceFlow
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
 from typings.config import AccountSettings, ConfigInput
@@ -566,7 +566,16 @@ def run_conversational_agent(
         agent_with_configs,
         tool_callback_handler,
     )
-    tools = datasource_tools + agent_tools
+
+    pre_retrieved_context = ""
+
+    if agent_with_configs.configs.source_flow == DataSourceFlow.PRE_RETRIEVAL.value:
+        if len(datasource_tools) != 0:
+            pre_retrieved_context = datasource_tools[0]._run(prompt)
+
+        tools = agent_tools
+    else:
+        tools = datasource_tools + agent_tools
 
     conversational = ConversationalAgent(sender_name, provider_account, session_id)
     return conversational.run(
@@ -580,6 +589,7 @@ def run_conversational_agent(
         run_id,
         sender_user_id,
         run_logs_manager,
+        pre_retrieved_context,
     )
 
 

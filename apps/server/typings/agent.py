@@ -1,8 +1,14 @@
+from enum import Enum
 from typing import List, Optional
 
 from pydantic import UUID4, BaseModel
 
 from typings.user import UserOutput
+
+
+class DataSourceFlow(Enum):
+    PRE_RETRIEVAL = "pre_execution"
+    SOURCE_DETECTION = "source_detection"
 
 
 class AgentInput(BaseModel):
