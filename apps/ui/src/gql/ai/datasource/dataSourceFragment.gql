@@ -1,0 +1,14 @@
+fragment DataSourceFragment on Datasource {
+  id
+  name
+  description
+  source_type
+  status
+  workspace_id
+  is_deleted
+  is_public
+  account_id
+  created_by
+  modified_by
+  error
+}

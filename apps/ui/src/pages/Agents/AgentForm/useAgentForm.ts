@@ -9,7 +9,7 @@ export const useAgentForm = (formik: any) => {
 
   const { uploadFile } = useUploadFile()
 
-  const { data: datasourcesData } = useDatasourcesService()
+  const { data: dataSources } = useDatasourcesService()
   const { data: tools } = useToolsService()
   const { data: models } = useModelsService()
 
@@ -18,8 +18,8 @@ export const useAgentForm = (formik: any) => {
     label: `${name} (${provider})`,
   }))
 
-  const datasourceOptions = datasourcesData?.map((datasource: any) => {
-    return { value: datasource.id, label: datasource.name }
+  const datasourceOptions = dataSources?.map(({ id, name }) => {
+    return { value: id, label: name }
   })
 
   const toolOptions = tools

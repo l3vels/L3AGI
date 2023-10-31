@@ -1,16 +1,7 @@
-query getDatasources @api(name: "ai") {
-  getDatasources @rest(type: "Datasource", path: "/datasource", method: "GET", endpoint: "ai") {
-    id
-    name
-    description
-    source_type
-    status
-    workspace_id
-    is_deleted
-    is_public
-    account_id
-    created_by
-    modified_by
-    error
+#import "./dataSourceFragment.gql"
+
+query dataSources @api(name: "ai") {
+  dataSources @rest(type: "Datasource", path: "/datasource", method: "GET", endpoint: "ai") {
+    ...DataSourceFragment
   }
 }
