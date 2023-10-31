@@ -211,14 +211,19 @@ class FileDatasourceRetriever:
             llm=llm, chunk_size=self.chunk_size
         )
 
-        query_engine = self.index.as_query_engine(
-            response_mode=self.response_mode,
-            service_context=service_context,
-            similarity_top_k=self.similarity_top_k
-            if self.index_type == IndexType.VECTOR_STORE.value
-            else None,
-            verbose=True,
+        retriever = self.index.as_retriever(
+            service_context=service_context, verbose=True
         )
 
-        result = query_engine.query(query_str)
-        return result.response
+        # query_engine = self.index.as_query_engine(
+        #     response_mode=self.response_mode,
+        #     service_context=service_context,
+        #     similarity_top_k=self.similarity_top_k
+        #     if self.index_type == IndexType.VECTOR_STORE.value
+        #     else None,
+        #     verbose=True,
+        # )
+
+        nodes = retriever.retrieve(query_str)
+        content = "\n".join([node.text for node in nodes])
+        return content
