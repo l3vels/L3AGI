@@ -39,7 +39,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
             <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
           </Tab>
           <Tab onClick={() => setActiveTab(1)}>
-            <StyledTabListSpan>{t('model')}</StyledTabListSpan>
+            <StyledTabListSpan>{`${t('model')}s`}</StyledTabListSpan>
           </Tab>
         </TabList>
       </StyledTabListWrapper>
@@ -54,7 +54,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
             <StyledSectionWrapper>
               <StyledHeaderGroup className='header_group'>
                 <div>
-                  <StyledSectionTitle>{`${t('model')}`}</StyledSectionTitle>
+                  <StyledSectionTitle>{`${t('model')}s`}</StyledSectionTitle>
                   <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
                 </div>
               </StyledHeaderGroup>
