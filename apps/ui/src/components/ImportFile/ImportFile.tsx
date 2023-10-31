@@ -6,11 +6,17 @@ import ImportFileTable from './ImportFileTable'
 import useImportFile from './useImportFile'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+
 import UploadButton from 'components/UploadButton'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { useDownloadTemplate } from './useDownloadTemplate'
 
 import { t } from 'i18next'
+
+import TypographySecondary from 'components/Typography/Secondary'
+import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 
 const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
   const {
@@ -56,12 +62,26 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     <>
       <StyledFormSection>
         <StyledButtonContainer>
-          <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
-            {t('download-template json')}
-          </ButtonTertiary>
-          <ButtonTertiary onClick={handleDownloadTemplateCSV} size={Button.sizes.SMALL}>
-            {t('download-template csv')}
-          </ButtonTertiary>
+          <StyledMenuButton
+            component={() => (
+              <TypographySecondary
+                value={t('download-template')}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            )}
+            closeDialogOnContentClick={false}
+            zIndex={2}
+          >
+            <StyledMenuButtonsWrapper>
+              <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+                {t('download-json')}
+              </ButtonTertiary>
+              <ButtonTertiary onClick={handleDownloadTemplateCSV} size={Button.sizes.SMALL}>
+                {t('download-csv')}
+              </ButtonTertiary>
+            </StyledMenuButtonsWrapper>
+          </StyledMenuButton>
 
           {parsedData?.length === 0 && (
             <UploadButton
@@ -104,4 +124,7 @@ const StyledButtonContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+`
+const StyledMenuButton = styled(MenuButton)`
+  width: 140px;
 `

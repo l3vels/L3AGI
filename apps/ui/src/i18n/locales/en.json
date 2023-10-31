@@ -112,6 +112,8 @@
   "done": "Done",
   "dont-have-account": "Don't have an account?",
   "download-template": "Download Template",
+  "download-json": "JSON",
+  "download-csv": "CSV",
   "edit-agent": "Edit $t(agent)",
   "edit-api-keys": "Edit API keys",
   "edit-team": "Edit $t(team)",

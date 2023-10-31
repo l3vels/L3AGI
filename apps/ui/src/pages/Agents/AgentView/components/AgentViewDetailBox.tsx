@@ -216,7 +216,7 @@ export const StyledMenuButtonsWrapper = styled.div`
   backdrop-filter: blur(100px);
   padding: 10px;
   border-radius: 10px;
-  width: 200px;
+
   min-width: fit-content;
 
   display: flex;
