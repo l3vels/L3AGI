@@ -107,23 +107,23 @@ const MainNavigation = () => {
         >
           <StyledMobileIcon size={30} />
           <TypographySecondary
-            value={'Contacts'}
+            value={`${t('contact')}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      {isGroup && (
+      {/* {isGroup && (
         <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
           <StyledGroupIcon size={30} />
           <TypographySecondary
-            value={'Groups'}
+            value={`${t('group')}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
-      )}
+      )} */}
 
       {isDatasource && (
         <StyledLi

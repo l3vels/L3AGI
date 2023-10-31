@@ -21,6 +21,7 @@ import {
 import styled from 'styled-components'
 import Table from 'components/Table'
 import { StyledTableWrapper } from '../Contact/Contacts'
+import { t } from 'i18next'
 
 const Groups = () => {
   const { groups, deleteGroupHandler } = useGroups()
@@ -80,14 +81,14 @@ const Groups = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Groups</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('group')}s`}</StyledSectionTitle>
           {/* <StyledSectionDescription>
             Here is your datasource, a collection of databases, APIs, files, and more.
           </StyledSectionDescription> */}
         </div>
         <div>
           <ButtonPrimary onClick={() => navigate('/groups/create-group')} size={'small'}>
-            Add Group
+            {t('add-group')}
           </ButtonPrimary>
         </div>
       </StyledHeaderGroup>
