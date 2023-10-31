@@ -6,7 +6,6 @@ import Papa from 'papaparse'
 const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   const { setToast } = useContext(ToastContext)
 
-  const [step, setStep] = React.useState<number>(0)
   const [fileIsLoading, setFileIsLoading] = React.useState(false)
   const [parsedData, setParsedData] = React.useState<any>([])
 
@@ -89,7 +88,6 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     setFileIsLoading(false)
 
     setParsedData(data)
-    setStep(1)
   }
 
   const handleFileFormat = async (event: any) => {
@@ -139,10 +137,8 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
   return {
     handleFileFormat,
-    step,
     parsedData,
     setParsedData,
-    setStep,
     handleConvertJson,
     handleConvertCSVtoJSON,
     fileIsLoading,
