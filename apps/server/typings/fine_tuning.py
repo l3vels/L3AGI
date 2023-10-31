@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 
 class FineTuningStatus(Enum):
-    VALIDATING = "Validating"
+    VALIDATING = "Validating Files"
     QUEUED = "Queued"
     RUNNING = "Running"
     FAILED = "Failed"
@@ -31,3 +31,4 @@ class FineTuningOutput(BaseModel):
     file_url: str
     status: Optional[str]
     model_id: Optional[UUID]
+    error: Optional[str]
