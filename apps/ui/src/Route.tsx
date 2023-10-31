@@ -284,10 +284,7 @@ const Route = () => {
                 element={<EditContactForm />}
                 key={document.location.href}
               />
-            </Router>
 
-            <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Group />} key={document.location.href} />
               <Router
                 path={'create-group'}
                 element={<CreateGroupForm />}
@@ -299,6 +296,10 @@ const Route = () => {
                 key={document.location.href}
               />
             </Router>
+
+            {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Group />} key={document.location.href} />
+            </Router> */}
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
               <Router index element={<ApiKeys />} key={document.location.href} />
