@@ -63,7 +63,7 @@ const Groups = () => {
               />
 
               <IconButton
-                onClick={() => navigate(`/groups/${cell.value}/edit-group`)}
+                onClick={() => navigate(`/contacts/${cell.value}/edit-group`)}
                 icon={() => <StyledEditIcon />}
                 size={IconButton.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
@@ -87,7 +87,7 @@ const Groups = () => {
           </StyledSectionDescription> */}
         </div>
         <div>
-          <ButtonPrimary onClick={() => navigate('/groups/create-group')} size={'small'}>
+          <ButtonPrimary onClick={() => navigate('/contacts/create-group')} size={'small'}>
             {t('add-group')}
           </ButtonPrimary>
         </div>
