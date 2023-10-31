@@ -74,6 +74,7 @@
   "community": "Community",
   "community-description": "Check on the latest plugins built by the community",
   "connect": "Connect",
+  "compact": "Compact",
   "compact-accumulate": "Compact Accumulate",
   "company-name": "Company name",
   "complete-your-mission": "Complete your mission",
@@ -320,5 +321,6 @@
   "final-answer": "Final Answer",
   "input": "Input",
   "output": "Output",
-  "error": "Error"
+  "error": "Error",
+  "similarity-top-k": "Similarity Top K"
 }

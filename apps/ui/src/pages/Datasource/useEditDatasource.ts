@@ -38,6 +38,7 @@ export const useEditDatasource = () => {
     response_mode: '',
     vector_store: '',
     chunk_size: '',
+    similarity_top_k: '',
     files: [],
   }
 
@@ -45,14 +46,14 @@ export const useEditDatasource = () => {
     let value = config.value
 
     if (config.key_type === 'files') {
-      const { index_type, response_mode, vector_store, chunk_size, files } = JSON.parse(
-        config.value,
-      )
+      const { index_type, response_mode, vector_store, chunk_size, similarity_top_k, files } =
+        JSON.parse(config.value)
 
       defaultValues.index_type = index_type
       defaultValues.response_mode = response_mode
       defaultValues.vector_store = vector_store
       defaultValues.chunk_size = chunk_size
+      defaultValues.similarity_top_k = similarity_top_k
       defaultValues.files = files
 
       value = JSON.parse(config.value)
@@ -97,12 +98,14 @@ export const useEditDatasource = () => {
       if (cfg.key_type === 'int') {
         value = parseInt(cfg.value)
       } else if (cfg.key_type === 'files') {
-        const { index_type, response_mode, vector_store, chunk_size, files } = values
+        const { index_type, response_mode, vector_store, chunk_size, similarity_top_k, files } =
+          values
         value = JSON.stringify({
           index_type,
           response_mode,
           vector_store,
           chunk_size: parseInt(chunk_size),
+          similarity_top_k: parseInt(similarity_top_k),
           files,
         })
       }

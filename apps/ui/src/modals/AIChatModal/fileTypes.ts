@@ -21,6 +21,7 @@ export const SUPPORTED_FILE_EXTENSIONS = [
   'txt',
   'pdf',
   'csv',
+  'json',
   'docx',
   'pptx',
   'md',

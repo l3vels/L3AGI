@@ -11,5 +11,6 @@ query getDatasources @api(name: "ai") {
     account_id
     created_by
     modified_by
+    error
   }
 }

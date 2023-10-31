@@ -207,9 +207,17 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
 
                   <FormikTextField
                     name='chunk_size'
-                    placeholder='Chunk Size'
+                    placeholder={t('chunk-size')}
                     label={t('chunk-size')}
                   />
+
+                  {index_type === 'vector_store' && (
+                    <FormikTextField
+                      name='similarity_top_k'
+                      placeholder={'2'}
+                      label={t('similarity-top-k')}
+                    />
+                  )}
                 </StyledUploadFileWrapper>
               )}
 
