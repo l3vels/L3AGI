@@ -6,11 +6,44 @@ import Papa from 'papaparse'
 const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
   const { setToast } = useContext(ToastContext)
 
-  const [step, setStep] = React.useState<number>(0)
   const [fileIsLoading, setFileIsLoading] = React.useState(false)
   const [parsedData, setParsedData] = React.useState<any>([])
 
   const { uploadFile } = useUploadFile()
+
+  const validateJSON = (content: any) => {
+    const data = JSON.parse(content)
+
+    if (
+      Array.isArray(data) &&
+      data.every(
+        obj =>
+          typeof obj === 'object' &&
+          'System' in obj &&
+          'User' in obj &&
+          'Assistant' in obj &&
+          Object.keys(obj).length === 3,
+      )
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  const validateCSV = (content: any) => {
+    const lines = content.split('\n')
+    const headers = lines[0].split(',').map((header: any) => header.trim())
+
+    if (
+      headers.length === 3 &&
+      headers.every((header: any) => ['System', 'User', 'Assistant'].includes(header))
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   const handleConvertJson = (data: any) => {
     const dataArray = JSON.parse(data)
@@ -19,8 +52,8 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       User: item.User,
       Assistant: item.Assistant,
     }))
-    setParsedData(convertedData)
-    setStep(1)
+
+    return { data: convertedData }
   }
 
   const handleConvertCSVtoJSON = (csvString: string) => {
@@ -29,11 +62,11 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       skipEmptyLines: true, // Skip empty lines in CSV
     })
 
-    setParsedData(data)
-    setStep(1)
+    return { data }
   }
 
-  const handleUploadFile = async (files: any) => {
+  const handleUploadFile = async (files: any, data: any) => {
+    setFileIsLoading(true)
     const promises = []
 
     for (const file of files) {
@@ -52,60 +85,60 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     const uploadedFiles = await Promise.all(promises)
 
     setFieldValue('fine_tuning_file_url', uploadedFiles?.[0].url)
+    setFileIsLoading(false)
+
+    setParsedData(data)
   }
 
-  const handleUploadJson = async (event: any) => {
+  const handleFileFormat = async (event: any) => {
     const { files } = event.target
     const file = files[0]
 
-    if (file.type !== 'application/json')
+    if (file.type !== 'text/csv' && file.type !== 'application/json')
       return setToast({
-        message: 'File must be JSON!',
+        message: 'File must be CSV or JSON format!',
         type: 'negative',
         open: true,
       })
 
-    handleUploadFile(files)
-
     const reader = new FileReader()
+    reader.onload = async (event: any) => {
+      const fileData = event.target.result
 
-    reader.onload = (event: any) => {
-      const data = event.target.result
-
-      handleConvertJson(data)
-    }
-    reader.readAsText(file)
-  }
-
-  const handleUploadCsv = async (event: any) => {
-    const { files } = event.target
-    const file = files[0]
-
-    if (file.type !== 'text/csv')
-      return setToast({
-        message: 'File must be CSV!',
-        type: 'negative',
-        open: true,
-      })
-
-    handleUploadFile(files)
-
-    const reader = new FileReader()
-
-    reader.onload = (event: any) => {
-      const csvString = event.target.result
-      handleConvertCSVtoJSON(csvString)
+      if (file.type === 'text/csv') {
+        const isValid = validateCSV(fileData)
+        if (isValid) {
+          const { data } = handleConvertCSVtoJSON(fileData)
+          await handleUploadFile(files, data)
+        } else {
+          return setToast({
+            message: 'Data Fields are incorrect!',
+            type: 'negative',
+            open: true,
+          })
+        }
+      } else if (file.type === 'application/json') {
+        const isValid = validateJSON(fileData)
+        if (isValid) {
+          const { data } = handleConvertJson(fileData)
+          await handleUploadFile(files, data)
+        } else {
+          return setToast({
+            message: 'Data Fields are incorrect!',
+            type: 'negative',
+            open: true,
+          })
+        }
+      }
     }
 
     reader.readAsText(file)
   }
 
   return {
-    handleUploadCsv,
-    handleUploadJson,
-    step,
+    handleFileFormat,
     parsedData,
-    setStep,
+    setParsedData,
     handleConvertJson,
     handleConvertCSVtoJSON,
     fileIsLoading,

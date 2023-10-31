@@ -5,7 +5,7 @@ levanion_configs = {
         "agent": "Agent",
         "team": "Team",
         "datasource": "Data sources",
-        "models": "Models",
+        "models": "Model",
         "discovery": "Discovery",
         "chat": "Multi-Agent",
         "toolkits": "Toolkits",

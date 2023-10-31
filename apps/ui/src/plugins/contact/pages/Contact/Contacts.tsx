@@ -8,6 +8,12 @@ import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
+import Tab from '@l3-lib/ui-core/dist/Tab'
+import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
@@ -20,18 +26,20 @@ import {
   StyledEditIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import Table from 'components/Table'
-import { StyledTableButtons } from '../Group/Groups'
+import Groups, { StyledTableButtons } from '../Group/Groups'
 
 import Microphone from '@l3-lib/ui-core/dist/icons/Microphone'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
-import { StyledMenuDots } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+
 import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
+import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import { t } from 'i18next'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -58,10 +66,12 @@ const Contacts = () => {
       {
         Header: 'Name',
         accessor: 'name',
+        width: 225,
       },
       {
         Header: 'Phone',
         accessor: 'phone',
+        width: 200,
         Cell: ({ cell }: any) => {
           return (
             <StyledPhoneCell>
@@ -109,11 +119,12 @@ const Contacts = () => {
       {
         Header: 'Email',
         accessor: 'email',
+        width: 200,
       },
       {
         Header: 'Group',
         accessor: 'group_id',
-
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <span>
@@ -127,11 +138,12 @@ const Contacts = () => {
       {
         Header: 'Description',
         accessor: 'description',
+        width: 250,
       },
       {
         Header: 'Actions',
         accessor: 'id',
-        maxWidth: 100,
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
@@ -158,28 +170,53 @@ const Contacts = () => {
     [],
   )
 
-  return (
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <div>
-          <StyledSectionTitle>Contacts</StyledSectionTitle>
-          {/* <StyledSectionDescription>
-          Here is your datasource, a collection of databases, APIs, files, and more.
-        </StyledSectionDescription> */}
-        </div>
-        <div>
-          <ButtonPrimary onClick={() => navigate('/contacts/create-contact')} size={'small'}>
-            Add Contact
-          </ButtonPrimary>
-        </div>
-      </StyledHeaderGroup>
+  const [activeTab, setActiveTab] = useState(0)
 
-      <ComponentsWrapper noPadding>
-        <StyledTableWrapper>
-          <Table columns={columns} data={gridData} />
-        </StyledTableWrapper>
-      </ComponentsWrapper>
-    </StyledSectionWrapper>
+  return (
+    <StyledTabRootWrapper>
+      <StyledTabListWrapper>
+        <TabList>
+          <Tab onClick={() => setActiveTab(0)}>
+            <StyledTabListSpan>{`${t('contact')}s`}</StyledTabListSpan>
+          </Tab>
+          <Tab onClick={() => setActiveTab(1)}>
+            <StyledTabListSpan>{`${t('group')}s`}</StyledTabListSpan>
+          </Tab>
+        </TabList>
+      </StyledTabListWrapper>
+
+      <TabsContext activeTabId={activeTab}>
+        <TabPanels noAnimation>
+          <TabPanel>
+            <StyledSectionWrapper>
+              <StyledHeaderGroup className='header_group'>
+                <div>
+                  <StyledSectionTitle>{`${t('contact')}s`}</StyledSectionTitle>
+                </div>
+                <div>
+                  <ButtonPrimary
+                    onClick={() => navigate('/contacts/create-contact')}
+                    size={'small'}
+                  >
+                    {t('add-contact')}
+                  </ButtonPrimary>
+                </div>
+              </StyledHeaderGroup>
+
+              <ComponentsWrapper noPadding>
+                <StyledTableWrapper>
+                  <Table columns={columns} data={gridData} />
+                </StyledTableWrapper>
+              </ComponentsWrapper>
+            </StyledSectionWrapper>
+          </TabPanel>
+
+          <TabPanel>
+            <Groups />
+          </TabPanel>
+        </TabPanels>
+      </TabsContext>
+    </StyledTabRootWrapper>
   )
 }
 
@@ -223,4 +260,6 @@ export const StyledTableWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 15px;
+  overflow: auto;
+  max-height: calc(100vh - 325px);
 `

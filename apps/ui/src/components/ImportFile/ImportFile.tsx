@@ -1,32 +1,36 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
 
-import ReviewImport, { StyledButtonContainer } from './ReviewImport'
+import ImportFileTable from './ImportFileTable'
 
 import useImportFile from './useImportFile'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+
 import UploadButton from 'components/UploadButton'
-import { ButtonTertiary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { useDownloadTemplate } from './useDownloadTemplate'
 
 import { t } from 'i18next'
 
+import TypographySecondary from 'components/Typography/Secondary'
+import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+
 const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
   const {
-    step,
     parsedData,
-    setStep,
-    handleUploadJson,
+    setParsedData,
+    handleFileFormat,
     handleConvertJson,
-    handleUploadCsv,
     handleConvertCSVtoJSON,
     fileIsLoading,
   } = useImportFile({
     setFieldValue: setFieldValue,
   })
 
-  const { handleDownloadTemplate } = useDownloadTemplate()
+  const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate()
 
   useEffect(() => {
     if (value.length > 0) {
@@ -41,9 +45,11 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
         })
         .then(data => {
           if (fileUrl.endsWith('.json')) {
-            handleConvertJson(data)
+            const { data: convertedData } = handleConvertJson(data)
+            setParsedData(convertedData)
           } else if (fileUrl.endsWith('.csv')) {
-            handleConvertCSVtoJSON(data)
+            const { data: convertedData } = handleConvertCSVtoJSON(data)
+            setParsedData(convertedData)
           }
         })
         .catch(error => {
@@ -52,39 +58,52 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     }
   }, [value])
 
-  function renderTabs(tabIndex: number) {
-    switch (tabIndex) {
-      case 0:
-        return (
-          <StyledButtonContainer>
-            <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
-              {t('download-template')}
-            </ButtonTertiary>
-
-            <UploadButton onChange={handleUploadCsv} isLoading={false} label={t('upload-csv')} />
-            <UploadButton
-              onChange={handleUploadJson}
-              isLoading={fileIsLoading}
-              label={t('upload-json')}
-            />
-          </StyledButtonContainer>
-        )
-
-      case 1:
-        return (
-          <>
-            <ReviewImport data={parsedData} setStep={setStep} />
-          </>
-        )
-
-      default:
-        return <>Error..!</>
-    }
-  }
-
   return (
     <>
-      <StyledFormSection>{renderTabs(step)}</StyledFormSection>
+      <StyledFormSection>
+        <StyledButtonContainer>
+          <StyledMenuButton
+            component={() => (
+              <TypographySecondary
+                value={t('download-template')}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            )}
+            closeDialogOnContentClick={false}
+            zIndex={2}
+          >
+            <StyledMenuButtonsWrapper>
+              <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+                {t('download-json')}
+              </ButtonTertiary>
+              <ButtonTertiary onClick={handleDownloadTemplateCSV} size={Button.sizes.SMALL}>
+                {t('download-csv')}
+              </ButtonTertiary>
+            </StyledMenuButtonsWrapper>
+          </StyledMenuButton>
+
+          {parsedData?.length === 0 && (
+            <UploadButton
+              onChange={handleFileFormat}
+              isLoading={fileIsLoading}
+              label={t('upload-file')}
+            />
+          )}
+          {parsedData?.length > 0 && (
+            <ButtonPrimary
+              onClick={() => {
+                setParsedData([])
+                setFieldValue('fine_tuning_file_url', '')
+              }}
+              size={Button.sizes.SMALL}
+            >
+              {t('start-over')}
+            </ButtonPrimary>
+          )}
+        </StyledButtonContainer>
+        {parsedData?.length > 0 && <ImportFileTable data={parsedData} />}
+      </StyledFormSection>
     </>
   )
 }
@@ -94,4 +113,18 @@ export default ImportFile
 export const StyledFormSection = styled.div<{ columns?: string }>`
   width: 100%;
   height: 100%;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`
+const StyledMenuButton = styled(MenuButton)`
+  width: 140px;
 `

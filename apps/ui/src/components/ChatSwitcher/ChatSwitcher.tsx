@@ -197,6 +197,16 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
         background: rgba(255, 255, 255, 0.1);
       }
     `};
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge add Firefox */
+   {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+  }
 `
 // const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
 //   position: absolute;

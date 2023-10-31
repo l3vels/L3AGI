@@ -100,7 +100,6 @@ const MainNavigation = () => {
         <span>Agents</span>
       </StyledLi> */}
 
-
       {isContact && (
         <StyledLi
           isActive={includes(active, 'contacts')}
@@ -108,23 +107,23 @@ const MainNavigation = () => {
         >
           <StyledMobileIcon size={30} />
           <TypographySecondary
-            value={'Contacts'}
+            value={`${t('contact')}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
 
-      {isGroup && (
+      {/* {isGroup && (
         <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
           <StyledGroupIcon size={30} />
           <TypographySecondary
-            value={'Groups'}
+            value={`${t('group')}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
-      )}  
+      )} */}
 
       {isDatasource && (
         <StyledLi
@@ -158,7 +157,7 @@ const MainNavigation = () => {
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
           <TypographySecondary
-            value={t('model')}
+            value={`${t('model')}s`}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -178,7 +177,6 @@ const MainNavigation = () => {
           />
         </StyledLi>
       )}
-
 
       {isDiscover && (
         <StyledLi

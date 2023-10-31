@@ -15,7 +15,7 @@ import {
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+
 import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
@@ -24,7 +24,7 @@ import Button from '@l3-lib/ui-core/dist/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/Secondary'
+
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyTertiary from 'components/Typography/Tertiary'
