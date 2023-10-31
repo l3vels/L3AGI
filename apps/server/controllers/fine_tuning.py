@@ -38,7 +38,12 @@ def create_fine_tuning(
             detail="OpenAI API key not set. Please set it in your account settings.",
         )
 
-    background_tasks.add_task(fine_tune_openai_model, fine_tuning_model, settings)
+    background_tasks.add_task(
+        fine_tune_openai_model,
+        fine_tuning_model.id,
+        fine_tuning_model.account_id,
+        settings,
+    )
 
     return convert_model_to_response(
         FineTuningModel.get_fine_tuning_by_id(
