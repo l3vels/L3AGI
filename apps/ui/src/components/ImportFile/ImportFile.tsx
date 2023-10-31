@@ -27,7 +27,7 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     setFieldValue: setFieldValue,
   })
 
-  const { handleDownloadTemplate } = useDownloadTemplate()
+  const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate()
 
   useEffect(() => {
     if (value.length > 0) {
@@ -62,7 +62,10 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
         return (
           <StyledButtonContainer>
             <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
-              {t('download-template')}
+              {t('download-template json')}
+            </ButtonTertiary>
+            <ButtonTertiary onClick={handleDownloadTemplateCSV} size={Button.sizes.SMALL}>
+              {t('download-template csv')}
             </ButtonTertiary>
 
             <UploadButton

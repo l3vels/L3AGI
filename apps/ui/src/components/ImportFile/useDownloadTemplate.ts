@@ -25,5 +25,31 @@ export const useDownloadTemplate = () => {
     document.body.removeChild(a)
   }
 
-  return { handleDownloadTemplate }
+  const handleDownloadTemplateCSV = () => {
+    const csvRows = []
+
+    // Headers
+    const headers = Object.keys(templateData[0])
+    csvRows.push(headers.join(','))
+
+    // Values
+    templateData.forEach((row: any) => {
+      const values = headers.map(header => {
+        return `"${row[header] || ''}"`
+      })
+      csvRows.push(values.join(','))
+    })
+
+    // Join rows
+    const csvContent = csvRows.join('\n')
+    const encodedUri = encodeURI(`data:text/csv;charset=utf-8,${csvContent}`)
+
+    const link = document.createElement('a')
+    link.setAttribute('href', encodedUri)
+    link.setAttribute('download', 'templateData.csv')
+    document.body.appendChild(link) // Required for Firefox
+    link.click()
+  }
+
+  return { handleDownloadTemplate, handleDownloadTemplateCSV }
 }
