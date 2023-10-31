@@ -212,7 +212,9 @@ class FileDatasourceRetriever:
         )
 
         retriever = self.index.as_retriever(
-            service_context=service_context, verbose=True
+            service_context=service_context,
+            similarity_top_k=self.similarity_top_k,
+            verbose=True,
         )
 
         # query_engine = self.index.as_query_engine(
