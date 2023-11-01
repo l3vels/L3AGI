@@ -1,18 +1,16 @@
-name: Deoloy worker
+name: Deploy worker
 
 on:
   push:
     branches:
       - main
     # paths:
-      # - 'apps/worker/**'
-
+    # - 'apps/worker/**'
 
 env:
   ACR_REPOSITORY_BEAT: "l3-beat"
   ACR_REPOSITORY_WORKER: "l3-worker"
   TR_DIRECTORY: "apps/server/terraform"
-
 
 jobs:
   Build_beat:
@@ -25,17 +23,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: 'Build and push image'
+
+      - name: "Build and push image"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ vars.ACR_REGISTRY }}
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest -f apps/worker/docker/Dockerfile.beat apps/worker
-           docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest
-           echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
+          docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest -f apps/worker/docker/Dockerfile.beat apps/worker
+          docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest
+          echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
   Build_worker:
     name: Build Application Container
@@ -47,16 +45,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: 'Build and push image'
+
+      - name: "Build and push image"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ vars.ACR_REGISTRY }}
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest -f apps/worker/docker/Dockerfile.worker apps/worker
-           docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest
-           echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
-  
-           
+          docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest -f apps/worker/docker/Dockerfile.worker apps/worker
+          docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest
+          echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
