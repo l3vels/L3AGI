@@ -8,6 +8,9 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory
 WORKDIR /app
 
+# Change permissions of the work directory
+RUN chmod 777 /app
+
 # Install dependencies
 COPY pyproject.toml poetry.lock /app/
 
