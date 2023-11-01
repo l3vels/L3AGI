@@ -23,9 +23,16 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import { useState } from 'react'
 import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
+
+  const { getModelModules } = useGetAccountModule()
+  const modelModule = getModelModules('models')
+  const fineTuningModule = getModelModules('fine-tuning')
+  const isModel = modelModule.list
+  const isFineTuning = fineTuningModule.list
 
   const [activeTab, setActiveTab] = useState(0)
 
@@ -46,43 +53,43 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
-          <TabPanel>
-            <FineTunings />
-          </TabPanel>
+          <TabPanel>{isFineTuning && <FineTunings />}</TabPanel>
 
           <TabPanel>
-            <StyledSectionWrapper>
-              <StyledHeaderGroup className='header_group'>
-                <div>
-                  <StyledSectionTitle>{`${t('model')}s`}</StyledSectionTitle>
-                  <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
-                </div>
-              </StyledHeaderGroup>
+            {isModel && (
+              <StyledSectionWrapper>
+                <StyledHeaderGroup className='header_group'>
+                  <div>
+                    <StyledSectionTitle>{`${t('model')}s`}</StyledSectionTitle>
+                    <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
+                  </div>
+                </StyledHeaderGroup>
 
-              <ComponentsWrapper noPadding>
-                <StyledCardsWrapper>
-                  {models
-                    ?.filter(model => !model.is_fine_tuned)
-                    ?.map((model, index: number) => {
-                      const logo = MODEL_PROVIDER_LOGOS.find(
-                        logo => logo.provider === model.provider,
-                      )
-                      const logoSrc = logo?.logoSrc || ''
+                <ComponentsWrapper noPadding>
+                  <StyledCardsWrapper>
+                    {models
+                      ?.filter(model => !model.is_fine_tuned)
+                      ?.map((model, index: number) => {
+                        const logo = MODEL_PROVIDER_LOGOS.find(
+                          logo => logo.provider === model.provider,
+                        )
+                        const logoSrc = logo?.logoSrc || ''
 
-                      return (
-                        <ModelCard
-                          key={index}
-                          isReadOnly={isPublic}
-                          isDisabled={false}
-                          title={model.name}
-                          author={model.provider}
-                          logoSrc={logoSrc}
-                        />
-                      )
-                    })}
-                </StyledCardsWrapper>
-              </ComponentsWrapper>
-            </StyledSectionWrapper>
+                        return (
+                          <ModelCard
+                            key={index}
+                            isReadOnly={isPublic}
+                            isDisabled={false}
+                            title={model.name}
+                            author={model.provider}
+                            logoSrc={logoSrc}
+                          />
+                        )
+                      })}
+                  </StyledCardsWrapper>
+                </ComponentsWrapper>
+              </StyledSectionWrapper>
+            )}
           </TabPanel>
         </TabPanels>
       </TabsContext>

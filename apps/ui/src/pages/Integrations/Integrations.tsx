@@ -26,11 +26,11 @@ const Integrations = () => {
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
         <TabList>
-          <Tab onClick={() => setActiveTab(0)} disabled={!isToolkit}>
+          <Tab onClick={() => setActiveTab(0)}>
             <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
           </Tab>
 
-          <Tab onClick={() => setActiveTab(1)} disabled={!isVoice}>
+          <Tab onClick={() => setActiveTab(1)}>
             <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
           </Tab>
         </TabList>
