@@ -10,6 +10,7 @@ import {
 import ToolCard from 'pages/Toolkit/components/ToolCard'
 import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
 import { useNavigate } from 'react-router-dom'
+import { voiceLogos } from './constants'
 
 const Voices = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: voicesData } = useVoicesService()
@@ -27,6 +28,12 @@ const Voices = ({ isPublic }: { isPublic?: boolean }) => {
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {voicesData?.map((voice: any, index: number) => {
+            const filteredLogos = voiceLogos.filter(
+              (voiceLogo: any) => voiceLogo.voiceName === voice.name,
+            )
+
+            const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
             return (
               <ToolCard
                 key={index}
@@ -39,7 +46,7 @@ const Voices = ({ isPublic }: { isPublic?: boolean }) => {
                   navigate(`/integrations/voice/${voice.slug}`)
                   // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
                 }}
-                logoSrc={''}
+                logoSrc={logoSrc}
               />
             )
           })}
