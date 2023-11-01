@@ -10,6 +10,7 @@ levanion_configs = {
         "chat": "Multi-Agent",
         "toolkits": "Toolkit",
         "schedules": "Schedule",
+        "integrations": "Integration",
     },
     "modules": {
         "home": {
@@ -48,6 +49,21 @@ levanion_configs = {
                     }
                 },
                 "fine-tuning": {"operations": True},
+            },
+        },
+        "integration": {
+            "active": True,
+            "label": "Integrations",
+            "submodules": {
+                "toolkit": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True,
+                    }
+                },
+                "voices": True,
+                "telephony": False,
             },
         },
         "toolkit": True,  # True

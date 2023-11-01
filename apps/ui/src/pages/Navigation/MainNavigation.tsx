@@ -37,12 +37,14 @@ const MainNavigation = () => {
     getScheduleModules,
     getContactModules,
     getGroupModules,
+    getIntegrationModules,
     moduleNames,
   } = useGetAccountModule()
 
   const isHome = getHomeModules('active')
   const isChat = getChatModules('active')
   const isModel = getModelModules('active')
+  const isIntegration = getIntegrationModules('active')
   const isToolkit = getToolkitModules()
   const isDiscover = getDiscoveryModules()
   const isDatasource = getDatasourceModules()
@@ -153,17 +155,19 @@ const MainNavigation = () => {
         </StyledLi>
       )} */}
 
-      <StyledLi
-        isActive={includes(active, 'integrations')}
-        onClick={() => onHandleClick('/integrations')}
-      >
-        <StyledGamesIcon size={40} />
-        <TypographySecondary
-          value={`${t('integration')}s`}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </StyledLi>
+      {isIntegration && (
+        <StyledLi
+          isActive={includes(active, 'integrations')}
+          onClick={() => onHandleClick('/integrations')}
+        >
+          <StyledGamesIcon size={40} />
+          <TypographySecondary
+            value={`${t('integration')}s`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
 
       {isModel && (
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>

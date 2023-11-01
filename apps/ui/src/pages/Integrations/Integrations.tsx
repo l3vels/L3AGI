@@ -10,18 +10,27 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { t } from 'i18next'
 import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const Integrations = () => {
   const [activeTab, setActiveTab] = useState(0)
+  const { getIntegrationModules } = useGetAccountModule()
+
+  const toolkitModule = getIntegrationModules('toolkit')
+  const voiceModule = getIntegrationModules('voices')
+
+  const isToolkit = toolkitModule.list
+  const isVoice = voiceModule.list
 
   return (
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
         <TabList>
-          <Tab onClick={() => setActiveTab(0)}>
+          <Tab onClick={() => setActiveTab(0)} disabled={!isToolkit}>
             <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
           </Tab>
-          <Tab onClick={() => setActiveTab(1)}>
+
+          <Tab onClick={() => setActiveTab(1)} disabled={!isVoice}>
             <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
           </Tab>
         </TabList>
@@ -29,12 +38,8 @@ const Integrations = () => {
 
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
-          <TabPanel>
-            <Toolkit />
-          </TabPanel>
-          <TabPanel>
-            <Voices />
-          </TabPanel>
+          <TabPanel>{isToolkit && <Toolkit />}</TabPanel>
+          <TabPanel>{isVoice && <Voices />}</TabPanel>
         </TabPanels>
       </TabsContext>
     </StyledTabRootWrapper>
