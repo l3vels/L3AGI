@@ -13,14 +13,14 @@ import { useNavigate } from 'react-router-dom'
 
 const Voices = ({ isPublic }: { isPublic?: boolean }) => {
   const { data: voicesData } = useVoicesService()
-  console.log('voicesData', voicesData)
+
   const navigate = useNavigate()
 
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Voices</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('voice')}s`}</StyledSectionTitle>
         </div>
       </StyledHeaderGroup>
 

@@ -8,7 +8,7 @@ import {
 } from 'pages/Home/homeStyle.css'
 
 import { useToolsService } from 'services/tool/useToolsService'
-import styled from 'styled-components'
+
 import ToolCard from './components/ToolCard'
 
 import { toolLogos } from './constants'
@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom'
 import { useToolView } from './ToolView/useToolView'
 import { useEffect, useState } from 'react'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
-import Voices from 'plugins/contact/pages/Voice'
 
 const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
@@ -42,47 +41,44 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
   }, [])
 
   return (
-    <>
-      <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledSectionTitle>{`${t('toolkit')}`}</StyledSectionTitle>
-            <StyledSectionDescription>{t('toolkit-description')}</StyledSectionDescription>
-          </div>
-        </StyledHeaderGroup>
+    <StyledSectionWrapper>
+      <StyledHeaderGroup className='header_group'>
+        <div>
+          <StyledSectionTitle>{`${t('toolkit')}`}</StyledSectionTitle>
+          <StyledSectionDescription>{t('toolkit-description')}</StyledSectionDescription>
+        </div>
+      </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          {show && (
-            <StyledCardsWrapper>
-              {tools?.map((tool: any, index: number) => {
-                const filteredLogos = toolLogos.filter(
-                  (toolLogo: any) => toolLogo.toolName === tool.name,
-                )
+      <ComponentsWrapper noPadding>
+        {show && (
+          <StyledCardsWrapper>
+            {tools?.map((tool: any, index: number) => {
+              const filteredLogos = toolLogos.filter(
+                (toolLogo: any) => toolLogo.toolName === tool.name,
+              )
 
-                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+              const logoSrc = filteredLogos?.[0]?.logoSrc || ''
 
-                return (
-                  <ToolCard
-                    key={index}
-                    isReadOnly={isPublic}
-                    isDisabled={!tool.is_active && !isPublic}
-                    title={tool.name}
-                    subTitle={!tool.is_active && !isPublic ? `${t('comingSoon')}` : ''}
-                    onClick={() => {
-                      if (isPublic) return
-                      navigate(`/toolkits/${tool.slug}`)
-                      // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
-                    }}
-                    logoSrc={logoSrc}
-                  />
-                )
-              })}
-            </StyledCardsWrapper>
-          )}
-        </ComponentsWrapper>
-      </StyledSectionWrapper>
-      <Voices />
-    </>
+              return (
+                <ToolCard
+                  key={index}
+                  isReadOnly={isPublic}
+                  isDisabled={!tool.is_active && !isPublic}
+                  title={tool.name}
+                  subTitle={!tool.is_active && !isPublic ? `${t('comingSoon')}` : ''}
+                  onClick={() => {
+                    if (isPublic) return
+                    navigate(`/toolkits/${tool.slug}`)
+                    // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
+                  }}
+                  logoSrc={logoSrc}
+                />
+              )
+            })}
+          </StyledCardsWrapper>
+        )}
+      </ComponentsWrapper>
+    </StyledSectionWrapper>
   )
 }
 

@@ -93,6 +93,7 @@ import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 import CreateFineTuningModal from 'modals/CreateFineTuningModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
+import Integrations from 'pages/Integrations'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -237,6 +238,15 @@ const Route = () => {
                 element={<EditTeamOfAgentsForm />}
                 key={document.location.href}
               />
+            </Router>
+
+            <Router
+              path={'integrations'}
+              element={<MainRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<Integrations />} key={document.location.href} />
+              {/* <Router path={':slug'} element={<ToolView />} key={document.location.href} /> */}
             </Router>
 
             <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>

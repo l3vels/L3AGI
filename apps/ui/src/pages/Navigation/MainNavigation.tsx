@@ -153,6 +153,18 @@ const MainNavigation = () => {
         </StyledLi>
       )}
 
+      <StyledLi
+        isActive={includes(active, 'integrations')}
+        onClick={() => onHandleClick('/integrations')}
+      >
+        <StyledGamesIcon size={40} />
+        <TypographySecondary
+          value={t('integration')}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+      </StyledLi>
+
       {isModel && (
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
