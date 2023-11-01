@@ -42,6 +42,7 @@ class ConfigModel(BaseModel):
         UUID, ForeignKey("agent.id", ondelete="CASCADE"), nullable=True, index=True
     )
     toolkit_id = Column(UUID, nullable=True)
+    voice_id = Column(UUID, nullable=True)
     account_id = Column(
         UUID, ForeignKey("account.id", ondelete="CASCADE"), nullable=True
     )

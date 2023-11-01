@@ -11,6 +11,7 @@ class ConfigInput(BaseModel):
     is_required: bool
     agent_id: Optional[UUID4]
     toolkit_id: Optional[UUID4]
+    voice_id: Optional[UUID4]
     datasource_id: Optional[UUID4]
     workspace_id: Optional[UUID4]
     team_id: Optional[UUID4]
@@ -26,6 +27,7 @@ class ConfigOutput(BaseModel):
     is_required: bool
     agent_id: Optional[UUID4]
     toolkit_id: Optional[UUID4]
+    voice_id: Optional[UUID4]
     datasource_id: Optional[UUID4]
     team_id: Optional[UUID4]
     account_id: UUID4
