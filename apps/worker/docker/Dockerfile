@@ -29,5 +29,7 @@ COPY ./ /app/
 # Copy supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+EXPOSE 80
+
 # Run supervisord
 CMD ["/usr/bin/supervisord"]
