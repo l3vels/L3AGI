@@ -1,34 +1,28 @@
-from typing import Optional, List
+from typing import List, Optional
 from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi_sqlalchemy import db
 from sqlalchemy.orm import joinedload
-from utils.auth import authenticate, try_auth_user
-from models.chat_message import ChatMessage as ChatMessageModel
-from typings.auth import UserAccount
-from typings.chat import (
-    ChatMessageInput,
-    ChatUserMessageInput,
-    NegotiateOutput,
-    ChatMessageOutput,
-    ChatStopInput,
-    ChatInput,
-    ChatOutput,
-)
-from utils.chat import get_chat_session_id, convert_chats_to_chat_list
+
+from exceptions import ChatException, ChatNotFoundException
 from models.agent import AgentModel
-from typings.config import ConfigOutput
-from models.team import TeamModel
-from models.config import ConfigModel
 from models.chat import ChatModel
-from utils.chat import convert_model_to_response
+from models.chat_message import ChatMessage as ChatMessageModel
+from models.config import ConfigModel
+from models.team import TeamModel
+from services.chat import create_client_message, create_user_message
 from services.pubsub import AzurePubSubService
-from typings.chat import ChatStatus
-from utils.configuration import (
-    convert_model_to_response as convert_config_model_to_response,
-)
-from exceptions import ChatNotFoundException, ChatException
-from services.chat import create_user_message, create_client_message
+from typings.auth import UserAccount
+from typings.chat import (ChatInput, ChatMessageInput, ChatMessageOutput,
+                          ChatOutput, ChatStatus, ChatStopInput,
+                          ChatUserMessageInput, NegotiateOutput)
+from typings.config import ConfigOutput
+from utils.auth import authenticate, try_auth_user
+from utils.chat import (convert_chats_to_chat_list, convert_model_to_response,
+                        get_chat_session_id)
+from utils.configuration import \
+    convert_model_to_response as convert_config_model_to_response
 
 router = APIRouter()
 
@@ -198,6 +192,19 @@ def negotiate(id: str):
 
 @router.post("/session/messages", status_code=201)
 def create_chat_message(request: Request, response: Response, body: ChatMessageInput):
+    """
+    Create new chat message
+    """
+    # authenticate
+    auth: UserAccount = try_auth_user(request, response)
+    create_client_message(body, auth)
+    return ""
+
+
+@router.post("/session/messages/draft", status_code=201)
+def create_chat_message_draft(
+    request: Request, response: Response, body: ChatMessageInput
+):
     """
     Create new chat message
     """

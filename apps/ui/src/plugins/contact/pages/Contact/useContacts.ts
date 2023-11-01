@@ -45,13 +45,13 @@ export const useContacts = () => {
     })
   }
 
-  const handleCall = () => {
+  const handleCall = (input: any) => {
     setToast({
       message: 'Call Started!',
       type: 'positive',
       open: true,
     })
-    createCallService()
+    createCallService(input)
   }
 
   const handleEndCall = async () => {
