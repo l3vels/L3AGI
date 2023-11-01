@@ -121,6 +121,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       value={agent_description}
                       name='agent_description'
                       onChange={(value: string) => onTextareaChange('agent_description', value)}
+                      maxLenght={5000}
+
                     />
                   </StyledTextareaWrapper>
 
@@ -247,6 +249,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       value={agent_text}
                       name='agent_text'
                       onChange={(value: string) => onTextareaChange('agent_text', value)}
+                      maxLenght={10000}
                     />
                   </StyledTextareaWrapper>
                 </StyledTabPanelInnerWrapper>

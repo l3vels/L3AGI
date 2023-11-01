@@ -94,7 +94,7 @@ const Contacts = () => {
                       return (
                         <AgentChatCard
                           key={index}
-                          onClick={handleCall}
+                          onClick={()=> {handleCall({agent_id : agent.id, contact_id: cell?.row?.original?.id})}}
                           onViewClick={handleView}
                           picked={false}
                           agent={agent}
