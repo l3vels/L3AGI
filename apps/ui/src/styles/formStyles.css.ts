@@ -15,3 +15,8 @@ export const StyledFormRoot = styled.div`
 
   display: flex;
 `
+export const StyledFormInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`

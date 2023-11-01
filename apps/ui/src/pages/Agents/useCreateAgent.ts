@@ -42,6 +42,13 @@ export const useCreateAgent = () => {
     agent_text: '',
     agent_avatar: '',
     agent_source_flow: 'source_detection',
+
+    agent_voice_synthesizer: '',
+    agent_default_voice: '',
+    agent_voice_id: '',
+    agent_voice_transcriber: '',
+    agent_voice_response: ['Text'],
+    agent_voice_input_mode: ['Text'],
   }
 
   if (agentById) {
@@ -63,6 +70,13 @@ export const useCreateAgent = () => {
       agent_greeting: agentById.configs?.greeting,
       agent_text: agentById.configs?.text,
       agent_source_flow: agentById.configs?.source_flow,
+
+      agent_voice_synthesizer: '',
+      agent_default_voice: '',
+      agent_voice_id: '',
+      agent_voice_transcriber: '',
+      agent_voice_response: ['Text'],
+      agent_voice_input_mode: ['Text'],
     }
   }
 

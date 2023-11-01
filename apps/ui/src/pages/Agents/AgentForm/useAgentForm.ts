@@ -3,6 +3,7 @@ import useUploadFile from 'hooks/useUploadFile'
 import { useModelsService } from 'services'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { useToolsService } from 'services/tool/useToolsService'
+import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
 
 export const useAgentForm = (formik: any) => {
   const [avatarIsLoading, setAvatarLoader] = useState(false)
@@ -12,6 +13,7 @@ export const useAgentForm = (formik: any) => {
   const { data: dataSources } = useDatasourcesService()
   const { data: tools } = useToolsService()
   const { data: models } = useModelsService()
+  const { data: voices } = useVoicesService()
 
   const modelOptions = models?.map(({ id, name, provider }) => ({
     value: id,
@@ -26,6 +28,12 @@ export const useAgentForm = (formik: any) => {
     ?.filter((tool: any) => tool.is_active)
     .map((tool: any) => {
       return { value: tool.toolkit_id, label: tool.name }
+    })
+
+  const voiceOptions = voices
+    ?.filter((voice: any) => voice.is_active)
+    .map((voice: any) => {
+      return { value: voice.id, label: voice.name }
     })
 
   const handleUploadAvatar = async (event: any) => {
@@ -58,6 +66,7 @@ export const useAgentForm = (formik: any) => {
     modelOptions,
     datasourceOptions,
     toolOptions,
+    voiceOptions,
     handleUploadAvatar,
     avatarIsLoading,
   }
