@@ -354,9 +354,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                         label={t('text')}
                         kind='secondary'
                         // name='agent_is_template'
-                        checked={agent_voice_input_mode.includes('Text')}
+                        checked={agent_voice_input_mode?.includes('Text')}
                         onChange={() => {
-                          if (agent_voice_input_mode.includes('Text')) {
+                          if (agent_voice_input_mode?.includes('Text')) {
                             const filteredInput = agent_voice_input_mode?.filter(
                               (input: string) => input !== 'Text',
                             )
@@ -375,9 +375,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                         label={t('voice')}
                         kind='secondary'
                         // name='agent_is_template'
-                        checked={agent_voice_input_mode.includes('Voice')}
+                        checked={agent_voice_input_mode?.includes('Voice')}
                         onChange={() => {
-                          if (agent_voice_input_mode.includes('Voice')) {
+                          if (agent_voice_input_mode?.includes('Voice')) {
                             const filteredInput = agent_voice_input_mode?.filter(
                               (input: string) => input !== 'Voice',
                             )
