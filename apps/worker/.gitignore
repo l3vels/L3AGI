@@ -5,3 +5,8 @@
 *.bak
 *.dat
 *.dir
+
+supervisord.log
+supervisord.pid
+
+celerybeat-schedule
