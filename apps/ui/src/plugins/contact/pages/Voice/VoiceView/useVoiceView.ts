@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom'
 import { useConfigsService } from 'services/config/useConfigsService'
 import { useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
-import { useToolsService } from 'services/tool/useToolsService'
 
 export const useVoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
   const { setToast } = useContext(ToastContext)
@@ -56,7 +55,7 @@ export const useVoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
         key_type: field.type,
         is_required: field.is_required,
         is_secret: field.is_secret,
-        tool_id: voice.id,
+        voice_id: voice.id,
       })
     }
 

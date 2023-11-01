@@ -41,7 +41,7 @@ const VoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
         {!voiceSlug && (
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>{t('toolkit')}</StyledSectionTitle>
+              <StyledSectionTitle>{t('voice')}</StyledSectionTitle>
               {/* <StyledSectionDescription>Here are all of your games, etc</StyledSectionDescription> */}
             </div>
             <StyledButtonWrapper>

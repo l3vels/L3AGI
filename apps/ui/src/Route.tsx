@@ -252,10 +252,10 @@ const Route = () => {
               <Router path={'voice/:slug'} element={<VoiceView />} key={document.location.href} />
             </Router>
 
-            <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
+            {/* <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
               <Router path={':slug'} element={<ToolView />} key={document.location.href} />
-            </Router>
+            </Router> */}
 
             <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Models />} key={document.location.href} />
