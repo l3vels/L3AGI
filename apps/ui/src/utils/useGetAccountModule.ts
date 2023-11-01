@@ -147,6 +147,7 @@ export const useGetAccountModule = () => {
     models: naming?.models,
     schedule: naming?.schedules,
     toolkits: naming?.toolkits,
+    integration: naming?.integrations,
   }
 
   return {
