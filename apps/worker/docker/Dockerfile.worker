@@ -15,12 +15,21 @@ RUN pip install poetry \
     && poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
+# Install supervisord
+RUN apt-get update && apt-get install -y supervisor
 
-RUN adduser --disabled-password --gecos '' myuser
-USER myuser
+# RUN adduser --disabled-password --gecos '' myuser
+
+# RUN mkdir -p /var/log/supervisor \
+#     && chown -R myuser:myuser /var/log/supervisor
+
+# USER myuser
 
 # Copy project
 COPY ./ /app/
 
-# Run Celery worker
-ENTRYPOINT ["celery", "-A", "main", "worker", "--loglevel=info"]
+# Copy supervisor configuration
+COPY supervisord_worker.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Run supervisord
+CMD ["/usr/bin/supervisord"]
