@@ -61,8 +61,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const data_process_flow = [
-    {label: 'Source Detection', value: 'source_detection'},
-    {label: 'Pre-Execution Data Retrieval', value: 'pre_execution'}
+    { label: 'Source Detection', value: 'source_detection' },
+    { label: 'Pre-Execution Data Retrieval', value: 'pre_execution' },
   ]
 
   return (
@@ -149,7 +149,6 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     options={toolOptions}
                   />
 
-
                   <StyledCombinedFields>
                     <AgentDropdown
                       isMulti
@@ -161,16 +160,16 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     />
 
                     <AgentDropdown
-                        label={'Data Process Flow'}
-                        fieldName={'agent_source_flow'}
-                        setFieldValue={setFieldValue}
-                        fieldValue={agent_source_flow}
-                        options={data_process_flow}
-                        onChange={() => {
-                          setFieldValue('agent_source_flow', '')
-                        }}
-                        optionSize={'small'}
-                      />
+                      label={'Data Process Flow'}
+                      fieldName={'agent_source_flow'}
+                      setFieldValue={setFieldValue}
+                      fieldValue={agent_source_flow}
+                      options={data_process_flow}
+                      onChange={() => {
+                        setFieldValue('agent_source_flow', '')
+                      }}
+                      optionSize={'small'}
+                    />
                   </StyledCombinedFields>
 
                   <StyledCombinedFields>
