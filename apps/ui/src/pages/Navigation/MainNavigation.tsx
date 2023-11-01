@@ -139,7 +139,7 @@ const MainNavigation = () => {
         </StyledLi>
       )}
 
-      {isToolkit && (
+      {/* {isToolkit && (
         <StyledLi
           isActive={includes(active, 'toolkits')}
           onClick={() => onHandleClick('/toolkits')}
@@ -151,7 +151,7 @@ const MainNavigation = () => {
             size={Typography.sizes.sm}
           />
         </StyledLi>
-      )}
+      )} */}
 
       <StyledLi
         isActive={includes(active, 'integrations')}
@@ -159,7 +159,7 @@ const MainNavigation = () => {
       >
         <StyledGamesIcon size={40} />
         <TypographySecondary
-          value={t('integration')}
+          value={`${t('integration')}s`}
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />

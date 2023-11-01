@@ -10,6 +10,7 @@ const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
 const SETTINGS_REGEX = /\/setting/
 const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
+const VOICE_REGEX = /\/voices\/[^/]+/
 // const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
 
 const AiMessageMarkdown = ({ children }: { children: any }) => {
@@ -60,6 +61,22 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
               <button
                 onClick={() => {
                   openModal({ name: 'toolkit-modal', data: { toolSlug: extractedPart } })
+                }}
+              >
+                <StyledText>{children}</StyledText>
+              </button>
+            )
+          }
+
+          if (VOICE_REGEX.test(href as string)) {
+            const inputString = href
+            const staticPart = '/voices/'
+            const extractedPart = inputString?.replace(staticPart, '')
+
+            return (
+              <button
+                onClick={() => {
+                  openModal({ name: 'voice-modal', data: { voiceSlug: extractedPart } })
                 }}
               >
                 <StyledText>{children}</StyledText>

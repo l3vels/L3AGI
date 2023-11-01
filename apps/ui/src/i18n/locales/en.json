@@ -156,7 +156,7 @@
   "greeting-description": "Hello, you can chat with $t(agent)s and $t(team)s on your dashboard.",
   "home": "Home",
   "here-are-all-your-agents-managing-tasks-and-operations": "Here are all your $t(agent)s, managing tasks and operations.",
-  "integration": "Integrationss",
+  "integration": "Integration",
   "i-got-it": "I got it",
   "import-images": "Import Images",
   "import-csv": "Import CSV",

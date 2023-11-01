@@ -36,7 +36,7 @@ const Voices = ({ isPublic }: { isPublic?: boolean }) => {
                 subTitle={!voice.is_active && !isPublic ? `${t('comingSoon')}` : ''}
                 onClick={() => {
                   if (isPublic) return
-                  navigate(`/voices/${voice.slug}`)
+                  navigate(`/integrations/voice/${voice.slug}`)
                   // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
                 }}
                 logoSrc={''}

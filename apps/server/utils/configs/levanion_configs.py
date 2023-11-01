@@ -8,8 +8,8 @@ levanion_configs = {
         "models": "Model",
         "discovery": "Discovery",
         "chat": "Multi-Agent",
-        "toolkits": "Toolkits",
-        "schedules": "Schedules",
+        "toolkits": "Toolkit",
+        "schedules": "Schedule",
     },
     "modules": {
         "home": {
