@@ -1,7 +1,5 @@
-import asyncio
 from datetime import timedelta
 
-import httpx
 import requests
 from celery import Celery
 
@@ -17,11 +15,11 @@ app.conf.accept_content = ["application/x-python-serialize", "application/json"]
 CELERY_BEAT_SCHEDULE = {
     "register-scheduled-run-tasks": {
         "task": "register-scheduled-run-tasks",
-        "schedule": timedelta(seconds=15),
+        "schedule": timedelta(minutes=2),
     },
     "register-fine-tuning-tasks": {
         "task": "register-fine-tuning-tasks",
-        "schedule": timedelta(seconds=15),
+        "schedule": timedelta(minutes=2),
     },
 }
 
@@ -41,11 +39,7 @@ def execute_scheduled_runs_task():
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
 
-    print(res.text)
-
     schedules_with_configs = res.json()
-
-    print(schedules_with_configs)
 
     for schedule in schedules_with_configs:
         execute_single_schedule_task.apply_async(args=[schedule["schedule"]["id"]])
@@ -80,12 +74,13 @@ def register_fine_tunings_task():
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
 
-    return res.text
+    fine_tunings = res.json()
 
-    # fine_tunings = res.json()
+    for fine_tuning in fine_tunings:
+        check_single_fine_tuning_task.apply_async(args=[fine_tuning["id"]])
 
-    # for fine_tuning in fine_tunings:
-    #     check_single_fine_tuning_task.apply_async(args=[fine_tuning["id"]])
+    fine_tuning_ids = [fine_tuning["id"] for fine_tuning in fine_tunings]
+    return fine_tuning_ids
 
 
 @app.task(
