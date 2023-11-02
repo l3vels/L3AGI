@@ -38,7 +38,7 @@ app.conf.beat_schedule = CELERY_BEAT_SCHEDULE
 def execute_scheduled_runs_task():
     res = requests.get(
         f"{Config.SERVER_URL}/schedule/due",
-        headers={"Authorization": f"Bearer {Config.AUTH_TOKEN}"},
+        headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
 
     schedules_with_configs = res.json()
@@ -59,7 +59,7 @@ def execute_scheduled_runs_task():
 def execute_single_schedule_task(schedule_id: str):
     res = requests.post(
         f"{Config.SERVER_URL}/schedule/{schedule_id}/run",
-        headers={"Authorization": f"Bearer {Config.AUTH_TOKEN}"},
+        headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
     return res.json()
 
@@ -73,7 +73,7 @@ def execute_single_schedule_task(schedule_id: str):
 def register_fine_tunings_task():
     res = requests.get(
         f"{Config.SERVER_URL}/fine-tuning/pending",
-        headers={"Authorization": f"Bearer {Config.AUTH_TOKEN}"},
+        headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
     fine_tunings = res.json()
 
@@ -90,7 +90,7 @@ def register_fine_tunings_task():
 def check_single_fine_tuning_task(fine_tuning_id: str):
     res = requests.post(
         f"{Config.SERVER_URL}/fine-tuning/{fine_tuning_id}/check",
-        headers={"Authorization": f"Bearer {Config.AUTH_TOKEN}"},
+        headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
     return res
 
