@@ -20,7 +20,7 @@ export const StyledTabListWrapper = styled.div`
 export const StyledTabListSpan = styled.span`
   color: ${({ theme }) => theme.body.textColorPrimary};
 `
-export const StyledFormTab = styled(Tab)<{ isDisabled?: boolean }>`
+export const StyledTab = styled(Tab)<{ isDisabled?: boolean }>`
   &.active .tab-inner {
     background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
   }

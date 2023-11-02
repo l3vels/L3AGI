@@ -9,7 +9,12 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { t } from 'i18next'
-import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import {
+  StyledTab,
+  StyledTabListSpan,
+  StyledTabListWrapper,
+  StyledTabRootWrapper,
+} from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -42,12 +47,12 @@ const Integrations = () => {
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
-          <Tab onClick={() => handleTabClick(0, 'toolkit')}>
+          <StyledTab onClick={() => handleTabClick(0, 'toolkit')}>
             <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
-          </Tab>
-          <Tab onClick={() => handleTabClick(1, 'voice')}>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'voice')}>
             <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
-          </Tab>
+          </StyledTab>
         </TabList>
       </StyledTabListWrapper>
 

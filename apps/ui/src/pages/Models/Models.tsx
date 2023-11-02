@@ -22,7 +22,12 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import { useState } from 'react'
-import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import {
+  StyledTab,
+  StyledTabListSpan,
+  StyledTabListWrapper,
+  StyledTabRootWrapper,
+} from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -57,12 +62,12 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
-          <Tab onClick={() => handleTabClick(0, 'fine-tuning')}>
+          <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')}>
             <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
-          </Tab>
-          <Tab onClick={() => handleTabClick(1, 'model')}>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'model')}>
             <StyledTabListSpan>{`${t('model')}s`}</StyledTabListSpan>
-          </Tab>
+          </StyledTab>
         </TabList>
       </StyledTabListWrapper>
 

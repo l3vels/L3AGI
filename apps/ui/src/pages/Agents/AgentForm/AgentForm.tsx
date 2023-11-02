@@ -23,7 +23,7 @@ import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
 
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
-import { StyledFormTab } from 'styles/tabStyles.css'
+import { StyledTab } from 'styles/tabStyles.css'
 
 type AgentFormProps = {
   formik: any
@@ -84,21 +84,21 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     <StyledFormRoot>
       <StyledFormTabsWrapper>
         <StyledFormTabList size='small'>
-          <StyledFormTab onClick={() => setActiveTab(0)}>
+          <StyledTab onClick={() => setActiveTab(0)}>
             <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
-          </StyledFormTab>
-          <StyledFormTab onClick={() => setActiveTab(1)}>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(1)}>
             <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
-          </StyledFormTab>
-          <StyledFormTab onClick={() => setActiveTab(2)}>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(2)}>
             <StyledSpan isActive={activeTab === 2}>Training Details</StyledSpan>
-          </StyledFormTab>
-          <StyledFormTab onClick={() => setActiveTab(3)}>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(3)}>
             <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
-          </StyledFormTab>
-          <StyledFormTab onClick={() => setActiveTab(4)} isDisabled={!isVoice}>
+          </StyledTab>
+          <StyledTab onClick={() => setActiveTab(4)} isDisabled={!isVoice}>
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
-          </StyledFormTab>
+          </StyledTab>
         </StyledFormTabList>
       </StyledFormTabsWrapper>
       <StyledForm>

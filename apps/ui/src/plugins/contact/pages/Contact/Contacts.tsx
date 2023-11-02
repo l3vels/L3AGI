@@ -38,7 +38,12 @@ import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
-import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import {
+  StyledTab,
+  StyledTabListSpan,
+  StyledTabListWrapper,
+  StyledTabRootWrapper,
+} from 'styles/tabStyles.css'
 import { t } from 'i18next'
 
 const Contacts = () => {
@@ -189,12 +194,12 @@ const Contacts = () => {
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
-          <Tab onClick={() => handleTabClick(0, 'contact')}>
+          <StyledTab onClick={() => handleTabClick(0, 'contact')}>
             <StyledTabListSpan>{`${t('contact')}s`}</StyledTabListSpan>
-          </Tab>
-          <Tab onClick={() => handleTabClick(1, 'group')}>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'group')}>
             <StyledTabListSpan>{`${t('group')}s`}</StyledTabListSpan>
-          </Tab>
+          </StyledTab>
         </TabList>
       </StyledTabListWrapper>
 
