@@ -49,6 +49,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_voice_synthesizer,
     agent_voice_transcriber,
     agent_voice_input_mode,
+    agent_voice_response,
   } = values
 
   const onTextareaChange = (field: string, value: string) => {
@@ -327,17 +328,24 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       text={t('text')}
                       name='agent_voice_response'
                       onSelect={() => setFieldValue('agent_voice_response', ['Text'])}
-                      defaultChecked
+                      checked={
+                        agent_voice_response?.length === 1 && agent_voice_response?.includes('Text')
+                      }
                     />
                     <RadioButton
                       text={t('voice')}
                       name='agent_voice_response'
                       onSelect={() => setFieldValue('agent_voice_response', ['Voice'])}
+                      checked={
+                        agent_voice_response?.length === 1 &&
+                        agent_voice_response?.includes('Voice')
+                      }
                     />
                     <RadioButton
                       text={`${t('text')} & ${t('voice')}`}
                       name='agent_voice_response'
                       onSelect={() => setFieldValue('agent_voice_response', ['Text', 'Voice'])}
+                      checked={agent_voice_response?.length === 2}
                     />
                   </StyledFormInputWrapper>
 

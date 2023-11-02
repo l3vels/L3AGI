@@ -46,6 +46,13 @@ export const useEditAgent = () => {
     agent_suggestions: agentById?.configs?.suggestions,
     agent_greeting: agentById?.configs?.greeting,
     agent_text: agentById?.configs?.text || '',
+
+    agent_voice_synthesizer: agentById?.configs?.synthesizer,
+    agent_default_voice: agentById?.configs?.default_voice,
+    agent_voice_id: agentById?.configs?.voice_id,
+    agent_voice_transcriber: agentById?.configs?.transcriber,
+    agent_voice_response: agentById?.configs?.response_mode,
+    agent_voice_input_mode: agentById?.configs?.input_mode,
   }
 
   const handleSubmit = async (values: any) => {
@@ -69,6 +76,13 @@ export const useEditAgent = () => {
       suggestions: values.agent_suggestions,
       greeting: values.agent_greeting,
       text: values.agent_text,
+
+      synthesizer: values.agent_voice_synthesizer,
+      default_voice: values.agent_default_voice,
+      voice_id: values.agent_voice_id,
+      transcriber: values.agent_voice_transcriber,
+      response_mode: values.agent_voice_response,
+      input_mode: values.agent_voice_input_mode,
     }
 
     await updateAgent(agentId || '', {
