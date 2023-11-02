@@ -65,7 +65,8 @@ const StyledFieldsWrapper = styled.div`
 `
 const StyledCustomFieldWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+
   gap: 5px;
 `
 const StyledButtonWrapper = styled.div`

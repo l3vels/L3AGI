@@ -5,6 +5,8 @@ fragment VoiceFragment on Voice {
   name
   description
   slug
+  is_synthesizer
+  is_transcriber
   fields {
     label
     key

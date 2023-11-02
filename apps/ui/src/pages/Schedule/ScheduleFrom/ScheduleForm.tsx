@@ -256,5 +256,6 @@ export const StyledInputWrapper = styled.div`
 const StyledRepeatFields = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
-  align-items: center;
+
+  gap: 15px;
 `

@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import styled from 'styled-components'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +11,6 @@ import {
 import { ButtonPrimary } from 'components/Button/Button'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -20,11 +18,9 @@ import { useFineTuning } from './useFineTuning'
 import { useFineTuningForm } from './FineTuningForm/useFineTuningForm'
 
 import Table from 'components/Table'
-import {
-  StyledDeleteIcon,
-  StyledEditIcon,
-} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+
 import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
+import TableActionButtons from 'components/Table/components/TableActionButtons'
 
 const FineTunings = () => {
   const { t } = useTranslation()
@@ -62,23 +58,10 @@ const FineTunings = () => {
         width: 100,
         Cell: ({ cell }: any) => {
           return (
-            <StyledTableButtons>
-              <IconButton
-                onClick={() => deleteFineTuningHandler(cell.value)}
-                icon={() => <StyledDeleteIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='Delete'
-              />
-
-              <IconButton
-                onClick={() => navigate(`/models/${cell.value}/edit-fine-tuning`)}
-                icon={() => <StyledEditIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
-                // ariaLabel='Edit'
-              />
-            </StyledTableButtons>
+            <TableActionButtons
+              onDeleteClick={() => deleteFineTuningHandler(cell.value)}
+              onEditClick={() => navigate(`/models/${cell.value}/edit-fine-tuning`)}
+            />
           )
         },
       },
@@ -119,10 +102,3 @@ const FineTunings = () => {
 }
 
 export default FineTunings
-
-const StyledTableButtons = styled.div`
-  display: flex;
-  align-items: center;
-
-  height: 100%;
-`

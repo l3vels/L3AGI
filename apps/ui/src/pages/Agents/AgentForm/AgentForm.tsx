@@ -23,13 +23,14 @@ import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
 
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
-import { StyledTextAreaWrapper } from 'pages/ApiKeys/EditApiKey/EditApiModal'
+import { StyledTab } from 'styles/tabStyles.css'
 
 type AgentFormProps = {
   formik: any
+  isVoice?: boolean
 }
 
-const AgentForm = ({ formik }: AgentFormProps) => {
+const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   const { t } = useTranslation()
 
   const { setFieldValue, values } = formik
@@ -49,8 +50,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_voice_synthesizer,
     agent_voice_transcriber,
     agent_voice_input_mode,
+    agent_voice_response,
   } = values
-  console.log('values', values)
+
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
   }
@@ -59,7 +61,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     modelOptions,
     datasourceOptions,
     toolOptions,
-    voiceOptions,
+    voiceSynthesizerOptions,
+    voiceTranscriberOptions,
     handleUploadAvatar,
     avatarIsLoading,
   } = useAgentForm(formik)
@@ -93,7 +96,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           <StyledTab onClick={() => setActiveTab(3)}>
             <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => setActiveTab(4)}>
+          <StyledTab onClick={() => setActiveTab(4)} isDisabled={!isVoice}>
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
           </StyledTab>
         </StyledFormTabList>
@@ -288,7 +291,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     fieldName={'agent_voice_synthesizer'}
                     setFieldValue={setFieldValue}
                     fieldValue={agent_voice_synthesizer}
-                    options={voiceOptions}
+                    options={voiceSynthesizerOptions}
                     onChange={() => {
                       setFieldValue('agent_voice_synthesizer', '')
                     }}
@@ -311,7 +314,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     fieldName={'agent_voice_transcriber'}
                     setFieldValue={setFieldValue}
                     fieldValue={agent_voice_transcriber}
-                    options={voiceOptions}
+                    options={voiceTranscriberOptions}
                     onChange={() => {
                       setFieldValue('agent_voice_transcriber', '')
                     }}
@@ -329,17 +332,24 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       text={t('text')}
                       name='agent_voice_response'
                       onSelect={() => setFieldValue('agent_voice_response', ['Text'])}
-                      defaultChecked
+                      checked={
+                        agent_voice_response?.length === 1 && agent_voice_response?.includes('Text')
+                      }
                     />
                     <RadioButton
                       text={t('voice')}
                       name='agent_voice_response'
                       onSelect={() => setFieldValue('agent_voice_response', ['Voice'])}
+                      checked={
+                        agent_voice_response?.length === 1 &&
+                        agent_voice_response?.includes('Voice')
+                      }
                     />
                     <RadioButton
                       text={`${t('text')} & ${t('voice')}`}
                       name='agent_voice_response'
                       onSelect={() => setFieldValue('agent_voice_response', ['Text', 'Voice'])}
+                      checked={agent_voice_response?.length === 2}
                     />
                   </StyledFormInputWrapper>
 
@@ -505,9 +515,4 @@ export const StyledTabPanelInnerWrapper = styled(TabPanel)`
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
-`
-export const StyledTab = styled(Tab)`
-  &.active .tab-inner {
-    background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
-  }
 `

@@ -1,4 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+import Tab from '@l3-lib/ui-core/dist/Tab'
 
 export const StyledTabRootWrapper = styled.div`
   display: flex;
@@ -17,4 +19,18 @@ export const StyledTabListWrapper = styled.div`
 `
 export const StyledTabListSpan = styled.span`
   color: ${({ theme }) => theme.body.textColorPrimary};
+`
+export const StyledTab = styled(Tab)<{ isDisabled?: boolean }>`
+  &.active .tab-inner {
+    background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
+  }
+
+  ${p =>
+    p.isDisabled &&
+    css`
+      position: absolute;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0;
+    `};
 `

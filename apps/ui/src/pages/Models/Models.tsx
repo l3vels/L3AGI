@@ -22,11 +22,19 @@ import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
 import { useState } from 'react'
-import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import {
+  StyledTab,
+  StyledTabListSpan,
+  StyledTabListWrapper,
+  StyledTabRootWrapper,
+} from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
+
+  const { data: models } = useModelsService()
 
   const { getModelModules } = useGetAccountModule()
   const modelModule = getModelModules('models')
@@ -34,20 +42,32 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const isModel = modelModule.list
   const isFineTuning = fineTuningModule.list
 
-  const [activeTab, setActiveTab] = useState(0)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const tabQuery = urlParams.get('tab')
 
-  const { data: models } = useModelsService()
+  const defaultActiveTab = () => {
+    if (tabQuery === 'fine-tuning') return 0
+    if (tabQuery === 'model') return 1
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    navigate(`/models?tab=${tabName}`)
+  }
 
   return (
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
-        <TabList>
-          <Tab onClick={() => setActiveTab(0)}>
+        <TabList activeTabId={activeTab}>
+          <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')}>
             <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
-          </Tab>
-          <Tab onClick={() => setActiveTab(1)}>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'model')}>
             <StyledTabListSpan>{`${t('model')}s`}</StyledTabListSpan>
-          </Tab>
+          </StyledTab>
         </TabList>
       </StyledTabListWrapper>
 

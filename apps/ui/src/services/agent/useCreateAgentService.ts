@@ -18,8 +18,15 @@ export type AgentInput = {
   is_memory: boolean
   suggestions: string[]
   text: string
-  avatar: string,
+  avatar: string
   source_flow: string
+
+  synthesizer?: string
+  default_voice?: string
+  voice_id?: string
+  transcriber?: string
+  response_mode?: string[]
+  input_mode?: string[]
 }
 
 export const useCreateAgentService = () => {
@@ -44,6 +51,13 @@ export const useCreateAgentService = () => {
       greeting,
       text,
       avatar,
+
+      synthesizer,
+      default_voice,
+      voice_id,
+      transcriber,
+      response_mode,
+      input_mode,
     } = input
 
     const {
@@ -52,25 +66,32 @@ export const useCreateAgentService = () => {
       variables: {
         input: {
           agent: {
-            name: name,
-            description: description,
-            role: role,
-            is_template: is_template,
-            is_memory: is_memory,
-            avatar: avatar,
+            name,
+            description,
+            role,
+            is_template,
+            is_memory,
+            avatar,
           },
           configs: {
-            goals: goals,
-            constraints: constraints,
-            tools: tools,
-            datasources: datasources,
+            goals,
+            constraints,
+            tools,
+            datasources,
             model,
-            temperature: temperature,
-            instructions: instructions,
-            suggestions: suggestions,
-            greeting: greeting,
-            text: text,
-            source_flow
+            temperature,
+            instructions,
+            suggestions,
+            greeting,
+            text,
+            source_flow,
+
+            synthesizer,
+            default_voice,
+            voice_id,
+            transcriber,
+            response_mode,
+            input_mode,
           },
         },
       },
