@@ -94,7 +94,8 @@ def check_single_fine_tuning_task(fine_tuning_id: str):
         f"{Config.SERVER_URL}/fine-tuning/{fine_tuning_id}/check",
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
-    return res
+
+    return res.json()
 
 
 if __name__ == "__main__":
