@@ -33,6 +33,8 @@ const Integrations = () => {
   const tabQuery = urlParams.get('tab')
 
   const defaultActiveTab = () => {
+    if (!isToolkit) return 1
+
     if (tabQuery === 'toolkit') return 0
     if (tabQuery === 'voice') return 1
   }
@@ -45,16 +47,18 @@ const Integrations = () => {
 
   return (
     <StyledTabRootWrapper>
-      <StyledTabListWrapper>
-        <TabList activeTabId={activeTab}>
-          <StyledTab onClick={() => handleTabClick(0, 'toolkit')}>
-            <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(1, 'voice')}>
-            <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
-          </StyledTab>
-        </TabList>
-      </StyledTabListWrapper>
+      {isVoice && isToolkit && (
+        <StyledTabListWrapper>
+          <TabList activeTabId={activeTab}>
+            <StyledTab onClick={() => handleTabClick(0, 'toolkit')} isDisabled={!isToolkit}>
+              <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
+            </StyledTab>
+            <StyledTab onClick={() => handleTabClick(1, 'voice')} isDisabled={!isVoice}>
+              <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
+            </StyledTab>
+          </TabList>
+        </StyledTabListWrapper>
+      )}
 
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
