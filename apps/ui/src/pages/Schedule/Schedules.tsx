@@ -1,8 +1,6 @@
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
-import { StyledCardsWrapper } from 'pages/Agents/Agents'
-
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
@@ -82,7 +80,6 @@ const Schedules = () => {
     [],
   )
 
-  console.log('schedules', schedules)
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
