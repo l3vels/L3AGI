@@ -30,9 +30,11 @@ def run_schedule(schedule_id: str):
     if schedule.status == ScheduleStatus.PROCESSING.value:
         raise HTTPException(status_code=400, detail="Schedule already is processing")
 
-    execute_scheduled_run(db.session, schedule)
-
-    return {"message": "Schedule run successfully"}
+    try:
+        execute_scheduled_run(db.session, schedule)
+        return {"message": "Schedule run successfully"}
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=str(err))
 
 
 @router.post("", status_code=201, response_model=ScheduleWithConfigsOutput)
