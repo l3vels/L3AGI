@@ -91,7 +91,7 @@ jobs:
           echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
           echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
           echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
-          echo -e "AUTH_TOKEN = \"${{ vars.AUTH_TOKEN }}\"\n" >> $TFVARS
+          echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
 
       - name: Display .auto.tfvars file content
         run: |
@@ -204,7 +204,7 @@ jobs:
           echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
           echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
           echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
-          echo -e "AUTH_TOKEN = \"${{ vars.AUTH_TOKEN }}\"\n" >> $TFVARS
+          echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
 
       - name: Display .auto.tfvars file content
         run: |
