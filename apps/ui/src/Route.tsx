@@ -46,10 +46,6 @@ import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 import RootLayout from 'routes/RootLayout'
 
-import CreateAgentModal from 'modals/CreateAgentModal'
-import EditAgentModal from 'modals/EditAgentModal'
-import CreateDatasourceModal from 'modals/CreateDatasourceModal'
-import EditDatasourceModal from 'modals/EditDatasourceModal'
 import Datasource from 'pages/Datasource'
 import TeamOfAgents from 'pages/TeamOfAgents'
 
@@ -90,7 +86,6 @@ import CreateGroupForm from 'plugins/contact/pages/Group/GroupForm/CreateGroupFo
 import EditGroupForm from 'plugins/contact/pages/Group/GroupForm/EditGroupForm'
 import ScheduleRunModal from 'modals/ScheduleRunModal'
 import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
-import CreateFineTuningModal from 'modals/CreateFineTuningModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
 import Integrations from 'pages/Integrations'
@@ -341,10 +336,6 @@ const Route = () => {
       </Routes>
 
       <DeleteConfirmationModal />
-      <CreateAgentModal />
-      <EditAgentModal />
-      <CreateDatasourceModal />
-      <EditDatasourceModal />
       <LoginModal />
       <AgentViewModal />
       <TeamOfAgentViewModal />
