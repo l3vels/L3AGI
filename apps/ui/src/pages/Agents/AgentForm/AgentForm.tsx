@@ -50,7 +50,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_voice_transcriber,
     agent_voice_input_mode,
   } = values
-  console.log('values', values)
+
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
   }
@@ -59,7 +59,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     modelOptions,
     datasourceOptions,
     toolOptions,
-    voiceOptions,
+    voiceSynthesizerOptions,
+    voiceTranscriberOptions,
     handleUploadAvatar,
     avatarIsLoading,
   } = useAgentForm(formik)
@@ -285,7 +286,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     fieldName={'agent_voice_synthesizer'}
                     setFieldValue={setFieldValue}
                     fieldValue={agent_voice_synthesizer}
-                    options={voiceOptions}
+                    options={voiceSynthesizerOptions}
                     onChange={() => {
                       setFieldValue('agent_voice_synthesizer', '')
                     }}
@@ -308,7 +309,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     fieldName={'agent_voice_transcriber'}
                     setFieldValue={setFieldValue}
                     fieldValue={agent_voice_transcriber}
-                    options={voiceOptions}
+                    options={voiceTranscriberOptions}
                     onChange={() => {
                       setFieldValue('agent_voice_transcriber', '')
                     }}
