@@ -8,13 +8,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 celery = "^5.3.4"
-requests = "^2.31.0"
 python-dotenv = "^1.0.0"
 redis = "^5.0.1"
 httpx = "^0.25.0"
 flower = "^2.0.1"
-fastapi = "^0.104.1"
-uvicorn = "^0.23.2"
 
 
 [build-system]

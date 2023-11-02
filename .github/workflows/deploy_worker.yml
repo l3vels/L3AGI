@@ -1,4 +1,4 @@
-name: Deploy worker
+name: Deploy Worker
 
 on:
   push:
@@ -13,28 +13,6 @@ env:
   TR_DIRECTORY: "apps/server/terraform"
 
 jobs:
-  # Build_beat:
-  #   name: Build Application Container
-  #   timeout-minutes: 15
-  #   runs-on: ubuntu-latest
-  #   outputs:
-  #     tag_name: ${{ steps.build-image.outputs.TAG_NAME }}
-  #   environment: dev
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: 'Build and push image'
-  #       uses: azure/docker-login@v1
-  #       with:
-  #         login-server: ${{ vars.ACR_REGISTRY }}
-  #         username: ${{ secrets.AZURE_USERNAME }}
-  #         password: ${{ secrets.AZURE_PASSWORD }}
-  #     - run: |
-  #          docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest -f apps/worker/docker/Dockerfile.beat apps/worker
-  #          docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_BEAT }}:latest
-  #          echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
-
   Build_worker:
     name: Build Application Container
     timeout-minutes: 15
