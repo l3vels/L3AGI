@@ -93,6 +93,9 @@ import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 import CreateFineTuningModal from 'modals/CreateFineTuningModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
+import Integrations from 'pages/Integrations'
+import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
+import VoiceModal from 'modals/VoiceModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -239,10 +242,20 @@ const Route = () => {
               />
             </Router>
 
-            <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
+            <Router
+              path={'integrations'}
+              element={<MainRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<Integrations />} key={document.location.href} />
+              <Router path={'toolkit/:slug'} element={<ToolView />} key={document.location.href} />
+              <Router path={'voice/:slug'} element={<VoiceView />} key={document.location.href} />
+            </Router>
+
+            {/* <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
               <Router path={':slug'} element={<ToolView />} key={document.location.href} />
-            </Router>
+            </Router> */}
 
             <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Models />} key={document.location.href} />
@@ -337,6 +350,7 @@ const Route = () => {
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
+      <VoiceModal />
       <ChatLinkModal />
       <ScheduleRunModal />
       <RunLogsModal />

@@ -8,7 +8,7 @@ call_configs = {
         "models": "Model",
         "discovery": "Discovery",
         "chat": "Agents",
-        "toolkits": "Toolkits",
+        "toolkits": "Toolkit",
         "schedules": "Campaigns",
     },
     "modules": {

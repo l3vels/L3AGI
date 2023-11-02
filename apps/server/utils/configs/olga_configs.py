@@ -9,7 +9,7 @@ olga_configs = {
         "discovery": "Discovery",
         "chat": "Agents",
         "toolkits": "Toolkits",
-        "schedules": "Campaigns",
+        "schedules": "Schedules",
     },
     "modules": {
         "home": {

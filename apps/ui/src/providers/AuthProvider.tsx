@@ -29,8 +29,19 @@ const AuthProvider = ({ children }: any) => {
     account,
   }
 
-  const { welcome, agent, team, chat, home, datasource, discovery, models, schedule, toolkits } =
-    moduleNames
+  const {
+    welcome,
+    agent,
+    team,
+    chat,
+    home,
+    datasource,
+    discovery,
+    models,
+    schedule,
+    toolkits,
+    integration,
+  } = moduleNames
 
   const handleTranslation = (value: string, newName: string) => {
     i18n.addResource('en', 'translation', value, newName)
@@ -48,6 +59,7 @@ const AuthProvider = ({ children }: any) => {
     if (models) handleTranslation('model', models)
     if (discovery) handleTranslation('discovery', discovery)
     if (schedule) handleTranslation('schedule', schedule)
+    if (integration) handleTranslation('integration', integration)
   }, [moduleNames])
 
   if (loading) {

@@ -77,3 +77,4 @@ class AgentOutput(BaseModel):
 class AgentWithConfigsOutput(BaseModel):
     agent: AgentOutput
     configs: Optional[ConfigsOutput]
+    system_message: Optional[str]

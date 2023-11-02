@@ -19,8 +19,11 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
+import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
+
 import UploadAvatar from 'components/UploadAvatar'
-import { StyledFormRoot } from 'styles/formStyles.css'
+import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
+import { StyledTextAreaWrapper } from 'pages/ApiKeys/EditApiKey/EditApiModal'
 
 type AgentFormProps = {
   formik: any
@@ -43,14 +46,23 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     agent_is_template,
     agent_avatar,
     agent_source_flow,
+    agent_voice_synthesizer,
+    agent_voice_transcriber,
+    agent_voice_input_mode,
   } = values
-
+  console.log('values', values)
   const onTextareaChange = (field: string, value: string) => {
     formik.setFieldValue(field, value)
   }
 
-  const { modelOptions, datasourceOptions, toolOptions, handleUploadAvatar, avatarIsLoading } =
-    useAgentForm(formik)
+  const {
+    modelOptions,
+    datasourceOptions,
+    toolOptions,
+    voiceOptions,
+    handleUploadAvatar,
+    avatarIsLoading,
+  } = useAgentForm(formik)
 
   useEffect(() => {
     if (agent_model === '' && modelOptions?.length > 0) {
@@ -61,8 +73,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
   const [activeTab, setActiveTab] = useState(0)
 
   const data_process_flow = [
-    {label: 'Source Detection', value: 'source_detection'},
-    {label: 'Pre-Execution Data Retrieval', value: 'pre_execution'}
+    { label: 'Source Detection', value: 'source_detection' },
+    { label: 'Pre-Execution Data Retrieval', value: 'pre_execution' },
   ]
 
   return (
@@ -81,9 +93,9 @@ const AgentForm = ({ formik }: AgentFormProps) => {
           <StyledTab onClick={() => setActiveTab(3)}>
             <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
           </StyledTab>
-          {/* <StyledTab onClick={() => setActiveTab(4)}>
-            <StyledSpan>Voice Preferences</StyledSpan>
-          </StyledTab> */}
+          <StyledTab onClick={() => setActiveTab(4)}>
+            <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
+          </StyledTab>
         </StyledFormTabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -109,6 +121,8 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       value={agent_description}
                       name='agent_description'
                       onChange={(value: string) => onTextareaChange('agent_description', value)}
+                      maxLenght={5000}
+
                     />
                   </StyledTextareaWrapper>
 
@@ -149,7 +163,6 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     options={toolOptions}
                   />
 
-
                   <StyledCombinedFields>
                     <AgentDropdown
                       isMulti
@@ -161,16 +174,16 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                     />
 
                     <AgentDropdown
-                        label={'Data Process Flow'}
-                        fieldName={'agent_source_flow'}
-                        setFieldValue={setFieldValue}
-                        fieldValue={agent_source_flow}
-                        options={data_process_flow}
-                        onChange={() => {
-                          setFieldValue('agent_source_flow', '')
-                        }}
-                        optionSize={'small'}
-                      />
+                      label={'Data Process Flow'}
+                      fieldName={'agent_source_flow'}
+                      setFieldValue={setFieldValue}
+                      fieldValue={agent_source_flow}
+                      options={data_process_flow}
+                      onChange={() => {
+                        setFieldValue('agent_source_flow', '')
+                      }}
+                      optionSize={'small'}
+                    />
                   </StyledCombinedFields>
 
                   <StyledCombinedFields>
@@ -236,6 +249,7 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                       value={agent_text}
                       name='agent_text'
                       onChange={(value: string) => onTextareaChange('agent_text', value)}
+                      maxLenght={10000}
                     />
                   </StyledTextareaWrapper>
                 </StyledTabPanelInnerWrapper>
@@ -267,7 +281,119 @@ const AgentForm = ({ formik }: AgentFormProps) => {
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
-              <TabPanel>5</TabPanel>
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <AgentDropdown
+                    label={t('synthesizer')}
+                    fieldName={'agent_voice_synthesizer'}
+                    setFieldValue={setFieldValue}
+                    fieldValue={agent_voice_synthesizer}
+                    options={voiceOptions}
+                    onChange={() => {
+                      setFieldValue('agent_voice_synthesizer', '')
+                    }}
+                    optionSize={'small'}
+                  />
+
+                  <FormikTextField
+                    name='agent_default_voice'
+                    // placeholder={t('default-voice')}
+                    label={t('default-voice')}
+                  />
+                  <FormikTextField
+                    name='agent_voice_id'
+                    // placeholder={t('voice-id')}
+                    label={t('voice-id')}
+                  />
+
+                  <AgentDropdown
+                    label={t('transcriber')}
+                    fieldName={'agent_voice_transcriber'}
+                    setFieldValue={setFieldValue}
+                    fieldValue={agent_voice_transcriber}
+                    options={voiceOptions}
+                    onChange={() => {
+                      setFieldValue('agent_voice_transcriber', '')
+                    }}
+                    optionSize={'small'}
+                  />
+
+                  <StyledFormInputWrapper>
+                    <TypographyPrimary
+                      value={t('response-mode')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+
+                    <RadioButton
+                      text={t('text')}
+                      name='agent_voice_response'
+                      onSelect={() => setFieldValue('agent_voice_response', ['Text'])}
+                      defaultChecked
+                    />
+                    <RadioButton
+                      text={t('voice')}
+                      name='agent_voice_response'
+                      onSelect={() => setFieldValue('agent_voice_response', ['Voice'])}
+                    />
+                    <RadioButton
+                      text={`${t('text')} & ${t('voice')}`}
+                      name='agent_voice_response'
+                      onSelect={() => setFieldValue('agent_voice_response', ['Text', 'Voice'])}
+                    />
+                  </StyledFormInputWrapper>
+
+                  <StyledFormInputWrapper>
+                    <TypographyPrimary
+                      value={t('input-mode')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.md}
+                    />
+                    <StyledCheckboxWrapper>
+                      <Checkbox
+                        label={t('text')}
+                        kind='secondary'
+                        // name='agent_is_template'
+                        checked={agent_voice_input_mode?.includes('Text')}
+                        onChange={() => {
+                          if (agent_voice_input_mode?.includes('Text')) {
+                            const filteredInput = agent_voice_input_mode?.filter(
+                              (input: string) => input !== 'Text',
+                            )
+                            setFieldValue('agent_voice_input_mode', filteredInput)
+                          } else {
+                            setFieldValue('agent_voice_input_mode', [
+                              ...agent_voice_input_mode,
+                              'Text',
+                            ])
+                          }
+                        }}
+                      />
+                    </StyledCheckboxWrapper>
+                    <StyledCheckboxWrapper>
+                      <Checkbox
+                        label={t('voice')}
+                        kind='secondary'
+                        // name='agent_is_template'
+                        checked={agent_voice_input_mode?.includes('Voice')}
+                        onChange={() => {
+                          if (agent_voice_input_mode?.includes('Voice')) {
+                            const filteredInput = agent_voice_input_mode?.filter(
+                              (input: string) => input !== 'Voice',
+                            )
+                            setFieldValue('agent_voice_input_mode', filteredInput)
+                          } else {
+                            setFieldValue('agent_voice_input_mode', [
+                              ...agent_voice_input_mode,
+                              'Voice',
+                            ])
+                          }
+                        }}
+                      />
+                    </StyledCheckboxWrapper>
+                  </StyledFormInputWrapper>
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
             </TabPanels>
           </TabsContext>
         </StyledInputWrapper>

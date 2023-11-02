@@ -105,7 +105,7 @@ export const StyledCardsWrapper = styled.div`
   max-height: calc(100vh - 325px);
   height: 100%;
   overflow-y: auto;
-  padding: 5px 35px;
+  padding: 5px 32px;
 `
 const StyledMainHeaderWrapper = styled.div`
   display: flex;

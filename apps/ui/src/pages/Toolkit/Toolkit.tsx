@@ -8,7 +8,7 @@ import {
 } from 'pages/Home/homeStyle.css'
 
 import { useToolsService } from 'services/tool/useToolsService'
-import styled from 'styled-components'
+
 import ToolCard from './components/ToolCard'
 
 import { toolLogos } from './constants'
@@ -68,8 +68,7 @@ const Toolkit = ({ isPublic }: { isPublic?: boolean }) => {
                   subTitle={!tool.is_active && !isPublic ? `${t('comingSoon')}` : ''}
                   onClick={() => {
                     if (isPublic) return
-                    navigate(`/toolkits/${tool.slug}`)
-                    // openModal({ name: 'toolkit-modal', data: { toolSlug: tool.slug } })
+                    navigate(`/integrations/toolkit/${tool.slug}`)
                   }}
                   logoSrc={logoSrc}
                 />
