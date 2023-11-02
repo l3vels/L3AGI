@@ -1,36 +1,36 @@
-name: Deploy Worker
+# name: Deploy Worker
 
-on:
-  push:
-    branches:
-      - main
-    # paths:
-    # - 'apps/worker/**'
+# on:
+#   push:
+#     branches:
+#       - main
+#     # paths:
+#     # - 'apps/worker/**'
 
-env:
-  ACR_REPOSITORY_BEAT: "l3-beat"
-  ACR_REPOSITORY_WORKER: "l3-worker"
-  TR_DIRECTORY: "apps/server/terraform"
+# env:
+#   ACR_REPOSITORY_BEAT: "l3-beat"
+#   ACR_REPOSITORY_WORKER: "l3-worker"
+#   TR_DIRECTORY: "apps/server/terraform"
 
-jobs:
-  Build_worker:
-    name: Build Application Container
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    outputs:
-      tag_name: ${{ steps.build-image.outputs.TAG_NAME }}
-    environment: dev
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+# jobs:
+#   Build_worker:
+#     name: Build Application Container
+#     timeout-minutes: 15
+#     runs-on: ubuntu-latest
+#     outputs:
+#       tag_name: ${{ steps.build-image.outputs.TAG_NAME }}
+#     environment: dev
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: "Build and push image"
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ vars.ACR_REGISTRY }}
-          username: ${{ secrets.AZURE_USERNAME }}
-          password: ${{ secrets.AZURE_PASSWORD }}
-      - run: |
-          docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest -f apps/worker/docker/Dockerfile apps/worker
-          docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest
-          echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
+#       - name: "Build and push image"
+#         uses: azure/docker-login@v1
+#         with:
+#           login-server: ${{ vars.ACR_REGISTRY }}
+#           username: ${{ secrets.AZURE_USERNAME }}
+#           password: ${{ secrets.AZURE_PASSWORD }}
+#       - run: |
+#           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest -f apps/worker/docker/Dockerfile apps/worker
+#           docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY_WORKER }}:latest
+#           echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
