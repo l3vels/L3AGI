@@ -17,11 +17,11 @@ app.conf.accept_content = ["application/x-python-serialize", "application/json"]
 CELERY_BEAT_SCHEDULE = {
     "register-scheduled-run-tasks": {
         "task": "register-scheduled-run-tasks",
-        "schedule": timedelta(minutes=2),
+        "schedule": timedelta(seconds=15),
     },
     "register-fine-tuning-tasks": {
         "task": "register-fine-tuning-tasks",
-        "schedule": timedelta(minutes=5),
+        "schedule": timedelta(seconds=15),
     },
 }
 
@@ -41,7 +41,11 @@ def execute_scheduled_runs_task():
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
 
+    print(res.text)
+
     schedules_with_configs = res.json()
+
+    print(schedules_with_configs)
 
     for schedule in schedules_with_configs:
         execute_single_schedule_task.apply_async(args=[schedule["schedule"]["id"]])
@@ -75,10 +79,13 @@ def register_fine_tunings_task():
         f"{Config.SERVER_URL}/fine-tuning/pending",
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
-    fine_tunings = res.json()
 
-    for fine_tuning in fine_tunings:
-        check_single_fine_tuning_task.apply_async(args=[fine_tuning["id"]])
+    return res.text
+
+    # fine_tunings = res.json()
+
+    # for fine_tuning in fine_tunings:
+    #     check_single_fine_tuning_task.apply_async(args=[fine_tuning["id"]])
 
 
 @app.task(
