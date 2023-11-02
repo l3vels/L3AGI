@@ -23,13 +23,14 @@ import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
 
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
-import { StyledTextAreaWrapper } from 'pages/ApiKeys/EditApiKey/EditApiModal'
+import { StyledFormTab } from 'styles/tabStyles.css'
 
 type AgentFormProps = {
   formik: any
+  isVoice?: boolean
 }
 
-const AgentForm = ({ formik }: AgentFormProps) => {
+const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   const { t } = useTranslation()
 
   const { setFieldValue, values } = formik
@@ -83,21 +84,21 @@ const AgentForm = ({ formik }: AgentFormProps) => {
     <StyledFormRoot>
       <StyledFormTabsWrapper>
         <StyledFormTabList size='small'>
-          <StyledTab onClick={() => setActiveTab(0)}>
+          <StyledFormTab onClick={() => setActiveTab(0)}>
             <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => setActiveTab(1)}>
+          </StyledFormTab>
+          <StyledFormTab onClick={() => setActiveTab(1)}>
             <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => setActiveTab(2)}>
+          </StyledFormTab>
+          <StyledFormTab onClick={() => setActiveTab(2)}>
             <StyledSpan isActive={activeTab === 2}>Training Details</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => setActiveTab(3)}>
+          </StyledFormTab>
+          <StyledFormTab onClick={() => setActiveTab(3)}>
             <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => setActiveTab(4)}>
+          </StyledFormTab>
+          <StyledFormTab onClick={() => setActiveTab(4)} isDisabled={!isVoice}>
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
-          </StyledTab>
+          </StyledFormTab>
         </StyledFormTabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -511,9 +512,4 @@ export const StyledTabPanelInnerWrapper = styled(TabPanel)`
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
-`
-export const StyledTab = styled(Tab)`
-  &.active .tab-inner {
-    background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
-  }
 `
