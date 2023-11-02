@@ -60,5 +60,6 @@ module "backend" {
     AWS_SECRET_ACCESS_KEY          = var.AWS_SECRET_ACCESS_KEY
     AWS_REGION                     = var.AWS_REGION
     AWS_S3_BUCKET                  = var.AWS_S3_BUCKET
+    AUTH_TOKEN                     = var.AUTH_TOKEN
   }
 }

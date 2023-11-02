@@ -1,20 +1,25 @@
+from datetime import timedelta
 from typing import Tuple
+
 import gql.transport.exceptions
-from fastapi import HTTPException, Request, Response, Depends
+import requests
+from fastapi import Depends, HTTPException, Request, Response
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.security.utils import get_authorization_scheme_param
 from fastapi_jwt_auth import AuthJWT
-from typings.auth import UserAccount
-from datetime import timedelta
-from config import Config
 from fastapi_sqlalchemy import db
-from models.user import UserModel
+
+from config import Config
 from models.account import AccountModel
-from typings.user import UserOutput
+from models.user import UserModel
 from typings.account import AccountOutput
-import requests
-from utils.account import convert_model_to_response as convert_model_to_response_account
-from utils.user import convert_model_to_response as convert_model_to_response_user
+from typings.auth import UserAccount
+from typings.user import UserOutput
+from utils.account import \
+    convert_model_to_response as convert_model_to_response_account
+from utils.user import \
+    convert_model_to_response as convert_model_to_response_user
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -41,6 +46,16 @@ def authenticate(
         )
     except gql.transport.exceptions.TransportQueryError:
         raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+def authenticate_by_auth_token(
+    request: Request, response: Response
+) -> Tuple[UserOutput, AccountOutput]:
+    authorization = request.headers.get("Authorization", None)
+    _, token = get_authorization_scheme_param(authorization)
+
+    if token != Config.AUTH_TOKEN:
+        raise HTTPException(status_code=401, detail="Invalid auth token")
 
 
 def try_auth_user(

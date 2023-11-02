@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv(override=False)
@@ -34,6 +35,8 @@ class Config:
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
     AWS_REGION = os.environ.get("AWS_REGION")
     AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET")
+
+    AUTH_TOKEN = os.environ.get("AUTH_TOKEN")
 
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
 
