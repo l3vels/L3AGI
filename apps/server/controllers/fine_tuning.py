@@ -20,7 +20,6 @@ router = APIRouter()
 @router.post(
     "/{fine_tuning_id}/check",
     status_code=200,
-    response_model=FineTuningOutput,
     dependencies=[Depends(authenticate_by_auth_token)],
 )
 def check_fine_tuning_status(fine_tuning_id: UUID):
