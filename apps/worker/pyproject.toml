@@ -12,6 +12,7 @@ python-dotenv = "^1.0.0"
 redis = "^5.0.1"
 httpx = "^0.25.0"
 flower = "^2.0.1"
+requests = "^2.31.0"
 
 
 [build-system]

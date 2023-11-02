@@ -247,7 +247,9 @@ class ConfigModel(BaseModel):
         return config
 
     @classmethod
-    def get_account_settings(cls, session: Session, account) -> AccountSettings:
+    def get_account_settings(
+        cls, session: Session, account_id: UUID
+    ) -> AccountSettings:
         keys = [
             "open_api_key",
             "hugging_face_access_token",
@@ -262,7 +264,7 @@ class ConfigModel(BaseModel):
             session.query(ConfigModel)
             .filter(
                 ConfigModel.key.in_(keys),
-                ConfigModel.account_id == account.id,
+                ConfigModel.account_id == account_id,
                 or_(
                     or_(
                         ConfigModel.is_deleted.is_(False),

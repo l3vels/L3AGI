@@ -194,7 +194,7 @@ def process_chat_message(
         run_id=run.id,
     )
 
-    settings = ConfigModel.get_account_settings(db.session, provider_account)
+    settings = ConfigModel.get_account_settings(db.session, provider_account.id)
 
     if len(agents) > 0:
         for agent_with_configs in agents:

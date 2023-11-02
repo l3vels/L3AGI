@@ -8,7 +8,9 @@ from uuid import UUID, uuid4
 
 import openai
 from openai.error import AuthenticationError
+from sqlalchemy.orm import Session
 
+from models.config import ConfigModel
 from models.fine_tuning import FineTuningModel
 from services.aws_s3 import AWSS3Service
 from typings.config import AccountSettings
@@ -66,43 +68,36 @@ def fine_tune_openai_model(
         )
 
         fine_tuning_model.openai_fine_tuning_id = fine_tuning_job.id
-
-        def retrieve_job():
-            job = openai.FineTuningJob.retrieve(
-                api_key=settings.openai_api_key, id=fine_tuning_job.id
-            )
-
-            session.refresh(fine_tuning_model)
-
-            fine_tuning_model.status = OPENAI_TO_FINE_TUNING_STATUS[job.status].value
-
-            is_finished = False
-
-            if fine_tuning_model.status == FineTuningStatus.COMPLETED.value:
-                fine_tuning_model.model_identifier = job.fine_tuned_model
-                is_finished = True
-
-            if job.error:
-                fine_tuning_model.error = job.error
-                is_finished = True
-
-            session.commit()
-
-            return is_finished
-
-        while True:
-            is_finished = retrieve_job()
-
-            if is_finished:
-                break
-
-            time.sleep(60)
     except AuthenticationError:
         fine_tuning_model.error = "Invalid OpenAI API Key"
-        session.commit()
     except Exception as err:
         fine_tuning_model.error = str(err)
-        session.commit()
+
+    session.commit()
+
+
+def check_fine_tuning(session: Session, id: UUID):
+    fine_tuning_model = FineTuningModel.get_fine_tuning_by_id(session, id)
+    settings = ConfigModel.get_account_settings(session, fine_tuning_model.account_id)
+
+    fine_tuning_job = openai.FineTuningJob.retrieve(
+        id=fine_tuning_model.openai_fine_tuning_id,
+        api_key=settings.openai_api_key,
+    )
+
+    job = openai.FineTuningJob.retrieve(
+        api_key=settings.openai_api_key, id=fine_tuning_job.id
+    )
+
+    fine_tuning_model.status = OPENAI_TO_FINE_TUNING_STATUS[job.status].value
+
+    if fine_tuning_model.status == FineTuningStatus.COMPLETED.value:
+        fine_tuning_model.model_identifier = job.fine_tuned_model
+
+    if job.error:
+        fine_tuning_model.error = job.error
+
+    session.commit()
 
 
 def convert_message_to_openai_conversation_format(message: Dict):

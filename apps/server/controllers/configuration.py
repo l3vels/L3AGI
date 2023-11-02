@@ -28,7 +28,7 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
 
     session = create_session()
 
-    settings = ConfigModel.get_account_settings(session, account)
+    settings = ConfigModel.get_account_settings(session, account.id)
     datasource = DatasourceModel.get_datasource_by_id(session, datasource_id, account)
 
     try:
