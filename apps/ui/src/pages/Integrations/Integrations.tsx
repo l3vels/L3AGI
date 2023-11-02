@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Toolkit from 'pages/Toolkit'
 import Voices from 'plugins/contact/pages/Voice'
@@ -11,9 +11,9 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { t } from 'i18next'
 import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Integrations = () => {
-  const [activeTab, setActiveTab] = useState(0)
   const { getIntegrationModules } = useGetAccountModule()
 
   const toolkitModule = getIntegrationModules('toolkit')
@@ -22,15 +22,30 @@ const Integrations = () => {
   const isToolkit = toolkitModule.list
   const isVoice = voiceModule.list
 
+  const navigate = useNavigate()
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const tabQuery = urlParams.get('tab')
+
+  const defaultActiveTab = () => {
+    if (tabQuery === 'toolkit') return 0
+    if (tabQuery === 'voice') return 1
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    navigate(`/integrations?tab=${tabName}`)
+  }
+
   return (
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
-        <TabList>
-          <Tab onClick={() => setActiveTab(0)}>
+        <TabList activeTabId={activeTab}>
+          <Tab onClick={() => handleTabClick(0, 'toolkit')}>
             <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
           </Tab>
-
-          <Tab onClick={() => setActiveTab(1)}>
+          <Tab onClick={() => handleTabClick(1, 'voice')}>
             <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
           </Tab>
         </TabList>
