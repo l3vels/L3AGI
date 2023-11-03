@@ -5,20 +5,22 @@ from fastapi_sqlalchemy import db
 
 from exceptions import ScheduleNotFoundException
 from models.schedule import ScheduleModel
-from typings.auth import UserAccount
-from typings.schedule import (
-    ScheduleConfigInput,
-    ScheduleWithConfigsOutput,
-    ScheduleStatus,
-)
-from utils.auth import authenticate
-from utils.schedule import convert_model_to_response, convert_schedules_to_schedule_list
 from services.schedule import execute_scheduled_run
+from typings.auth import UserAccount
+from typings.schedule import (ScheduleConfigInput, ScheduleStatus,
+                              ScheduleWithConfigsOutput)
+from utils.auth import authenticate, authenticate_by_auth_token
+from utils.schedule import (convert_model_to_response,
+                            convert_schedules_to_schedule_list)
 
 router = APIRouter()
 
 
-@router.post("/{schedule_id}/run", status_code=200)
+@router.post(
+    "/{schedule_id}/run",
+    status_code=200,
+    dependencies=[Depends(authenticate_by_auth_token)],
+)
 def run_schedule(schedule_id: str):
     schedule = ScheduleModel.get_schedule_by_id(db, schedule_id, None)
 
@@ -28,9 +30,11 @@ def run_schedule(schedule_id: str):
     if schedule.status == ScheduleStatus.PROCESSING.value:
         raise HTTPException(status_code=400, detail="Schedule already is processing")
 
-    execute_scheduled_run(db.session, schedule)
-
-    return {"message": "Schedule run successfully"}
+    try:
+        execute_scheduled_run(db.session, schedule)
+        return {"message": "Schedule run successfully"}
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=str(err))
 
 
 @router.post("", status_code=201, response_model=ScheduleWithConfigsOutput)
@@ -124,7 +128,7 @@ def get_schedules(
     return convert_schedules_to_schedule_list(db_schedules)
 
 
-@router.get("/due")
+@router.get("/due", dependencies=[Depends(authenticate_by_auth_token)])
 def get_due_schedules():
     schedules = ScheduleModel.get_due_schedules(db.session)
     return convert_schedules_to_schedule_list(schedules)

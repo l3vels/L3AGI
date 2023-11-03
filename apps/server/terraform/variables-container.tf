@@ -80,6 +80,9 @@ variable "AWS_REGION" {
 variable "AWS_S3_BUCKET" {
   type = string
 }
+variable "AUTH_TOKEN" {
+  type = string
+}
 
 locals {
   task_container_env_vars = [ ]

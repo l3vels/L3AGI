@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
@@ -38,7 +38,12 @@ import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
-import { StyledTabListSpan, StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import {
+  StyledTab,
+  StyledTabListSpan,
+  StyledTabListWrapper,
+  StyledTabRootWrapper,
+} from 'styles/tabStyles.css'
 import { t } from 'i18next'
 
 const Contacts = () => {
@@ -170,18 +175,31 @@ const Contacts = () => {
     [],
   )
 
-  const [activeTab, setActiveTab] = useState(0)
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const tabQuery = urlParams.get('tab')
+
+  const defaultActiveTab = () => {
+    if (tabQuery === 'contact') return 0
+    if (tabQuery === 'group') return 1
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    navigate(`/contacts?tab=${tabName}`)
+  }
 
   return (
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
-        <TabList>
-          <Tab onClick={() => setActiveTab(0)}>
+        <TabList activeTabId={activeTab}>
+          <StyledTab onClick={() => handleTabClick(0, 'contact')}>
             <StyledTabListSpan>{`${t('contact')}s`}</StyledTabListSpan>
-          </Tab>
-          <Tab onClick={() => setActiveTab(1)}>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'group')}>
             <StyledTabListSpan>{`${t('group')}s`}</StyledTabListSpan>
-          </Tab>
+          </StyledTab>
         </TabList>
       </StyledTabListWrapper>
 

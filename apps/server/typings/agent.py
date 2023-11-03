@@ -34,6 +34,12 @@ class ConfigInput(BaseModel):
     greeting: Optional[str]
     text: Optional[str]
     source_flow: Optional[str]
+    synthesizer: Optional[str]
+    default_voice: Optional[str]
+    voice_id: Optional[str]
+    transcriber: Optional[str]
+    response_mode: Optional[List[str]]
+    input_mode: Optional[List[str]]
 
 
 class AgentConfigInput(BaseModel):
@@ -53,6 +59,12 @@ class ConfigsOutput(BaseModel):
     greeting: Optional[str]
     text: Optional[str]
     source_flow: Optional[str]
+    synthesizer: Optional[str]
+    default_voice: Optional[str]
+    voice_id: Optional[str]
+    transcriber: Optional[str]
+    response_mode: Optional[List[str]]
+    input_mode: Optional[List[str]]
 
 
 class AgentOutput(BaseModel):

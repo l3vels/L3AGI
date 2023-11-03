@@ -46,7 +46,7 @@ export const useCreateGroup = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/contacts')
+      navigate('/contacts?tab=group')
     } catch (e) {
       setToast({
         message: 'Failed To Add Group!',

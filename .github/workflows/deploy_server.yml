@@ -5,13 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'apps/server/**'
-
+      - "apps/server/**"
 
 env:
   ACR_REPOSITORY: "l3-api"
   TR_DIRECTORY: "apps/server/terraform"
-
 
 jobs:
   Build:
@@ -24,17 +22,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: 'Build and push image'
+
+      - name: "Build and push image"
         uses: azure/docker-login@v1
         with:
           login-server: ${{ vars.ACR_REGISTRY }}
           username: ${{ secrets.AZURE_USERNAME }}
           password: ${{ secrets.AZURE_PASSWORD }}
       - run: |
-           docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/server/docker/Dockerfile apps/server
-           docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }}
-           echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
+          docker build -t ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }} -f apps/server/docker/Dockerfile apps/server
+          docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }}
+          echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
   Init_dev:
     runs-on: ubuntu-latest
@@ -44,15 +42,15 @@ jobs:
       ENVIRONMENT: dev
     defaults:
       run:
-        shell: bash        
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
-        
+
       - name: Change file name
-        run: | 
-          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
-      
+        run: |
+          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+
       - name: Update task_container_version
         run: |
           TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
@@ -93,11 +91,12 @@ jobs:
           echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
           echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
           echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
-          
+          echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
+
       - name: Display .auto.tfvars file content
         run: |
           cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
-  
+
       - name: Upload file
         uses: actions/upload-artifact@v2
         with:
@@ -114,8 +113,8 @@ jobs:
       tf_vars_file: varfiles/dev.tfvars
       gh_environment: dev
       task_container_name: "l3-api"
-      task_container_version: #${{ github.sha }} temp 
-      # task_container_version: "1fe3d215f1ac2e6be5d43b4e1522b9dc43aefd36" 
+      task_container_version: #${{ github.sha }} temp
+      # task_container_version: "1fe3d215f1ac2e6be5d43b4e1522b9dc43aefd36"
       task_container_registry: ${{ vars.ACR_REGISTRY }}
     secrets:
       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -156,15 +155,15 @@ jobs:
       ENVIRONMENT: prod
     defaults:
       run:
-        shell: bash        
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
-        
+
       - name: Change file name
-        run: | 
-          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars 
-            
+        run: |
+          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+
       - name: Update task_container_version
         run: |
           TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
@@ -205,17 +204,17 @@ jobs:
           echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
           echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
           echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
-          
+          echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
+
       - name: Display .auto.tfvars file content
         run: |
           cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
-  
+
       - name: Upload file
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
           path: ${{ github.workspace }}/${{ env.TR_DIRECTORY  }}/${{ env.ENVIRONMENT  }}.auto.tfvars
-  
 
   Plan_prod:
     needs: Init_Prod

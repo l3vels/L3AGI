@@ -64,8 +64,6 @@ app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 
 # Base.metadata.create_all(bind=engine)
 
-# if Config.ENV != "local"
-
 
 # origins = [
 #     "http://localhost:3000",

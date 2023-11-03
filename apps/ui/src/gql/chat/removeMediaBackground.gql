@@ -1,3 +1,0 @@
-mutation removeMediaBackground($id: ID!) @api(name: game) {
-  removeMediaBackground(id: $id)
-}
