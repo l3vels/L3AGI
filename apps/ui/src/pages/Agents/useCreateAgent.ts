@@ -50,7 +50,7 @@ export const useCreateAgent = () => {
     agent_voice_response: ['Text'],
     agent_voice_input_mode: ['Text'],
 
-    integrations: [],
+    agent_integrations: [],
   }
 
   if (agentById) {
@@ -80,7 +80,7 @@ export const useCreateAgent = () => {
       agent_voice_response: agentById.configs?.response_mode,
       agent_voice_input_mode: agentById.configs?.input_mode,
 
-      integrations: agentById.configs?.integrations,
+      agent_integrations: agentById.configs?.integrations,
     }
   }
 
@@ -113,7 +113,7 @@ export const useCreateAgent = () => {
         response_mode: values.agent_voice_response,
         input_mode: values.agent_voice_input_mode,
 
-        integrations: agentById.configs?.integrations,
+        integrations: values.agent_integrations,
       }
 
       const newAgent = await createAgentService(agentInput)

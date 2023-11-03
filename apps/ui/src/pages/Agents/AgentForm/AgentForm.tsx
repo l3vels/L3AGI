@@ -80,12 +80,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     { label: 'Pre-Execution Data Retrieval', value: 'pre_execution' },
   ]
 
-  const integrationWithId = (id: string) => integrationOptions.find((value: string) => value === id)
+  const agentIntegrationIds = agent_integrations?.map((integration: any) => integration.value)
 
-  // FIXME: agent_integrations .length is not found
   const onChangeIntegration = (id: string, item: any, index: number) => {
-    if (agent_integrations.length > 0 && !integrationWithId(id)) {
-      const updatedIntegrations = agent_integrations.filter((value: string) => value !== id)
+    if (agent_integrations?.length > 0 && agentIntegrationIds?.includes(id)) {
+      const updatedIntegrations = agent_integrations.filter(
+        (integration: any) => integration.value !== id,
+      )
       setFieldValue('agent_integrations', updatedIntegrations)
     } else {
       const updatedIntegrations = [...agent_integrations]
@@ -421,44 +422,38 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     </StyledCheckboxWrapper>
                   </StyledFormInputWrapper>
                 </StyledTabPanelInnerWrapper>
+              </TabPanel>
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  {integrationOptions?.map((integration: any, index: number) => {
+                    return (
+                      <StyledFormInputWrapper key={integration.value}>
+                        <StyledCheckboxWrapper>
+                          <Checkbox
+                            label={t(integration.label)}
+                            kind='secondary'
+                            name={integration.label}
+                            checked={agentIntegrationIds?.includes(integration.value)}
+                            onChange={() => {
+                              onChangeIntegration(integration.value, integration, index)
+                            }}
+                          />
+                        </StyledCheckboxWrapper>
 
-                <TabPanel>
-                  <TabPanel>
-                    <StyledTabPanelInnerWrapper>
-                      {integrationOptions.map((item: any, index: number) => {
-                        return (
-                          <div key={item.value}>
-                            <StyledCheckboxWrapper>
-                              <Checkbox
-                                label={t(item.label)}
-                                kind='secondary'
-                                name={item.label}
-                                checked={integrationWithId(item.value)}
-                                onChange={() => {
-                                  onChangeIntegration(item.value, item, index)
-                                }}
+                        {agentIntegrationIds?.includes(integration.value) &&
+                          integration.fields.map((field: any, fieldIndex: number) => (
+                            <div key={field.key}>
+                              <FormikTextField
+                                name={`agent_integrations[${index}].fields[${fieldIndex}].value`}
+                                placeholder={t(`${field.label}`)}
+                                label={t(`${field.label}`)}
                               />
-                            </StyledCheckboxWrapper>
-
-                            {integrationWithId(item.value) &&
-                              item.fields.map((field: any) => (
-                                <div key={field.key}>
-                                  <FormikTextField
-                                    name={field.key}
-                                    placeholder={t(`${field.label}`)}
-                                    label={t(`${field.label}`)}
-                                    onChange={value => {
-                                      // TODO: impl onUpdate
-                                    }}
-                                  />
-                                </div>
-                              ))}
-                          </div>
-                        )
-                      })}
-                    </StyledTabPanelInnerWrapper>
-                  </TabPanel>
-                </TabPanel>
+                            </div>
+                          ))}
+                      </StyledFormInputWrapper>
+                    )
+                  })}
+                </StyledTabPanelInnerWrapper>
               </TabPanel>
             </TabPanels>
           </TabsContext>
@@ -469,15 +464,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 }
 
 export default AgentForm
-
-const StyledRoot = styled.div`
-  width: 100%;
-
-  height: 100%;
-  overflow-y: scroll;
-
-  display: flex;
-`
 
 const StyledForm = styled.div`
   width: 100%;
@@ -508,35 +494,34 @@ const StyledInputWrapper = styled.div`
 export const StyledTextareaWrapper = styled.div`
   font: var(--font-general-label);
   line-height: 22px;
-             font-size: 10px;
+  font-size: 10px;
 
-                    height: fit-content;
+  height: fit-content;
 
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-                    .components-Textarea-Textarea-module__textarea--Qy3d2 {
-                        font - size: 14px;
-                    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
-                    color: ${({ theme }) => theme.body.textColorPrimary};
-                    background: ${({ theme }) => theme.body.textAreaBgColor};
-                    &::placeholder {
-                        color: ${({ theme }) => theme.body.placeHolderColor};
+  .components-Textarea-Textarea-module__textarea--Qy3d2 {
+    font-size: 14px;
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    color: ${({ theme }) => theme.body.textColorPrimary};
+    background: ${({ theme }) => theme.body.textAreaBgColor};
+    &::placeholder {
+      color: ${({ theme }) => theme.body.placeHolderColor};
     }
   }
 `
-
 const StyledCheckboxWrapper = styled.div`
-                    height: fit-content;
-                    padding-bottom: 5px;
-                    .l3-style-checkbox--kind-secondary .l3-style-checkbox__checkbox {
-                        border - color: ${({ theme }) => theme.typography.contentPrimary};
+  height: fit-content;
+  padding-bottom: 5px;
+  .l3-style-checkbox--kind-secondary .l3-style-checkbox__checkbox {
+    border-color: ${({ theme }) => theme.typography.contentPrimary};
   }
-                    .l3-style-checkbox--kind-secondary .l3-style-checkbox__label {
-                        color: ${({ theme }) => theme.typography.contentPrimary};
+  .l3-style-checkbox--kind-secondary .l3-style-checkbox__label {
+    color: ${({ theme }) => theme.typography.contentPrimary};
   }
-                    `
+`
 export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
@@ -573,7 +558,7 @@ export const StyledTabPanelInnerWrapper = styled(TabPanel)`
   display: flex;
   flex-direction: column;
 
-  /* padding: 0 20px; */
+  padding: 2px 0px;
 
   gap: 20px;
   width: 100%;
