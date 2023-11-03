@@ -81,7 +81,7 @@ export const useCreateAgent = () => {
       agent_voice_response: agentById.configs?.response_mode,
       agent_voice_input_mode: agentById.configs?.input_mode,
 
-      agent_integrations: agentById.configs?.integrations,
+      agent_integrations: agentById.configs?.integrations || [],
     }
   }
 
