@@ -40,9 +40,9 @@ const Datasource = () => {
       </StyledHeaderGroup>
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {datasources?.map((datasource: any, index: number) => {
+          {datasources?.map((datasource, index: number) => {
             const filteredLogos = DATA_LOADER_IMAGES.filter(
-              (loaderImages: any) => loaderImages.sourceName === datasource.source_type,
+              loaderImages => loaderImages.sourceName === datasource.source_type,
             )
 
             const imageSrc = filteredLogos?.[0]?.imageSrc || ''
@@ -53,6 +53,7 @@ const Datasource = () => {
                 name={datasource.name}
                 description={datasource.description}
                 status={datasource.status}
+                error={datasource.error}
                 onEditClick={() => navigate(`/datasources/${datasource.id}/edit-datasource`)}
                 onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
                 imageSrc={imageSrc}

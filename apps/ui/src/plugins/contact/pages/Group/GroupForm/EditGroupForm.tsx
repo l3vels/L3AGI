@@ -12,9 +12,10 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useEditGroup } from '../useEditGroup'
 import GroupForm from './GroupFrom'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const EditGroupForm = () => {
   const { isLoading, formik } = useEditGroup()

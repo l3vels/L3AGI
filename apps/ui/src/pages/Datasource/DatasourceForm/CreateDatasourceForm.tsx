@@ -12,11 +12,12 @@ import {
 } from 'pages/Home/homeStyle.css'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateDatasource } from '../useCreateDatasource'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()

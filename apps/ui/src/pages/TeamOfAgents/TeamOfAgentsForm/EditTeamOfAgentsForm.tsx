@@ -13,11 +13,12 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { t } from 'i18next'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const EditTeamOfAgentsForm = () => {
   const { t } = useTranslation()

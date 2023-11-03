@@ -1,0 +1,17 @@
+mutation deleteFineTuning($id: id!) @api(name: ai) {
+  deleteFineTuning(id: $id)
+    @rest(
+      type: "FineTuning"
+      path: "/fine-tuning/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    id
+    name
+    file_url
+    identifier
+    status
+    model_id
+  }
+}

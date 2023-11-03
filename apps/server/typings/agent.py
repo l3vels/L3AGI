@@ -1,8 +1,14 @@
-from typing import List, Mapping, Optional
+from enum import Enum
+from typing import List, Optional
 
 from pydantic import UUID4, BaseModel
 
 from typings.user import UserOutput
+
+
+class DataSourceFlow(Enum):
+    PRE_RETRIEVAL = "pre_execution"
+    SOURCE_DETECTION = "source_detection"
 
 
 class AgentInput(BaseModel):
@@ -28,6 +34,13 @@ class ConfigInput(BaseModel):
     greeting: Optional[str]
     text: Optional[str]
     integrations: List[dict]
+    source_flow: Optional[str]
+    synthesizer: Optional[str]
+    default_voice: Optional[str]
+    voice_id: Optional[str]
+    transcriber: Optional[str]
+    response_mode: Optional[List[str]]
+    input_mode: Optional[List[str]]
 
 
 class AgentConfigInput(BaseModel):
@@ -47,6 +60,13 @@ class ConfigsOutput(BaseModel):
     greeting: Optional[str]
     text: Optional[str]
     integrations: List[dict]
+    source_flow: Optional[str]
+    synthesizer: Optional[str]
+    default_voice: Optional[str]
+    voice_id: Optional[str]
+    transcriber: Optional[str]
+    response_mode: Optional[List[str]]
+    input_mode: Optional[List[str]]
 
 
 class AgentOutput(BaseModel):
@@ -71,3 +91,4 @@ class AgentOutput(BaseModel):
 class AgentWithConfigsOutput(BaseModel):
     agent: AgentOutput
     configs: Optional[ConfigsOutput]
+    system_message: Optional[str]

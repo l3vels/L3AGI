@@ -24,8 +24,12 @@ router = APIRouter()
 
 # TODO: refactor update method in models to be flexible.
 def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
-    settings = ConfigModel.get_account_settings(db, account)
-    datasource = DatasourceModel.get_datasource_by_id(db, datasource_id, account)
+    from models.db import create_session
+
+    session = create_session()
+
+    settings = ConfigModel.get_account_settings(session, account.id)
+    datasource = DatasourceModel.get_datasource_by_id(session, datasource_id, account)
 
     try:
         value = json.loads(value)
@@ -34,6 +38,7 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
         response_mode = value["response_mode"]
         vector_store = value["vector_store"]
         chunk_size = value["chunk_size"]
+        similarity_top_k = value["similarity_top_k"]
 
         file_urls = [file["url"] for file in files]
         retriever = FileDatasourceRetriever(
@@ -45,20 +50,24 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
             str(datasource_id),
             None,
             chunk_size,
+            similarity_top_k,
         )
         retriever.index_documents(file_urls)
 
         datasource.status = DatasourceStatus.READY.value
+        datasource.error = None
     except Exception as err:
+        print(err)
         sentry_sdk.capture_exception(err)
         datasource.status = DatasourceStatus.FAILED.value
+        datasource.error = str(err)
 
-    db.session.add(datasource)
-    db.session.commit()
+    session.add(datasource)
+    session.commit()
 
 
 @router.post("", status_code=201, response_model=ConfigOutput)
-def create_config(
+async def create_config(
     config: ConfigInput,
     background_tasks: BackgroundTasks,
     auth: UserAccount = Depends(authenticate),

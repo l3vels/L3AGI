@@ -1,7 +1,7 @@
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -16,6 +16,7 @@ import { useCreateGroup } from '../useCreateGroup'
 import { FormikProvider } from 'formik'
 
 import GroupForm from './GroupFrom'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const CreateGroupForm = () => {
   const { formik, isLoading } = useCreateGroup()

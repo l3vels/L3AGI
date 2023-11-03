@@ -41,9 +41,14 @@ class ChatMessage(BaseModel):
         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
     )
 
+    audio_url = Column(String(500), default=None, nullable=True)
+
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
-    sender_name = Column(String, nullable=True)
+    sender_name = Column(
+        String,
+        nullable=True,
+    )
 
     parent = relationship("ChatMessage", remote_side=[id], cascade="all, delete")
     agent = relationship("AgentModel", back_populates="chat_messages")
@@ -81,6 +86,28 @@ class ChatMessage(BaseModel):
         )
 
         return chat_message
+
+    @staticmethod
+    def update_audio_url_by_id(db, chat_message_id: UUID, new_audio_url: str):
+        """
+        Retrieve a ChatMessage by its ID and update the audio_url.
+
+        Args:
+            db: The database session.
+            chat_message_id(UUID): The ID of the ChatMessage to be updated.
+            new_audio_url(str): The new audio_url to be updated.
+
+        Returns:
+            None
+        """
+        chat_message = (
+            db.session.query(ChatMessage)
+            .filter(ChatMessage.id == chat_message_id)
+            .first()
+        )
+        if chat_message:
+            chat_message.audio_url = new_audio_url
+            db.session.commit()
 
     def to_dict(self):
         """

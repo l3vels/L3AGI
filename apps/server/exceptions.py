@@ -140,3 +140,7 @@ class ScheduleNotFoundException(DatasourceException):
 
 class RunNotFoundException(AppBaseException):
     pass
+
+
+class FineTuningNotFoundException(AppBaseException):
+    pass

@@ -43,7 +43,3 @@ export const prefixTypenames = (data: any, apiName: string): any => {
 }
 
 export const isFunction = (fn: any) => fn && {}.toString.call(fn) === '[object Function]'
-
-export const createSelectOptions = (option: string) => {
-  return
-}

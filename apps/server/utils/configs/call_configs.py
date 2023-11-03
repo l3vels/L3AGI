@@ -5,15 +5,15 @@ call_configs = {
         "agent": "Agent",
         "team": "Team",
         "datasource": "Data sources",
-        "models": "Models",
+        "models": "Model",
         "discovery": "Discovery",
         "chat": "Agents",
-        "toolkits": "Toolkits",
-        "schedules": "Schedules",
+        "toolkits": "Toolkit",
+        "schedules": "Campaigns",
     },
     "modules": {
         "home": {
-            "welcome_message": "Build your ",
+            "welcome_message": "Build Your Conversational Agents",
             "submodules": {
                 "team": False,
                 "agent": True,
@@ -37,7 +37,7 @@ call_configs = {
                 "fine-tuning": True,
             },
         },
-        "toolkit": False,  # True
+        "toolkit": True,  # True
         "datasource": False,
         "discovery": False,
         "Session": True,

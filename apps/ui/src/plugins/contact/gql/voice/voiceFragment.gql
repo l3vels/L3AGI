@@ -1,0 +1,18 @@
+fragment VoiceFragment on Voice {
+  id
+  is_active
+  is_public
+  name
+  description
+  slug
+  is_synthesizer
+  is_transcriber
+  fields {
+    label
+    key
+    type
+    is_required
+    is_secret
+    default_value
+  }
+}

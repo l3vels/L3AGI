@@ -1,12 +1,14 @@
 from __future__ import annotations
+
 import uuid
 
-from sqlalchemy import Column, String, Boolean, UUID, or_, ForeignKey, Index
-from sqlalchemy.orm import relationship
+from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String, or_
+from sqlalchemy.orm import Session, relationship
+
+from datasources.base import DatasourceType
+from exceptions import DatasourceNotFoundException
 from models.base_model import BaseModel
 from typings.datasource import DatasourceInput, DatasourceStatus
-from exceptions import DatasourceNotFoundException
-from datasources.base import DatasourceType
 
 
 class DatasourceModel(BaseModel):
@@ -32,7 +34,7 @@ class DatasourceModel(BaseModel):
     source_type = Column(String)  # Later add as Enum
     status = Column(String)  # Later add as Enum
     description = Column(String, nullable=True)
-    status = Column(String)
+    error = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)
     is_public = Column(Boolean, default=False, index=True)
     workspace_id = Column(
@@ -112,7 +114,7 @@ class DatasourceModel(BaseModel):
 
         """
         old_datasource = cls.get_datasource_by_id(
-            db=db, datasource_id=id, account=account
+            session=db.session, datasource_id=id, account=account
         )
         if not old_datasource:
             raise DatasourceNotFoundException("Datasource not found")
@@ -161,7 +163,7 @@ class DatasourceModel(BaseModel):
         return datasources
 
     @classmethod
-    def get_datasource_by_id(cls, db, datasource_id, account):
+    def get_datasource_by_id(cls, session: Session, datasource_id, account):
         """
         Get Datasource from datasource_id
 
@@ -174,7 +176,7 @@ class DatasourceModel(BaseModel):
         """
         # return db.session.query(DatasourceModel).filter(DatasourceModel.account_id == account.id, or_(or_(DatasourceModel.is_deleted.is_(False), DatasourceModel.is_deleted is None), DatasourceModel.is_deleted is None)).all()
         datasources = (
-            db.session.query(DatasourceModel)
+            session.query(DatasourceModel)
             .filter(
                 DatasourceModel.id == datasource_id,
                 or_(

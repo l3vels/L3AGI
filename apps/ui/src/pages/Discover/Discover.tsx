@@ -84,7 +84,7 @@ const Discover = () => {
 
 export default Discover
 
-const StyledRoot = styled.div`
+export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   gap: 100px;

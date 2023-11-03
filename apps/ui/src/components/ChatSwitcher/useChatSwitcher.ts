@@ -10,7 +10,7 @@ export const useChatSwitcher = () => {
   useEffect(() => {
     const handleResize = () => {
       // Check the window width and update the state accordingly
-      setShowSwitcher(window.innerWidth >= 1000) // Adjust the breakpoint as needed
+      setShowSwitcher(window.innerWidth >= 900) // Adjust the breakpoint as needed
     }
 
     // Set the initial state on component mount

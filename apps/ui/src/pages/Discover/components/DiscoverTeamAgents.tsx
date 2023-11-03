@@ -4,8 +4,8 @@ import { useModal } from 'hooks'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
-  StyledSectionTitle,
+  // StyledSectionDescription,
+  // StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import TeamOfAgentsCard from 'pages/TeamOfAgents/TeamOfAgentsCard'

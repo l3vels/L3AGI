@@ -88,8 +88,8 @@ const useApollo = () => {
       const mLink = new MultiAPILink({
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
-          pro: `http://localhost:7000`,
+          ai: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          pro: `${import.meta.env.REACT_APP_PR_SERVICES_URL}` 
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
@@ -125,8 +125,8 @@ const useApollo = () => {
       const restLink = new RestLink({
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          ai: `${import.meta.env.REACT_APP_AI_SERVICES_URL}`,
-          pro: `http://localhost:7000`,
+          ai: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
+          pro: `${import.meta.env.REACT_APP_PR_SERVICES_URL}`,
         },
         ...authConfig,
       })

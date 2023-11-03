@@ -14,7 +14,6 @@ default_configs = {
     },
     "modules": {
         "home": {
-            "welcome_message": "Build your ",
             "submodules": {
                 "team": {
                     "operations": {
@@ -73,5 +72,6 @@ default_configs = {
         },
         "contact": False,
         "group": False,
+        "external-links": True,
     },
 }

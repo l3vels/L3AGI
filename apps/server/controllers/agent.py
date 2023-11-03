@@ -1,18 +1,19 @@
-from typing import List, Dict
-
-# Standard library imports
+from typing import Dict, List, Optional
 
 # Third-party imports
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi_sqlalchemy import db
 
+from exceptions import AgentNotFoundException
 # Local application imports
 from models.agent import AgentModel
 from typings.agent import AgentConfigInput, AgentWithConfigsOutput
-from utils.auth import authenticate
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
-from exceptions import AgentNotFoundException
+from utils.auth import authenticate
+
+# Standard library imports
+
 
 router = APIRouter()
 
@@ -189,7 +190,9 @@ def get_agent_by_parent_id(
 
 @router.get("/{id}", response_model=AgentWithConfigsOutput)
 def get_agent_by_id(
-    id: str, auth: UserAccount = Depends(authenticate)
+    id: str,
+    is_system_message: Optional[bool] = False,
+    auth: UserAccount = Depends(authenticate),
 ) -> AgentWithConfigsOutput:
     """
     Get an agent by its ID.
@@ -208,7 +211,7 @@ def get_agent_by_id(
             status_code=404, detail="Agent not found"
         )  # Ensure consistent case in error messages
 
-    return convert_model_to_response(db_agent)
+    return convert_model_to_response(db_agent, is_system_message)
 
 
 @router.get("/discover/{id}", response_model=AgentWithConfigsOutput)

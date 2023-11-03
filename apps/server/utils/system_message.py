@@ -1,31 +1,36 @@
 from typing import List, Optional
+
 from typings.agent import AgentWithConfigsOutput
-from models.datasource import DatasourceModel
-from fastapi_sqlalchemy import db
 
 
 class SystemMessageBuilder:
-    def __init__(self, agent_with_configs: AgentWithConfigsOutput):
+    def __init__(
+        self,
+        agent_with_configs: AgentWithConfigsOutput,
+        pre_retrieved_context: Optional[str] = "",
+    ):
         self.agent = agent_with_configs.agent
         self.configs = agent_with_configs.configs
+        self.data_source_pre_retrieval = False
+        self.pre_retrieved_context = pre_retrieved_context
 
     def build(self) -> str:
-        result = ""
-
-        datasources = self.build_datasources(self.configs.datasources)
-
-        if self.configs.text is not None and self.configs.text != "":
-            result = f"{self.configs.text}\n{datasources}"
-            return result
-
+        base_system_message = self.build_base_system_message(self.configs.text)
         role = self.build_role(self.agent.role)
         description = self.build_description(self.agent.description)
         goals = self.build_goals(self.configs.goals)
         instructions = self.build_instructions(self.configs.instructions)
         constraints = self.build_constraints(self.configs.constraints)
+        context = self.build_pre_retrieved_context(self.pre_retrieved_context)
 
-        result = f"{role}{description}{goals}{instructions}{constraints}{datasources}"
+        result = f"{base_system_message}{role}{description}{goals}{instructions}{constraints}{context}"
         return result
+
+    def build_base_system_message(self, text: str) -> str:
+        if text is None or text == "":
+            return ""
+
+        return f"{text}\n"
 
     def build_role(self, role: Optional[str]):
         if role is None or role == "":
@@ -68,26 +73,10 @@ class SystemMessageBuilder:
         )
         return constraints
 
-    def build_datasources(self, datasource_ids: List[str]):
-        """Builds the data sources section of the system message."""
-        if len(datasource_ids) == 0:
+    def build_pre_retrieved_context(self, text: str):
+        if text is None or text == "":
             return ""
 
-        datasources = (
-            db.session.query(DatasourceModel)
-            .filter(DatasourceModel.id.in_(datasource_ids))
-            .all()
-        )
-
-        result = (
-            "DATASOURCES:"
-            "Data sources can be: SQL databases and files. You can use tools to get data from them.\n"
-            "You can use the following data sources:\n"
-        )
-
-        for datasource in datasources:
-            result += f"- Datasource Type: {datasource.source_type}, Datasource Name: {datasource.name}, Useful for: {datasource.description}, Datasource Id for tool: {datasource.id}  \n"
-
-        result += "\n"
+        result = "CONTEXT DATA: \n" f"{text}\n"
 
         return result

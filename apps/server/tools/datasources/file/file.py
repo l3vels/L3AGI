@@ -12,9 +12,7 @@ from typings.config import ConfigQueryParams
 
 
 class FileDatasourceSchema(BaseModel):
-    query: str = Field(
-        description="Containing Datasource Id and question in English natural language, separated by semicolon"
-    )
+    query: str = Field(description="Containing question in English natural language")
 
 
 class FileDatasourceTool(BaseTool):
@@ -22,7 +20,7 @@ class FileDatasourceTool(BaseTool):
 
     description = (
         "useful for when you need to answer questions over File datasource.\n"
-        "Input is string. String is separated by semicolon. First is question in English natural language. Second is datasource ID."
+        "Input is a question in English natural language"
     )
 
     args_schema: Type[FileDatasourceSchema] = FileDatasourceSchema
@@ -34,18 +32,17 @@ class FileDatasourceTool(BaseTool):
     ) -> str:
         """Ask questions over file datasource. Return result."""
 
-        question, datasource_id = query.split(";")
-
         configs = ConfigModel.get_configs(
-            db, ConfigQueryParams(datasource_id=datasource_id), self.account
+            db, ConfigQueryParams(datasource_id=self.data_source_id), self.account
         )
         files_config = [config for config in configs if config.key == "files"][0]
 
         value = json.loads(files_config.value)
-        index_type = value["index_type"]
-        response_mode = value["response_mode"]
-        vector_store = value["vector_store"]
-        chunk_size = value["chunk_size"]
+        index_type = value.get("index_type")
+        response_mode = value.get("response_mode")
+        vector_store = value.get("vector_store")
+        chunk_size = value.get("chunk_size")
+        similarity_top_k = value.get("similarity_top_k", 2)
 
         retriever = FileDatasourceRetriever(
             self.settings,
@@ -53,10 +50,11 @@ class FileDatasourceTool(BaseTool):
             response_mode,
             vector_store,
             str(self.account.id),
-            datasource_id,
+            self.data_source_id,
             self.agent_with_configs,
             chunk_size,
+            similarity_top_k,
         )
         retriever.load_index()
-        result = retriever.query(question)
+        result = retriever.query(query)
         return result

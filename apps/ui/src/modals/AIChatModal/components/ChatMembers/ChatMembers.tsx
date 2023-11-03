@@ -22,6 +22,7 @@ import {
   StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import { StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
 
 const ChatMembers = ({
   agentById,
@@ -50,16 +51,16 @@ const ChatMembers = ({
 
     return (
       <StyledRoot>
-        <StyledDiv>
+        <StyledTabListWrapper>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>
-              <StyledSpan>{t('info')}</StyledSpan>
+              <StyledTabListSpan>{t('info')}</StyledTabListSpan>
             </Tab>
             <Tab onClick={() => setActiveTab(1)}>
-              <StyledSpan>{t('members')}</StyledSpan>
+              <StyledTabListSpan>{t('members')}</StyledTabListSpan>
             </Tab>
           </TabList>
-        </StyledDiv>
+        </StyledTabListWrapper>
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
@@ -128,16 +129,16 @@ const ChatMembers = ({
   if (teamOfAgents) {
     return (
       <StyledRoot>
-        <StyledDiv>
+        <StyledTabListWrapper>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>
-              <StyledSpan>{t('info')}</StyledSpan>
+              <StyledTabListSpan>{t('info')}</StyledTabListSpan>
             </Tab>
             <Tab onClick={() => setActiveTab(1)}>
-              <StyledSpan>{t('members')}</StyledSpan>
+              <StyledTabListSpan>{t('members')}</StyledTabListSpan>
             </Tab>
           </TabList>
-        </StyledDiv>
+        </StyledTabListWrapper>
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
@@ -259,11 +260,4 @@ const StyledIconButtonWrapper = styled.div`
 
   display: flex;
   align-items: center;
-`
-const StyledDiv = styled.div`
-  border: ${({ theme }) => theme.body.secondaryBorder};
-  border-radius: 20px;
-`
-const StyledSpan = styled.span`
-  color: ${({ theme }) => theme.body.textColorPrimary};
 `

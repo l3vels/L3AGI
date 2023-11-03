@@ -12,12 +12,13 @@ import {
 } from 'pages/Home/homeStyle.css'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateTeamOfAgents } from '../useCreateTeamOfAgents'
 import BackButton from 'components/BackButton'
 import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const CreateTeamOfAgentsForm = () => {
   const { t } = useTranslation()

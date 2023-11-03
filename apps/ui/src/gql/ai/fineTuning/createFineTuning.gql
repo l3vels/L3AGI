@@ -1,0 +1,17 @@
+mutation createFineTuning($input: input!) @api(name: ai) {
+  createFineTuning(input: $input)
+    @rest(
+      type: "FineTuning"
+      path: "/fine-tuning"
+      method: "POST"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    id
+    name
+    file_url
+    identifier
+    status
+    model_id
+  }
+}

@@ -1,6 +1,7 @@
-from pydantic import BaseModel, UUID4
-from typing import Optional
 from enum import Enum
+from typing import Optional
+
+from pydantic import UUID4, BaseModel
 
 
 class DatasourceStatus(Enum):
@@ -28,6 +29,7 @@ class DatasourceOutput(BaseModel):
     account_id: UUID4
     created_by: Optional[UUID4]
     modified_by: Optional[UUID4]
+    error: Optional[str]
 
 
 class DatasourceSQLTableOutput(BaseModel):

@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 openai = "0.27.9"
-langchain = "0.0.312"
+langchain = "0.0.325"
 fastapi = { version = "0.99.1", extras = ["all"] }
 requests = "2.31.0"
 pydantic = "1.10.11"

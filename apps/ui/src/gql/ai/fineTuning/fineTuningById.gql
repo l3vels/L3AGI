@@ -1,0 +1,11 @@
+query fineTuningById($id: id!) @api(name: "ai") {
+  fineTuningById(id: $id)
+    @rest(type: "FineTuning", path: "/fine-tuning/{args.id}", method: "GET", endpoint: "ai") {
+    id
+    name
+    file_url
+    identifier
+    status
+    model_id
+  }
+}

@@ -23,23 +23,26 @@ def get_datasource_tools(
 
     tools: List[BaseTool] = []
 
-    datasource_types = [datasource.source_type for datasource in datasources]
-    datasource_types = list(set(datasource_types))
+    for data_source in datasources:
+        tool = None
 
-    for datasource_type in datasource_types:
-        if datasource_type == DatasourceType.POSTGRES.value:
-            tools.append(PostgresDatabaseTool())
-        if datasource_type == DatasourceType.MYSQL.value:
-            tools.append(MySQLDatabaseTool())
-        if datasource_type == DatasourceType.FILE.value:
-            tools.append(FileDatasourceTool())
+        if data_source.source_type == DatasourceType.POSTGRES.value:
+            tool = PostgresDatabaseTool()
+        if data_source.source_type == DatasourceType.MYSQL.value:
+            tool = MySQLDatabaseTool()
+        if data_source.source_type == DatasourceType.FILE.value:
+            tool = FileDatasourceTool()
 
-    for tool in tools:
+        tool.name = f"{data_source.name} Data Source"
+        tool.description = data_source.description
         tool.settings = settings
         tool.account = account
         tool.agent_with_configs = agent_with_configs
+        tool.data_source_id = str(data_source.id)
 
         if callback_handler:
             tool.callbacks = [callback_handler]
+
+        tools.append(tool)
 
     return tools

@@ -1,7 +1,7 @@
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
@@ -17,6 +17,7 @@ import { FormikProvider } from 'formik'
 import { useCreateContact } from '../useCreateContract'
 
 import ContactForm from './ContactForm'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const CreateContactForm = () => {
   const { formik, isLoading } = useCreateContact()

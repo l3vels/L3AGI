@@ -10,7 +10,7 @@
       "console": "integratedTerminal",
       "justMyCode": false,
       "cwd": "${workspaceFolder}/apps/server",
-      "python": "${workspaceFolder}/apps/server/.venv/bin/python"
+      // "python": "${workspaceFolder}/apps/server/.venv/bin/python"
     },
     {
       "name": "Python: Test",

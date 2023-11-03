@@ -100,12 +100,12 @@ export const StyledCardsWrapper = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
-  max-width: 1055px;
+  /* max-width: 1055px; */
   width: 100%;
   max-height: calc(100vh - 325px);
   height: 100%;
   overflow-y: auto;
-  padding: 5px;
+  padding: 5px 32px;
 `
 const StyledMainHeaderWrapper = styled.div`
   display: flex;

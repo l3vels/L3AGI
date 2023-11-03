@@ -247,7 +247,7 @@ export const StyledInputWrapper = styled.div`
 
   gap: 20px;
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
@@ -256,5 +256,6 @@ export const StyledInputWrapper = styled.div`
 const StyledRepeatFields = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
-  align-items: center;
+
+  gap: 15px;
 `

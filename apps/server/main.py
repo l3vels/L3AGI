@@ -17,6 +17,7 @@ from controllers.chat import router as chat_router
 from controllers.configuration import router as config_router
 from controllers.datasource import router as datasource_router
 from controllers.file import router as file_router
+from controllers.fine_tuning import router as fine_tuning_router
 from controllers.integrations import router as integrations_router
 from controllers.llm import router as llm_router
 from controllers.model import router as model_router
@@ -64,19 +65,19 @@ app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 
 # Base.metadata.create_all(bind=engine)
 
-origins = [
-    "http://localhost:3000",
-    "http://localhost:4000",
-    "https://l3vels.xyz",
-    "https://l3agi.com",
-    "https://dev.l3agi.com",
-    "https://www.l3agi.com",
-    "https://staging.l3agi.com",
-]
+
+# origins = [
+#     "http://localhost:3000",
+#     "http://localhost:4000",
+#     "http://localhost:7000",
+#     "https://l3vels.xyz",
+#     'https://.*\.l3agi\.com',
+#     "https://l3agi.com",
+# ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -111,6 +112,7 @@ app.include_router(model_router, prefix="/model")
 app.include_router(schedule_router, prefix="/schedule")
 app.include_router(api_key_router, prefix="/api-key")
 app.include_router(integrations_router, prefix="/integrations")
+app.include_router(fine_tuning_router, prefix="/fine-tuning")
 
 
 @app.get("/")

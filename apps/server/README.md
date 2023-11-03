@@ -4,11 +4,13 @@
 
 We use `Poetry` for package management
 
+
 First install `Poetry` by following [their installation instructions](https://python-poetry.org/docs/#installing-with-the-official-installer)
 
 Then install dependencies
 
 ```commandline
+poetry shell
 poetry install
 ```
 

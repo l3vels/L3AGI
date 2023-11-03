@@ -16,6 +16,7 @@ import { useContext } from 'react'
 import { LayoutContext } from 'contexts'
 import { useLocation } from 'react-router-dom'
 import { isMacOS } from 'utils/isMac'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 export const openLinkTab = (url: string) => {
   window.open(url, '_blank')
@@ -25,6 +26,9 @@ const HeaderButtons = () => {
   const { t } = useTranslation()
   const { expand, onChangeLayout } = useContext(LayoutContext)
   const location = useLocation()
+
+  const { getExternalLinksModule } = useGetAccountModule()
+  const isLinkModule = getExternalLinksModule()
 
   return (
     <StyledButtonsWrapper>
@@ -96,29 +100,31 @@ const HeaderButtons = () => {
         </ButtonTertiary>
       </Tooltip> */}
 
-      <Tooltip
-        content={() => <span>{t('github')}</span>}
-        position={Tooltip.positions.BOTTOM}
-        tooltipSize='small'
-      >
-        <ButtonTertiary
-          size={Button.sizes.SMALL}
-          onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
+      {isLinkModule && (
+        <Tooltip
+          content={() => <span>{t('github')}</span>}
+          position={Tooltip.positions.BOTTOM}
+          tooltipSize='small'
         >
-          <StyledInnerButtonWrapper>
-            <StyledImageWrapper>
-              <StyledImg src={githubIcon} />
-            </StyledImageWrapper>
-            {!location.pathname.includes('/chat') && (
-              <TypographyPrimary
-                value={t('star-us-on-github')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
-              />
-            )}
-          </StyledInnerButtonWrapper>
-        </ButtonTertiary>
-      </Tooltip>
+          <ButtonTertiary
+            size={Button.sizes.SMALL}
+            onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
+          >
+            <StyledInnerButtonWrapper>
+              <StyledImageWrapper>
+                <StyledImg src={githubIcon} />
+              </StyledImageWrapper>
+              {!location.pathname.includes('/chat') && (
+                <TypographyPrimary
+                  value={t('star-us-on-github')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.sm}
+                />
+              )}
+            </StyledInnerButtonWrapper>
+          </ButtonTertiary>
+        </Tooltip>
+      )}
     </StyledButtonsWrapper>
   )
 }

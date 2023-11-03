@@ -1,8 +1,9 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
+import { Field } from 'formik'
 
 type AgentDropdownProps = {
   label: string
@@ -63,33 +64,47 @@ const AgentDropdown = ({
   }
 
   return (
-    <StyledWrapper>
-      <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
-      <Dropdown
-        multi={isMulti}
-        // menuPlacement={'top'}
-        insideOverflow
-        multiline
-        size={Dropdown.size.MEDIUM}
-        value={value}
-        placeholder={value?.length >= 1 ? value : `${t('please-enter-value')}`}
-        options={options}
-        onChange={onChangeFunction}
-        onOptionRemove={onOptionRemove}
-        OptionRenderer={OptionRenderer}
-        // menuIsOpen={true}
-      />
-    </StyledWrapper>
+    <Field name={fieldName}>
+      {(formik: any) => {
+        const { meta } = formik
+
+        return (
+          <StyledWrapper isValidationError={meta?.error}>
+            <TypographyPrimary
+              value={label}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
+            <Dropdown
+              multi={isMulti}
+              // menuPlacement={'top'}
+              insideOverflow
+              multiline
+              size={Dropdown.size.MEDIUM}
+              value={value}
+              placeholder={value?.length >= 1 ? value : `${t('please-enter-value')}`}
+              options={options}
+              onChange={onChangeFunction}
+              onOptionRemove={onOptionRemove}
+              OptionRenderer={OptionRenderer}
+              // menuIsOpen={true}
+            />
+
+            {meta?.error && <StyledError>{meta?.error}</StyledError>}
+          </StyledWrapper>
+        )
+      }}
+    </Field>
   )
 }
 
 export default AgentDropdown
 
 //todo update dropdown styles in storybook
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ isValidationError: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   width: 100%;
   .css-xrcw8y-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
@@ -97,6 +112,9 @@ const StyledWrapper = styled.div`
 
   .css-ugu73m-placeholder {
     color: ${({ theme }) => theme.body.placeHolderColor};
+  }
+  .menu {
+    z-index: 10;
   }
 
   .menu.dropdown-menu-wrapper.css-19zapvn-menu {
@@ -111,7 +129,6 @@ const StyledWrapper = styled.div`
       background: ${({ theme }) => theme.body.placeHolderColor};
     }
   }
-
   .clear-indicator.css-1rycjgo {
     path {
       fill: ${({ theme }) => theme.body.iconColor};
@@ -144,4 +161,27 @@ const StyledWrapper = styled.div`
   .css-wxpx7r-menu {
     background-color: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
   }
+
+  .dropdown-wrapper.primary__wrapper.css-7xl64p-container {
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    height: auto;
+  }
+
+  .css-ugu73m-placeholder {
+    color: ${({ theme }) => theme.body.textColorPrimary};
+  }
+
+  ${p =>
+    p.isValidationError &&
+    css`
+      .dropdown-wrapper.primary__wrapper.css-7xl64p-container {
+        border: 4px solid #ef5533;
+      }
+    `};
+`
+
+//todo we need dropdown validation styles in storybook
+const StyledError = styled.div`
+  color: #e44258;
+  font-size: 14px;
 `

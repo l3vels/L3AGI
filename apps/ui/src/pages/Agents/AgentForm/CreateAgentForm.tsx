@@ -18,10 +18,15 @@ import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import { useCreateAgent } from '../useCreateAgent'
 import { t } from 'i18next'
+import { StyledFormWrapper } from 'styles/formStyles.css'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const CreateAgentForm = () => {
   const { formik, isLoading } = useCreateAgent()
 
+  const { getIntegrationModules } = useGetAccountModule()
+  const voiceModule = getIntegrationModules('voices')
+  const isVoiceCreate = voiceModule.create
   // const navigate = useNavigate()
 
   return (
@@ -48,7 +53,7 @@ const CreateAgentForm = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <AgentForm formik={formik} />
+            <AgentForm formik={formik} isVoice={isVoiceCreate} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
@@ -58,13 +63,6 @@ const CreateAgentForm = () => {
 
 export default CreateAgentForm
 
-export const StyledFormWrapper = styled.div`
-  width: 100%;
-
-  height: calc(100vh - 250px);
-
-  max-height: 1500px;
-`
 export const StyledButtonWrapper = styled.div`
   display: flex;
   align-items: flex-end;

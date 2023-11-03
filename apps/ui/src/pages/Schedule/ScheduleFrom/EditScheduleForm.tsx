@@ -12,9 +12,10 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
-import { StyledButtonWrapper, StyledFormWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useEditSchedule } from '../useEditSchedule'
 import ScheduleForm from './ScheduleForm'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
 const EditScheduleForm = () => {
   const { formik, isLoading } = useEditSchedule()
