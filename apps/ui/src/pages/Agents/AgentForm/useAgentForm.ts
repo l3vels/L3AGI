@@ -93,6 +93,7 @@ export const useAgentForm = (formik: any) => {
     datasourceOptions,
     toolOptions,
     integrationOptions,
+
     handleUploadAvatar,
     avatarIsLoading,
     voiceSynthesizerOptions,
