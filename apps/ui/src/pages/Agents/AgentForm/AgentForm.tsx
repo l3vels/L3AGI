@@ -33,7 +33,7 @@ type AgentFormProps = {
 const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   const { t } = useTranslation()
 
-  const { setFieldValue, values } = formik
+  const { setFieldValue, values, errors: validationError } = formik
   const {
     agent_name,
     agent_datasources,
@@ -101,8 +101,16 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     <StyledFormRoot>
       <StyledFormTabsWrapper>
         <StyledFormTabList size='small'>
-          <StyledTab onClick={() => setActiveTab(0)}>
-            <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
+          <StyledTab
+            onClick={() => setActiveTab(0)}
+            isError={validationError?.agent_name && activeTab !== 0}
+          >
+            <StyledSpan
+              isActive={activeTab === 0}
+              isError={validationError?.agent_name && activeTab !== 0}
+            >
+              General
+            </StyledSpan>
           </StyledTab>
           <StyledTab onClick={() => setActiveTab(1)}>
             <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
@@ -544,7 +552,7 @@ export const StyledFormTabList = styled(TabList)`
   }
 `
 
-export const StyledSpan = styled.span<{ isActive: boolean }>`
+export const StyledSpan = styled.span<{ isActive: boolean; isError?: boolean }>`
   width: 150px;
   color: ${({ theme }) => theme.body.textColorSecondary};
 
@@ -552,6 +560,12 @@ export const StyledSpan = styled.span<{ isActive: boolean }>`
     p.isActive &&
     css`
       color: ${({ theme }) => theme.body.textColorPrimary};
+    `};
+
+  ${p =>
+    p.isError &&
+    css`
+      color: #ef5533;
     `};
 `
 export const StyledTabPanelInnerWrapper = styled(TabPanel)`
