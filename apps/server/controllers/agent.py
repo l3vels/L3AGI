@@ -11,10 +11,9 @@ from typings.agent import AgentConfigInput, AgentWithConfigsOutput
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
 from utils.auth import authenticate
+from utils.system_message import SystemMessageBuilder
 
 # Standard library imports
-
-
 
 
 router = APIRouter()
@@ -213,7 +212,10 @@ def get_agent_by_id(
             status_code=404, detail="Agent not found"
         )  # Ensure consistent case in error messages
 
-    return convert_model_to_response(db_agent, is_system_message)
+    agent_with_configs = convert_model_to_response(db_agent)
+    system_message = SystemMessageBuilder(agent_with_configs).build()
+    agent_with_configs.system_message = system_message
+    return agent_with_configs
 
 
 @router.get("/discover/{id}", response_model=AgentWithConfigsOutput)

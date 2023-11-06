@@ -337,5 +337,6 @@
   "input-mode": "Input Mode",
   "output": "Output",
   "error": "Error",
-  "similarity-top-k": "Similarity Top K"
+  "similarity-top-k": "Similarity Top K",
+  "system-message": "System Message"
 }

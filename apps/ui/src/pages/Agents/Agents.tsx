@@ -6,7 +6,6 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
   StyledHeaderGroup,
   StyledSectionDescription,
-  StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
@@ -18,12 +17,13 @@ import { ButtonPrimary } from 'components/Button/Button'
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { AgentWithConfigs } from 'types'
 
 const Agents = ({ isHome }: { isHome?: boolean }) => {
   const { t } = useTranslation()
   const { getChatModules } = useGetAccountModule()
-  const agentModule = getChatModules('agent')
 
+  const agentModule = getChatModules('agent')
   const { agentsData, deleteAgentHandler } = useAgents()
 
   const navigate = useNavigate()
@@ -39,13 +39,6 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
           />
           <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription>
         </StyledMainHeaderWrapper>
-        {/* <div>
-
-          <StyledSectionTitle>Agents</StyledSectionTitle>
-          <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
-          </StyledSectionDescription>
-        </div> */}
 
         <div>
           {!isHome && (
@@ -58,10 +51,11 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
           )}
         </div>
       </StyledHeaderGroup>
+
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {agentsData?.map((agentObj: any, index: number) => {
-            const { agent } = agentObj
+          {agentsData?.map((agentWithConfigs: AgentWithConfigs, index: number) => {
+            const { agent } = agentWithConfigs
 
             const handleEdit = () => {
               navigate(`/agents/${agent.id}/edit-agent`)
@@ -99,14 +93,13 @@ export const StyledCardsWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
-
-  /* max-width: 1055px; */
   width: 100%;
   max-height: calc(100vh - 325px);
   height: 100%;
   overflow-y: auto;
   padding: 5px 32px;
 `
+
 const StyledMainHeaderWrapper = styled.div`
   display: flex;
   width: 100%;

@@ -1,6 +1,11 @@
+import re
 from typing import List, Optional
 
+from fastapi_sqlalchemy import db
+
+from models.agent import AgentModel
 from typings.agent import AgentWithConfigsOutput
+from utils.agent import convert_model_to_response
 
 
 class SystemMessageBuilder:
@@ -24,6 +29,7 @@ class SystemMessageBuilder:
         context = self.build_pre_retrieved_context(self.pre_retrieved_context)
 
         result = f"{base_system_message}{role}{description}{goals}{instructions}{constraints}{context}"
+        result = self.replace_templates(result)
         return result
 
     def build_base_system_message(self, text: str) -> str:
@@ -80,3 +86,45 @@ class SystemMessageBuilder:
         result = "CONTEXT DATA: \n" f"{text}\n"
 
         return result
+
+    def replace_templates(self, text: str) -> str:
+        # This pattern will match strings like {{agent.sales.greeting}}
+        pattern = re.compile(
+            r"\{\{agent\.(?P<agent_name>[\w\s]+?\w)\.(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
+        )
+
+        def replace_match(match):
+            agent_name = match.group("agent_name")
+            field_name = match.group("field_name")
+            index = match.group("index")
+
+            agent = AgentModel.get_agent_by_name(
+                db.session, self.agent.account_id, agent_name
+            )
+
+            agent_data = convert_model_to_response(agent)
+
+            if not agent_data:
+                return match.group(0)  # Return the original text if agent not found
+
+            # Retrieve the field value from either agent or configs depending on the field_name
+            if hasattr(agent_data.agent, field_name):
+                value = getattr(agent_data.agent, field_name)
+            elif hasattr(agent_data.configs, field_name):
+                value = getattr(agent_data.configs, field_name)
+                if index and isinstance(value, list):
+                    try:
+                        value = value[int(index)]
+                    except IndexError:
+                        value = "Index out of range"
+                elif isinstance(value, list):
+                    value = f"{field_name.upper()}: \n" + "\n".join(
+                        f"- {item}" for item in value
+                    )
+
+            else:
+                value = "Unknown field"
+
+            return str(value)
+
+        return pattern.sub(replace_match, text)
