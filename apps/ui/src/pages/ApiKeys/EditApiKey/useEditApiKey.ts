@@ -1,47 +1,49 @@
 import { useFormik } from 'formik'
-import { useApiKeyByIdService, useUpdateApiKeyService } from 'services/useApiKeyService'
 import { apiKeyValidation } from 'utils/validationsSchema'
 import { ToastContext } from 'contexts'
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
+import { useUpdateApiKeyService } from 'services/apiKey/useUpdateApiKeyService'
+import { useApiKeyByIdService } from 'services/apiKey/useApiKeyByIdService'
+import { useNavigate, useParams } from 'react-router-dom'
 
-const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
+const useEditApiKey = () => {
   const { t } = useTranslation()
   const { closeModal } = useModal()
+  const navigate = useNavigate()
+  const params = useParams()
+  const apiKeyId: string | undefined = params.apiKeyId
   const { setToast } = useContext(ToastContext)
-  const { id, refetchApiList } = props
-  const { data: apiKey, refetch: apiKeyRefetch } = useApiKeyByIdService({ id })
+  const { data: apiKeyById, refetch: apiKeyRefetch } = useApiKeyByIdService({ id: apiKeyId || '' })
   const [updateApiKeyById] = useUpdateApiKeyService()
+  const [isLoading, setIsLoading] = useState(false)
+  // console.log('apiKeyById', apiKeyById)
 
   const defaultValues = {
-    name: apiKey.name,
-    note: apiKey.note,
-    expiration: moment(apiKey.expiration).format('YYYY-MM-DD'),
-    games: apiKey.games,
+    name: apiKeyById?.name,
+    description: apiKeyById?.description,
   }
 
-  // console.log('defaultValues', defaultValues)
-
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: { name: string; description: string }) => {
+    setIsLoading(true)
     try {
       const newValues = {
         name: values.name,
-        note: values.note,
-        expiration: moment(values.expiration).format('YYYY-MM-DD'),
-        games: values.games,
+        description: values.description,
       }
 
-      await updateApiKeyById(id, { ...newValues })
-
+      if (apiKeyId) {
+        await updateApiKeyById(apiKeyId, { ...newValues })
+      }
+      console.log('newValues', newValues)
+      navigate('/api-key')
       setToast({
         message: t('API key successfully updated'),
         type: 'positive',
         open: true,
       })
-
-      refetchApiList()
       apiKeyRefetch()
       closeModal('edit-api-keys-modal')
     } catch (error) {
@@ -51,6 +53,7 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
         open: true,
       })
     }
+    setIsLoading(false)
   }
 
   const formik = useFormik({
@@ -60,12 +63,14 @@ const useEditApiKey = (props: { id: string; refetchApiList: any }) => {
     onSubmit: async values => handleSubmit(values),
   })
 
-  useEffect(() => {
-    apiKeyRefetch()
-  }, [])
+  // useEffect(() => {
+  //   apiKeyRefetch()
+  // }, [])
 
   return {
     formik,
+    isLoading,
+    handleSubmit,
   }
 }
 
