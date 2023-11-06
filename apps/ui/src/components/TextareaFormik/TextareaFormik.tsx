@@ -3,7 +3,7 @@ import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 import styled, { css } from 'styled-components'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type TextareaProps = {
   setFieldValue: any
@@ -17,13 +17,15 @@ const TextareaFormik = ({ setFieldValue, label, value, fieldName, ...props }: Te
 
   const onTextareaChange = (field: string, value: string) => {
     setFieldValue(field, value)
+  }
 
+  useEffect(() => {
     const textarea = textareaRef.current
     if (textarea) {
       textarea.style.height = 'auto' // Reset the height to auto to recalculate the height
       textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scroll height of the content
     }
-  }
+  }, [value])
 
   return (
     <StyledTextareaWrapper>
