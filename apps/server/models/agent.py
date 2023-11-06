@@ -266,24 +266,6 @@ class AgentModel(BaseModel):
         return agent
 
     @classmethod
-    def get_agents_by_names(cls, session, account, agent_names: List[str]):
-        agents = (
-            session.query(AgentModel)
-            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
-            .filter(
-                AgentModel.account_id == account.id,
-                AgentModel.is_deleted.is_(False),
-                AgentModel.name.in_(agent_names),
-            )
-            .options(
-                joinedload(AgentModel.configs)
-            )  # if you have a relationship set up named "configs"
-            .options(joinedload(AgentModel.creator))
-            .all()
-        )
-        return agents
-
-    @classmethod
     def get_agent_by_id(cls, db, agent_id):
         """
         Get Agent from agent_id
