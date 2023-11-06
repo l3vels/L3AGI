@@ -104,7 +104,9 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
             {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={t('greeting')} />}
 
-            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={t('advanced')} />}
+            {text?.length > 0 && (
+              <AdditionalInfoBox items={[text]} title={t('base-system-message')} />
+            )}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>
