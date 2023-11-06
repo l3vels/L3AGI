@@ -59,7 +59,7 @@ const ApiKeys = () => {
           leftIcon={Add}
           size={Button.sizes.SMALL}
         >
-          {t('create-secret-key')}
+          {t('create-api-key')}
         </ButtonPrimary>
       </StyledHeaderGroup>
 
