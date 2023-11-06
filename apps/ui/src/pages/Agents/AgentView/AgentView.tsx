@@ -81,7 +81,7 @@ const AgentView = ({ agentData }: { agentData?: AgentWithConfigs }) => {
                 title={
                   constraints.length === 1
                     ? `${t('constraint')}`
-                    : `${constraints.length} ${t('constraint')}`
+                    : `${constraints.length} ${t('constraints')}`
                 }
               />
             )}
@@ -110,7 +110,9 @@ const AgentView = ({ agentData }: { agentData?: AgentWithConfigs }) => {
 
             {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={t('greeting')} />}
 
-            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={t('advanced')} />}
+            {text?.length > 0 && (
+              <AdditionalInfoBox items={[text]} title={t('base-system-message')} />
+            )}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>

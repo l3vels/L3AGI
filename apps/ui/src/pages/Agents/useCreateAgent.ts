@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
+
 import { agentValidationSchema } from 'utils/validationsSchema'
 
 export const useCreateAgent = () => {
@@ -49,6 +50,8 @@ export const useCreateAgent = () => {
     agent_voice_transcriber: '',
     agent_voice_response: ['Text'],
     agent_voice_input_mode: ['Text'],
+
+    agent_integrations: [],
   }
 
   if (agentById) {
@@ -68,7 +71,7 @@ export const useCreateAgent = () => {
       agent_model: agentById?.configs?.agent_model,
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
-      agent_text: agentById.configs?.text,
+      agent_text: agentById.configs?.text || '',
       agent_source_flow: agentById.configs?.source_flow,
 
       agent_voice_synthesizer: agentById.configs?.synthesizer,
@@ -77,6 +80,8 @@ export const useCreateAgent = () => {
       agent_voice_transcriber: agentById.configs?.transcriber,
       agent_voice_response: agentById.configs?.response_mode,
       agent_voice_input_mode: agentById.configs?.input_mode,
+
+      agent_integrations: agentById.configs?.integrations || [],
     }
   }
 
@@ -108,6 +113,8 @@ export const useCreateAgent = () => {
         transcriber: values.agent_voice_transcriber,
         response_mode: values.agent_voice_response,
         input_mode: values.agent_voice_input_mode,
+
+        integrations: values.agent_integrations,
       }
 
       const newAgent = await createAgentService(agentInput)
@@ -131,6 +138,7 @@ export const useCreateAgent = () => {
     }
     setIsLoading(false)
   }
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async values => handleSubmit(values),

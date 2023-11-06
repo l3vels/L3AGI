@@ -20,7 +20,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import info from '../../../assets/images/info.png'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
-import TextareaFormik from 'components/TextareaFormik'
+// import TextareaFormik from 'components/TextareaFormik'
 
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -178,13 +178,13 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                     size={Typography.sizes.lg}
                   />
                 </StyledTextWrapper>
-                <StyledTextAreaWrapper>
+                {/* <StyledTextAreaWrapper>
                   <TextareaFormik
                     color='#FFFFFF'
                     field_name='note'
                     placeholder={t('api-key-placeholder-description')}
                   />
-                </StyledTextAreaWrapper>
+                </StyledTextAreaWrapper> */}
               </StyledCreateModalForm>
             </ModalContent>
             <StyledModalFooter>

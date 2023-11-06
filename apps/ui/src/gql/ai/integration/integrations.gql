@@ -1,0 +1,18 @@
+query GetTools @api(name: "ai") {
+  getIntegrations @rest(type: "Integrations", path: "/integrations", method: "GET", endpoint: "ai") {
+    id
+    is_active
+    is_public
+    name
+    description
+    slug
+    fields {
+      default_value
+      is_required
+      is_secret
+      key
+      label
+      type
+    }
+  },
+}

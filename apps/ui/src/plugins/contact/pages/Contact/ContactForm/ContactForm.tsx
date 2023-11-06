@@ -1,21 +1,16 @@
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
-import Typography from '@l3-lib/ui-core/dist/Typography'
 import FormikTextField from 'components/TextFieldFormik'
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
-import TypographyPrimary from 'components/Typography/Primary'
+
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import { useContactForm } from './useContactForm'
 import styled from 'styled-components'
+import { t } from 'i18next'
+import TextareaFormik from 'components/TextareaFormik'
 
 const ContactForm = ({ formik }: { formik: any }) => {
   const { groupOptions } = useContactForm()
 
   const { values, setFieldValue } = formik
   const { contact_description, contact_group_id } = values
-
-  const onDescriptionChange = (value: string) => {
-    setFieldValue('contact_description', value)
-  }
 
   return (
     <StyledRoot>
@@ -36,22 +31,12 @@ const ContactForm = ({ formik }: { formik: any }) => {
 
           <FormikTextField name='contact_email' placeholder='Email' label='Email' size='small' />
 
-          <StyledTextareaWrapper>
-            <TypographyPrimary
-              value='Description'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-
-            <Textarea
-              hint=''
-              rows={6}
-              placeholder='Description'
-              name='contact_description'
-              value={contact_description}
-              onChange={onDescriptionChange}
-            />
-          </StyledTextareaWrapper>
+          <TextareaFormik
+            setFieldValue={setFieldValue}
+            label={t('description')}
+            value={contact_description}
+            fieldName={'contact_description'}
+          />
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -59,21 +44,6 @@ const ContactForm = ({ formik }: { formik: any }) => {
 }
 
 export default ContactForm
-
-const StyledDoubleRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-`
-const StyledCronDescriptionWrapper = styled.div`
-  width: 300px;
-  height: 100%;
-  padding-top: 45px;
-
-  display: flex;
-  justify-content: center;
-`
 
 export const StyledCheckboxWrapper = styled.div`
   height: fit-content;

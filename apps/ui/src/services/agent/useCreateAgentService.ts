@@ -2,6 +2,21 @@ import { useMutation } from '@apollo/client'
 
 import createAgentGql from '../../gql/ai/agent/createAgent.gql'
 
+type FieldInput = {
+  key: string
+  label: string
+  type: string
+  value: string
+  is_required: boolean
+  is_secret: boolean
+}
+
+export type IntegrationInput = {
+  value: string
+  label: string
+  fields: FieldInput[]
+}
+
 export type AgentInput = {
   name: string
   role: string
@@ -27,6 +42,8 @@ export type AgentInput = {
   transcriber?: string
   response_mode?: string[]
   input_mode?: string[]
+
+  integrations?: IntegrationInput[]
 }
 
 export const useCreateAgentService = () => {
@@ -58,6 +75,8 @@ export const useCreateAgentService = () => {
       transcriber,
       response_mode,
       input_mode,
+
+      integrations,
     } = input
 
     const {
@@ -92,6 +111,8 @@ export const useCreateAgentService = () => {
             transcriber,
             response_mode,
             input_mode,
+
+            integrations,
           },
         },
       },

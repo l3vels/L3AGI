@@ -1,10 +1,9 @@
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 import FormikTextField from 'components/TextFieldFormik'
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
+
 import TypographyPrimary from 'components/Typography/Primary'
 import { useScheduleForm } from './useScheduleForm'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
