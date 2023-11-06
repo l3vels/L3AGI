@@ -93,6 +93,8 @@ import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 import CreateFineTuningModal from 'modals/CreateFineTuningModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
+import CreateApiKeyForm from 'pages/ApiKeys/CreateApiKey/CreateApikeysForm'
+import EditApiKeyForm from 'pages/ApiKeys/EditApiKey/EditApiKeysForm'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -296,6 +298,20 @@ const Route = () => {
               <Router
                 path={':groupId/edit-group'}
                 element={<EditGroupForm />}
+                key={document.location.href}
+              />
+            </Router>
+
+            <Router path='api-key' element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<ApiKeys />} key={document.location.href} />
+              <Router
+                path={'create-api-key'}
+                element={<CreateApiKeyForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':apiKeyId/edit-api-key'}
+                element={<EditApiKeyForm />}
                 key={document.location.href}
               />
             </Router>
