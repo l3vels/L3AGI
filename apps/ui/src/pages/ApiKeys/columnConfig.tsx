@@ -64,14 +64,14 @@ const columns = [
     Header: 'Created On',
     accessor: 'created_on',
     minWidth: 100,
-    width: 150,
+    width: 140,
     Cell: DateRenderer,
   },
   {
     Header: 'Actions',
     accessor: 'actions',
     minWidth: 100,
-    width: 150,
+    width: 130,
 
     Cell: (props: { row: { original: any } }) => {
       const { original: data } = props.row
