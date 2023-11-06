@@ -7,14 +7,24 @@ from fastapi_sqlalchemy import db
 from exceptions import FineTuningNotFoundException
 from models.config import ConfigModel
 from models.fine_tuning import FineTuningModel
-from services.fine_tuning import fine_tune_openai_model
+from services.fine_tuning import check_fine_tuning, fine_tune_openai_model
 from typings.auth import UserAccount
 from typings.fine_tuning import FineTuningInput, FineTuningOutput
-from utils.auth import authenticate
+from utils.auth import authenticate, authenticate_by_auth_token
 from utils.fine_tuning import (convert_fine_tunings_to_fine_tuning_list,
                                convert_model_to_response)
 
 router = APIRouter()
+
+
+@router.post(
+    "/{fine_tuning_id}/check",
+    status_code=200,
+    dependencies=[Depends(authenticate_by_auth_token)],
+)
+def check_fine_tuning_status(fine_tuning_id: UUID):
+    check_fine_tuning(db.session, fine_tuning_id)
+    return {"message": "Fine-tuning status checked"}
 
 
 @router.post("", status_code=201, response_model=FineTuningOutput)
@@ -30,7 +40,7 @@ def create_fine_tuning(
         auth.account.id,
     )
 
-    settings = ConfigModel.get_account_settings(db, auth.account)
+    settings = ConfigModel.get_account_settings(db.session, auth.account.id)
 
     if not settings.openai_api_key:
         raise HTTPException(
@@ -38,7 +48,12 @@ def create_fine_tuning(
             detail="OpenAI API key not set. Please set it in your account settings.",
         )
 
-    background_tasks.add_task(fine_tune_openai_model, fine_tuning_model, settings)
+    background_tasks.add_task(
+        fine_tune_openai_model,
+        fine_tuning_model.id,
+        fine_tuning_model.account_id,
+        settings,
+    )
 
     return convert_model_to_response(
         FineTuningModel.get_fine_tuning_by_id(
@@ -78,6 +93,22 @@ def update_fine_tuning(
         )
     except FineTuningNotFoundException:
         raise HTTPException(status_code=404, detail="Fine-tuning not found")
+
+
+@router.get(
+    "/pending",
+    response_model=List[FineTuningOutput],
+    dependencies=[Depends(authenticate_by_auth_token)],
+)
+def get_pending_fine_tunings() -> List[FineTuningOutput]:
+    """
+    Get all pending fine-tunings for worker.
+
+    Returns:
+        List[FineTuningOutput]: List of pending fine-tunings associated.
+    """
+    fine_tuning_models = FineTuningModel.get_pending_fine_tunings(db.session)
+    return convert_fine_tunings_to_fine_tuning_list(fine_tuning_models)
 
 
 @router.get("/{id}", response_model=FineTuningOutput)

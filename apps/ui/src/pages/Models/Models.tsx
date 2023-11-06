@@ -14,55 +14,107 @@ import { MODEL_PROVIDER_LOGOS } from './constants'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 import FineTunings from './FineTuning/FineTunings'
-import styled from 'styled-components'
+
+import Tab from '@l3-lib/ui-core/dist/Tab'
+import TabList from '@l3-lib/ui-core/dist/TabList'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+
+import { useState } from 'react'
+import {
+  StyledTab,
+  StyledTabListSpan,
+  StyledTabListWrapper,
+  StyledTabRootWrapper,
+} from 'styles/tabStyles.css'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
 
   const { data: models } = useModelsService()
 
+  const { getModelModules } = useGetAccountModule()
+  const modelModule = getModelModules('models')
+  const fineTuningModule = getModelModules('fine-tuning')
+  const isModel = modelModule.list
+  const isFineTuning = fineTuningModule.list
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const tabQuery = urlParams.get('tab')
+
+  const defaultActiveTab = () => {
+    if (tabQuery === 'fine-tuning') return 0
+    if (tabQuery === 'model') return 1
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    navigate(`/models?tab=${tabName}`)
+  }
+
   return (
-    <StyledRoot>
-      <FineTunings />
+    <StyledTabRootWrapper>
+      <StyledTabListWrapper>
+        <TabList activeTabId={activeTab}>
+          <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')}>
+            <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'model')}>
+            <StyledTabListSpan>{`${t('model')}s`}</StyledTabListSpan>
+          </StyledTab>
+        </TabList>
+      </StyledTabListWrapper>
 
-      <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledSectionTitle>{`${t('model')}`}</StyledSectionTitle>
-            <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
-          </div>
-        </StyledHeaderGroup>
+      <TabsContext activeTabId={activeTab}>
+        <TabPanels noAnimation>
+          <TabPanel>{isFineTuning && <FineTunings />}</TabPanel>
 
-        <ComponentsWrapper noPadding>
-          <StyledCardsWrapper>
-            {models
-              ?.filter(model => !model.is_fine_tuned)
-              ?.map((model, index: number) => {
-                const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
-                const logoSrc = logo?.logoSrc || ''
+          <TabPanel>
+            {isModel && (
+              <StyledSectionWrapper>
+                <StyledHeaderGroup className='header_group'>
+                  <div>
+                    <StyledSectionTitle>{`${t('model')}s`}</StyledSectionTitle>
+                    <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
+                  </div>
+                </StyledHeaderGroup>
 
-                return (
-                  <ModelCard
-                    key={index}
-                    isReadOnly={isPublic}
-                    isDisabled={false}
-                    title={model.name}
-                    author={model.provider}
-                    logoSrc={logoSrc}
-                  />
-                )
-              })}
-          </StyledCardsWrapper>
-        </ComponentsWrapper>
-      </StyledSectionWrapper>
-    </StyledRoot>
+                <ComponentsWrapper noPadding>
+                  <StyledCardsWrapper>
+                    {models
+                      ?.filter(model => !model.is_fine_tuned)
+                      ?.map((model, index: number) => {
+                        const logo = MODEL_PROVIDER_LOGOS.find(
+                          logo => logo.provider === model.provider,
+                        )
+                        const logoSrc = logo?.logoSrc || ''
+
+                        return (
+                          <ModelCard
+                            key={index}
+                            isReadOnly={isPublic}
+                            isDisabled={false}
+                            title={model.name}
+                            author={model.provider}
+                            logoSrc={logoSrc}
+                          />
+                        )
+                      })}
+                  </StyledCardsWrapper>
+                </ComponentsWrapper>
+              </StyledSectionWrapper>
+            )}
+          </TabPanel>
+        </TabPanels>
+      </TabsContext>
+    </StyledTabRootWrapper>
   )
 }
 
 export default Models
-
-const StyledRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-`

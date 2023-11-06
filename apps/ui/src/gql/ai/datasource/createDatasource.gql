@@ -1,3 +1,5 @@
+#import "./dataSourceFragment.gql"
+
 mutation createDatasource($input: input!) @api(name: ai) {
   createDatasource(input: $input)
     @rest(
@@ -7,16 +9,6 @@ mutation createDatasource($input: input!) @api(name: ai) {
       bodyKey: "input"
       endpoint: "ai"
     ) {
-    id
-    name
-    description
-    source_type
-    status
-    workspace_id
-    is_deleted
-    is_public
-    account_id
-    created_by
-    modified_by
+    ...DataSourceFragment
   }
 }

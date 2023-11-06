@@ -29,7 +29,7 @@ from services.pubsub import ChatPubSubService
 from services.run_log import RunLogsManager
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
-from typings.agent import AgentWithConfigsOutput
+from typings.agent import AgentWithConfigsOutput, DataSourceFlow
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
 from typings.config import AccountSettings, ConfigInput
@@ -96,7 +96,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     provider_account = chat.provider_account
     provider_user = chat.provider_user
 
-    sender_name = user.name
+    sender_name = user.name if auth else "Guest"
     sender_user_id = user.id
     sender_account_id = account.id
 
@@ -194,7 +194,7 @@ def process_chat_message(
         run_id=run.id,
     )
 
-    settings = ConfigModel.get_account_settings(db, provider_account)
+    settings = ConfigModel.get_account_settings(db.session, provider_account.id)
 
     if len(agents) > 0:
         for agent_with_configs in agents:
@@ -566,7 +566,16 @@ def run_conversational_agent(
         agent_with_configs,
         tool_callback_handler,
     )
-    tools = datasource_tools + agent_tools
+
+    pre_retrieved_context = ""
+
+    if agent_with_configs.configs.source_flow == DataSourceFlow.PRE_RETRIEVAL.value:
+        if len(datasource_tools) != 0:
+            pre_retrieved_context = datasource_tools[0]._run(prompt)
+
+        tools = agent_tools
+    else:
+        tools = datasource_tools + agent_tools
 
     conversational = ConversationalAgent(sender_name, provider_account, session_id)
     return conversational.run(
@@ -580,6 +589,7 @@ def run_conversational_agent(
         run_id,
         sender_user_id,
         run_logs_manager,
+        pre_retrieved_context,
     )
 
 

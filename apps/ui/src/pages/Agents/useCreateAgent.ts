@@ -41,6 +41,14 @@ export const useCreateAgent = () => {
     agent_is_memory: true,
     agent_text: '',
     agent_avatar: '',
+    agent_source_flow: 'source_detection',
+
+    agent_voice_synthesizer: '',
+    agent_default_voice: '',
+    agent_voice_id: '',
+    agent_voice_transcriber: '',
+    agent_voice_response: ['Text'],
+    agent_voice_input_mode: ['Text'],
   }
 
   if (agentById) {
@@ -61,6 +69,14 @@ export const useCreateAgent = () => {
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
       agent_text: agentById.configs?.text,
+      agent_source_flow: agentById.configs?.source_flow,
+
+      agent_voice_synthesizer: agentById.configs?.synthesizer,
+      agent_default_voice: agentById.configs?.default_voice,
+      agent_voice_id: agentById.configs?.voice_id,
+      agent_voice_transcriber: agentById.configs?.transcriber,
+      agent_voice_response: agentById.configs?.response_mode,
+      agent_voice_input_mode: agentById.configs?.input_mode,
     }
   }
 
@@ -77,6 +93,7 @@ export const useCreateAgent = () => {
         constraints: values.agent_constraints,
         tools: values.agent_tools,
         datasources: values.agent_datasources,
+        source_flow: values.agent_source_flow,
         instructions: values.agent_instructions,
         model: values.agent_model,
         is_memory: values.agent_is_memory,
@@ -84,6 +101,13 @@ export const useCreateAgent = () => {
         greeting: values.agent_greeting,
         text: values.agent_text,
         avatar: values.agent_avatar,
+
+        synthesizer: values.agent_voice_synthesizer,
+        default_voice: values.agent_default_voice,
+        voice_id: values.agent_voice_id,
+        transcriber: values.agent_voice_transcriber,
+        response_mode: values.agent_voice_response,
+        input_mode: values.agent_voice_input_mode,
       }
 
       const newAgent = await createAgentService(agentInput)

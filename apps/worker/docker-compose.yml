@@ -1,18 +1,18 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  beat:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.beat
-    volumes:
-      - .:/app
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
 
   worker:
     build:
       context: .
-      dockerfile: docker/Dockerfile.worker
+      dockerfile: docker/Dockerfile
     volumes:
       - .:/app
+    ports:
+      - "3001:80"
     depends_on:
-      - beat
+      - redis

@@ -1,0 +1,7 @@
+#import "./voiceFragment.gql"
+
+query getVoices @api(name: "pro") {
+  getVoices @rest(type: "Voice", path: "/voice", method: "GET", endpoint: "pro") {
+    ...VoiceFragment
+  }
+}

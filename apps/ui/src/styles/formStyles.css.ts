@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, css } from 'styled-components'
+import styled from 'styled-components'
 
 export const StyledFormWrapper = styled.div`
   width: 100%;
@@ -14,4 +14,9 @@ export const StyledFormRoot = styled.div`
   overflow-y: scroll;
 
   display: flex;
+`
+export const StyledFormInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `

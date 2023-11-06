@@ -6,6 +6,7 @@ from utils.configs.call_configs import call_configs
 from utils.configs.default import default_configs
 from utils.configs.heyyou import heyyou_configs
 from utils.configs.levanion_configs import levanion_configs
+from utils.configs.olga_configs import olga_configs
 from utils.configs.scrapper import scrapper_configs
 from utils.type import convert_value_to_type
 
@@ -22,6 +23,8 @@ def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
         account_model.configs = levanion_configs
     elif account_model.name == "call":
         account_model.configs = call_configs
+    elif account_model.name == "Olga":
+        account_model.configs = olga_configs
     else:
         account_model.configs = default_configs
 

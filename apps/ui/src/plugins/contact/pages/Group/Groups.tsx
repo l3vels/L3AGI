@@ -21,6 +21,7 @@ import {
 import styled from 'styled-components'
 import Table from 'components/Table'
 import { StyledTableWrapper } from '../Contact/Contacts'
+import { t } from 'i18next'
 
 const Groups = () => {
   const { groups, deleteGroupHandler } = useGroups()
@@ -39,16 +40,17 @@ const Groups = () => {
       {
         Header: 'Name',
         accessor: 'name',
+        width: 485,
       },
       {
         Header: 'Description',
         accessor: 'description',
+        width: 485,
       },
-
       {
         Header: 'Actions',
         accessor: 'id',
-        // maxWidth: 100,
+        width: 100,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
@@ -61,7 +63,7 @@ const Groups = () => {
               />
 
               <IconButton
-                onClick={() => navigate(`/groups/${cell.value}/edit-group`)}
+                onClick={() => navigate(`/contacts/${cell.value}/edit-group`)}
                 icon={() => <StyledEditIcon />}
                 size={IconButton.sizes.SMALL}
                 kind={IconButton.kinds.TERTIARY}
@@ -79,14 +81,14 @@ const Groups = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Groups</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('group')}s`}</StyledSectionTitle>
           {/* <StyledSectionDescription>
             Here is your datasource, a collection of databases, APIs, files, and more.
           </StyledSectionDescription> */}
         </div>
         <div>
-          <ButtonPrimary onClick={() => navigate('/groups/create-group')} size={'small'}>
-            Add Group
+          <ButtonPrimary onClick={() => navigate('/contacts/create-group')} size={'small'}>
+            {t('add-group')}
           </ButtonPrimary>
         </div>
       </StyledHeaderGroup>
@@ -105,4 +107,5 @@ export default Groups
 export const StyledTableButtons = styled.div`
   display: flex;
   align-items: center;
+  height: 100%;
 `

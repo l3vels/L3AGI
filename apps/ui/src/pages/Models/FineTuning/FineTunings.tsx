@@ -1,20 +1,26 @@
+import { useMemo } from 'react'
+
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import { ButtonPrimary } from 'components/Button/Button'
+
 import Button from '@l3-lib/ui-core/dist/Button'
 
 import { useNavigate } from 'react-router-dom'
-import TempCard from 'pages/Schedule/TempCard'
+
 import { useFineTuning } from './useFineTuning'
 import { useFineTuningForm } from './FineTuningForm/useFineTuningForm'
+
+import Table from 'components/Table'
+
+import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
+import TableActionButtons from 'components/Table/components/TableActionButtons'
 
 const FineTunings = () => {
   const { t } = useTranslation()
@@ -27,7 +33,53 @@ const FineTunings = () => {
 
   const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
   const { modelOptions } = useFineTuningForm()
-  console.log('fineTuningData', fineTuningData)
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name',
+        width: 500,
+      },
+      {
+        Header: 'Model',
+        accessor: 'model',
+        width: 370,
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+        width: 100,
+      },
+
+      {
+        Header: 'Actions',
+        accessor: 'id',
+        width: 100,
+        Cell: ({ cell }: any) => {
+          return (
+            <TableActionButtons
+              onDeleteClick={() => deleteFineTuningHandler(cell.value)}
+              onEditClick={() => navigate(`/models/${cell.value}/edit-fine-tuning`)}
+            />
+          )
+        },
+      },
+    ],
+    [],
+  )
+
+  const tableData =
+    fineTuningData?.map((fineTuning: any) => ({
+      id: fineTuning.id,
+      name: fineTuning.name,
+      status: fineTuning.status,
+      model:
+        modelOptions?.filter((model: any) => model.value === fineTuning?.model_id).length > 0
+          ? modelOptions?.filter((model: any) => model.value === fineTuning?.model_id)?.[0].label
+          : '',
+    })) || []
+
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
@@ -41,31 +93,9 @@ const FineTunings = () => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <StyledCardsWrapper>
-          {fineTuningData?.map((fineTuning: any, index: number) => {
-            const handleDelete = () => {
-              deleteFineTuningHandler(fineTuning.id)
-            }
-
-            const handleEdit = () => {
-              navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
-            }
-
-            const filteredModel = modelOptions?.filter(
-              (model: any) => model.value === fineTuning.model_id,
-            )?.[0]
-
-            return (
-              <TempCard
-                key={index}
-                name={fineTuning.name}
-                description={filteredModel?.label || ''}
-                onDeleteClick={handleDelete}
-                onEditClick={handleEdit}
-              />
-            )
-          })}
-        </StyledCardsWrapper>
+        <StyledTableWrapper>
+          <Table columns={columns} data={tableData} />
+        </StyledTableWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )

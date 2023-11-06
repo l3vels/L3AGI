@@ -46,10 +46,6 @@ import DevelopersRouteLayout from 'routes/DevelopersRouteLayout'
 import CommandMenu from 'components/CommandMenu/CommandMenu'
 import RootLayout from 'routes/RootLayout'
 
-import CreateAgentModal from 'modals/CreateAgentModal'
-import EditAgentModal from 'modals/EditAgentModal'
-import CreateDatasourceModal from 'modals/CreateDatasourceModal'
-import EditDatasourceModal from 'modals/EditDatasourceModal'
 import Datasource from 'pages/Datasource'
 import TeamOfAgents from 'pages/TeamOfAgents'
 
@@ -90,11 +86,13 @@ import CreateGroupForm from 'plugins/contact/pages/Group/GroupForm/CreateGroupFo
 import EditGroupForm from 'plugins/contact/pages/Group/GroupForm/EditGroupForm'
 import ScheduleRunModal from 'modals/ScheduleRunModal'
 import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
-import CreateFineTuningModal from 'modals/CreateFineTuningModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
 import CreateApiKeyForm from 'pages/ApiKeys/CreateApiKey/CreateApikeysForm'
 import EditApiKeyForm from 'pages/ApiKeys/EditApiKey/EditApiKeysForm'
+import Integrations from 'pages/Integrations'
+import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
+import VoiceModal from 'modals/VoiceModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -241,10 +239,20 @@ const Route = () => {
               />
             </Router>
 
-            <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
+            <Router
+              path={'integrations'}
+              element={<MainRouteLayout />}
+              key={document.location.href}
+            >
+              <Router index element={<Integrations />} key={document.location.href} />
+              <Router path={'toolkit/:slug'} element={<ToolView />} key={document.location.href} />
+              <Router path={'voice/:slug'} element={<VoiceView />} key={document.location.href} />
+            </Router>
+
+            {/* <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
               <Router path={':slug'} element={<ToolView />} key={document.location.href} />
-            </Router>
+            </Router> */}
 
             <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Models />} key={document.location.href} />
@@ -286,10 +294,7 @@ const Route = () => {
                 element={<EditContactForm />}
                 key={document.location.href}
               />
-            </Router>
 
-            <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Group />} key={document.location.href} />
               <Router
                 path={'create-group'}
                 element={<CreateGroupForm />}
@@ -315,6 +320,9 @@ const Route = () => {
                 key={document.location.href}
               />
             </Router>
+            {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<Group />} key={document.location.href} />
+            </Router> */}
 
             <Router path={'developers'} element={<DevelopersRouteLayout />}>
               <Router index element={<ApiKeys />} key={document.location.href} />
@@ -343,15 +351,12 @@ const Route = () => {
       </Routes>
 
       <DeleteConfirmationModal />
-      <CreateAgentModal />
-      <EditAgentModal />
-      <CreateDatasourceModal />
-      <EditDatasourceModal />
       <LoginModal />
       <AgentViewModal />
       <TeamOfAgentViewModal />
       <SettingsModal />
       <ToolkitModal />
+      <VoiceModal />
       <ChatLinkModal />
       <ScheduleRunModal />
       <RunLogsModal />

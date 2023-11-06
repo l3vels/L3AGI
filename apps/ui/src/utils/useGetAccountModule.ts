@@ -97,6 +97,15 @@ export const useGetAccountModule = () => {
     }
     return values
   }
+  const getIntegrationModules = (search: 'toolkit' | 'voices' | 'telephony' | 'active') => {
+    let values
+    if (search === 'active') {
+      values = getMainModule('integration')
+    } else {
+      values = getSubModules('integration', search)
+    }
+    return values
+  }
 
   const getToolkitModules = () => {
     const values = getMainModule('toolkit')
@@ -138,6 +147,7 @@ export const useGetAccountModule = () => {
     models: naming?.models,
     schedule: naming?.schedules,
     toolkits: naming?.toolkits,
+    integration: naming?.integrations,
   }
 
   return {
@@ -151,6 +161,7 @@ export const useGetAccountModule = () => {
     getScheduleModules,
     getContactModules,
     getGroupModules,
+    getIntegrationModules,
     moduleNames,
   }
 }

@@ -17,10 +17,15 @@ import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const EditAgentForm = () => {
   const { t } = useTranslation()
   const { formik, isLoading, handleNavigation } = useEditAgent()
+
+  const { getIntegrationModules } = useGetAccountModule()
+  const voiceModule = getIntegrationModules('voices')
+  const isVoiceEdit = voiceModule.edit
 
   return (
     <FormikProvider value={formik}>
@@ -47,7 +52,7 @@ const EditAgentForm = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <AgentForm formik={formik} />
+            <AgentForm formik={formik} isVoice={isVoiceEdit} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>

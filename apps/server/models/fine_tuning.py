@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from typing import Optional
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, String
 from sqlalchemy.orm import Session, relationship
@@ -160,26 +161,46 @@ class FineTuningModel(BaseModel):
         )
 
     @classmethod
-    def get_fine_tuning_by_id(cls, session: Session, id: UUID, account_id: UUID):
+    def get_pending_fine_tunings(cls, session: Session):
+        return (
+            session.query(FineTuningModel)
+            .filter(
+                FineTuningModel.status.in_(
+                    [
+                        FineTuningStatus.VALIDATING.value,
+                        FineTuningStatus.QUEUED.value,
+                        FineTuningStatus.RUNNING.value,
+                    ]
+                ),
+                FineTuningModel.is_deleted.is_(False),
+            )
+            .all()
+        )
+
+    @classmethod
+    def get_fine_tuning_by_id(
+        cls, session: Session, id: UUID, account_id: Optional[UUID] = None
+    ):
         """
-        Get Datasource from datasource_id
+        Get FineTuningModel from id
 
         Args:
             session: The database session.
-            datasource_id(int) : Unique identifier of an Datasource.
+            id(UUID) : Unique identifier of a FineTuningModel.
+            account_id(UUID, optional) : Unique identifier of an account. Defaults to None.
 
         Returns:
-            Datasource: Datasource object is returned.
+            FineTuningModel: FineTuningModel object is returned.
         """
-        fine_tuning_model = (
-            session.query(FineTuningModel)
-            .filter(
-                FineTuningModel.id == id,
-                FineTuningModel.account_id == account_id,
-                FineTuningModel.is_deleted.is_(False),
-            )
-            .first()
+        query = session.query(FineTuningModel).filter(
+            FineTuningModel.id == id,
+            FineTuningModel.is_deleted.is_(False),
         )
+
+        if account_id is not None:
+            query = query.filter(FineTuningModel.account_id == account_id)
+
+        fine_tuning_model = query.first()
         return fine_tuning_model
 
     @classmethod

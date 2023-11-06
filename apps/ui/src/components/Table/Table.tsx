@@ -26,7 +26,7 @@ const Table = ({ columns, data }: TableProps) => {
   const defaultColumn = useMemo(
     () => ({
       width: 300,
-      minWidth: 100,
+      // minWidth: 100,
       // maxWidth: 100,
     }),
     [],
@@ -34,13 +34,13 @@ const Table = ({ columns, data }: TableProps) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
+      defaultColumn,
       columns,
       data,
-      defaultColumn,
     },
-    useResizeColumns,
     useFlexLayout,
     useBlockLayout,
+    useResizeColumns,
   )
 
   return (
@@ -55,6 +55,7 @@ const Table = ({ columns, data }: TableProps) => {
                   {...column.getHeaderProps()}
                   {...column.getResizerProps()}
                   minWidth={column.minWidth}
+                  maxWidth={column.maxWidth}
                   width={column.width}
                 >
                   <TypographyPrimary
@@ -91,6 +92,13 @@ const StyledRoot = styled.div`
   height: 100%;
   overflow: auto;
 
+  ::-webkit-scrollbar {
+    width: 0; /* This will hide the scrollbar */
+  }
+  body {
+    scrollbar-width: none; /* This will hide the scrollbar */
+  }
+
   border-radius: 24px;
   max-height: calc(100vh - 300px);
 `
@@ -109,7 +117,7 @@ const StyledThead = styled.thead`
   background: #fff;
 
   display: flex;
-  z-index: 100000;
+  z-index: 1;
   position: sticky;
   top: 0px;
   margin: 0 0 0 0;

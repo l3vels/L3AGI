@@ -3,29 +3,42 @@ import useUploadFile from 'hooks/useUploadFile'
 import { useModelsService } from 'services'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { useToolsService } from 'services/tool/useToolsService'
+import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
 
 export const useAgentForm = (formik: any) => {
   const [avatarIsLoading, setAvatarLoader] = useState(false)
 
   const { uploadFile } = useUploadFile()
 
-  const { data: datasourcesData } = useDatasourcesService()
+  const { data: dataSources } = useDatasourcesService()
   const { data: tools } = useToolsService()
   const { data: models } = useModelsService()
+  const { data: voices } = useVoicesService()
 
   const modelOptions = models?.map(({ id, name, provider }) => ({
     value: id,
     label: `${name} (${provider})`,
   }))
 
-  const datasourceOptions = datasourcesData?.map((datasource: any) => {
-    return { value: datasource.id, label: datasource.name }
+  const datasourceOptions = dataSources?.map(({ id, name }) => {
+    return { value: id, label: name }
   })
 
   const toolOptions = tools
     ?.filter((tool: any) => tool.is_active)
     .map((tool: any) => {
       return { value: tool.toolkit_id, label: tool.name }
+    })
+
+  const voiceSynthesizerOptions = voices
+    ?.filter((voice: any) => voice.is_active && voice.is_synthesizer)
+    .map((voice: any) => {
+      return { value: voice.id, label: voice.name }
+    })
+  const voiceTranscriberOptions = voices
+    ?.filter((voice: any) => voice.is_active && voice.is_transcriber)
+    .map((voice: any) => {
+      return { value: voice.id, label: voice.name }
     })
 
   const handleUploadAvatar = async (event: any) => {
@@ -58,7 +71,10 @@ export const useAgentForm = (formik: any) => {
     modelOptions,
     datasourceOptions,
     toolOptions,
+
     handleUploadAvatar,
     avatarIsLoading,
+    voiceSynthesizerOptions,
+    voiceTranscriberOptions,
   }
 }

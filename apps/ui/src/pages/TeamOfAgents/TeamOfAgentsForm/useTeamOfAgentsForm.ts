@@ -16,7 +16,7 @@ export const useTeamOfAgentsForm = (formik: any) => {
     value: id,
     label: `${name} (${provider})`,
   }))
-  const datasourceOptions = datasourcesData?.map((datasource: any) => {
+  const datasourceOptions = datasourcesData?.map(datasource => {
     return { value: datasource.id, label: datasource.name }
   })
   const toolOptions = tools

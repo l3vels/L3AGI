@@ -34,47 +34,54 @@ def execute_scheduled_run(
     schedule.status = ScheduleStatus.PROCESSING.value
     session.commit()
 
-    schedule_with_configs = convert_model_to_response(schedule)
-    configs = schedule_with_configs.configs
+    try:
+        schedule_with_configs = convert_model_to_response(schedule)
+        configs = schedule_with_configs.configs
 
-    user = schedule.creator
-    account = schedule.account
+        user = schedule.creator
+        account = schedule.account
 
-    chat: ChatModel = None
+        chat: ChatModel = None
 
-    if configs.create_session_on_run:
-        chat = ChatModel.create_chat(
-            db,
-            chat=ChatInput(
-                name=f"{schedule.name} - {arrow.get(datetime.now()).format('DD MMM, YYYY, HH:mm')}",
-                is_public=True,
-                agent_id=configs.agent_id,
-                team_id=None,
-            ),
-            user=user,
-            account=account,
+        if configs.create_session_on_run:
+            chat = ChatModel.create_chat(
+                db,
+                chat=ChatInput(
+                    name=f"{schedule.name} - {arrow.get(datetime.now()).format('DD MMM, YYYY, HH:mm')}",
+                    is_public=True,
+                    agent_id=configs.agent_id,
+                    team_id=None,
+                ),
+                user=user,
+                account=account,
+            )
+
+        prompt = ""
+
+        for task in configs.tasks:
+            prompt += f"- {task}\n"
+
+        create_client_message(
+            body=ChatMessageInput(prompt=prompt, chat_id=chat.id if chat else None),
+            auth=UserAccount(user=user.to_dict(), account=account.to_dict()),
         )
 
-    prompt = "Complete following tasks:\n"
+        # Check if the schedule is recurring and the end date is not exceeded
+        if schedule_with_configs.configs.is_recurring:
+            interval_in_seconds = parse_interval_to_seconds(schedule.interval)
 
-    for task in configs.tasks:
-        prompt += f"- {task}\n"
+            next_run_date = schedule.next_run_date + timedelta(
+                seconds=interval_in_seconds
+            )
 
-    create_client_message(
-        body=ChatMessageInput(prompt=prompt, chat_id=chat.id if chat else None),
-        auth=UserAccount(user=user, account=account),
-    )
+            if next_run_date <= schedule.end_date:
+                schedule.next_run_date = next_run_date
+            else:
+                schedule.next_run_date = None
 
-    # Check if the schedule is recurring and the end date is not exceeded
-    if schedule_with_configs.configs.is_recurring:
-        interval_in_seconds = parse_interval_to_seconds(schedule.interval)
-
-        next_run_date = schedule.next_run_date + timedelta(seconds=interval_in_seconds)
-
-        if next_run_date <= schedule.end_date:
-            schedule.next_run_date = next_run_date
-        else:
-            schedule.next_run_date = None
-
-    schedule.status = ScheduleStatus.PENDING.value
-    session.commit()
+        schedule.status = ScheduleStatus.PENDING.value
+        session.commit()
+    except Exception as err:
+        schedule.status = ScheduleStatus.PENDING.value
+        session.commit()
+        raise err

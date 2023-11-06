@@ -12,7 +12,7 @@ from utils.encyption import decrypt_data, is_encrypted
 
 class MySQLDatabaseSchema(BaseModel):
     query: str = Field(
-        description="Containing Datasource Id and database question in English natural language, separated by semicolon"
+        description="Containing database question in English natural language. It is not SQL script!"
     )
 
 
@@ -21,8 +21,7 @@ class MySQLDatabaseTool(BaseTool):
 
     description = (
         "useful for when you need to answer questions over MySQL datasource.\n"
-        "Input is string. String is separated by semicolon. First is database question in English natural language. Second is datasource ID.\n"
-        "First part of input is English question and it is not SQL script!\n"
+        "Input is database question in English natural language. it is not SQL script!\n"
     )
 
     args_schema: Type[MySQLDatabaseSchema] = MySQLDatabaseSchema
@@ -34,11 +33,10 @@ class MySQLDatabaseTool(BaseTool):
     ) -> str:
         """Convert natural language to SQL Query and execute. Return result."""
 
-        question, datasource_id = query.split(";")
         configs = (
             db.session.query(ConfigModel)
             .where(
-                ConfigModel.datasource_id == datasource_id,
+                ConfigModel.datasource_id == self.data_source_id,
                 ConfigModel.is_deleted.is_(False),
             )
             .all()
@@ -59,7 +57,5 @@ class MySQLDatabaseTool(BaseTool):
 
         uri = f"mysql+pymysql://{user}:{password}@{host}:{port}/{name}"
 
-        result = SQLQueryEngine(self.settings, self.agent_with_configs, uri).run(
-            question
-        )
+        result = SQLQueryEngine(self.settings, self.agent_with_configs, uri).run(query)
         return result

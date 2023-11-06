@@ -5,7 +5,7 @@ from typing import List
 
 from fastapi_sqlalchemy.middleware import DBSessionMeta
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session, relationship
 from sqlalchemy.sql import and_, or_
 
 from exceptions import ConfigNotFoundException
@@ -42,6 +42,7 @@ class ConfigModel(BaseModel):
         UUID, ForeignKey("agent.id", ondelete="CASCADE"), nullable=True, index=True
     )
     toolkit_id = Column(UUID, nullable=True)
+    voice_id = Column(UUID, nullable=True)
     account_id = Column(
         UUID, ForeignKey("account.id", ondelete="CASCADE"), nullable=True
     )
@@ -246,7 +247,9 @@ class ConfigModel(BaseModel):
         return config
 
     @classmethod
-    def get_account_settings(cls, db, account) -> AccountSettings:
+    def get_account_settings(
+        cls, session: Session, account_id: UUID
+    ) -> AccountSettings:
         keys = [
             "open_api_key",
             "hugging_face_access_token",
@@ -258,10 +261,10 @@ class ConfigModel(BaseModel):
         ]
 
         configs: List[ConfigModel] = (
-            db.session.query(ConfigModel)
+            session.query(ConfigModel)
             .filter(
                 ConfigModel.key.in_(keys),
-                ConfigModel.account_id == account.id,
+                ConfigModel.account_id == account_id,
                 or_(
                     or_(
                         ConfigModel.is_deleted.is_(False),

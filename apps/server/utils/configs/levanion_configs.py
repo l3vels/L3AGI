@@ -5,11 +5,12 @@ levanion_configs = {
         "agent": "Agent",
         "team": "Team",
         "datasource": "Data sources",
-        "models": "Models",
+        "models": "Model",
         "discovery": "Discovery",
         "chat": "Multi-Agent",
-        "toolkits": "Toolkits",
-        "schedules": "Schedules",
+        "toolkits": "Toolkit",
+        "schedules": "Schedule",
+        "integrations": "Integration",
     },
     "modules": {
         "home": {
@@ -48,6 +49,21 @@ levanion_configs = {
                     }
                 },
                 "fine-tuning": {"operations": True},
+            },
+        },
+        "integration": {
+            "active": True,
+            "label": "Integrations",
+            "submodules": {
+                "toolkit": {
+                    "operations": {
+                        "create": True,
+                        "list": True,
+                        "edit": True,
+                    }
+                },
+                "voices": True,
+                "telephony": False,
             },
         },
         "toolkit": True,  # True

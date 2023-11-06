@@ -18,9 +18,17 @@ import { StyledFormWrapper } from 'styles/formStyles.css'
 import { useEditFineTuning } from '../useEditFineTuning'
 
 const EditFineTuningForm = () => {
-  const { formik, isLoading } = useEditFineTuning()
+  const { formik, isLoading, handleErrorAlert } = useEditFineTuning()
 
   if (!formik?.values) return <div />
+
+  const handleFormSubmit = () => {
+    if (formik?.errors?.fine_tuning_file_url) {
+      handleErrorAlert(`${formik?.errors?.fine_tuning_file_url}!`)
+    } else {
+      formik?.handleSubmit()
+    }
+  }
 
   return (
     <FormikProvider value={formik}>
@@ -34,7 +42,7 @@ const EditFineTuningForm = () => {
           <StyledButtonWrapper>
             <BackButton />
             <ButtonPrimary
-              onClick={formik?.handleSubmit}
+              onClick={handleFormSubmit}
               size={Button.sizes.SMALL}
               disabled={isLoading}
             >

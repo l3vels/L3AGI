@@ -5,9 +5,11 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 
 import s3fs
+from langchain.embeddings import OpenAIEmbeddings
 from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
                          SummaryIndex, TreeIndex, VectorStoreIndex,
                          load_index_from_storage)
+from llama_index.embeddings import LangchainEmbedding
 from llama_index.llms import LangChainLLM
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.vector_stores.types import VectorStore
@@ -47,6 +49,7 @@ class FileDatasourceRetriever:
     index_type: str
     response_mode: str
     vector_store: str
+    similarity_top_k: int
     chunk_size: int
     agent_with_configs: AgentWithConfigsOutput
 
@@ -60,6 +63,7 @@ class FileDatasourceRetriever:
         datasource_id: str,
         agent_with_configs: Optional[AgentWithConfigsOutput] = None,
         chunk_size: Optional[int] = 1024,
+        similarity_top_k: Optional[int] = 2,
     ) -> None:
         self.settings = settings
         self.datasource_id = datasource_id
@@ -68,11 +72,12 @@ class FileDatasourceRetriever:
         self.response_mode = response_mode
         self.vector_store = vector_store
         self.chunk_size = chunk_size
+        self.similarity_top_k = similarity_top_k
         self.agent_with_configs = agent_with_configs
 
         self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
 
-    def get_vector_store(self):
+    def get_vector_store(self, is_retriever: bool = False):
         vector_store: VectorStore
 
         if self.vector_store == VectorStoreProvider.ZEP.value:
@@ -95,7 +100,10 @@ class FileDatasourceRetriever:
                 api_key=self.settings.pinecone_api_key,
                 environment=self.settings.pinecone_environment,
             )
-            pinecone.create_index(index_name, dimension=1536, metric="cosine")
+
+            if not is_retriever:
+                pinecone.create_index(index_name, dimension=1536, metric="cosine")
+
             pinecone_index = pinecone.Index(index_name)
 
             vector_store = PineconeVectorStore(
@@ -124,14 +132,32 @@ class FileDatasourceRetriever:
     def index_documents(self, file_urls: List[str]):
         # Read documents from S3 and store them in tmp directory
         self.download_documents(file_urls)
-        documents = SimpleDirectoryReader(self.datasource_path.resolve()).load_data()
 
-        service_context = ServiceContext.from_defaults(chunk_size=self.chunk_size)
+        documents = SimpleDirectoryReader(
+            self.datasource_path.resolve(), filename_as_id=True
+        ).load_data()
 
+        # Remove tmp directory
+        shutil.rmtree(self.datasource_path)
+
+        embed_model = LangchainEmbedding(
+            OpenAIEmbeddings(
+                openai_api_key=self.settings.openai_api_key,
+                show_progress_bar=True,
+            ),
+        )
+
+        service_context = ServiceContext.from_defaults(
+            chunk_size=self.chunk_size, embed_model=embed_model
+        )
+
+        # try:
+        #     self.load_index()
+        # except FileNotFoundError:
         # Create index from documents
         if self.index_type == IndexType.SUMMARY.value:
             self.index = SummaryIndex.from_documents(
-                documents, service_context=service_context
+                documents, service_context=service_context, show_progress=True
             )
         elif self.index_type == IndexType.VECTOR_STORE.value:
             vector_store = self.get_vector_store()
@@ -141,21 +167,27 @@ class FileDatasourceRetriever:
                 documents,
                 service_context=service_context,
                 storage_context=storage_context,
+                show_progress=True,
             )
         elif self.index_type == IndexType.TREE.value:
             self.index = TreeIndex.from_documents(
-                documents, service_context=service_context
+                documents, service_context=service_context, show_progress=True
             )
 
-        # Persist index to S3
         self.index.set_index_id(self.datasource_id)
+
+        # Refresh docs if re-indexing
+        # self.index.refresh_ref_docs(
+        #     documents,
+        #     service_context=service_context,
+        #     update_kwargs={"delete_kwargs": {"delete_from_docstore": True}},
+        # )
+
+        # Persist index to S3
         self.index.storage_context.persist(persist_dir=self.index_persist_dir, fs=s3)
 
-        # Remove tmp directory
-        shutil.rmtree(self.datasource_path)
-
     def load_index(self):
-        vector_store = self.get_vector_store()
+        vector_store = self.get_vector_store(is_retriever=True)
         storage_context = StorageContext.from_defaults(
             persist_dir=self.index_persist_dir, fs=s3, vector_store=vector_store
         )
@@ -183,9 +215,21 @@ class FileDatasourceRetriever:
             llm=llm, chunk_size=self.chunk_size
         )
 
-        query_engine = self.index.as_query_engine(
-            response_mode=self.response_mode, service_context=service_context
+        retriever = self.index.as_retriever(
+            service_context=service_context,
+            similarity_top_k=self.similarity_top_k,
+            verbose=True,
         )
 
-        result = query_engine.query(query_str)
-        return result
+        # query_engine = self.index.as_query_engine(
+        #     response_mode=self.response_mode,
+        #     service_context=service_context,
+        #     similarity_top_k=self.similarity_top_k
+        #     if self.index_type == IndexType.VECTOR_STORE.value
+        #     else None,
+        #     verbose=True,
+        # )
+
+        nodes = retriever.retrieve(query_str)
+        content = "\n".join([node.text for node in nodes])
+        return content
