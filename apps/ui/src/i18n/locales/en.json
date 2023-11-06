@@ -198,6 +198,8 @@
   "no-text": "No Text",
   "note": "Note",
   "or": "OR",
+  "play-voice": "Voice",
+  "pause-voice": "Pause",
   "payload": "Payload",
   "password-must-contain": "Password must contain:",
   "password-successfully-updated": "Password successfully updated",

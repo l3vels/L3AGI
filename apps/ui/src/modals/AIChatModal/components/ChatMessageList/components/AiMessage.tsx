@@ -23,6 +23,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { useModal } from 'hooks'
 import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
+import PlayAudioButton from 'components/PlayAudioButton'
 
 type AiMessageProps = {
   agentName?: string
@@ -36,6 +37,7 @@ type AiMessageProps = {
   runId: string
   setIsNewMessage: (state: boolean) => void
   onReplyClick?: () => void
+  voice?: string
 }
 
 const AiMessage = ({
@@ -49,6 +51,7 @@ const AiMessage = ({
   runId,
   setIsNewMessage,
   onReplyClick,
+  voice,
 }: AiMessageProps) => {
   function isMarkdownTable(markdownString: string) {
     const tableRegex = /(?<=(\r?\n){2}|^)([^\r\n]*\|[^\r\n]*(\r?\n)?)+(?=(\r?\n){2}|$)/
@@ -106,6 +109,7 @@ const AiMessage = ({
                 children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
               />
             )}
+            {voice && <PlayAudioButton audioUrl={voice} />}
           </StyledMessageText>
         </StyledMainContent>
       </StyledMessageWrapper>

@@ -15,6 +15,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import AiMessageMarkdown from './AiMessageMarkdown'
 import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
 import { useModal } from 'hooks'
+import PlayAudioButton from 'components/PlayAudioButton'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -24,6 +25,7 @@ type HumanMessageProps = {
   userName: string
   runId: string
   onReplyClick?: () => void
+  voice?: string
 }
 
 const HumanMessage = ({
@@ -34,6 +36,7 @@ const HumanMessage = ({
   userName,
   runId,
   onReplyClick,
+  voice,
 }: HumanMessageProps) => {
   const { wordArray, handleFileClick, fileUrlMatch, fileName } = useHumanMessage({
     userId,
@@ -80,6 +83,7 @@ const HumanMessage = ({
 
             {/* <HumanMessageText textArray={wordArray} /> */}
             <AiMessageMarkdown children={messageText} />
+            {voice && <PlayAudioButton audioUrl={voice} />}
           </StyledMessageText>
         </StyledMainContent>
       </StyledMessageWrapper>
