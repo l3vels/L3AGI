@@ -1,99 +1,87 @@
-import { useRef } from 'react'
-import { useModal } from 'hooks'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-// import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
+import Table from 'components/Table'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+import { useNavigate } from 'react-router-dom'
 
 import useApiKeys from './useApiKeys'
-import EditApiModal from './EditApiKey'
 import ShowApiKeyModal from '../ApiKeys/ShowApiKey/ShowApiKeyModal'
-import CreateApiModal from './CreateApiKey/CreateApiModal'
-import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
-import { StyledGroupContainer, StyledTableValue } from 'components/Layout/LayoutStyle'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+import {
+  StyledHeaderGroup,
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+} from 'pages/Home/homeStyle.css'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 
 const ApiKeys = () => {
   const { t } = useTranslation()
-  const { apiKeys, handleEditApiKey, handleDeleteApiKey } = useApiKeys()
-  const gridRef = useRef({})
+  const { apiKeys } = useApiKeys()
 
-  const { openModal } = useModal()
-
-  const openCreateAPIModal = () => {
-    openModal({
-      name: 'add-api-keys-modal',
-    })
-  }
-  const config = columnConfig({ handleDeleteApiKey, handleEditApiKey })
+  const navigate = useNavigate()
 
   return (
-    <StyledGroupContainer>
-      <div id='header_group'>
-        <div id='inner_navigation'>
-          <StyledColumnContainer>
-            <div>
-              <StyledHeaderGroup>
-                <StyledTableValue>{t('standard-keys')}</StyledTableValue>
-              </StyledHeaderGroup>
-              <StyledGroupContainer mt='20'>
-                <StyledTypography>
+    <StyledSectionWrapper>
+      <StyledHeaderGroup className='header_group'>
+        <div>
+          <StyledSectionTitle>API Keys</StyledSectionTitle>
+          <StyledSectionDescription>
+            <StyledTypography>
+              {t('api-keys-authenticate')}
+              <StyledTypographyWrapper>
+                <ButtonTertiary
+                  onClick={() => openLinkTab(import.meta.env.REACT_APP_API_KEYS_LINK)}
+                  size={Button.sizes.SMALL}
+                >
                   <TypographyTertiary
-                    value={t('api-keys-authenticate')}
-                    type={Typography.types.P}
-                    size={Typography.sizes.lg}
+                    value={t('learn-more')}
+                    type={Typography.types.L}
+                    size={Typography.sizes.sm}
                   />
-                  <StyledTypographyWrapper>
-                    <ButtonTertiary
-                      onClick={() => window.open('https://docs.l3agi.com', '_blank')}
-                      size={Button.sizes.SMALL}
-                    >
-                      <TypographyTertiary
-                        value={t('learn-more')}
-                        type={Typography.types.P}
-                        size={Typography.sizes.lg}
-                      />
-                    </ButtonTertiary>
-                  </StyledTypographyWrapper>
-                </StyledTypography>
-              </StyledGroupContainer>
-            </div>
-            <ButtonPrimary onClick={openCreateAPIModal} leftIcon={Add} size={Button.sizes.LARGE}>
-              {t('create-secret-key')}
-            </ButtonPrimary>
-          </StyledColumnContainer>
+                </ButtonTertiary>
+              </StyledTypographyWrapper>
+            </StyledTypography>
+          </StyledSectionDescription>
         </div>
-      </div>
 
-      {/* <DataGrid
-        ref={gridRef}
-        data={apiKeys?.items || []}
-        columnConfig={config}
-        headerHeight={160}
-        // groupPanel={groupPanel}
+        <ButtonPrimary
+          onClick={() => navigate('/api-key/create-api-key')}
+          leftIcon={Add}
+          size={Button.sizes.SMALL}
+        >
+          {t('create-secret-key')}
+        </ButtonPrimary>
+      </StyledHeaderGroup>
 
-        // deleteRow={deleteRow}
-        // openEditModal={openEditAssetModal}
-        // noBorder={true}
-      /> */}
+      <ComponentsWrapper noPadding>
+        <StyledTableWrapper>
+          <Table columns={columnConfig} data={apiKeys || []} />
+        </StyledTableWrapper>
+      </ComponentsWrapper>
 
-      <CreateApiModal />
       <ShowApiKeyModal />
-      <EditApiModal />
-    </StyledGroupContainer>
+    </StyledSectionWrapper>
   )
 }
 
 export default ApiKeys
+
+const StyledTableWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  min-height: 300px;
+`
 
 export const StyledRightSideHeadingWrapper = styled.div`
   display: flex;
@@ -160,7 +148,6 @@ export const StyledTypography = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 28px;
-  margin-top: 20px;
   // color: rgba(255, 255, 255, 0.6);
   @media (max-width: 1209px) {
     margin-left: auto;
@@ -171,11 +158,11 @@ export const StyledTypography = styled.div`
   }
 `
 export const StyledTypographyWrapper = styled.div`
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid ${({ theme }) => theme.body.textColorPrimary};
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95px;
+  width: 75px;
   min-width: 30px;
   height: 20px;
   margin-left: 10px;
@@ -206,11 +193,4 @@ export const StyledGridWrapper = styled.div`
   margin-top: 40px;
   width: 100%;
   height: 900px;
-`
-
-const StyledColumnContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
 `
