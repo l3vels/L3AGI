@@ -43,7 +43,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
             />
           </StyledTextContainer>
         }
-        backgroundColor='dark'
+        backgroundColor='light'
         hideCloseButton={true}
       >
         <StyledTokenContainer>
@@ -75,20 +75,12 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           type={Toast.types.WARNING_LOW_INFORMATIONAL}
           label={
             <StyledToastLabel>
-              <TypographySecondary
-                value={t('note')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
+              <span>{t('note')}</span>
             </StyledToastLabel>
           }
           paragraph={
             <StyledToastParagraph>
-              <TypographySecondary
-                value={t('api-key-token-description')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
+              <span>{t('api-key-token-description')}</span>
             </StyledToastParagraph>
           }
           className='l3-storybook-toast_wrapper'
@@ -101,7 +93,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           closeable={false}
         />
         <StyledApiModalFooter>
-          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE} onClick={closeModal}>
+          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.MEDIUM} onClick={closeModal}>
             {t('done')}
           </Button>
         </StyledApiModalFooter>
@@ -140,12 +132,22 @@ const StyledToastLabel = styled.div`
   justify-content: flex-start;
   // float: left;
   right: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-family: Circular, Roboto;
+  color: ${({ theme }) => theme.body.warningToastTextColor} !important;
 `
 const StyledToastParagraph = styled.div`
   display: flex;
   position: relative;
   width: 567px;
   right: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-family: Circular, Roboto;
+  color: ${({ theme }) => theme.body.warningToastTextColor} !important;
 `
 
 export const StyledApiModalFooter = styled(ModalFooter)`
@@ -167,6 +169,7 @@ export const StyledTextContainer = styled.div`
   margin-top: 16px;
 `
 export const StyledTokenContainer = styled.div`
+  font-size: 14px;
   width: 662px;
   height: 44px;
   background: rgba(255, 255, 255, 0.2);
