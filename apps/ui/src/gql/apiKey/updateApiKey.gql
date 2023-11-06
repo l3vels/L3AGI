@@ -1,15 +1,17 @@
-mutation updateApiKey($id: ID!, $input: ApiKeyInput!) @api(name: game) {
-  updateApiKey(id: $id, input: $input) {
+mutation updateApiKey($id: id!, $input: input!) @api(name: "ai") {
+  updateApiKey(id: $id, input: $input)
+    @rest(type: "ApiKeys", path: "/api-key/{args.id}", method: "PUT", endpoint: "ai") {
     success
     apiKey {
       id
       name
       token
-      note
-      expiration
-      games
+      description
+      is_deleted
+      account_id
       created_on
-      last_used
+      created_by
+      modified_by
     }
   }
 }

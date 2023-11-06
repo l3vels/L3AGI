@@ -1,12 +1,12 @@
-mutation deleteApiKey($id: ID!) @api(name: game) {
-  deleteApiKey(id: $id) {
-    id
-    name
-    token
-    note
-    expiration
-    games
-    created_on
-    last_used
+mutation deleteApiKey($id: id!) @api(name: ai) {
+  deleteApiKey(id: $id)
+    @rest(
+      type: "ApiKeys"
+      path: "/api-key/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    agent
   }
 }
