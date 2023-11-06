@@ -89,6 +89,7 @@
   "create-asset": "Create Asset",
   "create-session": "Create Session",
   "create-secret-key": "Create secret key",
+  "create-api-key": "Create Api key",
   "create-new-secret-key": "Create a new secret key",
   "createAgent": "Create Agent",
   "custom-fields": "Custom Fields",
