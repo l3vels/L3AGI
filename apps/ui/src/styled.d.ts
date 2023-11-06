@@ -45,6 +45,7 @@ declare module 'styled-components' {
       sliderBackgroundColor: string
       dropdownSecondaryBgColor: string
       commandMenuBackgroundColor: string
+      warningToastTextColor: string
     }
     typography: {
       contentPrimary: string
