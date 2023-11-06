@@ -1,50 +1,46 @@
 import { useContext, useState } from 'react'
-
-import { useApiKeysService, useDeleteApiKeyService } from 'services/useApiKeyService'
 import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
-import { AuthContext, ToastContext } from 'contexts'
+import { ToastContext } from 'contexts' // Assuming you only need ToastContext
+import { useApiKeysService } from 'services/apiKey/useApiKeysService'
+import { useDeleteApiKeyByIdService } from 'services/apiKey/useDeleteApiKeyByIdService'
 
 const useApiKeys = () => {
-  const [page] = useState(1)
   const { openModal, closeModal } = useModal()
-  const { t } = useTranslation()
   const { setToast } = useContext(ToastContext)
 
-  const { data: apiKeys, refetch: apiKeyRefetch } = useApiKeysService({
-    page,
-    limit: 30,
-    search_text: '',
-  })
+  const { data: apiKeys, refetch: apiKeyRefetch } = useApiKeysService()
+  const { deleteApiKeyById } = useDeleteApiKeyByIdService()
 
-  const [deleteApiKeyByIdService] = useDeleteApiKeyService()
-
-  const handleEditApiKey = (apiKey: any) => {
+  const handleDeleteApiKey = async (id: string) => {
     openModal({
-      name: 'edit-api-keys-modal',
-      data: { id: apiKey.id, refetchApiList: apiKeyRefetch },
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: async () => {
+          try {
+            await deleteApiKeyById(id)
+            await apiKeyRefetch()
+            closeModal('delete-confirmation-modal')
+            setToast({
+              message: 'API Key was deleted!',
+              type: 'positive',
+              open: true,
+            })
+          } catch (e) {
+            setToast({
+              message: 'Failed to delete API Key!',
+              type: 'negative',
+              open: true,
+            })
+            closeModal('delete-confirmation-modal')
+          }
+        },
+        label: 'Delete API Key?',
+      },
     })
   }
 
-  const handleDeleteApiKey = async (apiKeyId: string) => {
-    const res = await deleteApiKeyByIdService(apiKeyId)
-    if (!res || !res.success) {
-      return setToast({
-        message: 'failed to delete API Key',
-        type: 'negative',
-        open: true,
-      })
-    }
-    setToast({
-      message: t('API key was deleted'),
-      type: 'positive',
-      open: true,
-    })
-    apiKeyRefetch()
-    closeModal('create-team-modal')
-  }
-
-  return { apiKeys, handleEditApiKey, handleDeleteApiKey }
+  return { apiKeys, handleDeleteApiKey }
 }
 
 export default useApiKeys
