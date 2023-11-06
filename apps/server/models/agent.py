@@ -34,7 +34,7 @@ class AgentModel(BaseModel):
     # __abstract__ = True
     __tablename__ = "agent"
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
-    name = Column(String)
+    name = Column(String, index=True)
     avatar = Column(String(300), default=None)
     role = Column(String)
     parent_id = Column(
@@ -248,6 +248,22 @@ class AgentModel(BaseModel):
             .all()
         )
         return agents
+
+    @classmethod
+    def get_agent_by_name(cls, session, account_id: UUID, agent_name: str):
+        agent = (
+            session.query(AgentModel)
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
+            .filter(
+                AgentModel.account_id == account_id,
+                AgentModel.is_deleted.is_(False),
+                AgentModel.name.ilike(f"%{agent_name}%"),
+            )
+            .options(joinedload(AgentModel.configs))
+            .options(joinedload(AgentModel.creator))
+            .first()
+        )
+        return agent
 
     @classmethod
     def get_agent_by_id(cls, db, agent_id):

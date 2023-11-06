@@ -21,6 +21,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary } from 'components/Button/Button'
 import { textSlicer } from 'utils/textSlicer'
+import { AgentWithConfigs } from 'types'
 
 type AgentCardProps = {
   name: string
@@ -32,14 +33,13 @@ type AgentCardProps = {
   onViewClick: () => void
   onChatClick?: () => void
   onCreateClick?: () => void
-  creator?: any
+  creator?: AgentWithConfigs['agent']['creator']
   avatar?: string
 }
 
 const AgentCard = ({
   name,
   description,
-  // headerText,
   headerTag,
   onDeleteClick,
   onEditClick,
@@ -82,15 +82,6 @@ const AgentCard = ({
             )}
           </div>
         </StyledTitleWrapper>
-        {/* <div>
-          {headerText && (
-            <TypographySecondary
-              value={headerText}
-              type={Typography.types.P}
-              size={Typography.sizes.sm}
-            />
-          )}
-        </div> */}
       </StyledCardHeader>
       <StyledCardBody>
         <StyledBodyTextWrapper>
@@ -104,7 +95,6 @@ const AgentCard = ({
       <StyledCardFooter className='cardFooter'>
         {creator && (
           <StyledCreatorWrapper>
-            {/* <StyledLogo src={l3Logo} /> */}
             <AvatarGenerator
               name={creator.name}
               size={16}
@@ -126,7 +116,6 @@ const AgentCard = ({
               icon={() => <StyledDeleteIcon />}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='Delete'
             />
           )}
           {onEditClick && (
@@ -135,7 +124,6 @@ const AgentCard = ({
               icon={() => <StyledEditIcon />}
               size={IconButton.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='Edit'
             />
           )}
           {onViewClick && (
@@ -148,7 +136,6 @@ const AgentCard = ({
               )}
               size={Button.sizes.SMALL}
               kind={IconButton.kinds.TERTIARY}
-              // ariaLabel='View'
             />
           )}
           {onCreateClick && (

@@ -340,5 +340,6 @@
   "connect-telegram-bot": "Connect Telegram Bot",
   "telegram-bot-api-token": "Telegram Bot API Token",
   "telegram-bot-username": "Telegram Bot Username",
-  "similarity-top-k": "Similarity Top K"
+  "similarity-top-k": "Similarity Top K",
+  "system-message": "System Message"
 }
