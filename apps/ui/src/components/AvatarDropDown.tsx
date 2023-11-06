@@ -11,6 +11,7 @@ import {
 } from '@radix-ui/react-dropdown-menu'
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import API from '@l3-lib/ui-core/dist/icons/API'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled, { css, keyframes } from 'styled-components'
 
@@ -101,9 +102,23 @@ const AvatarDropDown = () => {
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
           />
         </StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={() => navigate('api-key')}>
+          <StyledAPIIcon size={20} />
+
+          <TypographyPrimary
+            value='API Keys'
+            type={Typography.types.P}
+            size={Typography.sizes.xss}
+            style={{
+              fontSize: '12px',
+              fontStyle: 'normal',
+              fontWeight: '500',
+              lineHeight: '16px',
+            }}
+          />
+        </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={handleLogout}>
           <StyledLogOutIcon size={20} />
-
           <TypographyPrimary
             value={t('logout')}
             type={Typography.types.P}
@@ -329,5 +344,11 @@ const StyledLogOutIcon = styled(LogOut)`
 const StyledSettingsIcon = styled(Settings)`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledAPIIcon = styled(API)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
   }
 `
