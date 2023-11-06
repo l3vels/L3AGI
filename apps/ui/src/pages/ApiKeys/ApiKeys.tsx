@@ -22,6 +22,7 @@ import {
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
+import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
 
 const ApiKeys = () => {
   const { t } = useTranslation()
@@ -74,14 +75,6 @@ const ApiKeys = () => {
 }
 
 export default ApiKeys
-
-const StyledTableWrapper = styled.div`
-  width: 100%;
-  margin-bottom: 20px;
-  margin-left: 30px;
-  margin-right: 30px;
-  min-height: 300px;
-`
 
 export const StyledRightSideHeadingWrapper = styled.div`
   display: flex;
