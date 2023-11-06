@@ -522,7 +522,7 @@ export const StyledSpan = styled.span<{ isActive: boolean; isError?: boolean }>`
       color: #ef5533;
     `};
 `
-export const StyledTabPanelInnerWrapper = styled(TabPanel)`
+export const StyledTabPanelInnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
 

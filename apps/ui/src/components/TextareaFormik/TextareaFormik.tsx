@@ -2,7 +2,8 @@ import { Field } from 'formik'
 import Textarea from '@l3-lib/ui-core/dist/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { useRef, useState } from 'react'
 
 type TextareaProps = {
   setFieldValue: any
@@ -12,18 +13,28 @@ type TextareaProps = {
 }
 
 const TextareaFormik = ({ setFieldValue, label, value, fieldName, ...props }: TextareaProps) => {
+  const textareaRef = useRef(null as any)
+
   const onTextareaChange = (field: string, value: string) => {
     setFieldValue(field, value)
+
+    const textarea = textareaRef.current
+    if (textarea) {
+      textarea.style.height = 'auto' // Reset the height to auto to recalculate the height
+      textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scroll height of the content
+    }
   }
 
   return (
     <StyledTextareaWrapper>
       <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
       <Textarea
+        ref={textareaRef}
         hint=''
-        rows={6}
         value={value}
-        onChange={(value: string) => onTextareaChange(fieldName, value)}
+        onChange={(value: string) => {
+          onTextareaChange(fieldName, value)
+        }}
         maxLenght={10000}
         {...props}
       />
@@ -38,8 +49,6 @@ const StyledTextareaWrapper = styled.div`
   line-height: 22px;
   font-size: 10px;
 
-  height: fit-content;
-
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -52,5 +61,9 @@ const StyledTextareaWrapper = styled.div`
     &::placeholder {
       color: ${({ theme }) => theme.body.placeHolderColor};
     }
+  }
+  textarea {
+    min-height: 200px;
+    max-height: calc(100vh - 400px);
   }
 `
