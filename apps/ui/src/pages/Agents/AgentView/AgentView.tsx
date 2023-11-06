@@ -75,7 +75,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
                 title={
                   constraints.length === 1
                     ? `${t('constraint')}`
-                    : `${constraints.length} ${t('constraint')}`
+                    : `${constraints.length} ${t('constraints')}`
                 }
               />
             )}
