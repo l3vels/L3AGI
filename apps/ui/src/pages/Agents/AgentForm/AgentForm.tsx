@@ -24,6 +24,7 @@ import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 import { StyledTab } from 'styles/tabStyles.css'
+import TextareaFormik from 'components/TextareaFormik'
 
 type AgentFormProps = {
   formik: any
@@ -53,10 +54,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_voice_response,
     agent_integrations,
   } = values
-
-  const onTextareaChange = (field: string, value: string) => {
-    formik.setFieldValue(field, value)
-  }
 
   const {
     modelOptions,
@@ -139,22 +136,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
                   <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
 
-                  <StyledTextareaWrapper>
-                    <TypographyPrimary
-                      value={t('description')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <Textarea
-                      hint=''
-                      rows={6}
-                      placeholder={t('description')}
-                      value={agent_description}
-                      name='agent_description'
-                      onChange={(value: string) => onTextareaChange('agent_description', value)}
-                      maxLenght={5000}
-                    />
-                  </StyledTextareaWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('description')}
+                    value={agent_description}
+                    fieldName={'agent_description'}
+                  />
 
                   <StyledCheckboxWrapper>
                     <Checkbox
@@ -166,7 +153,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     />
                   </StyledCheckboxWrapper>
 
-                  <StyledTextareaWrapper>
+                  <StyledAvatarWrapper>
                     <TypographyPrimary
                       value={t('avatar')}
                       type={Typography.types.LABEL}
@@ -178,7 +165,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       avatarSrc={agent_avatar}
                       name={agent_name}
                     />
-                  </StyledTextareaWrapper>
+                  </StyledAvatarWrapper>
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -267,21 +254,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder={t('constraints')}
                   />
 
-                  <StyledTextareaWrapper>
-                    <TypographyPrimary
-                      value={t('base-system-message')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <Textarea
-                      hint=''
-                      rows={6}
-                      value={agent_text}
-                      name='agent_text'
-                      onChange={(value: string) => onTextareaChange('agent_text', value)}
-                      maxLenght={10000}
-                    />
-                  </StyledTextareaWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('base-system-message')}
+                    value={agent_text}
+                    fieldName={'agent_text'}
+                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -293,21 +271,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder={t('suggestions')}
                   />
 
-                  <StyledTextareaWrapper>
-                    <TypographyPrimary
-                      value={t('greeting')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <Textarea
-                      hint=''
-                      rows={6}
-                      placeholder={t('greeting')}
-                      value={agent_greeting}
-                      name='agent_greeting'
-                      onChange={(value: string) => onTextareaChange('agent_greeting', value)}
-                    />
-                  </StyledTextareaWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('greeting')}
+                    value={agent_greeting}
+                    fieldName={'agent_greeting'}
+                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -498,27 +467,12 @@ const StyledInputWrapper = styled.div`
   height: 100%;
   /* max-height: 800px; */
 `
-
-export const StyledTextareaWrapper = styled.div`
-  font: var(--font-general-label);
-  line-height: 22px;
-  font-size: 10px;
-
+const StyledAvatarWrapper = styled.div`
   height: fit-content;
 
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  .components-Textarea-Textarea-module__textarea--Qy3d2 {
-    font-size: 14px;
-    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
-    color: ${({ theme }) => theme.body.textColorPrimary};
-    background: ${({ theme }) => theme.body.textAreaBgColor};
-    &::placeholder {
-      color: ${({ theme }) => theme.body.placeHolderColor};
-    }
-  }
 `
 const StyledCheckboxWrapper = styled.div`
   height: fit-content;
