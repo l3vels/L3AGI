@@ -1,13 +1,22 @@
 import { useQuery } from '@apollo/client'
 import agentByIdGql from '../../gql/ai/agent/agentById.gql'
+import { AgentWithConfigs } from 'types'
 
-export const useAgentByIdService = ({ id }: { id: string }) => {
+type UseAgentByIdServiceData = {
+  agentById: AgentWithConfigs
+}
+
+type UseAgentByIdServiceVariables = {
+  id: string
+}
+
+export const useAgentByIdService = ({ id }: UseAgentByIdServiceVariables) => {
   const {
     data: { agentById } = {},
     error,
     loading,
     refetch,
-  } = useQuery(agentByIdGql, {
+  } = useQuery<UseAgentByIdServiceData, UseAgentByIdServiceVariables>(agentByIdGql, {
     variables: { id },
     skip: !id,
   })
