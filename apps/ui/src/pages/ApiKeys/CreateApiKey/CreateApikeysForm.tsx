@@ -1,197 +1,56 @@
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Tags from '@l3-lib/ui-core/dist/Tags'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import styled from 'styled-components'
-import FormikTextField from 'components/TextFieldFormik'
-import info from '../../../assets/images/info.png'
-import TextareaFormik from 'components/TextareaFormik'
-import useCreateApiKey from './useCreateApiKey'
-import TypographyPrimary from 'components/Typography/Primary'
-import TypographySecondary from 'components/Typography/Secondary'
+import React from 'react'
+import { FormikProvider } from 'formik'
+import BackButton from 'components/BackButton'
+import Button from '@l3-lib/ui-core/dist/Button'
+import Loader from '@l3-lib/ui-core/dist/Loader'
+import { ButtonPrimary } from 'components/Button/Button'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import {
+  StyledHeaderGroup,
+  StyledSectionDescription,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+} from 'pages/Home/homeStyle.css'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import ApiKeysForm from './ApiKeysForm'
+import { useCreateApiKey } from './useCreateApiKey'
+import { StyledFormWrapper } from 'styles/formStyles.css'
 
-type CreateApiKeysFormProps = {
-  closeModal: () => void
-  formik: any
-}
-
-type OptionRendererProps = {
-  label: string
-  text?: string
-  onDelete: (option: { label: string; value: string }) => void
-}
-
-const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
-  const { t } = useTranslation()
-  const { setFieldValue } = formik
-  const [dropdownValue, setDropdownValue] = useState<any>()
-
-  const onDropdownChange = (event: any) => {
-    if (event === null) {
-      setDropdownValue([])
-      // console.log('setDropdownValue([])', setDropdownValue([]))
-      setFieldValue('games', [])
-      // console.log("setFieldValue('games', [])", setFieldValue('games', []))
-    } else {
-      setDropdownValue(event)
-      const values = event?.map((option: any) => option.value)
-      // console.log('values', values)
-      setFieldValue('games', values)
-    }
-  }
-
-  const onOptionRemove = (item: any) => {
-    // console.error('onOptionRemove called with item', item)
-    const newValues = dropdownValue?.filter(
-      (option: any) => option.label !== item.label && option.value !== item.value,
-    )
-    setDropdownValue(newValues)
-    // console.log('newValues', newValues)
-    const filteredNewValues = newValues?.map((option: any) => option.value)
-    setFieldValue('games', filteredNewValues || [])
-    // console.log('filteredNewValues', filteredNewValues)
-  }
-
-  const OptionRenderer = ({ label, text, onDelete }: OptionRendererProps) => {
-    const handleDelete = () => {
-      onDelete({ label, value: label })
-    }
-
-    return (
-      <StyledNewCategory>
-        {text && (
-          <TypographyPrimary
-            value={text}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-          />
-        )}
-        <Tags
-          key={label}
-          label={label}
-          readOnly
-          outlined={true}
-          color={Tags.colors.white}
-          onDelete={handleDelete}
-        />
-      </StyledNewCategory>
-    )
-  }
+function CreateApiKeyForm() {
+  const { formik, isLoading } = useCreateApiKey()
 
   return (
-    <StyledCreateModalForm>
-      <StyledNameTextWrapper>
-        <TypographySecondary
-          value={t('name')}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-        />
-      </StyledNameTextWrapper>
-      <FormikTextField field_name='name' type={Typography.types.LABEL} size={Typography.sizes.md} />
-      <StyledTextFieldDate>
-        <StyledExpirationTextWrapper>
-          <TypographySecondary
-            value={t('expiration')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-          />
-        </StyledExpirationTextWrapper>
-        <FormikTextField type='date' field_name='expiration' />
-      </StyledTextFieldDate>
+    <>
+      <FormikProvider value={formik}>
+        <StyledSectionWrapper>
+          <StyledHeaderGroup className='header_group'>
+            <div>
+              <StyledSectionTitle>Add API Key</StyledSectionTitle>
+              <StyledSectionDescription>Here is your API Key.</StyledSectionDescription>
+            </div>
 
-      <StyledTextWrapper>
-        <TypographySecondary
-          value={t('choose-games')}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-        />
-        <StyledImgWrapper>
-          <img src={info} alt='info' />
-        </StyledImgWrapper>
-      </StyledTextWrapper>
-      {/* <Dropdown placeholder='Select' options={gamesOptions || []} multi multiLine /> */}
+            <StyledButtonWrapper>
+              <BackButton />
+              <ButtonPrimary
+                onClick={formik?.handleSubmit}
+                size={Button.sizes.SMALL}
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader size={32} /> : 'Save'}
+              </ButtonPrimary>
+            </StyledButtonWrapper>
+          </StyledHeaderGroup>
 
-      <StyledTextWrapper>
-        <TypographySecondary
-          value={t('note')}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
-        />
-      </StyledTextWrapper>
-      <StyledTextAreaWrapper>
-        <TextareaFormik
-          color='#FFFFFF'
-          field_name='note'
-          placeholder={t('api-key-placeholder-description')}
-        />
-      </StyledTextAreaWrapper>
-    </StyledCreateModalForm>
+          <ComponentsWrapper noPadding>
+            <StyledFormWrapper>
+              {/* Pass the apiKeys data to ApiKeysForm component */}
+              <ApiKeysForm formik={formik} />
+            </StyledFormWrapper>
+          </ComponentsWrapper>
+        </StyledSectionWrapper>
+      </FormikProvider>
+    </>
   )
 }
-export default CreateApiKeysForm
 
-export const StyledActionsContainer = styled.div`
-  display: flex;
-  position: relative;
-  justify-items: flex-end;
-  gap: 42px;
-`
-
-export const StyledCreateModalForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 24px;
-  width: 100%;
-  height: 100%;
-  color: rgba(255, 255, 255, 0.8);
-`
-export const StyledTextFieldDate = styled.div`
-  width: 199px;
-  margin-top: 24px;
-  color: rgba(255, 255, 255, 0.8);
-`
-export const StyledTextWrapper = styled.div`
-  width: 296px;
-  height: 24px;
-  margin-top: 24px;
-  margin-bottom: 10px;
-`
-export const StyledImgWrapper = styled.div`
-  margin-top: -20px;
-  margin-left: 130px;
-`
-
-export const StyledNameTextWrapper = styled.div`
-  width: 296px;
-  height: 24px;
-  margin-bottom: 10px;
-`
-export const StyledExpirationTextWrapper = styled.div`
-  width: 296px;
-  height: 24px;
-  margin-bottom: 10px;
-`
-
-export const StyledTextAreaWrapper = styled.div`
-  height: 130px;
-`
-export const StyledModalHeading = styled(Heading)`
-  font-size: 24px !important;
-  line-height: 32px !important;
-  font-weight: 500 !important;
-`
-
-export const StyledLabelTypography = styled(Typography)`
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: 500;
-`
-const StyledNewCategory = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`
+export default CreateApiKeyForm

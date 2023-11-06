@@ -1,83 +1,66 @@
-import { useContext, useState, useEffect } from 'react'
-import { useFormik } from 'formik'
-import { useCreateApiKeyService, useApiKeysService } from 'services/useApiKeyService'
 import { ToastContext } from 'contexts'
-import { apiKeyValidation } from 'utils/validationsSchema'
-
-import useSnackbarAlert from 'hooks/useSnackbar'
-
+import { useFormik } from 'formik'
 import { useModal } from 'hooks'
+import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useApiKeysService } from 'services/apiKey/useApiKeysService'
+import { useCreateApiKeyService } from 'services/apiKey/useCreateApiKeyService'
+import { apiKeyValidation } from 'utils/validationsSchema' // Import the appropriate validation schema
 
-import { useTranslation } from 'react-i18next'
-import { useForm } from 'react-hook-form'
-
-const initialValues = {
-  name: '',
-  note: '',
-  expiration: '',
-  games: [],
-}
-
-const useCreateApiKey = () => {
-  const { t } = useTranslation()
-  const [page] = useState(1)
-  const { closeModal, openModal } = useModal()
-
-  const { refetch: apiKeyRefetch } = useApiKeysService({ page, limit: 30, search_text: '' })
-  const [createApiKeyService] = useCreateApiKeyService()
-  const { setSnackbar } = useSnackbarAlert()
+export const useCreateApiKey = () => {
   const { setToast } = useContext(ToastContext)
+  const { openModal, closeModal } = useModal()
+  const navigate = useNavigate()
+  const { refetch: refetchApiKeys, data: apiKeys } = useApiKeysService()
+  const [createApiKeyService] = useCreateApiKeyService()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (values: any) => {
-    const newValues = {
-      name: values.name,
-      note: values.note,
-      expiration: values.expiration,
-      games: values.games,
-    }
+  const initialValues = {
+    name: '',
+    description: '',
+  }
 
-    const res = await createApiKeyService(newValues, () => {})
-
-    if (!res) {
-      setToast({ message: t('failed-to-add-new-api-key'), type: 'negative', open: true })
-      closeModal('add-api-keys-modal')
-      return
-    }
-
-    if (res) {
+  const handleSubmit = async (values: { name: string; description: string }) => {
+    setIsLoading(true)
+    try {
+      const apiKeyInput = {
+        name: values.name,
+        description: values.description,
+      }
+      const newApiKey = await createApiKeyService(apiKeyInput)
+      await refetchApiKeys()
       setToast({
-        message: t('new-api-key-was-created'),
+        message: 'New API Key was created!',
         type: 'positive',
         open: true,
       })
-
-      apiKeyRefetch()
-      closeModal('add-api-keys-modal')
-      const tokenValue = res.apiKey.token
-      openModal({ name: 'show-api-key-modal', data: { token: tokenValue } })
+      openModal({
+        name: 'show-api-key-modal',
+        data: {
+          token: newApiKey.token,
+        },
+      })
+      navigate(`/api-key`)
+    } catch (e) {
+      console.error('Error:', e)
+      setToast({
+        message: 'Failed to create API Key!',
+        type: 'negative',
+        open: true,
+      })
     }
+    setIsLoading(false)
   }
 
   const formik = useFormik({
     initialValues: initialValues,
-    validationSchema: apiKeyValidation,
     onSubmit: async values => handleSubmit(values),
+    validationSchema: apiKeyValidation,
   })
-
-  const formHook = useForm({
-    defaultValues: initialValues,
-  })
-
-  useEffect(() => {
-    apiKeyRefetch()
-  }, [])
 
   return {
     formik,
-
-    formHook,
     handleSubmit,
+    isLoading,
   }
 }
-
-export default useCreateApiKey
