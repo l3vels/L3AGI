@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "typeRoots": ["node_modules/@types", "src/@types"],
+    "typeRoots": ["node_modules/@types", "src/@types", "./node_modules"],
     "types": ["vite/client"]
   },
   "include": ["src", "Routes_old", "src/modals/AIChatModal/components/.tsx"],

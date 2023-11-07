@@ -2202,6 +2202,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-table@^7.7.17":
+  version "7.7.17"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.17.tgz#4b58dee39d2bb585013536b519e6414591029c73"
+  integrity sha512-25/SDkn0qnvxBvxSPnMO1vf1ymvcSmwPr7qcFuYyWElTGcsOWQsV+sCFq1dVhGYdd2fSsOnP4MkZUl/q9MlG+g==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.8":
   version "4.4.8"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.8.tgz#46f87d80512959cac793ecc610a93d80ef241ccf"
