@@ -11,6 +11,7 @@ export interface AgentWithConfigs {
     avatar: string
     is_template: boolean
     is_memory: boolean
+    created_by: string
   }
   configs: {
     goals: string[]
