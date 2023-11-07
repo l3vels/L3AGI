@@ -151,6 +151,7 @@ const ChatV2 = () => {
       created_on: new Date().toISOString(),
       sender_user: user || '',
       run_id: null,
+      audio_url: null,
     }
 
     upsertChatMessageInCache(message, {
