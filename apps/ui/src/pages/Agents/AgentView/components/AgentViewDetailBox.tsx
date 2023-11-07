@@ -7,11 +7,10 @@ import TagsRow from './TagsRow'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Button from '@l3-lib/ui-core/dist/Button'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
@@ -26,9 +25,10 @@ import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useModelsService } from 'services'
+import { AgentWithConfigs } from 'types'
 
 type AgentViewDetailBoxProps = {
-  agentData: any
+  agentData: AgentWithConfigs
 }
 
 const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
@@ -56,9 +56,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
   const isCreator = user?.id === agent?.created_by
 
-  const agentModel = models
-    ?.filter((modelData: any) => modelData.id === model)
-    .map((model: any) => model.name)
+  const agentModel = models?.filter(modelData => modelData.id === model).map(model => model.name)
 
   const handleEdit = () => {
     closeModal('agent-view-modal')
@@ -158,7 +156,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
         {agentModel?.length > 0 && <TagsRow title={t('model')} items={agentModel} />}
 
-        {temperature && <TagsRow title={t('temperature')} items={[temperature]} />}
+        {temperature && <TagsRow title={t('temperature')} items={[temperature.toString()]} />}
 
         <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
       </StyledWrapper>

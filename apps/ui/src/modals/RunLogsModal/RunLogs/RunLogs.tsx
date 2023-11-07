@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import TypographyPrimary from 'components/Typography/Primary'
 import { useTranslation } from 'react-i18next'
 import { useRunLogsService } from 'services/run'
 import Loader from '@l3-lib/ui-core/dist/Loader'
