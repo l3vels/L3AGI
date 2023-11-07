@@ -99,7 +99,9 @@ const Contacts = () => {
                       return (
                         <AgentChatCard
                           key={index}
-                          onClick={()=> {handleCall({agent_id : agent.id, contact_id: cell?.row?.original?.id})}}
+                          onClick={() => {
+                            handleCall({ agent_id: agent.id, contact_id: cell?.row?.original?.id })
+                          }}
                           onViewClick={handleView}
                           picked={false}
                           agent={agent}
@@ -248,7 +250,7 @@ const StyledPhoneCell = styled.div`
   width: 100%;
   height: 100%;
 `
-const StyledCallIcon = styled(Microphone)`
+export const StyledCallIcon = styled(Microphone)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
