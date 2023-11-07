@@ -27,12 +27,13 @@ from models.user import UserModel
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
 from services.run_log import RunLogsManager
+from services.voice import speech_to_text
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput, DataSourceFlow
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
-from typings.config import AccountSettings, ConfigInput
+from typings.config import AccountSettings, AccountVoiceSettings, ConfigInput
 from typings.run import RunInput
 from utils.agent import convert_model_to_response
 from utils.chat import get_chat_session_id, parse_agent_mention
@@ -76,6 +77,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         provider_account=provider_account,
         provider_user=provider_user,
         chat_id=None,
+        voice_url=None,
     )
 
     return ""
@@ -108,8 +110,15 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     local_chat_message_ref_id = body.local_chat_message_ref_id
 
     prompt = body.prompt
+    voice_url = body.voice_url
+    audio_data = body.audio_data
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id, chat_id)
+
+    if audio_data:
+        # need upload s3
+        pass
+    voice_url = body.voice_url
 
     process_chat_message(
         session_id=session_id,
@@ -124,6 +133,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
         provider_account=provider_account,
         provider_user=provider_user,
         chat_id=chat_id,
+        voice_url=voice_url,
     )
     return ""
 
@@ -141,6 +151,7 @@ def process_chat_message(
     provider_account: UserAccount,
     provider_user: UserModel,
     chat_id: str,
+    voice_url: str,
 ):
     run = RunModel.create_run(
         db.session,
@@ -195,9 +206,22 @@ def process_chat_message(
     )
 
     settings = ConfigModel.get_account_settings(db.session, provider_account.id)
+    # todo run async both
+    voice_settings = ConfigModel.get_account_voice_settings(
+        db.session, provider_account.id
+    )
 
     if len(agents) > 0:
         for agent_with_configs in agents:
+            # here todo voice convert if need
+            if voice_url:
+                # agent_with_configs.configs.default_voice
+                # agent_with_configs.configs.voice_id
+                # agent_with_configs.configs.transcriber
+                # agent_with_configs.configs.response_mode
+                configs = agent_with_configs.configs
+                prompt = speech_to_text(voice_url, configs, voice_settings)
+
             run_conversational_agent(
                 agent_with_configs=agent_with_configs,
                 sender_name=sender_name,
@@ -209,6 +233,7 @@ def process_chat_message(
                 human_message_id=human_message_id,
                 chat_pubsub_service=chat_pubsub_service,
                 settings=settings,
+                voice_settings=voice_settings,
                 team_id=team_id,
                 parent_id=parent_id,
                 run_id=run.id,
@@ -525,6 +550,7 @@ def run_conversational_agent(
     human_message_id: UUID,
     chat_pubsub_service: ChatPubSubService,
     settings: AccountSettings,
+    voice_settings: AccountVoiceSettings,
     run_id: UUID,
     run_logs_manager: RunLogsManager,
     team_id: Optional[UUID] = None,
@@ -580,6 +606,7 @@ def run_conversational_agent(
     conversational = ConversationalAgent(sender_name, provider_account, session_id)
     return conversational.run(
         settings,
+        voice_settings,
         chat_pubsub_service,
         agent_with_configs,
         tools,

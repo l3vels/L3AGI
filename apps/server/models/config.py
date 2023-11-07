@@ -11,7 +11,8 @@ from sqlalchemy.sql import and_, or_
 from exceptions import ConfigNotFoundException
 from models.base_model import BaseModel
 from typings.account import AccountOutput
-from typings.config import AccountSettings, ConfigInput, ConfigQueryParams
+from typings.config import (AccountSettings, AccountVoiceSettings, ConfigInput,
+                            ConfigQueryParams)
 from utils.encyption import decrypt_data, encrypt_data, is_encrypted
 
 
@@ -291,6 +292,51 @@ class ConfigModel(BaseModel):
             pinecone_environment=config.get("pinecone_environment"),
             weaviate_url=config.get("weaviate_url"),
             weaviate_api_key=config.get("weaviate_api_key"),
+        )
+
+    @classmethod
+    def get_account_voice_settings(
+        cls, session: Session, account_id: UUID
+    ) -> AccountVoiceSettings:
+        keys = [
+            "deepgram_api_key",
+            "azure_speech_key",
+            "azure_speech_region",
+            "play_ht_api_key",
+            "play_ht_user_id",
+            # todo add openai tsss
+            # todo add 11labs
+        ]
+
+        configs: List[ConfigModel] = (
+            session.query(ConfigModel)
+            .filter(
+                ConfigModel.key.in_(keys),
+                ConfigModel.account_id == account_id,
+                or_(
+                    or_(
+                        ConfigModel.is_deleted.is_(False),
+                        ConfigModel.is_deleted is None,
+                    ),
+                    ConfigModel.is_deleted is None,
+                ),
+            )
+            .all()
+        )
+
+        config = {}
+
+        for cfg in configs:
+            config[cfg.key] = (
+                decrypt_data(cfg.value) if is_encrypted(cfg.value) else cfg.value
+            )
+
+        return AccountVoiceSettings(
+            deepgram_api_key=config.get("deepgram_api_key"),
+            azure_speech_key=config.get("azure_speech_key"),
+            azure_speech_region=config.get("azure_speech_region"),
+            play_ht_api_key=config.get("play_ht_api_key"),
+            play_ht_user_id=config.get("play_ht_user_id"),
         )
 
     @classmethod

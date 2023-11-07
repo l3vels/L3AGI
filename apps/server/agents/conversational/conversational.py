@@ -10,8 +10,9 @@ from memory.zep.zep_memory import ZepMemory
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
 from services.run_log import RunLogsManager
+from services.voice import text_to_speech
 from typings.agent import AgentWithConfigsOutput
-from typings.config import AccountSettings
+from typings.config import AccountSettings, AccountVoiceSettings
 from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
@@ -20,6 +21,7 @@ class ConversationalAgent(BaseAgent):
     def run(
         self,
         settings: AccountSettings,
+        voice_settings: AccountVoiceSettings,
         chat_pubsub_service: ChatPubSubService,
         agent_with_configs: AgentWithConfigsOutput,
         tools,
@@ -84,8 +86,14 @@ class ConversationalAgent(BaseAgent):
                 },
             )
 
+        configs = agent_with_configs.configs
+        audio_url = None
+        if configs.response_mode.includes("Voice"):
+            audio_url = text_to_speech(res, configs, voice_settings)
+            pass
+
         ai_message = history.create_ai_message(
-            res, human_message_id, agent_with_configs.agent.id
+            res, human_message_id, agent_with_configs.agent.id, audio_url
         )
 
         chat_pubsub_service.send_chat_message(chat_message=ai_message)

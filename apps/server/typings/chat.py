@@ -14,6 +14,8 @@ class ChatStatus(Enum):
 
 class ChatUserMessageInput(BaseModel):
     prompt: str
+    voice_url: str
+    audio_data: str
     local_chat_message_ref_id: Optional[str] = None
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
@@ -22,6 +24,8 @@ class ChatUserMessageInput(BaseModel):
 
 class ChatMessageInput(BaseModel):
     prompt: str
+    voice_url: str
+    audio_data: str
     chat_id: Optional[UUID] = None
     # todo what it is?
     local_chat_message_ref_id: Optional[str] = None
