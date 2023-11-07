@@ -24,6 +24,7 @@ import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 import { StyledTab } from 'styles/tabStyles.css'
+import TextareaFormik from 'components/TextareaFormik'
 
 type AgentFormProps = {
   formik: any
@@ -33,7 +34,7 @@ type AgentFormProps = {
 const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   const { t } = useTranslation()
 
-  const { setFieldValue, values } = formik
+  const { setFieldValue, values, errors: validationError } = formik
   const {
     agent_name,
     agent_datasources,
@@ -51,11 +52,8 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_voice_transcriber,
     agent_voice_input_mode,
     agent_voice_response,
+    agent_integrations,
   } = values
-
-  const onTextareaChange = (field: string, value: string) => {
-    formik.setFieldValue(field, value)
-  }
 
   const {
     modelOptions,
@@ -65,27 +63,51 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     voiceTranscriberOptions,
     handleUploadAvatar,
     avatarIsLoading,
+    integrationOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {
     if (agent_model === '' && modelOptions?.length > 0) {
       setFieldValue('agent_model', modelOptions[2].value)
     }
-  }, [agent_model])
-
-  const [activeTab, setActiveTab] = useState(0)
+  }, [])
 
   const data_process_flow = [
     { label: 'Source Detection', value: 'source_detection' },
     { label: 'Pre-Execution Data Retrieval', value: 'pre_execution' },
   ]
 
+  const agentIntegrationIds = agent_integrations?.map((integration: any) => integration.value)
+
+  const onChangeIntegration = (id: string, item: any, index: number) => {
+    if (agent_integrations?.length > 0 && agentIntegrationIds?.includes(id)) {
+      const updatedIntegrations = agent_integrations.filter(
+        (integration: any) => integration.value !== id,
+      )
+      setFieldValue('agent_integrations', updatedIntegrations)
+    } else {
+      const updatedIntegrations = [...agent_integrations]
+      updatedIntegrations.splice(index, 0, item)
+      setFieldValue('agent_integrations', updatedIntegrations)
+    }
+  }
+
+  const [activeTab, setActiveTab] = useState(0)
+
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
         <StyledFormTabList size='small'>
-          <StyledTab onClick={() => setActiveTab(0)}>
-            <StyledSpan isActive={activeTab === 0}>General</StyledSpan>
+          <StyledTab
+            onClick={() => setActiveTab(0)}
+            isError={validationError?.agent_name && activeTab !== 0}
+          >
+            <StyledSpan
+              isActive={activeTab === 0}
+              isError={validationError?.agent_name && activeTab !== 0}
+            >
+              General
+            </StyledSpan>
           </StyledTab>
           <StyledTab onClick={() => setActiveTab(1)}>
             <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
@@ -99,6 +121,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <StyledTab onClick={() => setActiveTab(4)} isDisabled={!isVoice}>
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
           </StyledTab>
+          <StyledTab onClick={() => setActiveTab(5)}>
+            <StyledSpan isActive={activeTab === 5}>Integrations</StyledSpan>
+          </StyledTab>
         </StyledFormTabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -111,23 +136,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
                   <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
 
-                  <StyledTextareaWrapper>
-                    <TypographyPrimary
-                      value={t('description')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <Textarea
-                      hint=''
-                      rows={6}
-                      placeholder={t('description')}
-                      value={agent_description}
-                      name='agent_description'
-                      onChange={(value: string) => onTextareaChange('agent_description', value)}
-                      maxLenght={5000}
-
-                    />
-                  </StyledTextareaWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('description')}
+                    value={agent_description}
+                    fieldName={'agent_description'}
+                  />
 
                   <StyledCheckboxWrapper>
                     <Checkbox
@@ -139,7 +153,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     />
                   </StyledCheckboxWrapper>
 
-                  <StyledTextareaWrapper>
+                  <StyledAvatarWrapper>
                     <TypographyPrimary
                       value={t('avatar')}
                       type={Typography.types.LABEL}
@@ -151,7 +165,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       avatarSrc={agent_avatar}
                       name={agent_name}
                     />
-                  </StyledTextareaWrapper>
+                  </StyledAvatarWrapper>
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -240,21 +254,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder={t('constraints')}
                   />
 
-                  <StyledTextareaWrapper>
-                    <TypographyPrimary
-                      value={t('base-system-message')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <Textarea
-                      hint=''
-                      rows={6}
-                      value={agent_text}
-                      name='agent_text'
-                      onChange={(value: string) => onTextareaChange('agent_text', value)}
-                      maxLenght={10000}
-                    />
-                  </StyledTextareaWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('base-system-message')}
+                    value={agent_text}
+                    fieldName={'agent_text'}
+                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -266,21 +271,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder={t('suggestions')}
                   />
 
-                  <StyledTextareaWrapper>
-                    <TypographyPrimary
-                      value={t('greeting')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <Textarea
-                      hint=''
-                      rows={6}
-                      placeholder={t('greeting')}
-                      value={agent_greeting}
-                      name='agent_greeting'
-                      onChange={(value: string) => onTextareaChange('agent_greeting', value)}
-                    />
-                  </StyledTextareaWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('greeting')}
+                    value={agent_greeting}
+                    fieldName={'agent_greeting'}
+                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -404,6 +400,38 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   </StyledFormInputWrapper>
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  {integrationOptions?.map((integration: any, index: number) => {
+                    return (
+                      <StyledFormInputWrapper key={integration.value}>
+                        <StyledCheckboxWrapper>
+                          <Checkbox
+                            label={t(integration.label)}
+                            kind='secondary'
+                            name={integration.label}
+                            checked={agentIntegrationIds?.includes(integration.value)}
+                            onChange={() => {
+                              onChangeIntegration(integration.value, integration, index)
+                            }}
+                          />
+                        </StyledCheckboxWrapper>
+
+                        {agentIntegrationIds?.includes(integration.value) &&
+                          integration.fields.map((field: any, fieldIndex: number) => (
+                            <div key={field.key}>
+                              <FormikTextField
+                                name={`agent_integrations[${index}].fields[${fieldIndex}].value`}
+                                placeholder={t(`${field.label}`)}
+                                label={t(`${field.label}`)}
+                              />
+                            </div>
+                          ))}
+                      </StyledFormInputWrapper>
+                    )
+                  })}
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
             </TabPanels>
           </TabsContext>
         </StyledInputWrapper>
@@ -439,27 +467,12 @@ const StyledInputWrapper = styled.div`
   height: 100%;
   /* max-height: 800px; */
 `
-
-export const StyledTextareaWrapper = styled.div`
-  font: var(--font-general-label);
-  line-height: 22px;
-  font-size: 10px;
-
+const StyledAvatarWrapper = styled.div`
   height: fit-content;
 
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  .components-Textarea-Textarea-module__textarea--Qy3d2 {
-    font-size: 14px;
-    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
-    color: ${({ theme }) => theme.body.textColorPrimary};
-    background: ${({ theme }) => theme.body.textAreaBgColor};
-    &::placeholder {
-      color: ${({ theme }) => theme.body.placeHolderColor};
-    }
-  }
 `
 const StyledCheckboxWrapper = styled.div`
   height: fit-content;
@@ -493,7 +506,7 @@ export const StyledFormTabList = styled(TabList)`
   }
 `
 
-export const StyledSpan = styled.span<{ isActive: boolean }>`
+export const StyledSpan = styled.span<{ isActive: boolean; isError?: boolean }>`
   width: 150px;
   color: ${({ theme }) => theme.body.textColorSecondary};
 
@@ -502,12 +515,18 @@ export const StyledSpan = styled.span<{ isActive: boolean }>`
     css`
       color: ${({ theme }) => theme.body.textColorPrimary};
     `};
+
+  ${p =>
+    p.isError &&
+    css`
+      color: #ef5533;
+    `};
 `
-export const StyledTabPanelInnerWrapper = styled(TabPanel)`
+export const StyledTabPanelInnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* padding: 0 20px; */
+  padding: 2px 0px;
 
   gap: 20px;
   width: 100%;

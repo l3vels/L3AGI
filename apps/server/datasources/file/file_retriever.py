@@ -77,7 +77,7 @@ class FileDatasourceRetriever:
 
         self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
 
-    def get_vector_store(self):
+    def get_vector_store(self, is_retriever: bool = False):
         vector_store: VectorStore
 
         if self.vector_store == VectorStoreProvider.ZEP.value:
@@ -100,7 +100,10 @@ class FileDatasourceRetriever:
                 api_key=self.settings.pinecone_api_key,
                 environment=self.settings.pinecone_environment,
             )
-            pinecone.create_index(index_name, dimension=1536, metric="cosine")
+
+            if not is_retriever:
+                pinecone.create_index(index_name, dimension=1536, metric="cosine")
+
             pinecone_index = pinecone.Index(index_name)
 
             vector_store = PineconeVectorStore(
@@ -134,10 +137,14 @@ class FileDatasourceRetriever:
             self.datasource_path.resolve(), filename_as_id=True
         ).load_data()
 
+        # Remove tmp directory
+        shutil.rmtree(self.datasource_path)
+
         embed_model = LangchainEmbedding(
             OpenAIEmbeddings(
-                openai_api_key=self.settings.openai_api_key, show_progress_bar=True
-            )
+                openai_api_key=self.settings.openai_api_key,
+                show_progress_bar=True,
+            ),
         )
 
         service_context = ServiceContext.from_defaults(
@@ -179,11 +186,8 @@ class FileDatasourceRetriever:
         # Persist index to S3
         self.index.storage_context.persist(persist_dir=self.index_persist_dir, fs=s3)
 
-        # Remove tmp directory
-        shutil.rmtree(self.datasource_path)
-
     def load_index(self):
-        vector_store = self.get_vector_store()
+        vector_store = self.get_vector_store(is_retriever=True)
         storage_context = StorageContext.from_defaults(
             persist_dir=self.index_persist_dir, fs=s3, vector_store=vector_store
         )

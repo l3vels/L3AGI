@@ -31,6 +31,8 @@ export const useUpdateAgentService = () => {
       transcriber,
       response_mode,
       input_mode,
+
+      integrations,
     } = input
 
     const { data } = await mutation({
@@ -64,6 +66,8 @@ export const useUpdateAgentService = () => {
             transcriber,
             response_mode,
             input_mode,
+
+            integrations,
           },
         },
       },

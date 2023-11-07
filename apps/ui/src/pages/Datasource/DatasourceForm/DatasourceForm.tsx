@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
+
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import UploadedFile from 'components/UploadedFile'
 
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
 import { useDatasourceForm } from './useDatasourceForm'
 import UploadButton from './components/UploadButton'
 
@@ -22,6 +21,7 @@ import { useParams } from 'react-router-dom'
 import DataSourceDropdown from './components/DataSourceDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
+import TextareaFormik from 'components/TextareaFormik'
 
 type DatasourceFormProps = {
   formik: any
@@ -70,10 +70,6 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     }
   }, [isEdit, isDatabase])
 
-  const onDescriptionChange = (value: string) => {
-    setFieldValue('datasource_description', value)
-  }
-
   useEffect(() => {
     if (datasource_source_type?.length > 0 && !isLoading && fields) {
       setFieldValue('config_key', pickedLoaderFields?.fields[0]?.key)
@@ -86,21 +82,12 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
       <StyledInputWrapper>
         <FormikTextField name='datasource_name' placeholder={t('name')} label={t('name')} />
 
-        <StyledTextareaWrapper>
-          <TypographyPrimary
-            value={t('description')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-          />
-          <Textarea
-            hint=''
-            rows={6}
-            placeholder={t('description')}
-            name='datasource_description'
-            value={datasource_description}
-            onChange={onDescriptionChange}
-          />
-        </StyledTextareaWrapper>
+        <TextareaFormik
+          setFieldValue={setFieldValue}
+          label={t('description')}
+          value={datasource_description}
+          fieldName={'datasource_description'}
+        />
 
         <StyledSourceTypeWrapper>
           <TypographyPrimary
@@ -233,18 +220,12 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
                 ))}
 
               {category === 'Text' && (
-                <StyledTextareaWrapper>
-                  <Textarea
-                    hint=''
-                    rows={6}
-                    placeholder={t('text')}
-                    name='config_value'
-                    value={config_value}
-                    onChange={(text: string) => {
-                      formik.setFieldValue('config_value', text)
-                    }}
-                  />
-                </StyledTextareaWrapper>
+                <TextareaFormik
+                  setFieldValue={setFieldValue}
+                  label={''}
+                  value={config_value}
+                  fieldName={'config_value'}
+                />
               )}
 
               <>{category === 'Social' && <StyledText>{t('comingSoon')}</StyledText>}</>

@@ -32,6 +32,7 @@ import { StyledEyeOpenIcon } from './TeamOfAgentsCard/TeamOfAgentsCard'
 import AdditionalInfoBox from 'pages/Agents/AgentView/components/AdditionalInfoBox'
 import AgentToolkits from 'pages/Agents/AgentView/components/AgentToolkits'
 import AgentDatasources from 'pages/Agents/AgentView/components/AgentDatasources'
+import { t } from 'i18next'
 
 const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
   const { teamId } = useParams()
@@ -182,7 +183,9 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
             {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
 
-            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={'Advanced'} />}
+            {text?.length > 0 && (
+              <AdditionalInfoBox items={[text]} title={t('base-system-message')} />
+            )}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>

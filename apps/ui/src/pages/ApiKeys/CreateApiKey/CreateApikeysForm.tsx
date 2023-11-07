@@ -8,7 +8,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 import FormikTextField from 'components/TextFieldFormik'
 import info from '../../../assets/images/info.png'
-import TextareaFormik from 'components/TextareaFormik'
+// import TextareaFormik from 'components/TextareaFormik'
 import useCreateApiKey from './useCreateApiKey'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -121,13 +121,13 @@ const CreateApiKeysForm = ({ closeModal, formik }: CreateApiKeysFormProps) => {
           size={Typography.sizes.lg}
         />
       </StyledTextWrapper>
-      <StyledTextAreaWrapper>
+      {/* <StyledTextAreaWrapper>
         <TextareaFormik
           color='#FFFFFF'
           field_name='note'
           placeholder={t('api-key-placeholder-description')}
         />
-      </StyledTextAreaWrapper>
+      </StyledTextAreaWrapper> */}
     </StyledCreateModalForm>
   )
 }

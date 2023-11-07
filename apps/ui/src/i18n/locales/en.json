@@ -198,6 +198,8 @@
   "no-text": "No Text",
   "note": "Note",
   "or": "OR",
+  "play-voice": "Voice",
+  "pause-voice": "Pause",
   "payload": "Payload",
   "password-must-contain": "Password must contain:",
   "password-successfully-updated": "Password successfully updated",
@@ -337,5 +339,9 @@
   "input-mode": "Input Mode",
   "output": "Output",
   "error": "Error",
-  "similarity-top-k": "Similarity Top K"
+  "connect-telegram-bot": "Connect Telegram Bot",
+  "telegram-bot-api-token": "Telegram Bot API Token",
+  "telegram-bot-username": "Telegram Bot Username",
+  "similarity-top-k": "Similarity Top K",
+  "system-message": "System Message"
 }

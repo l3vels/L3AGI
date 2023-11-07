@@ -1,18 +1,12 @@
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-
 import FormikTextField from 'components/TextFieldFormik'
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
-import TypographyPrimary from 'components/Typography/Primary'
+
 import styled from 'styled-components'
+import TextareaFormik from 'components/TextareaFormik'
+import { t } from 'i18next'
 
 const GroupForm = ({ formik }: { formik: any }) => {
   const { values, setFieldValue } = formik
   const { group_description } = values
-
-  const onDescriptionChange = (value: string) => {
-    setFieldValue('group_description', value)
-  }
 
   return (
     <StyledRoot>
@@ -20,21 +14,12 @@ const GroupForm = ({ formik }: { formik: any }) => {
         <StyledInputWrapper>
           <FormikTextField name='group_name' placeholder='Name' label='Name' />
 
-          <StyledTextareaWrapper>
-            <TypographyPrimary
-              value='Description'
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
-            <Textarea
-              hint=''
-              rows={6}
-              placeholder='Description'
-              name='group_description'
-              value={group_description}
-              onChange={onDescriptionChange}
-            />
-          </StyledTextareaWrapper>
+          <TextareaFormik
+            setFieldValue={setFieldValue}
+            label={t('description')}
+            value={group_description}
+            fieldName={'group_description'}
+          />
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>
@@ -42,21 +27,6 @@ const GroupForm = ({ formik }: { formik: any }) => {
 }
 
 export default GroupForm
-
-const StyledDoubleRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-`
-const StyledCronDescriptionWrapper = styled.div`
-  width: 300px;
-  height: 100%;
-  padding-top: 45px;
-
-  display: flex;
-  justify-content: center;
-`
 
 export const StyledCheckboxWrapper = styled.div`
   height: fit-content;

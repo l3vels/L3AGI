@@ -67,6 +67,7 @@ const ChatMessageListV2 = ({
       sender_user: chat?.sender_user,
       sender_name: chat?.sender_name,
       run_id: chat?.run_id,
+      voice: chat?.audio_url,
     }
   })
 
@@ -185,6 +186,7 @@ const ChatMessageListV2 = ({
                   messageDate={chat.date}
                   messageText={chat.message}
                   runId={chat.run_id}
+                  voice={chat.voice}
                   onReplyClick={() => {
                     setReply({
                       isReply: true,
@@ -219,6 +221,7 @@ const ChatMessageListV2 = ({
                   isNewMessage={initialChat.length - 1 === index && isNewMessage}
                   setIsNewMessage={setIsNewMessage}
                   runId={chat.run_id}
+                  voice={chat.voice}
                   onReplyClick={
                     chat.isGreeting
                       ? undefined

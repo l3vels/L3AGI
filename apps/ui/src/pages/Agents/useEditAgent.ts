@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useUpdateAgentService } from 'services/agent/useUpdateAgentService'
+
 import { agentValidationSchema } from 'utils/validationsSchema'
 
 export const useEditAgent = () => {
@@ -53,6 +54,8 @@ export const useEditAgent = () => {
     agent_voice_transcriber: agentById?.configs?.transcriber,
     agent_voice_response: agentById?.configs?.response_mode,
     agent_voice_input_mode: agentById?.configs?.input_mode,
+
+    agent_integrations: agentById?.configs?.integrations || [],
   }
 
   const handleSubmit = async (values: any) => {
@@ -83,6 +86,8 @@ export const useEditAgent = () => {
       transcriber: values.agent_voice_transcriber,
       response_mode: values.agent_voice_response,
       input_mode: values.agent_voice_input_mode,
+
+      integrations: values.agent_integrations,
     }
 
     await updateAgent(agentId || '', {

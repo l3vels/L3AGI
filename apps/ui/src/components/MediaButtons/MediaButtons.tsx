@@ -13,62 +13,71 @@ import TwitterLogo from 'assets/tools/twitter.png'
 import YoutubeLogo from 'assets/tools/youtube.svg'
 
 import TypographyPrimary from 'components/Typography/Primary'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 const MediaButtons = () => {
   const { t } = useTranslation()
+
+  const { getExternalLinksModule } = useGetAccountModule()
+  const isLinkModule = getExternalLinksModule()
+
   return (
     <StyledWrapper>
-      <button onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}>
-        <StyledInnerButtonWrapper>
-          <StyledImg src={TwitterLogo} />
-          <TypographyPrimary
-            value={t('twitter')}
-            type={Typography.types.label}
-            size={Typography.sizes.xss}
-            as={'a'}
-            style={{
-              cursor: 'pointer',
-              textAlign: 'center',
-            }}
-          />
-        </StyledInnerButtonWrapper>
-      </button>
+      {isLinkModule && (
+        <>
+          <button onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}>
+            <StyledInnerButtonWrapper>
+              <StyledImg src={TwitterLogo} />
+              <TypographyPrimary
+                value={t('twitter')}
+                type={Typography.types.label}
+                size={Typography.sizes.xss}
+                as={'a'}
+                style={{
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                }}
+              />
+            </StyledInnerButtonWrapper>
+          </button>
 
-      <StyledDivider />
+          <StyledDivider />
 
-      <button onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}>
-        <StyledInnerButtonWrapper>
-          <StyledDiscordIcon />
-          <TypographyPrimary
-            value={t('discord')}
-            type={Typography.types.label}
-            size={Typography.sizes.xss}
-            as={'a'}
-            style={{
-              cursor: 'pointer',
-              textAlign: 'center',
-            }}
-          />
-        </StyledInnerButtonWrapper>
-      </button>
+          <button onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}>
+            <StyledInnerButtonWrapper>
+              <StyledDiscordIcon />
+              <TypographyPrimary
+                value={t('discord')}
+                type={Typography.types.label}
+                size={Typography.sizes.xss}
+                as={'a'}
+                style={{
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                }}
+              />
+            </StyledInnerButtonWrapper>
+          </button>
 
-      <StyledDivider />
+          <StyledDivider />
 
-      <button onClick={() => openLinkTab(import.meta.env.REACT_APP_YOUTUBE_LINK)}>
-        <StyledInnerButtonWrapper>
-          <StyledImg src={YoutubeLogo} />
-          <TypographyPrimary
-            value={t('youtube')}
-            type={Typography.types.label}
-            size={Typography.sizes.xss}
-            as={'a'}
-            style={{
-              cursor: 'pointer',
-              textAlign: 'center',
-            }}
-          />
-        </StyledInnerButtonWrapper>
-      </button>
+          <button onClick={() => openLinkTab(import.meta.env.REACT_APP_YOUTUBE_LINK)}>
+            <StyledInnerButtonWrapper>
+              <StyledImg src={YoutubeLogo} />
+              <TypographyPrimary
+                value={t('youtube')}
+                type={Typography.types.label}
+                size={Typography.sizes.xss}
+                as={'a'}
+                style={{
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                }}
+              />
+            </StyledInnerButtonWrapper>
+          </button>
+        </>
+      )}
     </StyledWrapper>
   )
 }

@@ -97,6 +97,7 @@ export const useGetAccountModule = () => {
     }
     return values
   }
+
   const getIntegrationModules = (search: 'toolkit' | 'voices' | 'telephony' | 'active') => {
     let values
     if (search === 'active') {
@@ -135,6 +136,11 @@ export const useGetAccountModule = () => {
     const values = getMainModule('group')
     return values
   }
+  const getExternalLinksModule = () => {
+    const values = getMainModule('external-links')
+    return values
+  }
+
   const moduleNames = {
     welcome: welcomeMessage,
     chat: naming?.chat,
@@ -161,6 +167,7 @@ export const useGetAccountModule = () => {
     getContactModules,
     getGroupModules,
     getIntegrationModules,
+    getExternalLinksModule,
     moduleNames,
   }
 }

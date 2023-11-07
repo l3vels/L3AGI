@@ -20,7 +20,7 @@ export const StyledTabListWrapper = styled.div`
 export const StyledTabListSpan = styled.span`
   color: ${({ theme }) => theme.body.textColorPrimary};
 `
-export const StyledTab = styled(Tab)<{ isDisabled?: boolean }>`
+export const StyledTab = styled(Tab)<{ isDisabled?: boolean; isError?: boolean }>`
   &.active .tab-inner {
     background-color: ${({ theme }) => theme.body.detailCardBackgroundColor};
   }
@@ -32,5 +32,14 @@ export const StyledTab = styled(Tab)<{ isDisabled?: boolean }>`
       z-index: -1;
       pointer-events: none;
       opacity: 0;
+    `};
+
+  ${p =>
+    p.isError &&
+    css`
+      .tab-inner {
+        outline: 2px solid #ef5533;
+        border-radius: 60px;
+      }
     `};
 `
