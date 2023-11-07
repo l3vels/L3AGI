@@ -1,6 +1,11 @@
+import re
 from typing import List, Optional
 
+from fastapi_sqlalchemy import db
+
+from models.agent import AgentModel
 from typings.agent import AgentWithConfigsOutput
+from utils.agent import convert_model_to_response
 
 
 class SystemMessageBuilder:
@@ -24,6 +29,7 @@ class SystemMessageBuilder:
         context = self.build_pre_retrieved_context(self.pre_retrieved_context)
 
         result = f"{base_system_message}{role}{description}{goals}{instructions}{constraints}{context}"
+        result = self.replace_templates(result)
         return result
 
     def build_base_system_message(self, text: str) -> str:
@@ -80,3 +86,68 @@ class SystemMessageBuilder:
         result = "CONTEXT DATA: \n" f"{text}\n"
 
         return result
+
+    def replace_templates(self, text: str) -> str:
+        # This pattern will match strings like {{agent.sales.greeting}} and {{greeting}}
+        pattern = re.compile(
+            r"\{\{(agents\.(?P<agent_name>[\w\s]+?)\.)?(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
+        )
+
+        agent_mapping = {}
+
+        def replace_match(match):
+            agent_name = match.group("agent_name")
+            field_name = match.group("field_name")
+            index = match.group("index")
+
+            if agent_name:
+                agent = agent_mapping.get(agent_name, None)
+
+                if not agent:
+                    # Retrieve the agent if not already retrieved
+                    agent = AgentModel.get_agent_by_name(
+                        db.session, self.agent.account_id, agent_name
+                    )
+
+                    agent_mapping[agent_name] = agent
+
+                agent_with_configs = convert_model_to_response(agent)
+                agent_with_configs.system_message = SystemMessageBuilder(
+                    agent_with_configs
+                ).build()
+
+                source_data = None
+
+                if hasattr(agent_with_configs.agent, field_name):
+                    source_data = agent_with_configs.agent
+                elif hasattr(agent_with_configs.configs, field_name):
+                    source_data = agent_with_configs.configs
+                else:
+                    source_data = agent_with_configs
+            else:
+                # Use current agent if no agent name is provided
+                source_data = (
+                    self.agent if hasattr(self.agent, field_name) else self.configs
+                )
+
+            if not source_data:
+                return match.group(
+                    0
+                )  # Return the original text if agent or property not found
+
+            # Retrieve the field value
+            value = getattr(source_data, field_name, "")
+            if index and isinstance(value, list):
+                try:
+                    value = value[int(index)]
+                except IndexError:
+                    value = ""
+            elif isinstance(value, list):
+                # Format the list for display
+                value = f"{field_name.upper()}: \n" + "\n".join(
+                    f"- {item}" for item in value
+                )
+
+            return str(value)
+
+        return pattern.sub(replace_match, text)

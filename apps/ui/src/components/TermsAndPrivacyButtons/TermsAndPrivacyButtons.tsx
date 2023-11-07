@@ -48,6 +48,7 @@ export const StyledWrapper = styled.div`
   align-items: center;
   gap: 5px;
   height: fit-content;
+  min-height: 20px;
 `
 export const StyledDivider = styled.div`
   width: 1px;

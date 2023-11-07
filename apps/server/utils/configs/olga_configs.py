@@ -4,12 +4,13 @@ olga_configs = {
         "home": "Home",
         "agent": "Agent",
         "team": "Team",
-        "datasource": "Data sources",
-        "models": "Model",
+        "datasource": "Knowledge",
+        "model": "Model",
         "discovery": "Discovery",
         "chat": "Agents",
-        "toolkits": "Toolkits",
+        "toolkit": "Toolkit",
         "schedules": "Schedules",
+        "integration": "Integration",
     },
     "modules": {
         "home": {

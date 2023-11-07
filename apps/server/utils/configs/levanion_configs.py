@@ -73,5 +73,6 @@ levanion_configs = {
         "schedule": True,
         "contact": True,
         "group": True,
+        "external-links": True,
     },
 }

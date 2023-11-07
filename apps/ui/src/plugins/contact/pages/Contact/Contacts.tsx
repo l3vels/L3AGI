@@ -195,10 +195,10 @@ const Contacts = () => {
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
           <StyledTab onClick={() => handleTabClick(0, 'contact')}>
-            <StyledTabListSpan>{`${t('contact')}s`}</StyledTabListSpan>
+            <StyledTabListSpan>{`${t('contacts')}`}</StyledTabListSpan>
           </StyledTab>
           <StyledTab onClick={() => handleTabClick(1, 'group')}>
-            <StyledTabListSpan>{`${t('group')}s`}</StyledTabListSpan>
+            <StyledTabListSpan>{`${t('groups')}`}</StyledTabListSpan>
           </StyledTab>
         </TabList>
       </StyledTabListWrapper>
@@ -209,7 +209,7 @@ const Contacts = () => {
             <StyledSectionWrapper>
               <StyledHeaderGroup className='header_group'>
                 <div>
-                  <StyledSectionTitle>{`${t('contact')}s`}</StyledSectionTitle>
+                  <StyledSectionTitle>{`${t('contacts')}`}</StyledSectionTitle>
                 </div>
                 <div>
                   <ButtonPrimary

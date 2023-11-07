@@ -74,7 +74,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
     openModal({ name: 'schedule-run-modal', data: { id: chatId || agent.id, type: 'agent' } })
   }
-  console.log(model)
+
   return (
     <StyledDetailsBox>
       <StyledWrapper>
@@ -190,6 +190,8 @@ export const StyledWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   padding: 10px 0;
+
+  white-space: pre-line;
 `
 
 export const StyledDivider = styled.div`

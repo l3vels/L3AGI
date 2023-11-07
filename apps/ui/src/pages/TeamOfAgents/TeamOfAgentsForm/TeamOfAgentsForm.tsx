@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
+
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
-import { StyledCombinedFields, StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
+import { StyledCombinedFields } from 'pages/Agents/AgentForm/AgentForm'
 import { useTeamOfAgentsForm } from './useTeamOfAgentsForm'
 import UploadButton from './components/UploadButton'
 import UploadedFile from 'components/UploadedFile'
@@ -20,6 +20,7 @@ import CustomField from 'pages/Agents/AgentForm/components/CustomField'
 import AgentSlider from 'pages/Agents/AgentForm/components/AgentSlider'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import ShowAdvancedButton from 'pages/Agents/AgentForm/components/ShowAdvancedButton'
+import TextareaFormik from 'components/TextareaFormik'
 
 type TeamOfAgentsFormProps = {
   formik: any
@@ -64,14 +65,6 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
     team_model,
   } = values
 
-  const onDescriptionChange = (value: string) => {
-    formik.setFieldValue('teamOfAgents_description', value)
-  }
-
-  const onTextareaChange = (field: string, value: string) => {
-    formik.setFieldValue(field, value)
-  }
-
   useEffect(() => {
     if (teamOfAgents_team_type?.length > 0 && !isLoading && fields) {
       setFieldValue('config_key', pickedLoaderFields?.fields[0]?.key)
@@ -88,21 +81,12 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
       <StyledInputWrapper>
         <FormikTextField name='teamOfAgents_name' placeholder={t('name')} label={t('name')} />
 
-        <StyledTextareaWrapper>
-          <TypographyPrimary
-            value={t('description')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-          />
-          <Textarea
-            hint=''
-            rows={6}
-            placeholder={t('description')}
-            name='teamOfAgents_description'
-            value={teamOfAgents_description}
-            onChange={onDescriptionChange}
-          />
-        </StyledTextareaWrapper>
+        <TextareaFormik
+          setFieldValue={setFieldValue}
+          label={t('description')}
+          value={teamOfAgents_description}
+          fieldName={'teamOfAgents_description'}
+        />
 
         <StyledSourceTypeWrapper>
           <TypographyPrimary
@@ -161,18 +145,12 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
                 ))}
 
               {category === 'Text' && (
-                <StyledTextareaWrapper>
-                  <Textarea
-                    hint=''
-                    rows={6}
-                    placeholder='Text'
-                    name='config_value'
-                    value={config_value}
-                    onChange={(text: string) => {
-                      formik.setFieldValue('config_value', text)
-                    }}
-                  />
-                </StyledTextareaWrapper>
+                <TextareaFormik
+                  setFieldValue={setFieldValue}
+                  label={''}
+                  value={config_value}
+                  fieldName={'config_value'}
+                />
               )}
 
               <>{category === 'Social' && <StyledText>{t('comingSoon')}</StyledText>}</>
@@ -213,24 +191,16 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
           placeholder={t('suggestions')}
         />
 
-        <StyledTextareaWrapper>
-          <TypographyPrimary
-            value={t('greeting')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-          />
-          <Textarea
-            hint=''
-            placeholder={t('greeting')}
-            value={team_greeting}
-            name='team_greeting'
-            onChange={(value: string) => onTextareaChange('team_greeting', value)}
-          />
-        </StyledTextareaWrapper>
+        <TextareaFormik
+          setFieldValue={setFieldValue}
+          label={'greeting'}
+          value={team_greeting}
+          fieldName={'team_greeting'}
+        />
 
         <AgentDropdown
           isMulti
-          label={t('data-source')}
+          label={t('datasource')}
           fieldName={'team_datasources'}
           fieldValue={team_datasources}
           setFieldValue={setFieldValue}
@@ -267,21 +237,13 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
               formikField={'team_constraints'}
               placeholder={t('constraints')}
             />
-            <StyledTextareaWrapper>
-              <TypographyPrimary
-                value={t('base-system-message')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-              <Textarea
-                hint=''
-                rows={6}
-                placeholder={t('text')}
-                value={team_text}
-                name='team_text'
-                onChange={(value: string) => onTextareaChange('team_text', value)}
-              />
-            </StyledTextareaWrapper>
+
+            <TextareaFormik
+              setFieldValue={setFieldValue}
+              label={t('text')}
+              value={team_text}
+              fieldName={'team_text'}
+            />
 
             <StyledCombinedFields>
               <AgentDropdown

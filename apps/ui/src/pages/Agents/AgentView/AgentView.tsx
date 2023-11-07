@@ -19,16 +19,18 @@ import AgentToolkits from './components/AgentToolkits'
 import AgentDatasources from './components/AgentDatasources'
 
 import AgentVIewDetailBox from './components/AgentViewDetailBox'
+import { AgentWithConfigs } from 'types'
 
-const AgentView = ({ agentData }: { agentData?: any }) => {
+const AgentView = ({ agentData }: { agentData?: AgentWithConfigs }) => {
   const { t } = useTranslation()
   const params = useParams()
   const { agentId } = params
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
-  if (!agentById && !agentData) return <div />
+  const agent = agentById || agentData
+  if (!agent) return <div />
 
-  const { configs } = agentById || agentData
+  const { configs, system_message } = agent
 
   const { tools, goals, constraints, instructions, datasources, suggestions, greeting, text } =
     configs
@@ -51,13 +53,17 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
           </>
         )}
       </StyledHeaderGroup>
-      <ComponentsWrapper noPadding hideBox={agentData}>
-        <StyledInnerWrapper noPadding={agentData}>
+      <ComponentsWrapper noPadding hideBox={!!agentData}>
+        <StyledInnerWrapper noPadding={!!agentData}>
           <StyledLeftColumn>
-            <AgentVIewDetailBox agentData={agentById || agentData} />
+            <AgentVIewDetailBox agentData={agent} />
           </StyledLeftColumn>
 
           <StyledRightColumn>
+            {system_message?.length ? (
+              <AdditionalInfoBox items={[system_message]} title={t('system-message')} />
+            ) : null}
+
             {tools?.length > 0 && <AgentToolkits tools={tools} />}
 
             {datasources?.length > 0 && <AgentDatasources datasources={datasources} />}
@@ -75,7 +81,7 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
                 title={
                   constraints.length === 1
                     ? `${t('constraint')}`
-                    : `${constraints.length} ${t('constraint')}`
+                    : `${constraints.length} ${t('constraints')}`
                 }
               />
             )}
@@ -104,7 +110,9 @@ const AgentView = ({ agentData }: { agentData?: any }) => {
 
             {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={t('greeting')} />}
 
-            {text?.length > 0 && <AdditionalInfoBox items={[text]} title={t('advanced')} />}
+            {text?.length > 0 && (
+              <AdditionalInfoBox items={[text]} title={t('base-system-message')} />
+            )}
           </StyledRightColumn>
         </StyledInnerWrapper>
       </ComponentsWrapper>

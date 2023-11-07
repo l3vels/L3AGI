@@ -51,10 +51,10 @@ const Integrations = () => {
         <StyledTabListWrapper>
           <TabList activeTabId={activeTab}>
             <StyledTab onClick={() => handleTabClick(0, 'toolkit')} isDisabled={!isToolkit}>
-              <StyledTabListSpan>{`${t('toolkit')}s`}</StyledTabListSpan>
+              <StyledTabListSpan>{t('toolkit')}</StyledTabListSpan>
             </StyledTab>
             <StyledTab onClick={() => handleTabClick(1, 'voice')} isDisabled={!isVoice}>
-              <StyledTabListSpan>{`${t('voice')}s`}</StyledTabListSpan>
+              <StyledTabListSpan>{t('voices')}</StyledTabListSpan>
             </StyledTab>
           </TabList>
         </StyledTabListWrapper>

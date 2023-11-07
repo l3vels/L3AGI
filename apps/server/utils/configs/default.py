@@ -4,13 +4,13 @@ default_configs = {
         "home": "Home",
         "agent": "Agent",
         "team": "Team",
-        "datasource": "Data sources",
-        "models": "Models",
+        "datasource": "Knowledge",
+        "model": "Model",
         "discovery": "Discovery",
-        "chat": "Multi-Agent",
-        "toolkits": "Toolkits",
+        "chat": "Agents",
+        "toolkit": "Toolkit",
         "schedules": "Schedules",
-        "integrations": "Integrations",
+        "integration": "Integration",
     },
     "modules": {
         "home": {
@@ -72,5 +72,6 @@ default_configs = {
         },
         "contact": False,
         "group": False,
+        "external-links": True,
     },
 }

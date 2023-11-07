@@ -2,15 +2,12 @@ from typing import List
 
 from models.agent import AgentModel
 from typings.agent import AgentOutput, AgentWithConfigsOutput, ConfigsOutput
-from utils.system_message import SystemMessageBuilder
 from utils.type import convert_value_to_type
 from utils.user import \
     convert_model_to_response as user_convert_model_to_response
 
 
-def convert_model_to_response(
-    agent_model: AgentModel, is_system_message: bool = False
-) -> AgentWithConfigsOutput:
+def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput:
     agent_data = {}
 
     # Extract attributes from AgentModel using annotations of Agent
@@ -43,9 +40,6 @@ def convert_model_to_response(
         agent=AgentOutput(**agent_data),
         configs=ConfigsOutput(**configs) if configs else None,
     )
-    if is_system_message:
-        system_message = SystemMessageBuilder(agent_with_config).build()
-        agent_with_config.system_message = system_message
 
     return agent_with_config
 
