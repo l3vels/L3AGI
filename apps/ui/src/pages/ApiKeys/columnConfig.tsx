@@ -1,220 +1,150 @@
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import TextType from '@l3-lib/ui-core/dist/icons/TextType'
-import Id from '@l3-lib/ui-core/dist/icons/Id'
-import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
-
-import styled from 'styled-components'
-import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
-
-import moment from 'moment'
-
+import React, { FC } from 'react'
 import { useModal } from 'hooks'
-import { ToastContext } from 'contexts'
 import { useTranslation } from 'react-i18next'
-import TypographyPrimary from 'components/Typography/Primary'
+import TableCell from '../../components/Table/components/TableCell'
+import useApiKeys from './useApiKeys'
+import moment from 'moment'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
+import { ButtonTertiary } from 'components/Button/Button'
+import { useNavigate } from 'react-router-dom'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import {
+  StyledDeleteIcon,
+  StyledEditIcon,
+} from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
-type configTypes = {
-  handleEditApiKey: (apiKey: any) => void
-  handleDeleteApiKey: (apiKey: any) => void
+type CellProps = {
+  value: any
 }
 
-export default ({ handleEditApiKey, handleDeleteApiKey }: configTypes) => {
-  const { openModal, closeModal } = useModal()
-  const { t } = useTranslation()
-  type RendererProps = {
-    data: any
-    value: string
-  }
-  const TextCellRenderer = (props: RendererProps) => (
-    <div>
-      <TypographyPrimary
-        value={props.value}
+const DateRenderer: React.FC<CellProps> = ({ value }) => {
+  let content = null
+
+  if (value === null) {
+    const currentTime = moment().fromNow()
+    content = (
+      <TypographySecondary
+        value={currentTime}
         type={Typography.types.LABEL}
         size={Typography.sizes.sm}
       />
-    </div>
-  )
-
-  const DateRenderer = (props: RendererProps) => {
-    const value = props.value === null ? '-' : moment(props.value).fromNow()
-
-    return (
-      <TypographyPrimary value={value} type={Typography.types.LABEL} size={Typography.sizes.sm} />
     )
+  } else {
+    const formattedDate = moment(value).fromNow()
+    content = <span>{formattedDate}</span>
   }
 
-  const MenuDotsCellRenderer = (props: RendererProps) => {
-    const {
-      data: { id },
-      value,
-    } = props
-
-    const handleClickEdit = () => {
-      handleEditApiKey(props.data)
-    }
-    const handleClickDelete = () => {
-      const deleteFunc = async () => {
-        handleDeleteApiKey(id)
-        closeModal('delete-confirmation-modal')
-      }
-      openModal({
-        name: 'delete-confirmation-modal',
-        data: {
-          closeModal: () => closeModal('delete-confirmation-modal'),
-          deleteItem: deleteFunc,
-          label: t('are-you-sure-you-want-to-delete-this-row?'),
-          title: t('delete-row'),
-        },
-      })
-    }
-
-    return (
-      <div>
-        <div
-          style={{
-            display: 'flex',
-            position: 'relative',
-            float: 'right',
-          }}
-        >
-          <MenuButton component={menuDots}>
-            <StyledButtonsWrapper>
-              <StyledClickableDiv onClick={handleClickEdit}>
-                <TypographySecondary
-                  value={'Edit'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                />
-              </StyledClickableDiv>
-              <StyledClickableDiv onClick={handleClickDelete}>
-                <TypographySecondary
-                  value={'Delete API key'}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                />
-              </StyledClickableDiv>
-            </StyledButtonsWrapper>
-          </MenuButton>
-        </div>
-        <TypographyPrimary
-          value={value === null ? '-' : moment(value).fromNow()}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      </div>
-    )
-  }
-
-  return [
-    {
-      headerName: (
-        <TypographyPrimary value='Name' type={Typography.types.LABEL} size={Typography.sizes.sm} />
-      ),
-      headerComponent: HeaderComponent,
-      field: 'name',
-      filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <TextType />
-          </StyledOutlineIcon>
-        ),
-      },
-      // minWidth: 150,
-      // width: 350,
-    },
-    {
-      headerName: (
-        <TypographyPrimary value='Token' type={Typography.types.LABEL} size={Typography.sizes.sm} />
-      ),
-      headerComponent: HeaderComponent,
-      field: 'token',
-      filter: 'agTextColumnFilter',
-      cellRenderer: TextCellRenderer,
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Id />
-          </StyledOutlineIcon>
-        ),
-      },
-      // minWidth: 150,
-      // width: 460,
-    },
-    {
-      headerName: (
-        <TypographyPrimary
-          value='Last used'
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      ),
-      headerComponent: HeaderComponent,
-      field: 'last_used',
-      filter: 'agTextColumnFilter',
-      cellRenderer: DateRenderer,
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Calendar />
-          </StyledOutlineIcon>
-        ),
-      },
-      // minWidth: 150,
-      // width: 438,
-    },
-    {
-      headerName: (
-        <TypographyPrimary
-          value='Created'
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
-      ),
-      headerComponent: HeaderComponent,
-      field: 'created_on',
-      filter: 'agTextColumnFilter',
-      cellRenderer: MenuDotsCellRenderer,
-      headerComponentParams: {
-        icon: (
-          <StyledOutlineIcon>
-            <Calendar />
-          </StyledOutlineIcon>
-        ),
-      },
-      // minWidth: 150,
-      // width: 438,
-    },
-  ]
+  return content
 }
 
-const StyledButtonsWrapper = styled.div`
-  margin-top: 15px;
-  margin-right: 15px;
+const columns = [
+  {
+    Header: 'Name',
+    accessor: 'name',
+    minWidth: 100,
+    width: 150,
+  },
+  {
+    Header: 'Token',
+    accessor: 'token',
+    minWidth: 300,
+    width: 350,
+  },
+  {
+    Header: 'Description',
+    accessor: 'description',
+    minWidth: 250,
+    width: 300,
+  },
+  {
+    Header: 'Created On',
+    accessor: 'created_on',
+    minWidth: 100,
+    width: 140,
+    Cell: DateRenderer,
+  },
+  {
+    Header: 'Actions',
+    accessor: 'actions',
+    minWidth: 100,
+    width: 130,
+
+    Cell: (props: { row: { original: any } }) => {
+      const { original: data } = props.row
+      const { handleDeleteApiKey } = useApiKeys()
+      const navigate = useNavigate()
+      const handleEditClick = (apiKeyId: string) => {
+        navigate(`/api-key/${apiKeyId}/edit-api-key`)
+      }
+
+      return (
+        <StyledActionWrapper>
+          <IconButton
+            onClick={() => handleDeleteApiKey(data.id)}
+            icon={() => <StyledDeleteIcon />}
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            ariaLabel='Delete'
+          />
+
+          <IconButton
+            onClick={() => handleEditClick(data.id)}
+            icon={() => <StyledEditIcon />}
+            size={IconButton.sizes.SMALL}
+            kind={IconButton.kinds.TERTIARY}
+            ariaLabel='Edit'
+          />
+        </StyledActionWrapper>
+      )
+    },
+  },
+]
+
+export default columns
+
+export const StyledMenuDots = styled.div`
+  .menu-button--wrapper.menu-button--wrapper--size-32 {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+    }
+    path {
+      stroke: ${({ theme }) => theme.body.iconColor};
+    }
+  }
+`
+
+export const StyledMenuButtonsWrapper = styled.div`
+  background: ${({ theme }) => theme.body.backgroundColorSecondary};
+  border: ${({ theme }) => theme.body.secondaryBorder};
+  backdrop-filter: blur(100px);
+  padding: 10px;
+  border-radius: 10px;
+  width: 200px;
+  min-width: fit-content;
+
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-
-  gap: 4px;
-
-  background: rgba(0, 0, 0, 0.2);
-
-  padding: 16px;
-
-  box-shadow: 2px 6px 15px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(50px);
-
-  border-radius: 6px;
-`
-const StyledClickableDiv = styled.div`
-  cursor: pointer;
+  gap: 5px;
 `
 
 export const StyledOutlineIcon = styled.div`
   color: transparent;
   /* width: 40px; */
+`
+
+const StyledActionWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+      border-radius: 50%;
+    }
+  }
 `

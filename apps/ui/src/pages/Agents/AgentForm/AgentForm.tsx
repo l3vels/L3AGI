@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -94,12 +94,25 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
   const [activeTab, setActiveTab] = useState(0)
 
+  const topRef = useRef(null as any)
+
+  const scrollToTop = () => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({})
+    }
+  }
+
+  const handleTabClick = (id: number) => {
+    setActiveTab(id)
+    scrollToTop()
+  }
+
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
         <StyledFormTabList size='small'>
           <StyledTab
-            onClick={() => setActiveTab(0)}
+            onClick={() => handleTabClick(0)}
             isError={validationError?.agent_name && activeTab !== 0}
           >
             <StyledSpan
@@ -109,24 +122,25 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
               General
             </StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => setActiveTab(1)}>
+          <StyledTab onClick={() => handleTabClick(1)}>
             <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => setActiveTab(2)}>
+          <StyledTab onClick={() => handleTabClick(2)}>
             <StyledSpan isActive={activeTab === 2}>Training Details</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => setActiveTab(3)}>
+          <StyledTab onClick={() => handleTabClick(3)}>
             <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => setActiveTab(4)} isDisabled={!isVoice}>
+          <StyledTab onClick={() => handleTabClick(4)} isDisabled={!isVoice}>
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => setActiveTab(5)}>
+          <StyledTab onClick={() => handleTabClick(5)}>
             <StyledSpan isActive={activeTab === 5}>Integrations</StyledSpan>
           </StyledTab>
         </StyledFormTabList>
       </StyledFormTabsWrapper>
       <StyledForm>
+        <div ref={topRef} />
         <StyledInputWrapper>
           <TabsContext activeTabId={activeTab}>
             <TabPanels noAnimation>
@@ -141,6 +155,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     label={t('description')}
                     value={agent_description}
                     fieldName={'agent_description'}
+                    triggerResize={activeTab}
                   />
 
                   <StyledCheckboxWrapper>
@@ -259,6 +274,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     label={t('base-system-message')}
                     value={agent_text}
                     fieldName={'agent_text'}
+                    triggerResize={activeTab}
                   />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
@@ -276,6 +292,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     label={t('greeting')}
                     value={agent_greeting}
                     fieldName={'agent_greeting'}
+                    triggerResize={activeTab}
                   />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>

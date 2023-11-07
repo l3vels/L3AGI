@@ -23,7 +23,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { useModal } from 'hooks'
 import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
-import PlayAudioButton from 'components/PlayAudioButton'
+import AudioPlayer from 'components/AudioPlayer'
 
 type AiMessageProps = {
   agentName?: string
@@ -109,7 +109,7 @@ const AiMessage = ({
                 children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
               />
             )}
-            {voice && <PlayAudioButton audioUrl={voice} />}
+            {voice && <AudioPlayer audioUrl={voice} />}
           </StyledMessageText>
         </StyledMainContent>
       </StyledMessageWrapper>

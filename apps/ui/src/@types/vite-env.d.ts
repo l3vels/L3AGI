@@ -21,6 +21,7 @@ interface ImportMetaEnv {
   readonly REACT_APP_TERMS_LINK: string
   readonly REACT_APP_PRIVACY: string
   readonly REACT_APP_BASICS_LINK: string
+  readonly REACT_APP_API_KEYS_LINK: string
   readonly REACT_APP_AGENTS_LINK: string
   readonly REACT_APP_DATASOURCES_LINK: string
   readonly REACT_APP_TOOLS_LINK: string

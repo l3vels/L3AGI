@@ -1,3 +1,4 @@
+// EditApiKeyForm.js
 import React from 'react'
 import { FormikProvider } from 'formik'
 import BackButton from 'components/BackButton'
@@ -12,12 +13,15 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import ApiKeysForm from './ApiKeysForm'
-import { useCreateApiKey } from './useCreateApiKey'
+
 import { StyledFormWrapper } from 'styles/formStyles.css'
 
-function CreateApiKeyForm() {
-  const { formik, isLoading } = useCreateApiKey()
+import ApiKeysForm from '../CreateApiKey/ApiKeysForm'
+import useEditApiKey from './useEditApiKey'
+
+function EditApiKeyForm() {
+  const { formik, isLoading } = useEditApiKey()
+  // console.log('formik', formik)
 
   return (
     <>
@@ -25,8 +29,8 @@ function CreateApiKeyForm() {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>Add API Key</StyledSectionTitle>
-              <StyledSectionDescription>Here is your API Key.</StyledSectionDescription>
+              <StyledSectionTitle>Edit API Key</StyledSectionTitle>
+              <StyledSectionDescription>Edit your API Key details.</StyledSectionDescription>
             </div>
 
             <StyledButtonWrapper>
@@ -43,7 +47,6 @@ function CreateApiKeyForm() {
 
           <ComponentsWrapper noPadding>
             <StyledFormWrapper>
-              {/* Pass the apiKeys data to ApiKeysForm component */}
               <ApiKeysForm formik={formik} />
             </StyledFormWrapper>
           </ComponentsWrapper>
@@ -53,4 +56,4 @@ function CreateApiKeyForm() {
   )
 }
 
-export default CreateApiKeyForm
+export default EditApiKeyForm

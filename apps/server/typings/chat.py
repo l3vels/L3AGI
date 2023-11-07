@@ -74,6 +74,7 @@ class ChatMessageOutput(BaseModel):
     sender_name: Optional[str]
     chat_id: Optional[UUID]
     run_id: Optional[UUID] = None
+    audio_url: Optional[str]
 
 
 class NegotiateOutput(BaseModel):

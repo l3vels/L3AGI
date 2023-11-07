@@ -1,12 +1,14 @@
-mutation createApiKey($input: ApiKeyInput!) @api(name: game) {
-  createApiKey(input: $input) {
-    success
-    apiKey {
-      name
-      token
-      note
-      expiration
-      games
-    }
+mutation createApiKey($input: input!) @api(name: ai) {
+  createApiKey(input: $input)
+    @rest(type: "ApiKeys", path: "/api-key", method: "POST", bodyKey: "input", endpoint: "ai") {
+    id
+    name
+    token
+    description
+    is_deleted
+    account_id
+    created_on
+    created_by
+    modified_by
   }
 }

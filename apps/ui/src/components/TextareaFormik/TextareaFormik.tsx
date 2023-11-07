@@ -10,9 +10,17 @@ type TextareaProps = {
   label: string
   value: string
   fieldName: string
+  triggerResize?: number
 }
 
-const TextareaFormik = ({ setFieldValue, label, value, fieldName, ...props }: TextareaProps) => {
+const TextareaFormik = ({
+  setFieldValue,
+  label,
+  value,
+  fieldName,
+  triggerResize,
+  ...props
+}: TextareaProps) => {
   const textareaRef = useRef(null as any)
 
   const onTextareaChange = (field: string, value: string) => {
@@ -22,10 +30,15 @@ const TextareaFormik = ({ setFieldValue, label, value, fieldName, ...props }: Te
   useEffect(() => {
     const textarea = textareaRef.current
     if (textarea) {
-      textarea.style.height = 'auto' // Reset the height to auto to recalculate the height
-      textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scroll height of the content
+      // console.log('SHOULD RESIZE')
+      // textarea.style.height = 'auto' // Reset the height to auto to recalculate the height
+      // textarea.style.height = `${textarea.scrollHeight}px` // Set the height to the scroll height of the content
+      setTimeout(function () {
+        textarea.style.height = 'auto' // Reset the height to auto to recalculate the height
+        textarea.style.height = `${textarea.scrollHeight}px`
+      }, 100)
     }
-  }, [value])
+  }, [value, triggerResize])
 
   return (
     <StyledTextareaWrapper>
