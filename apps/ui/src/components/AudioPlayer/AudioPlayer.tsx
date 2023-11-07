@@ -13,9 +13,9 @@ const AudioPlayer = ({ audioUrl }: { audioUrl: string }) => {
 
   const togglePlay = () => {
     if (isPlaying) {
-      audioRef.current.pause()
+      audioRef?.current.pause()
     } else {
-      audioRef.current.play()
+      audioRef?.current.play()
     }
     setIsPlaying(!isPlaying)
   }
@@ -54,7 +54,7 @@ const AudioPlayer = ({ audioUrl }: { audioUrl: string }) => {
 
   return (
     <StyledRoot>
-      <StyledButton onClick={togglePlay} className='play-pause-button'>
+      <StyledButton onClick={togglePlay} className='play-pause-button' type='button'>
         {isPlaying ? <Pause size={25} /> : <Play size={20} />}
       </StyledButton>
 
@@ -83,8 +83,14 @@ const StyledRoot = styled.div`
   padding: 2px;
   padding-left: 10px;
 
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
   width: 160px;
+  min-width: 160px;
+  min-height: 35px;
+  max-height: 35px;
+
+  overflow: hidden;
+
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
   background: ${({ theme }) => theme.body.cardBgColor};
 `
 const StyledProgress = styled.div`
@@ -107,6 +113,8 @@ const StyledTimeIndicator = styled.div`
   pointer-events: none;
   user-select: none;
   opacity: 0.4;
+
+  color: black;
 `
 const StyledButton = styled.button`
   width: 30px;

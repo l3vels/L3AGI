@@ -45,6 +45,8 @@ import { useClientChatMessagesService } from 'services/chat/useChatMessagesServi
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { textSlicer } from 'utils/textSlicer'
+import AudioRecorder from 'components/AudioRecorder'
+import AudioPlayer from 'components/AudioPlayer'
 
 const ChatV2 = () => {
   const { t } = useTranslation()
@@ -53,6 +55,7 @@ const ChatV2 = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const [formValue, setFormValue] = useState('')
+  const [recordedVoice, setRecordedVoice] = useState<string | null>(null)
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
 
@@ -368,6 +371,7 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
+              {recordedVoice && <AudioPlayer audioUrl={recordedVoice || ''} />}
 
               {typingEffectText ? (
                 <StyledInputWrapper secondary>
@@ -408,6 +412,7 @@ const ChatV2 = () => {
               >
                 <StyledSenIcon size={27} />
               </StyledButton>
+              <AudioRecorder setRecordedVoice={setRecordedVoice} />
               {user && <CommandIcon />}
             </StyledTextareaWrapper>
           </StyledForm>
