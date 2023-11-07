@@ -55,6 +55,7 @@ const AudioPlayer = ({
   }
 
   useEffect(() => {
+    if (!audioRef) return
     audioRef.current.onloadedmetadata = () => {
       setDuration(audioRef.current.duration)
     }
