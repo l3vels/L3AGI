@@ -3,6 +3,7 @@ from typing import List
 from models.account import AccountModel
 from typings.account import AccountOutput
 from utils.configs.call_configs import call_configs
+from utils.configs.dato_configs import dato_configs
 from utils.configs.default import default_configs
 from utils.configs.heyyou import heyyou_configs
 from utils.configs.levanion_configs import levanion_configs
@@ -25,6 +26,8 @@ def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
         account_model.configs = call_configs
     elif account_model.name == "Olga":
         account_model.configs = olga_configs
+    elif account_model.name == "davit":
+        account_model.configs = dato_configs
     else:
         account_model.configs = default_configs
 

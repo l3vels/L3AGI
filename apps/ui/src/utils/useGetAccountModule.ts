@@ -135,7 +135,6 @@ export const useGetAccountModule = () => {
     const values = getMainModule('group')
     return values
   }
-
   const moduleNames = {
     welcome: welcomeMessage,
     chat: naming?.chat,
