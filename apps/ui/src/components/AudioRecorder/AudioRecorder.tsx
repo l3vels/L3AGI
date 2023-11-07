@@ -1,9 +1,14 @@
-import useUploadFile from 'hooks/useUploadFile'
 import { useState } from 'react'
 import styled from 'styled-components'
+import useUploadFile from 'hooks/useUploadFile'
+import { StyledCallIcon } from 'plugins/contact/pages/Contact/Contacts'
+
+import Loader from '@l3-lib/ui-core/dist/Loader'
+import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 
 const AudioRecorder = ({ setRecordedVoice }: { setRecordedVoice: any }) => {
   const [recording, setRecording] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [mediaRecorder, setMediaRecorder] = useState<any>(null)
 
   const { uploadFile } = useUploadFile()
@@ -25,67 +30,54 @@ const AudioRecorder = ({ setRecordedVoice }: { setRecordedVoice: any }) => {
 
   const stopRecording = async () => {
     if (!mediaRecorder) return
-    await mediaRecorder.stop()
-    setRecording(false)
+    setIsLoading(true)
+    try {
+      await mediaRecorder.stop()
+      setRecording(false)
 
-    mediaRecorder.ondataavailable = async (e: any) => {
-      if (e.data.size > 0) {
-        const blob = new Blob([e.data], { type: 'audio/wav' })
+      mediaRecorder.ondataavailable = async (e: any) => {
+        if (e.data.size > 0) {
+          const blob = new Blob([e.data], { type: 'audio/wav' })
 
-        const formData: any = new FormData()
-        await formData.append('audio', blob, 'recorded_audio.wav')
+          const formData: any = new FormData()
+          await formData.append('audio', blob, 'recorded_audio.wav')
 
-        const audioBlob = await formData.get('audio')
+          const audioBlob = await formData.get('audio')
 
-        const uploadedFiles = await uploadFile(
-          {
-            name: audioBlob.name,
-            type: audioBlob.type,
-            size: audioBlob.size,
-          },
-          audioBlob,
-        )
-        setRecordedVoice(uploadedFiles?.url)
+          const uploadedFiles = await uploadFile(
+            {
+              name: audioBlob.name,
+              type: audioBlob.type,
+              size: audioBlob.size,
+            },
+            audioBlob,
+          )
+          setRecordedVoice(uploadedFiles?.url)
+        }
       }
+    } catch (e) {
+      console.log(e)
     }
+    setIsLoading(false)
   }
-
-  //   const uploadRecording = async () => {
-  //     if (recordedChunks.length) {
-  //       const blob = new Blob(recordedChunks, { type: 'audio/wav' })
-
-  //       const formData: any = new FormData()
-  //       await formData.append('audio', blob, 'recorded_audio.wav')
-
-  //       const audioBlob = await formData.get('audio')
-
-  //       const uploadedFiles = await uploadFile(
-  //         {
-  //           name: audioBlob.name,
-  //           type: audioBlob.type,
-  //           size: audioBlob.size,
-  //         },
-  //         audioBlob,
-  //       )
-  //       setRecordedVoice(uploadedFiles?.url)
-  //       console.log('uploadedFiles', uploadedFiles)
-  //     }
-  //   }
 
   return (
     <StyledRoot>
-      {!recording ? (
-        <button onClick={startRecording} disabled={recording} type='button'>
-          Start
-        </button>
+      {isLoading ? (
+        <Loader size={20} />
       ) : (
-        <button onClick={stopRecording} disabled={!recording} type='button'>
-          Stop
-        </button>
+        <>
+          {!recording ? (
+            <button onClick={startRecording} disabled={recording} type='button'>
+              <StyledCallIcon />
+            </button>
+          ) : (
+            <button onClick={stopRecording} disabled={!recording} type='button'>
+              <StyledCloseIcon />
+            </button>
+          )}
+        </>
       )}
-      {/* <button onClick={uploadRecording} disabled={recordedChunks.length === 0} type='button'>
-        Play Recording
-      </button> */}
     </StyledRoot>
   )
 }
@@ -94,5 +86,14 @@ export default AudioRecorder
 
 const StyledRoot = styled.div`
   display: flex;
-  background: grey;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  background: ${({ theme }) => theme.body.cardBgColor};
+
+  min-width: 30px;
+  min-height: 30px;
+
+  border-radius: 100px;
 `
