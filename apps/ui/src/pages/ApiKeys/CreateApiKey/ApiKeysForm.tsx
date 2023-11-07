@@ -1,13 +1,9 @@
 import styled from 'styled-components'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import FormikTextField from 'components/TextFieldFormik'
 import { useTranslation } from 'react-i18next'
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
-import Button from '@l3-lib/ui-core/dist/Button'
-import { useParams } from 'react-router-dom'
-import TypographyPrimary from 'components/Typography/Primary'
-import { StyledTextareaWrapper } from 'pages/Agents/AgentForm/AgentForm'
-import { useCreateApiKey } from './useCreateApiKey'
+
+import TextareaFormik from 'components/TextareaFormik'
 
 type ApiKeyFormProps = {
   formik: any
@@ -15,36 +11,22 @@ type ApiKeyFormProps = {
   isEdit?: boolean
 }
 
-const ApiKeysForm = ({ formik, isLoading, isEdit = false }: ApiKeyFormProps) => {
+const ApiKeysForm = ({ formik }: ApiKeyFormProps) => {
   const { t } = useTranslation()
-  const { apiKeyId } = useParams()
-  const { values, setFieldValue } = formik
-  const { name, description } = values
 
-  const onTextareaChange = (field: string, value: string) => {
-    formik.setFieldValue(field, value)
-  }
+  const { values, setFieldValue } = formik
+  const { description } = values
 
   return (
     <StyledFormContainer>
       <StyledInputWrapper>
         <FormikTextField name='name' placeholder={t('name')} label={t('name')} />
-
-        <StyledTextareaWrapper>
-          <TypographyPrimary
-            value={t('description')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-          />
-          <Textarea
-            hint=''
-            rows={6}
-            placeholder={t('description')}
-            value={description}
-            name='description'
-            onChange={(value: string) => onTextareaChange('description', value)}
-          />
-        </StyledTextareaWrapper>
+        <TextareaFormik
+          setFieldValue={setFieldValue}
+          label={t('description')}
+          fieldName={'description'}
+          value={description}
+        />
       </StyledInputWrapper>
     </StyledFormContainer>
   )
