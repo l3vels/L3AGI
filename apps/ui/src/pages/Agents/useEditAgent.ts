@@ -48,12 +48,12 @@ export const useEditAgent = () => {
     agent_greeting: agentById?.configs?.greeting,
     agent_text: agentById?.configs?.text || '',
 
-    agent_voice_synthesizer: agentById?.configs?.synthesizer,
-    agent_default_voice: agentById?.configs?.default_voice,
-    agent_voice_id: agentById?.configs?.voice_id,
-    agent_voice_transcriber: agentById?.configs?.transcriber,
-    agent_voice_response: agentById?.configs?.response_mode,
-    agent_voice_input_mode: agentById?.configs?.input_mode,
+    agent_voice_synthesizer: agentById?.configs?.synthesizer || '',
+    agent_default_voice: agentById?.configs?.default_voice || '',
+    agent_voice_id: agentById?.configs?.voice_id || '',
+    agent_voice_transcriber: agentById?.configs?.transcriber || '',
+    agent_voice_response: agentById?.configs?.response_mode || ['Text'],
+    agent_voice_input_mode: agentById?.configs?.input_mode || ['Text'],
 
     agent_integrations: agentById?.configs?.integrations || [],
   }
