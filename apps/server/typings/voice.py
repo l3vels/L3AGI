@@ -27,14 +27,6 @@ class ToolInput(BaseModel):
     class_name: Optional[str]
 
 
-class VoiceSynthesizerResponse(BaseModel):
-    audio_url: str
-
-
-class VoiceTranscriberResponse(BaseModel):
-    text: str
-
-
 class ToolFieldOutput(BaseModel):
     label: str
     key: str
