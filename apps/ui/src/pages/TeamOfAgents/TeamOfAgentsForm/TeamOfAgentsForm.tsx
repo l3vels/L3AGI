@@ -200,7 +200,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <AgentDropdown
           isMulti
-          label={t('data-source')}
+          label={t('datasource')}
           fieldName={'team_datasources'}
           fieldValue={team_datasources}
           setFieldValue={setFieldValue}
