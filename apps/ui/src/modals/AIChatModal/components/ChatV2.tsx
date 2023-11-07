@@ -154,7 +154,7 @@ const ChatV2 = () => {
       created_on: new Date().toISOString(),
       sender_user: user || '',
       run_id: null,
-      audio_url: null,
+      audio_url: recordedVoice || null,
     }
 
     upsertChatMessageInCache(message, {
@@ -231,6 +231,7 @@ const ChatV2 = () => {
           chat_id: chatId,
           prompt: message,
           localChatMessageRefId,
+          voice_url: recordedVoice,
         })
       } else {
         await createChatMessageService({
@@ -239,6 +240,7 @@ const ChatV2 = () => {
           teamId,
           localChatMessageRefId, // Used to update the message with socket
           parentId: parentMessageId,
+          voice_url: recordedVoice,
         })
       }
 
@@ -257,7 +259,7 @@ const ChatV2 = () => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
 
-      if (formValue || uploadedFileObject) {
+      if (formValue || uploadedFileObject || recordedVoice) {
         createMessage()
       }
     }
@@ -367,17 +369,18 @@ const ChatV2 = () => {
                 />
               </StyledFileWrapper>
             )}
+
             <StyledTextareaWrapper>
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
+              <AudioRecorder setRecordedVoice={setRecordedVoice} />
               {recordedVoice && (
                 <AudioPlayer
                   audioUrl={recordedVoice || ''}
                   onCloseClick={() => setRecordedVoice(null)}
                 />
               )}
-
               {typingEffectText ? (
                 <StyledInputWrapper secondary>
                   <Typewriter
@@ -409,15 +412,15 @@ const ChatV2 = () => {
               )}
               <StyledButton
                 onClick={() => {
-                  if (formValue || uploadedFileObject) {
+                  if (formValue || uploadedFileObject || recordedVoice) {
                     createMessage()
                   }
                 }}
-                disabled={!formValue || thinking}
+                disabled={(!formValue && !recordedVoice) || thinking}
               >
                 <StyledSenIcon size={27} />
               </StyledButton>
-              <AudioRecorder setRecordedVoice={setRecordedVoice} />
+
               {user && <CommandIcon />}
             </StyledTextareaWrapper>
           </StyledForm>
@@ -463,9 +466,10 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
 
-  align-items: flex-start;
-  padding: 0px 23px 0px 16px;
+  /* align-items: center; */
+  padding: 10px 30px;
   /* gap: 12px; */
+  /* padding-top: 5px; */
 
   background: rgba(0, 0, 0, 0.1);
   /* Style */
@@ -503,8 +507,9 @@ const StyledTextareaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 0px;
-  padding-left: 20px;
+  gap: 10px;
+  /* padding: 10px 0px;
+  padding-left: 20px; */
 `
 
 const StyledButton = styled.div<{ disabled: boolean }>`
@@ -530,7 +535,6 @@ const StyledChatFooter = styled.div`
   justify-content: center;
 
   width: 100%;
-  padding: 0 20px;
 `
 
 const StyledButtonGroup = styled.div`
@@ -587,25 +591,23 @@ const StyledFileWrapper = styled.div`
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
   /* width: calc(100vw - 600px);
   max-width: 600px; */
+  overflow: hidden;
 
-  padding-bottom: 2px;
   width: 100%;
   ${p =>
     p.secondary &&
     css`
       padding-left: 2px;
-      padding-bottom: 0;
     `};
-
-  /* @media (max-width: 1200px) {
-    width: 400px;
-  } */
 `
 const StyledChatInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100%;
+
+  margin-top: 50px;
 `
 const StyledChatBottom = styled.div`
   display: flex;
@@ -615,6 +617,7 @@ const StyledChatBottom = styled.div`
   width: 100%;
 `
 const StyledSenIcon = styled(SendIcon)`
+  min-width: 30px;
   path {
     fill: ${({ theme }) => theme.body.iconColor};
     stroke: ${({ theme }) => theme.body.iconColor};

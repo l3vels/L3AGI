@@ -146,7 +146,7 @@ const StyledTimeIndicator = styled.div`
   user-select: none;
   opacity: 0.4;
 
-  color: black;
+  color: #000;
 `
 const StyledButton = styled.button`
   width: 30px;
