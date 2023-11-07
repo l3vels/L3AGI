@@ -90,8 +90,10 @@ class SystemMessageBuilder:
     def replace_templates(self, text: str) -> str:
         # This pattern will match strings like {{agent.sales.greeting}} and {{greeting}}
         pattern = re.compile(
-            r"\{\{(agent\.(?P<agent_name>[\w\s]+?)\.)?(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
+            r"\{\{(agents\.(?P<agent_name>[\w\s]+?)\.)?(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
         )
+
+        agent_mapping = {}
 
         def replace_match(match):
             agent_name = match.group("agent_name")
@@ -99,16 +101,29 @@ class SystemMessageBuilder:
             index = match.group("index")
 
             if agent_name:
-                # Fetch agent by name
-                agent = AgentModel.get_agent_by_name(
-                    db.session, self.agent.account_id, agent_name
-                )
-                agent_data = convert_model_to_response(agent)
-                source_data = (
-                    agent_data.agent
-                    if hasattr(agent_data.agent, field_name)
-                    else agent_data.configs
-                )
+                agent = agent_mapping.get(agent_name, None)
+
+                if not agent:
+                    # Retrieve the agent if not already retrieved
+                    agent = AgentModel.get_agent_by_name(
+                        db.session, self.agent.account_id, agent_name
+                    )
+
+                    agent_mapping[agent_name] = agent
+
+                agent_with_configs = convert_model_to_response(agent)
+                agent_with_configs.system_message = SystemMessageBuilder(
+                    agent_with_configs
+                ).build()
+
+                source_data = None
+
+                if hasattr(agent_with_configs.agent, field_name):
+                    source_data = agent_with_configs.agent
+                elif hasattr(agent_with_configs.configs, field_name):
+                    source_data = agent_with_configs.configs
+                else:
+                    source_data = agent_with_configs
             else:
                 # Use current agent if no agent name is provided
                 source_data = (
@@ -121,12 +136,12 @@ class SystemMessageBuilder:
                 )  # Return the original text if agent or property not found
 
             # Retrieve the field value
-            value = getattr(source_data, field_name, "Unknown field")
+            value = getattr(source_data, field_name, "")
             if index and isinstance(value, list):
                 try:
                     value = value[int(index)]
                 except IndexError:
-                    value = "Index out of range"
+                    value = ""
             elif isinstance(value, list):
                 # Format the list for display
                 value = f"{field_name.upper()}: \n" + "\n".join(
