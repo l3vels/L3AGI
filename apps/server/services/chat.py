@@ -239,6 +239,7 @@ def process_chat_message(
                 voice_settings=voice_settings,
                 team_id=team_id,
                 parent_id=parent_id,
+                history=history,
                 run_id=run.id,
                 run_logs_manager=run_logs_manager,
             )
@@ -556,22 +557,11 @@ def run_conversational_agent(
     voice_settings: AccountVoiceSettings,
     run_id: UUID,
     run_logs_manager: RunLogsManager,
+    history: PostgresChatMessageHistory,
     team_id: Optional[UUID] = None,
     parent_id: Optional[UUID] = None,
 ):
-    history = PostgresChatMessageHistory(
-        session_id=session_id,
-        sender_account_id=sender_account_id,
-        sender_user_id=sender_user_id,
-        sender_name=sender_name,
-        parent_id=parent_id,
-        team_id=team_id,
-        agent_id=agent_with_configs.agent.id,
-        chat_id=None,
-        run_id=run_id,
-    )
-
-    datasources = (
+    data_sources = (
         db.session.query(DatasourceModel)
         .filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources))
         .all()
@@ -579,8 +569,8 @@ def run_conversational_agent(
 
     tool_callback_handler = run_logs_manager.get_tool_callback_handler()
 
-    datasource_tools = get_datasource_tools(
-        datasources,
+    data_source_tools = get_datasource_tools(
+        data_sources,
         settings,
         provider_account,
         agent_with_configs,
@@ -599,12 +589,12 @@ def run_conversational_agent(
     pre_retrieved_context = ""
 
     if agent_with_configs.configs.source_flow == DataSourceFlow.PRE_RETRIEVAL.value:
-        if len(datasource_tools) != 0:
-            pre_retrieved_context = datasource_tools[0]._run(prompt)
+        if len(data_source_tools) != 0:
+            pre_retrieved_context = data_source_tools[0]._run(prompt)
 
         tools = agent_tools
     else:
-        tools = datasource_tools + agent_tools
+        tools = data_source_tools + agent_tools
 
     conversational = ConversationalAgent(sender_name, provider_account, session_id)
     return conversational.run(
@@ -616,8 +606,6 @@ def run_conversational_agent(
         prompt,
         history,
         human_message_id,
-        run_id,
-        sender_user_id,
         run_logs_manager,
         pre_retrieved_context,
     )
@@ -625,8 +613,6 @@ def run_conversational_agent(
 
 def create_and_send_chat_message(
     session_id: str,
-    # account: AccountModel,
-    # sender_user: UserModel,
     sender_name: str,
     sender_user_id: str,
     sender_account_id: str,

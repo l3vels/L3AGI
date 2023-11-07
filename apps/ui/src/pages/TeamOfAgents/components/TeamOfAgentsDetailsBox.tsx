@@ -58,9 +58,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
   const { model, temperature } = configs
   const isCreator = user?.id === created_by
 
-  const teamModel = models
-    ?.filter((modelData: any) => modelData.id === model)
-    .map((model: any) => model.name)
+  const teamModel = models?.filter(modelData => modelData.id === model).map(model => model.name)
 
   const handleEdit = () => {
     closeModal('team-of-agent-view-modal')
