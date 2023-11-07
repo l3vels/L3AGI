@@ -49,7 +49,7 @@ const HeaderButtons = () => {
       )}
 
       <Tooltip
-        content={() => <span>{`${t('doc')}s`}</span>}
+        content={() => <span>{t('docs')}</span>}
         position={Tooltip.positions.BOTTOM}
         tooltipSize='small'
       >
@@ -59,7 +59,7 @@ const HeaderButtons = () => {
         >
           <StyledInnerButtonWrapper>
             <TypographyPrimary
-              value={`${t('doc')}s`}
+              value={t('docs')}
               type={Typography.types.LABEL}
               size={Typography.sizes.sm}
             />

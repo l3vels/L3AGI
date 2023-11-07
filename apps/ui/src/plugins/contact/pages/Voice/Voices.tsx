@@ -21,7 +21,7 @@ const Voices = ({ isPublic }: { isPublic?: boolean }) => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>{`${t('voice')}s`}</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('voices')}`}</StyledSectionTitle>
         </div>
       </StyledHeaderGroup>
 

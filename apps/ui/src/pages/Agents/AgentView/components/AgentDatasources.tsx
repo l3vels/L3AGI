@@ -23,7 +23,7 @@ const AgentDatasources = ({ datasources }: AgentDataSourcesProps) => {
   return (
     <StyledWrapper>
       <TypographyPrimary
-        value={`${t('data-source')}s`}
+        value={t('datasources')}
         type={Typography.types.LABEL}
         size={Typography.sizes.lg}
       />

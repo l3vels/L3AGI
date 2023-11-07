@@ -109,23 +109,12 @@ const MainNavigation = () => {
         >
           <StyledMobileIcon size={30} />
           <TypographySecondary
-            value={`${t('contact')}s`}
+            value={t('contacts')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
         </StyledLi>
       )}
-
-      {/* {isGroup && (
-        <StyledLi isActive={includes(active, 'groups')} onClick={() => onHandleClick('/groups')}>
-          <StyledGroupIcon size={30} />
-          <TypographySecondary
-            value={`${t('group')}s`}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          />
-        </StyledLi>
-      )} */}
 
       {isDatasource && (
         <StyledLi
@@ -134,7 +123,7 @@ const MainNavigation = () => {
         >
           <StyledValueOutlineIcon size={40} />
           <TypographySecondary
-            value={t('data-source')}
+            value={t('datasources')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -162,7 +151,7 @@ const MainNavigation = () => {
         >
           <StyledGamesIcon size={40} />
           <TypographySecondary
-            value={`${t('integration')}s`}
+            value={t('integrations')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -173,7 +162,7 @@ const MainNavigation = () => {
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
           <TypographySecondary
-            value={`${t('model')}s`}
+            value={t('models')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

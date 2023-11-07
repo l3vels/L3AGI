@@ -13,6 +13,7 @@
   "add-email": "Add email",
   "add-agent": "Add $t(agent)",
   "add-team": "Add $t(team)",
+  "datasource": "Knowledge",
   "add-datasource": "Add $t(datasource)",
   "add-contact": "Add $t(contact)",
   "add-group": "Add $t(group)",
@@ -96,7 +97,7 @@
   "ctrl+f": "Ctrl+F",
   "ctrl+shift+f": "Ctrl+Shift+F",
   "date": "Date",
-  "data-source": "Data source",
+  "datasource": "Data source",
   "datasource-description": "Here is your $t(datasource), a collection of databases, APIs, files, and more.",
   "description": "Description",
   "deleteUser": "Delete user",
@@ -343,5 +344,13 @@
   "telegram-bot-api-token": "Telegram Bot API Token",
   "telegram-bot-username": "Telegram Bot Username",
   "similarity-top-k": "Similarity Top K",
-  "system-message": "System Message"
+  "system-message": "System Message",
+  "datasources": "$t(datasource)s",
+  "docs": "$t(doc)s",
+  "toolkits": "$t(toolkit)s",
+  "voices": "$t(voice)s",
+  "contacts": "$t(contact)s",
+  "groups": "$t(group)s",
+  "integrations": "$t(integration)s",
+  "models": "$t(model)s"
 }
