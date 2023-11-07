@@ -2,7 +2,7 @@ import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 
-import useCreateApiKey from './useCreateApiKey'
+import { useCreateApiKey } from './useCreateApiKey'
 
 import { useTranslation } from 'react-i18next'
 
@@ -27,9 +27,7 @@ type CreateApiModalProps = {
 
 const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
   const { t } = useTranslation()
-  const { formik, formHook, handleSubmit } = useCreateApiKey()
-
-  const apiKeysName = formHook.watch('name')
+  const { formik, handleSubmit } = useCreateApiKey()
 
   return (
     <>
@@ -58,7 +56,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
               form={<CreateApiKeysForm closeModal={closeModal} formHook={formHook} />}
               categoryValue={undefined}
             /> */}
-            <CreateApiKeysForm closeModal={closeModal} formik={formik} />
+            {/* <CreateApiKeysForm /> */}
             <StyledModalFooter>
               <StyledActionsContainer>
                 <ButtonTertiary onClick={closeModal} size={Button.sizes.LARGE}>

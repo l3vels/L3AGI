@@ -88,6 +88,8 @@ import ScheduleRunModal from 'modals/ScheduleRunModal'
 import RunLogsModal from 'modals/RunLogsModal/RunLogsModal'
 import CreateFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/CreateFineTuningForm'
 import EditFineTuningForm from 'pages/Models/FineTuning/FineTuningForm/EditFineTuningForm'
+import CreateApiKeyForm from 'pages/ApiKeys/CreateApiKey/CreateApikeysForm'
+import EditApiKeyForm from 'pages/ApiKeys/EditApiKey/EditApiKeysForm'
 import Integrations from 'pages/Integrations'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import VoiceModal from 'modals/VoiceModal'
@@ -305,6 +307,19 @@ const Route = () => {
               />
             </Router>
 
+            <Router path='api-key' element={<MainRouteLayout />} key={document.location.href}>
+              <Router index element={<ApiKeys />} key={document.location.href} />
+              <Router
+                path={'create-api-key'}
+                element={<CreateApiKeyForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={':apiKeyId/edit-api-key'}
+                element={<EditApiKeyForm />}
+                key={document.location.href}
+              />
+            </Router>
             {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Group />} key={document.location.href} />
             </Router> */}

@@ -3,8 +3,7 @@ import cronstrue from 'cronstrue'
 
 export const apiKeyValidation = yup.object().shape({
   name: yup.string().required('Name cannot be blank'),
-  note: yup.string().nullable(),
-  expiration: yup.date().nullable(),
+  description: yup.string().nullable(),
 })
 
 export const webhookValidation = yup.object().shape({

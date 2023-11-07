@@ -1,9 +1,14 @@
-query apiKeyById($id: ID!) @api(name: game) {
-  apiKeyById(id: $id) {
+query apiKeyById($id: id!) @api(name: "ai") {
+  apiKeyById(id: $id)
+    @rest(type: "ApiKeys", path: "/api-key/{args.id}", method: "GET", endpoint: "ai") {
+    id
     name
     token
-    note
-    expiration
-    games
+    description
+    is_deleted
+    account_id
+    created_on
+    created_by
+    modified_by
   }
 }
