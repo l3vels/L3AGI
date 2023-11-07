@@ -1,5 +1,17 @@
 olga_configs = {
     "info": {"logo": "", "welcomeMessage": "Welcome to L3AGI"},
+    "naming": {
+        "home": "Home",
+        "agent": "Agent",
+        "team": "Team",
+        "datasource": "Knowledge",
+        "model": "Model",
+        "discovery": "Discovery",
+        "chat": "Agents",
+        "toolkit": "Toolkit",
+        "schedules": "Schedules",
+        "integration": "Integration",
+    },
     "modules": {
         "home": {
             "welcome_message": "Build Your Support AI Agents",
