@@ -89,6 +89,7 @@ class ConversationalAgent(BaseAgent):
         configs = agent_with_configs.configs
         audio_url = None
         if configs.response_mode.includes("Voice"):
+            # todo text to speech and generate audio url
             audio_url = text_to_speech(res, configs, voice_settings)
             pass
 

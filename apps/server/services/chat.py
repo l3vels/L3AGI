@@ -63,6 +63,9 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     prompt = body.prompt
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id)
+    if body.audio_data:
+        # todo Ismael need upload s3
+        pass
 
     process_chat_message(
         session_id=session_id,
@@ -77,7 +80,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         provider_account=provider_account,
         provider_user=provider_user,
         chat_id=None,
-        voice_url=None,
+        voice_url=body.voice_url,
     )
 
     return ""
@@ -116,7 +119,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id, chat_id)
 
     if audio_data:
-        # need upload s3
+        # Ismael need upload s3
         pass
     voice_url = body.voice_url
 

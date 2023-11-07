@@ -299,11 +299,11 @@ class ConfigModel(BaseModel):
         cls, session: Session, account_id: UUID
     ) -> AccountVoiceSettings:
         keys = [
-            "deepgram_api_key",
-            "azure_speech_key",
-            "azure_speech_region",
-            "play_ht_api_key",
-            "play_ht_user_id",
+            "DEEPGRAM_API_KEY",
+            "AZURE_SPEECH_KEY",
+            "AZURE_SPEECH_REGION",
+            "PLAY_HT_API_KEY",
+            "PLAY_HT_USER_ID",
             # todo add openai tsss
             # todo add 11labs
         ]
@@ -332,11 +332,11 @@ class ConfigModel(BaseModel):
             )
 
         return AccountVoiceSettings(
-            deepgram_api_key=config.get("deepgram_api_key"),
-            azure_speech_key=config.get("azure_speech_key"),
-            azure_speech_region=config.get("azure_speech_region"),
-            play_ht_api_key=config.get("play_ht_api_key"),
-            play_ht_user_id=config.get("play_ht_user_id"),
+            DEEPGRAM_API_KEY=config.get("DEEPGRAM_API_KEY"),
+            AZURE_SPEECH_KEY=config.get("AZURE_SPEECH_KEY"),
+            AZURE_SPEECH_REGION=config.get("AZURE_SPEECH_REGION"),
+            PLAY_HT_API_KEY=config.get("PLAY_HT_API_KEY"),
+            PLAY_HT_USER_ID=config.get("PLAY_HT_USER_ID"),
         )
 
     @classmethod

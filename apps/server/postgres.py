@@ -58,6 +58,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
     def create_message(
         self, message, parent_id: Optional[str] = None, agent_id: Optional[UUID] = None
     ):
+        # todo store audio file
         # Append the message to the record in PostgreSQL
         chat_message = ChatMessage(
             sender_user_id=self.sender_user_id,

@@ -60,8 +60,8 @@ class AccountSettings(BaseModel):
 
 
 class AccountVoiceSettings(BaseModel):
-    deepgram_api_key: Optional[str]
-    azure_speech_key: Optional[str]
-    azure_speech_region: Optional[str]
-    play_ht_api_key: Optional[str]
-    play_ht_user_id: Optional[str]
+    DEEPGRAM_API_KEY: Optional[str]
+    AZURE_SPEECH_KEY: Optional[str]
+    AZURE_SPEECH_REGION: Optional[str]
+    PLAY_HT_API_KEY: Optional[str]
+    PLAY_HT_USER_ID: Optional[str]

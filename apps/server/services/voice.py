@@ -26,6 +26,7 @@ async def text_to_speech(
     """
 
     # todo text to speech
+    # check which one you can use
     synthesizer = configs.synthesizer  # you can check with it later which synthesizer
     default_voice = configs.default_voice or None
 

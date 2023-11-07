@@ -3,6 +3,7 @@ import playHTLogo from 'assets/voices/playHT.png'
 import azureLogo from 'assets/voices/azure.png'
 import googleVoiceLogo from 'assets/voices/googleVoice.png'
 import labsLogo from 'assets/voices/11labs.webp'
+import openAI from 'assets/models/openai.jpg'
 
 export const voiceLogos = [
   {
@@ -24,5 +25,9 @@ export const voiceLogos = [
   {
     logoSrc: labsLogo,
     voiceName: '11Labs',
+  },
+  {
+    logoSrc: openAI,
+    voiceName: 'OpenAI',
   },
 ]
