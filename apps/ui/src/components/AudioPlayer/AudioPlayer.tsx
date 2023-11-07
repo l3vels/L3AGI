@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 
 import Play from '@l3-lib/ui-core/dist/icons/PlayOutline'
-import Pause from '@l3-lib/ui-core/dist/icons/Pause'
-import styled from 'styled-components'
 
-const AudioPlayer = ({ audioUrl }: { audioUrl: string }) => {
+import Pause from '@l3-lib/ui-core/dist/icons/Pause'
+import styled, { css } from 'styled-components'
+import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
+
+const AudioPlayer = ({
+  audioUrl,
+  onCloseClick,
+}: {
+  audioUrl: string
+  onCloseClick?: () => void
+}) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -53,12 +61,17 @@ const AudioPlayer = ({ audioUrl }: { audioUrl: string }) => {
   }, [])
 
   return (
-    <StyledRoot>
+    <StyledRoot hasClose={onCloseClick ? true : false}>
       <StyledButton onClick={togglePlay} className='play-pause-button' type='button'>
-        {isPlaying ? <Pause size={25} /> : <Play size={20} />}
+        {isPlaying ? <StyledPauseIcon size={25} /> : <StyledPlayIcon size={20} />}
       </StyledButton>
 
-      <StyledProgress className='player-controls' ref={progressBarRef} onClick={handleSeek}>
+      <StyledProgress
+        className='player-controls'
+        ref={progressBarRef}
+        onClick={handleSeek}
+        hasClose={onCloseClick ? true : false}
+      >
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <audio ref={audioRef} src={audioUrl} onTimeUpdate={handleTimeUpdate} />
 
@@ -66,13 +79,19 @@ const AudioPlayer = ({ audioUrl }: { audioUrl: string }) => {
           <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
         </StyledTimeIndicator>
       </StyledProgress>
+
+      {onCloseClick && (
+        <StyledButton onClick={onCloseClick} className='play-pause-button' type='button'>
+          <StyledCloseIcon size='18' />
+        </StyledButton>
+      )}
     </StyledRoot>
   )
 }
 
 export default AudioPlayer
 
-const StyledRoot = styled.div`
+const StyledRoot = styled.div<{ hasClose: boolean }>`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -92,8 +111,15 @@ const StyledRoot = styled.div`
 
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
   background: ${({ theme }) => theme.body.cardBgColor};
+
+  ${props =>
+    props.hasClose &&
+    css`
+      width: 200px;
+      min-width: 200px;
+    `}
 `
-const StyledProgress = styled.div`
+const StyledProgress = styled.div<{ hasClose: boolean }>`
   height: 100%;
   width: 100%;
 
@@ -107,6 +133,12 @@ const StyledProgress = styled.div`
   align-items: center;
 
   /* background: ${({ theme }) => theme.body.backgroundColorPrimary}; */
+
+  ${props =>
+    props.hasClose &&
+    css`
+      border-radius: 0px;
+    `}
 `
 
 const StyledTimeIndicator = styled.div`
@@ -119,4 +151,15 @@ const StyledTimeIndicator = styled.div`
 const StyledButton = styled.button`
   width: 30px;
   height: 100%;
+`
+
+const StyledPlayIcon = styled(Play)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledPauseIcon = styled(Pause)`
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
 `

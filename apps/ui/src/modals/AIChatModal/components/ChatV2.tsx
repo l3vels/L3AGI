@@ -371,7 +371,12 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-              {recordedVoice && <AudioPlayer audioUrl={recordedVoice || ''} />}
+              {recordedVoice && (
+                <AudioPlayer
+                  audioUrl={recordedVoice || ''}
+                  onCloseClick={() => setRecordedVoice(null)}
+                />
+              )}
 
               {typingEffectText ? (
                 <StyledInputWrapper secondary>
