@@ -26,6 +26,7 @@ from controllers.schedule import router as schedule_router
 from controllers.team import router as team_router
 from controllers.team_agent import router as team_agent_router
 from controllers.tool import router as tool_router
+from controllers.voice import router as voice_router
 from controllers.workspace import router as workspace_router
 from models import *  # noqa: F403
 from models.db import Base, engine  # noqa: F401
@@ -113,6 +114,7 @@ app.include_router(schedule_router, prefix="/schedule")
 app.include_router(api_key_router, prefix="/api-key")
 app.include_router(integrations_router, prefix="/integrations")
 app.include_router(fine_tuning_router, prefix="/fine-tuning")
+app.include_router(voice_router, prefix="/voice")
 
 
 @app.get("/")
