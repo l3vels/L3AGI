@@ -222,6 +222,8 @@ const ChatV2 = () => {
       }
 
       const parentMessageId = reply.messageId || undefined
+      const voiceUrl = recordedVoice
+      setRecordedVoice(null)
 
       if (reply.isReply) {
         setReply(defaultReplyState)
@@ -231,7 +233,7 @@ const ChatV2 = () => {
           chat_id: chatId,
           prompt: message,
           localChatMessageRefId,
-          voice_url: recordedVoice,
+          voice_url: voiceUrl,
         })
       } else {
         await createChatMessageService({
@@ -240,7 +242,7 @@ const ChatV2 = () => {
           teamId,
           localChatMessageRefId, // Used to update the message with socket
           parentId: parentMessageId,
-          voice_url: recordedVoice,
+          voice_url: voiceUrl,
         })
       }
 
@@ -607,7 +609,7 @@ const StyledChatInputWrapper = styled.div`
 
   width: 100%;
 
-  margin-top: 50px;
+  /* margin-top: 50px; */
 `
 const StyledChatBottom = styled.div`
   display: flex;
