@@ -26,8 +26,6 @@ class ConversationalAgent(BaseAgent):
         prompt: str,
         history: PostgresChatMessageHistory,
         human_message_id: str,
-        run_id: UUID,
-        sender_user_id: str,
         run_logs_manager: RunLogsManager,
         pre_retrieved_context: str,
     ):
