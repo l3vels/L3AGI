@@ -84,7 +84,6 @@ class ConversationalAgent(BaseAgent):
         configs = agent_with_configs.configs
         audio_url = None
         if "Voice" in configs.response_mode:
-            # todo text to speech and generate audio url
             audio_url = text_to_speech(res, configs, voice_settings)
             pass
 
@@ -92,7 +91,7 @@ class ConversationalAgent(BaseAgent):
             res,
             human_message_id,
             agent_with_configs.agent.id,
-            # audio_url why pass this if we don't use it?
+            audio_url,
         )
 
         chat_pubsub_service.send_chat_message(chat_message=ai_message)

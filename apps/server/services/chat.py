@@ -63,9 +63,9 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     prompt = body.prompt
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id)
-    if body.audio_data:
-        # todo Ismael need upload s3
-        pass
+    # TODO: why?
+    # if body.audio_data:
+    #     pass
 
     process_chat_message(
         session_id=session_id,
@@ -218,10 +218,6 @@ def process_chat_message(
         for agent_with_configs in agents:
             # here todo voice convert if need
             if voice_url:
-                # agent_with_configs.configs.default_voice
-                # agent_with_configs.configs.voice_id
-                # agent_with_configs.configs.transcriber
-                # agent_with_configs.configs.response_mode
                 configs = agent_with_configs.configs
                 prompt = speech_to_text(voice_url, configs, voice_settings)
 

@@ -18,7 +18,7 @@ from voices.get_voices import DeepgramVoice, PlayHTVoice
 load_dotenv()
 
 
-async def text_to_speech(
+def text_to_speech(
     text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> str:
     """
@@ -35,7 +35,7 @@ async def text_to_speech(
         return ""
 
     voice_id = uuid.uuid1()
-    voice_bytes = await synthesizers[configs.synthesizer](text, configs, settings)
+    voice_bytes = synthesizers[configs.synthesizer](text, configs, settings)
     key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{voice_id}.waw"
     img_data = io.BytesIO(voice_bytes)
     url = AWSS3Service.upload(body=img_data, key=key, content_type="audio/waw")
@@ -43,7 +43,7 @@ async def text_to_speech(
     return url
 
 
-async def speech_to_text(
+def speech_to_text(
     url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> str:
     """
@@ -59,10 +59,10 @@ async def speech_to_text(
     if configs.transcriber not in transcribers:
         return ""
 
-    return await transcribers[configs.transcriber](url, configs, settings)
+    return transcribers[configs.transcriber](url, configs, settings)
 
 
-async def playht_text_to_speech(
+def playht_text_to_speech(
     text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> bytes:
     payload = {
@@ -95,7 +95,7 @@ async def playht_text_to_speech(
     return b""
 
 
-async def deepgram_speech_to_text(
+def deepgram_speech_to_text(
     url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> str:
     response = requests.get(url)
@@ -118,9 +118,7 @@ async def deepgram_speech_to_text(
         "tier": "enhanced",
     }
 
-    response = await asyncio.create_task(
-        deepgram.transcription.prerecorded(source, playload)
-    )
+    response = asyncio.create_task(deepgram.transcription.prerecorded(source, playload))
 
     results = response.get("results", {})
     channels = results.get("channels", [])
