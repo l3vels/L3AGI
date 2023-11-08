@@ -1,15 +1,20 @@
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
 import { useRunLogsService } from 'services/run'
 import Loader from '@l3-lib/ui-core/dist/Loader'
+import { StyledTab, StyledTabListSpan } from 'styles/tabStyles.css'
+import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
+import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
+import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import { useState } from 'react'
+import { StyledFormTabList, StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
 
 type RunLogsProps = {
   runId: string
 }
 
 const RunLogs = ({ runId }: RunLogsProps) => {
-  const { t } = useTranslation()
   const { data, loading } = useRunLogsService({ run_id: runId })
+  const [activeTab, setActiveTab] = useState(0)
 
   if (loading)
     return (
@@ -18,49 +23,47 @@ const RunLogs = ({ runId }: RunLogsProps) => {
       </StyledLoaderWrapper>
     )
 
+  const handleTabClick = (tabId: number) => {
+    setActiveTab(tabId)
+  }
+
   return (
     <StyledWrapper>
-      {data?.map(({ id, input, output, name, type, error }, index: number) => {
-        const isFinalAnswer = type === 'Final Answer'
-        const isSystem = type === 'System'
-        const isTool = type === 'Tool'
+      <StyledFormTabsWrapper>
+        <StyledFormTabList size='small' activeTabId={activeTab}>
+          {data.map(({ name }, index) => (
+            <StyledTab key={index} onClick={() => handleTabClick(index)}>
+              <StyledTabListSpan>
+                {index + 1}. {name}
+              </StyledTabListSpan>
+            </StyledTab>
+          ))}
+        </StyledFormTabList>
+      </StyledFormTabsWrapper>
 
-        return (
-          <LogCard key={id}>
-            <LogTitle>
-              {index + 1}.{' '}
-              {isTool
-                ? `${name} ${t('tool')}`
-                : isSystem
-                ? t('system-prompt')
-                : isFinalAnswer
-                ? t('final-answer')
-                : ''}
-            </LogTitle>
+      <TabsContext activeTabId={activeTab}>
+        <TabPanels noAnimation>
+          {data.map(({ messages }, index) => (
+            <TabPanel key={index}>
+              <StyledCards>
+                {messages.map(({ name, content }, index: number) => {
+                  return (
+                    <StyledLogCard key={index}>
+                      <StyledLogTitle>{name}</StyledLogTitle>
 
-            {input && (
-              <CodeCard>
-                <CodeTitle>{t('input')}</CodeTitle>
-                <CodeContent>{input}</CodeContent>
-              </CodeCard>
-            )}
-
-            {output && (
-              <CodeCard>
-                <CodeTitle>{t('output')}</CodeTitle>
-                <CodeContent>{output}</CodeContent>
-              </CodeCard>
-            )}
-
-            {error && (
-              <CodeCard>
-                <CodeTitle>{t('error')}</CodeTitle>
-                <CodeContent>{error}</CodeContent>
-              </CodeCard>
-            )}
-          </LogCard>
-        )
-      })}
+                      {content && (
+                        <StyledCodeCard>
+                          <StyledCodeContent>{content}</StyledCodeContent>
+                        </StyledCodeCard>
+                      )}
+                    </StyledLogCard>
+                  )
+                })}
+              </StyledCards>
+            </TabPanel>
+          ))}
+        </TabPanels>
+      </TabsContext>
     </StyledWrapper>
   )
 }
@@ -68,6 +71,14 @@ const RunLogs = ({ runId }: RunLogsProps) => {
 export default RunLogs
 
 const StyledWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  overflow-y: scroll;
+`
+
+const StyledCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -86,36 +97,33 @@ const StyledLoaderWrapper = styled.div`
   margin-left: 5px;
 `
 
-const LogCard = styled.div`
+const StyledLogCard = styled.div`
   border-radius: 10px;
   padding: 20px;
   width: 100%;
   background: #fff;
+  color: #000;
 `
 
-const LogTitle = styled.h2`
+const StyledLogTitle = styled.h2`
   margin: 0;
   padding: 0;
   font-size: 18px;
+  color: #000;
 `
 
-const CodeCard = styled.div`
+const StyledCodeCard = styled.div`
   margin-top: 15px;
   padding: 16px;
   background-color: #f1f1f1;
   border-radius: 10px;
 `
 
-const CodeTitle = styled.h3`
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-`
-
-const CodeContent = styled.pre`
+const StyledCodeContent = styled.pre`
   margin: 0;
   padding: 0;
   font-family: monospace;
   white-space: pre-wrap;
   font-size: 12px;
+  color: #000;
 `

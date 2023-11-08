@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import uuid
+from typing import Dict
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, String
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.sql import or_
 
 from models.base_model import BaseModel
-from typings.run import RunLogInput, UpdateRunLogInput
+from typings.run import RunLogInput, RunLogType
 
 
 class RunLogModel(BaseModel):
@@ -27,9 +29,8 @@ class RunLogModel(BaseModel):
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
 
     name = Column(String)
-    input = Column(String)
-    output = Column(String)
-    type = Column(String)  # System, Tool, Final Answer
+    type = Column(String)  # LLM, Tool
+    messages = Column(JSONB)
 
     run_id = Column(
         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
@@ -107,13 +108,18 @@ class RunLogModel(BaseModel):
         return db_run_log
 
     @classmethod
-    def update_latest_run_log(
-        cls, session: Session, run_id: UUID, run: UpdateRunLogInput, user_id: UUID
+    def add_message_to_latest_run_log(
+        cls,
+        session: Session,
+        run_id: UUID,
+        type: RunLogType,
+        message: Dict,
+        user_id: UUID,
     ):
         # Get the latest run log by the 'created_on' field
         old_run_log = (
             session.query(RunLogModel)
-            .filter(RunLogModel.run_id == run_id)
+            .filter(RunLogModel.run_id == run_id, RunLogModel.type == type.value)
             .order_by(RunLogModel.created_on.desc())
             .first()
         )
@@ -122,9 +128,10 @@ class RunLogModel(BaseModel):
         if not old_run_log:
             raise Exception("Run log not found")
 
-        for field in UpdateRunLogInput.__annotations__.keys():
-            setattr(old_run_log, field, getattr(run, field))
+        new_messages = list(old_run_log.messages) if old_run_log.messages else []
+        new_messages.append(message)
 
+        old_run_log.messages = new_messages
         old_run_log.modified_by = user_id
 
         # Commit the changes to the database
