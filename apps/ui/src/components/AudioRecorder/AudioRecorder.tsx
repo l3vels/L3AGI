@@ -5,6 +5,7 @@ import { StyledCallIcon } from 'plugins/contact/pages/Contact/Contacts'
 
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 import { ToastContext } from 'contexts'
+import { StyledTimeIndicator } from 'components/AudioPlayer/AudioPlayer'
 
 const AudioRecorder = ({
   setVoicePreview,
@@ -123,10 +124,10 @@ const AudioRecorder = ({
         ) : (
           <>
             <StyledButton onClick={stopRecording} disabled={!recording} type='button'>
-              <StyledCloseIcon />
-              <StyledTimer>stop recording</StyledTimer>
+              <StyledCallIcon />
+              <StyledTimeIndicator>Stop recording</StyledTimeIndicator>
             </StyledButton>
-            <StyledTimer>{timer}</StyledTimer>
+            <StyledTimeIndicator>{timer}</StyledTimeIndicator>
             {/* Display the formatted time */}
           </>
         )}
@@ -155,14 +156,13 @@ const StyledRoot = styled.div<{ recording: boolean }>`
     css`
       width: 100%;
       justify-content: space-between;
-      padding-right: 20px;
+      padding: 0 20px;
       padding-left: 5px;
     `};
 `
-const StyledTimer = styled.div`
-  color: black;
-`
+
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
+  gap: 4px;
 `

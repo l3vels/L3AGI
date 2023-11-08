@@ -142,7 +142,7 @@ const StyledProgress = styled.div<{ hasClose: boolean }>`
     `}
 `
 
-const StyledTimeIndicator = styled.div`
+export const StyledTimeIndicator = styled.div`
   pointer-events: none;
   user-select: none;
   opacity: 0.4;
