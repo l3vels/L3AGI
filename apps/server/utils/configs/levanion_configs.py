@@ -4,7 +4,7 @@ levanion_configs = {
         "home": "Home",
         "agent": "Agent",
         "team": "Team",
-        "datasource": "Data sources",
+        "datasource": "Data source",
         "models": "Model",
         "discovery": "Discovery",
         "chat": "Multi-Agent",
@@ -41,14 +41,8 @@ levanion_configs = {
             "active": True,
             "label": "Models",
             "submodules": {
-                "models": {
-                    "operations": {
-                        "create": True,
-                        "list": True,
-                        "edit": True,
-                    }
-                },
-                "fine-tuning": {"operations": True},
+                "models": True,
+                "fine-tuning": True,
             },
         },
         "integration": {

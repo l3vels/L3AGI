@@ -7,7 +7,7 @@ interface CreateClientChatMessageInput {
   chat_id: string
   prompt: string
   localChatMessageRefId: string
-  voice_url?: Nullable<string>
+  voice_url: Nullable<string>
 }
 
 export const useCreateClientChatMessageService = () => {
