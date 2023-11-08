@@ -28,6 +28,7 @@ import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
@@ -58,6 +59,7 @@ const ChatV2 = () => {
 
   const [voicePreview, setVoicePreview] = useState<string | null>(null)
   const [startedRecording, setStartedRecording] = useState(false)
+  const [voiceLoading, setVoiceLoading] = useState(false)
 
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
@@ -220,6 +222,7 @@ const ChatV2 = () => {
       }
 
       if (voicePreview) {
+        setVoiceLoading(true)
         const voiceResponse = await fetch(voicePreview)
         const voiceBlob = await voiceResponse.blob()
 
@@ -238,6 +241,7 @@ const ChatV2 = () => {
         )
         voiceUrl = uploadedFile?.url
         setVoicePreview(null)
+        setVoiceLoading(false)
       }
 
       const { id: localChatMessageRefId } = addMessagesToCache(message, 'human', voiceUrl)
@@ -286,7 +290,7 @@ const ChatV2 = () => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && !thinking) {
+    if (e.key === 'Enter' && !e.shiftKey && !thinking && !voiceLoading) {
       e.preventDefault()
 
       if (formValue || uploadedFileObject || voicePreview) {
@@ -444,21 +448,30 @@ const ChatV2 = () => {
                         teamId={teamId}
                       />
                     </StyledInputWrapper>
-                  )}{' '}
+                  )}
                 </>
               )}
-              <StyledButton
-                onClick={() => {
-                  if (formValue || uploadedFileObject || voicePreview) {
-                    createMessage()
-                  }
-                }}
-                disabled={(!formValue && !voicePreview) || thinking}
-              >
-                <StyledSenIcon size={27} />
-              </StyledButton>
 
-              {user && <CommandIcon />}
+              <StyledChatInputRightSide>
+                {voiceLoading ? (
+                  <StyledLoaderWrapper>
+                    <Loader size={20} />
+                  </StyledLoaderWrapper>
+                ) : (
+                  <StyledButton
+                    onClick={() => {
+                      if (formValue || uploadedFileObject || voicePreview) {
+                        createMessage()
+                      }
+                    }}
+                    disabled={(!formValue && !voicePreview) || thinking}
+                  >
+                    <StyledSenIcon />
+                  </StyledButton>
+                )}
+
+                {user && <CommandIcon />}
+              </StyledChatInputRightSide>
             </StyledTextareaWrapper>
           </StyledForm>
           <StyledChatBottom>
@@ -523,7 +536,7 @@ const StyledForm = styled.form`
 
   width: 100%;
   max-width: 800px;
-  min-height: 48px;
+  min-height: 54px;
   height: fit-content;
   max-height: 250px;
 
@@ -550,7 +563,7 @@ const StyledTextareaWrapper = styled.div`
 `
 
 const StyledButton = styled.div<{ disabled: boolean }>`
-  margin: 0 20px;
+  /* margin: 0 10px; */
   cursor: pointer;
   ${props =>
     props.disabled &&
@@ -659,4 +672,14 @@ const StyledSenIcon = styled(SendIcon)`
     fill: ${({ theme }) => theme.body.iconColor};
     stroke: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledLoaderWrapper = styled.div`
+  padding: 0 5px;
+`
+const StyledChatInputRightSide = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 80px;
 `
