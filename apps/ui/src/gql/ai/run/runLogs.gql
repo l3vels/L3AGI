@@ -4,9 +4,10 @@ query runLogs($run_id: run_id!) @api(name: "ai") {
     id
     name
     type
-    input
-    output
-    error
+    messages {
+      name
+      content
+    }
     created_on
   }
 }

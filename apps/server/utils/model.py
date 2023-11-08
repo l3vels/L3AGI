@@ -1,8 +1,9 @@
 import os
-from typing import Dict, List
+from typing import Dict, List, Optional
 from uuid import UUID
 
 from fastapi_sqlalchemy import db
+from langchain.callbacks.base import BaseCallbackHandler
 from langchain.chat_models import ChatOpenAI
 from langchain.llms.huggingface_hub import HuggingFaceHub
 from langchain.llms.replicate import Replicate
@@ -107,6 +108,7 @@ def get_models_with_fine_tunings(account_id: UUID):
 def get_llm(
     settings: AccountSettings,
     agent_with_configs: AgentWithConfigsOutput,
+    callback_handler: Optional[BaseCallbackHandler] = None,
 ):
     models = get_models_with_fine_tunings(agent_with_configs.agent.account_id)
     model = get_model(models, agent_with_configs.configs.model)
@@ -126,6 +128,7 @@ def get_llm(
             openai_api_key=settings.openai_api_key,
             temperature=temperature,
             model_name=model_name,
+            callbacks=[callback_handler],
         )
     elif provider == ModelProviders.HUGGING_FACE:
         if not settings.hugging_face_access_token:

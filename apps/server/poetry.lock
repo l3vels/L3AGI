@@ -5872,4 +5872,4 @@ pydantic = ">=1.10.7"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d6d26dfea1b4b47e732dac53fae3867317ebf4253d7f2186dec63adeccf3c106"
+content-hash = "2c6a6d1dfeef1e23e29b3e4d66bde8450b5f2a748452c6486235e28ae6d72336"

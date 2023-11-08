@@ -51,7 +51,7 @@ const StyledModal = styled(Modal)`
 const StyledModalBody = styled.div`
   min-height: 400px;
 
-  max-width: 1000px;
+  max-width: 1200px;
   max-height: 800px;
   width: 100vw;
 `

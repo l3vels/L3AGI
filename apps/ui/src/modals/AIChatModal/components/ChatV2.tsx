@@ -28,6 +28,7 @@ import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
@@ -55,7 +56,11 @@ const ChatV2 = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const [formValue, setFormValue] = useState('')
-  const [recordedVoice, setRecordedVoice] = useState<string | null>(null)
+
+  const [voicePreview, setVoicePreview] = useState<string | null>(null)
+  const [startedRecording, setStartedRecording] = useState(false)
+  const [voiceLoading, setVoiceLoading] = useState(false)
+
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
 
@@ -130,7 +135,11 @@ const ChatV2 = () => {
     setThinking(status === ChatStatus.Running)
   }, [status])
 
-  const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
+  const addMessagesToCache = (
+    prompt: string,
+    message_type: 'human' | 'ai',
+    recordedVoiceUrl: string | null,
+  ) => {
     // Add message to cache immediately after user sends it. This message will be updated with sockets
     const message = {
       id: uuid(),
@@ -154,7 +163,7 @@ const ChatV2 = () => {
       created_on: new Date().toISOString(),
       sender_user: user || '',
       run_id: null,
-      audio_url: recordedVoice || null,
+      audio_url: recordedVoiceUrl,
     }
 
     upsertChatMessageInCache(message, {
@@ -206,12 +215,36 @@ const ChatV2 = () => {
   const createMessage = async () => {
     try {
       let message = formValue
+      let voiceUrl = null
 
       if (uploadedFileObject) {
         message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
       }
 
-      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human')
+      if (voicePreview) {
+        setVoiceLoading(true)
+        const voiceResponse = await fetch(voicePreview)
+        const voiceBlob = await voiceResponse.blob()
+
+        const formData: any = new FormData()
+        await formData.append('audio', voiceBlob, 'recorded_audio.wav')
+
+        const audioBlob = await formData.get('audio')
+
+        const uploadedFile = await uploadFile(
+          {
+            name: audioBlob.name,
+            type: audioBlob.type,
+            size: audioBlob.size,
+          },
+          audioBlob,
+        )
+        voiceUrl = uploadedFile?.url
+        setVoicePreview(null)
+        setVoiceLoading(false)
+      }
+
+      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human', voiceUrl)
 
       setThinking(true)
       setFormValue('')
@@ -222,8 +255,6 @@ const ChatV2 = () => {
       }
 
       const parentMessageId = reply.messageId || undefined
-      const voiceUrl = recordedVoice
-      setRecordedVoice(null)
 
       if (reply.isReply) {
         setReply(defaultReplyState)
@@ -248,6 +279,7 @@ const ChatV2 = () => {
 
       setThinking(false)
     } catch (e) {
+      console.log(e)
       setToast({
         message: t('toast-negative-message'),
         type: 'negative',
@@ -258,10 +290,10 @@ const ChatV2 = () => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && !thinking) {
+    if (e.key === 'Enter' && !e.shiftKey && !thinking && !voiceLoading) {
       e.preventDefault()
 
-      if (formValue || uploadedFileObject || recordedVoice) {
+      if (formValue || uploadedFileObject || voicePreview) {
         createMessage()
       }
     }
@@ -376,54 +408,70 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-              <AudioRecorder setRecordedVoice={setRecordedVoice} />
-              {recordedVoice && (
+              <AudioRecorder
+                setVoicePreview={setVoicePreview}
+                setStartedRecording={setStartedRecording}
+              />
+              {voicePreview && (
                 <AudioPlayer
-                  audioUrl={recordedVoice || ''}
-                  onCloseClick={() => setRecordedVoice(null)}
+                  audioUrl={voicePreview || ''}
+                  onCloseClick={() => setVoicePreview(null)}
                 />
               )}
-              {typingEffectText ? (
-                <StyledInputWrapper secondary>
-                  <Typewriter
-                    size='small'
-                    message={formValue}
-                    callFunction={() => {
-                      setTypingEffectText(false)
-                      setTimeout(() => {
-                        inputRef.current?.focus()
-                        inputRef.current?.setSelectionRange(formValue.length, formValue.length)
-                      }, 1)
-                    }}
-                  />
-                </StyledInputWrapper>
-              ) : (
-                <StyledInputWrapper>
-                  <Mentions
-                    inputRef={inputRef}
-                    onChange={(e: any) => {
-                      setFormValue(e.target.value)
-                    }}
-                    value={formValue}
-                    onKeyDown={handleKeyDown}
-                    setValue={setFormValue}
-                    agentId={agentId}
-                    teamId={teamId}
-                  />
-                </StyledInputWrapper>
+              {!startedRecording && !voicePreview && (
+                <>
+                  {typingEffectText ? (
+                    <StyledInputWrapper secondary>
+                      <Typewriter
+                        size='small'
+                        message={formValue}
+                        callFunction={() => {
+                          setTypingEffectText(false)
+                          setTimeout(() => {
+                            inputRef.current?.focus()
+                            inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                          }, 1)
+                        }}
+                      />
+                    </StyledInputWrapper>
+                  ) : (
+                    <StyledInputWrapper>
+                      <Mentions
+                        inputRef={inputRef}
+                        onChange={(e: any) => {
+                          setFormValue(e.target.value)
+                        }}
+                        value={formValue}
+                        onKeyDown={handleKeyDown}
+                        setValue={setFormValue}
+                        agentId={agentId}
+                        teamId={teamId}
+                      />
+                    </StyledInputWrapper>
+                  )}
+                </>
               )}
-              <StyledButton
-                onClick={() => {
-                  if (formValue || uploadedFileObject || recordedVoice) {
-                    createMessage()
-                  }
-                }}
-                disabled={(!formValue && !recordedVoice) || thinking}
-              >
-                <StyledSenIcon size={27} />
-              </StyledButton>
 
-              {user && <CommandIcon />}
+              <StyledChatInputRightSide>
+                {voiceLoading ? (
+                  <StyledLoaderWrapper>
+                    <Loader size={20} />
+                  </StyledLoaderWrapper>
+                ) : (
+                  <StyledButton
+                    onClick={() => {
+                      if (formValue || uploadedFileObject || voicePreview) {
+                        createMessage()
+                      }
+                    }}
+                    disabled={(!formValue && !voicePreview) || thinking}
+                  >
+                    <StyledSenIcon />
+                  </StyledButton>
+                )}
+
+                {user && <CommandIcon />}
+              </StyledChatInputRightSide>
             </StyledTextareaWrapper>
           </StyledForm>
           <StyledChatBottom>
@@ -488,7 +536,7 @@ const StyledForm = styled.form`
 
   width: 100%;
   max-width: 800px;
-  min-height: 48px;
+  min-height: 54px;
   height: fit-content;
   max-height: 250px;
 
@@ -515,7 +563,7 @@ const StyledTextareaWrapper = styled.div`
 `
 
 const StyledButton = styled.div<{ disabled: boolean }>`
-  margin: 0 20px;
+  /* margin: 0 10px; */
   cursor: pointer;
   ${props =>
     props.disabled &&
@@ -624,4 +672,14 @@ const StyledSenIcon = styled(SendIcon)`
     fill: ${({ theme }) => theme.body.iconColor};
     stroke: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledLoaderWrapper = styled.div`
+  padding: 0 5px;
+`
+const StyledChatInputRightSide = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 80px;
 `

@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from langchain.agents import AgentType, initialize_agent
 
 from agents.base_agent import BaseAgent
@@ -46,14 +44,13 @@ class ConversationalAgent(BaseAgent):
             agent_with_configs, pre_retrieved_context
         ).build()
 
-        run_logs_manager.create_system_run_log(system_message)
-
         res: str
 
         try:
             llm = get_llm(
                 settings,
                 agent_with_configs,
+                run_logs_manager.get_agent_callback_handler(),
             )
 
             agent = initialize_agent(
@@ -86,13 +83,16 @@ class ConversationalAgent(BaseAgent):
 
         configs = agent_with_configs.configs
         audio_url = None
-        if configs.response_mode.includes("Voice"):
+        if "Voice" in configs.response_mode:
             # todo text to speech and generate audio url
             audio_url = text_to_speech(res, configs, voice_settings)
             pass
 
         ai_message = history.create_ai_message(
-            res, human_message_id, agent_with_configs.agent.id, audio_url
+            res,
+            human_message_id,
+            agent_with_configs.agent.id,
+            # audio_url why pass this if we don't use it?
         )
 
         chat_pubsub_service.send_chat_message(chat_message=ai_message)

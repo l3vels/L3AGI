@@ -1,12 +1,13 @@
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional
 from uuid import UUID
 
 from langchain.callbacks.base import BaseCallbackHandler
+from langchain.chat_models.base import BaseMessage
 from langchain.schema.agent import AgentAction, AgentFinish
 from sqlalchemy.orm import Session
 
 from models.run_log import RunLogModel
-from typings.run import RunLogInput, RunLogType, UpdateRunLogInput
+from typings.run import RunLogInput, RunLogType
 
 
 class RunLogsManager:
@@ -41,12 +42,7 @@ class RunLogsManager:
         return callback_handler
 
     def create_run_log(
-        self,
-        type: RunLogType,
-        input: Optional[str] = None,
-        name: Optional[str] = None,
-        output: Optional[str] = None,
-        error: Optional[str] = None,
+        self, type: RunLogType, name: Optional[str] = "", messages: Optional[Dict] = []
     ):
         return RunLogModel.create_run_log(
             self.session,
@@ -56,33 +52,51 @@ class RunLogsManager:
                 team_id=self.team_id,
                 chat_id=self.chat_id,
                 name=name,
-                input=input,
-                output=output,
-                error=error,
                 type=str(type),
+                messages=messages,
             ),
             self.user_id,
             self.account_id,
         )
 
-    def create_system_run_log(self, input: str):
-        return self.create_run_log(type=RunLogType.SYSTEM, input=input)
+    def create_llm_run_log(self, messages: List[BaseMessage]):
+        message_mapping = {
+            "system": "System",
+            "human": "Human",
+            "ai": "AI",
+        }
 
-    def create_tool_run_log(self, input: str, tool_name: str):
-        return self.create_run_log(type=RunLogType.TOOL, name=tool_name, input=input)
+        messages = [
+            {
+                "name": message_mapping[message.type],
+                "content": message.content,
+            }
+            for message in messages
+        ]
 
-    def create_final_answer_run_log(self, input: str):
-        return self.create_run_log(type=RunLogType.ANSWER, output=input)
+        return self.create_run_log(
+            type=RunLogType.LLM, name=RunLogType.LLM, messages=messages
+        )
 
-    def update_run_log(
-        self,
-        output: Optional[str] = None,
-        error: Optional[str] = None,
-    ):
-        return RunLogModel.update_latest_run_log(
+    def create_tool_run_log(self, name: str, input: str):
+        messages = [
+            {
+                "name": name,
+                "content": input,
+            }
+        ]
+
+        return self.create_run_log(type=RunLogType.TOOL, name=name, messages=messages)
+
+    def add_message_to_run_log(self, type: RunLogType, name: str, content: str):
+        return RunLogModel.add_message_to_latest_run_log(
             self.session,
             self.run_id,
-            UpdateRunLogInput(error=error, output=output),
+            type,
+            {
+                "name": name,
+                "content": content,
+            },
             self.user_id,
         )
 
@@ -90,8 +104,14 @@ class RunLogsManager:
 class AgentCallbackHandler(BaseCallbackHandler):
     run_logs_manager: RunLogsManager
 
-    def on_llm_new_token(self, token: str, **kwargs) -> None:
-        print(f"My custom handler, token: {token}")
+    def on_chat_model_start(
+        self,
+        serialized: Dict[str, Any],
+        messages: List[List[BaseMessage]],
+        **kwargs: Any,
+    ) -> Any:
+        """Run when Chat Model starts running."""
+        self.run_logs_manager.create_llm_run_log(messages[0])
 
     def on_agent_action(
         self,
@@ -101,8 +121,14 @@ class AgentCallbackHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any,
     ) -> Any:
+        self.run_logs_manager.add_message_to_run_log(
+            type=RunLogType.LLM,
+            name="AI",
+            content=action.log,
+        )
+
         self.run_logs_manager.create_tool_run_log(
-            input=action.tool_input, tool_name=action.tool
+            name=action.tool, input=action.tool_input
         )
 
     def on_agent_finish(
@@ -113,8 +139,10 @@ class AgentCallbackHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any,
     ) -> Any:
-        self.run_logs_manager.create_final_answer_run_log(
-            input=finish.return_values["output"]
+        self.run_logs_manager.add_message_to_run_log(
+            type=RunLogType.LLM,
+            name="AI",
+            content=finish.log,
         )
 
 
@@ -130,7 +158,11 @@ class ToolCallbackHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any,
     ) -> Any:
-        self.run_logs_manager.update_run_log(None, str(error))
+        self.run_logs_manager.add_message_to_run_log(
+            type=RunLogType.TOOL,
+            name="Error",
+            content=str(error),
+        )
 
     def on_tool_end(
         self,
@@ -140,4 +172,8 @@ class ToolCallbackHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any,
     ) -> Any:
-        self.run_logs_manager.update_run_log(output, None)
+        self.run_logs_manager.add_message_to_run_log(
+            type=RunLogType.TOOL,
+            name="Output",
+            content=output,
+        )
