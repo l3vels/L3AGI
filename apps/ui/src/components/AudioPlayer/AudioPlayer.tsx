@@ -16,19 +16,24 @@ const AudioPlayer = ({
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
-  const audioRef = useRef(null as any)
-  const progressBarRef = useRef(null as any)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const progressBarRef = useRef<HTMLDivElement | null>(null)
 
   const togglePlay = () => {
+    if (audioRef.current === null) return
+
     if (isPlaying) {
-      audioRef?.current.pause()
+      audioRef.current.pause()
     } else {
-      audioRef?.current.play()
+      audioRef.current.play()
     }
     setIsPlaying(!isPlaying)
   }
 
   const handleTimeUpdate = () => {
+    if (audioRef.current === null) return
+    if (progressBarRef.current === null) return
+
     setCurrentTime(audioRef.current.currentTime)
     setDuration(audioRef.current.duration)
 
@@ -43,6 +48,9 @@ const AudioPlayer = ({
   }
 
   const handleSeek = (e: any) => {
+    if (audioRef.current === null) return
+    if (progressBarRef.current === null) return
+
     const seekTime = (e.nativeEvent.offsetX / progressBarRef.current.clientWidth) * duration
     audioRef.current.currentTime = seekTime
     setCurrentTime(seekTime)
@@ -55,8 +63,11 @@ const AudioPlayer = ({
   }
 
   useEffect(() => {
-    if (!audioRef) return
+    if (audioRef.current === null) return
+
     audioRef.current.onloadedmetadata = () => {
+      if (audioRef.current === null) return
+
       setDuration(audioRef.current.duration)
     }
   }, [])

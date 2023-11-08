@@ -333,7 +333,7 @@ const ChatV2 = () => {
       },
     })
   }
-  const hide = false
+
   return (
     <StyledWrapper>
       <StyledMessages>

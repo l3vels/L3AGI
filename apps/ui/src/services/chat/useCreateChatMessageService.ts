@@ -28,7 +28,7 @@ export const useCreateChatMessageService = () => {
           team_id: teamId,
           local_chat_message_ref_id: localChatMessageRefId,
           parent_id: parentId,
-          voice_url: voice_url,
+          voice_url,
         },
       },
     })

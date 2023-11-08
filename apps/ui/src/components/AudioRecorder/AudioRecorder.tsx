@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components'
 
 import { StyledCallIcon } from 'plugins/contact/pages/Contact/Contacts'
 
-import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 import { ToastContext } from 'contexts'
 import { StyledTimeIndicator } from 'components/AudioPlayer/AudioPlayer'
 
