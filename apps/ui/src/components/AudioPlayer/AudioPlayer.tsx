@@ -127,7 +127,7 @@ const StyledRoot = styled.div<{ hasClose: boolean }>`
   ${props =>
     props.hasClose &&
     css`
-      width: 200px;
+      width: 100%;
       min-width: 200px;
     `}
 `

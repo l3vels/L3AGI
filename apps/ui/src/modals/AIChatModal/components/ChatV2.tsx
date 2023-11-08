@@ -418,7 +418,7 @@ const ChatV2 = () => {
                   onCloseClick={() => setVoicePreview(null)}
                 />
               )}
-              {!startedRecording && (
+              {!startedRecording && !voicePreview && (
                 <>
                   {typingEffectText ? (
                     <StyledInputWrapper secondary>
