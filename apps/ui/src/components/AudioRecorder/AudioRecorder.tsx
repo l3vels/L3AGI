@@ -6,7 +6,11 @@ import { StyledCallIcon } from 'plugins/contact/pages/Contact/Contacts'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 
-const AudioRecorder = ({ setRecordedVoice }: { setRecordedVoice: any }) => {
+const AudioRecorder = ({
+  setVoicePreview,
+}: {
+  setVoicePreview: (value: string | null) => void
+}) => {
   const [recording, setRecording] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mediaRecorder, setMediaRecorder] = useState<any>(null)
@@ -14,7 +18,7 @@ const AudioRecorder = ({ setRecordedVoice }: { setRecordedVoice: any }) => {
   const { uploadFile } = useUploadFile()
 
   const startRecording = async () => {
-    setRecordedVoice(null)
+    setVoicePreview(null)
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
@@ -30,11 +34,28 @@ const AudioRecorder = ({ setRecordedVoice }: { setRecordedVoice: any }) => {
 
   const stopRecording = async () => {
     if (!mediaRecorder) return
-    setIsLoading(true)
+
     try {
       await mediaRecorder.stop()
       setRecording(false)
 
+      mediaRecorder.ondataavailable = async (e: any) => {
+        if (e.data.size > 0) {
+          const blob = new Blob([e.data], { type: 'audio/wav' })
+          const audioURL = URL.createObjectURL(blob)
+
+          setVoicePreview(audioURL)
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const saveRecording = async () => {
+    if (!mediaRecorder) return
+    setIsLoading(true)
+    try {
       mediaRecorder.ondataavailable = async (e: any) => {
         if (e.data.size > 0) {
           const blob = new Blob([e.data], { type: 'audio/wav' })
@@ -52,7 +73,7 @@ const AudioRecorder = ({ setRecordedVoice }: { setRecordedVoice: any }) => {
             },
             audioBlob,
           )
-          setRecordedVoice(uploadedFiles?.url)
+          setVoicePreview(uploadedFiles?.url)
         }
       }
     } catch (e) {

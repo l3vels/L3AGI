@@ -55,7 +55,8 @@ const ChatV2 = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const [formValue, setFormValue] = useState('')
-  const [recordedVoice, setRecordedVoice] = useState<string | null>(null)
+
+  const [voicePreview, setVoicePreview] = useState<string | null>(null)
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
 
@@ -130,7 +131,11 @@ const ChatV2 = () => {
     setThinking(status === ChatStatus.Running)
   }, [status])
 
-  const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
+  const addMessagesToCache = (
+    prompt: string,
+    message_type: 'human' | 'ai',
+    recordedVoiceUrl: string | null,
+  ) => {
     // Add message to cache immediately after user sends it. This message will be updated with sockets
     const message = {
       id: uuid(),
@@ -154,7 +159,7 @@ const ChatV2 = () => {
       created_on: new Date().toISOString(),
       sender_user: user || '',
       run_id: null,
-      audio_url: recordedVoice || null,
+      audio_url: recordedVoiceUrl,
     }
 
     upsertChatMessageInCache(message, {
@@ -211,7 +216,30 @@ const ChatV2 = () => {
         message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
       }
 
-      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human')
+      let voiceUrl = null
+      if (voicePreview) {
+        const voiceResponse = await fetch(voicePreview)
+        const voiceBlob = await voiceResponse.blob()
+
+        const formData: any = new FormData()
+
+        await formData.append('audio', voiceBlob, 'recorded_audio.wav')
+
+        const audioBlob = await formData.get('audio')
+
+        const uploadedFile = await uploadFile(
+          {
+            name: audioBlob.name,
+            type: audioBlob.type,
+            size: audioBlob.size,
+          },
+          audioBlob,
+        )
+        voiceUrl = uploadedFile?.url
+        setVoicePreview(null)
+      }
+
+      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human', voiceUrl)
 
       setThinking(true)
       setFormValue('')
@@ -222,8 +250,6 @@ const ChatV2 = () => {
       }
 
       const parentMessageId = reply.messageId || undefined
-      const voiceUrl = recordedVoice
-      setRecordedVoice(null)
 
       if (reply.isReply) {
         setReply(defaultReplyState)
@@ -248,6 +274,7 @@ const ChatV2 = () => {
 
       setThinking(false)
     } catch (e) {
+      console.log(e)
       setToast({
         message: t('toast-negative-message'),
         type: 'negative',
@@ -261,7 +288,7 @@ const ChatV2 = () => {
     if (e.key === 'Enter' && !e.shiftKey && !thinking) {
       e.preventDefault()
 
-      if (formValue || uploadedFileObject || recordedVoice) {
+      if (formValue || uploadedFileObject || voicePreview) {
         createMessage()
       }
     }
@@ -376,11 +403,11 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-              <AudioRecorder setRecordedVoice={setRecordedVoice} />
-              {recordedVoice && (
+              <AudioRecorder setVoicePreview={setVoicePreview} />
+              {voicePreview && (
                 <AudioPlayer
-                  audioUrl={recordedVoice || ''}
-                  onCloseClick={() => setRecordedVoice(null)}
+                  audioUrl={voicePreview || ''}
+                  onCloseClick={() => setVoicePreview(null)}
                 />
               )}
               {typingEffectText ? (
@@ -414,11 +441,11 @@ const ChatV2 = () => {
               )}
               <StyledButton
                 onClick={() => {
-                  if (formValue || uploadedFileObject || recordedVoice) {
+                  if (formValue || uploadedFileObject || voicePreview) {
                     createMessage()
                   }
                 }}
-                disabled={(!formValue && !recordedVoice) || thinking}
+                disabled={(!formValue && !voicePreview) || thinking}
               >
                 <StyledSenIcon size={27} />
               </StyledButton>
