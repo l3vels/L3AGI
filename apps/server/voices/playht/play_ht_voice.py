@@ -23,7 +23,7 @@ class PlayHTVoice(BaseVoice, ABC):
                 is_secret=True,
             ),
             VoiceEnvKey(
-                label="API key",
+                label="User ID",
                 key="PLAY_HT_USER_ID",
                 key_type=VoiceEnvKeyType.STRING,
                 is_required=True,

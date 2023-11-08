@@ -2,6 +2,7 @@ import asyncio
 import base64
 import io
 import os
+import uuid
 from logging import log
 
 import requests
@@ -27,14 +28,14 @@ async def text_to_speech(
 
     synthesizers = {
         PlayHTVoice.id: playht_text_to_speech,
+        # TODO: add AzureVoice.id: azure_text_to_speech, when available.
     }
-
-    voice_id = configs.voice_id or None
 
     if configs.synthesizer not in synthesizers:
         return ""
 
-    voice_bytes = await synthesizers[configs.synthesizer](text, settings)
+    voice_id = uuid.uuid1()
+    voice_bytes = await synthesizers[configs.synthesizer](text, configs, settings)
     key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{voice_id}.waw"
     img_data = io.BytesIO(voice_bytes)
     url = AWSS3Service.upload(body=img_data, key=key, content_type="audio/waw")
@@ -58,28 +59,26 @@ async def speech_to_text(
     if configs.transcriber not in transcribers:
         return ""
 
-    return await transcribers[configs.transcriber](url, settings)
+    return await transcribers[configs.transcriber](url, configs, settings)
 
 
-# TODO: configure caller via settings
-async def playht_text_to_speech(text: str, settings: AccountVoiceSettings) -> bytes:
-    API_KEY = os.environ["PLAY_HT_API_KEY"]
-    USER_ID = os.environ["PLAY_HT_USER_ID"]
-
+async def playht_text_to_speech(
+    text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> bytes:
     payload = {
         "quality": "high",
-        "output_format": "mp3",
+        "output_format": "waw",
         "speed": 1,
         "sample_rate": 24000,
         "text": text,
-        "voice": "larry",
+        "voice": configs.voice_id or configs.default_voice or "larry",
     }
 
     headers = {
         "accept": "text/event-stream",
         "content-type": "application/json",
-        "AUTHORIZATION": f"Bearer {API_KEY}",
-        "X-USER-ID": USER_ID,
+        "AUTHORIZATION": f"Bearer {settings.PLAY_HT_API_KEY}",
+        "X-USER-ID": settings.PLAY_HT_USER_ID,
     }
 
     response = requests.post(
@@ -96,12 +95,15 @@ async def playht_text_to_speech(text: str, settings: AccountVoiceSettings) -> by
     return b""
 
 
-# TODO: configure caller via settings
-async def deepgram_speech_to_text(url: str, settings: AccountVoiceSettings) -> str:
-    deepgram = Deepgram(os.environ["DEEPGRAM_API_KEY"])
-    audio_bytes = base64.b64decode(
-        url
-    )  # TODO: download voice here, and then perform action.
+async def deepgram_speech_to_text(
+    url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> str:
+    response = requests.get(url)
+    if response.status_code != 200:
+        return ""
+
+    audio_bytes = base64.b64decode(response.content)
+    deepgram = Deepgram(settings.DEEPGRAM_API_KEY)
 
     source = {
         "buffer": io.BytesIO(audio_bytes),
