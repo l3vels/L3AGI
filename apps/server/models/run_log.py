@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import uuid
+from datetime import datetime
 from typing import Dict
 
-from sqlalchemy import UUID, Boolean, Column, ForeignKey, String
+from sqlalchemy import (UUID, Boolean, Column, DateTime, ForeignKey, Integer,
+                        String)
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.sql import or_
@@ -31,6 +33,9 @@ class RunLogModel(BaseModel):
     name = Column(String)
     type = Column(String)  # LLM, Tool
     messages = Column(JSONB)
+
+    start_date = Column(DateTime(timezone=True), default=datetime.utcnow)
+    end_date = Column(DateTime(timezone=True))
 
     run_id = Column(
         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
@@ -131,6 +136,7 @@ class RunLogModel(BaseModel):
         new_messages = list(old_run_log.messages) if old_run_log.messages else []
         new_messages.append(message)
 
+        old_run_log.end_date = datetime.utcnow()
         old_run_log.messages = new_messages
         old_run_log.modified_by = user_id
 

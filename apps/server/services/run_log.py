@@ -70,6 +70,8 @@ class RunLogsManager:
             {
                 "name": message_mapping[message.type],
                 "content": message.content,
+                "additional_kwargs": message.additional_kwargs,
+                "is_chat_history": message.additional_kwargs.get("uuid") is not None,
             }
             for message in messages
         ]

@@ -30,8 +30,16 @@ class RunLogInput(BaseModel):
     messages: Optional[List[Dict]]
 
 
+class RunLogMessageOutput(BaseModel):
+    name: str
+    content: str
+    is_chat_history: Optional[bool]
+
+
 class RunLogOutput(BaseModel):
     id: UUID4
     name: str
     type: str
-    messages: Optional[List[Dict]]
+    messages: Optional[List[RunLogMessageOutput]]
+    start_date: Optional[str]
+    end_date: Optional[str]
