@@ -1,26 +1,53 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import useUploadFile from 'hooks/useUploadFile'
+import { useContext, useEffect, useRef, useState } from 'react'
+import styled, { css } from 'styled-components'
+
 import { StyledCallIcon } from 'plugins/contact/pages/Contact/Contacts'
 
-import Loader from '@l3-lib/ui-core/dist/Loader'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
+import { ToastContext } from 'contexts'
 
 const AudioRecorder = ({
   setVoicePreview,
+  setStartedRecording,
 }: {
   setVoicePreview: (value: string | null) => void
+  setStartedRecording: (value: boolean) => void
 }) => {
+  const { setToast } = useContext(ToastContext)
+
   const [recording, setRecording] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+
   const [mediaRecorder, setMediaRecorder] = useState<any>(null)
 
-  const { uploadFile } = useUploadFile()
+  const [timer, setTimer] = useState('00:00') // Timer state
+  const timerIntervalRef = useRef<any>(null)
+
+  const checkMicrophonePermission = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      // Permission is granted if getUserMedia resolves without an error
+      stream.getTracks().forEach(track => track.stop()) // Stop the tracks after checking
+      return true
+    } catch (error) {
+      // Permission is denied or an error occurred
+      setToast({
+        message: 'Microphone access denied!',
+        type: 'negative',
+        open: true,
+      })
+
+      return false
+    }
+  }
 
   const startRecording = async () => {
     setVoicePreview(null)
 
+    const isMicrophone = await checkMicrophonePermission()
+
     try {
+      if (!isMicrophone) return
+      setStartedRecording(true)
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const recorder = new MediaRecorder(stream)
 
@@ -28,7 +55,12 @@ const AudioRecorder = ({
       setMediaRecorder(recorder)
       setRecording(true)
     } catch (err) {
-      console.error('Error accessing the microphone:', err)
+      // console.error('Error accessing the microphone:', err)
+      setToast({
+        message: 'Error accessing the microphone!',
+        type: 'negative',
+        open: true,
+      })
     }
   }
 
@@ -37,6 +69,7 @@ const AudioRecorder = ({
 
     try {
       await mediaRecorder.stop()
+
       setRecording(false)
 
       mediaRecorder.ondataavailable = async (e: any) => {
@@ -48,64 +81,63 @@ const AudioRecorder = ({
         }
       }
     } catch (e) {
-      console.log(e)
+      setToast({
+        message: 'Failed to stop recording',
+        type: 'negative',
+        open: true,
+      })
     }
+
+    setStartedRecording(false)
   }
 
-  const saveRecording = async () => {
-    if (!mediaRecorder) return
-    setIsLoading(true)
-    try {
-      mediaRecorder.ondataavailable = async (e: any) => {
-        if (e.data.size > 0) {
-          const blob = new Blob([e.data], { type: 'audio/wav' })
-
-          const formData: any = new FormData()
-          await formData.append('audio', blob, 'recorded_audio.wav')
-
-          const audioBlob = await formData.get('audio')
-
-          const uploadedFiles = await uploadFile(
-            {
-              name: audioBlob.name,
-              type: audioBlob.type,
-              size: audioBlob.size,
-            },
-            audioBlob,
-          )
-          setVoicePreview(uploadedFiles?.url)
-        }
-      }
-    } catch (e) {
-      console.log(e)
+  useEffect(() => {
+    if (recording) {
+      let seconds = 0
+      timerIntervalRef.current = setInterval(() => {
+        seconds = seconds + 1
+        const minutes = Math.floor(seconds / 60)
+        const remainingSeconds = seconds % 60
+        const formattedTime = `${String(minutes).padStart(2, '0')}:${String(
+          remainingSeconds,
+        ).padStart(2, '0')}`
+        setTimer(formattedTime)
+      }, 1000)
+    } else {
+      clearInterval(timerIntervalRef.current)
+      setTimer('00:00')
     }
-    setIsLoading(false)
-  }
+
+    return () => {
+      clearInterval(timerIntervalRef.current)
+    }
+  }, [recording])
 
   return (
-    <StyledRoot>
-      {isLoading ? (
-        <Loader size={20} />
-      ) : (
-        <>
-          {!recording ? (
-            <button onClick={startRecording} disabled={recording} type='button'>
-              <StyledCallIcon />
-            </button>
-          ) : (
-            <button onClick={stopRecording} disabled={!recording} type='button'>
+    <StyledRoot recording={recording}>
+      <>
+        {!recording ? (
+          <button onClick={startRecording} disabled={recording} type='button'>
+            <StyledCallIcon />
+          </button>
+        ) : (
+          <>
+            <StyledButton onClick={stopRecording} disabled={!recording} type='button'>
               <StyledCloseIcon />
-            </button>
-          )}
-        </>
-      )}
+              <StyledTimer>stop recording</StyledTimer>
+            </StyledButton>
+            <StyledTimer>{timer}</StyledTimer>
+            {/* Display the formatted time */}
+          </>
+        )}
+      </>
     </StyledRoot>
   )
 }
 
 export default AudioRecorder
 
-const StyledRoot = styled.div`
+const StyledRoot = styled.div<{ recording: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,4 +149,20 @@ const StyledRoot = styled.div`
   min-height: 30px;
 
   border-radius: 100px;
+
+  ${p =>
+    p.recording &&
+    css`
+      width: 100%;
+      justify-content: space-between;
+      padding-right: 20px;
+      padding-left: 5px;
+    `};
+`
+const StyledTimer = styled.div`
+  color: black;
+`
+const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
 `

@@ -105,8 +105,8 @@ const StyledRoot = styled.div<{ hasClose: boolean }>`
 
   width: 160px;
   min-width: 160px;
-  min-height: 35px;
-  max-height: 35px;
+  min-height: 30px;
+  max-height: 30px;
 
   overflow: hidden;
 

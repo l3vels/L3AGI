@@ -57,6 +57,8 @@ const ChatV2 = () => {
   const [formValue, setFormValue] = useState('')
 
   const [voicePreview, setVoicePreview] = useState<string | null>(null)
+  const [startedRecording, setStartedRecording] = useState(false)
+
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
 
@@ -211,18 +213,17 @@ const ChatV2 = () => {
   const createMessage = async () => {
     try {
       let message = formValue
+      let voiceUrl = null
 
       if (uploadedFileObject) {
         message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
       }
 
-      let voiceUrl = null
       if (voicePreview) {
         const voiceResponse = await fetch(voicePreview)
         const voiceBlob = await voiceResponse.blob()
 
         const formData: any = new FormData()
-
         await formData.append('audio', voiceBlob, 'recorded_audio.wav')
 
         const audioBlob = await formData.get('audio')
@@ -332,7 +333,7 @@ const ChatV2 = () => {
       },
     })
   }
-
+  const hide = false
   return (
     <StyledWrapper>
       <StyledMessages>
@@ -403,41 +404,48 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-              <AudioRecorder setVoicePreview={setVoicePreview} />
+              <AudioRecorder
+                setVoicePreview={setVoicePreview}
+                setStartedRecording={setStartedRecording}
+              />
               {voicePreview && (
                 <AudioPlayer
                   audioUrl={voicePreview || ''}
                   onCloseClick={() => setVoicePreview(null)}
                 />
               )}
-              {typingEffectText ? (
-                <StyledInputWrapper secondary>
-                  <Typewriter
-                    size='small'
-                    message={formValue}
-                    callFunction={() => {
-                      setTypingEffectText(false)
-                      setTimeout(() => {
-                        inputRef.current?.focus()
-                        inputRef.current?.setSelectionRange(formValue.length, formValue.length)
-                      }, 1)
-                    }}
-                  />
-                </StyledInputWrapper>
-              ) : (
-                <StyledInputWrapper>
-                  <Mentions
-                    inputRef={inputRef}
-                    onChange={(e: any) => {
-                      setFormValue(e.target.value)
-                    }}
-                    value={formValue}
-                    onKeyDown={handleKeyDown}
-                    setValue={setFormValue}
-                    agentId={agentId}
-                    teamId={teamId}
-                  />
-                </StyledInputWrapper>
+              {!startedRecording && (
+                <>
+                  {typingEffectText ? (
+                    <StyledInputWrapper secondary>
+                      <Typewriter
+                        size='small'
+                        message={formValue}
+                        callFunction={() => {
+                          setTypingEffectText(false)
+                          setTimeout(() => {
+                            inputRef.current?.focus()
+                            inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                          }, 1)
+                        }}
+                      />
+                    </StyledInputWrapper>
+                  ) : (
+                    <StyledInputWrapper>
+                      <Mentions
+                        inputRef={inputRef}
+                        onChange={(e: any) => {
+                          setFormValue(e.target.value)
+                        }}
+                        value={formValue}
+                        onKeyDown={handleKeyDown}
+                        setValue={setFormValue}
+                        agentId={agentId}
+                        teamId={teamId}
+                      />
+                    </StyledInputWrapper>
+                  )}{' '}
+                </>
               )}
               <StyledButton
                 onClick={() => {
