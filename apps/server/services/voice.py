@@ -12,8 +12,8 @@ from dotenv import load_dotenv
 from services.aws_s3 import AWSS3Service
 from typings.agent import ConfigsOutput
 from typings.config import AccountVoiceSettings
-from typings.voice import VoiceInput, VoiceTextInput
-from voices.get_voices import DeepgramVoice, PlayHTVoice
+from voices.deepgram.deepgram_voice import DeepgramVoice
+from voices.playht.play_ht_voice import PlayHTVoice
 
 load_dotenv()
 
@@ -27,18 +27,19 @@ def text_to_speech(
     """
 
     synthesizers = {
-        PlayHTVoice.id: playht_text_to_speech,
+        "142e60f5-2d46-4b1a-9054-0764e553eed6": playht_text_to_speech,
         # TODO: add AzureVoice.id: azure_text_to_speech, when available.
     }
 
     if configs.synthesizer not in synthesizers:
         return ""
 
-    voice_id = uuid.uuid1()
+    id = uuid.uuid1()
     voice_bytes = synthesizers[configs.synthesizer](text, configs, settings)
-    key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{voice_id}.waw"
-    img_data = io.BytesIO(voice_bytes)
-    url = AWSS3Service.upload(body=img_data, key=key, content_type="audio/waw")
+    key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{id}.waw"
+    url = AWSS3Service.upload(
+        body=io.BytesIO(voice_bytes), key=key, content_type="audio/waw"
+    )
 
     return url
 
@@ -52,7 +53,7 @@ def speech_to_text(
     """
 
     transcribers = {
-        DeepgramVoice.id: deepgram_speech_to_text,
+        "b44769b1-1a20-44d3-b0f1-8b4c96e6a02a": deepgram_speech_to_text,
         # TODO: add AzureVoice.id: azure_speech_to_text, when available.
     }
 
