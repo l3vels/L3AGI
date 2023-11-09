@@ -50,8 +50,9 @@ class ConversationalAgent(BaseAgent):
             llm = get_llm(
                 settings,
                 agent_with_configs,
-                run_logs_manager.get_agent_callback_handler(),
             )
+
+            llm.callbacks = [run_logs_manager.get_agent_callback_handler()]
 
             agent = initialize_agent(
                 tools,
