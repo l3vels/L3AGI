@@ -7,6 +7,7 @@ from langchain.schema.agent import AgentAction, AgentFinish
 from sqlalchemy.orm import Session
 
 from models.run_log import RunLogModel
+from tools.get_tools import get_toolkit_id_by_tool_name
 from typings.run import RunLogInput, RunLogType
 
 
@@ -42,7 +43,11 @@ class RunLogsManager:
         return callback_handler
 
     def create_run_log(
-        self, type: RunLogType, name: Optional[str] = "", messages: Optional[Dict] = []
+        self,
+        type: RunLogType,
+        name: Optional[str] = "",
+        messages: Optional[Dict] = [],
+        toolkit_id: Optional[UUID] = None,
     ):
         return RunLogModel.create_run_log(
             self.session,
@@ -54,6 +59,7 @@ class RunLogsManager:
                 name=name,
                 type=str(type),
                 messages=messages,
+                toolkit_id=toolkit_id,
             ),
             self.user_id,
             self.account_id,
@@ -70,6 +76,8 @@ class RunLogsManager:
             {
                 "name": message_mapping[message.type],
                 "content": message.content,
+                "additional_kwargs": message.additional_kwargs,
+                "is_chat_history": message.additional_kwargs.get("uuid") is not None,
             }
             for message in messages
         ]
@@ -86,7 +94,14 @@ class RunLogsManager:
             }
         ]
 
-        return self.create_run_log(type=RunLogType.TOOL, name=name, messages=messages)
+        toolkit_id = get_toolkit_id_by_tool_name(name)
+
+        return self.create_run_log(
+            type=RunLogType.TOOL,
+            name=name,
+            messages=messages,
+            toolkit_id=UUID(toolkit_id),
+        )
 
     def add_message_to_run_log(self, type: RunLogType, name: str, content: str):
         return RunLogModel.add_message_to_latest_run_log(

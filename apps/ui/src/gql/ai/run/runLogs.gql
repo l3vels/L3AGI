@@ -7,7 +7,11 @@ query runLogs($run_id: run_id!) @api(name: "ai") {
     messages {
       name
       content
+      is_chat_history
     }
+    start_date
+    end_date
     created_on
+    toolkit_id
   }
 }
