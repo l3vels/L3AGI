@@ -1,21 +1,15 @@
 import asyncio
 import base64
 import io
-import os
+import json
 import uuid
-from logging import log
 
 import requests
 from deepgram import Deepgram
-from dotenv import load_dotenv
 
 from services.aws_s3 import AWSS3Service
 from typings.agent import ConfigsOutput
 from typings.config import AccountVoiceSettings
-from voices.deepgram.deepgram_voice import DeepgramVoice
-from voices.playht.play_ht_voice import PlayHTVoice
-
-load_dotenv()
 
 
 def text_to_speech(
@@ -68,7 +62,7 @@ def playht_text_to_speech(
 ) -> bytes:
     payload = {
         "quality": "high",
-        "output_format": "waw",
+        "output_format": "wav",
         "speed": 1,
         "sample_rate": 24000,
         "text": text,
@@ -82,16 +76,23 @@ def playht_text_to_speech(
         "X-USER-ID": settings.PLAY_HT_USER_ID,
     }
 
-    response = requests.post(
-        "https://play.ht/api/v2/tts", headers=headers, json=payload, timeout=300
-    )
-
-    if response.status_code in [200, 201]:
-        audio_url = response.json().get("url", "")
-        if audio_url:
-            audio_response = requests.get(audio_url)
-            if audio_response.status_code == 200:
-                return audio_response.content
+    try:
+        response = requests.post(
+            "https://play.ht/api/v2/tts", headers=headers, json=payload, timeout=300
+        )
+        if response.status_code in [200, 201]:
+            for line in response.content.decode().split("\r\n"):
+                if line.startswith("data:"):
+                    try:
+                        data = json.loads(line[5:])
+                        if "url" in data:
+                            audio_response = requests.get(data["url"])
+                            if audio_response.status_code == 200:
+                                return audio_response.content
+                    except json.JSONDecodeError:
+                        continue
+    except Exception as e:
+        print(f"->>> Error occurred: {e}")
 
     return b""
 
@@ -99,36 +100,42 @@ def playht_text_to_speech(
 def deepgram_speech_to_text(
     url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> str:
-    response = requests.get(url)
-    if response.status_code != 200:
+    try:
+        response = requests.get(url)
+        if response.status_code != 200:
+            return ""
+
+        audio_bytes = base64.b64decode(response.content)
+        deepgram = Deepgram(settings.DEEPGRAM_API_KEY)
+
+        source = {
+            "buffer": io.BytesIO(audio_bytes),
+            "mimetype": "audio/wav",
+        }
+
+        playload = {
+            "smart_format": True,
+            "model": "general",
+            "diarize": True,
+            "interim_results": False,
+            "tier": "enhanced",
+        }
+
+        response = asyncio.create_task(
+            deepgram.transcription.prerecorded(source, playload)
+        )
+
+        results = response.get("results", {})
+        channels = results.get("channels", [])
+
+        transcribed_text = ""
+        for channel in channels:
+            alternatives = channel.get("alternatives", [])
+            for alternative in alternatives:
+                transcript = alternative.get("transcript", "")
+                transcribed_text += transcript + " "
+
+        return transcribed_text.strip('"')
+    except Exception as e:
+        print(f"->>> Error occurred: {e}")
         return ""
-
-    audio_bytes = base64.b64decode(response.content)
-    deepgram = Deepgram(settings.DEEPGRAM_API_KEY)
-
-    source = {
-        "buffer": io.BytesIO(audio_bytes),
-        "mimetype": "audio/waw",
-    }
-
-    playload = {
-        "smart_format": True,
-        "model": "general",
-        "diarize": True,
-        "interim_results": False,
-        "tier": "enhanced",
-    }
-
-    response = asyncio.create_task(deepgram.transcription.prerecorded(source, playload))
-
-    results = response.get("results", {})
-    channels = results.get("channels", [])
-
-    transcribed_text = ""
-    for channel in channels:
-        alternatives = channel.get("alternatives", [])
-        for alternative in alternatives:
-            transcript = alternative.get("transcript", "")
-            transcribed_text += transcript + " "
-
-    return transcribed_text.strip('"')
