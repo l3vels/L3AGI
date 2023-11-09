@@ -48,6 +48,8 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const tabQuery = urlParams.get('tab')
 
   const defaultActiveTab = () => {
+    if (!isFineTuning) return 1
+
     if (tabQuery === 'fine-tuning') return 0
     if (tabQuery === 'model') return 1
   }
@@ -60,16 +62,18 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
   return (
     <StyledTabRootWrapper>
-      <StyledTabListWrapper>
-        <TabList activeTabId={activeTab}>
-          <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')}>
-            <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(1, 'model')}>
-            <StyledTabListSpan>{t('models')}</StyledTabListSpan>
-          </StyledTab>
-        </TabList>
-      </StyledTabListWrapper>
+      {isModel && isFineTuning && (
+        <StyledTabListWrapper>
+          <TabList activeTabId={activeTab}>
+            <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')} isDisabled={!isFineTuning}>
+              <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
+            </StyledTab>
+            <StyledTab onClick={() => handleTabClick(1, 'model')} isDisabled={!isModel}>
+              <StyledTabListSpan>{t('models')}</StyledTabListSpan>
+            </StyledTab>
+          </TabList>
+        </StyledTabListWrapper>
+      )}
 
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
