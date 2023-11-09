@@ -12,5 +12,6 @@ query runLogs($run_id: run_id!) @api(name: "ai") {
     start_date
     end_date
     created_on
+    toolkit_id
   }
 }

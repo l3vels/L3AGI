@@ -37,6 +37,8 @@ class RunLogModel(BaseModel):
     start_date = Column(DateTime(timezone=True), default=datetime.utcnow)
     end_date = Column(DateTime(timezone=True))
 
+    toolkit_id = Column(UUID, nullable=True)
+
     run_id = Column(
         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
     )

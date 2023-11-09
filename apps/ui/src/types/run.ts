@@ -12,4 +12,5 @@ export interface RunLog {
   created_on: string
   start_date: Nullable<string>
   end_date: Nullable<string>
+  toolkit_id: Nullable<string>
 }

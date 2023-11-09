@@ -28,6 +28,7 @@ class RunLogInput(BaseModel):
     session_id: Optional[str]
     name: Optional[str]
     messages: Optional[List[Dict]]
+    toolkit_id: Optional[UUID4]
 
 
 class RunLogMessageOutput(BaseModel):
@@ -43,3 +44,4 @@ class RunLogOutput(BaseModel):
     messages: Optional[List[RunLogMessageOutput]]
     start_date: Optional[str]
     end_date: Optional[str]
+    toolkit_id: Optional[UUID4]
