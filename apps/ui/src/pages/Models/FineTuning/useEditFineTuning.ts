@@ -52,8 +52,12 @@ export const useEditFineTuning = () => {
         open: true,
       })
       navigate('/models')
-    } catch (e) {
-      handleErrorAlert('Failed To Update Fine-Tuning!')
+    } catch (error: any) {
+      if (error.networkError && 'result' in error.networkError) {
+        handleErrorAlert(error.networkError.result.detail)
+      } else {
+        handleErrorAlert('Failed to create Fine-tuning!')
+      }
     }
     setIsLoading(false)
   }
