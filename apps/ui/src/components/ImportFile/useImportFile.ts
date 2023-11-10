@@ -3,7 +3,13 @@ import useUploadFile from 'hooks/useUploadFile'
 import React, { useContext } from 'react'
 import Papa from 'papaparse'
 
-const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
+const useImportFile = ({
+  setFieldValue,
+  fileValidationFields,
+}: {
+  setFieldValue: any
+  fileValidationFields: any
+}) => {
   const { setToast } = useContext(ToastContext)
 
   const [fileIsLoading, setFileIsLoading] = React.useState(false)
@@ -19,10 +25,8 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       data.every(
         obj =>
           typeof obj === 'object' &&
-          'System' in obj &&
-          'User' in obj &&
-          'Assistant' in obj &&
-          Object.keys(obj).length === 3,
+          fileValidationFields.every((field: string) => field in obj) &&
+          Object.keys(obj).length === fileValidationFields.length,
       )
     ) {
       return true
@@ -37,7 +41,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
     if (
       headers.length === 3 &&
-      headers.every((header: any) => ['System', 'User', 'Assistant'].includes(header))
+      headers.every((header: any) => fileValidationFields.includes(header))
     ) {
       return true
     } else {
@@ -107,7 +111,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
       if (file.type === 'text/csv') {
         const isValid = validateCSV(fileData)
-        if (isValid) {
+        if (await isValid) {
           const { data } = handleConvertCSVtoJSON(fileData)
           await handleUploadFile(files, data)
         } else {
@@ -119,7 +123,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
         }
       } else if (file.type === 'application/json') {
         const isValid = validateJSON(fileData)
-        if (isValid) {
+        if (await isValid) {
           const { data } = handleConvertJson(fileData)
           await handleUploadFile(files, data)
         } else {

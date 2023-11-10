@@ -49,6 +49,7 @@ const FineTuningForm = ({ formik }: { formik: any }) => {
             value={fine_tuning_file_url}
             templateData={templateData}
             columns={columns}
+            fileValidationFields={['System', 'User', 'Assistant']}
           />
         </StyledInputWrapper>
       </StyledForm>

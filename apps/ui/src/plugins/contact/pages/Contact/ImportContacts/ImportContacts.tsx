@@ -59,6 +59,7 @@ const ImportContacts = () => {
               setFieldValue={setFieldValue}
               templateData={templateData}
               columns={columns}
+              fileValidationFields={['Name', 'Phone', 'Group', 'Email', 'Description']}
             />
           </StyledFormWrapper>
         </ComponentsWrapper>
