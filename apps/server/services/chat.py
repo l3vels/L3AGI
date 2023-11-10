@@ -27,7 +27,6 @@ from models.user import UserModel
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
 from services.run_log import RunLogsManager
-from services.voice import speech_to_text
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput, DataSourceFlow
@@ -63,9 +62,6 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     prompt = body.prompt
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id)
-    if body.audio_data:
-        # todo Ismael need upload s3
-        pass
 
     process_chat_message(
         session_id=session_id,
@@ -114,13 +110,9 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
 
     prompt = body.prompt
     voice_url = body.voice_url
-    audio_data = body.audio_data
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id, chat_id)
 
-    if audio_data:
-        # Ismael need upload s3
-        pass
     voice_url = body.voice_url
 
     process_chat_message(
@@ -206,6 +198,7 @@ def process_chat_message(
         current_agent_id=current_agent_id,
         chat_id=chat_id,
         run_id=run.id,
+        voice_url=voice_url,
     )
 
     settings = ConfigModel.get_account_settings(db.session, provider_account.id)
@@ -216,15 +209,6 @@ def process_chat_message(
 
     if len(agents) > 0:
         for agent_with_configs in agents:
-            # here todo voice convert if need
-            if voice_url:
-                # agent_with_configs.configs.default_voice
-                # agent_with_configs.configs.voice_id
-                # agent_with_configs.configs.transcriber
-                # agent_with_configs.configs.response_mode
-                configs = agent_with_configs.configs
-                prompt = speech_to_text(voice_url, configs, voice_settings)
-
             run_conversational_agent(
                 agent_with_configs=agent_with_configs,
                 sender_name=sender_name,
@@ -233,6 +217,7 @@ def process_chat_message(
                 provider_account=provider_account,
                 session_id=session_id,
                 prompt=prompt,
+                voice_url=voice_url,
                 human_message_id=human_message_id,
                 chat_pubsub_service=chat_pubsub_service,
                 settings=settings,
@@ -551,6 +536,7 @@ def run_conversational_agent(
     sender_account_id: str,
     session_id: str,
     prompt: str,
+    voice_url: str,
     human_message_id: UUID,
     chat_pubsub_service: ChatPubSubService,
     settings: AccountSettings,
@@ -604,6 +590,7 @@ def run_conversational_agent(
         agent_with_configs,
         tools,
         prompt,
+        voice_url,
         history,
         human_message_id,
         run_logs_manager,
@@ -617,6 +604,7 @@ def create_and_send_chat_message(
     sender_user_id: str,
     sender_account_id: str,
     prompt: str,
+    voice_url: str,
     agent_id: str,
     team_id: str,
     parent_id: str,
@@ -637,7 +625,7 @@ def create_and_send_chat_message(
         run_id=run_id,
     )
 
-    human_message = history.create_human_message(prompt)
+    human_message = history.create_human_message(prompt, voice_url=voice_url)
     human_message_id = UUID(human_message["id"])
 
     memory = ZepMemory(

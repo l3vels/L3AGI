@@ -1,160 +1,150 @@
 import asyncio
 import base64
 import io
-import os
-from logging import log
+import json
+import uuid
 
 import requests
-from deepgram import Deepgram
-from dotenv import load_dotenv
 
+from exceptions import SynthesizerException, TranscriberException
 from services.aws_s3 import AWSS3Service
 from typings.agent import ConfigsOutput
 from typings.config import AccountVoiceSettings
-from typings.voice import (VoiceInput, VoiceSynthesizerResponse,
-                           VoiceTextInput, VoiceTranscriberResponse)
-
-load_dotenv()
 
 
-async def text_to_speech(
-    text: str, configs: ConfigsOutput, voice_settings: AccountVoiceSettings
-) -> VoiceSynthesizerResponse:
+def text_to_speech(
+    text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> str:
     """
     Synthesize text to speech by Agent config
 
     """
 
-    # todo text to speech
-    # check which one you can use
-    synthesizer = configs.synthesizer  # you can check with it later which synthesizer
-    default_voice = configs.default_voice or None
+    synthesizers = {
+        "142e60f5-2d46-4b1a-9054-0764e553eed6": playht_text_to_speech,
+        # TODO: add AzureVoice.id: azure_text_to_speech, when available.
+    }
 
-    # voice_settings
-    voice_id = configs.voice_id or None
+    if configs.synthesizer not in synthesizers:
+        raise SynthesizerException(
+            "The selected synthesizer implementation is not available. Please choose a different synthesizer option or contact support for assistance."
+        )
 
-    voice = await playht_text_to_speech(input, {})
+    id = uuid.uuid1()
+    voice_bytes = synthesizers[configs.synthesizer](text, configs, settings)
+    key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{id}.waw"
+    url = AWSS3Service.upload(
+        body=io.BytesIO(voice_bytes), key=key, content_type="audio/waw"
+    )
 
-    key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{voice_id}.mp3"
-    img_data = io.BytesIO(voice)
-    url = AWSS3Service.upload(body=img_data, key=key, content_type="audio/mp3")
-
-    return VoiceTranscriberResponse(audio_url=url)
-
-    # if input.agent_id is None:
-
-    # else:
-    #     l3 = L3Service(request)
-    #     agent = l3.get_agent(input.agent_id)
-    #     configs = agent.get('configs', {})
-
-    #     match_synthesizer = {
-    #         'PlayHT': playht_text_to_speech,
-    #     }
-
-    #     synthesizer = configs.get('synthesizer', 'PlayHT')
-    #     voice = await match_synthesizer[synthesizer](input, configs)
-    #     voice_id = uuid.uuid4()
-
-    #     key = f"account_e5d915b2-7ccf-11ee-b962-0242ac120002/chat/voice-{voice_id}.mp3"
-
-    #     img_data = io.BytesIO(voice)
-    #     url = AWSS3Service.upload(
-    #         body=img_data, key=key, content_type="audio/mp3"
-    #     )
-
-    #     return VoiceTranscriberResponse(audio_url=url)
+    return url
 
 
-async def speech_to_text(
-    text: str, configs: ConfigsOutput, voice_settings: AccountVoiceSettings
-) -> VoiceTranscriberResponse:
+def speech_to_text(
+    url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> str:
     """
     Transcribe speech to text by Agent config
 
     """
-    return await deepgram_speech_to_text(text, {})
 
-    # if input.agent_id is None:
+    transcribers = {
+        "b44769b1-1a20-44d3-b0f1-8b4c96e6a02a": deepgram_speech_to_text,
+        # TODO: add AzureVoice.id: azure_speech_to_text, when available.
+    }
 
-    # else:
-    #     l3 = L3Service(request)
-    #     agent = l3.get_agent(input.agent_id)
-    #     configs = agent.get('configs', {})
+    if configs.transcriber not in transcribers:
+        raise SynthesizerException(
+            "The selected transcriber implementation is not available. Please choose a different transcriber option or contact support for assistance."
+        )
 
-    #     match_transcriber = {
-    #         'Deepgram': deepgram_speech_to_text,
-    #     }
-
-    #     transcriber = configs.get('transcriber', 'Deepgram')
-    #     return await match_transcriber[transcriber](input, configs)
+    text = asyncio.run(transcribers[configs.transcriber](url, configs, settings))
+    return text
 
 
-async def playht_text_to_speech(input: VoiceTextInput, configs: dict) -> bytes:
-    API_KEY = os.environ["PLAY_HT_API_KEY"]
-    USER_ID = os.environ["PLAY_HT_USER_ID"]
+def playht_text_to_speech(
+    text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> bytes:
+    if (
+        settings.PLAY_HT_USER_ID is None
+        or settings.PLAY_HT_API_KEY is None
+        or not settings.PLAY_HT_USER_ID
+        or not settings.PLAY_HT_API_KEY
+    ):
+        raise SynthesizerException(
+            "Please set PlayHT credentials in [Voice Integrations](/integrations/voice/playht) in order to synthesize text to speech"
+        )
 
     payload = {
         "quality": "high",
-        "output_format": "mp3",
+        "output_format": "wav",
         "speed": 1,
-        "sample_rate": 24000,
-        "text": input.prompt,
-        "voice": "larry",
+        "sample_rate": 24000,  # TODO: config should return sample_rate
+        "text": text,
+        "voice": configs.voice_id or configs.default_voice or "larry",
     }
 
     headers = {
         "accept": "text/event-stream",
         "content-type": "application/json",
-        "AUTHORIZATION": f"Bearer {API_KEY}",
-        "X-USER-ID": USER_ID,
+        "AUTHORIZATION": f"Bearer {settings.PLAY_HT_API_KEY}",
+        "X-USER-ID": settings.PLAY_HT_USER_ID,
     }
 
-    response = requests.post(
-        "https://play.ht/api/v2/tts", headers=headers, json=payload, timeout=300
-    )
-
-    if response.status_code in [200, 201]:
-        audio_url = response.json().get("url", "")
-        if audio_url:
-            audio_response = requests.get(audio_url)
-            if audio_response.status_code == 200:
-                return audio_response.content
+    try:
+        response = requests.post(
+            "https://play.ht/api/v2/tts", headers=headers, json=payload, timeout=300
+        )
+        if response.status_code in [200, 201]:
+            for line in response.content.decode().split("\r\n"):
+                if line.startswith("data:"):
+                    try:
+                        data = json.loads(line[5:])
+                        if "url" in data:
+                            audio_response = requests.get(data["url"])
+                            if audio_response.status_code == 200:
+                                return audio_response.content
+                    except json.JSONDecodeError:
+                        continue
+    except Exception as err:
+        raise SynthesizerException(str(err))
 
     return b""
 
 
 async def deepgram_speech_to_text(
-    input: VoiceInput, configs: dict
-) -> VoiceTranscriberResponse:
-    deepgram = Deepgram(os.environ["DEEPGRAM_API_KEY"])
-    audio_bytes = base64.b64decode(input.audio_data)
+    url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> str:
+    if settings.DEEPGRAM_API_KEY is None or not settings.DEEPGRAM_API_KEY:
+        raise TranscriberException(
+            "Please set the Deepgram API Key in [Voice Integrations](/integrations/voice/deepgram) in order to transcribe speech to text"
+        )
 
-    source = {
-        "buffer": io.BytesIO(audio_bytes),
-        "mimetype": "audio/waw",
-    }
+    try:
+        payload = {"url": url}
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json",
+            "Authorization": f"Token {settings.DEEPGRAM_API_KEY}",
+        }
 
-    playload = {
-        "smart_format": True,
-        "model": "general",
-        "diarize": True,
-        "interim_results": False,
-        "tier": "enhanced",
-    }
+        response = requests.post(
+            "https://api.deepgram.com/v1/listen?filler_words=false&summarize=v2",
+            json=payload,
+            headers=headers,
+        )
 
-    response = await asyncio.create_task(
-        deepgram.transcription.prerecorded(source, playload)
-    )
+        res = response.json()
+        results = res.get("results", {})
+        channels = results.get("channels", [])
 
-    results = response.get("results", {})
-    channels = results.get("channels", [])
+        transcribed_text = ""
+        for channel in channels:
+            alternatives = channel.get("alternatives", [])
+            for alternative in alternatives:
+                transcript = alternative.get("transcript", "")
+                transcribed_text += transcript + " "
 
-    transcribed_text = ""
-    for channel in channels:
-        alternatives = channel.get("alternatives", [])
-        for alternative in alternatives:
-            transcript = alternative.get("transcript", "")
-            transcribed_text += transcript + " "
-
-    return VoiceTranscriberResponse(text=transcribed_text.strip('"'))
+        return transcribed_text.strip('"')
+    except Exception as err:
+        raise TranscriberException(str(err))

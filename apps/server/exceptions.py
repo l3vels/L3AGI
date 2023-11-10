@@ -144,3 +144,11 @@ class RunNotFoundException(AppBaseException):
 
 class FineTuningNotFoundException(AppBaseException):
     pass
+
+
+class TranscriberException(AppBaseException):
+    pass
+
+
+class SynthesizerException(AppBaseException):
+    pass
