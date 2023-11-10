@@ -45,6 +45,7 @@ import {
   StyledTabRootWrapper,
 } from 'styles/tabStyles.css'
 import { t } from 'i18next'
+import { StyledButtonsWrapper } from 'styles/globalStyle.css'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -213,14 +214,21 @@ const Contacts = () => {
                 <div>
                   <StyledSectionTitle>{`${t('contacts')}`}</StyledSectionTitle>
                 </div>
-                <div>
+
+                <StyledButtonsWrapper>
+                  <ButtonPrimary
+                    onClick={() => navigate('/contacts/import-contacts')}
+                    size={'small'}
+                  >
+                    {t('import-contacts')}
+                  </ButtonPrimary>
                   <ButtonPrimary
                     onClick={() => navigate('/contacts/create-contact')}
                     size={'small'}
                   >
                     {t('add-contact')}
                   </ButtonPrimary>
-                </div>
+                </StyledButtonsWrapper>
               </StyledHeaderGroup>
 
               <ComponentsWrapper noPadding>

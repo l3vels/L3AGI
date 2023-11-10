@@ -127,7 +127,6 @@ export const useCreateAgent = () => {
 
       navigate(`/chat?agent=${newAgent.agent.id}`)
     } catch (e) {
-      console.log('rrorr', e)
       // navigate('/agents')
 
       setToast({

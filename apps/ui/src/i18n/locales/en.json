@@ -163,6 +163,7 @@
   "i-got-it": "I got it",
   "import-images": "Import Images",
   "import-csv": "Import CSV",
+  "import-contacts": "Import $t(contact)s",
   "import-was-successfully": "Import was successfully",
   "immutable": "Immutable",
   "immutable-description": "Create contracts for any language, and chain, deploy it right away.",

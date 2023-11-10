@@ -3,7 +3,15 @@ import useUploadFile from 'hooks/useUploadFile'
 import React, { useContext } from 'react'
 import Papa from 'papaparse'
 
-const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
+const useImportFile = ({
+  setFieldValue,
+  fileValidationFields,
+  fieldName,
+}: {
+  setFieldValue: any
+  fileValidationFields: any
+  fieldName: string
+}) => {
   const { setToast } = useContext(ToastContext)
 
   const [fileIsLoading, setFileIsLoading] = React.useState(false)
@@ -19,10 +27,8 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
       data.every(
         obj =>
           typeof obj === 'object' &&
-          'System' in obj &&
-          'User' in obj &&
-          'Assistant' in obj &&
-          Object.keys(obj).length === 3,
+          fileValidationFields.every((field: string) => field in obj) &&
+          Object.keys(obj).length === fileValidationFields.length,
       )
     ) {
       return true
@@ -35,10 +41,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
     const lines = content.split('\n')
     const headers = lines[0].split(',').map((header: any) => header.trim())
 
-    if (
-      headers.length === 3 &&
-      headers.every((header: any) => ['System', 'User', 'Assistant'].includes(header))
-    ) {
+    if (headers.every((header: any) => fileValidationFields.includes(header))) {
       return true
     } else {
       return false
@@ -47,11 +50,16 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
   const handleConvertJson = (data: any) => {
     const dataArray = JSON.parse(data)
-    const convertedData = dataArray.map((item: any) => ({
-      System: item.System,
-      User: item.User,
-      Assistant: item.Assistant,
-    }))
+
+    const convertedData = dataArray.map((item: any) => {
+      const dynamicFields: any = {}
+
+      fileValidationFields.forEach((field: any) => {
+        dynamicFields[field] = item[field]
+      })
+
+      return dynamicFields
+    })
 
     return { data: convertedData }
   }
@@ -84,7 +92,7 @@ const useImportFile = ({ setFieldValue }: { setFieldValue: any }) => {
 
     const uploadedFiles = await Promise.all(promises)
 
-    setFieldValue('fine_tuning_file_url', uploadedFiles?.[0].url)
+    setFieldValue(fieldName, uploadedFiles?.[0].url)
     setFileIsLoading(false)
 
     setParsedData(data)

@@ -18,7 +18,21 @@ import { t } from 'i18next'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 
-const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
+const ImportFile = ({
+  setFieldValue,
+  fieldName,
+  value = '',
+  templateData,
+  columns,
+  fileValidationFields,
+}: {
+  setFieldValue: any
+  fieldName: string
+  value?: string
+  templateData: any
+  columns: any
+  fileValidationFields: any
+}) => {
   const {
     parsedData,
     setParsedData,
@@ -28,9 +42,13 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     fileIsLoading,
   } = useImportFile({
     setFieldValue: setFieldValue,
+    fileValidationFields: fileValidationFields,
+    fieldName: fieldName,
   })
 
-  const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate()
+  const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate({
+    templateData: templateData,
+  })
 
   useEffect(() => {
     if (value.length > 0) {
@@ -94,7 +112,7 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
             <ButtonPrimary
               onClick={() => {
                 setParsedData([])
-                setFieldValue('fine_tuning_file_url', '')
+                setFieldValue(fieldName, '')
               }}
               size={Button.sizes.SMALL}
             >
@@ -102,7 +120,7 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
             </ButtonPrimary>
           )}
         </StyledButtonContainer>
-        {parsedData?.length > 0 && <ImportFileTable data={parsedData} />}
+        {parsedData?.length > 0 && <ImportFileTable data={parsedData} columns={columns} />}
       </StyledFormSection>
     </>
   )
