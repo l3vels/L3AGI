@@ -62,6 +62,10 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      - name: List dist contents
+        run: ls -l apps/ui/dist
+        
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
