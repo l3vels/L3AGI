@@ -18,7 +18,15 @@ import { t } from 'i18next'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 
-const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?: string }) => {
+const ImportFile = ({
+  setFieldValue,
+  value = '',
+  templateData,
+}: {
+  setFieldValue: any
+  value?: string
+  templateData: any
+}) => {
   const {
     parsedData,
     setParsedData,
@@ -30,7 +38,9 @@ const ImportFile = ({ setFieldValue, value = '' }: { setFieldValue: any; value?:
     setFieldValue: setFieldValue,
   })
 
-  const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate()
+  const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate({
+    templateData: templateData,
+  })
 
   useEffect(() => {
     if (value.length > 0) {

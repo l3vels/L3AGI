@@ -9,6 +9,7 @@ import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 
 import { StyledFormRoot } from 'styles/formStyles.css'
 import { useEffect } from 'react'
+import { templateData } from '../fineTuningTemplate'
 
 const FineTuningForm = ({ formik }: { formik: any }) => {
   const { setFieldValue, values } = formik
@@ -40,7 +41,11 @@ const FineTuningForm = ({ formik }: { formik: any }) => {
             optionSize={'small'}
           />
 
-          <ImportFile setFieldValue={formik?.setFieldValue} value={fine_tuning_file_url} />
+          <ImportFile
+            setFieldValue={formik?.setFieldValue}
+            value={fine_tuning_file_url}
+            templateData={templateData}
+          />
         </StyledInputWrapper>
       </StyledForm>
     </StyledFormRoot>
