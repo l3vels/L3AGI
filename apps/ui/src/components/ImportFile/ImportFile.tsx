@@ -22,10 +22,12 @@ const ImportFile = ({
   setFieldValue,
   value = '',
   templateData,
+  columns,
 }: {
   setFieldValue: any
   value?: string
   templateData: any
+  columns: any
 }) => {
   const {
     parsedData,
@@ -112,7 +114,7 @@ const ImportFile = ({
             </ButtonPrimary>
           )}
         </StyledButtonContainer>
-        {parsedData?.length > 0 && <ImportFileTable data={parsedData} />}
+        {parsedData?.length > 0 && <ImportFileTable data={parsedData} columns={columns} />}
       </StyledFormSection>
     </>
   )

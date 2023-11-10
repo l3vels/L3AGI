@@ -21,11 +21,14 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import { t } from 'i18next'
 import { templateData } from '../contactsTemplate'
+import importColumnConfig from './importColumnConfig'
 
 const ImportContacts = () => {
   const { formik } = useImportContacts()
 
   const { setFieldValue } = formik
+
+  const columns = importColumnConfig()
 
   return (
     <FormikProvider value={formik}>
@@ -52,7 +55,11 @@ const ImportContacts = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <ImportFile setFieldValue={setFieldValue} templateData={templateData} />
+            <ImportFile
+              setFieldValue={setFieldValue}
+              templateData={templateData}
+              columns={columns}
+            />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
