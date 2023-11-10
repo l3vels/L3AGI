@@ -1,6 +1,4 @@
-import { templateData } from './constants'
-
-export const useDownloadTemplate = () => {
+export const useDownloadTemplate = ({ templateData }: { templateData: any }) => {
   const handleDownloadTemplate = () => {
     const jsonContent = JSON.stringify(templateData) // Replace 'yourData' with your JSON data
 
