@@ -56,19 +56,27 @@ export const useImportContacts = () => {
             rows.push(rowData)
           })
         // Assuming there is at least one row in the CSV
-        firstRow = rows[0]
+        data = rows
       }
 
-      // Assigning values to initialValues object
-      const contactInput = {
-        name: firstRow['Name'],
-        description: firstRow['Description'],
-        group_id: firstRow['Group'],
-        email: firstRow['Email'],
-        phone: firstRow['Phone'],
-      }
+      const contactValues = data
+        .map((contact: any) => {
+          return {
+            name: contact['Name'] || '',
+            description: contact['Description'] || '',
+            group_id: contact['Group'] || '',
+            email: contact['Email'] || '',
+            phone: contact['Phone'] || '',
+          }
+        })
+        .filter(
+          (contact: any) =>
+            contact.name.length > 0 && contact.phone.length > 0 && contact.group_id.length > 0,
+        )
+      console.log(contactValues)
+      const promises = contactValues.map((contactValue: any) => createContactService(contactValue))
+      await Promise.all(promises)
 
-      await createContactService(contactInput)
       await refetchContacts()
       setToast({
         message: 'New Contact was Created!',
