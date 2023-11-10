@@ -20,6 +20,7 @@ import { StyledFormWrapper } from 'styles/formStyles.css'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import { t } from 'i18next'
+import { templateData } from '../contactsTemplate'
 
 const ImportContacts = () => {
   const { formik } = useImportContacts()
@@ -51,7 +52,7 @@ const ImportContacts = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <ImportFile setFieldValue={setFieldValue} />
+            <ImportFile setFieldValue={setFieldValue} templateData={templateData} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
