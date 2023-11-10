@@ -34,7 +34,7 @@ const Groups = () => {
       name: group.name,
       description: group.description,
     })) || []
-  console.log(gridData)
+
   const columns = useMemo(
     () => [
       {

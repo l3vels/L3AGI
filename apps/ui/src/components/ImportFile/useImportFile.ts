@@ -129,7 +129,6 @@ const useImportFile = ({
         const isValid = validateJSON(fileData)
         if (isValid) {
           const { data } = handleConvertJson(fileData)
-          console.log(data)
           await handleUploadFile(files, data)
         } else {
           return setToast({

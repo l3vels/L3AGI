@@ -97,8 +97,6 @@ export const useImportContacts = () => {
         type: 'negative',
         open: true,
       })
-
-      console.error('Error fetching file:', error)
     }
     setIsLoading(false)
   }
