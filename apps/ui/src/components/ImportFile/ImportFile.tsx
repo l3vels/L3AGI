@@ -23,11 +23,13 @@ const ImportFile = ({
   value = '',
   templateData,
   columns,
+  fileValidationFields,
 }: {
   setFieldValue: any
   value?: string
   templateData: any
   columns: any
+  fileValidationFields: any
 }) => {
   const {
     parsedData,
@@ -38,6 +40,7 @@ const ImportFile = ({
     fileIsLoading,
   } = useImportFile({
     setFieldValue: setFieldValue,
+    fileValidationFields: fileValidationFields,
   })
 
   const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate({
