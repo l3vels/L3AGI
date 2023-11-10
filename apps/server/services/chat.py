@@ -62,9 +62,6 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     prompt = body.prompt
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id)
-    # TODO: why?
-    # if body.audio_data:
-    #     pass
 
     process_chat_message(
         session_id=session_id,
@@ -113,13 +110,9 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
 
     prompt = body.prompt
     voice_url = body.voice_url
-    audio_data = body.audio_data
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id, chat_id)
 
-    if audio_data:
-        # Ismael need upload s3
-        pass
     voice_url = body.voice_url
 
     process_chat_message(
