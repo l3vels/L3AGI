@@ -22,6 +22,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { t } from 'i18next'
 import { templateData } from '../contactsTemplate'
 import importColumnConfig from './importColumnConfig'
+import { StyledTableWrapper } from '../Contacts'
 
 const ImportContacts = () => {
   const { formik, isLoading } = useImportContacts()
@@ -53,7 +54,7 @@ const ImportContacts = () => {
         </StyledHeaderGroup>
 
         <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
+          <StyledTableWrapper>
             <ImportFile
               setFieldValue={setFieldValue}
               templateData={templateData}
@@ -61,7 +62,7 @@ const ImportContacts = () => {
               fileValidationFields={['Name', 'Phone', 'Group', 'Email', 'Description']}
               fieldName={'file_url'}
             />
-          </StyledFormWrapper>
+          </StyledTableWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
