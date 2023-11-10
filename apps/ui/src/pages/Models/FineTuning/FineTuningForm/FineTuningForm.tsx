@@ -46,6 +46,7 @@ const FineTuningForm = ({ formik }: { formik: any }) => {
 
           <ImportFile
             setFieldValue={formik?.setFieldValue}
+            fieldName={'fine_tuning_file_url'}
             value={fine_tuning_file_url}
             templateData={templateData}
             columns={columns}

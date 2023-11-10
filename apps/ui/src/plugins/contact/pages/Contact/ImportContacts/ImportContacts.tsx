@@ -24,7 +24,7 @@ import { templateData } from '../contactsTemplate'
 import importColumnConfig from './importColumnConfig'
 
 const ImportContacts = () => {
-  const { formik } = useImportContacts()
+  const { formik, isLoading } = useImportContacts()
 
   const { setFieldValue } = formik
 
@@ -44,11 +44,10 @@ const ImportContacts = () => {
 
             <ButtonPrimary
               onClick={formik?.handleSubmit}
-              //   disabled={isLoading}
+              disabled={isLoading}
               size={Button.sizes.SMALL}
             >
-              {/* {isLoading ? <Loader size={32} /> : t('save')} */}
-              {t('save')}
+              {isLoading ? <Loader size={32} /> : t('save')}
             </ButtonPrimary>
           </StyledButtonWrapper>
         </StyledHeaderGroup>
@@ -60,6 +59,7 @@ const ImportContacts = () => {
               templateData={templateData}
               columns={columns}
               fileValidationFields={['Name', 'Phone', 'Group', 'Email', 'Description']}
+              fieldName={'file_url'}
             />
           </StyledFormWrapper>
         </ComponentsWrapper>

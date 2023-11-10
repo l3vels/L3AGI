@@ -20,12 +20,14 @@ import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/Agen
 
 const ImportFile = ({
   setFieldValue,
+  fieldName,
   value = '',
   templateData,
   columns,
   fileValidationFields,
 }: {
   setFieldValue: any
+  fieldName: string
   value?: string
   templateData: any
   columns: any
@@ -41,6 +43,7 @@ const ImportFile = ({
   } = useImportFile({
     setFieldValue: setFieldValue,
     fileValidationFields: fileValidationFields,
+    fieldName: fieldName,
   })
 
   const { handleDownloadTemplate, handleDownloadTemplateCSV } = useDownloadTemplate({
@@ -109,7 +112,7 @@ const ImportFile = ({
             <ButtonPrimary
               onClick={() => {
                 setParsedData([])
-                setFieldValue('fine_tuning_file_url', '')
+                setFieldValue(fieldName, '')
               }}
               size={Button.sizes.SMALL}
             >
