@@ -93,6 +93,7 @@ import EditApiKeyForm from 'pages/ApiKeys/EditApiKey/EditApiKeysForm'
 import Integrations from 'pages/Integrations'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import VoiceModal from 'modals/VoiceModal'
+import ImportContacts from 'plugins/contact/pages/Contact/ImportContacts'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -287,6 +288,11 @@ const Route = () => {
               <Router
                 path={'create-contact'}
                 element={<CreateContactForm />}
+                key={document.location.href}
+              />
+              <Router
+                path={'import-contacts'}
+                element={<ImportContacts />}
                 key={document.location.href}
               />
               <Router
