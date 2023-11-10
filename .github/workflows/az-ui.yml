@@ -10,12 +10,15 @@ on:
       - main
 
 jobs:
-  Build:
+  deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
 
       - uses: actions/setup-node@v2
         with:
@@ -51,17 +54,6 @@ jobs:
       - name: Postbuild
         run: yarn run postbuild
         working-directory: apps/ui
-
-  deploy_job:
-    needs: Build
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
 
       - name: List dist contents
         run: ls -l apps/ui/dist
