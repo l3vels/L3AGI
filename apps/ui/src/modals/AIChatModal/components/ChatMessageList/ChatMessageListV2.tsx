@@ -67,7 +67,7 @@ const ChatMessageListV2 = ({
       sender_user: chat?.sender_user,
       sender_name: chat?.sender_name,
       run_id: chat?.run_id,
-      voice: chat?.audio_url,
+      voice: chat?.voice_url,
     }
   })
 

@@ -41,7 +41,7 @@ class ChatMessage(BaseModel):
         UUID, ForeignKey("run.id", ondelete="CASCADE"), nullable=True, index=True
     )
 
-    audio_url = Column(String(500), default=None, nullable=True)
+    voice_url = Column(String(500), default=None, nullable=True)
 
     message = Column(JSONB, nullable=False)
     thoughts = Column(JSONB)
@@ -88,14 +88,14 @@ class ChatMessage(BaseModel):
         return chat_message
 
     @staticmethod
-    def update_audio_url_by_id(db, chat_message_id: UUID, new_audio_url: str):
+    def update_voice_url_by_id(db, chat_message_id: UUID, new_voice_url: str):
         """
-        Retrieve a ChatMessage by its ID and update the audio_url.
+        Retrieve a ChatMessage by its ID and update the voice_url.
 
         Args:
             db: The database session.
             chat_message_id(UUID): The ID of the ChatMessage to be updated.
-            new_audio_url(str): The new audio_url to be updated.
+            new_voice_url(str): The new voice_url to be updated.
 
         Returns:
             None
@@ -106,7 +106,7 @@ class ChatMessage(BaseModel):
             .first()
         )
         if chat_message:
-            chat_message.audio_url = new_audio_url
+            chat_message.voice_url = new_voice_url
             db.session.commit()
 
     def to_dict(self):

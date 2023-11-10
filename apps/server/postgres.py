@@ -60,7 +60,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         message,
         parent_id: Optional[str] = None,
         agent_id: Optional[UUID] = None,
-        audio_url: Optional[str] = None,
+        voice_url: Optional[str] = None,
     ):
         # Append the message to the record in PostgreSQL
         chat_message = ChatMessage(
@@ -74,7 +74,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             sender_name=self.sender_name,
             chat_id=self.chat_id,
             run_id=self.run_id,
-            audio_url=audio_url,
+            voice_url=voice_url,
         )
 
         db.session.add(chat_message)
@@ -98,13 +98,13 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
         message: str,
         parent_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        audio_url: Optional[str] = None,
+        voice_url: Optional[str] = None,
     ):
         return self.create_message(
-            AIMessage(content=message), parent_id, agent_id, audio_url
+            AIMessage(content=message), parent_id, agent_id, voice_url
         )
 
-    def create_human_message(self, message: str):
+    def create_human_message(self, message: str, voice_url: str):
         return self.create_message(
             HumanMessage(
                 content=message,
@@ -113,6 +113,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
                 },
             ),
             parent_id=self.parent_id,
+            voice_url=voice_url,
         )
 
     def add_message(self, message: BaseMessage) -> str:

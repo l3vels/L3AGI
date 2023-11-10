@@ -5,8 +5,8 @@ import json
 import uuid
 
 import requests
-from deepgram import Deepgram
 
+from exceptions import SynthesizerException, TranscriberException
 from services.aws_s3 import AWSS3Service
 from typings.agent import ConfigsOutput
 from typings.config import AccountVoiceSettings
@@ -26,7 +26,9 @@ def text_to_speech(
     }
 
     if configs.synthesizer not in synthesizers:
-        return ""
+        raise SynthesizerException(
+            "The selected synthesizer implementation is not available. Please choose a different synthesizer option or contact support for assistance."
+        )
 
     id = uuid.uuid1()
     voice_bytes = synthesizers[configs.synthesizer](text, configs, settings)
@@ -52,19 +54,32 @@ def speech_to_text(
     }
 
     if configs.transcriber not in transcribers:
-        return ""
+        raise SynthesizerException(
+            "The selected transcriber implementation is not available. Please choose a different transcriber option or contact support for assistance."
+        )
 
-    return transcribers[configs.transcriber](url, configs, settings)
+    text = asyncio.run(transcribers[configs.transcriber](url, configs, settings))
+    return text
 
 
 def playht_text_to_speech(
     text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> bytes:
+    if (
+        settings.PLAY_HT_USER_ID is None
+        or settings.PLAY_HT_API_KEY is None
+        or not settings.PLAY_HT_USER_ID
+        or not settings.PLAY_HT_API_KEY
+    ):
+        raise SynthesizerException(
+            "Please set PlayHT credentials in [Voice Integrations](/integrations/voice/playht) in order to synthesize text to speech"
+        )
+
     payload = {
         "quality": "high",
         "output_format": "wav",
         "speed": 1,
-        "sample_rate": 24000,
+        "sample_rate": 24000,  # TODO: config should return sample_rate
         "text": text,
         "voice": configs.voice_id or configs.default_voice or "larry",
     }
@@ -91,41 +106,36 @@ def playht_text_to_speech(
                                 return audio_response.content
                     except json.JSONDecodeError:
                         continue
-    except Exception as e:
-        print(f"->>> Error occurred: {e}")
+    except Exception as err:
+        raise SynthesizerException(str(err))
 
     return b""
 
 
-def deepgram_speech_to_text(
+async def deepgram_speech_to_text(
     url: str, configs: ConfigsOutput, settings: AccountVoiceSettings
 ) -> str:
-    try:
-        response = requests.get(url)
-        if response.status_code != 200:
-            return ""
-
-        audio_bytes = base64.b64decode(response.content)
-        deepgram = Deepgram(settings.DEEPGRAM_API_KEY)
-
-        source = {
-            "buffer": io.BytesIO(audio_bytes),
-            "mimetype": "audio/wav",
-        }
-
-        playload = {
-            "smart_format": True,
-            "model": "general",
-            "diarize": True,
-            "interim_results": False,
-            "tier": "enhanced",
-        }
-
-        response = asyncio.create_task(
-            deepgram.transcription.prerecorded(source, playload)
+    if settings.DEEPGRAM_API_KEY is None or not settings.DEEPGRAM_API_KEY:
+        raise TranscriberException(
+            "Please set the Deepgram API Key in [Voice Integrations](/integrations/voice/deepgram) in order to transcribe speech to text"
         )
 
-        results = response.get("results", {})
+    try:
+        payload = {"url": url}
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json",
+            "Authorization": f"Token {settings.DEEPGRAM_API_KEY}",
+        }
+
+        response = requests.post(
+            "https://api.deepgram.com/v1/listen?filler_words=false&summarize=v2",
+            json=payload,
+            headers=headers,
+        )
+
+        res = response.json()
+        results = res.get("results", {})
         channels = results.get("channels", [])
 
         transcribed_text = ""
@@ -136,6 +146,5 @@ def deepgram_speech_to_text(
                 transcribed_text += transcript + " "
 
         return transcribed_text.strip('"')
-    except Exception as e:
-        print(f"->>> Error occurred: {e}")
-        return ""
+    except Exception as err:
+        raise TranscriberException(str(err))

@@ -53,8 +53,8 @@ default_configs = {
         "toolkit": True,  # True
         "datasource": True,
         "discovery": True,
-        "Session": False,
-        "schedule": False,
+        "Session": True,
+        "schedule": True,
         "integration": {
             "active": True,
             "label": "Integrations",
@@ -66,12 +66,12 @@ default_configs = {
                         "edit": True,
                     }
                 },
-                "voices": False,
-                "telephony": False,
+                "voices": True,
+                "telephony": True,
             },
         },
-        "contact": False,
-        "group": False,
+        "contact": True,
+        "group": True,
         "external-links": True,
     },
 }
