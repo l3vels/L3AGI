@@ -4,7 +4,7 @@ call_configs = {
         "home": "Home",
         "agent": "Agent",
         "team": "Team",
-        "datasource": "Data sources",
+        "datasource": "Data source",
         "models": "Model",
         "discovery": "Discovery",
         "chat": "Agents",
@@ -15,7 +15,7 @@ call_configs = {
         "home": {
             "welcome_message": "Build Your Conversational Agents",
             "submodules": {
-                "team": False,
+                "team": True,
                 "agent": True,
                 "discovery": True,
             },
@@ -24,7 +24,7 @@ call_configs = {
             "active": True,
             "label": "Multi-Agent",
             "submodules": {
-                "team": False,
+                "team": True,
                 "agent": True,
                 "session": True,
             },
@@ -33,12 +33,12 @@ call_configs = {
             "active": True,
             "label": "Fine-tunings",
             "submodules": {
-                "models": False,
+                "models": True,
                 "fine-tuning": True,
             },
         },
         "toolkit": True,  # True
-        "datasource": False,
+        "datasource": True,
         "discovery": False,
         "Session": True,
         "schedule": True,
