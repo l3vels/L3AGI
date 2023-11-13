@@ -3,6 +3,7 @@ from typing import List
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.base import BaseTool, BaseToolkit
 from tools.bing.bing_search_toolkit import BingSearchToolkit
+from tools.cal.cal_toolkit import CalToolkit
 from tools.chart.chart_toolkit import ChartToolkit
 from tools.duck_duck_go.duck_duck_go_search_toolkit import \
     DuckDuckGoSearchToolkit
@@ -35,6 +36,7 @@ TOOLKITS: List[BaseToolkit] = [
     SendGridToolkit(),
     ZapierSendToolkit(),
     ChartToolkit(),
+    CalToolkit(),
     TwitterToolkit(),
     InstagramToolkit(),
     SlackToolkit(),
