@@ -3,22 +3,19 @@ import { AuthContext } from 'contexts'
 import { useModal } from 'hooks'
 import AgentCard from 'pages/Agents/AgentCard'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
-
+import Typography from '@l3-lib/ui-core/dist/Typography'
+import Heading from '@l3-lib/ui-core/dist/Heading'
 import {
-  StyledHeaderGroup,
-  StyledSectionDescription,
-  StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-
-import Toolkit from 'pages/Toolkit'
+import TypographySecondary from 'components/Typography/Secondary'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import styled from 'styled-components'
 import DiscoverSystemAgents from './components/DiscoverSystemAgents'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'
-
+import HeadingPrimary from 'components/Heading/Primary'
 import { useDiscover } from './useDiscover'
 
 const Discover = () => {
@@ -32,23 +29,19 @@ const Discover = () => {
 
   return (
     <StyledRoot>
-      <DiscoverTeamAgents />
-
-      {user && <DiscoverSystemAgents />}
+      
+      {/* {<DiscoverSystemAgents />} */}
 
       {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
-          <StyledHeaderGroup className='header_group'>
-            <div>
-              <StyledSectionTitle>
-                AI Agents Powered by the Efforts of the Community
-              </StyledSectionTitle>
-              <StyledSectionDescription>
-                Start a conversation with these exceptional AI talents today, or unleash your
-                creativity and build your own.
-              </StyledSectionDescription>
-            </div>
-          </StyledHeaderGroup>
+          <StyledHeadingWrapper>
+            <StyledHeadingPrimary type={Heading.types.h1} value={'Discover AI Agents built with L3'} />
+            <TypographySecondary
+              value={"Chat with the foremost minds shaping AI's future or create your own innovative ideas"}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.lg}
+            />
+          </StyledHeadingWrapper>
           <ComponentsWrapper noPadding>
             <StyledCardsWrapper>
               {templateAgents?.map((agentObj: any, index: number) => {
@@ -77,6 +70,9 @@ const Discover = () => {
         </StyledSectionWrapper>
       )}
 
+      <DiscoverTeamAgents />
+
+
       {/* {!user && <Toolkit isPublic />} */}
     </StyledRoot>
   )
@@ -84,8 +80,23 @@ const Discover = () => {
 
 export default Discover
 
+
+
+
 export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   gap: 100px;
 `
+
+const StyledHeadingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 16px 10px;
+`
+const StyledHeadingPrimary = styled(HeadingPrimary)`
+  font-size: 40px;
+`
+

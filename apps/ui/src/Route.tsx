@@ -172,7 +172,7 @@ const Route = () => {
             </Router> */}
 
             <Router
-              path={'/chatHistory'}
+              path={'/chat/history'}
               element={<ChatHistoryRouteLayout />}
               key={document.location.href}
             >

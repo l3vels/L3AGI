@@ -320,7 +320,7 @@ class AgentModel(BaseModel):
             .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.parent_id == parent_id,
-                AgentModel.account_id == account.id,
+                # AgentModel.account_id == account.id,
                 or_(
                     or_(
                         AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None
