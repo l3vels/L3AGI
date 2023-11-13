@@ -1,6 +1,6 @@
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useModal } from 'hooks'
-import React from 'react'
+
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import {
   StyledHeaderGroup,
@@ -20,7 +20,6 @@ import { AuthContext } from 'contexts'
 
 const DiscoverTeamAgents = () => {
   const navigate = useNavigate()
-  const { user } = React.useContext(AuthContext)
   const { openModal } = useModal()
 
   const { data: publicTeamAgents } = useTeamOfAgentsPublicService()
@@ -31,16 +30,14 @@ const DiscoverTeamAgents = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
       </StyledHeaderGroup>
-      {(location.pathname !== '/' || !user) && (
-        <StyledHeadingWrapper>
-          <StyledHeadingPrimary type={Heading.types.h1} value={'Discover Team of Agents '} />
-          <TypographySecondary
-            value={'Create and manage your team of AI agents for interactive experiences'}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.lg}
-          />
-        </StyledHeadingWrapper>
-      )}
+      <StyledHeadingWrapper>
+        <StyledHeadingPrimary type={Heading.types.h1} value={'Discover Team of Agents '} />
+        <TypographySecondary
+          value={'Create and manage your team of AI agents for interactive experiences'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.lg}
+        />
+      </StyledHeadingWrapper>
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
           {publicTeamAgents?.map((teamOfAgents: any) => {

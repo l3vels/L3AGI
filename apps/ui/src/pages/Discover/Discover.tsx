@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import DiscoverSystemAgents from './components/DiscoverSystemAgents'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'
+import DiscoverTemplateAgents from './components/DiscoverTemplateAgents'
 import HeadingPrimary from 'components/Heading/Primary'
 import { useDiscover } from './useDiscover'
 
@@ -32,43 +33,7 @@ const Discover = () => {
       
       {/* {<DiscoverSystemAgents />} */}
 
-      {templateAgents?.length > 0 && (
-        <StyledSectionWrapper>
-          <StyledHeadingWrapper>
-            <StyledHeadingPrimary type={Heading.types.h1} value={'Discover AI Agents built with L3'} />
-            <TypographySecondary
-              value={"Chat with the foremost minds shaping AI's future or create your own innovative ideas"}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.lg}
-            />
-          </StyledHeadingWrapper>
-          <ComponentsWrapper noPadding>
-            <StyledCardsWrapper>
-              {templateAgents?.map((agentObj: any, index: number) => {
-                const { agent } = agentObj
-
-                return (
-                  <AgentCard
-                    key={index}
-                    name={agent.name}
-                    description={agent.description}
-                    onViewClick={() =>
-                      openModal({
-                        name: 'agent-view-modal',
-                        data: { agent: agentObj },
-                      })
-                    }
-                    onChatClick={() => navigate(`/chat/history?agent=${agent.id}`)}
-                    headerTag={agent.role}
-                    creator={agent.creator}
-                    avatar={agent.avatar}
-                  />
-                )
-              })}
-            </StyledCardsWrapper>
-          </ComponentsWrapper>
-        </StyledSectionWrapper>
-      )}
+      <DiscoverTemplateAgents/>
 
       <DiscoverTeamAgents />
 

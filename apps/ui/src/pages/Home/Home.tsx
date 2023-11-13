@@ -13,6 +13,7 @@ import GetStartedCard from './GetStarted/GetStartedCard'
 
 import cardBg4 from 'assets/images/whiteBg.png'
 import DiscoverTeamAgents from 'pages/Discover/components/DiscoverTeamAgents'
+import DiscoverTemplateAgents from 'pages/Discover/components/DiscoverTemplateAgents'
 import DiscoverSystemAgents from 'pages/Discover/components/DiscoverSystemAgents'
 import TeamOfAgents from 'pages/TeamOfAgents'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
@@ -35,15 +36,16 @@ const Home = () => {
   return (
     <>
       <StyledInnerWrapperEdit>
-        <HeaderText />
+        {!user && <HeaderText />}
         {user ? (
           <>
             {/* <GetStartedComponent /> */}
             <StyledWrapper>
+              {agentModules?.list && agentsData?.length > 0 ? <Agents isHome />: <DiscoverTemplateAgents/> }
+
               {teamModules?.list &&
                 (teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />)}
-
-              {agentModules?.list && agentsData?.length > 0 && <Agents isHome />}
+              
             </StyledWrapper>
           </>
         ) : (
