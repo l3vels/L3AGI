@@ -10,6 +10,7 @@ import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 import MyWeek from '@l3-lib/ui-core/dist/icons/MyWeek'
 import Mobile from '@l3-lib/ui-core/dist/icons/Mobile'
 import Group from '@l3-lib/ui-core/dist/icons/Group'
+import Session from '@l3-lib/ui-core/dist/icons/Teams'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import includes from 'lodash/includes'
@@ -38,6 +39,7 @@ const MainNavigation = () => {
     getContactModules,
     getGroupModules,
     getIntegrationModules,
+    getSessionModules,
     moduleNames,
   } = useGetAccountModule()
 
@@ -51,8 +53,9 @@ const MainNavigation = () => {
   const isSchedule = getScheduleModules()
   const isContact = getContactModules()
   const isGroup = getGroupModules()
+  const isSession = getSessionModules()
 
-  const { chat, home, datasource, models, discovery, schedule, toolkits } = moduleNames
+  const { chat, home, datasource, models, discovery, schedule, toolkits, sessions } = moduleNames
 
   const navigate = useNavigate()
 
@@ -163,6 +166,20 @@ const MainNavigation = () => {
           <StyledBasicIcon size={30} />
           <TypographySecondary
             value={t('models')}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
+
+      {isSession && (
+        <StyledLi
+          isActive={includes(active, 'sessions')}
+          onClick={() => onHandleClick('/sessions')}
+        >
+          <StyledSessionIcon size={30} />
+          <TypographySecondary
+            value={t('sessions')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />
@@ -302,6 +319,12 @@ const StyledMobileIcon = styled(Mobile)`
 `
 
 const StyledGroupIcon = styled(Group)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledSessionIcon = styled(Session)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
