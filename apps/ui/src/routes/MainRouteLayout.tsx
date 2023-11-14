@@ -9,7 +9,7 @@ import { Footer, Header } from 'components/Layout'
 import MainNavigation from 'pages/Navigation/MainNavigation'
 import styled from 'styled-components'
 
-const MainRouteLayout = () => {
+const MainRouteLayout = ({ expand }: { expand?: boolean }) => {
   const { user } = React.useContext(AuthContext)
 
   const outlet = useOutlet()
@@ -22,7 +22,7 @@ const MainRouteLayout = () => {
       {/* <StyledNavigationWrapper>
         <MainNavigation />
       </StyledNavigationWrapper> */}
-      <StyledMainContainer>{outlet}</StyledMainContainer>
+      <StyledMainContainer expand={expand}>{outlet}</StyledMainContainer>
       <Footer />
     </StyledAppContainer>
   )
