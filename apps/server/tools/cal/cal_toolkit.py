@@ -24,5 +24,12 @@ class CalToolkit(BaseToolkit, ABC):
                 key_type=ToolEnvKeyType.STRING,
                 is_required=True,
                 is_secret=True,
-            )
+            ),
+            ToolEnvKey(
+                label="Username",
+                key="CALCOM_USERNAME",
+                key_type=ToolEnvKeyType.STRING,
+                is_required=True,
+                is_secret=False,
+            ),
         ]
