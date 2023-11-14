@@ -69,7 +69,7 @@ const routes: any = [
 
   //chat
   { path: '/chat', breadcrumb: null },
-  { path: '/chatHistory', breadcrumb: null },
+  { path: '/chat/history', breadcrumb: null },
 ]
 
 type BreadcrumbsProps = {

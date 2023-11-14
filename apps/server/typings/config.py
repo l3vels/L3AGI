@@ -57,3 +57,11 @@ class AccountSettings(BaseModel):
     pinecone_environment: Optional[str]
     weaviate_url: Optional[str]
     weaviate_api_key: Optional[str]
+
+
+class AccountVoiceSettings(BaseModel):
+    DEEPGRAM_API_KEY: Optional[str]
+    AZURE_SPEECH_KEY: Optional[str]
+    AZURE_SPEECH_REGION: Optional[str]
+    PLAY_HT_API_KEY: Optional[str]
+    PLAY_HT_USER_ID: Optional[str]

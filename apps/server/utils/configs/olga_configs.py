@@ -45,5 +45,6 @@ olga_configs = {
         "schedule": False,
         "contact": False,
         "group": False,
+        "external-links": False,
     },
 }

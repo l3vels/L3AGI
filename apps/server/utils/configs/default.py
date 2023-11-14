@@ -54,7 +54,7 @@ default_configs = {
         "datasource": True,
         "discovery": True,
         "Session": False,
-        "schedule": False,
+        "schedule": True,
         "integration": {
             "active": True,
             "label": "Integrations",
@@ -66,8 +66,8 @@ default_configs = {
                         "edit": True,
                     }
                 },
-                "voices": False,
-                "telephony": False,
+                "voices": True,
+                "telephony": True,
             },
         },
         "contact": False,

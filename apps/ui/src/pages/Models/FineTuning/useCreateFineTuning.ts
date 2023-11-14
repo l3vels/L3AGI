@@ -42,6 +42,7 @@ export const useCreateFineTuning = () => {
       }
 
       await createFineTuningService(fineTuningInput)
+
       await refetchFineTining()
       navigate('/models')
       setToast({
@@ -49,8 +50,12 @@ export const useCreateFineTuning = () => {
         type: 'positive',
         open: true,
       })
-    } catch (e) {
-      handleErrorAlert('Failed to create Fine-tuning!')
+    } catch (error: any) {
+      if (error.networkError && 'result' in error.networkError) {
+        handleErrorAlert(error.networkError.result.detail)
+      } else {
+        handleErrorAlert('Failed to create Fine-tuning!')
+      }
     }
 
     setIsLoading(false)

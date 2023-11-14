@@ -14,6 +14,8 @@ class ChatStatus(Enum):
 
 class ChatUserMessageInput(BaseModel):
     prompt: str
+    voice_url: Optional[str]
+    audio_data: Optional[str]
     local_chat_message_ref_id: Optional[str] = None
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
@@ -22,6 +24,8 @@ class ChatUserMessageInput(BaseModel):
 
 class ChatMessageInput(BaseModel):
     prompt: str
+    voice_url: Optional[str]
+    audio_data: Optional[str]
     chat_id: Optional[UUID] = None
     # todo what it is?
     local_chat_message_ref_id: Optional[str] = None
@@ -70,7 +74,7 @@ class ChatMessageOutput(BaseModel):
     sender_name: Optional[str]
     chat_id: Optional[UUID]
     run_id: Optional[UUID] = None
-    audio_url: Optional[str]
+    voice_url: Optional[str]
 
 
 class NegotiateOutput(BaseModel):

@@ -14,6 +14,7 @@ RUN pip install poetry \
     && poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
+
 # Copy project
 COPY ./ /code/
 

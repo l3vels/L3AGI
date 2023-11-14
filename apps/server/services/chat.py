@@ -32,7 +32,7 @@ from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput, DataSourceFlow
 from typings.auth import UserAccount
 from typings.chat import ChatMessageInput, ChatStatus, ChatUserMessageInput
-from typings.config import AccountSettings, ConfigInput
+from typings.config import AccountSettings, AccountVoiceSettings, ConfigInput
 from typings.run import RunInput
 from utils.agent import convert_model_to_response
 from utils.chat import get_chat_session_id, parse_agent_mention
@@ -76,6 +76,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         provider_account=provider_account,
         provider_user=provider_user,
         chat_id=None,
+        voice_url=body.voice_url,
     )
 
     return ""
@@ -108,8 +109,11 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
     local_chat_message_ref_id = body.local_chat_message_ref_id
 
     prompt = body.prompt
+    voice_url = body.voice_url
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id, chat_id)
+
+    voice_url = body.voice_url
 
     process_chat_message(
         session_id=session_id,
@@ -124,6 +128,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
         provider_account=provider_account,
         provider_user=provider_user,
         chat_id=chat_id,
+        voice_url=voice_url,
     )
     return ""
 
@@ -141,6 +146,7 @@ def process_chat_message(
     provider_account: UserAccount,
     provider_user: UserModel,
     chat_id: str,
+    voice_url: str,
 ):
     run = RunModel.create_run(
         db.session,
@@ -192,9 +198,14 @@ def process_chat_message(
         current_agent_id=current_agent_id,
         chat_id=chat_id,
         run_id=run.id,
+        voice_url=voice_url,
     )
 
     settings = ConfigModel.get_account_settings(db.session, provider_account.id)
+    # todo run async both
+    voice_settings = ConfigModel.get_account_voice_settings(
+        db.session, provider_account.id
+    )
 
     if len(agents) > 0:
         for agent_with_configs in agents:
@@ -206,11 +217,14 @@ def process_chat_message(
                 provider_account=provider_account,
                 session_id=session_id,
                 prompt=prompt,
+                voice_url=voice_url,
                 human_message_id=human_message_id,
                 chat_pubsub_service=chat_pubsub_service,
                 settings=settings,
+                voice_settings=voice_settings,
                 team_id=team_id,
                 parent_id=parent_id,
+                history=history,
                 run_id=run.id,
                 run_logs_manager=run_logs_manager,
             )
@@ -522,27 +536,18 @@ def run_conversational_agent(
     sender_account_id: str,
     session_id: str,
     prompt: str,
+    voice_url: str,
     human_message_id: UUID,
     chat_pubsub_service: ChatPubSubService,
     settings: AccountSettings,
+    voice_settings: AccountVoiceSettings,
     run_id: UUID,
     run_logs_manager: RunLogsManager,
+    history: PostgresChatMessageHistory,
     team_id: Optional[UUID] = None,
     parent_id: Optional[UUID] = None,
 ):
-    history = PostgresChatMessageHistory(
-        session_id=session_id,
-        sender_account_id=sender_account_id,
-        sender_user_id=sender_user_id,
-        sender_name=sender_name,
-        parent_id=parent_id,
-        team_id=team_id,
-        agent_id=agent_with_configs.agent.id,
-        chat_id=None,
-        run_id=run_id,
-    )
-
-    datasources = (
+    data_sources = (
         db.session.query(DatasourceModel)
         .filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources))
         .all()
@@ -550,8 +555,8 @@ def run_conversational_agent(
 
     tool_callback_handler = run_logs_manager.get_tool_callback_handler()
 
-    datasource_tools = get_datasource_tools(
-        datasources,
+    data_source_tools = get_datasource_tools(
+        data_sources,
         settings,
         provider_account,
         agent_with_configs,
@@ -570,24 +575,24 @@ def run_conversational_agent(
     pre_retrieved_context = ""
 
     if agent_with_configs.configs.source_flow == DataSourceFlow.PRE_RETRIEVAL.value:
-        if len(datasource_tools) != 0:
-            pre_retrieved_context = datasource_tools[0]._run(prompt)
+        if len(data_source_tools) != 0:
+            pre_retrieved_context = data_source_tools[0]._run(prompt)
 
         tools = agent_tools
     else:
-        tools = datasource_tools + agent_tools
+        tools = data_source_tools + agent_tools
 
     conversational = ConversationalAgent(sender_name, provider_account, session_id)
     return conversational.run(
         settings,
+        voice_settings,
         chat_pubsub_service,
         agent_with_configs,
         tools,
         prompt,
+        voice_url,
         history,
         human_message_id,
-        run_id,
-        sender_user_id,
         run_logs_manager,
         pre_retrieved_context,
     )
@@ -595,12 +600,11 @@ def run_conversational_agent(
 
 def create_and_send_chat_message(
     session_id: str,
-    # account: AccountModel,
-    # sender_user: UserModel,
     sender_name: str,
     sender_user_id: str,
     sender_account_id: str,
     prompt: str,
+    voice_url: str,
     agent_id: str,
     team_id: str,
     parent_id: str,
@@ -621,7 +625,7 @@ def create_and_send_chat_message(
         run_id=run_id,
     )
 
-    human_message = history.create_human_message(prompt)
+    human_message = history.create_human_message(prompt, voice_url=voice_url)
     human_message_id = UUID(human_message["id"])
 
     memory = ZepMemory(

@@ -80,6 +80,15 @@ def get_all_tools():
     return result
 
 
+def get_toolkit_id_by_tool_name(tool_name: str) -> str | None:
+    toolkits = get_all_tools()
+
+    for toolkit in toolkits:
+        for tool in toolkit["tools"]:
+            if tool["name"] == tool_name:
+                return toolkit["toolkit_id"]
+
+
 def get_agent_tools(
     toolkit_ids: List[str], db, account, settings, agent_with_configs, callback_handler
 ) -> List[BaseTool]:

@@ -28,6 +28,7 @@ import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 import Button from '@l3-lib/ui-core/dist/Button'
+import Loader from '@l3-lib/ui-core/dist/Loader'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
@@ -45,6 +46,8 @@ import { useClientChatMessagesService } from 'services/chat/useChatMessagesServi
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
 import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { textSlicer } from 'utils/textSlicer'
+import AudioRecorder from 'components/AudioRecorder'
+import AudioPlayer from 'components/AudioPlayer'
 
 const ChatV2 = () => {
   const { t } = useTranslation()
@@ -53,6 +56,11 @@ const ChatV2 = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const [formValue, setFormValue] = useState('')
+
+  const [voicePreview, setVoicePreview] = useState<string | null>(null)
+  const [startedRecording, setStartedRecording] = useState(false)
+  const [voiceLoading, setVoiceLoading] = useState(false)
+
   const [typingEffectText, setTypingEffectText] = useState(false)
   const [fileLoading, setFileLoading] = useState(false)
 
@@ -127,7 +135,11 @@ const ChatV2 = () => {
     setThinking(status === ChatStatus.Running)
   }, [status])
 
-  const addMessagesToCache = (prompt: string, message_type: 'human' | 'ai') => {
+  const addMessagesToCache = (
+    prompt: string,
+    message_type: 'human' | 'ai',
+    recordedVoiceUrl: string | null,
+  ) => {
     // Add message to cache immediately after user sends it. This message will be updated with sockets
     const message = {
       id: uuid(),
@@ -151,7 +163,7 @@ const ChatV2 = () => {
       created_on: new Date().toISOString(),
       sender_user: user || '',
       run_id: null,
-      audio_url: null,
+      voice_url: recordedVoiceUrl,
     }
 
     upsertChatMessageInCache(message, {
@@ -203,12 +215,36 @@ const ChatV2 = () => {
   const createMessage = async () => {
     try {
       let message = formValue
+      let voiceUrl = null
 
       if (uploadedFileObject) {
         message = `${uploadedFileObject.fileName} ${uploadedFileObject.url} ${formValue}`
       }
 
-      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human')
+      if (voicePreview) {
+        setVoiceLoading(true)
+        const voiceResponse = await fetch(voicePreview)
+        const voiceBlob = await voiceResponse.blob()
+
+        const formData: any = new FormData()
+        await formData.append('audio', voiceBlob, 'recorded_audio.wav')
+
+        const audioBlob = await formData.get('audio')
+
+        const uploadedFile = await uploadFile(
+          {
+            name: audioBlob.name,
+            type: audioBlob.type,
+            size: audioBlob.size,
+          },
+          audioBlob,
+        )
+        voiceUrl = uploadedFile?.url
+        setVoicePreview(null)
+        setVoiceLoading(false)
+      }
+
+      const { id: localChatMessageRefId } = addMessagesToCache(message, 'human', voiceUrl)
 
       setThinking(true)
       setFormValue('')
@@ -228,6 +264,7 @@ const ChatV2 = () => {
           chat_id: chatId,
           prompt: message,
           localChatMessageRefId,
+          voice_url: voiceUrl,
         })
       } else {
         await createChatMessageService({
@@ -236,11 +273,13 @@ const ChatV2 = () => {
           teamId,
           localChatMessageRefId, // Used to update the message with socket
           parentId: parentMessageId,
+          voice_url: voiceUrl,
         })
       }
 
       setThinking(false)
     } catch (e) {
+      console.log(e)
       setToast({
         message: t('toast-negative-message'),
         type: 'negative',
@@ -251,10 +290,10 @@ const ChatV2 = () => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && !thinking) {
+    if (e.key === 'Enter' && !e.shiftKey && !thinking && !voiceLoading) {
       e.preventDefault()
 
-      if (formValue || uploadedFileObject) {
+      if (formValue || uploadedFileObject || voicePreview) {
         createMessage()
       }
     }
@@ -364,51 +403,75 @@ const ChatV2 = () => {
                 />
               </StyledFileWrapper>
             )}
+
             <StyledTextareaWrapper>
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-
-              {typingEffectText ? (
-                <StyledInputWrapper secondary>
-                  <Typewriter
-                    size='small'
-                    message={formValue}
-                    callFunction={() => {
-                      setTypingEffectText(false)
-                      setTimeout(() => {
-                        inputRef.current?.focus()
-                        inputRef.current?.setSelectionRange(formValue.length, formValue.length)
-                      }, 1)
-                    }}
-                  />
-                </StyledInputWrapper>
-              ) : (
-                <StyledInputWrapper>
-                  <Mentions
-                    inputRef={inputRef}
-                    onChange={(e: any) => {
-                      setFormValue(e.target.value)
-                    }}
-                    value={formValue}
-                    onKeyDown={handleKeyDown}
-                    setValue={setFormValue}
-                    agentId={agentId}
-                    teamId={teamId}
-                  />
-                </StyledInputWrapper>
+              <AudioRecorder
+                setVoicePreview={setVoicePreview}
+                setStartedRecording={setStartedRecording}
+              />
+              {voicePreview && (
+                <AudioPlayer
+                  audioUrl={voicePreview || ''}
+                  onCloseClick={() => setVoicePreview(null)}
+                />
               )}
-              <StyledButton
-                onClick={() => {
-                  if (formValue || uploadedFileObject) {
-                    createMessage()
-                  }
-                }}
-                disabled={!formValue || thinking}
-              >
-                <StyledSenIcon size={27} />
-              </StyledButton>
-              {user && <CommandIcon />}
+              {!startedRecording && !voicePreview && (
+                <>
+                  {typingEffectText ? (
+                    <StyledInputWrapper secondary>
+                      <Typewriter
+                        size='small'
+                        message={formValue}
+                        callFunction={() => {
+                          setTypingEffectText(false)
+                          setTimeout(() => {
+                            inputRef.current?.focus()
+                            inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                          }, 1)
+                        }}
+                      />
+                    </StyledInputWrapper>
+                  ) : (
+                    <StyledInputWrapper>
+                      <Mentions
+                        inputRef={inputRef}
+                        onChange={(e: any) => {
+                          setFormValue(e.target.value)
+                        }}
+                        value={formValue}
+                        onKeyDown={handleKeyDown}
+                        setValue={setFormValue}
+                        agentId={agentId}
+                        teamId={teamId}
+                      />
+                    </StyledInputWrapper>
+                  )}
+                </>
+              )}
+
+              <StyledChatInputRightSide>
+                {voiceLoading ? (
+                  <StyledLoaderWrapper>
+                    <Loader size={20} />
+                  </StyledLoaderWrapper>
+                ) : (
+                  <StyledButton
+                    onClick={() => {
+                      if (formValue || uploadedFileObject || voicePreview) {
+                        createMessage()
+                      }
+                    }}
+                    disabled={(!formValue && !voicePreview) || thinking}
+                  >
+                    <StyledSenIcon />
+                  </StyledButton>
+                )}
+
+                {user && <CommandIcon />}
+              </StyledChatInputRightSide>
             </StyledTextareaWrapper>
           </StyledForm>
           <StyledChatBottom>
@@ -453,9 +516,10 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
 
-  align-items: flex-start;
-  padding: 0px 23px 0px 16px;
+  /* align-items: center; */
+  padding: 10px 30px;
   /* gap: 12px; */
+  /* padding-top: 5px; */
 
   background: rgba(0, 0, 0, 0.1);
   /* Style */
@@ -472,7 +536,7 @@ const StyledForm = styled.form`
 
   width: 100%;
   max-width: 800px;
-  min-height: 48px;
+  min-height: 54px;
   height: fit-content;
   max-height: 250px;
 
@@ -493,12 +557,13 @@ const StyledTextareaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 0px;
-  padding-left: 20px;
+  gap: 10px;
+  /* padding: 10px 0px;
+  padding-left: 20px; */
 `
 
 const StyledButton = styled.div<{ disabled: boolean }>`
-  margin: 0 20px;
+  /* margin: 0 10px; */
   cursor: pointer;
   ${props =>
     props.disabled &&
@@ -520,7 +585,6 @@ const StyledChatFooter = styled.div`
   justify-content: center;
 
   width: 100%;
-  padding: 0 20px;
 `
 
 const StyledButtonGroup = styled.div`
@@ -577,25 +641,23 @@ const StyledFileWrapper = styled.div`
 const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
   /* width: calc(100vw - 600px);
   max-width: 600px; */
+  overflow: hidden;
 
-  padding-bottom: 2px;
   width: 100%;
   ${p =>
     p.secondary &&
     css`
       padding-left: 2px;
-      padding-bottom: 0;
     `};
-
-  /* @media (max-width: 1200px) {
-    width: 400px;
-  } */
 `
 const StyledChatInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100%;
+
+  /* margin-top: 50px; */
 `
 const StyledChatBottom = styled.div`
   display: flex;
@@ -605,8 +667,19 @@ const StyledChatBottom = styled.div`
   width: 100%;
 `
 const StyledSenIcon = styled(SendIcon)`
+  min-width: 30px;
   path {
     fill: ${({ theme }) => theme.body.iconColor};
     stroke: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledLoaderWrapper = styled.div`
+  padding: 0 5px;
+`
+const StyledChatInputRightSide = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 80px;
 `

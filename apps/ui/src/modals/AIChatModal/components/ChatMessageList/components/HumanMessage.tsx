@@ -15,7 +15,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import AiMessageMarkdown from './AiMessageMarkdown'
 import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
 import { useModal } from 'hooks'
-import PlayAudioButton from 'components/PlayAudioButton'
+import AudioPlayer from 'components/AudioPlayer'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -83,7 +83,7 @@ const HumanMessage = ({
 
             {/* <HumanMessageText textArray={wordArray} /> */}
             <AiMessageMarkdown children={messageText} />
-            {voice && <PlayAudioButton audioUrl={voice} />}
+            {voice && <AudioPlayer audioUrl={voice} />}
           </StyledMessageText>
         </StyledMainContent>
       </StyledMessageWrapper>

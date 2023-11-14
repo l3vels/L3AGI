@@ -1,8 +1,9 @@
 import os
-from typing import Dict, List
+from typing import Dict, List, Optional
 from uuid import UUID
 
 from fastapi_sqlalchemy import db
+from langchain.callbacks.base import BaseCallbackHandler
 from langchain.chat_models import ChatOpenAI
 from langchain.llms.huggingface_hub import HuggingFaceHub
 from langchain.llms.replicate import Replicate

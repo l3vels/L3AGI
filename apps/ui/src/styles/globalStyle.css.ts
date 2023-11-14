@@ -96,6 +96,12 @@ const SectionDivider = styled.div`
   height: 1px;
 `
 
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`
+
 export {
   StyledFormSection,
   StyledFlex,
@@ -107,4 +113,5 @@ export {
   StyledHeaderGroup,
   StyledCenteredWrapper,
   SectionDivider,
+  StyledButtonsWrapper,
 }

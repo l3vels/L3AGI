@@ -56,6 +56,8 @@ const StyledTypewriterWrapper = styled.div<{ size: string }>`
   width: 100%;
   color: ${({ theme }) => theme.body.textColorPrimary};
 
+  white-space: pre-line;
+
   ${p =>
     p.size === 'small' &&
     css`

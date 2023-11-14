@@ -1,5 +1,3 @@
-from uuid import UUID
-
 from langchain.agents import AgentType, initialize_agent
 
 from agents.base_agent import BaseAgent
@@ -10,8 +8,9 @@ from memory.zep.zep_memory import ZepMemory
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
 from services.run_log import RunLogsManager
+from services.voice import speech_to_text, text_to_speech
 from typings.agent import AgentWithConfigsOutput
-from typings.config import AccountSettings
+from typings.config import AccountSettings, AccountVoiceSettings
 from utils.model import get_llm
 from utils.system_message import SystemMessageBuilder
 
@@ -20,14 +19,14 @@ class ConversationalAgent(BaseAgent):
     def run(
         self,
         settings: AccountSettings,
+        voice_settings: AccountVoiceSettings,
         chat_pubsub_service: ChatPubSubService,
         agent_with_configs: AgentWithConfigsOutput,
         tools,
         prompt: str,
+        voice_url: str,
         history: PostgresChatMessageHistory,
         human_message_id: str,
-        run_id: UUID,
-        sender_user_id: str,
         run_logs_manager: RunLogsManager,
         pre_retrieved_context: str,
     ):
@@ -46,15 +45,19 @@ class ConversationalAgent(BaseAgent):
             agent_with_configs, pre_retrieved_context
         ).build()
 
-        run_logs_manager.create_system_run_log(system_message)
-
         res: str
 
         try:
+            if voice_url:
+                configs = agent_with_configs.configs
+                prompt = speech_to_text(voice_url, configs, voice_settings)
+
             llm = get_llm(
                 settings,
                 agent_with_configs,
             )
+
+            llm.callbacks = [run_logs_manager.get_agent_callback_handler()]
 
             agent = initialize_agent(
                 tools,
@@ -84,8 +87,20 @@ class ConversationalAgent(BaseAgent):
                 },
             )
 
+        try:
+            configs = agent_with_configs.configs
+            voice_url = None
+            if "Voice" in configs.response_mode:
+                voice_url = text_to_speech(res, configs, voice_settings)
+                pass
+        except Exception as err:
+            res = f"{res}\n\n{handle_agent_error(err)}"
+
         ai_message = history.create_ai_message(
-            res, human_message_id, agent_with_configs.agent.id
+            res,
+            human_message_id,
+            agent_with_configs.agent.id,
+            voice_url,
         )
 
         chat_pubsub_service.send_chat_message(chat_message=ai_message)

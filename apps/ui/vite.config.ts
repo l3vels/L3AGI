@@ -6,6 +6,8 @@ import graphql from '@rollup/plugin-graphql'
 import svgrPlugin from 'vite-plugin-svgr'
 import envCompatible from 'vite-plugin-env-compatible'
 import eslint from 'vite-plugin-eslint'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+
 
 // import packageJson from "./package.json";
 // const deps = packageJson.dependencies;
@@ -25,6 +27,15 @@ export default defineConfig({
         icon: true,
       },
     }),
+
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'staticwebapp.config.json',
+          dest: ''
+        }
+      ]
+    })
   ],
   server: {
     port: 3000,
