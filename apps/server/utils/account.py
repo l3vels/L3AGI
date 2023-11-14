@@ -26,7 +26,7 @@ def convert_model_to_response(account_model: AccountModel) -> AccountOutput:
         account_model.configs = call_configs
     elif account_model.name == "Olga":
         account_model.configs = olga_configs
-    elif account_model.name == "davit":
+    elif account_model.name == "Giga":
         account_model.configs = dato_configs
     else:
         account_model.configs = default_configs
