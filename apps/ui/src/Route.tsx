@@ -1,7 +1,7 @@
 import { Route as Router, Routes } from 'react-router-dom'
 import About from './pages/About'
 
-import Sessions from './pages/sessions/Session'
+import Sessions from './pages/Sessions/Session'
 import Create from './pages/Create'
 
 import Home from './pages/Home'
