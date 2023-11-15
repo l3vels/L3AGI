@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from pydantic import BaseModel, Field
 
-from exceptions import ToolEnvKeyException
+from exceptions import ToolEnvKeyException, ToolException
 from tools.base import BaseTool
 
 load_dotenv()
@@ -18,10 +18,11 @@ class CalGetAvailableDatesSchema(BaseModel):
     query: str = Field(
         ...,
         description=(
-            "The input parameter is a JSON string representing a time-related query for an action."
-            "Give me 'dateFrom' and 'dateTo' fields in json as formatted like: dd/mm/yyyy"
-            "Task is to interpret these expressions and translate them into date formats"
-            "Current date is: " + datetime.now().strftime("%d/%m/%Y")
+            "Your task is to process a JSON string representing a time-related query for a specific action. \n"
+            "Give me 'dateFrom' and 'dateTo' fields in JSON format, formatted as dd/mm/yyyy. \n"
+            "Ensure that the maximum difference between 'dateFrom' and 'dateTo' does not exceed 21 days. \n"
+            "Task is to interpret these expressions and translate them into date formats \n"
+            "The current date for reference is " + datetime.now().strftime("%d/%m/%Y")
         ),
     )
 
@@ -34,10 +35,11 @@ class CalGetAvailableDatesTool(BaseTool):
     name = "Cal.com Get Available Dates"
 
     description = (
-        "The input parameter is a JSON string representing a date-related query for an action."
-        "Give me 'dateFrom' and 'dateTo' fields in json as formatted like: dd/mm/yyyy"
-        "Task is to interpret these expressions and translate them into date formats"
-        "Current date is " + datetime.now().strftime("%d/%m/%Y")
+        "Your task is to process a JSON string representing a time-related query for a specific action. \n"
+        "Give me 'dateFrom' and 'dateTo' fields in JSON format, formatted as dd/mm/yyyy. \n"
+        "Ensure that the maximum difference between 'dateFrom' and 'dateTo' does not exceed 21 days. \n"
+        "Task is to interpret these expressions and translate them into date formats \n"
+        "The current date for reference is " + datetime.now().strftime("%d/%m/%Y")
     )
 
     args_schema: Type[CalGetAvailableDatesSchema] = CalGetAvailableDatesSchema
@@ -71,9 +73,8 @@ class CalGetAvailableDatesTool(BaseTool):
                     "dateTo": dateTo,
                 },
             )
+            print(response)
         except Exception as e:
-            print("Error:", e)
-
-        # Valid parse method for response of availability.
+            raise ToolException(str(e))
 
         return str(response.json())

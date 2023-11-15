@@ -5,7 +5,7 @@ from openai.error import Timeout as TimeoutError
 
 from exceptions import (InvalidLLMApiKeyException, PlannerEmptyTasksException,
                         SynthesizerException, ToolEnvKeyException,
-                        TranscriberException)
+                        ToolException, TranscriberException)
 
 
 def handle_agent_error(err: Exception) -> str:
@@ -24,6 +24,8 @@ def handle_agent_error(err: Exception) -> str:
     elif isinstance(err, PlannerEmptyTasksException):
         return "There are no tasks to execute."
     elif isinstance(err, InvalidLLMApiKeyException):
+        return str(err)
+    elif isinstance(err, ToolException):
         return str(err)
     elif isinstance(err, TranscriberException):
         return str(err)
