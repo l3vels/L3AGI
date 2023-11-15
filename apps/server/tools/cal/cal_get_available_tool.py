@@ -49,10 +49,6 @@ class CalGetAvailableDatesTool(BaseTool):
     ) -> str:
         cal_api_key = self.get_env_key("CALCOM_API_KEY")
         cal_username = self.get_env_key("CALCOM_USERNAME")
-        if not cal_username:  # remove this when I finnaly able to put CALCOM_USERNAME
-            cal_username = "theiskaa"
-
-        print("-->", query)
 
         if not cal_api_key or not cal_username:
             raise ToolEnvKeyException(
@@ -77,5 +73,7 @@ class CalGetAvailableDatesTool(BaseTool):
             )
         except Exception as e:
             print("Error:", e)
+
+        # Valid parse method for response of availability.
 
         return str(response.json())
