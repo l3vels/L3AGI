@@ -11,12 +11,14 @@ from models.chat import ChatModel
 from models.chat_message import ChatMessage as ChatMessageModel
 from models.config import ConfigModel
 from models.team import TeamModel
+from postgres import PostgresChatMessageHistory
 from services.chat import create_client_message, create_user_message
 from services.pubsub import AzurePubSubService
 from typings.auth import UserAccount
 from typings.chat import (ChatInput, ChatMessageInput, ChatMessageOutput,
                           ChatOutput, ChatStatus, ChatStopInput,
-                          ChatUserMessageInput, NegotiateOutput)
+                          ChatUserMessageInput, InsertChatMessagesInput,
+                          NegotiateOutput)
 from typings.config import ConfigOutput
 from utils.auth import authenticate, try_auth_user
 from utils.chat import (convert_chats_to_chat_list, convert_model_to_response,
@@ -33,6 +35,7 @@ def create_chat(
 ) -> ChatOutput:
     if not chat.agent_id and not chat.team_id:
         ChatException("Agent or Team should be defined")
+
     db_chat = ChatModel.create_chat(db, chat=chat, user=auth.user, account=auth.account)
     return convert_model_to_response(db_chat)
 
@@ -188,6 +191,59 @@ def negotiate(id: str):
 
     token = AzurePubSubService().get_client_access_token(user_id=id)
     return NegotiateOutput(url=token["url"])
+
+
+@router.post("/session/messages/insert", status_code=201)
+def insert_chat_messages(
+    body: InsertChatMessagesInput, auth: UserAccount = Depends(authenticate)
+):
+    """
+    Inserts chat messages
+    """
+    chat = ChatModel.get_chat_by_id(db, body.chat_id)
+
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat not found")
+
+    account = chat.creator_account
+    user = chat.creator_user
+
+    if auth:
+        account = auth.account
+        user = auth.user
+
+    sender_name = user.name if auth else "Guest"
+    sender_user_id = user.id
+    sender_account_id = account.id
+
+    session_id = get_chat_session_id(
+        auth.user.id, auth.account.id, chat.agent_id, chat.team_id, chat.id
+    )
+
+    history = PostgresChatMessageHistory(
+        session_id=session_id,
+        sender_account_id=sender_account_id,
+        sender_user_id=sender_user_id,
+        sender_name=sender_name,
+        parent_id=None,
+        team_id=chat.team_id,
+        agent_id=chat.agent_id,
+        chat_id=body.chat_id,
+        run_id=None,
+    )
+
+    for message in body.messages:
+        content = message.content.strip()
+
+        if content == "":
+            continue
+
+        if message.type == "human":
+            history.create_human_message(message=content)
+        elif message.type == "ai":
+            history.create_ai_message(message=content)
+
+    return ""
 
 
 @router.post("/session/messages", status_code=201)

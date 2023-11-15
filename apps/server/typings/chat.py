@@ -32,6 +32,17 @@ class ChatMessageInput(BaseModel):
     parent_id: Optional[UUID] = None
 
 
+class InsertChatMessageInput(BaseModel):
+    timestamp: int
+    type: str
+    content: str
+
+
+class InsertChatMessagesInput(BaseModel):
+    chat_id: UUID
+    messages: List[InsertChatMessageInput]
+
+
 class ChatInput(BaseModel):
     name: str
     is_public: Optional[bool]
