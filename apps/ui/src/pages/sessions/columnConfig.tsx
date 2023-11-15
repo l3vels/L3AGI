@@ -10,15 +10,15 @@ import { useNavigate } from 'react-router-dom'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import {
   StyledDeleteIcon,
-  StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { useChatsService } from 'services/chat/useChatsService'
 import { useDeleteChatService } from 'services/chat/useDeleteChatService'
 import { ToastContext } from 'contexts'
+import { Nullable } from 'types'
 
 type CellProps = {
-  value: any
+  value: Nullable<string>
 }
 
 const DateRenderer: React.FC<CellProps> = ({ value }) => {
