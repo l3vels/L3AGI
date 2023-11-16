@@ -2,6 +2,7 @@ from abc import ABC
 from typing import List
 
 from tools.base import BaseTool, BaseToolkit, ToolEnvKey, ToolEnvKeyType
+from tools.cal.cal_booking_tool import CalBookingTool
 from tools.cal.cal_get_available_tool import CalGetAvailableDatesTool
 
 
@@ -14,7 +15,7 @@ class CalToolkit(BaseToolkit, ABC):
     toolkit_id = "be23abc5-1e33-431e-8a9a-9233c527143b"
 
     def get_tools(self) -> List[BaseTool]:
-        return [CalGetAvailableDatesTool()]
+        return [CalGetAvailableDatesTool(), CalBookingTool()]
 
     def get_env_keys(self) -> List[ToolEnvKey]:
         return [
