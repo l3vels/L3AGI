@@ -21,7 +21,7 @@ class CalBookingSchema(BaseModel):
             "This task involves managing a JSON string that represents an action query.\n"
             "Generate a JSON output containing:\n"
             "Time format entries for 'start' and 'end' fields, where 'end' can be left empty. Please use the format: 'YYYY-MM-DDTHH:MM:SS.000Z'\n"
-            "Optional fields such as 'name', 'email', 'meetingurl', 'timeZone', 'title', and 'description'.\n"
+            "Optional fields such as 'name', 'email', 'location', 'timeZone', 'title', 'notes', and 'description'.\n"
             "If 'timeZone' is unspecified, assign the default as 'America/New York'"
         ),
     )
@@ -38,7 +38,7 @@ class CalBookingTool(BaseTool):
         "This task involves managing a JSON string that represents an action query.\n"
         "Generate a JSON output containing:\n"
         "Time format entries for 'start' and 'end' fields, where 'end' can be left empty. Please use the format: 'YYYY-MM-DDTHH:MM:SS.000Z'\n"
-        "Optional fields such as 'name', 'email', 'meetingurl', 'timeZone', 'title', and 'description'.\n"
+        "Optional fields such as 'name', 'email', 'location', 'timeZone', 'title', 'notes', and 'description'.\n"
         "If 'timeZone' is unspecified, assign the default as 'America/New York'"
     )
 
@@ -58,26 +58,11 @@ class CalBookingTool(BaseTool):
             )
 
         action = json.loads(query)
-        print("-->", action)
 
         start = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.000Z")
         end = (datetime.now() + timedelta(days=1, hours=1)).strftime(
             "%Y-%m-%dT%H:%M:%S.000Z"
         )
-        name = action.get("name", "")
-        email = action.get("email", "")
-        timeZone = action.get("timeZone", "America/New York")
-        language = action.get("language", "English")
-        title = action.get("title", "")
-        description = (action.get("description", ""),)
-        meetingurl = action.get("meetingurl", "")
-
-        if not meetingurl:
-            location = {"optionValue": meetingurl, "value": "other"}
-            pass
-        else:
-            location = {"optionValue": "Cal Video", "value": "global"}
-            pass
 
         api = os.environ.get("CALCOM_API")
         try:
@@ -86,20 +71,23 @@ class CalBookingTool(BaseTool):
                 api,
                 params={"apiKey": cal_api_key},
                 json={
-                    "username": cal_username,
-                    "eventTypeId": 7,
+                    "eventTypeId": 494081,
                     "start": start,
                     "end": end,
-                    "responses": {
-                        "name": name,
-                        "email": email,
-                        "location": location,
-                    },
-                    "timeZone": timeZone,
-                    "language": language,
-                    "title": title,
-                    "description": description,
                     "metadata": {},
+                    "responses": {
+                        "name": action.get("name", ""),
+                        "email": action.get("email", ""),
+                        "notes": action.get("notes", ""),
+                        "phone": action.get("phone", ""),
+                        "location": action.get("location", ""),
+                    },
+                    "timeZone": action.get("timeZone", "Asia/Tbilisi"),
+                    "language": action.get("language", "en"),
+                    "title": action.get("title", ""),
+                    "description": action.get("description", ""),
+                    "hasHashedBookingLink": False,
+                    "hashedLink": None,
                 },
             )
         except Exception as e:
