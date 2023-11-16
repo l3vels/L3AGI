@@ -104,7 +104,7 @@ class PostgresChatMessageHistory(BaseChatMessageHistory):
             AIMessage(content=message), parent_id, agent_id, voice_url
         )
 
-    def create_human_message(self, message: str, voice_url: str):
+    def create_human_message(self, message: str, voice_url: Optional[str] = None):
         return self.create_message(
             HumanMessage(
                 content=message,
