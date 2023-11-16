@@ -1,7 +1,7 @@
 import { Route as Router, Routes } from 'react-router-dom'
 import About from './pages/About'
 
-import Sessions from './pages/Sessions'
+import Sessions from './pages/Sessions/Session'
 import Create from './pages/Create'
 
 import Home from './pages/Home'
@@ -144,7 +144,6 @@ const Route = () => {
               {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
 
               <Router path='teams' element={<Teams />} key={document.location.href} />
-              <Router path='sessions' element={<Sessions />} key={document.location.href} />
 
               {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
@@ -267,6 +266,14 @@ const Route = () => {
                 element={<EditFineTuningForm />}
                 key={document.location.href}
               />
+            </Router>
+
+            <Router
+              path={'sessions'}
+              element={<MainRouteLayout expand />}
+              key={document.location.href}
+            >
+              <Router index element={<Sessions />} key={document.location.href} />
             </Router>
 
             <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>

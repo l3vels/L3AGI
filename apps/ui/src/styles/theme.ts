@@ -48,6 +48,7 @@ const darkTheme: DefaultTheme = {
     dropdownSecondaryBgColor: 'rgba(0, 0, 0, 0.7)',
     commandMenuBackgroundColor: ' var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1))',
     warningToastTextColor: 'rgb(110,110,110)',
+    sessionDropdownBorder: 'none',
   },
   typography: {
     contentPrimary: 'var(--color-primitive-white)',
@@ -113,6 +114,7 @@ const lightTheme: DefaultTheme = {
     dropdownSecondaryBgColor: 'rgb(253,252,250)',
     commandMenuBackgroundColor: '#F5F5F7',
     warningToastTextColor: 'rgb(110,110,110)',
+    sessionDropdownBorder: '2px solid #cccccc',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',

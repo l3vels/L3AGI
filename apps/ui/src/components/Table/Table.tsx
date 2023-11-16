@@ -20,9 +20,10 @@ type ColumnProps = {
 type TableProps = {
   columns: ColumnProps[]
   data: any
+  expand?: boolean
 }
 
-const Table = ({ columns, data }: TableProps) => {
+const Table = ({ columns, data, expand }: TableProps) => {
   const defaultColumn = useMemo(
     () => ({
       width: 300,
@@ -45,7 +46,7 @@ const Table = ({ columns, data }: TableProps) => {
 
   return (
     <StyledRoot>
-      <StyledTable {...getTableProps()}>
+      <StyledTable {...getTableProps()} expand={expand}>
         <StyledThead>
           {headerGroups.map((headerGroup: any, index: number) => (
             <StyledTr key={index} {...headerGroup.getHeaderGroupProps()}>
@@ -103,7 +104,8 @@ const StyledRoot = styled.div`
   max-height: calc(100vh - 330px);
 `
 
-const StyledTable = styled.table`
+const StyledTable = styled.table<{ expand?: boolean }>`
+  ${({ expand }) => (expand ? 'height: calc(100vh - 335px);' : 'height: auto;')}
   min-height: 400px;
   width: 100%;
 

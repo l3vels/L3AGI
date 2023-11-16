@@ -57,7 +57,9 @@ const StyledMainContainer = styled.main<{ expand?: boolean }>`
     expand &&
     `
   max-width: unset;
-  padding: 0 32px;
+  max-height: 100vh;
+   min-height: calc(100vh - 335px);
+  padding-right: 70px;
   `}
   @media(max-width: 1000px) {
     padding: 0 75px;

@@ -121,7 +121,7 @@ export const useGetAccountModule = () => {
     return values
   }
   const getSessionModules = () => {
-    const values = getMainModule('Session')
+    const values = getMainModule('sessions')
     return values
   }
   const getScheduleModules = () => {
@@ -150,6 +150,7 @@ export const useGetAccountModule = () => {
     datasource: naming?.datasource,
     discovery: naming?.discovery,
     models: naming?.models,
+    sessions: naming?.models,
     schedule: naming?.schedules,
     toolkits: naming?.toolkits,
     integration: naming?.integrations,

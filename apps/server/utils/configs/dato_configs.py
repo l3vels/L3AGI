@@ -40,8 +40,8 @@ dato_configs = {
         "toolkit": True,  # True
         "datasource": True,
         "discovery": False,
-        "Session": False,
-        "schedule": False,
+        "Session": True,
+        "schedule": True,
         "contact": False,
         "group": False,
     },
