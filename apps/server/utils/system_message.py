@@ -4,6 +4,7 @@ from typing import List, Optional
 from fastapi_sqlalchemy import db
 
 from models.agent import AgentModel
+from tools.get_tools import get_tool_by_slug
 from typings.agent import AgentWithConfigsOutput
 from utils.agent import convert_model_to_response
 
@@ -90,19 +91,28 @@ class SystemMessageBuilder:
     def replace_templates(self, text: str) -> str:
         # This pattern will match strings like {{agent.sales.greeting}} and {{greeting}}
         pattern = re.compile(
-            r"\{\{(agents\.(?P<agent_name>[\w\s]+?)\.)?(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
+            r"\{\{(agents\.(?P<agent_name>[\w\s]+?)|tools\.(?P<tool_name>[\w\s]+?))\.(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
         )
 
         agent_mapping = {}
+        tool_mapping = {}
 
         def replace_match(match):
             agent_name = match.group("agent_name")
             field_name = match.group("field_name")
+            tool_name = match.group("tool_name")
             index = match.group("index")
+
+            if tool_name:
+                tool = tool_mapping.get(field_name)
+                if not tool:
+                    tool = get_tool_by_slug(field_name)
+                    tool_mapping[field_name] = tool
+
+            # TODO: execute tool and get the write down the result.
 
             if agent_name:
                 agent = agent_mapping.get(agent_name, None)
-
                 if not agent:
                     # Retrieve the agent if not already retrieved
                     agent = AgentModel.get_agent_by_name(

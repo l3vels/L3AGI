@@ -23,6 +23,8 @@ class ZapierSendTool(BaseTool):
 
     name = "Zapier Send"
 
+    slug = "zapierSend"
+
     description = "use zapier"
 
     args_schema: Type[ZapierSendSchema] = ZapierSendSchema

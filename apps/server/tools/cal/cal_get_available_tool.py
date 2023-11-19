@@ -20,8 +20,8 @@ class CalGetAvailableDatesSchema(BaseModel):
         description=(
             "Your task is to process a JSON string representing a time-related query for a specific action. \n"
             "Give me 'dateFrom' and 'dateTo' fields in JSON format, formatted as dd/mm/yyyy. \n"
-            "Ensure that the maximum difference between 'dateFrom' and 'dateTo' does not exceed 21 days. \n"
-            "Task is to interpret these expressions and translate them into date formats \n"
+            "Ensure that the maximum difference between 'dateFrom' and 'dateTo' does not exceed 7 days. \n"
+            "Task is to interpret these expressions without exceeding 7 days (1 week) and translate them into date formats \n"
             "The current date for reference is " + datetime.now().strftime("%d/%m/%Y")
         ),
     )
@@ -34,11 +34,13 @@ class CalGetAvailableDatesTool(BaseTool):
 
     name = "Cal.com Get Available Dates"
 
+    slug = "calendarAvailabilities"
+
     description = (
         "Your task is to process a JSON string representing a time-related query for a specific action. \n"
         "Give me 'dateFrom' and 'dateTo' fields in JSON format, formatted as dd/mm/yyyy. \n"
-        "Ensure that the maximum difference between 'dateFrom' and 'dateTo' does not exceed 21 days. \n"
-        "Task is to interpret these expressions and translate them into date formats \n"
+        "Ensure that the maximum difference between 'dateFrom' and 'dateTo' does not exceed 7 days. \n"
+        "Task is to interpret these expressions without exceeding 7 days (1 week) and translate them into date formats \n"
         "The current date for reference is " + datetime.now().strftime("%d/%m/%Y")
     )
 
@@ -75,6 +77,8 @@ class CalGetAvailableDatesTool(BaseTool):
             )
             print(response)
         except Exception as e:
+            print(str(e))
             raise ToolException(str(e))
 
-        return str(response.json())
+        busy = response.json()["busy"]
+        return str(busy)

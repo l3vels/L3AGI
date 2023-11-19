@@ -30,6 +30,8 @@ class ChartGeneratorTool(BaseTool):
 
     name = "Chart Generator"
 
+    slug = "chartGenerator"
+
     description = (
         "generates chart and returns image URL\n"
         "Parameter is JSON string representing action input.\n"

@@ -1,12 +1,12 @@
 import random
 import re
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
 import requests
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
 from bs4 import BeautifulSoup
+from langchain.callbacks.manager import CallbackManagerForToolRun
+from pydantic import BaseModel, Field
+
 from tools.base import BaseTool
 
 USER_AGENTS = [
@@ -34,6 +34,8 @@ class WebScraperSchema(BaseModel):
 
 class WebScraperTool(BaseTool):
     name = "Web Scraper"
+
+    slug = "webScraper"
 
     description = (
         "This tool extracts data from webpages, "

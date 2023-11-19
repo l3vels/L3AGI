@@ -27,6 +27,8 @@ class SendGridSendTool(BaseTool):
 
     name = "SendGrid Send"
 
+    slug = "sendGridSend"
+
     description = (
         "Parameter is JSON string representing action input.\n"
         '"to" Python str, which is objective in natural language provided by user\n'

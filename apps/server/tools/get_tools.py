@@ -72,6 +72,7 @@ def get_all_tools():
                     {
                         "tool_id": tool.tool_id,
                         "name": tool.name,
+                        "slug": tool.slug,
                         "description": tool.description,
                     }
                     for tool in toolkit.get_tools()
@@ -89,6 +90,14 @@ def get_toolkit_id_by_tool_name(tool_name: str) -> str | None:
         for tool in toolkit["tools"]:
             if tool["name"] == tool_name:
                 return toolkit["toolkit_id"]
+
+
+def get_tool_by_slug(slug: str) -> BaseTool | None:
+    for toolkit in TOOLKITS:
+        tools = toolkit.get_tools()
+        for tool in tools:
+            if tool.slug == slug:
+                return tool
 
 
 def get_agent_tools(
