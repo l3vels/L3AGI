@@ -1,5 +1,8 @@
 from typing import List
 
+from fastapi_sqlalchemy import db
+
+from models.account import AccountModel
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.base import BaseTool, BaseToolkit
 from tools.bing.bing_search_toolkit import BingSearchToolkit
@@ -92,11 +95,18 @@ def get_toolkit_id_by_tool_name(tool_name: str) -> str | None:
                 return toolkit["toolkit_id"]
 
 
-def get_tool_by_slug(slug: str) -> BaseTool | None:
+def get_tool_by_slug(
+    toolkit_slug: str, tool_slug: str, db, account, agent_with_configs
+) -> BaseTool | None:
     for toolkit in TOOLKITS:
-        tools = toolkit.get_tools()
+        if toolkit_slug != toolkit.slug:
+            continue
+
+        tools = toolkit.get_tools_with_configs(
+            db, account, agent_with_configs, None, None
+        )
         for tool in tools:
-            if tool.slug == slug:
+            if tool.slug == tool_slug:
                 return tool
 
 

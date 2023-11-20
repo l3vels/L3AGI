@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, Type
 
 import requests
@@ -51,6 +51,7 @@ class CalGetAvailableDatesTool(BaseTool):
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
+        api = os.environ.get("CALCOM_API")
         cal_api_key = self.get_env_key("CALCOM_API_KEY")
         cal_username = self.get_env_key("CALCOM_USERNAME")
 
@@ -59,9 +60,14 @@ class CalGetAvailableDatesTool(BaseTool):
                 f"Please fill Cal.com Username and API Key in the [Cal.com Toolkit](/toolkits/{self.toolkit_slug})"
             )
 
-        dates = json.loads(query)
+        if query != self.slug:
+            dates = json.loads(query)
+        else:
+            dates = {
+                "dateFrom": datetime.now().strftime("%d/%m/%Y"),
+                "dateTo": (datetime.now() + timedelta(weeks=1)).strftime("%d/%m/%Y"),
+            }
 
-        api = os.environ.get("CALCOM_API")
         dateFrom = datetime.strptime(dates["dateFrom"], "%d/%m/%Y").timestamp()
         dateTo = datetime.strptime(dates["dateTo"], "%d/%m/%Y").timestamp()
         try:
@@ -75,10 +81,7 @@ class CalGetAvailableDatesTool(BaseTool):
                     "dateTo": dateTo,
                 },
             )
-            print(response)
         except Exception as e:
-            print(str(e))
             raise ToolException(str(e))
 
-        busy = response.json()["busy"]
-        return str(busy)
+        return str(response.json())

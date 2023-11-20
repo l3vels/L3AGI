@@ -3,6 +3,8 @@ from typing import List, Optional
 
 from fastapi_sqlalchemy import db
 
+from exceptions import ToolException
+from models.account import AccountModel
 from models.agent import AgentModel
 from tools.get_tools import get_tool_by_slug
 from typings.agent import AgentWithConfigsOutput
@@ -19,6 +21,7 @@ class SystemMessageBuilder:
         self.configs = agent_with_configs.configs
         self.data_source_pre_retrieval = False
         self.pre_retrieved_context = pre_retrieved_context
+        self.agent_with_configs = agent_with_configs
 
     def build(self) -> str:
         base_system_message = self.build_base_system_message(self.configs.text)
@@ -29,8 +32,10 @@ class SystemMessageBuilder:
         constraints = self.build_constraints(self.configs.constraints)
         context = self.build_pre_retrieved_context(self.pre_retrieved_context)
 
+        account = AccountModel.get_account_by_id(db, self.agent.account_id)
+
         result = f"{base_system_message}{role}{description}{goals}{instructions}{constraints}{context}"
-        result = self.replace_templates(result)
+        result = self.replace_templates(result, account)
         return result
 
     def build_base_system_message(self, text: str) -> str:
@@ -88,8 +93,8 @@ class SystemMessageBuilder:
 
         return result
 
-    def replace_templates(self, text: str) -> str:
-        # This pattern will match strings like {{agent.sales.greeting}} and {{greeting}}
+    def replace_templates(self, text: str, account: AccountModel) -> str:
+        # This pattern will match strings like {{agent.sales.greeting}}, {{greeting}} and {{tools.cal.calendarAvailabilities}}
         pattern = re.compile(
             r"\{\{(agents\.(?P<agent_name>[\w\s]+?)|tools\.(?P<tool_name>[\w\s]+?))\.(?P<field_name>\w+)(\[(?P<index>\d+)\])?\}\}"
         )
@@ -106,10 +111,16 @@ class SystemMessageBuilder:
             if tool_name:
                 tool = tool_mapping.get(field_name)
                 if not tool:
-                    tool = get_tool_by_slug(field_name)
+                    tool = get_tool_by_slug(
+                        tool_name, field_name, db, account, self.agent_with_configs
+                    )
                     tool_mapping[field_name] = tool
 
-            # TODO: execute tool and get the write down the result.
+                try:
+                    result = tool._run(field_name)
+                    return result
+                except:
+                    return ""
 
             if agent_name:
                 agent = agent_mapping.get(agent_name, None)
