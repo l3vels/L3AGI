@@ -119,8 +119,8 @@ class SystemMessageBuilder:
                 try:
                     result = tool._run(field_name)
                     return result
-                except:
-                    return ""
+                except Exception as e:
+                    return str(e)
 
             if agent_name:
                 agent = agent_mapping.get(agent_name, None)
