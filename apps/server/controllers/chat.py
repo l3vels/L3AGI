@@ -212,7 +212,7 @@ def insert_chat_messages(
         account = auth.account
         user = auth.user
 
-    sender_name = user.name if auth else "Guest"
+    sender_name = body.contact_name if auth else "Guest"
     sender_user_id = user.id
     sender_account_id = account.id
 

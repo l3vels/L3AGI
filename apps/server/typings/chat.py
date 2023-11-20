@@ -40,6 +40,7 @@ class InsertChatMessageInput(BaseModel):
 
 class InsertChatMessagesInput(BaseModel):
     chat_id: UUID
+    contact_name: str
     messages: List[InsertChatMessageInput]
 
 
