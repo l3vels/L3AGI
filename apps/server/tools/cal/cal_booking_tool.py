@@ -11,8 +11,6 @@ from pydantic import BaseModel, Field
 from exceptions import ToolEnvKeyException, ToolException
 from tools.base import BaseTool
 
-load_dotenv()
-
 
 class CalBookingSchema(BaseModel):
     query: str = Field(
