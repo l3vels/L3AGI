@@ -84,4 +84,16 @@ class CalGetAvailableDatesTool(BaseTool):
         except Exception as e:
             raise ToolException(str(e))
 
-        return str(response.json())
+        data = response.json()
+
+        busy = data["busy"]
+        timeZone = data["timeZone"]
+        workingHours = data["workingHours"]
+
+        result = f"Busy Time Ranges: {busy}\nTime Zone: {timeZone}\n"
+        if workingHours:
+            result += "Working Hours:\n"
+            for hours in workingHours:
+                result += f' - Days: {hours["days"]}, Start Time: {hours["startTime"]}, End Time: {hours["endTime"]}\n'
+
+        return result
