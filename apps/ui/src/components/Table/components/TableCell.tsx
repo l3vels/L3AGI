@@ -16,7 +16,15 @@ const TableCell = ({ cell }: TableCellProps) => {
 
   const { column, row, value: cellValue } = cell
   const { original: data } = row
-  const { isEdit, cellEditor: Editor, cellEditorParams, valueSetter, maxWidth } = column
+  const {
+    isEdit,
+    cellEditor: Editor,
+    cellEditorParams,
+    valueSetter,
+    maxWidth,
+    minWidth,
+    width,
+  } = column
 
   let handleEditMode = null
 
@@ -76,6 +84,8 @@ const TableCell = ({ cell }: TableCellProps) => {
       {...cell.getCellProps()}
       onClick={handleEditMode}
       maxWidth={maxWidth}
+      minWidth={minWidth}
+      width={width}
       isEditing={isEditing}
     >
       {isEditing ? (
@@ -95,7 +105,7 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td<{ maxWidth: number; isEditing: boolean }>`
+const StyledTd = styled.td<{ isEditing: boolean }>`
   padding: 5px 10px;
   position: relative;
 
