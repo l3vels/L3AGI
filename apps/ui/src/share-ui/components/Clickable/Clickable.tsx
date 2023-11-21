@@ -9,7 +9,6 @@ import { getTestId } from '../../tests/test-ids-utils'
 import { ComponentDefaultTestId } from '../../tests/constants'
 import L3ComponentProps from '../../types/L3ComponentProps'
 import L3Component from '../../types/L3Component'
-import './Clickable.scss'
 
 const CSS_BASE_CLASS = 'l3-style-clickable'
 const bemHelper = bemClass(CSS_BASE_CLASS)

@@ -20,7 +20,6 @@ import { getTestId } from '../../tests/test-ids-utils'
 import { NOOP } from '../../utils/function-utils'
 import { ComponentDefaultTestId } from '../../tests/constants'
 import { L3ComponentProps, L3Component } from '../../types'
-import './TextField.scss'
 
 const EMPTY_OBJECT = { primary: '', secondary: '', layout: '' }
 
