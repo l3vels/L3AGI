@@ -1,0 +1,149 @@
+@import "../../styles/themes";
+@import "../../styles/typography";
+@import "../../styles/states";
+@import "../../styles/keyframes";
+@import "../../styles/global-css-settings";
+@import "../../styles/theme-mixin";
+
+:root {
+  --color-gradient-gray: linear-gradient(180deg, #deefff 0%, #818cae 100%);
+}
+
+.tagsWrapper {
+  align-items: center;
+  display: inline-flex;
+  height: $spacing-xl;
+}
+
+.clickableWrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.tags {
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: $spacing-xs;
+  padding: $spacing-xs-small $spacing-small;
+  align-items: center;
+  user-select: none;
+  animation: tags-pop-in-emphasized var(--motion-productive-medium) var(--motion-timing-emphasize);
+
+  gap: $spacing-xxs;
+
+  box-shadow: $tags-box-shadow;
+
+  &.withUserSelect {
+    user-select: text;
+  }
+
+  .label {
+    @include theme-prop(color, tags-label-color);
+    font-style: normal;
+    font-weight: 500;
+    font-size: $spacing-medium;
+    line-height: 20px;
+  }
+
+  .white {
+    color: $black;
+  }
+
+  &.noAnimation {
+    animation: none;
+  }
+
+  // &.withClose {
+  //   padding-right: var(--spacing-xs);
+  //   // background-color: red;
+  // }
+
+  .icon,
+  .avatar {
+    background-color: transparent;
+    width: 15px;
+    &.left {
+      margin-right: var(--spacing-xs);
+    }
+    &.right {
+      margin-left: var(--spacing-xs);
+    }
+    &.close {
+      margin-left: $spacing-xs-small;
+      color: var(--primary-text-color);
+    }
+  }
+
+  &.disabled {
+    .icon {
+      @include theme-prop(color, disabled-text-color);
+    }
+    .label {
+      @include theme-prop(color, disabled-text-color);
+    }
+  }
+}
+
+.sizeSmall {
+  height: $spacing-large;
+  .tags {
+    padding: $spacing-xs $spacing-xs-small;
+  }
+
+  .label {
+    font-size: $spacing-small-medium;
+    line-height: $spacing-medium;
+  }
+
+  .icon,
+  .avatar {
+    &.close {
+      margin-left: $spacing-xs;
+    }
+  }
+}
+
+.outlined {
+  .label {
+    @include theme-prop(color, tags-label-color-outlined);
+  }
+
+  .tags {
+    @include theme-prop(background, tags-bg-color-outlined);
+
+    --b: 1px; /* border width*/
+    --r: 4px; /* the radius */
+
+    display: flex;
+    position: relative;
+    z-index: 0;
+  }
+
+  .tags::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    padding: var(--b);
+    border-radius: var(--r);
+    background: var(--outline-border-color-var);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include theme-prop(color, tags-label-color);
+  &.closeOutlined {
+    @include theme-prop(color, tags-label-color-outlined);
+  }
+}
+
+@include keyframe(tags-pop-in-emphasized) {
+  @include pop-in-emphasized();
+}
