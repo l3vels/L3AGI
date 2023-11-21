@@ -51,6 +51,11 @@ class ChatInput(BaseModel):
     team_id: Optional[UUID] = None
 
 
+class UpdateChatInput(BaseModel):
+    # name: Optional[str]
+    voice_url: Optional[str]
+
+
 class ChatOutput(BaseModel):
     id: str
     name: Optional[str]
@@ -61,6 +66,7 @@ class ChatOutput(BaseModel):
     agent: Optional[Dict] = None
     creator_user: Optional[Dict] = None
     creator_account: Optional[Dict] = None
+    voice_url: Optional[str] = None
     # provider_user: Optional[Dict] = None
     # provider_account: Optional[Dict] = None
     # creator_user_id: Optional[UUID]

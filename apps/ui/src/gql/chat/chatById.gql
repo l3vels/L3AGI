@@ -12,5 +12,6 @@ query chatById($id: id!) @api(name: "ai") {
     }
     creator_user
     creator_account
+    voice_url
   }
 }
