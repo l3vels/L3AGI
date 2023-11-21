@@ -1,5 +1,5 @@
 import { Field } from 'formik'
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
+import Textarea from 'share-ui/components/Textarea/Textarea'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 import styled, { css } from 'styled-components'

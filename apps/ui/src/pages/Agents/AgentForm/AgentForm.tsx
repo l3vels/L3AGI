@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
+import Textarea from 'share-ui/components/Textarea/Textarea'
 
 import FormikTextField from 'components/TextFieldFormik'
 

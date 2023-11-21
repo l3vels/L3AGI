@@ -34,10 +34,10 @@ interface TextareaProps extends L3ComponentProps {
   rows?: number
   maxLenght?: number
   minLenght?: number
-  onInvalid: (event: unknown) => void
-  onInvalidCapture: (event: unknown) => void
-  onSelect: (event: unknown) => void
-  onSelectCapture: (event: unknown) => void
+  onInvalid?: (event: unknown) => void
+  onInvalidCapture?: (event: unknown) => void
+  onSelect?: (event: unknown) => void
+  onSelectCapture?: (event: unknown) => void
   hint?: string
   resize?: boolean
   showLetterCount?: boolean
