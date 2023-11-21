@@ -1,5 +1,6 @@
 import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
+import Dropdown from 'share-ui/components/Dropdown/Dropdown'
+
 // import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 // import TypographyPrimary from 'components/Typography/Primary'
