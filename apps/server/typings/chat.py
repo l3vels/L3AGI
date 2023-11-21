@@ -40,6 +40,7 @@ class InsertChatMessageInput(BaseModel):
 
 class InsertChatMessagesInput(BaseModel):
     chat_id: UUID
+    contact_name: str
     messages: List[InsertChatMessageInput]
 
 
@@ -48,6 +49,11 @@ class ChatInput(BaseModel):
     is_public: Optional[bool]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
+
+
+class UpdateChatInput(BaseModel):
+    # name: Optional[str]
+    voice_url: Optional[str]
 
 
 class ChatOutput(BaseModel):
@@ -60,6 +66,7 @@ class ChatOutput(BaseModel):
     agent: Optional[Dict] = None
     creator_user: Optional[Dict] = None
     creator_account: Optional[Dict] = None
+    voice_url: Optional[str] = None
     # provider_user: Optional[Dict] = None
     # provider_account: Optional[Dict] = None
     # creator_user_id: Optional[UUID]

@@ -23,15 +23,19 @@ import {
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
+import AudioPlayer from 'components/AudioPlayer'
+import { Nullable } from 'types'
 
 const ChatMembers = ({
   agentById,
   teamOfAgents,
   isHistory,
+  voiceUrl,
 }: {
   agentById?: any
   teamOfAgents?: any
   isHistory?: boolean
+  voiceUrl?: Nullable<string>
 }) => {
   const { t } = useTranslation()
   const { user } = React.useContext(AuthContext)
@@ -67,6 +71,13 @@ const ChatMembers = ({
             <TabPanels noAnimation>
               <TabPanel>
                 <AgentViewDetailBox agentData={agentById} />
+                <div style={{ height: '100px', width: '100%' }}>
+                  {voiceUrl && (
+                    <StyledAudioPlayerWrapper>
+                      <AudioPlayer audioUrl={voiceUrl} />
+                    </StyledAudioPlayerWrapper>
+                  )}
+                </div>
               </TabPanel>
 
               <TabPanel>
@@ -260,4 +271,8 @@ const StyledIconButtonWrapper = styled.div`
 
   display: flex;
   align-items: center;
+`
+
+const StyledAudioPlayerWrapper = styled.div`
+  margin-top: 12px;
 `
