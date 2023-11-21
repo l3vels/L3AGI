@@ -1,12 +1,12 @@
-import { KeyboardEvent, MouseEvent, UIEvent, useCallback, useMemo, useRef } from "react";
-import cx from "classnames";
-import { noop as NOOP } from "lodash-es";
-import useEventListener from "../../../hooks/useEventListener";
-import useKeyEvent from "../../../hooks/useKeyEvent";
-import { keyCodes } from "../../../constants/keyCodes";
-import useIconScreenReaderAccessProps from "../../../hooks/useIconScreenReaderAccessProps";
+import { KeyboardEvent, MouseEvent, UIEvent, useCallback, useMemo, useRef } from 'react'
+import cx from 'classnames'
+import { noop as NOOP } from 'lodash-es'
+import useEventListener from '../../../hooks/useEventListener'
+import useKeyEvent from '../../../hooks/useKeyEvent'
+import { keyCodes } from '../../../constants/keyCodes'
+import useIconScreenReaderAccessProps from '../../../hooks/useIconScreenReaderAccessProps'
 
-const KEYS = [keyCodes.ENTER, keyCodes.SPACE];
+const KEYS = [keyCodes.ENTER, keyCodes.SPACE]
 
 export default function useIconProps({
   onClick,
@@ -15,44 +15,44 @@ export default function useIconProps({
   ignoreFocusStyle,
   isDecorationOnly,
   iconLabel,
-  externalTabIndex
+  externalTabIndex,
 }: {
-  onClick?: (event: UIEvent) => void;
-  className?: string;
-  clickable?: boolean;
-  ignoreFocusStyle?: boolean;
-  isDecorationOnly?: boolean;
-  iconLabel?: string;
-  externalTabIndex?: number | undefined;
+  onClick: (event: UIEvent) => void
+  className?: string
+  clickable?: boolean
+  ignoreFocusStyle?: boolean
+  isDecorationOnly?: boolean
+  iconLabel?: string
+  externalTabIndex?: number | undefined | string
 }) {
-  const iconRef = useRef(null);
+  const iconRef = useRef(null)
   const onEnterCallback = useCallback(
     (event: KeyboardEvent) => {
-      const isActive = document.activeElement === iconRef.current;
+      const isActive = document.activeElement === iconRef.current
       if (!isActive) {
-        return;
+        return
       }
-      onClick(event);
+      onClick(event)
     },
-    [iconRef, onClick]
-  );
+    [iconRef, onClick],
+  )
 
   const onMouseDown = useCallback((event: MouseEvent) => {
-    event.preventDefault();
-  }, []);
+    event.preventDefault()
+  }, [])
 
   const computedClassName = useMemo(() => {
-    return cx("icon_component", className, {
-      "icon_component--clickable": clickable,
-      "icon_component--no-focus-style": ignoreFocusStyle
-    });
-  }, [clickable, className, ignoreFocusStyle]);
+    return cx('icon_component', className, {
+      'icon_component--clickable': clickable,
+      'icon_component--no-focus-style': ignoreFocusStyle,
+    })
+  }, [clickable, className, ignoreFocusStyle])
 
   useEventListener({
-    eventName: "mousedown",
+    eventName: 'mousedown',
     callback: onMouseDown,
-    ref: iconRef
-  });
+    ref: iconRef,
+  })
 
   useKeyEvent({
     keys: KEYS,
@@ -61,30 +61,30 @@ export default function useIconProps({
     ignoreDocumentFallback: true,
     capture: true,
     stopPropagation: true,
-    preventDefault: true
-  });
+    preventDefault: true,
+  })
 
   const onClickCallback = useCallback(
     (event: MouseEvent) => {
-      const callback = onClick || NOOP;
-      callback(event);
+      const callback = onClick || NOOP
+      callback(event)
     },
-    [onClick]
-  );
+    [onClick],
+  )
 
   const screenReaderAccessProps = useIconScreenReaderAccessProps({
     isClickable: clickable,
     label: iconLabel,
-    isDecorationOnly
-  });
+    isDecorationOnly,
+  })
 
-  screenReaderAccessProps.tabIndex = externalTabIndex ?? screenReaderAccessProps.tabIndex;
+  screenReaderAccessProps.tabIndex = externalTabIndex ?? screenReaderAccessProps.tabIndex
 
   return {
     screenReaderAccessProps,
     onClickCallback,
     computedClassName,
     onEnterCallback,
-    iconRef
-  };
+    iconRef,
+  }
 }

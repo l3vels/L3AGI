@@ -1,71 +1,71 @@
-import React, { CSSProperties, forwardRef, Ref } from "react";
-import cx from "classnames";
-import useMergeRefs from "../../hooks/useMergeRefs";
-import { IconType } from "./IconConstants";
-import CustomSvgIcon from "./CustomSvgIcon/CustomSvgIcon";
-import FontIcon from "./FontIcon/FontIcon";
-import useIconProps from "./hooks/useIconProps";
-import { L3ComponentProps, L3Component, MouseEventCallBack, SubIcon } from "../../types";
-import "./Icon.scss";
+import React, { CSSProperties, forwardRef, Ref } from 'react'
+import cx from 'classnames'
+import useMergeRefs from '../../hooks/useMergeRefs'
+import { IconType } from './IconConstants'
+import CustomSvgIcon from './CustomSvgIcon/CustomSvgIcon'
+import FontIcon from './FontIcon/FontIcon'
+import useIconProps from './hooks/useIconProps'
+import { L3ComponentProps, L3Component, MouseEventCallBack, SubIcon } from '../../types'
+// import "./Icon.scss";
 
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
-const CLICK_NOOP = (_event: React.MouseEvent) => {};
+const CLICK_NOOP = (_event: React.MouseEvent) => {}
 
 export interface IconSubComponentProps {
-  ref?: Ref<HTMLElement>;
-  id?: string;
-  size?: string | number;
-  onClick?: MouseEventCallBack;
-  className?: string;
-  style?: CSSProperties;
-  "data-testid"?: string;
+  ref?: Ref<HTMLElement>
+  id?: string
+  size?: string | number
+  onClick?: MouseEventCallBack
+  className?: string
+  style?: CSSProperties
+  'data-testid'?: string
 }
 
 function renderIcon(Icon: SubIcon, props: IconSubComponentProps) {
-  return <Icon {...props} />;
+  return <Icon {...props} />
 }
 
 interface IconProps extends L3ComponentProps {
   // eslint-disable-next-line no-unused-vars
-  onClick?: (event: React.MouseEvent) => void;
+  onClick?: (event: React.MouseEvent) => void
   /**
    * We support three types of icons - SVG, FONT and SRC (classname) so this prop is either the name of the icon or the component
    */
-  icon: SubIcon;
+  icon: SubIcon
   /**
    * Is icon is a button
    */
-  clickable?: boolean;
+  clickable?: boolean
   /**
 mo   * Icon aria label [aria label](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)
    */
-  iconLabel?: string;
+  iconLabel?: string
   /**
    *  The type of the component - svg, font or custom svg (using [`react-inlinesvg`](https://github.com/gilbarbara/react-inlinesvg#readme))
    */
-  iconType?: IconType;
+  iconType?: IconType
   /**
    * Size for font icon
    */
-  iconSize?: number | string;
+  iconSize?: number | string
   /**
    * Remove focus style
    */
-  ignoreFocusStyle?: boolean;
-  tabindex?: number | string;
+  ignoreFocusStyle?: boolean
+  tabindex?: number | string
   /**
    * Hide icon asset from screen reader. No need to set value for this prop when `clickable` is false
    */
-  ariaHidden?: boolean;
-  style?: React.CSSProperties;
+  ariaHidden?: boolean
+  style?: React.CSSProperties
   /**
    * When using svg from src (Icon.type.SRC) this boolean will transform the "fill" property to "currentColor"
    */
-  useCurrentColor?: boolean;
+  useCurrentColor?: boolean
   /**
    * Override the default color with a custom one
    */
-  customColor?: string;
+  customColor?: string
 }
 
 const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = forwardRef(
@@ -77,7 +77,7 @@ const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = f
       id,
       onClick = CLICK_NOOP,
       className,
-      icon = "",
+      icon = '',
       clickable = true,
       iconLabel,
       iconType = IconType.SVG,
@@ -88,11 +88,11 @@ const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = f
       style,
       useCurrentColor = false,
       customColor,
-      "data-testid": dataTestId
+      'data-testid': dataTestId,
     },
-    ref
+    ref,
   ) => {
-    const overrideExternalTabIndex = externalTabIndex && +externalTabIndex;
+    const overrideExternalTabIndex = externalTabIndex && +externalTabIndex
     const { screenReaderAccessProps, onClickCallback, computedClassName, iconRef } = useIconProps({
       onClick,
       iconLabel,
@@ -100,19 +100,19 @@ const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = f
       className,
       isDecorationOnly: ariaHidden,
       ignoreFocusStyle,
-      externalTabIndex: overrideExternalTabIndex
-    });
+      externalTabIndex: overrideExternalTabIndex,
+    })
 
-    const mergedRef = useMergeRefs({ refs: [ref, iconRef] });
+    const mergedRef = useMergeRefs({ refs: [ref, iconRef] })
 
     if (!icon) {
-      return null;
+      return null
     }
 
     // Replace in major version change with more accurate check
-    const isFunctionType = typeof icon === "function";
+    const isFunctionType = typeof icon === 'function'
     // Replace in major version change with more accurate check
-    if (iconType === IconType.SVG || isFunctionType || typeof icon === "object") {
+    if (iconType === IconType.SVG || isFunctionType || typeof icon === 'object') {
       return renderIcon(icon, {
         id,
         ...screenReaderAccessProps,
@@ -121,8 +121,8 @@ const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = f
         onClick,
         className: computedClassName,
         style,
-        "data-testid": dataTestId
-      });
+        'data-testid': dataTestId,
+      })
     }
     if (iconType === IconType.SRC) {
       return (
@@ -136,7 +136,7 @@ const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = f
           customColor={customColor}
           data-testid={dataTestId}
         />
-      );
+      )
     }
     return (
       <FontIcon
@@ -148,10 +148,10 @@ const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = f
         icon={icon}
         data-testid={dataTestId}
       />
-    );
-  }
-);
+    )
+  },
+)
 
-Icon.type = IconType;
+Icon.type = IconType
 
-export default Icon;
+export default Icon

@@ -1,97 +1,108 @@
 /* eslint-disable react/button-has-type */
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import cx from "classnames";
-import { SIZES } from "../../constants";
-import useResizeObserver from "../../hooks/useResizeObserver";
-import useMergeRefs from "../../hooks/useMergeRefs";
-import { NOOP } from "../../utils/function-utils";
-import Icon from "../Icon/Icon";
-import Loader from "../Loader/Loader";
-import { BUTTON_ICON_SIZE, ButtonColor, ButtonInputType, ButtonType, getActualSize, Size } from "./ButtonConstants";
-import { getParentBackgroundColorNotTransparent, TRANSPARENT_COLOR } from "./helper/dom-helpers";
-import { getTestId } from "../../tests/test-ids-utils";
-import { isIE11 } from "../../utils/user-agent-utils";
-import { SubIcon, L3Component } from "../../types";
-import { ComponentDefaultTestId } from "../../tests/constants";
-import "./Button.scss";
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import cx from 'classnames'
+import { SIZES } from '../../constants'
+import useResizeObserver from '../../hooks/useResizeObserver'
+import useMergeRefs from '../../hooks/useMergeRefs'
+import { NOOP } from '../../utils/function-utils'
+import Icon from '../Icon/Icon'
+import Loader from '../Loader/Loader'
+import {
+  BUTTON_ICON_SIZE,
+  ButtonColor,
+  ButtonInputType,
+  ButtonType,
+  getActualSize,
+  Size,
+} from './ButtonConstants'
+import { getParentBackgroundColorNotTransparent, TRANSPARENT_COLOR } from './helper/dom-helpers'
+import { getTestId } from '../../tests/test-ids-utils'
+import { isIE11 } from '../../utils/user-agent-utils'
+import { SubIcon, L3Component } from '../../types'
+import { ComponentDefaultTestId } from '../../tests/constants'
+import styled, { css } from 'styled-components'
+// import './Button.scss'
+
+import '../../styles/global-css-settings.css'
 
 // min button width
-const MIN_BUTTON_HEIGHT_PX = isIE11() ? 32 : 6;
-const UPDATE_CSS_VARIABLES_DEBOUNCE = 200;
+const MIN_BUTTON_HEIGHT_PX = isIE11() ? 32 : 6
+const UPDATE_CSS_VARIABLES_DEBOUNCE = 200
 
 export interface ButtonProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode
   /** Custom class names to pass to the component */
-  className?: string;
+  className?: string
   /** The button's kind */
-  kind?: ButtonType;
+  kind?: ButtonType
   /** Callback function to run when the button is clicked */
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  onMouseDown?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onMouseDown?: (event: React.MouseEvent<HTMLButtonElement>) => void
   /** Blur on button click */
-  blurOnMouseUp?: boolean;
+  blurOnMouseUp?: boolean
   /** Name of the button - for form submit usages  */
-  name?: string;
+  name?: string
   /** The button's size */
-  size?: Size;
+  size?: Size
   /** The button's color */
-  color?: ButtonColor;
+  color?: ButtonColor
   /** The button's type */
-  type?: ButtonInputType;
+  type?: ButtonInputType
   /** Whether the button should be disabled or not */
-  disabled?: boolean;
+  disabled?: boolean
   /** Icon to place on the right */
-  rightIcon?: SubIcon;
+  rightIcon?: SubIcon
   /** Icon to place on the left */
-  leftIcon?: SubIcon;
+  leftIcon?: SubIcon
   /** the success props are used when you have async action and wants to display a success message */
-  success?: boolean;
+  success?: boolean
   /** Success icon name */
-  successIcon?: SubIcon;
+  successIcon?: SubIcon
   /** Success text */
-  successText?: string;
+  successText?: string
   /** loading boolean which switches the text to a loader */
-  loading?: boolean;
-  style?: React.CSSProperties;
+  loading?: boolean
+  style?: React.CSSProperties
   /** displays the active state */
-  active?: boolean;
+  active?: boolean
   /** id to pass to the button */
-  id?: string;
+  id?: string
   /** adds 8px margin to the right */
-  marginRight?: boolean;
+  marginRight?: boolean
   /** adds 8px margin to the left */
-  marginLeft?: boolean;
+  marginLeft?: boolean
   /** element id to describe the button accordingly */
-  ariaLabeledBy?: string;
+  ariaLabeledBy?: string
   /** aria label to provide important when providing only Icon */
-  ariaLabel?: string;
+  ariaLabel?: string
   /** aria for a button popup */
-  ariaHasPopup?: React.HTMLProps<HTMLButtonElement>["aria-haspopup"];
+  ariaHasPopup?: React.HTMLProps<HTMLButtonElement>['aria-haspopup']
   /** aria to be set if the popup is open */
-  ariaExpanded?: boolean;
+  ariaExpanded?: boolean
   /** aria controls - receives id for the controlled region */
-  ariaControls?: string;
+  ariaControls?: string
   /** On Button Focus callback */
-  onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void
   /** On Button Blur callback */
-  onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
-  rightFlat?: boolean;
-  leftFlat?: boolean;
-  preventClickAnimation?: boolean;
-  noSidePadding?: boolean;
+  onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void
+  rightFlat?: boolean
+  leftFlat?: boolean
+  preventClickAnimation?: boolean
+  noSidePadding?: boolean
   /** default color for text color in ON_PRIMARY_COLOR kind (should be any type of css color (rbg, var, hex...) */
-  defaultTextColorOnPrimaryColor?: string;
-  dataTestId?: string;
+  defaultTextColorOnPrimaryColor?: string
+  dataTestId?: string
   /** Change the focus indicator from around the button to within it */
-  insetFocus?: boolean;
+  insetFocus?: boolean
 }
 
 const Button: L3Component<ButtonProps, unknown> & {
-  sizes?: typeof SIZES;
-  colors?: typeof ButtonColor;
-  kinds?: typeof ButtonType;
-  types?: typeof ButtonInputType;
-  inputTags?: typeof ButtonInputType;
+  sizes?: typeof SIZES
+  colors?: typeof ButtonColor
+  kinds?: typeof ButtonType
+  types?: typeof ButtonInputType
+  inputTags?: typeof ButtonInputType
+  // eslint-disable-next-line react/display-name
 } = forwardRef<unknown, ButtonProps>(
   (
     {
@@ -130,99 +141,102 @@ const Button: L3Component<ButtonProps, unknown> & {
       ariaControls,
       blurOnMouseUp,
       dataTestId,
-      insetFocus
+      insetFocus,
     },
-    ref
+    ref,
   ) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const [hasSizeStyle, setHasSizeStyle] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null)
+    const [hasSizeStyle, setHasSizeStyle] = useState(false)
 
     const updateCssVariables = useMemo(() => {
       return ({ borderBoxSize }: { borderBoxSize: { blockSize: number; inlineSize: number } }) => {
-        const { blockSize, inlineSize } = borderBoxSize;
-        const width = Math.max(inlineSize, MIN_BUTTON_HEIGHT_PX);
-        const height = Math.max(blockSize, MIN_BUTTON_HEIGHT_PX);
-        if (!buttonRef.current) return;
-        buttonRef.current.style.setProperty("--element-width", `${width}px`);
-        buttonRef.current.style.setProperty("--element-height", `${height}px`);
-        setHasSizeStyle(true);
-      };
-    }, [buttonRef]);
+        const { blockSize, inlineSize } = borderBoxSize
+        const width = Math.max(inlineSize, MIN_BUTTON_HEIGHT_PX)
+        const height = Math.max(blockSize, MIN_BUTTON_HEIGHT_PX)
+        if (!buttonRef.current) return
+        buttonRef.current.style.setProperty('--element-width', `${width}px`)
+        buttonRef.current.style.setProperty('--element-height', `${height}px`)
+        setHasSizeStyle(true)
+      }
+    }, [buttonRef])
 
     useResizeObserver({
       ref: buttonRef,
       callback: updateCssVariables,
-      debounceTime: UPDATE_CSS_VARIABLES_DEBOUNCE
-    });
+      debounceTime: UPDATE_CSS_VARIABLES_DEBOUNCE,
+    })
     useEffect(() => {
-      if (color !== ButtonColor.ON_PRIMARY_COLOR) return;
-      if (kind !== ButtonType.PRIMARY) return;
-      if (!buttonRef.current) return;
+      if (color !== ButtonColor.ON_PRIMARY_COLOR) return
+      if (kind !== ButtonType.PRIMARY) return
+      if (!buttonRef.current) return
 
-      const buttonElement = buttonRef.current;
-      buttonElement.style.color = getParentBackgroundColorNotTransparent(buttonElement, defaultTextColorOnPrimaryColor);
-    }, [kind, buttonRef, color, defaultTextColorOnPrimaryColor]);
+      const buttonElement = buttonRef.current
+      buttonElement.style.color = getParentBackgroundColorNotTransparent(
+        buttonElement,
+        defaultTextColorOnPrimaryColor,
+      )
+    }, [kind, buttonRef, color, defaultTextColorOnPrimaryColor])
 
     const onMouseUp = useCallback(() => {
-      const button = buttonRef.current;
+      const button = buttonRef.current
       if (disabled || !button) {
-        return;
+        return
       }
       if (blurOnMouseUp) {
-        button.blur();
+        button.blur()
       }
-    }, [disabled, buttonRef, blurOnMouseUp]);
+    }, [disabled, buttonRef, blurOnMouseUp])
 
     const onButtonClicked = useCallback(
       (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (disabled || loading || success) {
-          event.preventDefault();
-          return;
+          event.preventDefault()
+          return
         }
 
         if (onClick) {
-          onClick(event);
+          onClick(event)
         }
       },
-      [onClick, disabled, loading, success]
-    );
+      [onClick, disabled, loading, success],
+    )
 
     const onMouseDownClicked = useCallback(
       (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (disabled || loading || success) {
-          event.preventDefault();
-          return;
+          event.preventDefault()
+          return
         }
 
         if (onMouseDown) {
-          onMouseDown(event);
+          onMouseDown(event)
         }
       },
-      [onMouseDown, disabled, loading, success]
-    );
+      [onMouseDown, disabled, loading, success],
+    )
 
     const classNames = useMemo(() => {
-      const calculatedColor = success ? ButtonColor.POSITIVE : color;
+      const calculatedColor = success ? ButtonColor.POSITIVE : color
       return cx(
         className,
-        "l3-style-button",
+        'l3-style-button',
         `l3-style-button--size-${getActualSize(size)}`,
         `l3-style-button--kind-${kind}`,
         `l3-style-button--color-${calculatedColor}`,
         {
-          "has-style-size": hasSizeStyle,
-          "l3-style-button--loading": loading,
+          'has-style-size': hasSizeStyle,
+          'l3-style-button--loading': loading,
           [`l3-style-button--color-${calculatedColor}-active`]: active,
-          "l3-style-button--margin-right": marginRight,
-          "l3-style-button--margin-left": marginLeft,
-          "l3-style-button--right-flat": rightFlat,
-          "l3-style-button--left-flat": leftFlat,
-          "l3-style-button--prevent-click-animation": preventClickAnimation,
-          "l3-style-button--no-side-padding": noSidePadding,
-          "l3-style-button--disabled": disabled,
-          "inset-focus-style": insetFocus
-        }
-      );
+          'l3-style-button--margin-right': marginRight,
+          'l3-style-button--margin-left': marginLeft,
+          'l3-style-button--right-flat': rightFlat,
+          'l3-style-button--left-flat': leftFlat,
+          'l3-style-button--prevent-click-animation': preventClickAnimation,
+          'l3-style-button--no-side-padding': noSidePadding,
+          'l3-style-button--disabled': disabled,
+          'inset-focus-style': insetFocus,
+        },
+      )
     }, [
       success,
       color,
@@ -239,16 +253,16 @@ const Button: L3Component<ButtonProps, unknown> & {
       preventClickAnimation,
       noSidePadding,
       disabled,
-      insetFocus
-    ]);
+      insetFocus,
+    ])
 
-    const mergedRef = useMergeRefs({ refs: [ref, buttonRef] });
+    const mergedRef = useMergeRefs({ refs: [ref, buttonRef] })
 
     const buttonProps = useMemo(() => {
       const props: Record<string, any> = {
         ref: mergedRef,
         type,
-        className: classNames,
+        className: className,
         name,
         onMouseUp,
         style,
@@ -256,17 +270,17 @@ const Button: L3Component<ButtonProps, unknown> & {
         id,
         onFocus,
         onBlur,
-        "data-testid": dataTestId || getTestId(ComponentDefaultTestId.BUTTON, id),
+        'data-testid': dataTestId || getTestId(ComponentDefaultTestId.BUTTON, id),
         onMouseDown: onMouseDownClicked,
-        "aria-disabled": disabled,
-        "aria-busy": loading,
-        "aria-labelledby": ariaLabeledBy,
-        "aria-label": ariaLabel,
-        "aria-haspopup": ariaHasPopup,
-        "aria-expanded": ariaExpanded,
-        "aria-controls": ariaControls
-      };
-      return props;
+        'aria-disabled': disabled,
+        'aria-busy': loading,
+        'aria-labelledby': ariaLabeledBy,
+        'aria-label': ariaLabel,
+        'aria-haspopup': ariaHasPopup,
+        'aria-expanded': ariaExpanded,
+        'aria-controls': ariaControls,
+      }
+      return props
     }, [
       disabled,
       mergedRef,
@@ -286,34 +300,34 @@ const Button: L3Component<ButtonProps, unknown> & {
       loading,
       ariaHasPopup,
       ariaExpanded,
-      ariaControls
-    ]);
+      ariaControls,
+    ])
 
     const leftIconSize = useMemo(() => {
-      if (typeof leftIcon !== "function") return;
-      return BUTTON_ICON_SIZE;
-    }, [leftIcon]);
+      if (typeof leftIcon !== 'function') return
+      return BUTTON_ICON_SIZE
+    }, [leftIcon])
 
     const rightIconSize = useMemo(() => {
-      if (typeof rightIcon !== "function") return;
-      return BUTTON_ICON_SIZE;
-    }, [rightIcon]);
+      if (typeof rightIcon !== 'function') return
+      return BUTTON_ICON_SIZE
+    }, [rightIcon])
 
     const successIconSize = useMemo(() => {
-      if (typeof successIcon !== "function") return;
-      return BUTTON_ICON_SIZE;
-    }, [successIcon]);
+      if (typeof successIcon !== 'function') return
+      return BUTTON_ICON_SIZE
+    }, [successIcon])
 
     if (loading) {
       return (
         <button {...buttonProps}>
-          <span className="l3-style-button__loader">
+          <span className='l3-style-button__loader'>
             {/** Because typescript can't handle with this not converted component API*/}
-            {/** @ts-ignore */}
-            <Loader svgClassName="l3-style-button-loader-svg" />
+
+            <Loader svgClassName='l3-style-button-loader-svg' />
           </span>
         </button>
-      );
+      )
     }
 
     if (success) {
@@ -321,48 +335,48 @@ const Button: L3Component<ButtonProps, unknown> & {
         <button {...buttonProps}>
           {successIcon ? (
             <Icon
-              iconType={Icon?.type.ICON_FONT}
+              iconType={Icon?.type?.ICON_FONT}
               clickable={false}
               icon={successIcon}
               iconSize={successIconSize}
               className={cx({
-                "l3-style-button--left-icon": !!successText
+                'l3-style-button--left-icon': !!successText,
               })}
               ignoreFocusStyle
             />
           ) : null}
           {successText}
         </button>
-      );
+      )
     }
 
     return (
-      <button {...buttonProps}>
+      <StyledButton {...buttonProps} size={size} kind={kind}>
         {leftIcon ? (
           <Icon
-            iconType={Icon?.type.ICON_FONT}
+            iconType={Icon?.type?.ICON_FONT}
             clickable={false}
             icon={leftIcon}
             iconSize={leftIconSize}
-            className={cx({ "l3-style-button--left-icon": !!children })}
+            className={cx({ 'l3-style-button--left-icon': !!children })}
             ignoreFocusStyle
           />
         ) : null}
         {children}
         {rightIcon ? (
           <Icon
-            iconType={Icon?.type.ICON_FONT}
+            iconType={Icon?.type?.ICON_FONT}
             clickable={false}
             icon={rightIcon}
             iconSize={rightIconSize}
-            className={cx({ "l3-style-button--right-icon": !!children })}
+            className={cx({ 'l3-style-button--right-icon': !!children })}
             ignoreFocusStyle
           />
         ) : null}
-      </button>
-    );
-  }
-);
+      </StyledButton>
+    )
+  },
+)
 
 Object.assign(Button, {
   sizes: SIZES,
@@ -370,8 +384,8 @@ Object.assign(Button, {
   kinds: ButtonType,
   types: ButtonInputType,
   inputTags: ButtonInputType,
-  defaultTestId: ComponentDefaultTestId.BUTTON
-});
+  defaultTestId: ComponentDefaultTestId.BUTTON,
+})
 
 Button.defaultProps = {
   className: undefined,
@@ -387,7 +401,7 @@ Button.defaultProps = {
   rightIcon: null,
   leftIcon: null,
   success: false,
-  successText: "",
+  successText: '',
   successIcon: null,
   loading: false,
   active: false,
@@ -408,7 +422,117 @@ Button.defaultProps = {
   ariaControls: undefined,
   ariaLabel: undefined,
   ariaLabeledBy: undefined,
-  insetFocus: false
-};
+  insetFocus: false,
+}
 
-export default Button;
+export default Button
+
+const StyledButton = styled.button<{ size?: string; kind?: string }>`
+  /* background-color: red; */
+  --loader-padding: 8px;
+  outline: none;
+  border: none;
+  height: auto;
+  border-radius: 60px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--motion-productive-short) transform,
+    var(--motion-productive-medium) var(--motion-timing-transition) min-width;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // Prevent text selection
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  // Will be updated dynamically after render by js
+  --element-width: 32;
+  --element-height: 32;
+
+  &--margin-right {
+    margin-right: 8px;
+  }
+  &--margin-left {
+    margin-left: 8px;
+  }
+
+  &--right-flat {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &--left-flat {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  ${props =>
+    props.size === 'xxs' &&
+    css`
+      padding: var(--spacing-xxs) var(--spacing-xs);
+      height: 16px;
+      line-height: 16px;
+    `}
+  ${props =>
+    props.size === 'xs' &&
+    css`
+      padding: var(--spacing-xs) var(--spacing-small);
+      height: 24px;
+      line-height: 21px;
+    `}
+  ${props =>
+    props.size === 'small' &&
+    css`
+      padding: var(--spacing-xs) var(--spacing-small);
+      height: var(--btn-size-small);
+      line-height: 24px;
+    `}
+  ${props =>
+    props.size === 'medium' &&
+    css`
+      padding: var(--spacing-small) var(--spacing-medium);
+      height: var(--btn-size-medium);
+    `}
+  ${props =>
+    props.size === 'large' &&
+    css`
+      padding: var(--spacing-small-medium) var(--spacing-large);
+      height: var(--btn-size-big);
+    `}
+
+
+    ${props =>
+    props.kind === 'primary' &&
+    css`
+      color: var(--text-color-on-primary);
+      /* background-color: var(--primary-background-color); */
+      background-color: #111;
+      &:active {
+        box-shadow: var(--primary-btn-shadow);
+        /* background-color: var(--primary-background-color); */
+        background-color: #111;
+      }
+      &:hover,
+      &:focus {
+        background-color: #e6e9ef;
+        backdrop-filter: brightness(85%);
+      }
+    `}
+    ${props =>
+    props.kind === 'secondary' &&
+    css`
+      color: var(--secondary-text-color);
+      /* background-color: blue; */
+      &:active {
+        box-shadow: var(--secondary-btn-shadow);
+        background-color: var(--secondary-background-color);
+      }
+      &:hover,
+      &:focus {
+        background-color: var(--secondary-hover-color);
+      }
+    `}
+`

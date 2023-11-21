@@ -1,154 +1,159 @@
 /* eslint-disable no-param-reassign */
-import React, { PureComponent, ReactElement } from "react";
-import { createPortal } from "react-dom";
-import { Manager, Modifier, Popper, Reference } from "react-popper";
-import { DialogPosition } from "../../constants/positions";
-import cx from "classnames";
-import { isFunction } from "lodash-es";
-import { chainFunctions, convertToArray, NOOP } from "../../utils/function-utils";
-import { DialogContent } from "./DialogContent/DialogContent";
-import { isInsideClass } from "../../utils/dom-utils";
-import { Refable } from "../Refable/Refable";
-import { AnimationType, HideShowEvent } from "../../constants/dialog";
-import { L3ComponentProps } from "../../types";
-import * as PopperJS from "@popperjs/core";
-import "./Dialog.scss";
-import TooltipArrow from "./arrow-svg";
+import React, { PureComponent, ReactElement } from 'react'
+import { createPortal } from 'react-dom'
+import { Manager, Modifier, Popper, Reference } from 'react-popper'
+import { DialogPosition } from '../../constants/positions'
+import cx from 'classnames'
+import { isFunction } from 'lodash-es'
+import { chainFunctions, convertToArray, NOOP } from '../../utils/function-utils'
+import { DialogContent } from './DialogContent/DialogContent'
+import { isInsideClass } from '../../utils/dom-utils'
+import { Refable } from '../Refable/Refable'
+import { AnimationType, HideShowEvent } from '../../constants/dialog'
+import { L3ComponentProps } from '../../types'
+import * as PopperJS from '@popperjs/core'
+// import "./Dialog.scss";
+import TooltipArrow from './arrow-svg'
 
 export interface DialogProps extends L3ComponentProps {
   /**
    * A Classname to be added to <spam> element which wraps the children
    */
-  referenceWrapperClassName?: string;
+  referenceWrapperClassName?: string
   /**
    * Where the dialog should be in reference to the children,
    * Top, Left, Right, Bottom ...
    */
-  position?: DialogPosition;
+  position?: DialogPosition
   /**
    * PopperJS Modifiers type
    * https://popper.js.org/docs/v2/modifiers/
    */
-  modifiers?: Modifier<any>[];
-  startingEdge?: string;
+  modifiers?: Modifier<any>[]
+  startingEdge?: string
   /**
    * How much to move the dialog in relative to children
    * main is the axis in which the position is aligned to
    * secondary is the vertical axes to the position
    */
-  moveBy?: { main?: number; secondary?: number };
+  moveBy?: { main?: number; secondary?: number }
   /**
    * how much delay should the Dialog wait until it should trigger the show in MS
    */
-  showDelay?: number;
+  showDelay?: number
   /**
    * how much delay should the Dialog wait until it should trigger the hide in MS
    */
-  hideDelay?: number;
+  hideDelay?: number
   /**
    * an array of hide/show trigger -
    * Dialog.hideShowTriggers
    */
-  showTrigger?: HideShowEvent | HideShowEvent[];
+  showTrigger?: HideShowEvent | HideShowEvent[]
   /**
    * an array of hide/show trigger -
    * Dialog.hideShowTriggers
    */
-  hideTrigger?: HideShowEvent | HideShowEvent[];
-  showOnDialogEnter?: boolean;
+  hideTrigger?: HideShowEvent | HideShowEvent[]
+  showOnDialogEnter?: boolean
   /**
    * Show the Dialog when the children are mounting
    */
-  shouldShowOnMount?: boolean;
+  shouldShowOnMount?: boolean
   /**
    * disable the opening of the dialog
    */
-  disable?: boolean;
+  disable?: boolean
   /**
    * open is a controlled prop to open the dialog
    */
-  open?: boolean;
+  open?: boolean
   /**
    * used when state is derived from props
    */
-  isOpen?: boolean;
+  isOpen?: boolean
   /**
    * if this class exists on the children the show trigger will be ignored
    */
-  showTriggerIgnoreClass?: string | Array<string>;
+  showTriggerIgnoreClass?: string | Array<string>
   /**
    * if this class exists on the children the hide trigger will be ignored
    */
-  hideTriggerIgnoreClass?: string | Array<string>;
+  hideTriggerIgnoreClass?: string | Array<string>
   /**
    * Dialog animation type
    */
-  animationType?: AnimationType;
+  animationType?: AnimationType
   /**
    * Classname to be added to the content container
    */
-  wrapperClassName?: string;
+  wrapperClassName?: string
   /**
    * Prevent Animation
    */
-  preventAnimationOnMount?: boolean;
+  preventAnimationOnMount?: boolean
   /**
    * the container selector in which to append the dialog
    * for examples: "body" , ".my-class", "#my-id"
    */
-  containerSelector?: string;
+  containerSelector?: string
   /**
    * should position the tooltip element
    * https://popper.js.org/docs/v2/modifiers/arrow/
    */
-  tooltip?: boolean;
+  tooltip?: boolean
   /**
    * class name to add to the tooltip element
    */
-  tooltipClassName?: string;
+  tooltipClassName?: string
   /**
    * callback to be called when the dialog is shown
    */
-  onDialogDidShow?: () => void;
+  onDialogDidShow?: () => void
   /**
    * callback to be called when the dialog is hidden
    */
-  onDialogDidHide?: (event: DialogEvent, eventName: HideShowEvent | string) => void;
+  onDialogDidHide?: (event: DialogEvent, eventName: HideShowEvent | string) => void
   /**
    * callback to be called when click outside is being triggered
    */
-  onClickOutside?: (event: React.MouseEvent) => void;
+  onClickOutside?: (event: React.MouseEvent) => void
   /**
    * callback to be called when click on the content is being triggered
    */
-  onContentClick?: (event: React.MouseEvent) => void;
+  onContentClick?: (event: React.MouseEvent) => void
   /**
    * z-index to add to the dialog
    */
-  zIndex?: number;
-  useDerivedStateFromProps?: boolean;
-  hideWhenReferenceHidden?: boolean;
-  shoudlCallbackOnMount?: boolean;
-  instantShowAndHide?: boolean;
-  getDynamicShowDelay?: () => { showDelay: number; preventAnimation: boolean };
-  content?: (() => JSX.Element) | JSX.Element;
-  children?: ReactElement | ReactElement[] | string;
+  zIndex?: number
+  useDerivedStateFromProps?: boolean
+  hideWhenReferenceHidden?: boolean
+  shoudlCallbackOnMount?: boolean
+  instantShowAndHide?: boolean
+  getDynamicShowDelay?: () => { showDelay: number; preventAnimation: boolean }
+  content?: (() => JSX.Element) | JSX.Element
+  children?: ReactElement | ReactElement[] | string
 }
 
 interface DialogState {
-  isOpen?: boolean;
-  shouldUseDerivedStateFromProps?: boolean;
-  preventAnimation?: boolean;
+  isOpen?: boolean
+  shouldUseDerivedStateFromProps?: boolean
+  preventAnimation?: boolean
 }
 
-export type DialogEvent = React.MouseEvent | React.KeyboardEvent | KeyboardEvent | React.FocusEvent | CustomEvent;
+export type DialogEvent =
+  | React.MouseEvent
+  | React.KeyboardEvent
+  | KeyboardEvent
+  | React.FocusEvent
+  | CustomEvent
 
 export default class Dialog extends PureComponent<DialogProps, DialogState> {
-  static hideShowTriggers = HideShowEvent;
-  static positions = DialogPosition;
-  static animationTypes = AnimationType;
+  static hideShowTriggers = HideShowEvent
+  static positions = DialogPosition
+  static animationTypes = AnimationType
   static defaultProps = {
-    position: "top",
+    position: 'top',
     modifiers: [] as Modifier<any>[],
     moveBy: { main: 0, secondary: 0 },
     showDelay: 100,
@@ -161,7 +166,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
     open: false,
     animationType: Dialog.animationTypes.EXPAND,
     preventAnimationOnMount: false,
-    containerSelector: "body",
+    containerSelector: 'body',
     tooltip: false,
     onDialogDidShow: NOOP,
     onDialogDidHide: NOOP,
@@ -170,257 +175,260 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
     useDerivedStateFromProps: false,
     hideWhenReferenceHidden: false,
     shoudlCallbackOnMount: false,
-    instantShowAndHide: false
-  };
-  private showTimeout: NodeJS.Timeout;
-  private hideTimeout: NodeJS.Timeout;
+    instantShowAndHide: false,
+  }
+  private showTimeout: NodeJS.Timeout
+  private hideTimeout: NodeJS.Timeout
 
   constructor(props: DialogProps) {
-    super(props);
+    super(props)
     this.state = {
       shouldUseDerivedStateFromProps: props.useDerivedStateFromProps,
-      isOpen: props.shouldShowOnMount
-    };
+      isOpen: props.shouldShowOnMount,
+    }
 
     // Binding section.
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.isShown = this.isShown.bind(this);
-    this.onEsc = this.onEsc.bind(this);
-    this.onClickOutside = this.onClickOutside.bind(this);
-    this.onDialogEnter = this.onDialogEnter.bind(this);
-    this.onDialogLeave = this.onDialogLeave.bind(this);
-    this.getContainer = this.getContainer.bind(this);
-    this.onContentClick = this.onContentClick.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.closeDialogOnEscape = this.closeDialogOnEscape.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this)
+    this.onMouseLeave = this.onMouseLeave.bind(this)
+    this.onMouseDown = this.onMouseDown.bind(this)
+    this.onClick = this.onClick.bind(this)
+    this.onFocus = this.onFocus.bind(this)
+    this.onBlur = this.onBlur.bind(this)
+    this.isShown = this.isShown.bind(this)
+    this.onEsc = this.onEsc.bind(this)
+    this.onClickOutside = this.onClickOutside.bind(this)
+    this.onDialogEnter = this.onDialogEnter.bind(this)
+    this.onDialogLeave = this.onDialogLeave.bind(this)
+    this.getContainer = this.getContainer.bind(this)
+    this.onContentClick = this.onContentClick.bind(this)
+    this.onKeyDown = this.onKeyDown.bind(this)
+    this.closeDialogOnEscape = this.closeDialogOnEscape.bind(this)
 
     // Timeouts
-    this.hideTimeout = null;
-    this.showTimeout = null;
+    this.hideTimeout = null
+    this.showTimeout = null
   }
 
   closeDialogOnEscape(event: KeyboardEvent) {
-    const { isOpen } = this.state;
+    const { isOpen } = this.state
     if (!isOpen) {
-      return;
+      return
     }
     switch (event.key) {
-      case "Escape":
-        this.hideDialogIfNeeded(event, HideShowEvent.ESCAPE_KEY);
-        break;
-      case "Tab":
-        this.handleEvent(HideShowEvent.TAB_KEY, event.target, event);
-        break;
-      case "Enter":
-        this.handleEvent(HideShowEvent.ENTER, event.target, event);
-        break;
+      case 'Escape':
+        this.hideDialogIfNeeded(event, HideShowEvent.ESCAPE_KEY)
+        break
+      case 'Tab':
+        this.handleEvent(HideShowEvent.TAB_KEY, event.target, event)
+        break
+      case 'Enter':
+        this.handleEvent(HideShowEvent.ENTER, event.target, event)
+        break
       default:
-        break;
+        break
     }
   }
 
   componentDidMount() {
-    const { shoudlCallbackOnMount, onDialogDidShow } = this.props;
-    const { isOpen } = this.state;
-    document.addEventListener("keyup", this.closeDialogOnEscape);
+    const { shoudlCallbackOnMount, onDialogDidShow } = this.props
+    const { isOpen } = this.state
+    document.addEventListener('keyup', this.closeDialogOnEscape)
     if (shoudlCallbackOnMount && isOpen) {
-      onDialogDidShow && onDialogDidShow();
+      onDialogDidShow && onDialogDidShow()
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener("keyup", this.closeDialogOnEscape);
+    document.removeEventListener('keyup', this.closeDialogOnEscape)
   }
 
   static getDerivedStateFromProps(nextProps: DialogProps, state: DialogState): DialogState {
     if (state.shouldUseDerivedStateFromProps) {
-      return { isOpen: nextProps.isOpen };
+      return { isOpen: nextProps.isOpen }
     }
-    return null;
+    return null
   }
 
   getContainer() {
-    const { containerSelector } = this.props;
+    const { containerSelector } = this.props
     if (!containerSelector) {
-      return document.body;
+      return document.body
     }
-    return document.querySelector(containerSelector) || document.body;
+    return document.querySelector(containerSelector) || document.body
   }
 
   showDialog(options: { preventAnimation?: boolean } = {}) {
-    const { showDelay, instantShowAndHide, getDynamicShowDelay } = this.props;
-    let finalShowDelay = showDelay;
-    let preventAnimation = options.preventAnimation;
+    const { showDelay, instantShowAndHide, getDynamicShowDelay } = this.props
+    let finalShowDelay = showDelay
+    let preventAnimation = options.preventAnimation
     if (getDynamicShowDelay) {
-      const dynamicDelayObj = getDynamicShowDelay();
-      finalShowDelay = dynamicDelayObj.showDelay || 0;
-      preventAnimation = preventAnimation || dynamicDelayObj.preventAnimation;
+      const dynamicDelayObj = getDynamicShowDelay()
+      finalShowDelay = dynamicDelayObj.showDelay || 0
+      preventAnimation = preventAnimation || dynamicDelayObj.preventAnimation
     }
 
     if (instantShowAndHide) {
-      this.onShowDialog();
-      this.setState({ isOpen: true, preventAnimation });
-      this.showTimeout = null;
+      this.onShowDialog()
+      this.setState({ isOpen: true, preventAnimation })
+      this.showTimeout = null
     } else {
       this.showTimeout = setTimeout(() => {
-        this.onShowDialog();
-        this.showTimeout = null;
-        this.setState({ isOpen: true, preventAnimation });
-      }, finalShowDelay);
+        this.onShowDialog()
+        this.showTimeout = null
+        this.setState({ isOpen: true, preventAnimation })
+      }, finalShowDelay)
     }
   }
 
   onShowDialog() {
-    if (this.isShown()) return;
-    const { onDialogDidShow } = this.props;
-    onDialogDidShow();
+    if (this.isShown()) return
+    const { onDialogDidShow } = this.props
+    onDialogDidShow()
   }
 
   showDialogIfNeeded(options = {}) {
-    const { disable } = this.props;
+    const { disable } = this.props
     if (disable) {
-      return;
+      return
     }
 
     if (this.hideTimeout) {
-      clearTimeout(this.hideTimeout);
-      this.hideTimeout = null;
+      clearTimeout(this.hideTimeout)
+      this.hideTimeout = null
     }
 
     if (!this.showTimeout) {
-      this.showDialog(options);
+      this.showDialog(options)
     }
   }
 
   hideDialog(event: DialogEvent, eventName: HideShowEvent | string) {
-    const { hideDelay, instantShowAndHide } = this.props;
+    const { hideDelay, instantShowAndHide } = this.props
     if (instantShowAndHide) {
-      this.onHideDialog(event, eventName);
-      this.setState({ isOpen: false });
-      this.hideTimeout = null;
+      this.onHideDialog(event, eventName)
+      this.setState({ isOpen: false })
+      this.hideTimeout = null
     } else {
       this.hideTimeout = setTimeout(() => {
-        this.onHideDialog(event, eventName);
-        this.setState({ isOpen: false });
-        this.hideTimeout = null;
-      }, hideDelay);
+        this.onHideDialog(event, eventName)
+        this.setState({ isOpen: false })
+        this.hideTimeout = null
+      }, hideDelay)
     }
   }
 
   onHideDialog(event: DialogEvent, eventName: HideShowEvent | string) {
-    const { onDialogDidHide } = this.props;
-    if (onDialogDidHide) onDialogDidHide(event, eventName);
+    const { onDialogDidHide } = this.props
+    if (onDialogDidHide) onDialogDidHide(event, eventName)
   }
 
   hideDialogIfNeeded(event: DialogEvent, eventName: HideShowEvent | string) {
     if (this.showTimeout) {
-      clearTimeout(this.showTimeout);
-      this.showTimeout = null;
+      clearTimeout(this.showTimeout)
+      this.showTimeout = null
     }
 
     if (this.hideTimeout) {
-      return;
+      return
     }
-    this.hideDialog(event, eventName);
+    this.hideDialog(event, eventName)
   }
 
   handleEvent(eventName: HideShowEvent, target: EventTarget, event: DialogEvent) {
-    const { showTriggerIgnoreClass, hideTriggerIgnoreClass } = this.props;
+    const { showTriggerIgnoreClass, hideTriggerIgnoreClass } = this.props
     if (
       this.isShowTrigger(eventName) &&
       !this.isShown() &&
       !isInsideClass(target as HTMLElement, showTriggerIgnoreClass)
     ) {
-      return this.showDialogIfNeeded();
+      return this.showDialogIfNeeded()
     }
 
-    if (this.isHideTrigger(eventName) && !isInsideClass(target as HTMLElement, hideTriggerIgnoreClass)) {
-      return this.hideDialogIfNeeded(event, eventName);
+    if (
+      this.isHideTrigger(eventName) &&
+      !isInsideClass(target as HTMLElement, hideTriggerIgnoreClass)
+    ) {
+      return this.hideDialogIfNeeded(event, eventName)
     }
   }
 
   isShown() {
-    const { isOpen } = this.state;
-    const { open } = this.props;
+    const { isOpen } = this.state
+    const { open } = this.props
 
-    return isOpen || open;
+    return isOpen || open
   }
 
   isShowTrigger(eventName: HideShowEvent) {
-    const { showTrigger } = this.props;
-    return convertToArray(showTrigger).indexOf(eventName) > -1;
+    const { showTrigger } = this.props
+    return convertToArray(showTrigger).indexOf(eventName) > -1
   }
 
   isHideTrigger(eventName: HideShowEvent) {
-    const { hideTrigger } = this.props;
-    return convertToArray(hideTrigger).indexOf(eventName) > -1;
+    const { hideTrigger } = this.props
+    return convertToArray(hideTrigger).indexOf(eventName) > -1
   }
 
   onMouseEnter(e: React.MouseEvent) {
-    this.handleEvent(HideShowEvent.MOUSE_ENTER, e.target, e);
+    this.handleEvent(HideShowEvent.MOUSE_ENTER, e.target, e)
   }
 
   onMouseLeave(e: React.MouseEvent) {
-    this.handleEvent(HideShowEvent.MOUSE_LEAVE, e.target, e);
+    this.handleEvent(HideShowEvent.MOUSE_LEAVE, e.target, e)
   }
 
   onClick(e: React.MouseEvent) {
-    if (e.button) return;
-    this.handleEvent(HideShowEvent.CLICK, e.target, e);
+    if (e.button) return
+    this.handleEvent(HideShowEvent.CLICK, e.target, e)
   }
 
   onKeyDown(event: React.KeyboardEvent) {
-    if (event.key === "Enter") {
-      this.handleEvent(HideShowEvent.ENTER, event.target, event);
+    if (event.key === 'Enter') {
+      this.handleEvent(HideShowEvent.ENTER, event.target, event)
     }
 
-    if (event.key === "Tab") {
-      this.handleEvent(HideShowEvent.TAB_KEY, event.target, event);
+    if (event.key === 'Tab') {
+      this.handleEvent(HideShowEvent.TAB_KEY, event.target, event)
     }
   }
 
   onMouseDown(e: React.MouseEvent) {
-    if (e.button) return;
-    this.handleEvent(HideShowEvent.MOUSE_DOWN, e.target, e);
+    if (e.button) return
+    this.handleEvent(HideShowEvent.MOUSE_DOWN, e.target, e)
   }
 
   onFocus(e: React.FocusEvent) {
-    this.handleEvent(HideShowEvent.FOCUS, e.target, e);
+    this.handleEvent(HideShowEvent.FOCUS, e.target, e)
   }
 
   onBlur(e: React.FocusEvent) {
-    this.handleEvent(HideShowEvent.BLUR, e.relatedTarget, e);
+    this.handleEvent(HideShowEvent.BLUR, e.relatedTarget, e)
   }
 
   onEsc(e: React.KeyboardEvent) {
-    this.handleEvent(HideShowEvent.ESCAPE_KEY, e.target, e);
+    this.handleEvent(HideShowEvent.ESCAPE_KEY, e.target, e)
   }
 
   onClickOutside(event: React.MouseEvent) {
-    const { onClickOutside } = this.props;
-    this.handleEvent(HideShowEvent.CLICK_OUTSIDE, event.target, event);
-    onClickOutside(event);
+    const { onClickOutside } = this.props
+    this.handleEvent(HideShowEvent.CLICK_OUTSIDE, event.target, event)
+    onClickOutside(event)
   }
 
   onDialogEnter() {
-    const { showOnDialogEnter } = this.props;
-    if (showOnDialogEnter) this.showDialogIfNeeded();
+    const { showOnDialogEnter } = this.props
+    if (showOnDialogEnter) this.showDialogIfNeeded()
   }
 
   onDialogLeave(event: React.MouseEvent) {
-    const { showOnDialogEnter } = this.props;
-    if (showOnDialogEnter) this.hideDialogIfNeeded(event, "DialogLeave");
+    const { showOnDialogEnter } = this.props
+    if (showOnDialogEnter) this.hideDialogIfNeeded(event, 'DialogLeave')
   }
 
   onContentClick(e: React.MouseEvent) {
-    const { onContentClick } = this.props;
-    this.handleEvent(HideShowEvent.CONTENT_CLICK, e.target, e);
-    onContentClick(e);
+    const { onContentClick } = this.props
+    this.handleEvent(HideShowEvent.CONTENT_CLICK, e.target, e)
+    onContentClick(e)
   }
 
   render() {
@@ -439,16 +447,17 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
       tooltipClassName,
       referenceWrapperClassName,
       zIndex,
-      hideWhenReferenceHidden
-    } = this.props;
-    const { preventAnimation } = this.state;
+      hideWhenReferenceHidden,
+    } = this.props
+    const { preventAnimation } = this.state
 
-    const disableOnClickOutside = !this.isHideTrigger(HideShowEvent.CLICK_OUTSIDE);
-    const animationTypeCalculated = preventAnimationOnMount || preventAnimation ? undefined : animationType;
-    const contentRendered = isFunction(content) ? content() : content;
+    const disableOnClickOutside = !this.isHideTrigger(HideShowEvent.CLICK_OUTSIDE)
+    const animationTypeCalculated =
+      preventAnimationOnMount || preventAnimation ? undefined : animationType
+    const contentRendered = isFunction(content) ? content() : content
 
     if (!contentRendered) {
-      return children;
+      return children
     }
     return (
       // @ts-ignore TS2746: This JSX tag's 'children' prop expects a single child of type 'ReactNode', but multiple children were provided.
@@ -460,17 +469,17 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
               <Refable
                 className={referenceWrapperClassName}
                 ref={ref}
-                onBlur={chainOnPropsAndInstance("onBlur", this, this.props)}
-                onKeyDown={chainOnPropsAndInstance("onKeyDown", this, this.props)}
-                onClick={chainOnPropsAndInstance("onClick", this, this.props)}
-                onFocus={chainOnPropsAndInstance("onFocus", this, this.props)}
-                onMouseDown={chainOnPropsAndInstance("onMouseDown", this, this.props)}
-                onMouseEnter={chainOnPropsAndInstance("onMouseEnter", this, this.props)}
-                onMouseLeave={chainOnPropsAndInstance("onMouseLeave", this, this.props)}
+                onBlur={chainOnPropsAndInstance('onBlur', this, this.props)}
+                onKeyDown={chainOnPropsAndInstance('onKeyDown', this, this.props)}
+                onClick={chainOnPropsAndInstance('onClick', this, this.props)}
+                onFocus={chainOnPropsAndInstance('onFocus', this, this.props)}
+                onMouseDown={chainOnPropsAndInstance('onMouseDown', this, this.props)}
+                onMouseEnter={chainOnPropsAndInstance('onMouseEnter', this, this.props)}
+                onMouseLeave={chainOnPropsAndInstance('onMouseLeave', this, this.props)}
               >
                 {children}
               </Refable>
-            );
+            )
           }}
         </Reference>
         {createPortal(
@@ -478,30 +487,30 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
             placement={position as unknown as PopperJS.Placement}
             modifiers={[
               {
-                name: "offset",
+                name: 'offset',
                 options: {
-                  offset: [moveBy.secondary, moveBy.main]
-                }
+                  offset: [moveBy.secondary, moveBy.main],
+                },
               },
               {
-                name: "zIndex",
+                name: 'zIndex',
                 enabled: true,
-                phase: "write",
+                phase: 'write',
                 fn({ state }) {
                   if (zIndex) {
-                    state.styles.popper.zIndex = String(zIndex);
+                    state.styles.popper.zIndex = String(zIndex)
                   }
-                  return state;
-                }
+                  return state
+                },
               },
               {
-                name: "rotator",
+                name: 'rotator',
                 enabled: true,
-                phase: "write",
+                phase: 'write',
                 fn({ state }) {
                   // eslint-disable-next-line no-param-reassign
                   if (!state.styles.arrow) {
-                    return state;
+                    return state
                   }
                   // const reg = new RegExp(
                   //   /translate\(([0-9].*)px, ([0-9].*)px\)/
@@ -510,21 +519,21 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                   // const res = reg.exec(transform);
                   // state.styles.popper.transformOrigin = `${100 -
                   //   res[1]}% ${100 - res[2]}%`;
-                  state.styles.arrow.transform = `${state.styles.arrow.transform} rotate(45deg)`;
-                  return state;
-                }
+                  state.styles.arrow.transform = `${state.styles.arrow.transform} rotate(45deg)`
+                  return state
+                },
               },
-              ...modifiers
+              ...modifiers,
             ]}
           >
             {({ placement, style, ref, arrowProps, isReferenceHidden }) => {
               if (!this.isShown() && placement) {
-                return null;
+                return null
               }
 
               if (hideWhenReferenceHidden && isReferenceHidden) {
-                const event = new CustomEvent("onReferenceHidden");
-                this.hideDialog(event, "onReferenceHidden");
+                const event = new CustomEvent('onReferenceHidden')
+                this.hideDialog(event, 'onReferenceHidden')
               }
 
               return (
@@ -551,7 +560,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                     <TooltipArrow
                       style={arrowProps.style}
                       ref={arrowProps.ref}
-                      className={cx("l3-style-tooltip-arrow", tooltipClassName)}
+                      className={cx('l3-style-tooltip-arrow', tooltipClassName)}
                       data-placement={placement}
                     />
                     // <div
@@ -559,17 +568,17 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                     // />
                   )}
                 </DialogContent>
-              );
+              )
             }}
           </Popper>,
-          this.getContainer()
+          this.getContainer(),
         )}
       </Manager>
-    );
+    )
   }
 }
 
 function chainOnPropsAndInstance(name: string, instance: Dialog, props: DialogProps) {
   // @ts-ignore
-  return chainFunctions([props[name], instance[name]], true);
+  return chainFunctions([props[name], instance[name]], true)
 }
