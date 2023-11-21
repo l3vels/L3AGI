@@ -7,7 +7,7 @@ import outsideClick from 'helpers/outsideClick'
 import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
 import { ButtonSecondary } from 'components/Button/Button'
 
-const DatePickerField = ({ start_date, end_date, onChange }: any) => {
+const DatePickerField = ({ start_date, end_date, onChange, onApply, onClear }: any) => {
   const { t } = useTranslation()
   const [is_open, setIsOpen] = React.useState(false)
 
@@ -19,9 +19,13 @@ const DatePickerField = ({ start_date, end_date, onChange }: any) => {
 
   return (
     <StyledContainer ref={ref}>
-      <ButtonSecondary leftIcon={() => <Calendar />} onClick={() => setIsOpen(true)}>
+      <StyledSearchContainer>
+        <StyledSearchInput placeholder='mm/dd/yyyy' disabled />
+        <StyledCalendarIcon onClick={() => setIsOpen(true)} />
+      </StyledSearchContainer>
+      {/* <ButtonSecondary leftIcon={() => <Calendar />} onClick={() => setIsOpen(true)}>
         {t('date')}
-      </ButtonSecondary>
+      </ButtonSecondary> */}
       {is_open && (
         <StyledPickerContainer>
           <DatePicker
@@ -29,6 +33,11 @@ const DatePickerField = ({ start_date, end_date, onChange }: any) => {
             date={start_date}
             endDate={end_date}
             range
+            onApply={onApply}
+            onClear={() => {
+              onClear()
+              onChange({ startDate: null, endDate: null })
+            }}
             data-testid='date-picker'
             onPickDate={onChange}
           />
@@ -51,4 +60,26 @@ const StyledPickerContainer = styled.div`
   position: absolute;
   top: 106%;
   left: -50%;
+`
+
+const StyledSearchInput = styled.input`
+  color: ${({ theme }) => theme.body.textColorSecondary} !important;
+  background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary} !important;
+  border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
+  min-width: 300px;
+  height: 48px;
+  border-radius: 8px;
+  padding-right: 40px;
+`
+const StyledSearchContainer = styled.div`
+  position: relative;
+`
+const StyledCalendarIcon = styled(Calendar)`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  
 `
