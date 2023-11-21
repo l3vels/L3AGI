@@ -5,7 +5,7 @@ import styled, { DefaultTheme, css } from 'styled-components'
 // import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-// import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+
 import { useChatSwitcher } from './useChatSwitcher'
 import MainNavigation from 'pages/Navigation/MainNavigation'
 
@@ -203,10 +203,8 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   }
 
   /* Hide scrollbar for IE, Edge add Firefox */
-   {
-    -ms-overflow-style: none;
-    scrollbar-width: none; /* Firefox */
-  }
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
 `
 // const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
 //   position: absolute;

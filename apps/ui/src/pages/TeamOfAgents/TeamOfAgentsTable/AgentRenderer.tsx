@@ -1,4 +1,4 @@
-import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'

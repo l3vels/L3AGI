@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import Button from 'share-ui/components/Button/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
+// import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
@@ -34,13 +35,13 @@ const HeaderButtons = () => {
     <StyledButtonsWrapper>
       {location.pathname.includes('/chat') && (
         <Tooltip
-          content={() => (
+          content={
             <span>
               {t('focus')} {isMacOS ? `${t('ctrl+f')}` : `${t('ctrl+shift+f')}`}
             </span>
-          )}
+          }
           position={Tooltip.positions.BOTTOM}
-          tooltipSize='small'
+          tooltipSize={Tooltip.tooltipSize.Small}
         >
           <ButtonTertiary size={'small'} onClick={() => onChangeLayout(!expand)}>
             {expand ? <Show size={26} /> : <Hide size={26} />}
@@ -49,9 +50,9 @@ const HeaderButtons = () => {
       )}
 
       <Tooltip
-        content={() => <span>{t('docs')}</span>}
+        content={<span>{t('docs')}</span>}
         position={Tooltip.positions.BOTTOM}
-        tooltipSize='small'
+        tooltipSize={Tooltip.tooltipSize.Small}
       >
         <ButtonTertiary
           size={Button.sizes?.SMALL}
@@ -102,9 +103,9 @@ const HeaderButtons = () => {
 
       {isLinkModule && (
         <Tooltip
-          content={() => <span>{t('github')}</span>}
+          content={<span>{t('github')}</span>}
           position={Tooltip.positions.BOTTOM}
-          tooltipSize='small'
+          tooltipSize={Tooltip.tooltipSize.Small}
         >
           <ButtonTertiary
             size={Button.sizes?.SMALL}

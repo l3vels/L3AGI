@@ -10,7 +10,7 @@ import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
-import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -69,10 +69,9 @@ const DatasourceCard = ({
 
       <StyledCardFooter>
         <Tooltip
-          content={() => (error ? <span>{error}</span> : null)}
+          content={error ? <span>{error}</span> : <span>Ready</span>}
           position={Tooltip.positions.BOTTOM}
           showDelay={100}
-          disabled
         >
           <StyledStatus>
             {statusIcon}
