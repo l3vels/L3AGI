@@ -143,12 +143,7 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
     )
 
     return (
-      <div
-        className={cx(styles.tagsWrapper, className, {
-          [styles.sizeSmall]: size === 'small',
-          [styles.outlined]: outlined,
-        })}
-      >
+      <div>
         <ClickableWrapper
           isClickable={hasClickableWrapper}
           clickableProps={{
@@ -156,17 +151,10 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
             onMouseDown,
             disabled,
             ariaLabel: ariaLabel || label,
-            className: styles.clickableWrapper,
           }}
         >
           <div
             ref={mergedRef}
-            className={cx(styles.tags, 'tags--wrapper', className, {
-              [styles.disabled]: disabled,
-              [styles.withClose]: hasCloseButton,
-              [styles.noAnimation]: noAnimation,
-              [styles.withUserSelect]: allowTextSelection,
-            })}
             id={id}
             style={backgroundColorStyle}
             data-testid={overrideDataTestId}
@@ -183,7 +171,6 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
             ) : null} */}
             {leftIcon ? (
               <Icon
-                className={cx(styles.icon, styles.left)}
                 iconType={Icon.type?.ICON_FONT}
                 clickable={false}
                 icon={leftIcon}
@@ -191,10 +178,9 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
                 ignoreFocusStyle
               />
             ) : null}
-            <div className={cx(styles.label, { [styles.white]: color === 'white' })}>{label}</div>
+            <div>{label}</div>
             {rightIcon ? (
               <Icon
-                className={cx(styles.icon, styles.right)}
                 iconType={Icon.type?.ICON_FONT}
                 clickable={false}
                 icon={rightIcon}
@@ -213,14 +199,14 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
               />
             ) : null} */}
             {hasCloseButton && (
-              <div className={cx(styles.icon, styles.close)}>
+              <div>
                 <IconButton
                   size={TagsSize.XXS}
                   color={IconButton.colors?.ON_PRIMARY_COLOR}
                   ariaLabel='Remove'
                   hideTooltip
                   icon={() => (
-                    <div className={cx(styles.close, { [styles.closeOutlined]: outlined })}>
+                    <div>
                       <CloseSmall />
                     </div>
                   )}
