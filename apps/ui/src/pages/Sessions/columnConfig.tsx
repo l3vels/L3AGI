@@ -34,7 +34,7 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
       />
     )
   } else {
-    const formattedDate = moment(value).fromNow()
+    const formattedDate = moment(value).format('MMM DD, YYYY')
     content = <span>{formattedDate}</span>
   }
 
@@ -45,51 +45,51 @@ const columns = [
   {
     Header: 'Name',
     accessor: 'name',
-    minWidth: 300,
-    width: 350,
+    minWidth: 343,
+    width: '24.8%',
   },
   // {
   //   Header: 'Team Name',
   //   accessor: 'team_name',
-  //   minWidth: 150,
+  //   minWidth: 342,
   //   width: 200,
   // },
   {
     Header: 'Agent Name',
     accessor: 'agent_name',
-    minWidth: 300,
-    width: 350,
+    minWidth: 342,
+    width: '24.8%',
   },
   {
     Header: 'Status',
     accessor: 'status',
-    minWidth: 300,
-    width: 350,
+    minWidth: 343,
+    width: '24.8%',
   },
   {
     Header: 'Sender Name',
     accessor: 'sender_name',
-    minWidth: 300,
-    width: 350,
+    minWidth: 343,
+    width: '24.8%',
   },
   // {
   //   Header: 'Schedule Name',
   //   accessor: 'schedule_name',
-  //   minWidth: 150,
+  //   minWidth: 343,
   //   width: 200,
   // },
   {
     Header: 'Created Date',
-    accessor: 'created_date',
-    minWidth: 300,
-    width: 350,
+    accessor: 'added_at',
+    minWidth: 343,
+    width: '24.8%',
     Cell: DateRenderer,
   },
   {
     Header: 'Actions',
     accessor: 'actions',
-    minWidth: 100,
-    width: 110,
+    minWidth: 150,
+    width: '10.39%',
 
     Cell: (props: { row: { original: any } }) => {
       const { original: data } = props.row
