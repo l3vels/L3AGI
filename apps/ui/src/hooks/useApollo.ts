@@ -58,7 +58,7 @@ const useApollo = () => {
       }
 
       const errorLink = onError(context => {
-        const { graphQLErrors, networkError } = context
+        const { graphQLErrors } = context
 
         if (graphQLErrors) {
           graphQLErrors.map(({ extensions }: any) => {
@@ -77,19 +77,13 @@ const useApollo = () => {
             return true
           })
         }
-
-        // @ts-expect-error TODO: fix status check
-        if (networkError && (networkError.statusCode === 401 || networkError.statusCode === 500)) {
-          console.log('network error', networkError)
-          // logout()
-        }
       })
 
       const mLink = new MultiAPILink({
         endpoints: {
           account: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
           ai: `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}`,
-          pro: `${import.meta.env.REACT_APP_PR_SERVICES_URL}` 
+          pro: `${import.meta.env.REACT_APP_PR_SERVICES_URL}`,
         },
         createHttpLink: () => createHttpLink({}),
         getContext: endpoint => {
