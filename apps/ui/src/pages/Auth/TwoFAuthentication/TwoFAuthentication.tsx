@@ -1,5 +1,5 @@
 import React from 'react'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 // import useResetPassword from './useResetPassword'
 import { FormikProvider } from 'formik'

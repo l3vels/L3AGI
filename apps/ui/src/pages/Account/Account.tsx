@@ -1,7 +1,7 @@
 import useAccount from 'pages/Account/useAccount'
 import { FormikProvider } from 'formik'
 
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'

@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 type ITypes = {
   placeholder?: string

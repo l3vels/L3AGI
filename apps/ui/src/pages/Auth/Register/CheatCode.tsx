@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
@@ -45,7 +45,7 @@ export const CheatCode = () => {
           <StyledInputContainer>
             <TextField
               placeholder='?'
-              size={TextField.sizes.LARGE}
+              size={TextField.sizes?.LARGE}
               className='cheat_code__input'
 
               // name='command_first'
@@ -63,7 +63,7 @@ export const CheatCode = () => {
           <StyledInputContainer>
             <TextField
               placeholder='?'
-              size={TextField.sizes.LARGE}
+              size={TextField.sizes?.LARGE}
               className='cheat_code__input'
               name='command_second'
 

@@ -13,7 +13,7 @@ import useEditApiKey from './useEditApiKey'
 // import Button from 'oldComponents/atoms/Button'
 import Button from 'share-ui/components/Button/Button'
 import DropDown from '@l3-lib/ui-core/dist/Dropdown'
-// import TextField from '@l3-lib/ui-core/dist/TextField'
+// import TextField from 'share-ui/components/TextField/TextField'
 // import TextArea from '@l3-lib/ui-core/dist/Textarea'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 // import DatePickerField from 'oldComponents/atoms/DatePickerField'
@@ -198,7 +198,7 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                 </Button>
 
                 <Button
-                  type={Button.types.SUBMIT}
+                  type={Button.types?.SUBMIT}
                   onClick={formik.handleSubmit}
                   kind={Button.kinds?.PRIMARY}
                   size={Button.sizes?.MEDIUM}

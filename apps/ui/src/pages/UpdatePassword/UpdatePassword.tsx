@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // import Typography from 'bf-ui/dist/Typography'
 // import Button from 'bf-ui/dist/Button'
 import useUpdatePassword from './useUpdatePassword'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 import Button from 'share-ui/components/Button/Button'
 import { ButtonPrimary } from 'components/Button/Button'

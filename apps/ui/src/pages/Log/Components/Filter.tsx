@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 // import useFilter from './useFilter'
 import DatePicker from 'components/DatePicker'
@@ -91,11 +91,11 @@ const Filter = ({ filter }: any) => {
 
   return (
     <StyledContainer>
-      <TextField
+      {/* <TextField
         // field_name='search'
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
         placeholder='Filter by resource ID'
-      />
+      /> */}
       <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowDate(true)}>
         <TypographyPrimary value='Date' type={Typography.types.LABEL} size={Typography.sizes.sm} />
       </ButtonTertiary>

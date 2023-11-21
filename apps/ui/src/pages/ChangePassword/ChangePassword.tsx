@@ -13,7 +13,7 @@ import Button from 'share-ui/components/Button/Button'
 // import Button from 'oldComponents/atoms/Button'
 
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import TypographySecondary from 'components/Typography/Secondary'

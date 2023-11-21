@@ -1,6 +1,6 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 import FormikTextField from 'components/TextFieldFormik'
 
@@ -106,7 +106,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
             field_name='start_date'
             placeholder='Run Date'
             label='Start Date'
-            size={TextField.sizes.SMALL}
+            size={TextField.sizes?.SMALL}
             type='datetime-local'
           />
 
@@ -153,7 +153,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
                 field_name='end_date'
                 placeholder='Recurring End Date'
                 label='Recurring End Date'
-                size={TextField.sizes.SMALL}
+                size={TextField.sizes?.SMALL}
                 type='datetime-local'
               />
             </StyledRepeatFields>

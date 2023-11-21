@@ -4,7 +4,7 @@ import Table from 'components/Table'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
