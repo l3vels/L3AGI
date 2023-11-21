@@ -1,9 +1,9 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.tools import YouTubeSearchTool
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
+from pydantic import BaseModel, Field
+
 from tools.base import BaseTool
 
 
@@ -18,6 +18,8 @@ class YoutubeSearchTool(BaseTool):
     """Tool that queries YouTube."""
 
     name = "Youtube Search"
+
+    slug = "youtubeSearch"
 
     description = (
         "search for youtube videos associated with a person. "

@@ -1,9 +1,9 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.utilities import WikipediaAPIWrapper
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
+from pydantic import BaseModel, Field
+
 from tools.base import BaseTool
 
 
@@ -18,6 +18,8 @@ class WikipediaSearchTool(BaseTool):
     """Tool for the Wikipedia API."""
 
     name = "Wikipedia Search"
+
+    slug = "wikipediaSearch"
 
     description = (
         "A wrapper around Wikipedia. "

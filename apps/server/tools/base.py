@@ -52,6 +52,7 @@ class BaseTool(LangchainBaseTool):
     tool_id: str
     configs: Dict[str, str] = {}
     settings: Optional[AccountSettings] = None
+    slug: str
     toolkit_slug: Optional[str] = None
     account: Optional[AccountOutput] = None
     agent_with_configs: Optional[AgentWithConfigsOutput] = None

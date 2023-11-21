@@ -1,11 +1,11 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.utilities import OpenWeatherMapAPIWrapper
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
-from tools.base import BaseTool
+from pydantic import BaseModel, Field
+
 from exceptions import ToolEnvKeyException
+from tools.base import BaseTool
 
 
 class OpenWeatherMapSchema(BaseModel):
@@ -19,6 +19,8 @@ class OpenWeatherMapTool(BaseTool):
     """Tool that queries the OpenWeatherMap API."""
 
     name = "OpenWeatherMap Search"
+
+    slug = "openWeatherMapSearch"
 
     description = (
         "A wrapper around OpenWeatherMap API. "

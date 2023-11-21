@@ -1,9 +1,9 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.utilities import ArxivAPIWrapper
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
+from pydantic import BaseModel, Field
+
 from tools.base import BaseTool
 
 
@@ -18,6 +18,8 @@ class ArxivSearchTool(BaseTool):
     """Tool that searches the Arxiv API."""
 
     name = "ArXiv Search"
+
+    slug = "arxivSearch"
 
     description = (
         "A wrapper around Arxiv.org "
