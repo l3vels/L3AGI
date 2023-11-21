@@ -12,7 +12,8 @@ import useEditApiKey from './useEditApiKey'
 
 // import Button from 'oldComponents/atoms/Button'
 import Button from 'share-ui/components/Button/Button'
-import DropDown from '@l3-lib/ui-core/dist/Dropdown'
+import Dropdown from 'share-ui/components/Dropdown/Dropdown'
+
 // import TextField from 'share-ui/components/TextField/TextField'
 // import Textarea from 'share-ui/components/Textarea/Textarea'
 import Heading from '@l3-lib/ui-core/dist/Heading'

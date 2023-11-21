@@ -8,7 +8,6 @@ import Dialog from '../../../Dialog/Dialog'
 import DialogContentContainer from '../../../DialogContentContainer/DialogContentContainer'
 import Tags from '../../../Tags/Tags'
 import { DROPDOWN_TAG_COLORS } from '../../dropdown-constants'
-import classes from './MultiValueContainer.module.scss'
 
 export default function Container({ children, selectProps, ...otherProps }) {
   const {
@@ -23,17 +22,11 @@ export default function Container({ children, selectProps, ...otherProps }) {
   const clickHandler = children[1]
   const [ref, setRef] = useState()
   const showPlaceholder = selectedOptions.length === 0 && !inputValue
-  const tagWrapperClassName = classes['tag-with-input-wrapper']
-  const tagClassName = cx(
-    isMultiline ? classes['multiselect-tag-multi-line'] : classes['multiselect-tag-single-line'],
-    { [classes['multiselect-tag-disabled']]: isDisabled },
-  )
 
   const { overflowIndex, hiddenOptionsCount } = useHiddenOptionsData({
     isMultiline,
     ref,
-    tagClassName,
-    tagWrapperClassName,
+
     selectedOptionsCount: selectedOptions.length,
   })
   const isCounterShown = hiddenOptionsCount > 0
@@ -47,7 +40,6 @@ export default function Container({ children, selectProps, ...otherProps }) {
           <Tags
             dataTestId='value-container-tag'
             key={option.value}
-            className={tagClassName}
             isClickable
             noAnimation
             disabled={isDisabled}
@@ -65,28 +57,22 @@ export default function Container({ children, selectProps, ...otherProps }) {
           />
         ) : null
       }),
-    [selectedOptions, tagClassName, isDisabled, onSelectedDelete, withMandatoryDefaultOptions],
+    [selectedOptions, isDisabled, onSelectedDelete, withMandatoryDefaultOptions],
   )
 
   return (
     <components.ValueContainer selectProps={selectProps} {...otherProps}>
-      <div className={classes['value-container']}>
+      <div>
         {showPlaceholder && (
-          <div className={classes['placeholder-container']}>
+          <div>
             <components.Placeholder {...otherProps}>{placeholder}</components.Placeholder>
           </div>
         )}
-        <div
-          className={cx(classes['value-container-tags'], {
-            [classes['without-placeholder']]: !showPlaceholder,
-          })}
-          ref={newRef => setRef(newRef)}
-          data-testid='value-container-tags'
-        >
+        <div ref={newRef => setRef(newRef)} data-testid='value-container-tags'>
           {isCounterShown ? (
             <>
               {renderOptions(0, overflowIndex - 1)}
-              <div className={tagWrapperClassName}>
+              <div>
                 {renderOptions(overflowIndex - 1, overflowIndex)}
                 {clickHandler}
               </div>
@@ -95,7 +81,7 @@ export default function Container({ children, selectProps, ...otherProps }) {
           ) : (
             <>
               {renderOptions(0, selectedOptions.length - 1)}
-              <div className={tagWrapperClassName}>
+              <div>
                 {renderOptions(selectedOptions.length - 1)}
                 {clickHandler}
               </div>
@@ -106,9 +92,7 @@ export default function Container({ children, selectProps, ...otherProps }) {
           {isCounterShown && (
             <Dialog
               content={() => (
-                <DialogContentContainer className={classes['value-container-dialog-content']}>
-                  {renderOptions(overflowIndex)}
-                </DialogContentContainer>
+                <DialogContentContainer>{renderOptions(overflowIndex)}</DialogContentContainer>
               )}
               tooltip
               showTrigger={Dialog.hideShowTriggers.CLICK}
