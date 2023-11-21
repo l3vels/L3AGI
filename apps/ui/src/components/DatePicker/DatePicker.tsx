@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import styled from 'styled-components'
 import outsideClick from 'helpers/outsideClick'
 import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
@@ -34,7 +34,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
               <StyledCustomFieldWrapper key={index}>
                 <FormikTextField name={`${formikField}.${index}`} />
 
-                <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes.SMALL}>
+                <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes?.SMALL}>
                   <StyledDeleteIcon siz={50} />
                 </StyledButtonTertiary>
               </StyledCustomFieldWrapper>
@@ -44,7 +44,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
           <StyledButtonWrapper>
             <ButtonSecondary
               onClick={() => insert(formik?.values[formikField].length, '')}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               + {t('add')}
             </ButtonSecondary>

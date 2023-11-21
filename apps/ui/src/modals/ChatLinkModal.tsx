@@ -3,7 +3,7 @@ import styled from 'styled-components'
 //eslint-disable-next-line
 import PropTypes from 'prop-types'
 import withRenderModal from 'hocs/withRenderModal'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -114,7 +114,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
         </StyledBody>
       </FormikProvider>
       <StyledModalFooter>
-        <ButtonTertiary onClick={() => closeModal('chat-link-modal')} size={Button.sizes.MEDIUM}>
+        <ButtonTertiary onClick={() => closeModal('chat-link-modal')} size={Button.sizes?.MEDIUM}>
           <Typography
             value={t('cancel')}
             type={Typography.types.LABEL}
@@ -125,7 +125,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
         {!chatLink && (
           <ButtonPrimary
             onClick={formik?.handleSubmit}
-            size={Button.sizes.MEDIUM}
+            size={Button.sizes?.MEDIUM}
             disabled={isLoading}
           >
             {isLoading ? <Loader size={20} /> : t('confirm')}

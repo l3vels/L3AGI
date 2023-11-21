@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import Toast from '@l3-lib/ui-core/dist/Toast'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import { ToastContext } from 'contexts'
 import styled from 'styled-components'

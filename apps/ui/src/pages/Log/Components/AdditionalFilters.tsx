@@ -5,7 +5,7 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
 
 import useFilter from './useFilter'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import TextFieldController from 'components/TextFieldController'
 
 const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
@@ -88,7 +88,7 @@ const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
         </StyledFormItem>
 
         <StyledFormItem columns='100px auto 120px'>
-          <Button kind={Button.kinds.TERTIARY} size='small'>
+          <Button kind={Button.kinds?.TERTIARY} size='small'>
             Clear
           </Button>
           <StyledLabel></StyledLabel>

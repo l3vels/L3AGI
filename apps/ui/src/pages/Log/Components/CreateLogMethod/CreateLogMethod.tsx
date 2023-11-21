@@ -57,8 +57,8 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
 
         <StyledButtonContainer>
           <StyledTertiaryButton
-            kind={Button.kinds.TERTIARY}
-            size={Button.sizes.SMALL}
+            kind={Button.kinds?.TERTIARY}
+            size={Button.sizes?.SMALL}
             onClick={onClose}
           >
             <TypographyPrimary
@@ -68,7 +68,7 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
             />
           </StyledTertiaryButton>
 
-          <StyledPrimaryButton kind={Button.kinds.PRIMARY} size={Button.sizes.SMALL}>
+          <StyledPrimaryButton kind={Button.kinds?.PRIMARY} size={Button.sizes?.SMALL}>
             <TypographyPrimary
               value='Apply'
               type={Typography.types.LABEL}

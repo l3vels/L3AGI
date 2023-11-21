@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import columnConfig from './columnConfig'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Table from 'components/Table'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Heading from '@l3-lib/ui-core/dist/Heading'
@@ -41,7 +41,7 @@ const ApiKeys = () => {
               <StyledTypographyWrapper>
                 <ButtonTertiary
                   onClick={() => openLinkTab(import.meta.env.REACT_APP_API_KEYS_LINK)}
-                  size={Button.sizes.SMALL}
+                  size={Button.sizes?.SMALL}
                 >
                   <TypographyTertiary
                     value={t('learn-more')}
@@ -57,7 +57,7 @@ const ApiKeys = () => {
         <ButtonPrimary
           onClick={() => navigate('/api-key/create-api-key')}
           leftIcon={Add}
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
         >
           {t('create-api-key')}
         </ButtonPrimary>

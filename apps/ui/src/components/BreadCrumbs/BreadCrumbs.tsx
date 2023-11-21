@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'
 import { useToolsService } from 'services/tool/useToolsService'
@@ -86,7 +86,7 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <ButtonTertiary size={Button.sizes.SMALL}>
+                  <ButtonTertiary size={Button.sizes?.SMALL}>
                     <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}
@@ -102,7 +102,7 @@ const Breadcrumbs = ({ onClick }: BreadcrumbsProps) => {
             return (
               <StyledBreadcrumbLi key={match.pathname}>
                 <StyledNavLink key={match.pathname} to={match.pathname} onClick={onClick}>
-                  <ButtonTertiary size={Button.sizes.SMALL}>
+                  <ButtonTertiary size={Button.sizes?.SMALL}>
                     <TypographySecondary
                       value={breadcrumb}
                       type={Typography.types.LABEL}

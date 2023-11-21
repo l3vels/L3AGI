@@ -8,7 +8,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
 // import useFilter from '../useFilter'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 // import useFilter from '../Components/useFilter'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
@@ -191,11 +191,11 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
         </StyledApiVersionContainerWrapper>
         <StyledModalFooter>
           <StyledActionsContainer>
-            <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+            <Button onClick={closeModal} kind={Button.kinds?.TERTIARY} size={Button.sizes?.LARGE}>
               <Typography value='Clear' type={Typography.types.LABEL} size={Typography.sizes.md} />
             </Button>
 
-            <Button kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE}>
+            <Button kind={Button.kinds?.PRIMARY} size={Button.sizes?.LARGE}>
               <StyledLabelTypography
                 value='Create'
                 type={Typography.types.LABEL}

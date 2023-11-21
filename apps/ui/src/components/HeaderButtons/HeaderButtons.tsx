@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 
@@ -54,7 +54,7 @@ const HeaderButtons = () => {
         tooltipSize='small'
       >
         <ButtonTertiary
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
           onClick={() => openLinkTab(import.meta.env.REACT_APP_BASICS_LINK)}
         >
           <StyledInnerButtonWrapper>
@@ -73,7 +73,7 @@ const HeaderButtons = () => {
         tooltipSize='small'
       >
         <ButtonTertiary
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
           onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
         >
           <StyledInnerButtonWrapper>
@@ -91,7 +91,7 @@ const HeaderButtons = () => {
         tooltipSize='small'
       >
         <ButtonTertiary
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
           onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
         >
           <StyledInnerButtonWrapper>
@@ -107,7 +107,7 @@ const HeaderButtons = () => {
           tooltipSize='small'
         >
           <ButtonTertiary
-            size={Button.sizes.SMALL}
+            size={Button.sizes?.SMALL}
             onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
           >
             <StyledInnerButtonWrapper>

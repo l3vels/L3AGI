@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
@@ -59,7 +59,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
             {/* <CreateApiKeysForm /> */}
             <StyledModalFooter>
               <StyledActionsContainer>
-                <ButtonTertiary onClick={closeModal} size={Button.sizes.LARGE}>
+                <ButtonTertiary onClick={closeModal} size={Button.sizes?.LARGE}>
                   <TypographyPrimary
                     value={t('cancel')}
                     type={Typography.types.LABEL}
@@ -67,7 +67,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
                   />
                 </ButtonTertiary>
 
-                <ButtonPrimary onClick={formik?.handleSubmit} size={Button.sizes.LARGE}>
+                <ButtonPrimary onClick={formik?.handleSubmit} size={Button.sizes?.LARGE}>
                   <StyledLabelTypography
                     value={t('create')}
                     type={Typography.types.LABEL}

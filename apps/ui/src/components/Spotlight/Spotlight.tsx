@@ -301,7 +301,7 @@ const Spotlight = () => {
 
       {/* <StyledNotificationsButtonWrapper>
         <Button
-          kind={Button.kinds.TERTIARY}
+          kind={Button.kinds?.TERTIARY}
           onClick={() => openModal({ name: 'notifications-modal' })}
         >
           <StyledNotificationLabelWrapper>

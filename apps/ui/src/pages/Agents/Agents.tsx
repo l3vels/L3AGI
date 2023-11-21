@@ -9,7 +9,7 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import AgentCard from './AgentCard'
 import { useAgents } from './useAgents'
 import { ButtonPrimary } from 'components/Button/Button'
@@ -44,7 +44,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
           {!isHome && (
             <ButtonPrimary
               onClick={() => navigate('/agents/create-agent-template')}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               {t('add-agent')}
             </ButtonPrimary>

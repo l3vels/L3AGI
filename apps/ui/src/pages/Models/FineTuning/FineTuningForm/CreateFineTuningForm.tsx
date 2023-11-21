@@ -5,7 +5,7 @@ import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
 import { useCreateFineTuning } from '../useCreateFineTuning'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
@@ -42,7 +42,7 @@ const CreateFineTuningForm = () => {
             <BackButton />
             <ButtonPrimary
               onClick={handleFormSubmit}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               disabled={isLoading}
             >
               {isLoading ? <Loader size={32} /> : 'Save'}

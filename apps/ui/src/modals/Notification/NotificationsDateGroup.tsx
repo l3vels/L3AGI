@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 

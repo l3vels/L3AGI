@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { FormikProvider } from 'formik'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -89,7 +89,10 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
         </StyledEmailFieldWrapper>
         {error && <StyledError>{error}</StyledError>}
         <StyledButtonsWrapper>
-          <ButtonTertiary onClick={() => closeModal('create-team-modal')} size={Button.sizes.LARGE}>
+          <ButtonTertiary
+            onClick={() => closeModal('create-team-modal')}
+            size={Button.sizes?.LARGE}
+          >
             <TypographySecondary
               value={t('cancel')}
               type={Typography.types.LABEL}
@@ -98,9 +101,9 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
           </ButtonTertiary>
 
           <ButtonPrimary
-            type={Button.types.SUBMIT}
+            type={Button.types?.SUBMIT}
             onClick={handleSubmit}
-            size={Button.sizes.LARGE}
+            size={Button.sizes?.LARGE}
           >
             <TypographyPrimary
               value={t('add')}

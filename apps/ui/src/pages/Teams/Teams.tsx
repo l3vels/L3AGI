@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
@@ -104,8 +104,8 @@ const Teams = () => {
           /> */}
 
             <Button
-              kind={Button.kinds.PRIMARY}
-              size={Button.sizes.MEDIUM}
+              kind={Button.kinds?.PRIMARY}
+              size={Button.sizes?.MEDIUM}
               // leftIcon={Add}
               onClick={openCreateTeamsModal}
             >

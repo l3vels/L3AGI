@@ -1,7 +1,7 @@
 import { FormikProvider } from 'formik'
 import DatasourceForm from './DatasourceForm'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import {
@@ -38,7 +38,7 @@ const CreateDatasourceForm = () => {
               <BackButton />
               <ButtonPrimary
                 onClick={formik?.handleSubmit}
-                size={Button.sizes.SMALL}
+                size={Button.sizes?.SMALL}
                 disabled={isLoading}
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}

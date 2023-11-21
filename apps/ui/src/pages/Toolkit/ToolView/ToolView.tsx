@@ -6,7 +6,7 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -51,7 +51,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                 <ButtonPrimary
                   onClick={() => handleSubmit(formik?.values)}
                   disabled={isLoading}
-                  size={Button.sizes.SMALL}
+                  size={Button.sizes?.SMALL}
                 >
                   {isLoading ? <Loader size={22} /> : t('save')}
                 </ButtonPrimary>
@@ -111,7 +111,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
                     closeModal('toolkit-modal')
                   }}
                   disabled={isLoading}
-                  size={Button.sizes.SMALL}
+                  size={Button.sizes?.SMALL}
                 >
                   {isLoading ? <Loader size={22} /> : t('save')}
                 </ButtonPrimary>

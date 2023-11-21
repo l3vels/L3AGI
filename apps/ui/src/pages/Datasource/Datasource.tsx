@@ -1,4 +1,4 @@
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
@@ -32,7 +32,7 @@ const Datasource = () => {
         <div>
           <ButtonPrimary
             onClick={() => navigate('/datasources/create-datasource')}
-            size={Button.sizes.SMALL}
+            size={Button.sizes?.SMALL}
           >
             {t('add-datasource')}
           </ButtonPrimary>

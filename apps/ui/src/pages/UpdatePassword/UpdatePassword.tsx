@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import useUpdatePassword from './useUpdatePassword'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const UpdatePassword = () => {

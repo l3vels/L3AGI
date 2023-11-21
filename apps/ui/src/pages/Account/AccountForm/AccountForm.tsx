@@ -3,7 +3,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
 // import useAccount from '../useAccount'
 import { useLogoutService } from 'services'
@@ -83,7 +83,7 @@ const AccountForm = () => {
           </StyledCustomTextField>
 
           <StyledButton>
-            <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes.SMALL}>
+            <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes?.SMALL}>
               <TypographySecondary
                 value={t('log-out')}
                 type={Typography.types.LABEL}

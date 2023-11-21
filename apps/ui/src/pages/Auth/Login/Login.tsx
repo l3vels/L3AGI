@@ -10,7 +10,7 @@ import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import githubIcon from 'assets/icons/githubIcon.png'
 
@@ -118,7 +118,7 @@ const Login = () => {
           </StyledInputWrapper>
         </FormikProvider>
 
-        <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
+        <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes?.MEDIUM}>
           {t('start')}
         </ButtonPrimary>
 

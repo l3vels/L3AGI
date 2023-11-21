@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
 import profile from 'assets/images/large.png'
@@ -34,7 +34,7 @@ const Account = () => {
           <StyledButtonsContainer>
             <StyledChangePasswordButton
               onClick={openCreateChangePasswordModal}
-              size={Button.sizes.MEDIUM}
+              size={Button.sizes?.MEDIUM}
             >
               <TypographyPrimary
                 value={t('change-password')}

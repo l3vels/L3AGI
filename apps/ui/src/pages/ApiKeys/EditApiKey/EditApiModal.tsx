@@ -11,7 +11,7 @@ import { FormikProvider } from 'formik'
 import useEditApiKey from './useEditApiKey'
 
 // import Button from 'oldComponents/atoms/Button'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import DropDown from '@l3-lib/ui-core/dist/Dropdown'
 // import TextField from '@l3-lib/ui-core/dist/TextField'
 // import TextArea from '@l3-lib/ui-core/dist/Textarea'
@@ -191,8 +191,8 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
               <StyledActionsContainer>
                 <Button
                   onClick={closeModal}
-                  kind={Button.kinds.TERTIARY}
-                  size={Button.sizes.MEDIUM}
+                  kind={Button.kinds?.TERTIARY}
+                  size={Button.sizes?.MEDIUM}
                 >
                   <StyledLabelTypography value={t('cancel')} type={Typography.types.P} />
                 </Button>
@@ -200,8 +200,8 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
                 <Button
                   type={Button.types.SUBMIT}
                   onClick={formik.handleSubmit}
-                  kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.MEDIUM}
+                  kind={Button.kinds?.PRIMARY}
+                  size={Button.sizes?.MEDIUM}
                 >
                   <StyledLabelTypography value={t('update')} type={Typography.types.P} />
                 </Button>

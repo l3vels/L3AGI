@@ -6,7 +6,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import TagsRow from './TagsRow'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 
@@ -121,7 +121,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         {!isCreator && (
           <div>
             <ButtonPrimary
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               onClick={() => {
                 closeModal('agent-view-modal')
                 navigate(`/agents/create-agent?agentId=${agent.id}`)

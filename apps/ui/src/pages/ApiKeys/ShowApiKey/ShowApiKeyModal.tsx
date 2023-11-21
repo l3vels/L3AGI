@@ -6,7 +6,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Modal from '@l3-lib/ui-core/dist/Modal'
@@ -93,7 +93,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           closeable={false}
         />
         <StyledApiModalFooter>
-          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.MEDIUM} onClick={closeModal}>
+          <Button kind={Button.kinds?.PRIMARY} size={Button.sizes?.MEDIUM} onClick={closeModal}>
             {t('done')}
           </Button>
         </StyledApiModalFooter>

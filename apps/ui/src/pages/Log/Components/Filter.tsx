@@ -6,7 +6,7 @@ import TextField from '@l3-lib/ui-core/dist/TextField'
 // import useFilter from './useFilter'
 import DatePicker from 'components/DatePicker'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import AdditionalFilters from './AdditionalFilters'
 import CreateLogModal from '../CreateLogModal/CreateLogModal'
 import { useModal } from 'hooks'
@@ -96,17 +96,17 @@ const Filter = ({ filter }: any) => {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
         placeholder='Filter by resource ID'
       />
-      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowDate(true)}>
+      <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowDate(true)}>
         <TypographyPrimary value='Date' type={Typography.types.LABEL} size={Typography.sizes.sm} />
       </ButtonTertiary>
-      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowMethod(true)}>
+      <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowMethod(true)}>
         <TypographyPrimary
           value='Method'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />
       </ButtonTertiary>
-      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowEndpoint(true)}>
+      <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowEndpoint(true)}>
         <TypographyPrimary
           value='API endpoints'
           type={Typography.types.LABEL}
@@ -114,7 +114,7 @@ const Filter = ({ filter }: any) => {
         />
       </ButtonTertiary>
       {/* <StyledAdditionalFilterContainer>
-        <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={openCreateLogModal}>
+        <Button kind={Button.kinds?.TERTIARY} size={Button.sizes?.SMALL} onClick={openCreateLogModal}>
           <Typography
             value='More...'
             type={Typography.types.LABEL}

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -120,7 +120,7 @@ const TeamOfAgentCard = ({
               <IconButton
                 onClick={onDeleteClick}
                 icon={() => <StyledDeleteIcon />}
-                size={Button.sizes.SMALL}
+                size={Button.sizes?.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Delete'
               />
@@ -132,7 +132,7 @@ const TeamOfAgentCard = ({
               <IconButton
                 onClick={onEditClick}
                 icon={() => <StyledEditIcon />}
-                size={Button.sizes.SMALL}
+                size={Button.sizes?.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='Edit'
               />
@@ -148,7 +148,7 @@ const TeamOfAgentCard = ({
                     <StyledEyeOpenIcon size={50} />
                   </StyledIconWrapper>
                 )}
-                size={Button.sizes.SMALL}
+                size={Button.sizes?.SMALL}
                 kind={IconButton.kinds.TERTIARY}
                 // ariaLabel='View'
               />
@@ -157,7 +157,7 @@ const TeamOfAgentCard = ({
 
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes?.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper>
                   Chat
                   <MoveArrowRight size={14} />

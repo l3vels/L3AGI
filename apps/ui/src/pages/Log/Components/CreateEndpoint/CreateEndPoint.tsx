@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 import outsideClick from 'helpers/outsideClick'
@@ -42,7 +42,7 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
         />
       </StyledFieldWrapper>
       <StyledButtonContainer>
-        <StyledTertiaryButton size={Button.sizes.SMALL} onClick={onClose}>
+        <StyledTertiaryButton size={Button.sizes?.SMALL} onClick={onClose}>
           <TypographyPrimary
             value='Clear'
             type={Typography.types.LABEL}
@@ -50,7 +50,7 @@ const CreateEndPoint = ({ onClose }: { onClose: Function }) => {
           />
         </StyledTertiaryButton>
 
-        <StyledPrimaryButton size={Button.sizes.SMALL} onClick={handleFilter}>
+        <StyledPrimaryButton size={Button.sizes?.SMALL} onClick={handleFilter}>
           <TypographyPrimary
             value='Apply'
             type={Typography.types.LABEL}

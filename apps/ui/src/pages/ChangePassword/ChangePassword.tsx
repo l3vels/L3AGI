@@ -8,7 +8,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 // import Button from 'oldComponents/atoms/Button'
 
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
@@ -121,7 +121,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
               />
 
               <StyledButtonWrapper>
-                <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
+                <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes?.MEDIUM}>
                   <TypographySecondary
                     value={t('update-password')}
                     type={Typography.types.LABEL}

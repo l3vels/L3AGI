@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
 import TypographyPrimary from 'components/Typography/Primary'
@@ -112,7 +112,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
         {!isCreator && (
           <div>
             <ButtonPrimary
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
             >
               <StyledInnerButtonWrapper>

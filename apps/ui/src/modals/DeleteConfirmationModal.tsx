@@ -4,7 +4,7 @@ import styled from 'styled-components'
 //eslint-disable-next-line
 import PropTypes from 'prop-types'
 import withRenderModal from 'hocs/withRenderModal'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import Typography from '@l3-lib/ui-core/dist/Typography'
@@ -56,8 +56,8 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
           <StyledActionsContainer>
             <Button
               onClick={handleClose}
-              kind={Button.kinds.TERTIARY}
-              size={Button.sizes.LARGE}
+              kind={Button.kinds?.TERTIARY}
+              size={Button.sizes?.LARGE}
               disabled={isLoading}
             >
               <Typography
@@ -69,8 +69,8 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
 
             <Button
               onClick={handleConfirm}
-              kind={Button.kinds.PRIMARY}
-              size={Button.sizes.LARGE}
+              kind={Button.kinds?.PRIMARY}
+              size={Button.sizes?.LARGE}
               disabled={isLoading}
             >
               <StyledLabelTypography
