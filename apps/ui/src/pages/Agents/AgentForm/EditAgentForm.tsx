@@ -9,7 +9,7 @@ import {
 import { useEditAgent } from '../useEditAgent'
 
 import Button from 'share-ui/components/Button/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 import { StyledButtonWrapper } from './CreateAgentForm'
 import AgentForm from './AgentForm'
 import BackButton from 'components/BackButton'

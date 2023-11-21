@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import Button from 'share-ui/components/Button/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 import { ButtonPrimary } from './Button/Button'

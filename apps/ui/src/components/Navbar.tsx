@@ -9,7 +9,7 @@ import Menu from '@l3-lib/ui-core/dist/Menu'
 import MenuItem from '@l3-lib/ui-core/dist/MenuItem'
 import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
 import { useNavigate, useLocation } from 'react-router-dom'

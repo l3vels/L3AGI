@@ -28,7 +28,7 @@ import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
 import Button from 'share-ui/components/Button/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'

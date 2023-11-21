@@ -7,7 +7,7 @@ import {
 } from 'pages/Home/homeStyle.css'
 
 import Button from 'share-ui/components/Button/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import styled from 'styled-components'

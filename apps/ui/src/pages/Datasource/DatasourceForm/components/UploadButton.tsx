@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import File from '@l3-lib/ui-core/dist/icons/File'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 import { SUPPORTED_FILE_EXTENSIONS } from 'modals/AIChatModal/fileTypes'
 import TypographySecondary from 'components/Typography/Secondary'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { FormikProvider } from 'formik'
 import BackButton from 'components/BackButton'
 import Button from 'share-ui/components/Button/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 import { ButtonPrimary } from 'components/Button/Button'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import {

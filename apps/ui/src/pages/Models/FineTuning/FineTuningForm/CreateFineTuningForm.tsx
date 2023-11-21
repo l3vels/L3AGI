@@ -6,7 +6,7 @@ import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateFineTuning } from '../useCreateFineTuning'
 
 import Button from 'share-ui/components/Button/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {

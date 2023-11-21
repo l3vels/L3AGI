@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useRunLogsService } from 'services/run'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 import { StyledTab, StyledTabListSpan } from 'styles/tabStyles.css'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { StyledLoaderWrapper, StyledUploadDiv } from './MediasRenderer'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
@@ -35,7 +35,7 @@ const ImageRenderer = (p: any) => {
 
       {p.isLoading && p.data === item ? (
         <StyledLoaderWrapper>
-          <Loader size={Loader.sizes.XS} />
+          <Loader size={Loader.sizes?.XS} />
         </StyledLoaderWrapper>
       ) : p.value?.length > 0 ? (
         p.isThumbnail ? (
