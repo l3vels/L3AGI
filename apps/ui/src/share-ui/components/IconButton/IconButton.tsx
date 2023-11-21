@@ -1,86 +1,87 @@
-import React, { forwardRef, Fragment, useMemo, useRef } from "react";
-import cx from "classnames";
-import { noop as NOOP } from "lodash-es";
-import useMergeRefs from "../../hooks/useMergeRefs";
-import Tooltip, { TooltipProps } from "../Tooltip/Tooltip";
-import Icon from "../Icon/Icon";
-import Close from "../Icon/Icons/components/Close";
-import { getWidthHeight, Size } from "./services/IconButton-helpers";
-import { SubIcon, L3Component, L3ComponentProps } from "../../types";
-import { getTestId } from "../../tests/test-ids-utils";
-import { ComponentDefaultTestId } from "../../tests/constants";
-import Button from "../Button/Button";
-import { BUTTON_ICON_SIZE, ButtonColor, ButtonType } from "../Button/ButtonConstants";
-import styles from "./IconButton.module.scss";
+import React, { forwardRef, Fragment, useMemo, useRef } from 'react'
+import cx from 'classnames'
+import { noop as NOOP } from 'lodash-es'
+import useMergeRefs from '../../hooks/useMergeRefs'
+import Tooltip, { TooltipProps } from '../Tooltip/Tooltip'
+import Icon from '../Icon/Icon'
+import Close from '../Icon/Icons/components/Close'
+import { getWidthHeight, Size } from './services/IconButton-helpers'
+import { SubIcon, L3Component, L3ComponentProps } from '../../types'
+import { getTestId } from '../../tests/test-ids-utils'
+import { ComponentDefaultTestId } from '../../tests/constants'
+import Button from '../Button/Button'
+import { BUTTON_ICON_SIZE, ButtonColor, ButtonType } from '../Button/ButtonConstants'
+import styles from './IconButton.module.scss'
 
 export interface IconButtonProps extends L3ComponentProps {
   /**
    * id to be added to the element
    */
-  id?: string;
+  id?: string
   /**
    * callback function when clicking the icon button
    */
-  onClick?: (event: React.MouseEvent) => void;
+  onClick?: (event: React.MouseEvent) => void
   /**
    * class to be added to the button
    */
-  className?: string;
+  className?: string
   /**
    * class to be added to the button wrapper
    */
-  wrapperClassName?: string;
+  wrapperClassName?: string
   /**
    * Icon to be rendered
    */
-  icon?: SubIcon;
+  icon?: SubIcon
   /**
    * a11y property to be added, used for screen reader to know what kind of button it is
    */
-  ariaLabel?: string;
+  ariaLabel?: string
   /**
    * Size of the icon
    */
-  size?: Size;
+  size?: Size
   /**
    * Whether the tooltip should be displayed or not
    */
-  hideTooltip?: boolean;
+  hideTooltip?: boolean
   /**
    * Props for Tooltip component
    */
-  tooltipProps?: Partial<TooltipProps>;
+  tooltipProps?: Partial<TooltipProps>
   /**
    * Tooltip wraps the button icon, it will display in the tooltip, if not present the aria label will be shown
    */
-  tooltipContent?: string;
+  tooltipContent?: string
   /**
    * Kind of button - like <Button />
    */
-  kind?: ButtonType;
-  active?: boolean;
+  kind?: ButtonType
+  active?: boolean
   /** The button's color  */
-  color?: ButtonColor;
+  color?: ButtonColor
   /**
    * disabled state
    */
-  disabled?: boolean;
+  disabled?: boolean
   /**
    * if disabled - this will be shown in the tooltip
    */
-  disabledReason?: string;
-  dataTestId?: string;
+  disabledReason?: string
+  dataTestId?: string
   /** Change the focus indicator from around the button to within it */
-  insetFocus?: boolean;
-  label?: string;
-  labelInButton?: string;
-  shape?: "Square" | "Circle";
+  insetFocus?: boolean
+  label?: string
+  labelInButton?: string
+  shape?: 'Square' | 'Circle'
 }
 
 const IconButton: L3Component<IconButtonProps> & {
-  sizes?: typeof Button.sizes;
-  kinds?: typeof Button.kinds;
-  colors?: typeof Button.colors;
+  sizes?: typeof Button.sizes
+  kinds?: typeof Button.kinds
+  colors?: typeof Button.colors
+  // eslint-disable-next-line react/display-name
 } = forwardRef(
   (
     {
@@ -102,63 +103,65 @@ const IconButton: L3Component<IconButtonProps> & {
       insetFocus,
       label,
       labelInButton,
-      shape
+      shape,
     },
-    ref
+    ref,
   ) => {
-    const componentRef = useRef(null);
-    const mergedRef = useMergeRefs({ refs: [ref, componentRef] });
+    const componentRef = useRef(null)
+    const mergedRef = useMergeRefs({ refs: [ref, componentRef] })
     const overrideTooltipContent = useMemo(
       () => tooltipProps?.content || tooltipContent,
-      [tooltipProps?.content, tooltipContent]
-    );
+      [tooltipProps?.content, tooltipContent],
+    )
 
     const buttonAriaLabel = useMemo(() => {
-      if (ariaLabel) return ariaLabel;
-      if (typeof overrideTooltipContent === "string") return overrideTooltipContent;
-      return undefined;
-    }, [ariaLabel, overrideTooltipContent]);
+      if (ariaLabel) return ariaLabel
+      if (typeof overrideTooltipContent === 'string') return overrideTooltipContent
+      return undefined
+    }, [ariaLabel, overrideTooltipContent])
 
     const iconSize = useMemo(() => {
       switch (size) {
-        case Button.sizes.XXS:
-        case Button.sizes.XS:
-        case Button.sizes.SMALL:
-          return 16;
-        case Button.sizes.LARGE:
-          return BUTTON_ICON_SIZE;
+        case Button.sizes?.XXS:
+        case Button.sizes?.XS:
+        case Button.sizes?.SMALL:
+          return 16
+        case Button.sizes?.LARGE:
+          return BUTTON_ICON_SIZE
         default:
-          return 24;
+          return 24
       }
-    }, [size]);
+    }, [size])
 
     const overrideStyle = useMemo(() => {
       let style = {
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 0
-      } as React.CSSProperties;
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+      } as React.CSSProperties
 
       if (size) {
-        style = { ...style, ...getWidthHeight(size) };
+        style = { ...style, ...getWidthHeight(size) }
       }
-      return style;
-    }, [size]);
+      return style
+    }, [size])
 
     const calculatedTooltipContent = useMemo(() => {
-      if (hideTooltip) return null;
-      if (disabled && disabledReason) return disabledReason;
-      if (overrideTooltipContent) return overrideTooltipContent as never;
-      return ariaLabel;
-    }, [hideTooltip, disabled, disabledReason, overrideTooltipContent, ariaLabel]);
+      if (hideTooltip) return null
+      if (disabled && disabledReason) return disabledReason
+      if (overrideTooltipContent) return overrideTooltipContent as never
+      return ariaLabel
+    }, [hideTooltip, disabled, disabledReason, overrideTooltipContent, ariaLabel])
 
-    const IconButtonWrapper = wrapperClassName ? "div" : Fragment;
+    const IconButtonWrapper = wrapperClassName ? 'div' : Fragment
     const iconButtonWrapperProps = useMemo(() => {
-      return wrapperClassName ? { className: cx(wrapperClassName, styles.wrapper) } : {};
-    }, [wrapperClassName]);
+      return wrapperClassName ? { className: cx(wrapperClassName, styles.wrapper) } : {}
+    }, [wrapperClassName])
 
-    const shapeTypeClassName = shape === "Circle" ? styles.l3_style_circle_button : styles.l3_style_square_button;
-    const labelSizeClassName = iconSize === 16 ? styles.label_styles_small : styles.label_styles_large;
+    const shapeTypeClassName =
+      shape === 'Circle' ? styles.l3_style_circle_button : styles.l3_style_square_button
+    const labelSizeClassName =
+      iconSize === 16 ? styles.label_styles_small : styles.label_styles_large
 
     return (
       <>
@@ -192,10 +195,10 @@ const IconButton: L3Component<IconButtonProps> & {
                   ) : (
                     <Icon
                       icon={icon}
-                      iconType={Icon.type.SVG}
+                      iconType={Icon.type?.SVG}
                       iconSize={iconSize}
                       ignoreFocusStyle
-                      className="icon-button-padding"
+                      className='icon-button-padding'
                       clickable={false}
                     />
                   )}
@@ -233,11 +236,11 @@ const IconButton: L3Component<IconButtonProps> & {
                     </>
                   ) : (
                     <Icon
-                      icon={icon}
-                      iconType={Icon.type.SVG}
+                      icon={icon || null}
+                      iconType={Icon.type?.SVG}
                       iconSize={iconSize}
                       ignoreFocusStyle
-                      className="icon-button-padding"
+                      className='icon-button-padding'
                       clickable={false}
                     />
                   )}
@@ -247,16 +250,16 @@ const IconButton: L3Component<IconButtonProps> & {
           </div>
         )}
       </>
-    );
-  }
-);
+    )
+  },
+)
 
 Object.assign(IconButton, {
   sizes: Button.sizes,
   kinds: Button.kinds,
   colors: Button.colors,
-  defaultTestId: ComponentDefaultTestId.ICON_BUTTON
-});
+  defaultTestId: ComponentDefaultTestId.ICON_BUTTON,
+})
 
 IconButton.defaultProps = {
   className: undefined,
@@ -265,17 +268,17 @@ IconButton.defaultProps = {
   id: undefined,
   icon: Close,
   ariaLabel: undefined,
-  size: IconButton?.sizes.LARGE,
+  size: IconButton.sizes?.LARGE,
   hideTooltip: false,
   tooltipContent: undefined,
   tooltipProps: {} as TooltipProps,
-  kind: IconButton.kinds.PRIMARY,
+  kind: IconButton.kinds?.PRIMARY,
   disabled: false,
   disabledReason: undefined,
   color: undefined,
   dataTestId: undefined,
   insetFocus: false,
-  shape: "Circle"
-};
+  shape: 'Circle',
+}
 
-export default IconButton;
+export default IconButton

@@ -40,6 +40,7 @@
     "i18next": "^21.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "moment": "^2.29.4",
     "notistack": "^2.0.5",
     "npm": "^9.6.2",

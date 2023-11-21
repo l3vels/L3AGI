@@ -1,107 +1,107 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { CSSProperties, isValidElement, PureComponent, ReactElement } from "react";
-import classnames from "classnames";
-import { Modifier } from "react-popper";
-import { isFunction } from "lodash-es";
-import Dialog from "../Dialog/Dialog";
-import { AnimationType, BASE_SIZES_WITH_NONE, HideShowEvent, JustifyType } from "../../constants";
-import { DialogPosition } from "../../constants/positions";
-import L3ComponentProps from "../../types/L3ComponentProps";
-import { TooltipArrowPosition, TooltipSize, TooltipTheme } from "./TooltipConstants";
-import { ElementContent } from "../../types/ElementContent";
-import { MoveBy } from "../../types/MoveBy";
-import "./Tooltip.scss";
+import React, { CSSProperties, isValidElement, PureComponent, ReactElement } from 'react'
+import classnames from 'classnames'
+import { Modifier } from 'react-popper'
+import { isFunction } from 'lodash-es'
+import Dialog from '../Dialog/Dialog'
+import { AnimationType, BASE_SIZES_WITH_NONE, HideShowEvent, JustifyType } from '../../constants'
+import { DialogPosition } from '../../constants/positions'
+import L3ComponentProps from '../../types/L3ComponentProps'
+import { TooltipArrowPosition, TooltipSize, TooltipTheme } from './TooltipConstants'
+import { ElementContent } from '../../types/ElementContent'
+import { MoveBy } from '../../types/MoveBy'
+import './Tooltip.scss'
 
 // TODO TS-migration extend DialogProps, once Dialog is migrated to TS
 export interface TooltipProps extends L3ComponentProps {
-  children: ReactElement | Array<ReactElement>;
-  content: ElementContent;
-  style?: CSSProperties;
-  arrowPosition?: TooltipArrowPosition;
-  paddingSize?: keyof typeof BASE_SIZES_WITH_NONE;
+  children: ReactElement | Array<ReactElement>
+  content: ElementContent
+  style?: CSSProperties
+  arrowPosition?: TooltipArrowPosition
+  paddingSize?: keyof typeof BASE_SIZES_WITH_NONE
   /**
    * How much to move the dialog in relative to children
    * main is the axis in which the position is aligned to
    * secondary is the vertical axes to the position
    */
-  moveBy?: MoveBy;
-  theme?: TooltipTheme;
-  justify?: JustifyType;
-  getContainer?: () => HTMLElement;
+  moveBy?: MoveBy
+  theme?: TooltipTheme
+  justify?: JustifyType
+  getContainer?: () => HTMLElement
   /**
    * how much delay should the Dialog wait until it should trigger the hide in MS
    */
-  hideDelay?: number;
+  hideDelay?: number
   /**
    * how much delay should the Dialog wait until it should trigger the show in MS
    */
-  showDelay?: number;
-  disableDialogSlide?: boolean;
-  animationType?: AnimationType;
-  withoutDialog?: boolean;
+  showDelay?: number
+  disableDialogSlide?: boolean
+  animationType?: AnimationType
+  withoutDialog?: boolean
   /**
    * the container selector in which to append the dialog
    * for examples: "body" , ".my-class", "#my-id"
    */
-  containerSelector?: string;
+  containerSelector?: string
   /**
    * With which delay tooltip is going to be shown
    */
-  immediateShowDelay?: number;
+  immediateShowDelay?: number
   /**
    * when false, the arrow of the tooltip is hidden
    */
-  tip?: boolean;
+  tip?: boolean
   /**
    * Show the Dialog when the children is mounting
    */
-  shouldShowOnMount?: boolean;
-  hideWhenReferenceHidden?: boolean;
-  onTooltipHide?: () => void;
-  onTooltipShow?: () => void;
+  shouldShowOnMount?: boolean
+  hideWhenReferenceHidden?: boolean
+  onTooltipHide?: () => void
+  onTooltipShow?: () => void
   /**
    * PopperJS Modifiers type
    * https://popper.js.org/docs/v2/modifiers/
    */
-  modifiers?: Array<Modifier<any>>;
+  modifiers?: Array<Modifier<any>>
   /**
    * Where the tooltip should be in reference to the children: Top, Left, Right, Bottom ...
    */
-  position?: DialogPosition;
+  position?: DialogPosition
   /**
    * an array of hide/show trigger -
    * Dialog.hideShowTriggers
    */
-  showTrigger?: HideShowEvent | Array<HideShowEvent>;
+  showTrigger?: HideShowEvent | Array<HideShowEvent>
   /**
    * an array of hide/show trigger -
    * Dialog.hideShowTriggers
    */
-  hideTrigger?: HideShowEvent | Array<HideShowEvent>;
-  showOnDialogEnter?: boolean;
+  hideTrigger?: HideShowEvent | Array<HideShowEvent>
+  showOnDialogEnter?: boolean
   /**
    * A Classname to be added to <spam> element which wraps the children
    */
-  referenceWrapperClassName?: string;
-  tooltipSize?: TooltipSize;
+  referenceWrapperClassName?: string
+  tooltipSize?: TooltipSize
 }
 // When last tooltip was shown in the last 1.5 second - the next tooltip will be shown immediately
-const IMMEDIATE_SHOW_THRESHOLD_MS = 1500;
+const IMMEDIATE_SHOW_THRESHOLD_MS = 1500
 
 // Shared state across multiple tooltip instances (i.e last tooltip shown time)
-const globalState: { lastTooltipHideTS: number; openTooltipsCount: number } = {
+const globalState: { lastTooltipHideTS: number | null; openTooltipsCount: number } = {
   lastTooltipHideTS: null,
-  openTooltipsCount: 0
-};
+  openTooltipsCount: 0,
+}
 
 export default class Tooltip extends PureComponent<TooltipProps> {
-  wasShown: boolean;
-  static positions = DialogPosition;
-  static themes = TooltipTheme;
-  static animationTypes = AnimationType;
-  static justifyTypes = JustifyType;
-  static arrowPositions = TooltipArrowPosition;
-  static tooltipSize = TooltipSize;
+  wasShown: boolean
+  static positions = DialogPosition
+  static themes = TooltipTheme
+  static animationTypes = AnimationType
+  static justifyTypes = JustifyType
+  static arrowPositions = TooltipArrowPosition
+  static tooltipSize = TooltipSize
   static defaultProps = {
     arrowPosition: TooltipArrowPosition.CENTER,
     moveBy: { main: 4, secondary: 0 },
@@ -113,47 +113,47 @@ export default class Tooltip extends PureComponent<TooltipProps> {
     disableDialogSlide: true,
     animationType: AnimationType.EXPAND,
     withoutDialog: false,
-    containerSelector: "#tooltips-container",
+    containerSelector: '#tooltips-container',
     tip: true,
     hideWhenReferenceHidden: false,
     modifiers: new Array<Modifier<any>>(),
     showTrigger: Dialog.hideShowTriggers.MOUSE_ENTER,
     hideTrigger: Dialog.hideShowTriggers.MOUSE_LEAVE,
     showOnDialogEnter: false,
-    referenceWrapperClassName: "",
-    tooltipSize: TooltipSize.Small
-  };
+    referenceWrapperClassName: '',
+    tooltipSize: TooltipSize.Small,
+  }
   constructor(props: TooltipProps) {
-    super(props);
-    this.renderTooltipContent = this.renderTooltipContent.bind(this);
-    this.getShowDelay = this.getShowDelay.bind(this);
-    this.onTooltipShow = this.onTooltipShow.bind(this);
-    this.onTooltipHide = this.onTooltipHide.bind(this);
+    super(props)
+    this.renderTooltipContent = this.renderTooltipContent.bind(this)
+    this.getShowDelay = this.getShowDelay.bind(this)
+    this.onTooltipShow = this.onTooltipShow.bind(this)
+    this.onTooltipHide = this.onTooltipHide.bind(this)
 
-    this.wasShown = false;
+    this.wasShown = false
   }
 
   getContainer() {
-    return document.getElementById("tooltips-container") || document.querySelector("body");
+    return document.getElementById('tooltips-container') || document.querySelector('body')
   }
 
   renderTooltipContent() {
-    const { theme, content, paddingSize, className, style, tooltipSize } = this.props;
+    const { theme, content, paddingSize, className, style, tooltipSize } = this.props
     if (!content) {
       // don't render empty tooltip
-      return null;
+      return null
     }
-    let contentValue;
+    let contentValue
     if (isFunction(content)) {
-      contentValue = content();
+      contentValue = content()
     } else if (isValidElement(content)) {
-      contentValue = content;
-    } else if (typeof content === "string" && content) {
-      contentValue = content;
+      contentValue = content
+    } else if (typeof content === 'string' && content) {
+      contentValue = content
     }
 
     if (!contentValue) {
-      return null;
+      return null
     }
 
     return (
@@ -161,54 +161,57 @@ export default class Tooltip extends PureComponent<TooltipProps> {
         style={style}
         className={classnames(
           `l3-style-tooltip l3-style-tooltip-${theme} padding-size-${paddingSize} tooptip-size-${tooltipSize}`,
-          className
+          className,
         )}
       >
         {contentValue}
       </div>
-    );
+    )
   }
 
   onTooltipShow() {
     if (!this.wasShown) {
-      const { onTooltipShow } = this.props;
-      globalState.openTooltipsCount++;
-      this.wasShown = true;
-      onTooltipShow && onTooltipShow();
+      const { onTooltipShow } = this.props
+      globalState.openTooltipsCount += 1
+      this.wasShown = true
+      onTooltipShow && onTooltipShow()
     }
   }
 
   onTooltipHide() {
     if (this.wasShown) {
-      const { onTooltipHide } = this.props;
-      globalState.lastTooltipHideTS = Date.now();
-      globalState.openTooltipsCount--;
-      this.wasShown = false;
-      onTooltipHide && onTooltipHide();
+      const { onTooltipHide } = this.props
+      globalState.lastTooltipHideTS = Date.now()
+      globalState.openTooltipsCount += 1
+      this.wasShown = false
+      onTooltipHide && onTooltipHide()
     }
   }
 
   getTimeSinceLastTooltip() {
     if (globalState.openTooltipsCount > 0) {
-      return 0;
+      return 0
     }
-    return globalState.lastTooltipHideTS ? Date.now() - globalState.lastTooltipHideTS : Infinity;
+    return globalState.lastTooltipHideTS ? Date.now() - globalState.lastTooltipHideTS : Infinity
   }
 
   getShowDelay() {
-    const { showDelay, immediateShowDelay } = this.props;
-    const timeSinceLastTooltip = this.getTimeSinceLastTooltip();
-    if ((immediateShowDelay === 0 || immediateShowDelay) && timeSinceLastTooltip < IMMEDIATE_SHOW_THRESHOLD_MS) {
+    const { showDelay, immediateShowDelay } = this.props
+    const timeSinceLastTooltip = this.getTimeSinceLastTooltip()
+    if (
+      (immediateShowDelay === 0 || immediateShowDelay) &&
+      timeSinceLastTooltip < IMMEDIATE_SHOW_THRESHOLD_MS
+    ) {
       // showing the tooltip immediately (without animation)
       return {
         showDelay: immediateShowDelay,
-        preventAnimation: true
-      };
+        preventAnimation: true,
+      }
     }
     return {
       showDelay,
-      preventAnimation: false
-    };
+      preventAnimation: false,
+    }
   }
 
   render() {
@@ -223,17 +226,17 @@ export default class Tooltip extends PureComponent<TooltipProps> {
       tip,
       showTrigger,
       hideTrigger,
-      showOnDialogEnter
-    } = this.props;
+      showOnDialogEnter,
+    } = this.props
 
     if (!children) {
-      return null;
+      return null
     }
 
     if (withoutDialog) {
-      return this.renderTooltipContent();
+      return this.renderTooltipContent()
     }
-    const content = this.renderTooltipContent;
+    const content = this.renderTooltipContent
     const dialogProps = {
       ...this.props,
       startingEdge: justify,
@@ -248,8 +251,8 @@ export default class Tooltip extends PureComponent<TooltipProps> {
       getDynamicShowDelay: this.getShowDelay,
       showTrigger,
       hideTrigger,
-      showOnDialogEnter
-    };
-    return <Dialog {...dialogProps}>{children}</Dialog>;
+      showOnDialogEnter,
+    }
+    return <Dialog {...dialogProps}>{children}</Dialog>
   }
 }

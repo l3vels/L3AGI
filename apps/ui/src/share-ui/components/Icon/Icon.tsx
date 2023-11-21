@@ -22,7 +22,11 @@ export interface IconSubComponentProps {
 }
 
 function renderIcon(Icon: SubIcon, props: IconSubComponentProps) {
-  return <Icon {...props} />
+  if (typeof Icon === 'function') {
+    return <Icon {...props} />
+  } else {
+    return null
+  }
 }
 
 interface IconProps extends L3ComponentProps {
@@ -68,6 +72,7 @@ mo   * Icon aria label [aria label](https://developer.mozilla.org/en-US/docs/Web
   customColor?: string
 }
 
+// eslint-disable-next-line react/display-name
 const Icon: L3Component<IconProps, HTMLElement> & { type?: typeof IconType } = forwardRef(
   (
     {

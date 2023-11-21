@@ -177,8 +177,8 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
     shoudlCallbackOnMount: false,
     instantShowAndHide: false,
   }
-  private showTimeout: NodeJS.Timeout
-  private hideTimeout: NodeJS.Timeout
+  private showTimeout: NodeJS.Timeout | null
+  private hideTimeout: NodeJS.Timeout | null
 
   constructor(props: DialogProps) {
     super(props)
@@ -242,7 +242,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
     document.removeEventListener('keyup', this.closeDialogOnEscape)
   }
 
-  static getDerivedStateFromProps(nextProps: DialogProps, state: DialogState): DialogState {
+  static getDerivedStateFromProps(nextProps: DialogProps, state: DialogState): DialogState | null {
     if (state.shouldUseDerivedStateFromProps) {
       return { isOpen: nextProps.isOpen }
     }
@@ -283,7 +283,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
   onShowDialog() {
     if (this.isShown()) return
     const { onDialogDidShow } = this.props
-    onDialogDidShow()
+    if (onDialogDidShow) onDialogDidShow()
   }
 
   showDialogIfNeeded(options = {}) {
@@ -334,7 +334,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
     this.hideDialog(event, eventName)
   }
 
-  handleEvent(eventName: HideShowEvent, target: EventTarget, event: DialogEvent) {
+  handleEvent(eventName: HideShowEvent, target: EventTarget | null, event: DialogEvent) {
     const { showTriggerIgnoreClass, hideTriggerIgnoreClass } = this.props
     if (
       this.isShowTrigger(eventName) &&
@@ -412,7 +412,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
   onClickOutside(event: React.MouseEvent) {
     const { onClickOutside } = this.props
     this.handleEvent(HideShowEvent.CLICK_OUTSIDE, event.target, event)
-    onClickOutside(event)
+    if (onClickOutside) onClickOutside(event)
   }
 
   onDialogEnter() {
@@ -428,7 +428,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
   onContentClick(e: React.MouseEvent) {
     const { onContentClick } = this.props
     this.handleEvent(HideShowEvent.CONTENT_CLICK, e.target, e)
-    onContentClick(e)
+    if (onContentClick) onContentClick(e)
   }
 
   render() {
@@ -460,12 +460,10 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
       return children
     }
     return (
-      // @ts-ignore TS2746: This JSX tag's 'children' prop expects a single child of type 'ReactNode', but multiple children were provided.
       <Manager>
         <Reference>
           {({ ref }) => {
             return (
-              // @ts-ignore TODO convert Refable to TS
               <Refable
                 className={referenceWrapperClassName}
                 ref={ref}
@@ -489,14 +487,14 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
               {
                 name: 'offset',
                 options: {
-                  offset: [moveBy.secondary, moveBy.main],
+                  offset: [moveBy?.secondary, moveBy?.main],
                 },
               },
               {
                 name: 'zIndex',
                 enabled: true,
                 phase: 'write',
-                fn({ state }) {
+                fn({ state }: any) {
                   if (zIndex) {
                     state.styles.popper.zIndex = String(zIndex)
                   }
@@ -507,7 +505,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                 name: 'rotator',
                 enabled: true,
                 phase: 'write',
-                fn({ state }) {
+                fn({ state }: any) {
                   // eslint-disable-next-line no-param-reassign
                   if (!state.styles.arrow) {
                     return state
@@ -523,7 +521,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                   return state
                 },
               },
-              ...modifiers,
+              ...(modifiers || []),
             ]}
           >
             {({ placement, style, ref, arrowProps, isReferenceHidden }) => {
@@ -579,6 +577,5 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
 }
 
 function chainOnPropsAndInstance(name: string, instance: Dialog, props: DialogProps) {
-  // @ts-ignore
   return chainFunctions([props[name], instance[name]], true)
 }
