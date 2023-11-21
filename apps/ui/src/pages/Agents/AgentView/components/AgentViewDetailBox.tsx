@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TagsRow from './TagsRow'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Button from 'share-ui/components/Button/Button'
 
 import Download from '@l3-lib/ui-core/dist/icons/Download'
@@ -89,8 +90,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                 <IconButton
                   onClick={handleEdit}
                   icon={() => <StyledEditIcon />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Edit'
                 />
               </StyledIconButton>

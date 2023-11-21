@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components'
 
 import Button from 'share-ui/components/Button/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
@@ -238,16 +239,16 @@ const NotificationsDateGroup = ({
         {isOpen && (
           <StyledHeaderButtonWrapper>
             <ButtonPrimary
-              size={IconButton.sizes.SMALL}
+              size={IconButton.sizes?.SMALL}
               onClick={() => updateNotifications(notifications)}
               disabled={activeNotificationCount === 0 || marked}
             >
               Mark as read
             </ButtonPrimary>
             <IconButton
-              kind={IconButton.kinds.TERTIARY}
+              kind={IconButton.kinds?.TERTIARY}
               leftIcon={() => <Close />}
-              size={IconButton.sizes.XS}
+              size={IconButton.sizes?.XS}
               onClick={() => onClose()}
             />
           </StyledHeaderButtonWrapper>

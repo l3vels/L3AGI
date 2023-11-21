@@ -5,7 +5,8 @@ import { useModal } from 'hooks'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Search from '@l3-lib/ui-core/dist/Search'
 
 import Tab from '@l3-lib/ui-core/dist/Tab'
@@ -128,9 +129,9 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
 
             <StyledCloseButton>
               <IconButton
-                kind={IconButton.kinds.TERTIARY}
+                kind={IconButton.kinds?.TERTIARY}
                 icon={() => <Close />}
-                size={IconButton.sizes.MEDIUM}
+                size={IconButton.sizes?.MEDIUM}
                 onClick={() => closeModal('notifications-modal')}
               />
             </StyledCloseButton>

@@ -14,7 +14,7 @@ import {
 } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
@@ -85,8 +85,8 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                 <IconButton
                   onClick={handleEdit}
                   icon={() => <StyledEditIcon />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Edit'
                 />
               </StyledIconButton>

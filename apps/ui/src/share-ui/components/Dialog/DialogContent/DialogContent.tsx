@@ -1,38 +1,38 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { cloneElement, CSSProperties, ReactElement, useCallback, useRef } from "react";
-import classNames from "classnames";
-import { CSSTransition } from "react-transition-group";
-import useOnClickOutside from "../../../hooks/useClickOutside";
-import { chainFunctions, NOOP } from "../../../utils/function-utils";
-import useKeyEvent from "../../../hooks/useKeyEvent";
-import { HideShowEvent } from "../consts/dialog-show-hide-event";
-import { L3Component, L3ComponentProps } from "../../../types";
-import { ESCAPE_KEYS } from "../../../constants";
-import * as PopperJS from "@popperjs/core";
-import "./DialogContent.scss";
+import React, { cloneElement, CSSProperties, ReactElement, useCallback, useRef } from 'react'
+import classNames from 'classnames'
+import { CSSTransition } from 'react-transition-group'
+import useOnClickOutside from '../../../hooks/useClickOutside'
+import { chainFunctions, NOOP } from '../../../utils/function-utils'
+import useKeyEvent from '../../../hooks/useKeyEvent'
+import { HideShowEvent } from '../consts/dialog-show-hide-event'
+import { L3Component, L3ComponentProps } from '../../../types'
+import { ESCAPE_KEYS } from '../../../constants'
+import * as PopperJS from '@popperjs/core'
 
-const transitionOptions: { classNames?: string } = {};
-const EMPTY_OBJECT = {};
+const transitionOptions: { classNames?: string } = {}
+const EMPTY_OBJECT = {}
 
 export interface DialogContentProps extends L3ComponentProps {
-  children?: ReactElement | ReactElement[];
-  position?: PopperJS.Placement;
-  wrapperClassName?: string;
-  isOpen?: boolean;
-  startingEdge?: any;
-  animationType?: string;
-  onEsc?: (event: React.KeyboardEvent) => void;
-  onMouseEnter?: (event: React.MouseEvent) => void;
-  onMouseLeave?: (event: React.MouseEvent) => void;
-  onClickOutside?: (event: React.MouseEvent, hideShowEvent: HideShowEvent) => void;
-  onClick?: (event: React.MouseEvent) => void;
-  showDelay?: number;
-  styleObject?: CSSProperties;
-  isReferenceHidden?: boolean;
-  hasTooltip?: boolean;
-  disableOnClickOutside?: boolean; // TODO prop is passsed, but not used. How it should behave?
+  children?: ReactElement | ReactElement[]
+  position?: PopperJS.Placement
+  wrapperClassName?: string
+  isOpen?: boolean
+  startingEdge?: any
+  animationType?: string
+  onEsc?: (event: React.KeyboardEvent) => void
+  onMouseEnter?: (event: React.MouseEvent) => void
+  onMouseLeave?: (event: React.MouseEvent) => void
+  onClickOutside?: (event: React.MouseEvent, hideShowEvent: HideShowEvent) => void
+  onClick?: (event: React.MouseEvent) => void
+  showDelay?: number
+  styleObject?: CSSProperties
+  isReferenceHidden?: boolean
+  hasTooltip?: boolean
+  disableOnClickOutside?: boolean // TODO prop is passsed, but not used. How it should behave?
 }
 
+// eslint-disable-next-line react/display-name
 export const DialogContent: L3Component<DialogContentProps> = React.forwardRef(
   (
     {
@@ -42,7 +42,7 @@ export const DialogContent: L3Component<DialogContentProps> = React.forwardRef(
       wrapperClassName,
       isOpen = false,
       startingEdge,
-      animationType = "expand",
+      animationType = 'expand',
       onMouseEnter = NOOP,
       onMouseLeave = NOOP,
       onClickOutside = NOOP,
@@ -50,50 +50,55 @@ export const DialogContent: L3Component<DialogContentProps> = React.forwardRef(
       showDelay,
       styleObject = EMPTY_OBJECT,
       isReferenceHidden,
-      hasTooltip = false
+      hasTooltip = false,
     },
-    forwardRef
+    forwardRef,
   ) => {
-    const ref = useRef(null);
+    const ref = useRef(null)
     const onOutSideClick = useCallback(
       (event: React.MouseEvent) => {
         if (isOpen) {
-          return onClickOutside(event, HideShowEvent.CLICK_OUTSIDE);
+          return onClickOutside(event, HideShowEvent.CLICK_OUTSIDE)
         }
       },
-      [isOpen, onClickOutside]
-    );
-    useKeyEvent({ keys: ESCAPE_KEYS, callback: onEsc });
-    useOnClickOutside({ callback: onOutSideClick, ref });
+      [isOpen, onClickOutside],
+    )
+    useKeyEvent({ keys: ESCAPE_KEYS, callback: onEsc })
+    useOnClickOutside({ callback: onOutSideClick, ref })
 
     if (animationType) {
-      transitionOptions.classNames = `l3-style-animation-${animationType}`;
+      transitionOptions.classNames = `l3-style-animation-${animationType}`
     }
     return (
       <span
-        className={classNames("l3-style-dialog-content-wrapper", wrapperClassName)}
+        className={classNames('l3-style-dialog-content-wrapper', wrapperClassName)}
         ref={forwardRef}
         style={styleObject}
         onClickCapture={onClick}
         data-popper-reference-hidden={isReferenceHidden}
       >
-        <CSSTransition {...transitionOptions} in={isOpen} appear={!!animationType} timeout={showDelay}>
+        <CSSTransition
+          {...transitionOptions}
+          in={isOpen}
+          appear={!!animationType}
+          timeout={showDelay}
+        >
           <div
-            className={classNames("l3-style-dialog-content-component", position, {
+            className={classNames('l3-style-dialog-content-component', position, {
               [`edge-${startingEdge}`]: startingEdge,
-              "has-tooltip": hasTooltip
+              'has-tooltip': hasTooltip,
             })}
             ref={ref}
           >
             {React.Children.toArray(children).map((child: ReactElement) => {
               return cloneElement(child, {
                 onMouseEnter: chainFunctions([child.props.onMouseEnter, onMouseEnter]),
-                onMouseLeave: chainFunctions([child.props.onMouseLeave, onMouseLeave])
-              });
+                onMouseLeave: chainFunctions([child.props.onMouseLeave, onMouseLeave]),
+              })
             })}
           </div>
         </CSSTransition>
       </span>
-    );
-  }
-);
+    )
+  },
+)

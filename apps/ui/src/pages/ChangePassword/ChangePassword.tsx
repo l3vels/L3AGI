@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
 import Button from 'share-ui/components/Button/Button'
 // import Button from 'oldComponents/atoms/Button'
@@ -34,8 +35,8 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
           <IconButton
             onClick={closeModal}
             icon={Close}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
           />
         </StyledCloseButton>
       </StyledHeaderGroup>

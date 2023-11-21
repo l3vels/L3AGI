@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import Button from 'share-ui/components/Button/Button'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
@@ -115,15 +116,15 @@ const AgentCard = ({
               onClick={onDeleteClick}
               icon={() => <StyledDeleteIcon />}
               size={Button.sizes?.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              kind={IconButton.kinds?.TERTIARY}
             />
           )}
           {onEditClick && (
             <IconButton
               onClick={onEditClick}
               icon={() => <StyledEditIcon />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
             />
           )}
           {onViewClick && (
@@ -135,7 +136,7 @@ const AgentCard = ({
                 </StyledIconWrapper>
               )}
               size={Button.sizes?.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              kind={IconButton.kinds?.TERTIARY}
             />
           )}
           {onCreateClick && (

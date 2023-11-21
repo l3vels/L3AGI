@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Doc from '@l3-lib/ui-core/dist/icons/Doc'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 
 type UploadedFileProps = {
@@ -28,9 +29,9 @@ const UploadedFile = ({ id, name, onClick, hasDeleteIcon = false }: UploadedFile
       </StyledTextWrapper>
       {hasDeleteIcon && (
         <IconButton
-          size={IconButton.sizes.XS}
+          size={IconButton.sizes?.XS}
           icon={() => <StyledCloseIcon size='22' />}
-          kind={IconButton.kinds.TERTIARY}
+          kind={IconButton.kinds?.TERTIARY}
           ariaLabel='Delete'
         />
       )}

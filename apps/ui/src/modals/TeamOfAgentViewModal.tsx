@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import TeamOfAgentView from 'pages/TeamOfAgents/TeamOfAgentView'
 import { StyledButtonWrapper } from './AgentViewModal'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 
@@ -35,9 +35,9 @@ const TeamOfAgentViewModal = ({ data }: TeamOfAgentsViewModalProps) => {
 
       <StyledButtonWrapper>
         <IconButton
-          size={IconButton.sizes.XS}
+          size={IconButton.sizes?.XS}
           icon={() => <Close />}
-          kind={IconButton.kinds.TERTIARY}
+          kind={IconButton.kinds?.TERTIARY}
           onClick={() => closeModal('team-of-agent-view-modal')}
         />
       </StyledButtonWrapper>

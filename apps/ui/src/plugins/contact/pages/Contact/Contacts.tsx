@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
@@ -115,8 +115,8 @@ const Contacts = () => {
                 <IconButton
                   onClick={handleEndCall}
                   icon={() => <StyledCloseIcon size={25} />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Hung up'
                 />
               </StyledTableButtons>
@@ -158,16 +158,16 @@ const Contacts = () => {
               <IconButton
                 onClick={() => deleteContactHandler(cell.value)}
                 icon={() => <StyledDeleteIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Delete'
               />
 
               <IconButton
                 onClick={() => navigate(`/contacts/${cell.value}/edit-contact`)}
                 icon={() => <StyledEditIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Edit'
               />
             </StyledTableButtons>

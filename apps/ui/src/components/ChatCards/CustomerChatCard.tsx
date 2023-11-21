@@ -1,7 +1,8 @@
 import MemberText from 'modals/AIChatModal/components/ChatMembers/components/MemberText'
 import { StyledAgentWrapper, StyledIconButtonWrapper } from './TeamChatCard'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import { StyledDeleteIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
@@ -37,8 +38,8 @@ const CustomerChatCard = ({
           <IconButton
             onClick={handleDelete}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             // ariaLabel='Delete'
           />
         )}

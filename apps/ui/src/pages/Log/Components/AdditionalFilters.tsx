@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
@@ -15,9 +16,9 @@ const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
       <StyledHeaderContainer>
         <StyledCloseButtonContainer>
           <IconButton
-            size={IconButton.sizes.SMALL}
+            size={IconButton.sizes?.SMALL}
             icon={Close}
-            kind={IconButton.kinds.PRIMARY}
+            kind={IconButton.kinds?.PRIMARY}
             active
             onClick={onClose}
           />

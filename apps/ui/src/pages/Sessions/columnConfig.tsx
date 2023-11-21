@@ -7,7 +7,8 @@ import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 
 import { useNavigate } from 'react-router-dom'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import {
   StyledDeleteIcon,
   StyledEyeOpenIcon,
@@ -135,16 +136,16 @@ const columns = [
           <IconButton
             onClick={() => deleteChatHandler(data.id)}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Delete'
           />
 
           <IconButton
             onClick={() => handleViewClick(data.id)}
             icon={() => <StyledEyeOpenIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='View'
           />
         </StyledActionWrapper>

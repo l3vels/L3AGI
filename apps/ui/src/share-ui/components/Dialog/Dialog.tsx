@@ -12,7 +12,7 @@ import { Refable } from '../Refable/Refable'
 import { AnimationType, HideShowEvent } from '../../constants/dialog'
 import { L3ComponentProps } from '../../types'
 import * as PopperJS from '@popperjs/core'
-// import "./Dialog.scss";
+
 import TooltipArrow from './arrow-svg'
 
 export interface DialogProps extends L3ComponentProps {

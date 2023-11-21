@@ -10,7 +10,6 @@ import L3ComponentProps from '../../types/L3ComponentProps'
 import { TooltipArrowPosition, TooltipSize, TooltipTheme } from './TooltipConstants'
 import { ElementContent } from '../../types/ElementContent'
 import { MoveBy } from '../../types/MoveBy'
-import './Tooltip.scss'
 
 // TODO TS-migration extend DialogProps, once Dialog is migrated to TS
 export interface TooltipProps extends L3ComponentProps {

@@ -11,7 +11,6 @@ import { getTestId } from '../../tests/test-ids-utils'
 import { ComponentDefaultTestId } from '../../tests/constants'
 import Button from '../Button/Button'
 import { BUTTON_ICON_SIZE, ButtonColor, ButtonType } from '../Button/ButtonConstants'
-import styles from './IconButton.module.scss'
 
 export interface IconButtonProps extends L3ComponentProps {
   /**
@@ -155,24 +154,15 @@ const IconButton: L3Component<IconButtonProps> & {
 
     const IconButtonWrapper = wrapperClassName ? 'div' : Fragment
     const iconButtonWrapperProps = useMemo(() => {
-      return wrapperClassName ? { className: cx(wrapperClassName, styles.wrapper) } : {}
+      return wrapperClassName ? { className: cx(wrapperClassName) } : {}
     }, [wrapperClassName])
-
-    const shapeTypeClassName =
-      shape === 'Circle' ? styles.l3_style_circle_button : styles.l3_style_square_button
-    const labelSizeClassName =
-      iconSize === 16 ? styles.label_styles_small : styles.label_styles_large
 
     return (
       <>
         {label ? (
-          <div className={styles.iconButtonContainer}>
+          <div>
             <IconButtonWrapper {...iconButtonWrapperProps}>
-              <Tooltip
-                {...tooltipProps}
-                content={calculatedTooltipContent}
-                referenceWrapperClassName={styles.referenceWrapper}
-              >
+              <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
                 <Button
                   onClick={onClick}
                   disabled={disabled}
@@ -184,13 +174,12 @@ const IconButton: L3Component<IconButtonProps> & {
                   dataTestId={dataTestId || getTestId(ComponentDefaultTestId.ICON_BUTTON, id)}
                   noSidePadding
                   active={active}
-                  className={shapeTypeClassName}
                   style={overrideStyle}
                   insetFocus={insetFocus}
                 >
                   {labelInButton ? (
                     <>
-                      <span className={labelSizeClassName}>{labelInButton}</span>
+                      <span>{labelInButton}</span>
                     </>
                   ) : (
                     <Icon
@@ -205,16 +194,12 @@ const IconButton: L3Component<IconButtonProps> & {
                 </Button>
               </Tooltip>
             </IconButtonWrapper>
-            <span className={labelSizeClassName}>{label}</span>
+            <span>{label}</span>
           </div>
         ) : (
-          <div className={styles.iconButtonContainer}>
+          <div>
             <IconButtonWrapper {...iconButtonWrapperProps}>
-              <Tooltip
-                {...tooltipProps}
-                content={calculatedTooltipContent}
-                referenceWrapperClassName={styles.referenceWrapper}
-              >
+              <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
                 <Button
                   onClick={onClick}
                   disabled={disabled}
@@ -226,13 +211,12 @@ const IconButton: L3Component<IconButtonProps> & {
                   dataTestId={dataTestId || getTestId(ComponentDefaultTestId.ICON_BUTTON, id)}
                   noSidePadding
                   active={active}
-                  className={shapeTypeClassName}
                   style={overrideStyle}
                   insetFocus={insetFocus}
                 >
                   {labelInButton ? (
                     <>
-                      <span className={labelSizeClassName}>{labelInButton}</span>
+                      <span>{labelInButton}</span>
                     </>
                   ) : (
                     <Icon

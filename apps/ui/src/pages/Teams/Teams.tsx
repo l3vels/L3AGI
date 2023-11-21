@@ -7,7 +7,8 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import Button from 'share-ui/components/Button/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
@@ -91,15 +92,15 @@ const Teams = () => {
           <StyledIconButtonWrapper>
             {/* <IconButton
             icon={SearchIcon}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
             // shape='Square'
           />
 
           <IconButton
             icon={Description}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
             // shape='Square'
           /> */}
 

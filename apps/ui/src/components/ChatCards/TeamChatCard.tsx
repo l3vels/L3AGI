@@ -1,7 +1,8 @@
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import MemberText from 'modals/AIChatModal/components/ChatMembers/components/MemberText'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Edit from '@l3-lib/ui-core/dist/icons/Edit'
 import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import styled, { css } from 'styled-components'
@@ -69,8 +70,8 @@ const TeamChatCard = ({
           <IconButton
             onClick={handleDelete}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             // ariaLabel='Delete'
           />
         )}
@@ -82,8 +83,8 @@ const TeamChatCard = ({
               <StyledEyeOpenIcon size={50} />
             </StyledIconWrapper>
           )}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
           // ariaLabel='View'
         />
 
@@ -91,8 +92,8 @@ const TeamChatCard = ({
           <IconButton
             onClick={handleEdit}
             icon={() => <StyledEditIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             // ariaLabel='Edit'
           />
         )}

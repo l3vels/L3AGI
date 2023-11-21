@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -17,8 +18,8 @@ const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsPr
         <IconButton
           onClick={onDeleteClick}
           icon={() => <StyledDeleteIcon />}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
           // ariaLabel='Delete'
         />
       )}
@@ -27,8 +28,8 @@ const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsPr
         <IconButton
           onClick={onEditClick}
           icon={() => <StyledEditIcon />}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
           // ariaLabel='Edit'
         />
       )}

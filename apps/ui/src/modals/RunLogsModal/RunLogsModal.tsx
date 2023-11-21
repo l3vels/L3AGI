@@ -1,7 +1,8 @@
 import withRenderModal from 'hocs/withRenderModal'
 import styled from 'styled-components'
 import Modal from '@l3-lib/ui-core/dist/Modal'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import { useModal } from 'hooks'
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import RunLogs from './RunLogs'
@@ -30,9 +31,9 @@ const RunLogsModal = ({ data }: RunLogsModalProps) => {
 
       <StyledButtonWrapper>
         <IconButton
-          size={IconButton.sizes.XS}
+          size={IconButton.sizes?.XS}
           icon={() => <Close />}
-          kind={IconButton.kinds.TERTIARY}
+          kind={IconButton.kinds?.TERTIARY}
           onClick={() => closeModal(RUN_LOGS_MODAL_NAME)}
         />
       </StyledButtonWrapper>

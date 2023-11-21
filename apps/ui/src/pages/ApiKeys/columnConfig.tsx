@@ -11,7 +11,8 @@ import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 import { ButtonTertiary } from 'components/Button/Button'
 import { useNavigate } from 'react-router-dom'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -86,16 +87,16 @@ const columns = [
           <IconButton
             onClick={() => handleDeleteApiKey(data.id)}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Delete'
           />
 
           <IconButton
             onClick={() => handleEditClick(data.id)}
             icon={() => <StyledEditIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Edit'
           />
         </StyledActionWrapper>

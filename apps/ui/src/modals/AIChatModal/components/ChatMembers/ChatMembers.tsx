@@ -7,7 +7,7 @@ import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
@@ -101,8 +101,8 @@ const ChatMembers = ({
                             <StyledEyeOpenIcon size={50} />
                           </StyledIconWrapper>
                         )}
-                        size={IconButton.sizes.SMALL}
-                        kind={IconButton.kinds.TERTIARY}
+                        size={IconButton.sizes?.SMALL}
+                        kind={IconButton.kinds?.TERTIARY}
                         // ariaLabel='View'
                       />
 
@@ -110,8 +110,8 @@ const ChatMembers = ({
                         <IconButton
                           onClick={handleEdit}
                           icon={() => <StyledEditIcon />}
-                          size={IconButton.sizes.SMALL}
-                          kind={IconButton.kinds.TERTIARY}
+                          size={IconButton.sizes?.SMALL}
+                          kind={IconButton.kinds?.TERTIARY}
                           // ariaLabel='Edit'
                         />
                       )}
@@ -188,8 +188,8 @@ const ChatMembers = ({
                                 <StyledEyeOpenIcon size={50} />
                               </StyledIconWrapper>
                             )}
-                            size={IconButton.sizes.SMALL}
-                            kind={IconButton.kinds.TERTIARY}
+                            size={IconButton.sizes?.SMALL}
+                            kind={IconButton.kinds?.TERTIARY}
                             // ariaLabel='View'
                           />
 
@@ -197,8 +197,8 @@ const ChatMembers = ({
                             <IconButton
                               onClick={handleEdit}
                               icon={() => <StyledEditIcon />}
-                              size={IconButton.sizes.SMALL}
-                              kind={IconButton.kinds.TERTIARY}
+                              size={IconButton.sizes?.SMALL}
+                              kind={IconButton.kinds?.TERTIARY}
                               // ariaLabel='Edit'
                             />
                           )}

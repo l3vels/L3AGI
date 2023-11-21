@@ -1,8 +1,8 @@
-import IconButton from "../IconButton";
-import Flex from "../../Flex/Flex";
-import Button from "../../Button/Button";
-import DialogContentContainer from "../../DialogContentContainer/DialogContentContainer";
-import person1 from "./assets/person1.png";
+import IconButton from '../IconButton'
+import Flex from '../../Flex/Flex'
+import Button from '../../Button/Button'
+import DialogContentContainer from '../../DialogContentContainer/DialogContentContainer'
+import person1 from './assets/person1.png'
 import {
   Bolt,
   Robot,
@@ -17,30 +17,30 @@ import {
   CloseSmall,
   Drag,
   Filter,
-  Close
-} from "../../Icon/Icons";
-import { ArgsTable, Story, Canvas, Meta } from "@storybook/addon-docs";
+  Close,
+} from '../../Icon/Icons'
+import { ArgsTable, Story, Canvas, Meta } from '@storybook/addon-docs'
 import {
   BUTTON_GROUP,
   MENU_BUTTON,
-  BUTTON
-} from "../../../storybook/components/related-components/component-description-map";
-import { Link, createComponentTemplate, createStoryMetaSettings } from "../../../storybook";
-import LinkComponent from "../../Link/Link";
-import Icon from "../../Icon/Icon";
-import Heading from "../../Heading/Heading";
-import classes from "./iconButton.stories.module.scss";
-import Avatar from "../../Avatar/Avatar";
+  BUTTON,
+} from '../../../storybook/components/related-components/component-description-map'
+import { Link, createComponentTemplate, createStoryMetaSettings } from '../../../storybook'
+import LinkComponent from '../../Link/Link'
+import Icon from '../../Icon/Icon'
+import Heading from '../../Heading/Heading'
+import classes from './iconButton.stories.module.scss'
+import Avatar from '../../Avatar/Avatar'
 
 export const metaSettings = createStoryMetaSettings({
   component: IconButton,
-  enumPropNamesArray: ["kind", "size", "color"],
-  iconPropNamesArray: ["icon"],
-  actionPropsArray: ["onClick"]
-});
+  enumPropNamesArray: ['kind', 'size', 'color'],
+  iconPropNamesArray: ['icon'],
+  actionPropsArray: ['onClick'],
+})
 
 <Meta
-  title="Buttons/Icon Button"
+  title='Buttons/Icon Button'
   component={IconButton}
   argTypes={metaSettings.argTypes}
   decorators={metaSettings.decorators}
@@ -48,7 +48,7 @@ export const metaSettings = createStoryMetaSettings({
 
 <!--- Component template -->
 
-export const iconButtonTemplate = createComponentTemplate(IconButton);
+export const iconButtonTemplate = createComponentTemplate(IconButton)
 
 <!--- Component documentation -->
 
@@ -68,34 +68,35 @@ export const iconButtonTemplate = createComponentTemplate(IconButton);
 Icon button is a square button contains only icon with no visible text labels used mostly in control bars.
 
 <Canvas>
-  <Story name="Overview" args={{ ariaLabel: "Close" }}>
+  <Story name='Overview' args={{ ariaLabel: 'Close' }}>
     {iconButtonTemplate.bind()}
   </Story>
 </Canvas>
 
 ## Props
 
-<ArgsTable story={"Overview"} />
+<ArgsTable story={'Overview'} />
 
 ## Usage
 
 <UsageGuidelines
   guidelines={[
     <>
-      Icon button will always appear with a <Link href="/?path=/docs/popover-tooltip--overview">tooltip</Link> while
-      hovering, defining the icon’s meaning.
+      Icon button will always appear with a{' '}
+      <Link href='/?path=/docs/popover-tooltip--overview'>tooltip</Link> while hovering, defining
+      the icon’s meaning.
     </>,
     "Use an icon button when a user can perform an inline action on this page and there's no room for a default button.",
-    "Use icon button when you want to display an active state of a button.",
+    'Use icon button when you want to display an active state of a button.',
     "Use a Primary icon button when it's the most important action to take.",
-    "Use icon button only when the icons is clear and understandable.",
-    "Icon buttons are often used when there are 2 or 3 adjacent icons buttons that perform actions on a single item presented in a row."
+    'Use icon button only when the icons is clear and understandable.',
+    'Icon buttons are often used when there are 2 or 3 adjacent icons buttons that perform actions on a single item presented in a row.',
   ]}
 />
 
-<Tip title="Check yourself">
-  To display icons that do not have actions associated with them, use the{" "}
-  <Link href="/?path=/docs/components-icon--overview" size={Link.sizes.SMALL} withoutSpacing>
+<Tip title='Check yourself'>
+  To display icons that do not have actions associated with them, use the{' '}
+  <Link href='/?path=/docs/components-icon--overview' size={Link.sizes.SMALL} withoutSpacing>
     Icon component
   </Link>
   .
@@ -108,58 +109,86 @@ Icon button is a square button contains only icon with no visible text labels us
 There can be more than one button in a screen, but to create the hierarchy of actions we need to use button kinds.
 
 <Canvas>
-  <Story name="Kinds">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
-      <IconButton icon={Close} kind={IconButton.kinds.PRIMARY} ariaLabel="My primary IconButton" />
-      <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" />
-      <IconButton icon={Close} kind={IconButton.kinds.PRIMARY} ariaLabel="My primary IconButton" shape="Square" />
-      <IconButton icon={Close} kind={IconButton.kinds.TERTIARY} ariaLabel="My tertiary IconButton" shape="Square" />
+  <Story name='Kinds'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
+      <IconButton icon={Close} kind={IconButton.kinds?.PRIMARY} ariaLabel='My primary IconButton' />
+      <IconButton
+        icon={Close}
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary IconButton'
+      />
+      <IconButton
+        icon={Close}
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My primary IconButton'
+        shape='Square'
+      />
+      <IconButton
+        icon={Close}
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary IconButton'
+        shape='Square'
+      />
     </div>
   </Story>
 </Canvas>
 
 <Tip>
-  If you need to use an icon as a button that opens dialog or menu next to it, check out{" "}
-  <Link href="/?path=/docs/buttons-menubutton--overview" size={Link.sizes.SMALL} withoutSpacing>
+  If you need to use an icon as a button that opens dialog or menu next to it, check out{' '}
+  <Link href='/?path=/docs/buttons-menubutton--overview' size={Link.sizes.SMALL} withoutSpacing>
     Menu button
-  </Link>{" "}
+  </Link>{' '}
   component.
 </Tip>
 
 ### Sizes
 
 <Canvas>
-  <Story name="Sizes">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Sizes'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My small IconButton"
-        key="small"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My small IconButton'
+        key='small'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My small IconButton"
-        key="small"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My small IconButton'
+        key='small'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My large IconButton"
-        key="large"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My large IconButton'
+        key='large'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My large IconButton"
-        key="large"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My large IconButton'
+        key='large'
+        shape='Square'
       />
     </div>
   </Story>
@@ -168,33 +197,40 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Icon
 
 <Canvas>
-  <Story name="Icon">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Icon'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Small Icon Button"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Small Icon Button'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Large Icon Button"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Large Icon Button'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Small Icon Button"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Small Icon Button'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Large Icon Button"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Large Icon Button'
+        shape='Square'
       />
     </div>
   </Story>
@@ -203,37 +239,44 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Icon + Label
 
 <Canvas>
-  <Story name="Icon + Label">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Icon + Label'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My IconLabel Button"
-        label="label"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My IconLabel Button'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My IconLabel Button"
-        label="label"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My IconLabel Button'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My IconLabel Button"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My IconLabel Button'
+        label='label'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My IconLabel Button"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My IconLabel Button'
+        label='label'
+        shape='Square'
       />
     </div>
   </Story>
@@ -242,33 +285,40 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Icon tertiary
 
 <Canvas>
-  <Story name="Icon tertiary">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Icon tertiary'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Small Icon Button"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Small Icon Button'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Large Icon Button"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Large Icon Button'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Small Icon Button"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Small Icon Button'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Large Icon Button"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Large Icon Button'
+        shape='Square'
       />
     </div>
   </Story>
@@ -277,37 +327,44 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Icon + Label tertiary
 
 <Canvas>
-  <Story name="Icon + Label tertiary">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Icon + Label tertiary'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Small Icon Button With Label"
-        label="label"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Small Icon Button With Label'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Large Icon Button With Label"
-        label="label"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Large Icon Button With Label'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Small Icon Button With Label"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Small Icon Button With Label'
+        label='label'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My Tertiary Large Icon Button With Label"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My Tertiary Large Icon Button With Label'
+        label='label'
+        shape='Square'
       />
     </div>
   </Story>
@@ -316,37 +373,44 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Label
 
 <Canvas>
-  <Story name="Label">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Label'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Small Label Button"
-        labelInButton="01"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Small Label Button'
+        labelInButton='01'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Large Label Button"
-        labelInButton="01"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Large Label Button'
+        labelInButton='01'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Small Label Button"
-        labelInButton="01"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Small Label Button'
+        labelInButton='01'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My Primary Large Label Button"
-        labelInButton="01"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My Primary Large Label Button'
+        labelInButton='01'
+        shape='Square'
       />
     </div>
   </Story>
@@ -355,41 +419,48 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Label + Label
 
 <Canvas>
-  <Story name="Label + Label">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Label + Label'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My primary small Label Button"
-        labelInButton="01"
-        label="label"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My primary small Label Button'
+        labelInButton='01'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My primary large Label Button"
-        labelInButton="01"
-        label="label"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My primary large Label Button'
+        labelInButton='01'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My primary small Label Button"
-        labelInButton="01"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My primary small Label Button'
+        labelInButton='01'
+        label='label'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My primary large Label Button"
-        labelInButton="01"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My primary large Label Button'
+        labelInButton='01'
+        label='label'
+        shape='Square'
       />
     </div>
   </Story>
@@ -398,37 +469,44 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Label tertiary
 
 <Canvas>
-  <Story name="Label tertiary">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Label tertiary'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary small Label Button"
-        labelInButton="01"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary small Label Button'
+        labelInButton='01'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary large Label Button"
-        labelInButton="01"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary large Label Button'
+        labelInButton='01'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary small Label Button"
-        labelInButton="01"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary small Label Button'
+        labelInButton='01'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary large Label Button"
-        labelInButton="01"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary large Label Button'
+        labelInButton='01'
+        shape='Square'
       />
     </div>
   </Story>
@@ -437,41 +515,48 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Label + Label tertiary
 
 <Canvas>
-  <Story name="Label + Label tertiary">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Label + Label tertiary'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary small Label Button"
-        labelInButton="01"
-        label="label"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary small Label Button'
+        labelInButton='01'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary large Label Button"
-        labelInButton="01"
-        label="label"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary large Label Button'
+        labelInButton='01'
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary small Label Button"
-        labelInButton="01"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary small Label Button'
+        labelInButton='01'
+        label='label'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My tertiary large Label Button"
-        labelInButton="01"
-        label="label"
-        shape="Square"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My tertiary large Label Button'
+        labelInButton='01'
+        label='label'
+        shape='Square'
       />
     </div>
   </Story>
@@ -480,73 +565,80 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 ### Active
 
 <Canvas>
-  <Story name="Active">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Active'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My active large IconButton"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My active large IconButton'
         active
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My active large IconButton"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My active large IconButton'
         active
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My active large IconButton"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My active large IconButton'
         active
-        shape="Square"
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My active large IconButton"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My active large IconButton'
         active
-        shape="Square"
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My active medium IconButton"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My active medium IconButton'
         active
-        label="label"
+        label='label'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My active medium IconButton"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My active medium IconButton'
         active
-        label="label"
-        labelInButton="01"
+        label='label'
+        labelInButton='01'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My active medium IconButton"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My active medium IconButton'
         active
-        label="label"
-        shape="Square"
+        label='label'
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My active medium IconButton"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My active medium IconButton'
         active
-        label="label"
-        labelInButton="01"
-        shape="Square"
+        label='label'
+        labelInButton='01'
+        shape='Square'
       />
     </div>
   </Story>
@@ -557,98 +649,112 @@ There can be more than one button in a screen, but to create the hierarchy of ac
 Set disable button for something that isn’t usable. Use a tooltip on hover in order to indicate the reason of the disabled action.
 
 <Canvas>
-  <Story name="Disabled">
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+  <Story name='Disabled'>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My small disabled IconButton"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My small disabled IconButton'
+        disabledReason='This function is not available'
         disabled
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My large disabled IconButton"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My large disabled IconButton'
+        disabledReason='This function is not available'
         disabled
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My disabled large IconButton"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My disabled large IconButton'
+        disabledReason='This function is not available'
         disabled
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My disabled large IconButton"
-        label="label"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My disabled large IconButton'
+        label='label'
+        disabledReason='This function is not available'
         disabled
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My disabled large IconButton"
-        label="label"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My disabled large IconButton'
+        label='label'
+        disabledReason='This function is not available'
         disabled
       />
     </div>
-    <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", width: "100%" }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My small disabled IconButton"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My small disabled IconButton'
+        disabledReason='This function is not available'
         disabled
-        shape="Square"
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My large disabled IconButton"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My large disabled IconButton'
+        disabledReason='This function is not available'
         disabled
-        shape="Square"
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My disabled large IconButton"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My disabled large IconButton'
+        disabledReason='This function is not available'
         disabled
-        shape="Square"
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.PRIMARY}
-        ariaLabel="My disabled large IconButton"
-        label="label"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.PRIMARY}
+        ariaLabel='My disabled large IconButton'
+        label='label'
+        disabledReason='This function is not available'
         disabled
-        shape="Square"
+        shape='Square'
       />
       <IconButton
-        size={IconButton.sizes.LARGE}
+        size={IconButton.sizes?.LARGE}
         icon={Close}
-        kind={IconButton.kinds.TERTIARY}
-        ariaLabel="My disabled large IconButton"
-        label="label"
-        disabledReason="This function is not available"
+        kind={IconButton.kinds?.TERTIARY}
+        ariaLabel='My disabled large IconButton'
+        label='label'
+        disabledReason='This function is not available'
         disabled
-        shape="Square"
+        shape='Square'
       />
     </div>
   </Story>
@@ -662,37 +768,37 @@ Set disable button for something that isn’t usable. Use a tooltip on hover in 
       positive: {
         component: (
           <DialogContentContainer>
-            <IconButton icon={Pin} ariaLabel="Pin to top" />
-            <IconButton icon={Show} ariaLabel="Show all" />
-            <IconButton icon={Broom} ariaLabel="Clear style" />
+            <IconButton icon={Pin} ariaLabel='Pin to top' />
+            <IconButton icon={Show} ariaLabel='Show all' />
+            <IconButton icon={Broom} ariaLabel='Clear style' />
           </DialogContentContainer>
         ),
         description:
-          "Use Icon button when action is lower priority than a regular action or there’s no space available to place a button."
+          'Use Icon button when action is lower priority than a regular action or there’s no space available to place a button.',
       },
       negative: {
-        component: <IconButton icon={Add} kind={IconButton.kinds.PRIMARY} ariaLabel="Add item" />,
+        component: <IconButton icon={Add} kind={IconButton.kinds?.PRIMARY} ariaLabel='Add item' />,
         description: (
           <>
-            Don’t use Icon button as the main action on the page. Instead, use the{" "}
-            <Link href="/?path=/docs/buttons-button--overview" withoutSpacing>
+            Don’t use Icon button as the main action on the page. Instead, use the{' '}
+            <Link href='/?path=/docs/buttons-button--overview' withoutSpacing>
               Button component
-            </Link>{" "}
+            </Link>{' '}
             with an icon.
           </>
-        )
-      }
+        ),
+      },
     },
     {
       positive: {
-        component: <IconButton icon={Close} ariaLabel="Close" />,
-        description: "Always provide ariaLabel or tooltipContent"
+        component: <IconButton icon={Close} ariaLabel='Close' />,
+        description: 'Always provide ariaLabel or tooltipContent',
       },
       negative: {
         component: <IconButton icon={Close} />,
-        description: "Don’t use icon button without adding a tooltip while hovering."
-      }
-    }
+        description: 'Don’t use icon button without adding a tooltip while hovering.',
+      },
+    },
   ]}
 />
 
@@ -701,17 +807,21 @@ Set disable button for something that isn’t usable. Use a tooltip on hover in 
 ### Icon button as toolbar button
 
 <Canvas>
-  <Story name="Icon button as toolbar button">
+  <Story name='Icon button as toolbar button'>
     <Flex
       className={classes.dashboard}
       direction={Flex.directions.COLUMN}
       align={Flex.align.START}
-      style={{ width: "50%" }}
+      style={{ width: '50%' }}
     >
       <Flex className={classes.dashboardHeader} gap={Flex.gaps.SMALL}>
         <Icon icon={Drag} />
-        <Heading type={Heading.types.h5} value="Widget name" />
-        <IconButton icon={Filter} ariaLabel="Filter the widget by everything" size={IconButton.sizes.SMALL} />
+        <Heading type={Heading.types.h5} value='Widget name' />
+        <IconButton
+          icon={Filter}
+          ariaLabel='Filter the widget by everything'
+          size={IconButton.sizes?.SMALL}
+        />
       </Flex>
       <div className={classes.dashboardContent} />
     </Flex>
@@ -721,26 +831,36 @@ Set disable button for something that isn’t usable. Use a tooltip on hover in 
 ### Icon button as close button
 
 <Canvas>
-  <Story name="Icon button as close button">
-    <Flex style={{ width: "100%" }}>
-      <Flex className={classes.recycleBin} style={{ width: "100%" }} justify={Flex.justify.START} gap={Flex.gaps.LARGE}>
+  <Story name='Icon button as close button'>
+    <Flex style={{ width: '100%' }}>
+      <Flex
+        className={classes.recycleBin}
+        style={{ width: '100%' }}
+        justify={Flex.justify.START}
+        gap={Flex.gaps.LARGE}
+      >
         <Flex
           direction={Flex.directions.COLUMN}
           className={classes.recycleBinTitleContainer}
           justify={Flex.justify.CENTER}
         >
           <Icon icon={Item} iconSize={40} />
-          <Heading className={classes.recycleBinTitle} type={Heading.types.h5} value="Item" id="l3-recycle-bin-title" />
+          <Heading
+            className={classes.recycleBinTitle}
+            type={Heading.types.h5}
+            value='Item'
+            id='l3-recycle-bin-title'
+          />
         </Flex>
         <Avatar size={Avatar.sizes.LARGE} src={person1} type={Avatar.types.IMG} />
         <Flex
           direction={Flex.directions.COLUMN}
           className={classes.recycleBinContent}
           align={Flex.justify.START}
-          ariaLabelledby="l3-recycle-bin-title"
+          ariaLabelledby='l3-recycle-bin-title'
         >
           <Flex gap={Flex.gaps.XS}>
-            <LinkComponent text="Hadas Farhi" />
+            <LinkComponent text='Hadas Farhi' />
             <span>deleted the item </span>
             <span className={classes.recycleBinItemName}>Hello World</span>
             <span>from the board</span>
@@ -755,7 +875,7 @@ Set disable button for something that isn’t usable. Use a tooltip on hover in 
         <Button className={classes.recycleBinRestoreButton}>Restore</Button>
       </Flex>
     </Flex>
-    <IconButton icon={CloseSmall} ariaLabel="Remove from Recycle bin" />
+    <IconButton icon={CloseSmall} ariaLabel='Remove from Recycle bin' />
   </Story>
 </Canvas>
 

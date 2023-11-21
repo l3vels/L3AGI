@@ -2,7 +2,8 @@ import styled, { css } from 'styled-components'
 
 import Button from 'share-ui/components/Button/Button'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import Delete from '@l3-lib/ui-core/dist/icons/Delete'
@@ -121,7 +122,7 @@ const TeamOfAgentCard = ({
                 onClick={onDeleteClick}
                 icon={() => <StyledDeleteIcon />}
                 size={Button.sizes?.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Delete'
               />
             </StyledButtonWrapper>
@@ -133,7 +134,7 @@ const TeamOfAgentCard = ({
                 onClick={onEditClick}
                 icon={() => <StyledEditIcon />}
                 size={Button.sizes?.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Edit'
               />
             </StyledButtonWrapper>
@@ -149,7 +150,7 @@ const TeamOfAgentCard = ({
                   </StyledIconWrapper>
                 )}
                 size={Button.sizes?.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='View'
               />
             </StyledButtonWrapper>

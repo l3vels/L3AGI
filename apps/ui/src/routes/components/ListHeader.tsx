@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
@@ -29,8 +29,8 @@ const ListHeader = ({ title, onAddClick }: ListHeaderProps) => {
             </StyledIconWrapper>
           )}
           onClick={onAddClick}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
           ariaLabel={`Add ${title}`}
         />
       )}

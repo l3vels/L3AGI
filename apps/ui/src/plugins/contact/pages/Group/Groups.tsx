@@ -1,7 +1,7 @@
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import {
   StyledHeaderGroup,
@@ -57,16 +57,16 @@ const Groups = () => {
               <IconButton
                 onClick={() => deleteGroupHandler(cell.value)}
                 icon={() => <StyledDeleteIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Delete'
               />
 
               <IconButton
                 onClick={() => navigate(`/contacts/${cell.value}/edit-group`)}
                 icon={() => <StyledEditIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Edit'
               />
             </StyledTableButtons>

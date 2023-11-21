@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import HelpIcon from '@l3-lib/ui-core/dist/icons/Help'
 import TypographyPrimary from 'components/Typography/Primary'
 
@@ -72,9 +73,9 @@ const DataSourceDropdown = ({
           <IconButton
             onClick={onHelpClick}
             icon={HelpIcon}
-            kind={IconButton.kinds.SECONDARY}
+            kind={IconButton.kinds?.SECONDARY}
             ariaLabel='Help'
-            size={IconButton.sizes.XXS}
+            size={IconButton.sizes?.XXS}
           />
         )}
       </StyledHeader>
