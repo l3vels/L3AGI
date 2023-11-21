@@ -1,0 +1,71 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import {
+  ComponentRules,
+  createComponentTemplate,
+  createStoryMetaSettings,
+  RelatedComponents,
+  UsageGuidelines
+} from "../../../storybook";
+import Textarea from "../Textarea";
+
+export const metaSettings = createStoryMetaSettings({
+  component: Textarea
+});
+
+<Meta
+  title="Inputs/Textarea"
+  component={Textarea}
+  argTypes={metaSettings.argTypes}
+  decorators={metaSettings.decorators}
+/>
+
+<!--- Component template -->
+
+export const textareaTemplate = createComponentTemplate(Textarea);
+
+<!--- Component documentation -->
+
+# Textarea
+
+- [Overview](#overview)
+- [Props](#props)
+- [Usage](#usage)
+- [Variants](#variants)
+- [Do’s and don’ts](#dos-and-donts)
+- [Use cases and examples](#use-cases-and-examples)
+- [Related components](#related-components)
+- [Feedback](#feedback)
+
+## Overview
+
+<Canvas>
+  <Story name="Overview">{textareaTemplate.bind({})}</Story>
+</Canvas>
+
+## Props
+
+<ArgsTable story="Overview" />
+
+## Variants
+
+### With hint
+
+<Canvas>
+  <Story name="With hint">
+    <div style={{ width: "1000px", height: "500px" }}>
+      <Textarea hint="this is Hint" placeholder="Your story..." showLetterCount />
+    </div>
+  </Story>
+</Canvas>
+
+### States
+
+<Canvas>
+  <Story name="States">
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "30px" }}>
+      <Textarea validation={{ status: "success" }} hint="Hint" />
+      <Textarea validation={{ status: "error" }} hint="Hint" />
+      <Textarea hint="Hint" disabled />
+    </div>
+  </Story>
+</Canvas>

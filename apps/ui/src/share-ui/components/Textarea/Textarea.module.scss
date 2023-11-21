@@ -1,0 +1,89 @@
+@import "../../styles/global-css-settings";
+@import "../../styles/typography/typography";
+
+.mainWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-small;
+  width: 100%;
+  height: 100%;
+  @include typography-label-small;
+}
+
+.labelTop {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.textarea {
+  @include typography-label-large;
+  color: var(--color-primitive-white);
+  width: 100%;
+  height: 100%;
+  outline: 0;
+  padding: 10px 16px;
+  padding-right: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  background: var(--color-transparent-white-02);
+  border-radius: 6px;
+  transition: border-color var(--motion-productive-medium), box-shadow var(--motion-productive-medium),
+    background-color var(--motion-productive-medium) ease-in;
+  &::placeholder {
+    @include theme-prop(color, text-field-placeholder-color);
+  }
+  &:focus {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    @include theme-prop(background-color, primary-background-hover-color);
+
+    @include theme-prop(border-color, text-field-active-border-color);
+  }
+}
+
+.status_error {
+  color: var(--color-content-negative);
+  .textarea {
+    @include theme-prop(border-color, border-negative);
+  }
+}
+
+.status_success {
+  .textarea {
+    @include theme-prop(border-color, border-positive);
+  }
+}
+
+.disabled {
+  color: var(--color-content-state-disabled);
+  .textarea {
+    @include theme-prop(background-color, disabled-background-color);
+
+    &:hover {
+      cursor: not-allowed !important;
+    }
+  }
+}
+
+.noResize {
+  .textarea {
+    resize: none;
+  }
+}
+
+.textareaWrapper {
+  display: flex;
+  // position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.clearIcon {
+  width: 0px;
+  height: 0px;
+  margin-left: -26px;
+  margin-top: 10px;
+}

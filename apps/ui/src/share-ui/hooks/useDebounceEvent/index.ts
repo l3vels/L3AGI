@@ -1,63 +1,74 @@
-import { useMemo, useCallback, useState, useRef, useEffect, ChangeEvent, Dispatch, SetStateAction } from "react";
-import { noop, debounce } from "lodash-es";
+import {
+  useMemo,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from 'react'
+import { noop, debounce } from 'lodash-es'
 
 export type UseDebounceResult = {
-  inputValue: string;
-  onEventChanged: (event: ChangeEvent<Partial<HTMLInputElement> | Partial<HTMLTextAreaElement>>) => void;
-  clearValue: () => void;
-  updateValue: Dispatch<SetStateAction<string>>;
-};
+  inputValue: string
+  onEventChanged: (
+    event: ChangeEvent<Partial<HTMLInputElement> | Partial<HTMLTextAreaElement>>,
+  ) => void
+  clearValue: () => void
+  updateValue: Dispatch<SetStateAction<string>>
+}
 
 export default function useDebounceEvent({
   delay = 0,
   onChange,
-  initialStateValue = "",
-  trim
+  initialStateValue = '',
+  trim,
 }: {
-  onChange: (value: string) => void;
-  initialStateValue?: string;
-  delay?: number;
-  trim?: boolean;
+  onChange?: (value: string) => void
+  initialStateValue?: string
+  delay?: number
+  trim?: boolean
 }) {
-  const [inputValue, setValue] = useState<string>(initialStateValue);
-  const previousValue = useRef<string>(null);
+  const [inputValue, setValue] = useState<string>(initialStateValue)
+  const previousValue = useRef<string>(null)
 
   useEffect(() => {
-    previousValue.current = initialStateValue;
-  });
+    previousValue.current = initialStateValue
+  })
 
   const debounceCallback = useMemo(() => {
     if (!delay) {
-      return onChange;
+      return onChange
     }
 
     if (!onChange) {
-      return noop;
+      return noop
     }
 
-    return debounce(onChange, delay);
-  }, [onChange, delay]);
+    return debounce(onChange, delay)
+  }, [onChange, delay])
 
   const onEventChanged = useCallback(
     (event: ChangeEvent<Partial<HTMLInputElement> | Partial<HTMLTextAreaElement>>) => {
-      const { value } = event.target;
-      const finalValue = trim ? value.trim() : value;
-      setValue(finalValue);
-      debounceCallback(finalValue);
+      const { value } = event.target
+      const finalValue = trim ? value?.trim() : value
+      if (finalValue) setValue(finalValue)
+      debounceCallback(finalValue)
     },
-    [debounceCallback, setValue, trim]
-  );
+    [debounceCallback, setValue, trim],
+  )
 
   const clearValue = useCallback(() => {
-    setValue("");
+    setValue('')
     if (onChange) {
-      onChange("");
+      onChange('')
     }
-  }, [setValue, onChange]);
+  }, [setValue, onChange])
 
   if (initialStateValue !== previousValue.current && initialStateValue !== inputValue) {
-    setValue(initialStateValue);
+    setValue(initialStateValue)
   }
 
-  return { inputValue, onEventChanged, clearValue, updateValue: setValue };
+  return { inputValue, onEventChanged, clearValue, updateValue: setValue }
 }
