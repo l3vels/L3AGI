@@ -2,12 +2,13 @@ import styled from 'styled-components'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
+
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import useFilter from './useFilter'
 import Button from 'share-ui/components/Button/Button'
 import TextFieldController from 'components/TextFieldController'
+import Toggle from 'share-ui/components/Toggle/Toggle'
 
 const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
   const { control } = useFilter()

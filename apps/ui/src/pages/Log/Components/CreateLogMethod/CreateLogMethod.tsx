@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import Button from 'share-ui/components/Button/Button'
 import Typography from 'share-ui/components/typography/Typography'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
+import Toggle from 'share-ui/components/Toggle/Toggle'
 import useLog from 'pages/Log/useLog'
 import TypographyPrimary from 'components/Typography/Primary'
 

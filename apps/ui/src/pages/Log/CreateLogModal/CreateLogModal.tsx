@@ -2,7 +2,7 @@ import styled from 'styled-components'
 // import IconButton from 'share-ui/components/IconButton/IconButton'
 
 // import Close from '@l3-lib/ui-core/dist/icons/Close'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
+import Toggle from 'share-ui/components/Toggle/Toggle'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
