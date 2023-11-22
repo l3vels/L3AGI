@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import withRenderModal from 'hocs/withRenderModal'
 
@@ -18,6 +17,7 @@ import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Done from '@l3-lib/ui-core/dist/icons/Check'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
+import Toast from 'share-ui/components/Toast/Toast'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void
@@ -69,7 +69,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
             )}
           </StyledTokenIcon>
         </StyledTokenContainer>
-        <StyledWarningToken
+        {/* <StyledWarningToken
           open
           autoHideDuration={5000}
           type={Toast.types.WARNING_LOW_INFORMATIONAL}
@@ -91,7 +91,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           }
           hideIcon={false}
           closeable={false}
-        />
+        /> */}
         <StyledApiModalFooter>
           <Button kind={Button.kinds?.PRIMARY} size={Button.sizes?.MEDIUM} onClick={closeModal}>
             {t('done')}
