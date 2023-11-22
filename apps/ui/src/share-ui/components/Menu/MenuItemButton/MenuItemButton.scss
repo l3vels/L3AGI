@@ -1,0 +1,22 @@
+@import "../../../styles/themes";
+@import "../../../styles/typography";
+@import "../../../styles/global-css-settings";
+
+.l3-style-menu-item-button {
+  margin: unset;
+  @include font-default;
+  display: flex;
+  flex-direction: row;
+  padding: $spacing-xs 0;
+  align-items: center;
+
+  .l3-style-button {
+    width: 100%;
+
+    .menu-item-button-content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

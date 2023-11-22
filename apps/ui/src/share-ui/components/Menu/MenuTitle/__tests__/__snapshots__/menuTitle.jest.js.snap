@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly with caption 1`] = `
+<div
+  className="l3-style-menu-title"
+>
+  <div
+    className="polygon-main-container"
+  >
+    <div
+      className="l3-style-avatar l3-style-avatar--medium"
+      style={Object {}}
+    >
+      <div
+        className="polygon polygon_none"
+      >
+        <svg
+          className="svg"
+        >
+          <clipPath
+            clipPathUnits="objectBoundingBox"
+            id="my-clip-path"
+          >
+            <path
+              d="M0.405,0.022 C0.465,-0.007,0.535,-0.007,0.595,0.022 L0.822,0.133 C0.881,0.162,0.923,0.215,0.937,0.278 L0.995,0.536 C1,0.598,0.994,0.663,0.955,0.714 L0.795,0.918 C0.754,0.97,0.691,1,0.625,1 H0.375 C0.309,1,0.246,0.97,0.205,0.918 L0.045,0.714 C0.006,0.663,-0.009,0.598,0.005,0.536 L0.063,0.278 C0.077,0.215,0.119,0.162,0.178,0.133 L0.405,0.022,NaN f, i, l0 lNaN u, r, p, a0 i, n, tNaN r, a0 d, i, a0 lNaN"
+            />
+          </clipPath>
+        </svg>
+        <div
+          className="clipped"
+        >
+          <img
+            className="l3-style-avatar-content_img l3-style-avatar-content_img--medium"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <label
+    className="l3-style-menu-title__caption l3-style-menu-title__caption--bottom menu-title-size__lg"
+    contentEditable={true}
+  >
+    my title
+  </label>
+</div>
+`;
+
+exports[`renders correctly with custom class name 1`] = `
+<div
+  className="l3-style-menu-title dummy-class-name"
+>
+  <div
+    className="polygon-main-container"
+  >
+    <div
+      className="l3-style-avatar l3-style-avatar--medium"
+      style={Object {}}
+    >
+      <div
+        className="polygon polygon_none"
+      >
+        <svg
+          className="svg"
+        >
+          <clipPath
+            clipPathUnits="objectBoundingBox"
+            id="my-clip-path"
+          >
+            <path
+              d="M0.405,0.022 C0.465,-0.007,0.535,-0.007,0.595,0.022 L0.822,0.133 C0.881,0.162,0.923,0.215,0.937,0.278 L0.995,0.536 C1,0.598,0.994,0.663,0.955,0.714 L0.795,0.918 C0.754,0.97,0.691,1,0.625,1 H0.375 C0.309,1,0.246,0.97,0.205,0.918 L0.045,0.714 C0.006,0.663,-0.009,0.598,0.005,0.536 L0.063,0.278 C0.077,0.215,0.119,0.162,0.178,0.133 L0.405,0.022,NaN f, i, l0 lNaN u, r, p, a0 i, n, tNaN r, a0 d, i, a0 lNaN"
+            />
+          </clipPath>
+        </svg>
+        <div
+          className="clipped"
+        >
+          <img
+            className="l3-style-avatar-content_img l3-style-avatar-content_img--medium"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders correctly with empty props 1`] = `
+<div
+  className="l3-style-menu-title"
+>
+  <div
+    className="polygon-main-container"
+  >
+    <div
+      className="l3-style-avatar l3-style-avatar--medium"
+      style={Object {}}
+    >
+      <div
+        className="polygon polygon_none"
+      >
+        <svg
+          className="svg"
+        >
+          <clipPath
+            clipPathUnits="objectBoundingBox"
+            id="my-clip-path"
+          >
+            <path
+              d="M0.405,0.022 C0.465,-0.007,0.535,-0.007,0.595,0.022 L0.822,0.133 C0.881,0.162,0.923,0.215,0.937,0.278 L0.995,0.536 C1,0.598,0.994,0.663,0.955,0.714 L0.795,0.918 C0.754,0.97,0.691,1,0.625,1 H0.375 C0.309,1,0.246,0.97,0.205,0.918 L0.045,0.714 C0.006,0.663,-0.009,0.598,0.005,0.536 L0.063,0.278 C0.077,0.215,0.119,0.162,0.178,0.133 L0.405,0.022,NaN f, i, l0 lNaN u, r, p, a0 i, n, tNaN r, a0 d, i, a0 lNaN"
+            />
+          </clipPath>
+        </svg>
+        <div
+          className="clipped"
+        >
+          <img
+            className="l3-style-avatar-content_img l3-style-avatar-content_img--medium"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

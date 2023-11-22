@@ -7,7 +7,6 @@ import { StyledLoaderWrapper, StyledUploadDiv } from './MediasRenderer'
 
 import Typography from 'share-ui/components/typography/Typography'
 import Loader from 'share-ui/components/Loader/Loader'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import Attach from '@l3-lib/ui-core/dist/icons/Attach'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -40,13 +39,13 @@ const ImageRenderer = (p: any) => {
       ) : p.value?.length > 0 ? (
         p.isThumbnail ? (
           <StyledImageWrapper>
-            <Avatar
+            {/* <Avatar
               size={Avatar.sizes.SMALL}
               src={p.value}
               type={Avatar.types.IMG}
               rectangle
               onClick={onButtonClick}
-            />
+            /> */}
           </StyledImageWrapper>
         ) : (
           <StyledImageWrapper>

@@ -10,7 +10,6 @@ import {
   Trigger,
 } from '@radix-ui/react-dropdown-menu'
 
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Typography from 'share-ui/components/typography/Typography'
 
