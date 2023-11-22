@@ -20,12 +20,11 @@ import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 
-import RadioButton from '@l3-lib/ui-core/dist/RadioButton'
-
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 import { StyledTab } from 'styles/tabStyles.css'
 import TextareaFormik from 'components/TextareaFormik'
+import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 
 type AgentFormProps = {
   formik: any
