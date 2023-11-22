@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 // import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TextField from 'share-ui/components/TextField/TextField'

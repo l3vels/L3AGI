@@ -1,0 +1,296 @@
+@import "../../styles/global-css-settings";
+@import "../../styles/themes";
+@import "../../styles/theme-mixin";
+@import "../../styles/typography";
+@import "../../styles/states";
+
+// $checkbox-size: 16px;
+
+@mixin hover-selected {
+  @include theme-prop(background-color, primary-hover-color);
+  border-color: transparent;
+}
+
+@mixin hover-unselected {
+  @include theme-prop(border-color, secondary-text-color);
+}
+
+.l3-style-checkbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: min-content;
+  // flex-wrap: wrap;
+
+  &__checkbox {
+    cursor: pointer;
+    visibility: visible;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: $checkbox-size-large;
+    height: $checkbox-size-large;
+    // border: 1px solid;
+    // @include theme-prop(border-color, ui-border-color);
+    // border-radius: $border-radius-extra-small;
+    border: 3.5px solid $black;
+    border-radius: 3.5px;
+    // transition: transform var(--motion-productive-short) var(--motion-timing-enter);
+    position: relative;
+    overflow: hidden;
+
+    // &:after {
+    //   content: " ";
+    //   background-color: transparent;
+    //   position: absolute;
+    //   height: $checkbox-size;
+    //   z-index: 2;
+    //   left: 0;
+    //   right: 0;
+    //   width: 100%;
+    // }
+
+    // &:hover {
+    //   @include hover-unselected;
+    // }
+  }
+
+  &--kind {
+    &-secondary {
+      .l3-style-checkbox {
+        &__checkbox {
+          @include theme-prop(border-color, checkbox-border-color-secondary);
+          // border-color: $white;
+        }
+        &__label {
+          @include theme-prop(color, checkbox-label-color-secondary);
+          // color: $white;
+        }
+        &_input {
+          &:checked {
+            & + .l3-style-checkbox__checkbox {
+              &__checkbox {
+                outline: $checkbox-outline-checked;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__icon {
+    width: 100%;
+    @include theme-prop(color, text-color-on-primary);
+    visibility: hidden;
+  }
+
+  &__label {
+    // display: flex;
+    // flex-direction: column;
+
+    // width: 50%;
+    @include font-input();
+    cursor: pointer;
+    user-select: none;
+    margin-inline-start: 17.5px;
+    @include theme-prop(color, checkbox-label-color-primary);
+    // color: $black;
+    font-weight: 500;
+    font-size: $spacing-medium;
+    line-height: 20px;
+  }
+
+  &__description {
+    font-weight: 450;
+    font-size: $spacing-small-medium;
+    @include theme-prop(color, checkbox-description-color-primary);
+    // color: $black-3;
+    max-width: 200px;
+    margin-left: 39px;
+    // margin-top: 18px;
+    &--size {
+      &-small {
+        margin-left: 22px;
+        // margin-top: 8px;
+      }
+    }
+    &--kind {
+      &-secondary {
+        @include theme-prop(color, checkbox-description-color-secondary);
+        // color: $white-6;
+      }
+    }
+  }
+
+  &--size {
+    &-small {
+      .l3-style-checkbox {
+        &__checkbox {
+          width: $checkbox-size-small;
+          height: $checkbox-size-small;
+          border-width: $spacing-xxs;
+          border-radius: $spacing-xxs;
+        }
+        &__label {
+          margin-inline-start: 10px;
+          font-size: $spacing-small-medium;
+          line-height: $spacing-medium;
+        }
+      }
+    }
+  }
+  // Since it is not possible to change the design of the checkbox according to the requirements using css,
+  // we hide the checkbox and draw a new one instead.
+  // In order to allow accessibility, all operations will be performed on the hidden checkbox and be reflected
+  // in the new checkbox we drew.
+  &__input {
+    @include hidden-element();
+
+    // For any active attribute in the hidden checkbox, we will change the appearance of the checkbox we drew in its place.
+    &:focus {
+      & + .l3-style-checkbox__checkbox {
+        @include hover-unselected;
+      }
+
+      &:checked + .l3-style-checkbox__checkbox {
+        @include hover-selected;
+      }
+    }
+    &:checked {
+      &:active {
+        & + .l3-style-checkbox__checkbox {
+          @include theme-prop(border-color, checkbox-checked-active-border-color);
+          // border-color: $white;
+          outline: $checkbox-outline-active;
+          // outline-width: $spacing-xxs;
+          border-width: $spacing-xxs;
+        }
+      }
+    }
+
+    &:focus-visible {
+      & + .l3-style-checkbox__checkbox {
+        outline: none;
+        border: 1px solid;
+        @include theme-prop(border-color, primary-color);
+        box-shadow: 0 0 0 3px hsla(209, 100%, 50%, 0.5);
+        border-radius: $spacing-xxs;
+      }
+    }
+
+    &:active {
+      & + .l3-style-checkbox__checkbox {
+        @include theme-prop(border-color, checkbox-active-border-color);
+      }
+    }
+
+    &:checked {
+      &:focus + .l3-style-checkbox__checkbox:after {
+        @include theme-prop(background-color, primary-hover-color);
+      }
+
+      & + .l3-style-checkbox {
+        &__checkbox {
+          animation: checkbox-grow-animation var(--motion-productive-short);
+
+          &__prevent-animation {
+            animation-duration: 0ms;
+          }
+
+          @include theme-prop(border-color, checkbox-active-border-color);
+          @include theme-prop(background-color, checkbox-active-border-color);
+
+          outline: $checkbox-outline-checked;
+
+          & > .l3-style-checkbox__icon {
+            visibility: visible;
+          }
+        }
+      }
+
+      &:disabled + .l3-style-checkbox {
+        &__checkbox:after {
+          @include theme-prop(background-color, checkbox-bg-disabled);
+          // background-color: $white-2;
+        }
+      }
+    }
+
+    &:indeterminate {
+      & + .l3-style-checkbox {
+        &__checkbox {
+          animation: checkbox-grow-animation var(--motion-productive-short);
+
+          &__prevent-animation {
+            animation-duration: 0ms;
+          }
+          @include theme-prop(border-color, checkbox-indeterminate-border-color);
+          // border-color: #000000;
+          background: transparent;
+          outline: $checkbox-outline-checked;
+          & > .l3-style-checkbox__icon {
+            visibility: visible;
+          }
+        }
+      }
+    }
+
+    &:disabled {
+      & + .l3-style-checkbox {
+        &__checkbox,
+        &__checkbox:hover {
+          // @include theme-prop(background-color, disabled-background-color);
+          background-color: transparent;
+          @include theme-prop(border-color, checkbox-bg-disabled);
+          // border-color: $white-2;
+          outline: none;
+
+          .l3-style-checkbox__icon {
+            @include theme-prop(color, disabled-text-color);
+          }
+
+          cursor: not-allowed;
+        }
+      }
+      &:checked {
+        & + .l3-style-checkbox {
+          &__checkbox,
+          &__checkbox:hover {
+            @include theme-prop(background-color, checkbox-bg-disabled);
+            // background-color: $white-2;
+            border: none;
+          }
+        }
+      }
+      & ~ .l3-style-checkbox__label {
+        cursor: not-allowed;
+        color: var(--disabled-text-color);
+      }
+    }
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  &--size {
+    &-large {
+      gap: 18px;
+    }
+    &-small {
+      gap: $spacing-small;
+    }
+  }
+}
+
+@keyframes checkbox-grow-animation {
+  0% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

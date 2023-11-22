@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import { StyledCombinedFields } from 'pages/Agents/AgentForm/AgentForm'
 import { useTeamOfAgentsForm } from './useTeamOfAgentsForm'

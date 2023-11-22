@@ -7,7 +7,8 @@ import TextFieldFormik from 'components/TextFieldFormik'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
 import HeadingTertiary from 'components/Heading/Tertiary'
 import { ButtonPrimary } from 'components/Button/Button'
 

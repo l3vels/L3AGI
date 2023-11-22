@@ -1,5 +1,6 @@
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
 import TextField from 'share-ui/components/TextField/TextField'
 
 import FormikTextField from 'components/TextFieldFormik'
