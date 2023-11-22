@@ -1,0 +1,73 @@
+import Tab from "../Tab";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { createComponentTemplate } from "../../../../storybook/functions/createComponentTemplate";
+import { Email } from "../../../Icon/Icons";
+
+<Meta title="Navigation/Tabs - (in progress)/Tab - (in progress)" component={Tab} />
+
+<!--- Component template -->
+
+export const TabTemplate = createComponentTemplate(Tab);
+
+<!--- Component documentation -->
+
+# Tab
+
+- [Overview](#overview)
+- [Props](#props)
+- [Variants](#variants)
+- [Feedback](#feedback)
+
+## Overview
+
+<Canvas>
+  <Story name="Overview" args={{ children: "Tab" }}>
+    {TabTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={Tab} />
+
+## Variants
+
+<<<<<<< HEAD
+
+### Size
+
+<Canvas>
+  <Story name="Size">
+    <Tab size="large" active>
+      Large Tab
+    </Tab>
+    <Tab size="small" active>
+      Small Tab
+    </Tab>
+  </Story>
+</Canvas>
+
+=======
+
+> > > > > > > main
+
+### States
+
+<Canvas>
+  <Story name="States">
+    <Tab>Normal Tab</Tab>
+    <Tab disabled>Disabled Tab</Tab>
+    <Tab active>Active Tab</Tab>
+  </Story>
+</Canvas>
+
+### Icons
+
+<Canvas>
+  <Story name="Icons">
+    <Tab icon={Email}>Tab</Tab>
+    <Tab icon={Email} iconSide="right">
+      Tab
+    </Tab>
+  </Story>
+</Canvas>

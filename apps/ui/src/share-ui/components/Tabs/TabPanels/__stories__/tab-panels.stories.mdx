@@ -1,0 +1,49 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { createStoryMetaSettings } from "../../../../storybook/functions/createStoryMetaSettings";
+import TabPanel from "../../TabPanel/TabPanel";
+import TabPanels from "../TabPanels";
+
+export const metaSettings = createStoryMetaSettings({
+  component: TabPanels,
+  enumPropNamesArray: ["animationDirection"]
+});
+
+<Meta
+  title="Navigation/Tabs - (in progress)/TabPanels - (Coming Soon)"
+  component={TabPanels}
+  argTypes={metaSettings.argTypes}
+  decorators={metaSettings.decorators}
+/>
+
+<!--- Component template -->
+
+export const tabPanelsTemplate = args => (
+  <TabPanels {...args}>
+    <TabPanel>First tab panel</TabPanel>
+    <TabPanel>Second tab panel</TabPanel>
+    <TabPanel>Third tab panel</TabPanel>
+  </TabPanels>
+);
+
+<!--- Component documentation -->
+
+# TabPanels
+
+- [Overview](#overview)
+- [Props](#props)
+- [Variants](#variants)
+- [Feedback](#feedback)
+
+## Overview
+
+The Tab Panels component contains all the content of all the Tabs component's tabs.
+
+<Canvas>
+  <Story name="Overview" args={{ activeTabId: 1 }}>
+    {tabPanelsTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable story="Overview" />

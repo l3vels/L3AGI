@@ -1,0 +1,95 @@
+import TabList from "../TabList.tsx";
+import Tab from "../../Tab/Tab";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import classes from "./tab-list.stories.module.scss";
+
+<Meta title="Navigation/Tabs - (in progress)/TabList - (in progress)" component={TabList} />
+
+<!--- Component template -->
+
+export const tabListTemplate = args => (
+  <TabList {...args}>
+    <Tab>Label Tab 01</Tab>
+    <Tab>Label Tab 02</Tab>
+    <Tab>Label Tab 03</Tab>
+    <Tab disabled>Disabled Tab</Tab>
+  </TabList>
+);
+
+<!--- Component documentation -->
+
+# TabList
+
+- [Overview](#overview)
+- [Props](#props)
+- [Variants](#variants)
+- [Feedback](#feedback)
+
+## Overview
+
+TabList is a container of all the tabs headers inside the tabs component
+
+<Canvas>
+  <Story name="Overview">{tabListTemplate.bind({})}</Story>
+</Canvas>
+
+## Props
+
+<ArgsTable story="Overview" />
+
+## Variants
+
+### Default - compact tabs
+
+<Canvas>
+  <Story name="Default">
+    <TabList>
+      <Tab>Label Tab 01</Tab>
+      <Tab>Label Tab 02</Tab>
+      <Tab>Label Tab 03</Tab>
+      <Tab disabled>Disabled Tab</Tab>
+    </TabList>
+  </Story>
+</Canvas>
+
+### Stretched
+
+The width of the list is responsive to the screen's width.
+
+<Canvas>
+  <Story name="Stretched">
+    <div style={{ width: "100%" }}>
+      <TabList tabType="stretched">
+        <Tab>Label Tab 01</Tab>
+        <Tab>Label Tab 02</Tab>
+        <Tab>Label Tab 03</Tab>
+        <Tab disabled>Disabled Tab</Tab>
+      </TabList>
+    </div>
+  </Story>
+</Canvas>
+
+### Sizes
+
+<Canvas>
+  <Story name="Sizes">
+    <div className={classes.tabsSizesContainer}>
+      <>
+        Small
+        <TabList size="small">
+          <Tab>Label Tab 01</Tab>
+          <Tab>Label Tab 02</Tab>
+          <Tab disabled>Disabled Tab</Tab>
+        </TabList>
+      </>
+      <>
+        Large
+        <TabList size="large">
+          <Tab>Label Tab 01</Tab>
+          <Tab>Label Tab 02</Tab>
+          <Tab disabled>Disabled Tab</Tab>
+        </TabList>
+      </>
+    </div>
+  </Story>
+</Canvas>
