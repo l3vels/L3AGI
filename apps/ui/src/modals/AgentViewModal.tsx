@@ -7,7 +7,7 @@ import AgentView from 'pages/Agents/AgentView'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 import { useDiscoverAgentByIdService } from 'services/discover/useDiscoverAgentById'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { AgentWithConfigs } from 'types'

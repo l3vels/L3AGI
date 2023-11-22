@@ -13,8 +13,8 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
+import SearchOutline from 'share-ui/components/Icon/Icons/components/SearchOutline'
 
 import NotificationsDateGroup from './NotificationsDateGroup'
 import { useNotificationsByDateService } from 'services/useNotificationService'

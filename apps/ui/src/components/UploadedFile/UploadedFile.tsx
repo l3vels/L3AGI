@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 import Typography from 'share-ui/components/typography/Typography'
-import Doc from '@l3-lib/ui-core/dist/icons/Doc'
+import Doc from 'share-ui/components/Icon/Icons/components/Doc'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 
 type UploadedFileProps = {
   onClick: (id?: string) => void

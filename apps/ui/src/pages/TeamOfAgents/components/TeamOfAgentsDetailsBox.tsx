@@ -22,7 +22,7 @@ import { AuthContext } from 'contexts'
 
 import Button from 'share-ui/components/Button/Button'
 
-import Download from '@l3-lib/ui-core/dist/icons/Download'
+import Download from 'share-ui/components/Icon/Icons/components/Download'
 import TypographyPrimary from 'components/Typography/Primary'
 
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
@@ -30,7 +30,7 @@ import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyTertiary from 'components/Typography/Tertiary'
 
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 import { useTeamOfAgents } from '../useTeamOfAgents'
 import { useModelsService } from 'services'
 import { useGetAccountModule } from 'utils/useGetAccountModule'

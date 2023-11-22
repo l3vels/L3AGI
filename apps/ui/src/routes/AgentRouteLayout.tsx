@@ -15,9 +15,9 @@ import MemberText from 'modals/AIChatModal/components/ChatMembers/components/Mem
 import { useModal } from 'hooks'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
-import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Edit from 'share-ui/components/Icon/Icons/components/Edit'
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { StyledSectionTitle } from 'pages/Home/homeStyle.css'
 import Typography from 'share-ui/components/typography/Typography'

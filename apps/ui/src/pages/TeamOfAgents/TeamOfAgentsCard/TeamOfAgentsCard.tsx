@@ -6,10 +6,10 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Typography from 'share-ui/components/typography/Typography'
 
-import Delete from '@l3-lib/ui-core/dist/icons/Delete'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+import Delete from 'share-ui/components/Icon/Icons/components/Delete'
+import Edit from 'share-ui/components/Icon/Icons/components/Edit'
+import MoveArrowRight from 'share-ui/components/Icon/Icons/components/MoveArrowRight'
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 

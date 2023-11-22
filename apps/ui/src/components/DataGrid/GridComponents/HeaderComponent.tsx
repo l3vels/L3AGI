@@ -5,7 +5,7 @@ import Typography from 'share-ui/components/typography/Typography'
 import SortIcon from 'assets/svgComponents/SortIcon.svg'
 import styled from 'styled-components'
 
-import MenuOutline from '@l3-lib/ui-core/dist/icons/MenuOutline'
+import MenuOutline from 'share-ui/components/Icon/Icons/components/MenuOutline'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const HeaderComponent = (props: any) => {

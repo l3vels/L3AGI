@@ -4,7 +4,7 @@ import Button from 'share-ui/components/Button/Button'
 
 import Typography from 'share-ui/components/typography/Typography'
 
-import Delete from '@l3-lib/ui-core/dist/icons/Delete'
+import Delete from 'share-ui/components/Icon/Icons/components/Delete'
 
 import FormikTextField from 'components/TextFieldFormik'
 import { FieldArray } from 'formik'

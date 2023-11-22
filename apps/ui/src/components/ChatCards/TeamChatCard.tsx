@@ -3,8 +3,8 @@ import MemberText from 'modals/AIChatModal/components/ChatMembers/components/Mem
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+import Edit from 'share-ui/components/Icon/Icons/components/Edit'
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
 import styled, { css } from 'styled-components'
 import {
   StyledDeleteIcon,

@@ -21,7 +21,7 @@ import Tags from 'share-ui/components/Tags/Tags'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 

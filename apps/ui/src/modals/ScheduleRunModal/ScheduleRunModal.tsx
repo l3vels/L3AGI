@@ -4,7 +4,7 @@ import Modal from '@l3-lib/ui-core/dist/Modal'
 import { useModal } from 'hooks'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 
 type ScheduleRunModalProps = {

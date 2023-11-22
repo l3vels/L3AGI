@@ -5,7 +5,7 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Typography from 'share-ui/components/typography/Typography'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 import { useEffect, useState } from 'react'
 import NotificationItem from './NotificationItem'
 import { game_default_image } from 'helpers/const_helper'

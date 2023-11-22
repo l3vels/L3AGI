@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
-import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
+import NavigationChevronLeft from 'share-ui/components/Icon/Icons/components/NavigationChevronLeft'
+import NavigationChevronRight from 'share-ui/components/Icon/Icons/components/NavigationChevronRight'
 
 type ArrowNavigationProps = {
   onClick?: () => void

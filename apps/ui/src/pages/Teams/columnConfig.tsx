@@ -4,13 +4,13 @@ import styled from 'styled-components'
 
 import Typography from 'share-ui/components/typography/Typography'
 
-import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import menuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 
-import PersonaIcon from '@l3-lib/ui-core/dist/icons/Person'
-import EmailIcon from '@l3-lib/ui-core/dist/icons/Email'
+import PersonaIcon from 'share-ui/components/Icon/Icons/components/Person'
+import EmailIcon from 'share-ui/components/Icon/Icons/components/Email'
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import EventIcon from '@l3-lib/ui-core/dist/icons/Event'
-import UserStatusIcon from '@l3-lib/ui-core/dist/icons/UserStatus'
+import EventIcon from 'share-ui/components/Icon/Icons/components/Event'
+import UserStatusIcon from 'share-ui/components/Icon/Icons/components/UserStatus'
 
 import HeaderComponent from 'components/DataGrid/GridComponents/HeaderComponent'
 import { useTranslation } from 'react-i18next'

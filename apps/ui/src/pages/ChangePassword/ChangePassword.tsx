@@ -8,7 +8,7 @@ import Heading from 'share-ui/components/Heading/Heading'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
+import Close from 'share-ui/components/Icon/Icons/components/CloseOutline'
 import Button from 'share-ui/components/Button/Button'
 // import Button from 'oldComponents/atoms/Button'
 

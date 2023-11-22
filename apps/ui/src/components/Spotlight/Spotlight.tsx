@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next'
 
 import Typography from 'share-ui/components/typography/Typography'
 import TypographyQuaternary from 'components/Typography/Quaternary'
-import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import Search from 'share-ui/components/Icon/Icons/components/SearchOutline'
 
-import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
+import SendIcon from 'share-ui/components/Icon/Icons/components/Send'
 import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
 import { useCreateChatMessageService, useChatMessagesService } from 'services'

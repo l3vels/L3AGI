@@ -9,7 +9,7 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Button from 'share-ui/components/Button/Button'
 
-import Download from '@l3-lib/ui-core/dist/icons/Download'
+import Download from 'share-ui/components/Icon/Icons/components/Download'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
@@ -22,7 +22,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useModelsService } from 'services'

@@ -3,7 +3,7 @@ import Loader from 'share-ui/components/Loader/Loader'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Attach from '@l3-lib/ui-core/dist/icons/Attach'
+import Attach from 'share-ui/components/Icon/Icons/components/Attach'
 import { useRef, useState } from 'react'
 import TypographySecondary from 'components/Typography/Secondary'
 // import { StyledOutlineIcon } from 'pages/Asset/Assets/columnConfig'

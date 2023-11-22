@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-import Play from '@l3-lib/ui-core/dist/icons/PlayOutline'
+import Play from 'share-ui/components/Icon/Icons/components/PlayOutline'
 
-import Pause from '@l3-lib/ui-core/dist/icons/Pause'
+import Pause from 'share-ui/components/Icon/Icons/components/Pause'
 import styled, { css } from 'styled-components'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 

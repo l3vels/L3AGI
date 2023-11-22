@@ -7,7 +7,7 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Typography from 'share-ui/components/typography/Typography'
 
-import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
+import MoveArrowRight from 'share-ui/components/Icon/Icons/components/MoveArrowRight'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import {

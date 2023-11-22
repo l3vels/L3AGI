@@ -10,7 +10,7 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import SearchOutline from 'share-ui/components/Icon/Icons/components/SearchOutline'
 import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'

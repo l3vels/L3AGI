@@ -4,7 +4,7 @@ import DatePicker from 'share-ui/components/DatePicker/DatePicker'
 import Button from 'share-ui/components/Button/Button'
 import styled from 'styled-components'
 import outsideClick from 'helpers/outsideClick'
-import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
+import Calendar from 'share-ui/components/Icon/Icons/components/Calendar'
 import { ButtonSecondary } from 'components/Button/Button'
 
 const DatePickerField = ({ start_date, end_date, onChange }: any) => {

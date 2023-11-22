@@ -8,7 +8,7 @@ import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
-import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
+import SendIcon from 'share-ui/components/Icon/Icons/components/Send'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 

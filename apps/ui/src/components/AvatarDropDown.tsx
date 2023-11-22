@@ -10,7 +10,7 @@ import {
   Trigger,
 } from '@radix-ui/react-dropdown-menu'
 
-import API from '@l3-lib/ui-core/dist/icons/API'
+import API from 'share-ui/components/Icon/Icons/components/API'
 import Typography from 'share-ui/components/typography/Typography'
 
 import styled, { css, keyframes } from 'styled-components'
@@ -22,8 +22,8 @@ import { useTranslation } from 'react-i18next'
 
 import defaultAvatar from '../assets/images/defaultAvatar.png'
 
-import Settings from '@l3-lib/ui-core/dist/icons/Settings'
-import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
+import Settings from 'share-ui/components/Icon/Icons/components/Settings'
+import LogOut from 'share-ui/components/Icon/Icons/components/LogOut'
 import AvatarGenerator from './AvatarGenerator/AvatarGenerator'
 import React from 'react'
 import { AuthContext } from 'contexts'

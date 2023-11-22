@@ -10,13 +10,13 @@ import Button from 'share-ui/components/Button/Button'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 
 // import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 
-import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
-import Description from '@l3-lib/ui-core/dist/icons/Description'
+import SearchIcon from 'share-ui/components/Icon/Icons/components/SearchOutline'
+import Description from 'share-ui/components/Icon/Icons/components/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 

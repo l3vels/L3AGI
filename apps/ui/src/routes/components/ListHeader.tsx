@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
 
 import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Typography from 'share-ui/components/typography/Typography'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 
 import { useHumanMessage } from './ChatMessageList/components/useHumanMessage'
 import HumanMessageText from './ChatMessageList/components/HumanMessageText'

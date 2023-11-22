@@ -3,7 +3,7 @@ import { ChangeEvent, useRef } from 'react'
 import styled from 'styled-components'
 import Typography from 'share-ui/components/typography/Typography'
 
-import File from '@l3-lib/ui-core/dist/icons/File'
+import File from 'share-ui/components/Icon/Icons/components/File'
 import Loader from 'share-ui/components/Loader/Loader'
 import { SUPPORTED_FILE_EXTENSIONS } from 'modals/AIChatModal/fileTypes'
 import TypographySecondary from 'components/Typography/Secondary'

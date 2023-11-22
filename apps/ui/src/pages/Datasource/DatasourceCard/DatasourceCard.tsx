@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Typography from 'share-ui/components/typography/Typography'
-import CheckIcon from '@l3-lib/ui-core/dist/icons/Check'
-import BulletIcon from '@l3-lib/ui-core/dist/icons/Bullet'
-import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
+import CheckIcon from 'share-ui/components/Icon/Icons/components/Check'
+import BulletIcon from 'share-ui/components/Icon/Icons/components/Bullet'
+import CloseIcon from 'share-ui/components/Icon/Icons/components/CloseSmall'
 
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'

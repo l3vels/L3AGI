@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import Typography from 'share-ui/components/typography/Typography'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Help from '@l3-lib/ui-core/dist/icons/Help'
+import Help from 'share-ui/components/Icon/Icons/components/Help'
 import TypographyPrimary from 'components/Typography/Primary'
 
 type DataLoaderCardProps = {

@@ -5,7 +5,7 @@ import { useAssignedUserListService } from 'services'
 import { RandomAvatar } from 'helpers/RandomImage'
 
 import Typography from 'share-ui/components/typography/Typography'
-import Share from '@l3-lib/ui-core/dist/icons/Share'
+import Share from 'share-ui/components/Icon/Icons/components/Share'
 import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import TypographySecondary from 'components/Typography/Secondary'
 

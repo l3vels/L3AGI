@@ -30,7 +30,7 @@ import { useMemo, useState } from 'react'
 import Table from 'components/Table'
 import Groups, { StyledTableButtons } from '../Group/Groups'
 
-import Microphone from '@l3-lib/ui-core/dist/icons/Microphone'
+import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
 
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 
