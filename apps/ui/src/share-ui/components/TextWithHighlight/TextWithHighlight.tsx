@@ -44,6 +44,7 @@ export interface TextWithHighlightProps extends L3ComponentProps {
   tooltipPosition?: DialogPosition
 }
 
+// eslint-disable-next-line react/display-name
 const TextWithHighlight: React.FC<TextWithHighlightProps> = forwardRef(
   (
     {
@@ -86,13 +87,13 @@ const TextWithHighlight: React.FC<TextWithHighlightProps> = forwardRef(
           parts.push(
             getTextPart(
               tokens[i],
-              key++,
+              (key = key + 1),
               shouldHighlight,
               wrappingTextTag,
               wrappingElementClassName,
             ),
           )
-          if (isTermPart) highlightTermsCount++
+          if (isTermPart) highlightTermsCount = highlightTermsCount + 1
         }
       }
 
