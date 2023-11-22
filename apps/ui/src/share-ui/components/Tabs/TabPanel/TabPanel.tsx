@@ -4,7 +4,7 @@ import useMergeRefs from '../../../hooks/useMergeRefs'
 import L3ComponentProps from '../../../types/L3ComponentProps'
 
 export interface TabPanelProps extends L3ComponentProps {
-  children?: string
+  children?: React.ReactNode
   index?: number
 }
 

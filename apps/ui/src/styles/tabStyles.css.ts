@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import Tab from '@l3-lib/ui-core/dist/Tab'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
 
 export const StyledTabRootWrapper = styled.div`
   display: flex;
