@@ -255,6 +255,7 @@ const StyledSearchInput = styled.input`
   min-width: 300px;
   height: 48px;
   border-radius: 8px;
+  padding-left: 15px;
   padding-right: 40px;
 `
 
