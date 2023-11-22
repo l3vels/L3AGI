@@ -11,13 +11,14 @@ import Typography from 'share-ui/components/typography/Typography'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
-import Icon from '@l3-lib/ui-core/dist/Icon'
+
 import Warning from '@l3-lib/ui-core/dist/icons/Warning'
 import Copy from '@l3-lib/ui-core/dist/icons/Copy'
 import Done from '@l3-lib/ui-core/dist/icons/Check'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import Toast from 'share-ui/components/Toast/Toast'
+import Icon from 'share-ui/components/Icon/Icon'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void
