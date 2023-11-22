@@ -6,7 +6,7 @@ import Button from 'share-ui/components/Button/Button'
 import TextFieldFormik from 'components/TextFieldFormik'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import HeadingTertiary from 'components/Heading/Tertiary'
@@ -21,7 +21,7 @@ const ResetPassword = () => {
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <HeadingTertiary
         value={t('forgot-password')}
-        type={Heading.types.h1}
+        type={Heading.types?.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>

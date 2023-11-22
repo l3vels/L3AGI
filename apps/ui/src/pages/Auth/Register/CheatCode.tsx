@@ -3,7 +3,7 @@ import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import { useEffect } from 'react'
 import HeadingTertiary from 'components/Heading/Tertiary'
 import HeadingPrimary from 'components/Heading/Primary'
@@ -37,7 +37,7 @@ export const CheatCode = () => {
     <StyledCenterFormContainer>
       <HeadingTertiary
         value={t('cheat-code')}
-        type={Heading.types.h1}
+        type={Heading.types?.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
@@ -57,7 +57,7 @@ export const CheatCode = () => {
           </StyledInputContainer>
           <HeadingPrimary
             value={'+'}
-            type={Heading.types.h1}
+            type={Heading.types?.h1}
             style={{ fontSize: 52, lineHeight: 'normal' }}
           />
           <StyledInputContainer>

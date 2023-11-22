@@ -4,7 +4,7 @@ import { useModal } from 'hooks'
 import AgentCard from 'pages/Agents/AgentCard'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import Typography from 'share-ui/components/typography/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import { StyledSectionWrapper } from 'pages/Home/homeStyle.css'
 import TypographySecondary from 'components/Typography/Secondary'
 import React from 'react'
@@ -31,7 +31,7 @@ const Discover = () => {
         <StyledSectionWrapper>
           <StyledHeadingWrapper>
             <StyledHeadingPrimary
-              type={Heading.types.h1}
+              type={Heading.types?.h1}
               value={'Discover AI Agents built with L3'}
             />
             <TypographySecondary

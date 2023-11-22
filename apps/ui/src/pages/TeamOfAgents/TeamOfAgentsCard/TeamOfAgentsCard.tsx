@@ -13,7 +13,7 @@ import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
@@ -68,7 +68,7 @@ const TeamOfAgentCard = ({
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
-        <HeadingSecondary type={Heading.types.h1} value={name} size='medium' />
+        <HeadingSecondary type={Heading.types?.h1} value={name} size='medium' />
 
         <TypographySecondary
           value={shortDescription}

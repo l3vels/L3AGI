@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Toggle from 'share-ui/components/Toggle/Toggle'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import Typography from 'share-ui/components/typography/Typography'
 import TextField from 'share-ui/components/TextField/TextField'
 
@@ -32,7 +32,9 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
         onClose={closeModal}
         show
         backgroundColor='dark'
-        title={<HeadingPrimary type={Heading.types.h1} size={Heading.sizes.sm} value='Filer' />}
+        title={
+          <HeadingPrimary type={Heading.types?.h1} size={Heading.sizes?.SMALL} value='Filer' />
+        }
       >
         <StyledApiAddressContainerWrapper>
           <StyledIPAddressContainer>

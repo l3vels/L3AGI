@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // import { CustomTable } from 'oldComponents/atoms/CustomTable'
 // import { StyledButton, StyledInputContainer, StyledTextField } from './teamsStyle'
 import Typography from 'share-ui/components/typography/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import Button from 'share-ui/components/Button/Button'
 import IconButton from 'share-ui/components/IconButton/IconButton'
@@ -83,8 +83,8 @@ const Teams = () => {
         <StyledHeaderGroup>
           <StyledHeadingWrapper>
             <HeadingPrimary
-              type={Heading.types.h1}
-              size={Heading.sizes.lg}
+              type={Heading.types?.h1}
+              size={Heading.sizes?.LARGE}
               value={`${assignedUserList.length} Members`}
             />
           </StyledHeadingWrapper>

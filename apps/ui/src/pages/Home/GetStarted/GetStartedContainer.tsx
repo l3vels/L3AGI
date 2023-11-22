@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import Typography from 'share-ui/components/typography/Typography'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
@@ -32,7 +32,7 @@ const GetStartedContainer = ({
           <StyledCloseButton onClick={() => setShow(false)}>
             <StyledCloseIcon />
           </StyledCloseButton>
-          {!noText && <HeadingPrimary type={Heading.types.h1} value='Get Started' size='medium' />}
+          {!noText && <HeadingPrimary type={Heading.types?.h1} value='Get Started' size='medium' />}
         </StyledColumn>
         {!noText && (
           <StyledColumn>

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Button from 'share-ui/components/Button/Button'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import HeadingTertiary from 'components/Heading/Tertiary'
@@ -17,7 +17,7 @@ const ForgotPassword = () => {
     <StyledCenterFormContainer>
       <HeadingTertiary
         value={t('add-email')}
-        type={Heading.types.h1}
+        type={Heading.types?.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>

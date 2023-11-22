@@ -5,7 +5,7 @@ import { FormikProvider } from 'formik'
 
 import Button from 'share-ui/components/Button/Button'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import Typography from 'share-ui/components/typography/Typography'
 import FormikTextField from 'components/TextFieldFormik'
 import useTeams from './useTeams'
@@ -69,7 +69,11 @@ const TeamForm = ({ formik, assignedUserList }: TeamFormProps) => {
     <StyledContainer>
       <FormikProvider value={formik}>
         <StyledHeaderWrapper>
-          <StyledHeading type={Heading.types.h1} size={Heading.sizes.sm} value={t('add-member')} />
+          <StyledHeading
+            type={Heading.types?.h1}
+            size={Heading.sizes?.SMALL}
+            value={t('add-member')}
+          />
         </StyledHeaderWrapper>
         <StyledEmailWrapper>
           <TypographyPrimary

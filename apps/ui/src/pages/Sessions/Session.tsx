@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import Table from 'components/Table'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import TextField from 'share-ui/components/TextField/TextField'
 import {

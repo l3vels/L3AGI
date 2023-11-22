@@ -17,7 +17,7 @@ import Dropdown from 'share-ui/components/Dropdown/Dropdown'
 
 // import TextField from 'share-ui/components/TextField/TextField'
 // import Textarea from 'share-ui/components/Textarea/Textarea'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 // import DatePickerField from 'oldComponents/atoms/DatePickerField'
 import Typography from 'share-ui/components/typography/Typography'
 import info from '../../../assets/images/info.png'
@@ -122,8 +122,8 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
             show
             title={
               <StyledModalHeading
-                type={Heading.types.h1}
-                size={Heading.sizes.md}
+                type={Heading.types?.h1}
+                size={Heading.sizes?.MEDIUM}
                 value={t('edit-api-keys')}
               />
             }

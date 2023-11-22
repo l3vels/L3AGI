@@ -15,7 +15,7 @@ import { useAgents } from './useAgents'
 import { ButtonPrimary } from 'components/Button/Button'
 
 import HeadingPrimary from 'components/Heading/Primary'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { AgentWithConfigs } from 'types'
 
@@ -33,7 +33,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
       <StyledHeaderGroup className='header_group'>
         <StyledMainHeaderWrapper>
           <HeadingPrimary
-            type={Heading.types.h1}
+            type={Heading.types?.h1}
             size='medium'
             value={`${t('agent').toUpperCase()}S`}
           />

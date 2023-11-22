@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useTeamOfAgentsPublicService } from 'services/team/useTeamOfAgentsPublicService'
 import TypographySecondary from 'components/Typography/Secondary'
 import Typography from 'share-ui/components/typography/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import HeadingPrimary from 'components/Heading/Primary'
 import styled from 'styled-components'
 import { AuthContext } from 'contexts'
@@ -29,7 +29,7 @@ const DiscoverTeamAgents = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'></StyledHeaderGroup>
       <StyledHeadingWrapper>
-        <StyledHeadingPrimary type={Heading.types.h1} value={'Discover Team of Agents '} />
+        <StyledHeadingPrimary type={Heading.types?.h1} value={'Discover Team of Agents '} />
         <TypographySecondary
           value={'Create and manage your team of AI agents for interactive experiences'}
           type={Typography.types.LABEL}

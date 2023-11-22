@@ -14,7 +14,7 @@ import Typography from 'share-ui/components/typography/Typography'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import CreateApiKeysForm from './CreateApikeysForm'
 import { StyledRoot } from '../EditApiKey/EditApiModal'
@@ -38,8 +38,8 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
             show
             title={
               <StyledModalHeading
-                type={Heading.types.h1}
-                size={Heading.sizes.md}
+                type={Heading.types?.h1}
+                size={Heading.sizes?.MEDIUM}
                 value={t('create-new-secret-key')}
               />
             }

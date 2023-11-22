@@ -7,7 +7,6 @@ import useImportFile from './useImportFile'
 
 import Button from 'share-ui/components/Button/Button'
 import Typography from 'share-ui/components/typography/Typography'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
 import UploadButton from 'components/UploadButton'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
@@ -17,6 +16,7 @@ import { t } from 'i18next'
 
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 
 const ImportFile = ({
   setFieldValue,

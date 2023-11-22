@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { data } from './dummyData'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import Typography from 'share-ui/components/typography/Typography'
 
 import { StyledTextWrapper } from '../Collection/CollectionForm/CollectionForm'
@@ -80,7 +80,7 @@ const Home = () => {
         {/* 
           <StyledTextWrapper>
             <Heading
-              type={Heading.types.h1}
+              type={Heading.types?.h1}
               value={'Reports Overview'}
               size='medium'
               customColor={'rgba(255, 255, 255, 0.8)'}

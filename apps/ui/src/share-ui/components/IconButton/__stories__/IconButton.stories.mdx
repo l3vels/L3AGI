@@ -816,7 +816,7 @@ Set disable button for something that isn’t usable. Use a tooltip on hover in 
     >
       <Flex className={classes.dashboardHeader} gap={Flex.gaps.SMALL}>
         <Icon icon={Drag} />
-        <Heading type={Heading.types.h5} value='Widget name' />
+        <Heading type={Heading.types?.h5} value='Widget name' />
         <IconButton
           icon={Filter}
           ariaLabel='Filter the widget by everything'
@@ -847,7 +847,7 @@ Set disable button for something that isn’t usable. Use a tooltip on hover in 
           <Icon icon={Item} iconSize={40} />
           <Heading
             className={classes.recycleBinTitle}
-            type={Heading.types.h5}
+            type={Heading.types?.h5}
             value='Item'
             id='l3-recycle-bin-title'
           />

@@ -5,7 +5,7 @@ import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from 'share-ui/components/typography/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import Button from 'share-ui/components/Button/Button'
 
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
@@ -29,7 +29,11 @@ const Account = () => {
       <div id='header_group'>
         <StyledHeaderGroup>
           <StyledTextHeaderWrapper>
-            <HeadingPrimary type={Heading.types.h1} size={Heading.sizes.lg} value='My Profile' />
+            <HeadingPrimary
+              type={Heading.types?.h1}
+              size={Heading.sizes?.LARGE}
+              value='My Profile'
+            />
           </StyledTextHeaderWrapper>
           <StyledButtonsContainer>
             <StyledChangePasswordButton
