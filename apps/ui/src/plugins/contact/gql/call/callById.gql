@@ -1,0 +1,10 @@
+query callById($id: id!) @api(name: pro) {
+  callById(id: $id) @rest(type: "Call", path: "/call/{args.id}", method: "GET", endpoint: "pro") {
+    id
+    chat_id
+    contact_id
+    logs {
+      content
+    }
+  }
+}
