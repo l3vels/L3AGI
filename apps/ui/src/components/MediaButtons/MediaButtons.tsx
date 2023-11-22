@@ -6,7 +6,7 @@ import {
   StyledWrapper,
 } from 'components/TermsAndPrivacyButtons/TermsAndPrivacyButtons'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import Discord from '@l3-lib/ui-core/dist/icons/Discord'
 import TwitterLogo from 'assets/tools/twitter.png'

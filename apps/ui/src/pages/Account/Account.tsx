@@ -4,7 +4,7 @@ import { FormikProvider } from 'formik'
 import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from 'share-ui/components/Button/Button'
 

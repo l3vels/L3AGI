@@ -20,7 +20,7 @@ import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { StyledSectionTitle } from 'pages/Home/homeStyle.css'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import {
   StyledEditIcon,

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import HumanMessageText from './HumanMessageText'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import TypographyPrimary from 'components/Typography/Primary'

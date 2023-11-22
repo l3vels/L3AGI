@@ -6,7 +6,7 @@ import { FormikProvider } from 'formik'
 import Button from 'share-ui/components/Button/Button'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import FormikTextField from 'components/TextFieldFormik'
 import useTeams from './useTeams'
 import TypographyPrimary from 'components/Typography/Primary'

@@ -9,7 +9,7 @@ import {
 import Button from 'share-ui/components/Button/Button'
 import Loader from 'share-ui/components/Loader/Loader'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 import { toolLogos } from '../constants'
 import FormikTextField from 'components/TextFieldFormik'

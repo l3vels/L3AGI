@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Button from 'share-ui/components/Button/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import useLog from 'pages/Log/useLog'
 import TypographyPrimary from 'components/Typography/Primary'

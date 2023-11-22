@@ -2,7 +2,7 @@ import React, { FC, useContext } from 'react'
 import { useModal } from 'hooks'
 
 import moment from 'moment'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 

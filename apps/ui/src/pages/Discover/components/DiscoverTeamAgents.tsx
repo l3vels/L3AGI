@@ -9,10 +9,10 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import TeamOfAgentsCard from 'pages/TeamOfAgents/TeamOfAgentsCard'
-import { useNavigate, useLocation} from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useTeamOfAgentsPublicService } from 'services/team/useTeamOfAgentsPublicService'
 import TypographySecondary from 'components/Typography/Secondary'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import HeadingPrimary from 'components/Heading/Primary'
 import styled from 'styled-components'
@@ -25,11 +25,9 @@ const DiscoverTeamAgents = () => {
   const { data: publicTeamAgents } = useTeamOfAgentsPublicService()
   const location = useLocation()
 
-
   return (
     <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-      </StyledHeaderGroup>
+      <StyledHeaderGroup className='header_group'></StyledHeaderGroup>
       <StyledHeadingWrapper>
         <StyledHeadingPrimary type={Heading.types.h1} value={'Discover Team of Agents '} />
         <TypographySecondary
@@ -78,4 +76,3 @@ const StyledHeadingWrapper = styled.div`
 const StyledHeadingPrimary = styled(HeadingPrimary)`
   font-size: 40px;
 `
-

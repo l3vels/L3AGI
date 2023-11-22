@@ -1,4 +1,4 @@
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 

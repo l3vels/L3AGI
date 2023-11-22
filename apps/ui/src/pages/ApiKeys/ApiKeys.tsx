@@ -7,7 +7,7 @@ import Button from 'share-ui/components/Button/Button'
 import Table from 'components/Table'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import { useNavigate } from 'react-router-dom'
 
 import useApiKeys from './useApiKeys'

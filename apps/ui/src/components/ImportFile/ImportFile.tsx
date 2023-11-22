@@ -6,7 +6,7 @@ import ImportFileTable from './ImportFileTable'
 import useImportFile from './useImportFile'
 
 import Button from 'share-ui/components/Button/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
 
 import UploadButton from 'components/UploadButton'

@@ -12,7 +12,8 @@ import {
 
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 import API from '@l3-lib/ui-core/dist/icons/API'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
+
 import styled, { css, keyframes } from 'styled-components'
 
 import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'

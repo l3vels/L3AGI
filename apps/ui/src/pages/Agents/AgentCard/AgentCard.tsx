@@ -5,7 +5,7 @@ import Button from 'share-ui/components/Button/Button'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
 

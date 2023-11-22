@@ -2,7 +2,7 @@ import { ChangeEvent, useRef } from 'react'
 
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import File from '@l3-lib/ui-core/dist/icons/File'
 import Loader from 'share-ui/components/Loader/Loader'

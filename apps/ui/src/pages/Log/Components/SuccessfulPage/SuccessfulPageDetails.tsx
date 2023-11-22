@@ -13,7 +13,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Tags from 'share-ui/components/Tags/Tags'
 
 import TypographySecondary from 'components/Typography/Secondary'

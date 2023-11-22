@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Tags from 'share-ui/components/Tags/Tags'
 
 import TypographyPrimary from 'components/Typography/Primary'

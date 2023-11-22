@@ -6,7 +6,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import Button from 'share-ui/components/Button/Button'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Loader from 'share-ui/components/Loader/Loader'
 
 import { useTranslation } from 'react-i18next'

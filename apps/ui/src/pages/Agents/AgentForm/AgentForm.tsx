@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import Textarea from 'share-ui/components/Textarea/Textarea'

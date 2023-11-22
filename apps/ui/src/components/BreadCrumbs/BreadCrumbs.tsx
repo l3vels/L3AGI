@@ -3,7 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Button from 'share-ui/components/Button/Button'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import { useDatasourceByIdService } from 'services/datasource/useDatasourceByIdService'

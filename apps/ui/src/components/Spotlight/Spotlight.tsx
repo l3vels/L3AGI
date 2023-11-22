@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyQuaternary from 'components/Typography/Quaternary'
 import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
 

@@ -6,7 +6,7 @@ import Toggle from '@l3-lib/ui-core/dist/Toggle'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TextField from 'share-ui/components/TextField/TextField'
 
 // import useFilter from '../useFilter'

@@ -22,7 +22,7 @@ import {
   StyledValueOutlineIcon,
 } from 'components/ChatSwitcher/ChatSwitcher'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { t } from 'i18next'

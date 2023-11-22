@@ -9,7 +9,7 @@ import useGithubLogin from 'pages/Auth/Login/useGithubLogin'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Button from 'share-ui/components/Button/Button'
 
 import githubIcon from 'assets/icons/githubIcon.png'

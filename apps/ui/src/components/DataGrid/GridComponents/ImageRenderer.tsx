@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { StyledLoaderWrapper, StyledUploadDiv } from './MediasRenderer'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Loader from 'share-ui/components/Loader/Loader'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 

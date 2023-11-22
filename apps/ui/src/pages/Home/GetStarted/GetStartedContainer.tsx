@@ -3,7 +3,7 @@ import { ReactNode, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import Close from '@l3-lib/ui-core/dist/icons/Close'
 import Connect from '@l3-lib/ui-core/dist/icons/Connect'

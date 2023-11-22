@@ -5,7 +5,7 @@ import TextField from 'share-ui/components/TextField/TextField'
 
 // import useFilter from './useFilter'
 import DatePicker from 'components/DatePicker'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Button from 'share-ui/components/Button/Button'
 import AdditionalFilters from './AdditionalFilters'
 import CreateLogModal from '../CreateLogModal/CreateLogModal'

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useAssignedUserListService } from 'services'
 import { RandomAvatar } from 'helpers/RandomImage'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Share from '@l3-lib/ui-core/dist/icons/Share'
 import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import TypographySecondary from 'components/Typography/Secondary'

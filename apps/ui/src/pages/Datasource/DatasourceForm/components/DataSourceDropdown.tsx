@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Dropdown from 'share-ui/components/Dropdown/Dropdown'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import HelpIcon from '@l3-lib/ui-core/dist/icons/Help'

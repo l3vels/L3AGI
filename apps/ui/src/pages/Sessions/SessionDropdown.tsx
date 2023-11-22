@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'share-ui/components/Dropdown/Dropdown'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 import { placeholder } from 'lodash/fp'
 

@@ -7,7 +7,7 @@ import defaultStyle from './defaultStyle'
 import styled from 'styled-components'
 import { useAssignedUserListService } from 'services'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Avatar from '@l3-lib/ui-core/dist/Avatar'
 
 import l3Icon from 'assets/avatars/l3.png'

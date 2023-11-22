@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import useRegister from 'pages/Auth/Register/useRegister'
 import TextFieldFormik from 'components/TextFieldFormik'
 import Button from 'share-ui/components/Button/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import { useModal } from 'hooks'
 

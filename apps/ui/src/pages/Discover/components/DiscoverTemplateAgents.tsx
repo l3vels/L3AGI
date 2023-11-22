@@ -3,11 +3,9 @@ import { AuthContext } from 'contexts'
 import { useModal } from 'hooks'
 import AgentCard from 'pages/Agents/AgentCard'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import {
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
+import { StyledSectionWrapper } from 'pages/Home/homeStyle.css'
 import TypographySecondary from 'components/Typography/Secondary'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,15 +24,20 @@ const Discover = () => {
   const { templateAgents } = useDiscover()
 
   return (
-    <>      
+    <>
       {/* {<DiscoverSystemAgents />} */}
 
       {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
           <StyledHeadingWrapper>
-            <StyledHeadingPrimary type={Heading.types.h1} value={'Discover AI Agents built with L3'} />
+            <StyledHeadingPrimary
+              type={Heading.types.h1}
+              value={'Discover AI Agents built with L3'}
+            />
             <TypographySecondary
-              value={"Chat with the foremost minds shaping AI's future or create your own innovative ideas"}
+              value={
+                "Chat with the foremost minds shaping AI's future or create your own innovative ideas"
+              }
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
             />
@@ -72,9 +75,6 @@ const Discover = () => {
 
 export default Discover
 
-
-
-
 export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
@@ -91,4 +91,3 @@ const StyledHeadingWrapper = styled.div`
 const StyledHeadingPrimary = styled(HeadingPrimary)`
   font-size: 40px;
 `
-

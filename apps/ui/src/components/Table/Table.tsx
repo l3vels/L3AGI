@@ -4,7 +4,7 @@ import { useTable, useResizeColumns, useFlexLayout, useBlockLayout } from 'react
 import styled, { css } from 'styled-components'
 import TableCell from './components/TableCell'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 
 type ColumnProps = {

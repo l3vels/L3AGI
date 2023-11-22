@@ -4,7 +4,7 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 

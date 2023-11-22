@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import Button from 'share-ui/components/Button/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TextField from 'share-ui/components/TextField/TextField'
 import outsideClick from 'helpers/outsideClick'
 import useLog from 'pages/Log/useLog'
