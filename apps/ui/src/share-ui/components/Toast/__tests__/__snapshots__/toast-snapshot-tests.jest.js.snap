@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast renders correctly (renders nothing) with empty props 1`] = `null`;
+
+exports[`Toast renders correctly and don't renders close button if closeable=false 1`] = `
+<div
+  className="l3-style-toast--position"
+>
+  <div
+    aria-live="polite"
+    className="l3-style-toast l3-style-toast--position-bottom-right l3-style-toast--type-positive"
+    role="alert"
+  >
+    <div
+      className="l3-style-toast-icon-large"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon_component--no-focus-style"
+        fill="currentColor"
+        height="37.78px"
+        onClick={[Function]}
+        viewBox="0 0 40 40"
+        width="37.78px"
+      >
+        <path
+          d="M20.0002 38.8891C30.4323 38.8891 38.8891 30.4323 38.8891 20.0002C38.8891 9.56817 30.4323 1.11133 20.0002 1.11133C9.56817 1.11133 1.11133 9.56817 1.11133 20.0002C1.11133 30.4323 9.56817 38.8891 20.0002 38.8891Z"
+          fill="#fff"
+        />
+        <path
+          d="M20.0004 36.3152C29.0108 36.3152 36.3152 29.0108 36.3152 20.0004C36.3152 10.9899 29.0108 3.68555 20.0004 3.68555C10.9899 3.68555 3.68555 10.9899 3.68555 20.0004C3.68555 29.0108 10.9899 36.3152 20.0004 36.3152Z"
+          fill="#000"
+        />
+        <path
+          d="M17.9268 25.9725L12.8657 20.9114L14.6875 19.0897L17.9268 22.329L25.3163 14.9395L27.1381 16.7612L17.9268 25.9725Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <div
+      className="l3-style-toast-content"
+    />
+  </div>
+</div>
+`;
+
+exports[`Toast renders correctly renders nothing when open is false 1`] = `null`;
+
+exports[`Toast renders correctly when icon is hidden 1`] = `null`;
+
+exports[`Toast renders correctly when open is true 1`] = `
+<div
+  className="l3-style-toast--position"
+>
+  <div
+    aria-live="polite"
+    className="l3-style-toast l3-style-toast--position-bottom-right l3-style-toast--type-positive"
+    role="alert"
+  >
+    <div
+      className="l3-style-toast-icon-large"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon_component--no-focus-style"
+        fill="currentColor"
+        height="37.78px"
+        onClick={[Function]}
+        viewBox="0 0 40 40"
+        width="37.78px"
+      >
+        <path
+          d="M20.0002 38.8891C30.4323 38.8891 38.8891 30.4323 38.8891 20.0002C38.8891 9.56817 30.4323 1.11133 20.0002 1.11133C9.56817 1.11133 1.11133 9.56817 1.11133 20.0002C1.11133 30.4323 9.56817 38.8891 20.0002 38.8891Z"
+          fill="#fff"
+        />
+        <path
+          d="M20.0004 36.3152C29.0108 36.3152 36.3152 29.0108 36.3152 20.0004C36.3152 10.9899 29.0108 3.68555 20.0004 3.68555C10.9899 3.68555 3.68555 10.9899 3.68555 20.0004C3.68555 29.0108 10.9899 36.3152 20.0004 36.3152Z"
+          fill="#000"
+        />
+        <path
+          d="M17.9268 25.9725L12.8657 20.9114L14.6875 19.0897L17.9268 22.329L25.3163 14.9395L27.1381 16.7612L17.9268 25.9725Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <div
+      className="l3-style-toast-content"
+    />
+    <button
+      aria-busy={false}
+      aria-disabled={false}
+      aria-label="close-toast"
+      className="l3-style-toast_close-button l3-style-button l3-style-button--size-small l3-style-button--kind-tertiary l3-style-button--color-on-primary-color"
+      data-testid="button"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`Toast renders correctly with button 1`] = `
+<div
+  className="l3-style-toast--position"
+>
+  <div
+    aria-live="polite"
+    className="l3-style-toast l3-style-toast--position-bottom-right l3-style-toast--type-positive"
+    role="alert"
+  >
+    <div
+      className="l3-style-toast-icon-large"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon_component--no-focus-style"
+        fill="currentColor"
+        height="37.78px"
+        onClick={[Function]}
+        viewBox="0 0 40 40"
+        width="37.78px"
+      >
+        <path
+          d="M20.0002 38.8891C30.4323 38.8891 38.8891 30.4323 38.8891 20.0002C38.8891 9.56817 30.4323 1.11133 20.0002 1.11133C9.56817 1.11133 1.11133 9.56817 1.11133 20.0002C1.11133 30.4323 9.56817 38.8891 20.0002 38.8891Z"
+          fill="#fff"
+        />
+        <path
+          d="M20.0004 36.3152C29.0108 36.3152 36.3152 29.0108 36.3152 20.0004C36.3152 10.9899 29.0108 3.68555 20.0004 3.68555C10.9899 3.68555 3.68555 10.9899 3.68555 20.0004C3.68555 29.0108 10.9899 36.3152 20.0004 36.3152Z"
+          fill="#000"
+        />
+        <path
+          d="M17.9268 25.9725L12.8657 20.9114L14.6875 19.0897L17.9268 22.329L25.3163 14.9395L27.1381 16.7612L17.9268 25.9725Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <div
+      className="l3-style-toast-content"
+    />
+    <div
+      className="l3-style-toast-action"
+    >
+      <button
+        aria-busy={false}
+        aria-disabled={false}
+        className="l3-style-toast-action_button l3-style-button l3-style-button--size-small l3-style-button--kind-secondary l3-style-button--color-on-primary-color"
+        data-testid="button"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        Undo 5
+      </button>
+    </div>
+    <button
+      aria-busy={false}
+      aria-disabled={false}
+      aria-label="close-toast"
+      className="l3-style-toast_close-button l3-style-button l3-style-button--size-small l3-style-button--kind-tertiary l3-style-button--color-on-primary-color"
+      data-testid="button"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`Toast renders correctly with button and link 1`] = `
+<div
+  className="l3-style-toast--position"
+>
+  <div
+    aria-live="polite"
+    className="l3-style-toast l3-style-toast--position-bottom-right l3-style-toast--type-positive"
+    role="alert"
+  >
+    <div
+      className="l3-style-toast-icon-large"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon_component--no-focus-style"
+        fill="currentColor"
+        height="37.78px"
+        onClick={[Function]}
+        viewBox="0 0 40 40"
+        width="37.78px"
+      >
+        <path
+          d="M20.0002 38.8891C30.4323 38.8891 38.8891 30.4323 38.8891 20.0002C38.8891 9.56817 30.4323 1.11133 20.0002 1.11133C9.56817 1.11133 1.11133 9.56817 1.11133 20.0002C1.11133 30.4323 9.56817 38.8891 20.0002 38.8891Z"
+          fill="#fff"
+        />
+        <path
+          d="M20.0004 36.3152C29.0108 36.3152 36.3152 29.0108 36.3152 20.0004C36.3152 10.9899 29.0108 3.68555 20.0004 3.68555C10.9899 3.68555 3.68555 10.9899 3.68555 20.0004C3.68555 29.0108 10.9899 36.3152 20.0004 36.3152Z"
+          fill="#000"
+        />
+        <path
+          d="M17.9268 25.9725L12.8657 20.9114L14.6875 19.0897L17.9268 22.329L25.3163 14.9395L27.1381 16.7612L17.9268 25.9725Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <div
+      className="l3-style-toast-content"
+    />
+    <div
+      className="l3-style-toast-action"
+    >
+      <button
+        aria-busy={false}
+        aria-disabled={false}
+        className="l3-style-toast-action_button l3-style-button l3-style-button--size-small l3-style-button--kind-secondary l3-style-button--color-on-primary-color"
+        data-testid="button"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        Undo 5
+      </button>
+    </div>
+    <button
+      aria-busy={false}
+      aria-disabled={false}
+      aria-label="close-toast"
+      className="l3-style-toast_close-button l3-style-button l3-style-button--size-small l3-style-button--kind-tertiary l3-style-button--color-on-primary-color"
+      data-testid="button"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`Toast renders correctly with link 1`] = `
+<div
+  className="l3-style-toast--position"
+>
+  <div
+    aria-live="polite"
+    className="l3-style-toast l3-style-toast--position-bottom-right l3-style-toast--type-positive"
+    role="alert"
+  >
+    <div
+      className="l3-style-toast-icon-large"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon_component--no-focus-style"
+        fill="currentColor"
+        height="37.78px"
+        onClick={[Function]}
+        viewBox="0 0 40 40"
+        width="37.78px"
+      >
+        <path
+          d="M20.0002 38.8891C30.4323 38.8891 38.8891 30.4323 38.8891 20.0002C38.8891 9.56817 30.4323 1.11133 20.0002 1.11133C9.56817 1.11133 1.11133 9.56817 1.11133 20.0002C1.11133 30.4323 9.56817 38.8891 20.0002 38.8891Z"
+          fill="#fff"
+        />
+        <path
+          d="M20.0004 36.3152C29.0108 36.3152 36.3152 29.0108 36.3152 20.0004C36.3152 10.9899 29.0108 3.68555 20.0004 3.68555C10.9899 3.68555 3.68555 10.9899 3.68555 20.0004C3.68555 29.0108 10.9899 36.3152 20.0004 36.3152Z"
+          fill="#000"
+        />
+        <path
+          d="M17.9268 25.9725L12.8657 20.9114L14.6875 19.0897L17.9268 22.329L25.3163 14.9395L27.1381 16.7612L17.9268 25.9725Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <div
+      className="l3-style-toast-content"
+    />
+    <div
+      className="l3-style-toast-action"
+    />
+    <button
+      aria-busy={false}
+      aria-disabled={false}
+      aria-label="close-toast"
+      className="l3-style-toast_close-button l3-style-button l3-style-button--size-small l3-style-button--kind-tertiary l3-style-button--color-on-primary-color"
+      data-testid="button"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    />
+  </div>
+</div>
+`;
+
+exports[`Toast renders correctly with negative type 1`] = `
+<div
+  className="l3-style-toast--position"
+>
+  <div
+    aria-live="polite"
+    className="l3-style-toast l3-style-toast--position-bottom-right l3-style-toast--type-negative"
+    role="alert"
+  >
+    <div
+      className="l3-style-toast-icon-large"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon_component--no-focus-style"
+        fill="currentColor"
+        height="37.78px"
+        onClick={[Function]}
+        viewBox="0 0 40 40"
+        width="37.78px"
+      >
+        <path
+          d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z"
+          fill="#fff"
+        />
+        <path
+          d="M20 37.2727C29.5395 37.2727 37.2727 29.5395 37.2727 20C37.2727 10.4605 29.5395 2.72727 20 2.72727C10.4605 2.72727 2.72727 10.4605 2.72727 20C2.72727 29.5395 10.4605 37.2727 20 37.2727Z"
+          fill="#000"
+        />
+        <path
+          d="M20.0225 15.4182C19.5771 15.4182 19.2044 15.2682 18.8953 14.9682C18.5862 14.6682 18.4316 14.2954 18.4316 13.85C18.4316 13.4091 18.5862 13.0364 18.8953 12.7454C19.2044 12.4545 19.5771 12.3046 20.0225 12.3046C20.468 12.3046 20.8362 12.45 21.1271 12.7454C21.4225 13.0409 21.568 13.4091 21.568 13.85C21.568 14.2954 21.4225 14.6636 21.1271 14.9682C20.8316 15.2682 20.4635 15.4182 20.0225 15.4182ZM21.418 27.6955H18.6044V16.6H21.418V27.6955Z"
+          fill="#fff"
+        />
+      </svg>
+    </div>
+    <div
+      className="l3-style-toast-content"
+    />
+    <button
+      aria-busy={false}
+      aria-disabled={false}
+      aria-label="close-toast"
+      className="l3-style-toast_close-button l3-style-button l3-style-button--size-small l3-style-button--kind-tertiary l3-style-button--color-on-primary-color"
+      data-testid="button"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    />
+  </div>
+</div>
+`;

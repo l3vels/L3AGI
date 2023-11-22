@@ -1,0 +1,9 @@
+@import "../../../styles/global-css-settings";
+@import "../../../styles/themes";
+
+.l3-style-toast-action_link {
+  @include theme-prop(color, text-color-on-primary);
+  text-decoration: underline;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
