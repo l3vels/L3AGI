@@ -93,11 +93,13 @@ const TableCell = ({ cell }: TableCellProps) => {
           <Editor {...cellEditorParams} value={cellValue} ref={multiselectEditorRef} />
         </StyledWrapper>
       ) : (
-        <TypographySecondary
-          value={cell.render('Cell')}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
+        <StyledTypographyWrapper>
+          <TypographySecondary
+            value={cell.render('Cell')}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledTypographyWrapper>
       )}
     </StyledTd>
   )
@@ -131,4 +133,10 @@ const StyledTd = styled.td<{ isEditing: boolean }>`
 `
 const StyledWrapper = styled.div`
   border: 1px solid #000;
+`
+
+const StyledTypographyWrapper = styled.div`
+  display: inline;
+  justify-content: space-between;
+  align-items: center;
 `
