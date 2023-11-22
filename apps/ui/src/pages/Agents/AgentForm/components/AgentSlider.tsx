@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Slider from '@l3-lib/ui-core/dist/Slider'
+
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
+import Slider from 'share-ui/components/Slider/Slider'
 
 const AgentSlider = ({ onChange, value }: { value: number; onChange: (value: number) => void }) => {
   const { t } = useTranslation()
@@ -18,7 +19,7 @@ const AgentSlider = ({ onChange, value }: { value: number; onChange: (value: num
       </StyledSliderHeader>
       <StyledSlide
         className='slider'
-        color={Slider.colors.POSITIVE}
+        color={Slider.colors?.POSITIVE}
         defaultValue={value * 10 || 2}
         min={0}
         max={10}

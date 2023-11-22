@@ -21,7 +21,6 @@ import { isIE11 } from '../../utils/user-agent-utils'
 import { SubIcon, L3Component } from '../../types'
 import { ComponentDefaultTestId } from '../../tests/constants'
 import styled, { css } from 'styled-components'
-// import './Button.scss'
 
 import '../../styles/global-css-settings.css'
 

@@ -11,7 +11,6 @@ import MenuTitle from '@l3-lib/ui-core/dist/MenuTitle'
 import EditableHeading from '@l3-lib/ui-core/dist/EditableHeading'
 import Loader from 'share-ui/components/Loader/Loader'
 
-import DialogContentContainer from '@l3-lib/ui-core/dist/DialogContentContainer'
 import { useNavigate, useLocation } from 'react-router-dom'
 import BurgerMenuIconSvg from 'assets/svgComponents/BurgerMenuIconSvg'
 
@@ -23,6 +22,7 @@ import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import LeftArrowIconSvg from 'assets/svgComponents/LeftArrowIconSvg'
 
 import defaultLogo from '../assets/icons/defaultLogo.svg'
+import DialogContentContainer from 'share-ui/components/DialogContentContainer/DialogContentContainer'
 
 type NavbarProps = {
   showMenu: boolean
@@ -103,7 +103,7 @@ const Navbar = ({
             </StyledBurgerIcon>
           </StyledTopColumn>
 
-          <DialogContentContainer collapsed={showMenu}>
+          <DialogContentContainer>
             <StyledMenu
               size='large'
               collapsed={showMenu}

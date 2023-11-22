@@ -1,0 +1,507 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slider Render 01. with empty props 1`] = `
+<div
+  style="display: flex;"
+>
+  <div
+    class="l3-slider"
+    data-testid="l3-slider"
+  >
+    <div
+      style="width: 100%;"
+    >
+      <div
+        class="l3-slider__base l3-slider__base--small l3-slider__base--normal"
+        data-testid="l3-slider__base"
+      >
+        <div
+          class="l3-slider__rail"
+          data-testid="l3-slider__rail"
+        >
+          <div
+            class="l3-slider__track"
+          />
+          <div
+            class="l3-slider__filled-track"
+            style="left: 0%; width: 0%;"
+          />
+          <div
+            aria-disabled="false"
+            aria-valuemax="100"
+            aria-valuemin="0"
+            aria-valuenow="0"
+            aria-valuetext="0%"
+            class="l3-slider__thumb l3-slider__thumb--index-0"
+            data-testid="l3-slider__thumb-0"
+            role="slider"
+            style="left: 0%;"
+            tabindex="0"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Slider Render 02. with ariaLabel 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"ariaLabel":"My Slider"}
+
+@@ --- --- @@
+            />
+            <div
+              aria-disabled="false"
++             aria-label="My Slider"
+              aria-valuemax="100"
+              aria-valuemin="0"
+              aria-valuenow="0"
+`;
+
+exports[`Slider Render 03. with ariaLabelledby 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"ariaLabelledby":"id-of-the-custom-label"}
+
+@@ --- --- @@
+            />
+            <div
+              aria-disabled="false"
++             aria-labelledby="id-of-the-custom-label"
+              aria-valuemax="100"
+              aria-valuemin="0"
+              aria-valuenow="0"
+`;
+
+exports[`Slider Render 04. with custom className 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"className":"slide-me"}
+
+@@ --- --- @@
+    style="display: flex;"
+  >
+    <div
+-     class="l3-slider"
++     class="l3-slider slide-me"
+      data-testid="l3-slider"
+    >
+      <div
+`;
+
+exports[`Slider Render 05. with id and data-testid 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"id":"my-slider","data-testid":"my-slider"}
+
+@@ --- --- @@
+  >
+    <div
+      class="l3-slider"
+-     data-testid="l3-slider"
++     data-testid="my-slider"
++     id="my-slider"
+    >
+      <div
+        style="width: 100%;"
+      >
+        <div
+          class="l3-slider__base l3-slider__base--small l3-slider__base--normal"
+-         data-testid="l3-slider__base"
++         data-testid="my-slider__base"
+        >
+          <div
+            class="l3-slider__rail"
+-           data-testid="l3-slider__rail"
++           data-testid="my-slider__rail"
+          >
+            <div
+              class="l3-slider__track"
+@@ --- --- @@
+              aria-valuenow="0"
+              aria-valuetext="0%"
+              class="l3-slider__thumb l3-slider__thumb--index-0"
+-             data-testid="l3-slider__thumb-0"
++             data-testid="my-slider__thumb-0"
+              role="slider"
+              style="left: 0%;"
+              tabindex="0"
+`;
+
+exports[`Slider Render 06. with disabled 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"disabled":true}
+
+@@ --- --- @@
+    style="display: flex;"
+  >
+    <div
+-     class="l3-slider"
++     class="l3-slider l3-slider--disabled"
+      data-testid="l3-slider"
+    >
+      <div
+        style="width: 100%;"
+      >
+        <div
+-         class="l3-slider__base l3-slider__base--small l3-slider__base--normal"
++         class="l3-slider__base l3-slider__base--small l3-slider__base--normal l3-slider__base--disabled"
+          data-testid="l3-slider__base"
+        >
+          <div
+@@ --- --- @@
+              style="left: 0%; width: 0%;"
+            />
+            <div
+-             aria-disabled="false"
++             aria-disabled="true"
+              aria-valuemax="100"
+              aria-valuemin="0"
+              aria-valuenow="0"
+              aria-valuetext="0%"
+-             class="l3-slider__thumb l3-slider__thumb--index-0"
++             class="l3-slider__thumb l3-slider__thumb--disabled l3-slider__thumb--index-0"
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+              style="left: 0%;"
+-             tabindex="0"
++             tabindex="-1"
+            />
+          </div>
+        </div>
+`;
+
+exports[`Slider Render 07. with color 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"color":"positive"}
+
+@@ --- --- @@
+        style="width: 100%;"
+      >
+        <div
+-         class="l3-slider__base l3-slider__base--small l3-slider__base--normal"
++         class="l3-slider__base l3-slider__base--small l3-slider__base--positive"
+          data-testid="l3-slider__base"
+        >
+          <div
+`;
+
+exports[`Slider Render 08. with size 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"size":"large"}
+
+@@ --- --- @@
+        style="width: 100%;"
+      >
+        <div
+-         class="l3-slider__base l3-slider__base--small l3-slider__base--normal"
++         class="l3-slider__base l3-slider__base--large l3-slider__base--normal"
+          data-testid="l3-slider__base"
+        >
+          <div
+`;
+
+exports[`Slider Render 09. with min, max, and step 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"min":10,"max":20,"step":2}
+
+@@ --- --- @@
+            />
+            <div
+              aria-disabled="false"
+-             aria-valuemax="100"
+-             aria-valuemin="0"
+-             aria-valuenow="0"
+-             aria-valuetext="0%"
++             aria-valuemax="20"
++             aria-valuemin="10"
++             aria-valuenow="10"
++             aria-valuetext="10%"
+              class="l3-slider__thumb l3-slider__thumb--index-0"
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+`;
+
+exports[`Slider Render 10. with showValue 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"showValue":true}
+
+@@ --- --- @@
+    style="display: flex;"
+  >
+    <div
+-     class="l3-slider"
++     class="l3-slider l3-slider--value-shown"
+      data-testid="l3-slider"
+    >
+      <div
+@@ --- --- @@
+              role="slider"
+              style="left: 0%;"
+              tabindex="0"
+-           />
++           >
++             <label
++               class="l3-slider__thumb-label"
++             >
++               0%
++             </label>
++           </div>
+          </div>
+        </div>
+      </div>
+`;
+
+exports[`Slider Render 11. with valueFormatter 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {}
+
+@@ --- --- @@
+              aria-valuemax="100"
+              aria-valuemin="0"
+              aria-valuenow="0"
+-             aria-valuetext="0%"
++             aria-valuetext="--0GB--"
+              class="l3-slider__thumb l3-slider__thumb--index-0"
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+`;
+
+exports[`Slider Render 12. with value (controlled component) 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"value":12}
+
+@@ --- --- @@
+            />
+            <div
+              class="l3-slider__filled-track"
+-             style="left: 0%; width: 0%;"
++             style="left: 0%; width: 12%;"
+            />
+            <div
+              aria-disabled="false"
+              aria-valuemax="100"
+              aria-valuemin="0"
+-             aria-valuenow="0"
+-             aria-valuetext="0%"
++             aria-valuenow="12"
++             aria-valuetext="12%"
+              class="l3-slider__thumb l3-slider__thumb--index-0"
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+-             style="left: 0%;"
++             style="left: 12%;"
+              tabindex="0"
+            />
+          </div>
+`;
+
+exports[`Slider Render 13. with value, valueText (controlled component) 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"value":15,"valueText":"15kg"}
+
+@@ --- --- @@
+            />
+            <div
+              class="l3-slider__filled-track"
+-             style="left: 0%; width: 0%;"
++             style="left: 0%; width: 15%;"
+            />
+            <div
+              aria-disabled="false"
+              aria-valuemax="100"
+              aria-valuemin="0"
+-             aria-valuenow="0"
+-             aria-valuetext="0%"
++             aria-valuenow="15"
++             aria-valuetext="15kg"
+              class="l3-slider__thumb l3-slider__thumb--index-0"
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+-             style="left: 0%;"
++             style="left: 15%;"
+              tabindex="0"
+            />
+          </div>
+`;
+
+exports[`Slider Render 14. with indicateSelection 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"indicateSelection":true}
+
+@@ --- --- @@
+          </div>
+        </div>
+      </div>
++     <div
++       class="l3-slider__infix l3-slider__infix--postfix"
++       style="width: 60px;"
++     >
++       <div
++         data-testid="mock-text-field-comp"
++       >
++         {"value":"0%"}
++       </div>
++     </div>
+    </div>
+  </div>
+`;
+
+exports[`Slider Render 15. with prefix (string) and postfix (Icon) 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render
+
+@@ --- --- @@
+      data-testid="l3-slider"
+    >
+      <div
++       class="l3-slider__infix l3-slider__infix--txt l3-slider__infix--prefix"
++     >
++       Vol
++     </div>
++     <div
+        style="width: 100%;"
+      >
+        <div
+@@ --- --- @@
+              style="left: 0%;"
+              tabindex="0"
+            />
++         </div>
++       </div>
+      </div>
++     <div
++       class="l3-slider__infix l3-slider__infix--postfix"
++     >
++       <div
++         data-testid="mock-icon"
++       >
++         {"clickable":false,"iconSize":18,"ignoreFocusStyle":true,"icon":"Sound"}
+        </div>
+      </div>
+    </div>
+`;
+
+exports[`Slider Render 16. with prefix (custom) and postfix (render-props) 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render
+
+@@ --- --- @@
+      data-testid="l3-slider"
+    >
+      <div
++       class="l3-slider__infix l3-slider__infix--prefix"
++     >
++       <div>
++         Custom component
++       </div>
++     </div>
++     <div
+        style="width: 100%;"
+      >
+        <div
+@@ --- --- @@
+            />
+          </div>
+        </div>
++     </div>
++     <div
++       class="l3-slider__infix l3-slider__infix--postfix"
++     >
++       Render Props result: 0% (0)
+      </div>
+    </div>
+  </div>
+`;
+
+exports[`Slider Render 17. with ranged (ranged slider) 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"ranged":true}
+
+@@ --- --- @@
+            />
+            <div
+              class="l3-slider__filled-track"
+-             style="left: 0%; width: 0%;"
++             style="left: 0%; width: 100%;"
+            />
+            <div
+              aria-disabled="false"
+@@ --- --- @@
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+              style="left: 0%;"
++             tabindex="0"
++           />
++           <div
++             aria-disabled="false"
++             aria-valuemax="100"
++             aria-valuemin="0"
++             aria-valuenow="100"
++             aria-valuetext="100%"
++             class="l3-slider__thumb l3-slider__thumb--index-1"
++             data-testid="l3-slider__thumb-1"
++             role="slider"
++             style="left: 100%;"
+              tabindex="0"
+            />
+          </div>
+`;
+
+exports[`Slider Render 18. ranged slider with options 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"defaultValue":[20,30],"min":10,"max":50,"ranged":true,"step":2}
+
+@@ --- --- @@
+            />
+            <div
+              class="l3-slider__filled-track"
+-             style="left: 0%; width: 0%;"
++             style="left: 25%; width: 25%;"
+            />
+            <div
+              aria-disabled="false"
+-             aria-valuemax="100"
+-             aria-valuemin="0"
+-             aria-valuenow="0"
+-             aria-valuetext="0%"
++             aria-valuemax="50"
++             aria-valuemin="10"
++             aria-valuenow="20"
++             aria-valuetext="20%"
+              class="l3-slider__thumb l3-slider__thumb--index-0"
+              data-testid="l3-slider__thumb-0"
+              role="slider"
+-             style="left: 0%;"
++             style="left: 25%;"
++             tabindex="0"
++           />
++           <div
++             aria-disabled="false"
++             aria-valuemax="50"
++             aria-valuemin="10"
++             aria-valuenow="30"
++             aria-valuetext="30%"
++             class="l3-slider__thumb l3-slider__thumb--index-1"
++             data-testid="l3-slider__thumb-1"
++             role="slider"
++             style="left: 50%;"
+              tabindex="0"
+            />
+          </div>
+`;

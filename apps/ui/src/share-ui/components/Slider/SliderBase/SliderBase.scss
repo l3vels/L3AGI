@@ -1,0 +1,217 @@
+@import "../../../styles/global-css-settings";
+@import "../../../styles/states";
+@import "../../../styles/themes";
+
+$slider-box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3), 0px 3px 1px rgba(0, 0, 0, 0.05);
+
+.l3-slider {
+  &__base {
+    display: flex;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+  }
+
+  &__rail {
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+  }
+
+  &__track {
+    position: absolute;
+    // @include theme-prop(background, var(--color-transparent-white-01));
+    // background: var(--color-transparent-white-01);
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 3px;
+    top: calc(50% - 2px / 2);
+    height: 2px;
+    width: 100%;
+  }
+
+  &__filled-track {
+    position: absolute;
+    // @include theme-prop(background-color, primary-color);
+    // background: var(--color-gradient-light-blue);
+    -webkit-tap-highlight-color: transparent;
+    height: 2px;
+    top: calc(50% - 2px / 2);
+    width: 100%;
+  }
+
+  &__thumb {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: $slider-box-shadow;
+    // @include theme-prop(background, var(--color-gradient-light-blue));
+    // background: var(--color-gradient-light-blue);
+    -webkit-tap-highlight-color: transparent;
+    transform: translate(-50%, -50%);
+    transition: transform var(--motion-productive-long) var(--motion-timing-enter);
+    &--dragging {
+      cursor: grabbing !important;
+    }
+    &--focused {
+      cursor: grab;
+    }
+  }
+
+  &__thumb-label {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    max-width: 50px;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    transform: translate(-50%, 0);
+    white-space: nowrap;
+  }
+
+  // thumb (for NOT-disabled)
+  &:not(&--disabled) {
+    .l3-slider {
+      &__thumb {
+        @include focus-style(50%);
+        &:hover {
+          cursor: grab;
+        }
+      }
+    }
+  }
+
+  // modifications
+
+  &__base {
+    &--disabled {
+      * {
+        pointer-events: none;
+      }
+      cursor: not-allowed !important;
+      opacity: var(--disabled-component-opacity);
+    }
+
+    &--small {
+      padding: 0 8px;
+      .l3-slider {
+        &__rail {
+          border-radius: 2px;
+          height: 2px;
+          padding: 8px 0;
+        }
+        &__thumb {
+          height: 16px;
+          width: 16px;
+        }
+      }
+    }
+
+    &--medium {
+      padding: 0 12px;
+      .l3-slider {
+        &__rail {
+          border-radius: 2px;
+          height: 4px;
+          padding: 12px 0;
+        }
+        &__thumb {
+          height: 20px;
+          width: 20px;
+        }
+      }
+    }
+
+    &--large {
+      padding: 0 12px;
+      .l3-slider {
+        &__rail {
+          border-radius: 8px;
+          height: 8px;
+          padding: 10px 0;
+        }
+        &__thumb {
+          height: 24px;
+          width: 24px;
+        }
+      }
+    }
+
+    &--positive {
+      .l3-slider {
+        &__track {
+          // @include theme-prop(background, var(--color-transparent-white-01));
+          background: var(--color-transparent-white-01);
+        }
+        &__filled-track {
+          background: var(--color-gradient-green);
+        }
+        &__thumb {
+          background: var(--color-gradient-green);
+        }
+      }
+      &:not(&--disabled) {
+        .l3-slider {
+          &__thumb {
+            &:hover {
+              @include theme-prop(border-color, positive-color-hover);
+            }
+          }
+        }
+      }
+    }
+
+    &--normal {
+      .l3-slider {
+        &__track {
+          // @include theme-prop(background, var(--color-transparent-white-01));
+          background: var(--color-transparent-white-01);
+        }
+        &__filled-track {
+          // @include theme-prop(background, var(--color-gradient-light-blue));
+          background: var(--color-gradient-light-blue);
+        }
+        &__thumb {
+          // @include theme-prop(background, var(--color-gradient-light-blue));
+          background: var(--color-gradient-light-blue);
+        }
+      }
+      &:not(&--disabled) {
+        .l3-slider {
+          &__thumb {
+            &:hover {
+              @include theme-prop(border-color, positive-color-hover);
+            }
+          }
+        }
+      }
+    }
+
+    &--negative {
+      .l3-slider {
+        &__track {
+          // @include theme-prop(background, var(--color-transparent-white-01));
+          background: var(--color-transparent-white-01);
+        }
+        &__filled-track {
+          // @include theme-prop(background, var(--color-gradient-red));
+          background: var(--color-gradient-red);
+        }
+        &__thumb {
+          // @include theme-prop(background, var(--color-gradient-red));
+          background: var(--color-gradient-red);
+        }
+      }
+      &:not(&--disabled) {
+        .l3-slider {
+          &__thumb {
+            &:hover {
+              @include theme-prop(border-color, negative-color-hover);
+            }
+          }
+        }
+      }
+    }
+  }
+}

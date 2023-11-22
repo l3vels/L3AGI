@@ -6,7 +6,6 @@ import CustomSvgIcon from './CustomSvgIcon/CustomSvgIcon'
 import FontIcon from './FontIcon/FontIcon'
 import useIconProps from './hooks/useIconProps'
 import { L3ComponentProps, L3Component, MouseEventCallBack, SubIcon } from '../../types'
-// import "./Icon.scss";
 
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
 const CLICK_NOOP = (_event: React.MouseEvent) => {}

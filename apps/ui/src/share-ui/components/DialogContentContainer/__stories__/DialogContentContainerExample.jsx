@@ -1,13 +1,12 @@
-import React from "react";
-import styles from "./DialogContentContainerExample.module.scss";
+import React from 'react'
 
 const DialogContentContainerExample = () => {
   return (
-    <div className={styles["content-example"]}>
+    <div>
       <p>I could be anything when i grow up</p>
       <p>even Moshe Zemach</p>
     </div>
-  );
-};
+  )
+}
 
-export default DialogContentContainerExample;
+export default DialogContentContainerExample
