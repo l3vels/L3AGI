@@ -14,7 +14,11 @@ from utils.model import get_llm
 class ZapierSendSchema(BaseModel):
     query: str = Field(
         ...,
-        description="use zapier",
+        description=(
+            "Create a workflow that captures either an email or phone number and adds a corresponding record in Notion.\n"
+            "If available, include additional information along with the phone number or email.\n"
+            "This property encompasses various actions within Zapier, such as creating a Notion page or adding a record.\n"
+        ),
     )
 
 
@@ -23,7 +27,13 @@ class ZapierSendTool(BaseTool):
 
     name = "Zapier Send"
 
-    description = "use zapier"
+    slug = "zapierSend"
+
+    description = (
+        "Create a workflow that captures either an email or phone number and adds a corresponding record in Notion.\n"
+        "If available, include additional information along with the phone number or email.\n"
+        "This property encompasses various actions within Zapier, such as creating a Notion page or adding a record.\n"
+    )
 
     args_schema: Type[ZapierSendSchema] = ZapierSendSchema
 
