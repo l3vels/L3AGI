@@ -29,7 +29,7 @@ import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyTertiary from 'components/Typography/Tertiary'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useTeamOfAgents } from '../useTeamOfAgents'
 import { useModelsService } from 'services'

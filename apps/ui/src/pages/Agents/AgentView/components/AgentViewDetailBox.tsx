@@ -21,7 +21,7 @@ import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'

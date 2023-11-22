@@ -8,7 +8,7 @@ import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 import PersonaIcon from '@l3-lib/ui-core/dist/icons/Person'
 import EmailIcon from '@l3-lib/ui-core/dist/icons/Email'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 import EventIcon from '@l3-lib/ui-core/dist/icons/Event'
 import UserStatusIcon from '@l3-lib/ui-core/dist/icons/UserStatus'
 

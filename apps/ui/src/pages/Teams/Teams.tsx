@@ -9,7 +9,7 @@ import Heading from '@l3-lib/ui-core/dist/Heading'
 import Button from 'share-ui/components/Button/Button'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 // import DataGrid from 'components/DataGrid'

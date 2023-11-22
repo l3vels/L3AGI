@@ -23,7 +23,7 @@ import { NOOP } from '../../utils/function-utils'
 import { DialogSize } from '../DialogContentContainer/DialogContentContainerConstants'
 import { Menu } from '../Icon/Icons'
 
-function BEMClass(className: string) {
+function bemClass(className: string) {
   return `menu-button--wrapper--${className}`
 }
 
@@ -223,13 +223,12 @@ const MenuButton: L3Component<MenuButtonProps> & {
 
         const newProps: { focusOnMount?: boolean; onClose?: (event: React.KeyboardEvent) => void } =
           {}
-        // @ts-ignore
+
         if (child.type && child.type.supportFocusOnMount) {
           newProps.focusOnMount = true
           triggers.delete(Dialog.hideShowTriggers.ESCAPE_KEY)
         }
 
-        // @ts-ignore
         if (child.type && child.type.isMenu) {
           newProps.onClose = onMenuDidClose
         }
@@ -318,7 +317,7 @@ const MenuButton: L3Component<MenuButtonProps> & {
           useDerivedStateFromProps={true}
           onDialogDidShow={onDialogDidShow}
           onDialogDidHide={onDialogDidHide}
-          referenceWrapperClassName={BEMClass('reference-icon')}
+          referenceWrapperClassName={bemClass('reference-icon')}
           zIndex={zIndex}
           isOpen={isOpen}
           hideWhenReferenceHidden={hideWhenReferenceHidden}
@@ -327,11 +326,11 @@ const MenuButton: L3Component<MenuButtonProps> & {
             id={id}
             ref={mergedRef}
             type='button'
-            className={cx('menu-button--wrapper', overrideClassName, BEMClass(`size-${size}`), {
-              [BEMClass('open')]: isOpen,
+            className={cx('menu-button--wrapper', overrideClassName, bemClass(`size-${size}`), {
+              [bemClass('open')]: isOpen,
               [openDialogComponentClassName]: isOpen && openDialogComponentClassName,
-              [BEMClass('disabled')]: disabled,
-              [BEMClass('text')]: text,
+              [bemClass('disabled')]: disabled,
+              [bemClass('text')]: text,
             })}
             aria-haspopup='true'
             aria-expanded={isOpen}
@@ -340,7 +339,7 @@ const MenuButton: L3Component<MenuButtonProps> & {
             aria-disabled={disabled}
           >
             {componentPosition === MenuButton.componentPositions.START && icon}
-            {text && <span className={BEMClass('inner-text')}>{text}</span>}
+            {text && <span className={bemClass('inner-text')}>{text}</span>}
             {componentPosition === MenuButton.componentPositions.END && icon}
           </button>
         </Dialog>

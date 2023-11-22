@@ -6,7 +6,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
 import TabList from 'share-ui/components/Tabs/TabList/TabList'
