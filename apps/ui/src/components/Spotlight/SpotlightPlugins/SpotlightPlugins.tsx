@@ -2,8 +2,6 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Search from '@l3-lib/ui-core/dist/Search'
-
 import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
@@ -21,7 +19,6 @@ const SpotlightPlugins = () => {
   return (
     <StyledRoot>
       <StyledHeader>
-        <Search />
         <TabList size='small'>
           <Tab onClick={() => setActiveTab(0)}>{t('all')}</Tab>
           <Tab onClick={() => setActiveTab(1)}>{t('web3')}</Tab>
