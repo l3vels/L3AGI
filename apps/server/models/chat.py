@@ -1,7 +1,7 @@
 import uuid
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, Integer, String, or_
-from sqlalchemy.orm import joinedload, relationship
+from sqlalchemy.orm import Session, joinedload, relationship
 
 from exceptions import ChatNotFoundException
 from models.account import AccountModel
@@ -10,7 +10,7 @@ from models.base_model import BaseModel
 from models.team import TeamModel
 from models.user import UserModel
 from typings.account import AccountOutput
-from typings.chat import ChatInput
+from typings.chat import ChatInput, UpdateChatInput
 
 
 class ChatModel(BaseModel):
@@ -28,6 +28,8 @@ class ChatModel(BaseModel):
     name = Column(String, nullable=True)
     agent_id = Column(UUID, ForeignKey("agent.id", ondelete="CASCADE"), index=True)
     team_id = Column(UUID, ForeignKey("team.id", ondelete="CASCADE"), index=True)
+
+    voice_url = Column(String, nullable=True)
 
     creator_user_id = Column(
         UUID,
@@ -173,6 +175,29 @@ class ChatModel(BaseModel):
         cls.update_model_from_input(db_chat, chat)
         db.session.add(db_chat)
         db.session.flush()  # Flush pending changes to generate the agent's ID
+        db.session.commit()
+
+        return db_chat
+
+    @classmethod
+    def update_chat(
+        cls,
+        db,
+        id: UUID,
+        chat_input: UpdateChatInput,
+        user,
+    ):
+        db_chat = cls.get_chat_by_id(db=db, chat_id=id)
+        if not db_chat:
+            raise ChatNotFoundException("Chat not found!")
+
+        for field in UpdateChatInput.__annotations__.keys():
+            if hasattr(chat_input, field):
+                setattr(db_chat, field, getattr(chat_input, field))
+
+        db_chat.modified_by = user.id
+
+        # db.session.add(db_chat)
         db.session.commit()
 
         return db_chat

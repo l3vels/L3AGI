@@ -311,7 +311,11 @@ const ChatRouteLayout = () => {
           <StyledRightColumn
             isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}
           >
-            <ChatMembers agentById={agentById || chatById?.agent} teamOfAgents={teamOfAgents} />
+            <ChatMembers
+              agentById={agentById || chatById?.agent}
+              teamOfAgents={teamOfAgents}
+              voiceUrl={chatById?.voice_url}
+            />
           </StyledRightColumn>
         )}
       </StyledContainer>

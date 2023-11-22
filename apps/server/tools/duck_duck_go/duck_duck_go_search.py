@@ -1,9 +1,9 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.tools import DuckDuckGoSearchResults
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
+from pydantic import BaseModel, Field
+
 from tools.base import BaseTool
 
 
@@ -16,6 +16,8 @@ class DuckDuckGoSearchSchema(BaseModel):
 
 class DuckDuckGoSearchTool(BaseTool):
     name = "DuckDuckGo Search"
+
+    slug = "duckDuckGoSearch"
 
     description = (
         "A tool for performing a DuckDuckGo search."

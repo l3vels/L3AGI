@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client'
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import { useCreateCallService } from 'plugins/contact/services/call/useCreateCallService'
@@ -45,17 +46,32 @@ export const useContacts = () => {
     })
   }
 
-  const handleCall = (input: any) => {
+  const handleCall = async (input: any) => {
     setToast({
       message: 'Call Started!',
       type: 'positive',
       open: true,
     })
-    createCallService(input)
+
+    try {
+      await createCallService(input)
+    } catch (e) {
+      if (e instanceof ApolloError) {
+        // @ts-expect-error result is not defined in networkError
+        const message = e.networkError?.result?.detail || 'Something went wrong!'
+
+        setToast({
+          message,
+          type: 'negative',
+          open: true,
+        })
+      }
+    }
   }
 
   const handleEndCall = async () => {
     await endCallService()
+
     setToast({
       message: 'Call Ended!',
       type: 'positive',

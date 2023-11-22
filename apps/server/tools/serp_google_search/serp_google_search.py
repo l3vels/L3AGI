@@ -18,6 +18,8 @@ class SerpGoogleSearchSchema(BaseModel):
 class SerpGoogleSearchTool(BaseTool):
     name = "Serp Google Search"
 
+    slug = "serpGoogleSearch"
+
     description = (
         "This tool performs Google searches and extracts relevant snippets and webpages. "
         "It's particularly useful for staying updated with current events and finding quick answers to your queries."

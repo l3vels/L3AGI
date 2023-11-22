@@ -134,9 +134,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <StyledTab onClick={() => handleTabClick(4)} isDisabled={!isVoice}>
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => handleTabClick(5)}>
+          {/* <StyledTab onClick={() => handleTabClick(5)}>
             <StyledSpan isActive={activeTab === 5}>Integrations</StyledSpan>
-          </StyledTab>
+          </StyledTab> */}
         </StyledFormTabList>
       </StyledFormTabsWrapper>
       <StyledForm>

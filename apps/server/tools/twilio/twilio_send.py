@@ -1,11 +1,11 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
-from tools.base import BaseTool
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.utilities.twilio import TwilioAPIWrapper
+from pydantic import BaseModel, Field
+
 from exceptions import ToolEnvKeyException
+from tools.base import BaseTool
 
 
 class TwilioSendSchema(BaseModel):
@@ -19,6 +19,8 @@ class TwilioSendTool(BaseTool):
     """Tool that sends text message using Twilio."""
 
     name = "Twilio Send"
+
+    slug = "twilioSend"
 
     description = (
         "Send a text message or SMS using Twilio."
