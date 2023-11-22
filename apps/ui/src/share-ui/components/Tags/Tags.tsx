@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useMemo, useRef } from 'react'
+import React, { ReactNode, forwardRef, useCallback, useMemo, useRef } from 'react'
 import cx from 'classnames'
 import Icon from '../Icon/Icon'
 import useMergeRefs from '../../hooks/useMergeRefs'
@@ -16,7 +16,7 @@ import ClickableWrapper from '../Clickable/ClickableWrapper'
 import { ComponentDefaultTestId } from '../../tests/constants'
 
 interface TagsProps extends L3ComponentProps {
-  label?: string
+  label?: string | ReactNode
   disabled?: boolean
   readOnly?: boolean
   dataTestId?: string
@@ -44,11 +44,11 @@ interface TagsProps extends L3ComponentProps {
   /**
    * Callback function to be called when the user clicks the component.
    */
-  onMouseDown?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onMouseDown?: (event: React.MouseEvent) => void
   /**
    * Callback function to be called when the user clicks the component.
    */
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onClick?: (event: React.MouseEvent) => void
   /**
    * Applies when element has onClick or onMouseDown props
    */
@@ -64,7 +64,7 @@ interface TagsProps extends L3ComponentProps {
 }
 
 const Tags: L3Component<TagsProps, HTMLElement> & {
-  sizes?: typeof TagsSize
+  sizes?: typeof TagSizes
   colors?: typeof tagElementColorsNames
   // eslint-disable-next-line react/display-name
 } = forwardRef<HTMLElement, TagsProps>(
@@ -82,7 +82,7 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
       allowTextSelection = false,
       color = tagElementColorsNames.gradient_blue,
       iconSize = 16,
-      onDelete = (_id: string, _e: React.MouseEvent<HTMLSpanElement>) => {},
+      onDelete = (_id: string, _e: React.MouseEvent) => {},
       onMouseDown,
       onClick,
       noAnimation = false,
@@ -123,7 +123,7 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
     }, [disabled, isHovered, hasClickableWrapper, color, outlined])
 
     const onDeleteCallback = useCallback(
-      (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+      (e: React.MouseEvent) => {
         e.stopPropagation()
         if (onDelete && id) {
           onDelete(id, e)
@@ -133,7 +133,7 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
     )
 
     const onClickCallback = useCallback(
-      (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      (e: React.MouseEvent) => {
         if ((e.target as HTMLElement) !== iconButtonRef.current && onClick) {
           e.preventDefault()
           onClick(e)
@@ -225,7 +225,7 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
 )
 
 Object.assign(Tags, {
-  sizes: TagsSize,
+  sizes: TagSizes,
   defaultTestId: ComponentDefaultTestId.TAG,
   colors: tagElementColorsNames,
 })

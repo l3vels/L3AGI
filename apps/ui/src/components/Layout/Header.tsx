@@ -6,7 +6,7 @@ import { StyledHeader, StyledLogoWrapper, StyledNavigationColumn } from './Layou
 import ArrowNavigation from 'pages/Navigation/ArrowNavigation'
 
 import HeaderButtons from 'components/HeaderButtons'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+import Tags from 'share-ui/components/Tags/Tags'
 
 import styled from 'styled-components'
 
@@ -35,7 +35,7 @@ const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes)
           label={t('beta')}
           readOnly
           color={'gradient_yellow'}
-          size={'small'}
+          size={Tags.sizes?.SMALL}
           noAnimation
         />
       </StyledLogoWrapper>

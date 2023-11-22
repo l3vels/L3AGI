@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+import Tags from 'share-ui/components/Tags/Tags'
 
 import TypographySecondary from 'components/Typography/Secondary'
 
@@ -29,7 +29,7 @@ const TagsRow = ({ items, title }: TagsRowProps) => {
               }
               color='Tags.colors.gradient_dark_blue'
               readOnly
-              size='small'
+              size={Tags.sizes?.SMALL}
               outlined
             />
           )

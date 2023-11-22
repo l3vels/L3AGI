@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-import React, { AriaRole, forwardRef, useRef } from 'react'
+import React, { AriaRole, ReactNode, forwardRef, useRef } from 'react'
 import { noop as NOOP } from 'lodash-es'
 import cx from 'classnames'
 import useMergeRefs from '../../hooks/useMergeRefs'
@@ -22,7 +22,7 @@ export interface ClickableProps extends L3ComponentProps {
   onClick?: (event: React.MouseEvent) => void
   enableTextSelection?: boolean
   onMouseDown?: (event: React.MouseEvent) => void
-  ariaLabel?: string
+  ariaLabel?: string | ReactNode
   ariaHidden?: boolean
   ariaHasPopup?: boolean | string
   ariaExpanded?: boolean

@@ -4,7 +4,8 @@ import withRenderModal from 'hocs/withRenderModal'
 import Modal from '@l3-lib/ui-core/dist/Modal'
 import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
 import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+import Tags from 'share-ui/components/Tags/Tags'
+
 import { useTranslation } from 'react-i18next'
 
 import { FormikProvider } from 'formik'
