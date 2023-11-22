@@ -92,6 +92,7 @@ import Integrations from 'pages/Integrations'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import VoiceModal from 'modals/VoiceModal'
 import ImportContacts from 'plugins/contact/pages/Contact/ImportContacts'
+import CallLogsModal from 'modals/CallLogsModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -377,6 +378,7 @@ const Route = () => {
       <ChatLinkModal />
       <ScheduleRunModal />
       <RunLogsModal />
+      <CallLogsModal />
 
       <CommandMenu
         open={cmdkOpen}
