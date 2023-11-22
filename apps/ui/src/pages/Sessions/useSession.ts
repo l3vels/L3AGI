@@ -11,6 +11,9 @@ type Chat = {
   agent?: {
     agent?: {
       name: string
+      id: string
+      role: string
+      description: string
     }
   }
   team?: {
@@ -33,6 +36,9 @@ export const useSession = () => {
     id: chat?.id,
     name: chat?.name,
     agent_name: chat?.agent?.agent?.name,
+    gent_role: chat?.agent?.agent?.role,
+    gent_description: chat?.agent?.agent?.description,
+    agent_id: chat?.agent?.agent?.id,
     team_name: chat?.team?.team?.name,
     added_At: new Date().toISOString(),
   }))
@@ -100,6 +106,7 @@ export const useSession = () => {
     handleDateChange,
     startDate,
     endDate,
+    filterByDateRange,
     clearSelectedDays,
   }
 }
