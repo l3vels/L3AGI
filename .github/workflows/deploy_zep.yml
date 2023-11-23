@@ -23,5 +23,6 @@ jobs:
         with:
           app-name: "l3-zep-dev"
           slot-name: "production"
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_5aa592a5843d47f5ab6d78132942a60f }}
+          # publish-profile: ${{ secrets.AzureAppService_PublishProfile_5aa592a5843d47f5ab6d78132942a60f }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AC74324B8D274B7F9F5FE91CAE3ADB57 }}
           images: ghcr.io/getzep/zep-cloud:0.19,ghcr.io/getzep/zep-nlp-server:0.4.1
