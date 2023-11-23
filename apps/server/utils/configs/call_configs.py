@@ -9,7 +9,6 @@ call_configs = {
         "discovery": "Discovery",
         "chat": "Agents",
         "toolkits": "Toolkit",
-        "schedules": "Campaigns",
     },
     "modules": {
         "home": {
@@ -39,7 +38,7 @@ call_configs = {
         },
         "toolkit": True,  # True
         "datasource": True,
-        "discovery": False,
+        "discovery": True,
         "Session": True,
         "schedule": True,
         "contact": True,
