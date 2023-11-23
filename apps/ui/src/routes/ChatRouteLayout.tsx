@@ -26,6 +26,7 @@ import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdSer
 import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { t } from 'i18next'
+import { useCallByIdService } from 'plugins/contact/services/call/useCallByIdService'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -64,13 +65,15 @@ const ChatRouteLayout = () => {
 
   const agentId = urlParams.get('agent') || params.agentId
   const teamId = urlParams.get('team') || params.teamId
-  const chatId = urlParams.get('chat')
+  const chatId = urlParams.get('chat') ?? undefined
 
   const { deleteChat } = useDeleteChatService()
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
   const { data: teamOfAgents } = useTeamOfAgentsByIdService({ id: teamId || '' })
   const { data: chatById } = useChatByIdService({ id: chatId || '' })
+
+  const { data: call } = useCallByIdService({ id: chatId })
 
   useEffect(() => {
     if (!urlParams || !params) return
@@ -315,6 +318,7 @@ const ChatRouteLayout = () => {
               agentById={agentById || chatById?.agent}
               teamOfAgents={teamOfAgents}
               voiceUrl={chatById?.voice_url}
+              call={call}
             />
           </StyledRightColumn>
         )}
