@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  zep_cloud:
+    image: ghcr.io/getzep/zep-cloud:0.19
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - ZEP_SERVER_WEB_ENABLED=true
+
+  zep_nlp:
+    image: ghcr.io/getzep/zep-nlp-server:0.4.1
+    env_file:
+      - .env
+    restart: on-failure
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/5557' || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+    ports:
+      - "5557:5557"

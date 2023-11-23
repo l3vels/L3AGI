@@ -1,0 +1,28 @@
+name: Build and deploy Python app to Azure Web App - l3-zep-dev
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "zep/**"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    environment:
+      name: "production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: "Deploy to Azure Web App"
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: "l3-zep-dev"
+          slot-name: "production"
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_5aa592a5843d47f5ab6d78132942a60f }}
+          images: ghcr.io/getzep/zep-cloud:0.19,ghcr.io/getzep/zep-nlp-server:0.4.1
