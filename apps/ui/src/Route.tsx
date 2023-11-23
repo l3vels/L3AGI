@@ -273,6 +273,12 @@ const Route = () => {
               key={document.location.href}
             >
               <Router index element={<Sessions />} key={document.location.href} />
+
+              <Router
+                path={':agentId/edit-agent'}
+                element={<EditAgentForm />}
+                key={document.location.href}
+              />
             </Router>
 
             <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
