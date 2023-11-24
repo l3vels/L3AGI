@@ -18,7 +18,7 @@ from typings.auth import UserAccount
 from typings.chat import (ChatInput, ChatMessageInput, ChatMessageOutput,
                           ChatOutput, ChatStatus, ChatStopInput,
                           ChatUserMessageInput, InsertChatMessagesInput,
-                          NegotiateOutput)
+                          NegotiateOutput, UpdateChatInput)
 from typings.config import ConfigOutput
 from utils.auth import authenticate, try_auth_user
 from utils.chat import (convert_chats_to_chat_list, convert_model_to_response,
@@ -37,6 +37,14 @@ def create_chat(
         ChatException("Agent or Team should be defined")
 
     db_chat = ChatModel.create_chat(db, chat=chat, user=auth.user, account=auth.account)
+    return convert_model_to_response(db_chat)
+
+
+@router.patch("/{id}", status_code=200)
+def update_chat(
+    id: UUID, chat: UpdateChatInput, auth: UserAccount = Depends(authenticate)
+) -> ChatOutput:
+    db_chat = ChatModel.update_chat(db, id, chat, auth.user)
     return convert_model_to_response(db_chat)
 
 
@@ -212,7 +220,7 @@ def insert_chat_messages(
         account = auth.account
         user = auth.user
 
-    sender_name = user.name if auth else "Guest"
+    sender_name = body.contact_name if auth else "Guest"
     sender_user_id = user.id
     sender_account_id = account.id
 

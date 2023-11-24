@@ -11,5 +11,6 @@ query getChats @api(name: "ai") {
     }
     creator_user
     creator_account
+    voice_url
   }
 }

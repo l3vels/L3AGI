@@ -62,16 +62,23 @@ export const useToolView = ({ toolSlug }: { toolSlug?: string }) => {
     }
 
     try {
-      if (filteredConfig.length === 0) {
-        const promises = configs.map((config: any) => createConfig(config))
-        await Promise.all(promises)
-      } else {
-        const promises = configs.map((config: any) =>
-          updateConfig(filteredConfig.find((cfg: any) => cfg.key === config.key).id, config),
-        )
+      const promises = tool?.fields.map((field: any) => {
+        const existingConfig = filteredConfig?.find((config: any) => config.key === field.key)
+        const config = {
+          key: field.key,
+          value: values[field.key],
+          key_type: field.type,
+          is_required: field.is_required,
+          is_secret: field.is_secret,
+          tool_id: tool.toolkit_id,
+        }
 
-        await Promise.all(promises)
-      }
+        if (!existingConfig) return createConfig(config)
+        return updateConfig(existingConfig.id, config)
+      })
+
+      await Promise.all(promises)
+
       await refetchConfigs()
       setToast({
         message: 'Toolkit was updated!',

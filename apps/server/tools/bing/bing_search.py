@@ -1,11 +1,11 @@
 from typing import Optional, Type
-from pydantic import BaseModel, Field
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
-from tools.base import BaseTool
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.utilities.bing_search import BingSearchAPIWrapper
+from pydantic import BaseModel, Field
+
 from exceptions import ToolEnvKeyException
+from tools.base import BaseTool
 
 
 class BingSearchSchema(BaseModel):
@@ -17,6 +17,8 @@ class BingSearchSchema(BaseModel):
 
 class BingSearchTool(BaseTool):
     name = "Bing Search"
+
+    slug = "bingSearch"
 
     description = (
         "A tool for performing a Bing search."

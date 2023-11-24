@@ -36,3 +36,15 @@ Syntax is following:
 {{text}} # Base system message
 {{goals[0]}} # References first goal
 ```
+
+## Reference inside/outside tools
+```
+{{tools.cal.calendarAvailabilities}}
+         │          │
+         │          │    ╭───────────╮
+         │          ╰──▶ │ Tool Slug │
+         ▼               ╰───────────╯
+  ╭──────────────╮
+  │ Toolkit Slug │
+  ╰──────────────╯
+```

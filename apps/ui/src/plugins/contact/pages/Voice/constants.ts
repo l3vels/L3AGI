@@ -24,7 +24,7 @@ export const voiceLogos = [
   },
   {
     logoSrc: labsLogo,
-    voiceName: '11Labs',
+    voiceName: 'ElevenLabs',
   },
   {
     logoSrc: openAI,

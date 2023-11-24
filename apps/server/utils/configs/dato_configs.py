@@ -4,7 +4,7 @@ dato_configs = {
         "home": "Home",
         "agent": "Agent",
         "team": "Team",
-        "datasource": "Data sources",
+        "datasource": "Data source",
         "models": "Model",
         "discovery": "Discovery",
         "chat": "Agents",

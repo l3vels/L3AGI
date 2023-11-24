@@ -1,8 +1,8 @@
 from typing import Optional, Type
+
+from langchain.callbacks.manager import CallbackManagerForToolRun
 from pydantic import BaseModel, Field
-from langchain.callbacks.manager import (
-    CallbackManagerForToolRun,
-)
+
 from tools.base import BaseTool
 
 
@@ -17,6 +17,8 @@ class TweetTool(BaseTool):
     """Tool that tweets on Twitter."""
 
     name = "Tweet on Twitter"
+
+    slug = "tweeterTweet"
 
     description = "Tweet a message using Twitter."
 

@@ -51,7 +51,10 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
     try {
-      const res = await createChat({ agent_id: agentId, name: values.chat_name })
+      const res = await createChat({
+        agent_id: agentId,
+        name: values.chat_name,
+      })
       await refetchChat()
       setChatLink(`${import.meta.env.REACT_APP_DOMAIN_NAME}/chat/session?chat=${res.id}`)
     } catch (e) {

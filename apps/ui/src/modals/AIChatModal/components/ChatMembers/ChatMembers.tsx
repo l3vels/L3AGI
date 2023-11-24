@@ -23,15 +23,26 @@ import {
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
+import AudioPlayer from 'components/AudioPlayer'
+import { Nullable } from 'types'
+import { CALL_LOGS_MODAL_NAME } from 'modals/CallLogsModal'
+import { StyledActionButton } from 'components/CopyButton/CopyButton'
+import TypographyPrimary from 'components/Typography/Primary'
+import Logs from 'share-ui/components/Icon/Icons/components/Logs'
+import Typography from 'share-ui/components/typography/Typography'
 
 const ChatMembers = ({
   agentById,
   teamOfAgents,
   isHistory,
+  voiceUrl,
+  call,
 }: {
   agentById?: any
   teamOfAgents?: any
   isHistory?: boolean
+  voiceUrl?: Nullable<string>
+  call?: any
 }) => {
   const { t } = useTranslation()
   const { user } = React.useContext(AuthContext)
@@ -67,6 +78,32 @@ const ChatMembers = ({
             <TabPanels noAnimation>
               <TabPanel>
                 <AgentViewDetailBox agentData={agentById} />
+                <div style={{ height: '200px', width: '100%' }}>
+                  {voiceUrl && (
+                    <StyledAudioPlayerWrapper>
+                      <AudioPlayer audioUrl={voiceUrl} />
+                    </StyledAudioPlayerWrapper>
+                  )}
+
+                  <StyledLogsButton
+                    onClick={() =>
+                      openModal({
+                        name: CALL_LOGS_MODAL_NAME,
+                        data: {
+                          chatId: call?.chat_id,
+                        },
+                      })
+                    }
+                  >
+                    <StyledLogsIcon size={32} />
+
+                    <TypographyPrimary
+                      value={t('logs')}
+                      type={Typography.types.P}
+                      size={Typography.sizes.sm}
+                    />
+                  </StyledLogsButton>
+                </div>
               </TabPanel>
 
               <TabPanel>
@@ -260,4 +297,21 @@ const StyledIconButtonWrapper = styled.div`
 
   display: flex;
   align-items: center;
+`
+
+const StyledAudioPlayerWrapper = styled.div`
+  margin-top: 12px;
+`
+
+const StyledLogsIcon = styled(Logs)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledLogsButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px;
 `

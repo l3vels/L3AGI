@@ -16,7 +16,15 @@ const TableCell = ({ cell }: TableCellProps) => {
 
   const { column, row, value: cellValue } = cell
   const { original: data } = row
-  const { isEdit, cellEditor: Editor, cellEditorParams, valueSetter, maxWidth } = column
+  const {
+    isEdit,
+    cellEditor: Editor,
+    cellEditorParams,
+    valueSetter,
+    maxWidth,
+    minWidth,
+    width,
+  } = column
 
   let handleEditMode = null
 
@@ -76,6 +84,8 @@ const TableCell = ({ cell }: TableCellProps) => {
       {...cell.getCellProps()}
       onClick={handleEditMode}
       maxWidth={maxWidth}
+      minWidth={minWidth}
+      width={width}
       isEditing={isEditing}
     >
       {isEditing ? (
@@ -83,11 +93,13 @@ const TableCell = ({ cell }: TableCellProps) => {
           <Editor {...cellEditorParams} value={cellValue} ref={multiselectEditorRef} />
         </StyledWrapper>
       ) : (
-        <TypographySecondary
-          value={cell.render('Cell')}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
+        <StyledTypographyWrapper>
+          <TypographySecondary
+            value={cell.render('Cell')}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledTypographyWrapper>
       )}
     </StyledTd>
   )
@@ -95,7 +107,7 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td<{ maxWidth: number; isEditing: boolean }>`
+const StyledTd = styled.td<{ isEditing: boolean }>`
   padding: 5px 10px;
   position: relative;
 
@@ -121,4 +133,10 @@ const StyledTd = styled.td<{ maxWidth: number; isEditing: boolean }>`
 `
 const StyledWrapper = styled.div`
   border: 1px solid #000;
+`
+
+const StyledTypographyWrapper = styled.div`
+  display: inline;
+  justify-content: space-between;
+  align-items: center;
 `

@@ -1,8 +1,12 @@
 from typing import List
 
+from fastapi_sqlalchemy import db
+
+from models.account import AccountModel
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.base import BaseTool, BaseToolkit
 from tools.bing.bing_search_toolkit import BingSearchToolkit
+from tools.cal.cal_toolkit import CalToolkit
 from tools.chart.chart_toolkit import ChartToolkit
 from tools.duck_duck_go.duck_duck_go_search_toolkit import \
     DuckDuckGoSearchToolkit
@@ -35,6 +39,7 @@ TOOLKITS: List[BaseToolkit] = [
     SendGridToolkit(),
     ZapierSendToolkit(),
     ChartToolkit(),
+    CalToolkit(),
     TwitterToolkit(),
     InstagramToolkit(),
     SlackToolkit(),
@@ -70,6 +75,7 @@ def get_all_tools():
                     {
                         "tool_id": tool.tool_id,
                         "name": tool.name,
+                        "slug": tool.slug,
                         "description": tool.description,
                     }
                     for tool in toolkit.get_tools()
@@ -87,6 +93,21 @@ def get_toolkit_id_by_tool_name(tool_name: str) -> str | None:
         for tool in toolkit["tools"]:
             if tool["name"] == tool_name:
                 return toolkit["toolkit_id"]
+
+
+def get_tool_by_slug(
+    toolkit_slug: str, tool_slug: str, db, account, agent_with_configs
+) -> BaseTool | None:
+    for toolkit in TOOLKITS:
+        if toolkit_slug != toolkit.slug:
+            continue
+
+        tools = toolkit.get_tools_with_configs(
+            db, account, agent_with_configs, None, None
+        )
+        for tool in tools:
+            if tool.slug == tool_slug:
+                return tool
 
 
 def get_agent_tools(

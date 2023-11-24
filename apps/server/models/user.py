@@ -3,7 +3,7 @@ import hashlib
 import os
 import uuid
 
-from sqlalchemy import UUID, Boolean, Column, Index, String, or_
+from sqlalchemy import UUID, Boolean, Column, Index, String, func, or_
 
 from exceptions import UserNotFoundException
 from models.base_model import RootBaseModel
@@ -68,6 +68,8 @@ class UserModel(RootBaseModel):
         db_user = UserModel()
         if user.password:
             user.password = cls.hash_password(user.password)  # Hash the password
+        if user.email:
+            user.email = user.email.lower()  # Convert email to lowercase
         cls.update_model_from_input(db_user, user)
         db.session.add(db_user)
         db.session.flush()  # Flush pending changes to generate the user's ID
@@ -78,14 +80,15 @@ class UserModel(RootBaseModel):
     @classmethod
     def update_user(cls, db, id, user):
         """
-        Creates a new user with the provided configuration.
+        Updates an existing user with the provided configuration.
 
         Args:
             db: The database object.
-            user_with_config: The object containing the user and configuration details.
+            id: The id of the user to be updated.
+            user: The object containing the updated user details.
 
         Returns:
-            User: The created user.
+            User: The updated user.
 
         """
         old_user = cls.get_user_by_id(db=db, user_id=id)
@@ -93,6 +96,8 @@ class UserModel(RootBaseModel):
             raise UserNotFoundException("User not found")
         if user.password:
             user.password = cls.hash_password(user.password)  # Hash the password
+        if user.email:
+            user.email = user.email.lower()  # Convert email to lowercase
         db_user = cls.update_model_from_input(user_model=old_user, user_input=user)
 
         db.session.add(db_user)
@@ -135,20 +140,19 @@ class UserModel(RootBaseModel):
     @classmethod
     def get_user_by_email(cls, db, email):
         """
-        Get User from user_id
+        Get User from email
 
         Args:
-            session: The database session.
-            user_id(int) : Unique identifier of an User.
+            db: The database session.
+            email(str) : Email of the User.
 
         Returns:
             User: User object is returned.
         """
-        # return db.session.query(UserModel).filter(UserModel.account_id == account.id, or_(or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None), UserModel.is_deleted is None)).all()
         user = (
             db.session.query(UserModel)
             .filter(
-                UserModel.email == email,
+                func.lower(UserModel.email) == func.lower(email),
                 or_(
                     or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None),
                     UserModel.is_deleted is None,
@@ -156,12 +160,6 @@ class UserModel(RootBaseModel):
             )
             .first()
         )
-
-        # users = (
-        #     db.session.query(UserModel)
-        #     .filter(UserModel.email == email, or_(or_(UserModel.is_deleted.is_(False), UserModel.is_deleted is None), UserModel.is_deleted is None))
-        #     .first()
-        # )
         return user
 
     @classmethod

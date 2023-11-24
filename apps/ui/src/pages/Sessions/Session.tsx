@@ -17,9 +17,26 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useSession } from './useSession'
 import SessionDropdown from './SessionDropdown'
 import columnConfig from './columnConfig'
+// import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
+import { SetStateAction, useState } from 'react'
+import DatePickerField from 'components/DatePicker/DatePicker'
+import { Moment } from 'moment'
 
 const Sessions = () => {
-  const { scheduleOptions, agentOptions, filteredData, searchText, setSearchText } = useSession()
+  const {
+    scheduleOptions,
+    agentOptions,
+    filteredData,
+    searchText,
+    setSearchText,
+    selectedAgentNames,
+    setSelectedAgentNames,
+    startDate,
+    endDate,
+    filterByDateRange,
+    handleDateChange,
+    clearSelectedDays,
+  } = useSession()
 
   return (
     <StyledSectionWrapper>
@@ -30,10 +47,22 @@ const Sessions = () => {
 
         <StyledRightSideWrapper>
           <StyledSessionDropdownWrapper>
-            <SessionDropdown isMulti placeholder='Agent' label={''} options={agentOptions} />
+            <SessionDropdown
+              isMulti
+              placeholder='Agent'
+              label={''}
+              options={agentOptions}
+              onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+            />
           </StyledSessionDropdownWrapper>
           <StyledDateWrapper>
-            <TextField iconName='fa fa-square' placeholder='Date and Time' type='date' />
+            <DatePickerField
+              start_date={startDate}
+              end_date={endDate}
+              onChange={handleDateChange}
+              onClear={clearSelectedDays}
+              onApply={filterByDateRange}
+            />
           </StyledDateWrapper>
 
           <StyledSessionDropdownWrapper>
@@ -184,8 +213,8 @@ export const StyledGridWrapper = styled.div`
 `
 
 const StyledSessionDropdownWrapper = styled.div`
-  width: 300px !important;
-  height: 48px !important;
+  min-width: 300px !important;
+  max-width: 800px;
 `
 
 const StyledRightSideWrapper = styled.div`
@@ -195,6 +224,7 @@ const StyledRightSideWrapper = styled.div`
 `
 
 const StyledDateWrapper = styled.div`
+  z-index: 10;
   .input-component {
     width: 300px;
     border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
@@ -220,11 +250,12 @@ const StyledSearchContainer = styled.div`
 
 const StyledSearchInput = styled.input`
   color: ${({ theme }) => theme.body.textColorSecondary} !important;
-  background: ${({ theme }) => theme.body.textAreaBgColor};
+  background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
   border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
   min-width: 300px;
   height: 48px;
   border-radius: 8px;
+  padding-left: 15px;
   padding-right: 40px;
 `
 

@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  zep_cloud:
+    image: ghcr.io/getzep/zep-cloud:0.19
+    restart: on-failure
+    ports:
+      - "80:8000"
+    environment:
+      - PORT=8000
+      - ZEP_AUTH_REQUIRED=true
+      - ZEP_AUTH_SECRET=
+      - ZEP_NLP_SERVER_URL=http://zep_nlp:5557
+      - ZEP_OPENAI_API_KEY=
+      - ZEP_SERVER_WEB_ENABLED=false
+      - ZEP_STORE_POSTGRES_DSN=postgres://postgres:password@localhost:5432/db
+
+  zep_nlp:
+    image: ghcr.io/getzep/zep-nlp-server:0.4.1
+    environment:
+      - ZEP_OPENAI_API_KEY=
+    restart: on-failure
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/5557' || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+    ports:
+      - "5557:5557"

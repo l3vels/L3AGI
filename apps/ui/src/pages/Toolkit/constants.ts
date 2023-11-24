@@ -15,6 +15,7 @@ import GoogleCalendarLogo from 'assets/tools/googleCalendar.png'
 import ChartLogo from 'assets/tools/chart.png'
 import SendGridLogo from 'assets/tools/sendGridLogo.png'
 import ZapierLogo from 'assets/tools/zapier.png'
+import CalComLogo from 'assets/tools/cal.png'
 
 export const toolLogos = [
   {
@@ -84,5 +85,9 @@ export const toolLogos = [
   {
     logoSrc: ZapierLogo,
     toolName: 'Zapier Toolkit',
+  },
+  {
+    logoSrc: CalComLogo,
+    toolName: 'Cal.com Toolkit',
   },
 ]

@@ -4,12 +4,14 @@ from typings.voice import VoiceOutput
 from voices.azure.azure_voice import AzureVoice
 from voices.base import BaseVoice
 from voices.deepgram.deepgram_voice import DeepgramVoice
+from voices.eleven_labs.eleven_labs_voice import ElevenLabsVoice
 from voices.playht.play_ht_voice import PlayHTVoice
 
 VOICES: List[BaseVoice] = [
     DeepgramVoice(),
     PlayHTVoice(),
     AzureVoice(),
+    ElevenLabsVoice(),
 ]
 
 
@@ -19,12 +21,6 @@ COMING_SOON = [
         "is_active": False,
         "name": "Google",
         "description": "Convert text into natural-sounding speech and accurately transcribe speech into text using an API powered by the best of Google’s AI research and technology.",
-    },
-    {
-        "is_public": True,
-        "is_active": False,
-        "name": "11Labs",
-        "description": "Explore the most advanced text to speech and voice cloning software ever. Create lifelike voiceovers for your content or use our AI voice generator as an easy-to-use text reader.",
     },
 ]
 

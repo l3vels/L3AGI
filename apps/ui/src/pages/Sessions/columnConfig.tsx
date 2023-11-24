@@ -6,17 +6,21 @@ import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
-
 import {
   StyledDeleteIcon,
+  StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { useChatsService } from 'services/chat/useChatsService'
 import { useDeleteChatService } from 'services/chat/useDeleteChatService'
 import { ToastContext } from 'contexts'
-import { Nullable } from 'types'
+import { AgentWithConfigs, Nullable } from 'types'
+import Edit from '@l3-lib/ui-core/dist/icons/Edit'
+import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import { useAgentsService } from 'services/agent/useAgentsService'
+import AudioPlayer from 'components/AudioPlayer'
 
 type CellProps = {
   value: Nullable<string>
@@ -35,8 +39,22 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
       />
     )
   } else {
-    const formattedDate = moment(value).fromNow()
-    content = <span>{formattedDate}</span>
+    const formattedDate = moment(value).format('MMM DD, YYYY')
+    const formattedTime = moment(value).format('h:mm A')
+    content = (
+      <StyledDateWrapper>
+        <TypographySecondary
+          value={formattedDate}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+        <TypographySecondary
+          value={formattedTime}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+      </StyledDateWrapper>
+    )
   }
 
   return content
@@ -46,55 +64,109 @@ const columns = [
   {
     Header: 'Name',
     accessor: 'name',
-    minWidth: 300,
-    width: 350,
+    minWidth: 343,
+    width: '24.8%',
   },
   // {
   //   Header: 'Team Name',
   //   accessor: 'team_name',
-  //   minWidth: 150,
+  //   minWidth: 342,
   //   width: 200,
   // },
   {
     Header: 'Agent Name',
     accessor: 'agent_name',
-    minWidth: 300,
-    width: 350,
+    minWidth: 342,
+    width: '24.8%',
+    Cell: (props: { row: { original: any } }) => {
+      const { original: data } = props.row
+      const navigate = useNavigate()
+      const { openModal } = useModal()
+
+      const { data: agentsData } = useAgentsService()
+
+      const handleAgentEditClick = () => {
+        const agentIdToEdit = data.agent_id
+
+        const agentToEdit = agentsData.find(agent => agent.agent.id === agentIdToEdit)
+
+        if (agentToEdit) {
+          navigate(`/agents/${agentToEdit.agent.id}/edit-agent`)
+        }
+      }
+
+      const handleViewClick = () => {
+        const selectedAgent = agentsData.find(agentObj => agentObj.agent.id === data.agent_id)
+
+        if (selectedAgent) {
+          openModal({ name: 'agent-view-modal', data: { agent: selectedAgent } })
+        }
+      }
+
+      return (
+        <StyledAgentNameCell>
+          <TypographySecondary
+            value={data.agent_name}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+          <StyledAgentIconsWrapper>
+            <IconButton
+              onClick={() => handleAgentEditClick()}
+              icon={() => <StyledEditIcon />}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
+              ariaLabel='Edit'
+              className='eye-icon'
+            />
+
+            <IconButton
+              onClick={() => handleViewClick()}
+              icon={() => <StyledEyeOpenIcon />}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
+              ariaLabel='View'
+              className='search-icon'
+            />
+          </StyledAgentIconsWrapper>
+        </StyledAgentNameCell>
+      )
+    },
   },
   {
     Header: 'Status',
     accessor: 'status',
-    minWidth: 300,
-    width: 350,
+    minWidth: 343,
+    width: '24.8%',
   },
   {
-    Header: 'Sender Name',
+    Header: 'Voice',
     accessor: 'sender_name',
-    minWidth: 300,
-    width: 350,
+    minWidth: 343,
+    width: '24.8%',
   },
   // {
   //   Header: 'Schedule Name',
   //   accessor: 'schedule_name',
-  //   minWidth: 150,
+  //   minWidth: 343,
   //   width: 200,
   // },
   {
     Header: 'Created Date',
-    accessor: 'created_date',
-    minWidth: 300,
-    width: 350,
+    accessor: 'added_at',
+    minWidth: 343,
+    width: '24.8%',
     Cell: DateRenderer,
   },
   {
     Header: 'Actions',
     accessor: 'actions',
-    minWidth: 100,
-    width: 110,
+    minWidth: 150,
+    width: '10.39%',
 
     Cell: (props: { row: { original: any } }) => {
       const { original: data } = props.row
-      const { data: chatsData, refetch: refetchChat } = useChatsService()
+      const { refetch: refetchChat } = useChatsService()
       const { deleteChat } = useDeleteChatService()
       const { openModal, closeModal } = useModal()
       const { setToast } = useContext(ToastContext)
@@ -197,4 +269,41 @@ const StyledActionWrapper = styled.div`
       border-radius: 50%;
     }
   }
+`
+
+const StyledAgentNameCell = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 5px;
+
+  .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
+    &:hover {
+      background: ${({ theme }) => theme.body.humanMessageBgColor};
+      border-radius: 50%;
+    }
+  }
+`
+const StyledAgentIconsWrapper = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  bottom: 11px;
+  margin-left: auto;
+  opacity: 0;
+
+  ${StyledAgentNameCell}:hover & {
+    opacity: 1;
+  }
+
+  .edit-icon,
+  .search-icon {
+    margin-left: 10px;
+  }
+`
+
+const StyledDateWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
 `

@@ -57,7 +57,7 @@ interface DatePickerProps extends L3ComponentProps {
 
 // eslint-disable-next-line react/display-name
 const DatePicker: L3Component<DatePickerProps, HTMLElement> = forwardRef<
-  HTMLDivElement,
+  HTMLElement,
   DatePickerProps
 >(
   (
