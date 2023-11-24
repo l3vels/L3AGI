@@ -1,11 +1,10 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
-import Button from '@l3-lib/ui-core/dist/Button'
+
 import styled from 'styled-components'
 import outsideClick from 'helpers/outsideClick'
 import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
-import { ButtonSecondary } from 'components/Button/Button'
 
 const DatePickerField = ({ start_date, end_date, onChange, onApply, onClear }: any) => {
   const { t } = useTranslation()
@@ -17,10 +16,16 @@ const DatePickerField = ({ start_date, end_date, onChange, onApply, onClear }: a
     if (is_open) setIsOpen(false)
   })
 
+  const formattedStartDate = start_date ? start_date.format('MMM D, YYYY h:mm A') : ''
+  const formattedEndDate = end_date ? end_date.format('MMM D, YYYY h:mm A') : ''
+
+  const displayValue = start_date && end_date ? `${formattedStartDate} - ${formattedEndDate}` : ''
+  const placeholder = start_date && end_date ? 'Select date range...' : 'Start date → End date'
+
   return (
     <StyledContainer ref={ref}>
       <StyledSearchContainer>
-        <StyledSearchInput placeholder='mm/dd/yyyy' disabled />
+        <StyledSearchInput value={displayValue} placeholder={placeholder} disabled />
         <StyledCalendarIcon onClick={() => setIsOpen(true)} />
       </StyledSearchContainer>
       {/* <ButtonSecondary leftIcon={() => <Calendar />} onClick={() => setIsOpen(true)}>
@@ -66,9 +71,10 @@ const StyledSearchInput = styled.input`
   color: ${({ theme }) => theme.body.textColorSecondary} !important;
   background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary} !important;
   border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
-  min-width: 300px;
+  min-width: 390px;
   height: 48px;
   border-radius: 8px;
+  padding-left: 15px;
   padding-right: 40px;
 `
 const StyledSearchContainer = styled.div`

@@ -92,6 +92,7 @@ import Integrations from 'pages/Integrations'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import VoiceModal from 'modals/VoiceModal'
 import ImportContacts from 'plugins/contact/pages/Contact/ImportContacts'
+import CallLogsModal from 'modals/CallLogsModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -272,6 +273,12 @@ const Route = () => {
               key={document.location.href}
             >
               <Router index element={<Sessions />} key={document.location.href} />
+
+              <Router
+                path={':agentId/edit-agent'}
+                element={<EditAgentForm />}
+                key={document.location.href}
+              />
             </Router>
 
             <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
@@ -371,6 +378,7 @@ const Route = () => {
       <ChatLinkModal />
       <ScheduleRunModal />
       <RunLogsModal />
+      <CallLogsModal />
 
       <CommandMenu
         open={cmdkOpen}

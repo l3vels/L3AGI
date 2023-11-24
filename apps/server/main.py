@@ -122,7 +122,7 @@ def root():
     return f"Server is running on {Config.ENV} environment"
 
 
-print("Server is running on port 4000")
+print("Server is running on 4000 port")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=4000)

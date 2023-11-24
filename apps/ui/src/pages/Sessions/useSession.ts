@@ -8,9 +8,13 @@ import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
 type Chat = {
   id: string
   name: string
+  voice_url: string
   agent?: {
     agent?: {
       name: string
+      id: string
+      role: string
+      description: string
     }
   }
   team?: {
@@ -33,8 +37,12 @@ export const useSession = () => {
     id: chat?.id,
     name: chat?.name,
     agent_name: chat?.agent?.agent?.name,
+    gent_role: chat?.agent?.agent?.role,
+    gent_description: chat?.agent?.agent?.description,
+    agent_id: chat?.agent?.agent?.id,
     team_name: chat?.team?.team?.name,
     added_At: new Date().toISOString(),
+    voice_url: chat?.voice_url,
   }))
 
   const [startDate, setStartDate] = useState<Moment | null>(null)
@@ -100,6 +108,7 @@ export const useSession = () => {
     handleDateChange,
     startDate,
     endDate,
+    filterByDateRange,
     clearSelectedDays,
   }
 }
