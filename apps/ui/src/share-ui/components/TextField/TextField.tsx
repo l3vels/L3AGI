@@ -20,6 +20,8 @@ import { getTestId } from '../../tests/test-ids-utils'
 import { NOOP } from '../../utils/function-utils'
 import { ComponentDefaultTestId } from '../../tests/constants'
 import { L3ComponentProps, L3Component } from '../../types'
+import styled, { css } from 'styled-components'
+import { isError } from 'lodash'
 
 const EMPTY_OBJECT = { primary: '', secondary: '', layout: '' }
 
@@ -189,149 +191,124 @@ const TextField: L3Component<TextFieldProps, unknown> & {
       : 'search__main_wrapper search__hidden'
 
     return (
-      <div
-        className={classNames(
-          'input-component',
-          wrapperClassName,
-          type === 'search' && isSearchVisivle,
-          {
-            'input-component--disabled': disabled,
-          },
-        )}
-        role={role}
-        aria-busy={loading}
-      >
-        <div className='input-component__label--wrapper'>
-          <FieldLabel
-            labelText={title}
-            icon={labelIconName}
-            iconLabel={iconsNames.layout}
-            labelFor={id}
+      <StyledInputWrapper>
+        <FieldLabel
+          labelText={title}
+          icon={labelIconName}
+          iconLabel={iconsNames.layout}
+          labelFor={id}
+        />
+        <>
+          {/*Programatical input (tabIndex={-1}) is working fine with aria-activedescendant attribute despite the rule*/}
+          {/*eslint-disable-next-line jsx-a11y/aria-activedescendant-has-tabindex*/}
+          <StyledInput
+            isError={validation?.status === 'error'}
+            size={size}
+            className={className}
+            placeholder={placeholder}
+            autoComplete={autoComplete}
+            value={inputValue}
+            onChange={onEventChanged}
+            disabled={disabled}
+            readOnly={readonly}
+            ref={mergedRef}
+            type={type}
+            id={id}
+            name={name}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            onKeyDown={onKeyDown}
+            maxLength={maxLength}
+            role={searchResultsContainerId && 'combobox'} // For voice reader
+            aria-label={inputAriaLabel || placeholder}
+            aria-invalid={validation && validation.status === 'error'}
+            aria-owns={searchResultsContainerId}
+            aria-activedescendant={activeDescendant}
+            required={required}
+            data-testid={dataTestId || getTestId(ComponentDefaultTestId.TEXT_FIELD, id)}
+            tabIndex={tabIndex}
           />
-          <div
-            className={classNames(
-              'input-component__input-wrapper',
-              SIZE_MAPPER[getActualSize(size)],
-              validationClass,
-              isWrapperVisible,
-            )}
-          >
-            {/*Programatical input (tabIndex={-1}) is working fine with aria-activedescendant attribute despite the rule*/}
-            {/*eslint-disable-next-line jsx-a11y/aria-activedescendant-has-tabindex*/}
-            <input
-              className={classNames(className, 'input-component__input', isSearchType, {
-                'input-component__input--has-icon': !!hasIcon,
+          {loading && (
+            <div
+              className={classNames('input-component__loader--container', {
+                'input-component__loader--container-has-icon': hasIcon,
+                isSearchType,
               })}
-              placeholder={placeholder}
-              autoComplete={autoComplete}
-              value={inputValue}
-              onChange={onEventChanged}
-              disabled={disabled}
-              readOnly={readonly}
-              ref={mergedRef}
-              type={type}
-              id={id}
-              name={name}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              onKeyDown={onKeyDown}
-              maxLength={maxLength}
-              role={searchResultsContainerId && 'combobox'} // For voice reader
-              aria-label={inputAriaLabel || placeholder}
-              aria-invalid={validation && validation.status === 'error'}
-              aria-owns={searchResultsContainerId}
-              aria-activedescendant={activeDescendant}
-              required={required}
-              data-testid={dataTestId || getTestId(ComponentDefaultTestId.TEXT_FIELD, id)}
-              tabIndex={tabIndex}
-            />
-            {loading && (
-              <div
-                className={classNames('input-component__loader--container', {
-                  'input-component__loader--container-has-icon': hasIcon,
-                  isSearchType,
-                })}
-              >
-                <div className={'input-component__loader'}>
-                  <Loader svgClassName='input-component__loader-svg' />
-                </div>
+            >
+              <div className={'input-component__loader'}>
+                <Loader svgClassName='input-component__loader-svg' />
               </div>
-            )}
-            <Clickable
-              className={classNames(
-                'input-component__icon--container',
-                {
-                  'input-component__icon--container-has-icon': hasIcon,
-                  'input-component__icon--container-active': isPrimary,
-                },
-                type === 'search' && 'search_icon',
-              )}
-              onClick={type === 'search' ? () => setShow(!show) : onIconClickCallback}
-              tabIndex={
-                onIconClick !== NOOP && inputValue && iconName?.length && isPrimary ? '0' : '-1'
-              }
-            >
-              <Icon
-                icon={iconName || null}
-                className={classNames('input-component__icon')}
-                clickable={false}
-                id={id}
-                iconLabel={iconsNames.primary}
-                iconType={Icon.type?.ICON_FONT}
-                ignoreFocusStyle
-                iconSize={size === TextField.sizes?.SMALL ? '32px' : '38px'}
-              />
-            </Clickable>
-            <Clickable
-              className={classNames(
-                'input-component__icon--container',
-                {
-                  'input-component__icon--container-has-icon': hasIcon,
-                  'input-component__icon--container-active': isSecondary,
-                },
-                type === 'search' && 'search-icon',
-              )}
-              onClick={onIconClickCallback}
-              tabIndex={!shouldFocusOnSecondaryIcon ? '-1' : '0'}
-              dataTestId={
-                secondaryDataTestId ||
-                getTestId(ComponentDefaultTestId.TEXT_FIELD_SECONDARY_BUTTON, id)
-              }
-            >
-              <Icon
-                icon={secondaryIconName || null}
-                className={classNames('input-component__icon')}
-                clickable={false}
-                id={id}
-                iconLabel={iconsNames.secondary}
-                iconType={Icon.type?.ICON_FONT}
-                ignoreFocusStyle
-                iconSize={size === TextField.sizes?.SMALL ? '16px' : '18px'}
-              />
-            </Clickable>
-          </div>
-          {shouldShowExtraText && (
-            <div className='input-component__sub-text-container'>
-              {validation && validation.text && (
-                <span
-                  className='input-component__sub-text-container-status'
-                  aria-label={TextFieldAriaLabel.VALIDATION_TEXT}
-                >
-                  {validation.text}
-                </span>
-              )}
-              {showCharCount && (
-                <span
-                  className='input-component__sub-text-container-counter'
-                  aria-label={TextFieldAriaLabel.CHAR}
-                >
-                  {(inputValue && inputValue.length) || 0}
-                </span>
-              )}
             </div>
           )}
-        </div>
-      </div>
+          <Clickable
+            className={classNames(
+              'input-component__icon--container',
+              {
+                'input-component__icon--container-has-icon': hasIcon,
+                'input-component__icon--container-active': isPrimary,
+              },
+              type === 'search' && 'search_icon',
+            )}
+            onClick={type === 'search' ? () => setShow(!show) : onIconClickCallback}
+            tabIndex={
+              onIconClick !== NOOP && inputValue && iconName?.length && isPrimary ? '0' : '-1'
+            }
+          >
+            <Icon
+              icon={iconName || null}
+              className={classNames('input-component__icon')}
+              clickable={false}
+              id={id}
+              iconLabel={iconsNames.primary}
+              iconType={Icon.type?.ICON_FONT}
+              ignoreFocusStyle
+              iconSize={size === TextField.sizes?.SMALL ? '32px' : '38px'}
+            />
+          </Clickable>
+          <Clickable
+            className={classNames(
+              'input-component__icon--container',
+              {
+                'input-component__icon--container-has-icon': hasIcon,
+                'input-component__icon--container-active': isSecondary,
+              },
+              type === 'search' && 'search-icon',
+            )}
+            onClick={onIconClickCallback}
+            tabIndex={!shouldFocusOnSecondaryIcon ? '-1' : '0'}
+            dataTestId={
+              secondaryDataTestId ||
+              getTestId(ComponentDefaultTestId.TEXT_FIELD_SECONDARY_BUTTON, id)
+            }
+          >
+            <Icon
+              icon={secondaryIconName || null}
+              className={classNames('input-component__icon')}
+              clickable={false}
+              id={id}
+              iconLabel={iconsNames.secondary}
+              iconType={Icon.type?.ICON_FONT}
+              ignoreFocusStyle
+              iconSize={size === TextField.sizes?.SMALL ? '16px' : '18px'}
+            />
+          </Clickable>
+        </>
+        {shouldShowExtraText && (
+          <div className='input-component__sub-text-container'>
+            {validation && validation.text && (
+              <StyledValidationText>{validation.text}</StyledValidationText>
+            )}
+            {showCharCount && (
+              <span
+                className='input-component__sub-text-container-counter'
+                aria-label={TextFieldAriaLabel.CHAR}
+              >
+                {(inputValue && inputValue.length) || 0}
+              </span>
+            )}
+          </div>
+        )}
+      </StyledInputWrapper>
     )
   },
 )
@@ -344,3 +321,60 @@ Object.assign(TextField, {
 })
 
 export default TextField
+
+const StyledInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`
+
+const StyledInput = styled.input<{ isError: boolean; size: string }>`
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+
+  padding: 8px 16px;
+
+  color: ${({ theme }) => theme.textFiled.primary.color};
+  outline: 4px solid ${({ theme }) => theme.textFiled.primary.borderColor};
+
+  &:active,
+  &:focus {
+    border: none;
+    outline: none;
+    box-shadow: ${({ theme }) => theme.textFiled.primary.activeBoxShadow};
+
+    outline: 4px solid ${({ theme }) => theme.textFiled.primary.activeBorderColor};
+    background: ${({ theme }) => theme.textFiled.primary.activeBgColor};
+  }
+
+  ${props =>
+    props.isError &&
+    css`
+      outline: 4px solid ${({ theme }) => theme.textFiled.primary.errorBorderColor};
+      &:active,
+      &:focus {
+        outline: 4px solid ${({ theme }) => theme.textFiled.primary.errorBorderColor};
+      }
+    `}
+
+  ${props =>
+    props.size === 'small' &&
+    css`
+      height: 38px;
+    `}
+    ${props =>
+    props.size === 'large' &&
+    css`
+      height: 52px;
+    `}
+`
+const StyledValidationText = styled.span`
+  color: ${({ theme }) => theme.textFiled.primary.errorColor};
+`

@@ -19,20 +19,10 @@ const ButtonSecondary = (props: any) => {
 
 const ButtonTertiary = (props: any) => {
   return (
-    <StyledButtonTertiaryWrapper>
-      <Button kind={Button.kinds?.TERTIARY} {...props}>
-        {props.children}
-      </Button>
-    </StyledButtonTertiaryWrapper>
+    <Button kind={Button.kinds?.TERTIARY} {...props}>
+      {props.children}
+    </Button>
   )
 }
 
 export { ButtonSecondary, ButtonPrimary, ButtonTertiary }
-
-const StyledButtonTertiaryWrapper = styled.div`
-  .l3-style-button--kind-secondary.l3-style-button--color-primary {
-    &:hover {
-      background: ${({ theme }) => theme.body.placeHolderColor};
-    }
-  }
-`

@@ -85,7 +85,16 @@ const darkTheme: DefaultTheme = {
     },
   },
   textFiled: {
-    primary: 'dark',
+    primary: {
+      bgColor: 'rgba(255, 255, 255, 0.3)',
+      color: '#fff',
+      borderColor: 'transparent',
+      activeBoxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+      activeBorderColor: 'rgba(0, 0, 0, 0.2)',
+      activeBgColor: 'rgba(255, 255, 255, 0.3)',
+      errorBorderColor: '#e44258',
+      errorColor: '#e44258',
+    },
   },
 }
 
@@ -169,7 +178,16 @@ const lightTheme: DefaultTheme = {
     },
   },
   textFiled: {
-    primary: 'light',
+    primary: {
+      bgColor: 'rgba(255, 255, 255, 0.3)',
+      color: '#000',
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+      activeBoxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+      activeBorderColor: '#000',
+      activeBgColor: 'rgba(255, 255, 255, 0.3)',
+      errorBorderColor: '#ef5533',
+      errorColor: '#ef5533',
+    },
   },
 }
 

@@ -65,7 +65,16 @@ declare module 'styled-components' {
       tertiary: ButtonStyleProps
     }
     textFiled: {
-      primary: string
+      primary: {
+        color: string
+        bgColor: string
+        borderColor: string
+        activeBoxShadow: string
+        activeBorderColor: string
+        activeBgColor: string
+        errorBorderColor: string
+        errorColor: string
+      }
     }
   }
 }
