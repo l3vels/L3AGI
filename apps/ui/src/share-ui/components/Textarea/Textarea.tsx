@@ -8,6 +8,7 @@ import { NOOP } from '../../utils/function-utils'
 
 import IconButton from '../IconButton/IconButton'
 import CloseSmall from '../Icon/Icons/components/CloseSmall'
+import styled from 'styled-components'
 
 interface TextareaProps extends L3ComponentProps {
   placeholder?: string
@@ -101,7 +102,7 @@ const Textarea: L3Component<TextareaProps, unknown> = forwardRef(
     }, [inputRef, autoFocus])
 
     return (
-      <div>
+      <StyledTextareaWrapper>
         {disabled ? (
           <span>Disabled</span>
         ) : (
@@ -112,8 +113,8 @@ const Textarea: L3Component<TextareaProps, unknown> = forwardRef(
           )
         )}
 
-        <div>
-          <textarea
+        <StyledTextareaInnerWrapper>
+          <StyledTextarea
             ref={mergedRef}
             id={id}
             // className={styles.textarea}
@@ -142,7 +143,7 @@ const Textarea: L3Component<TextareaProps, unknown> = forwardRef(
             required={required}
           />
           {textareaValue && (
-            <div>
+            <StyledClearIcon>
               <IconButton
                 size={'xxs'}
                 ariaLabel='Remove'
@@ -151,13 +152,58 @@ const Textarea: L3Component<TextareaProps, unknown> = forwardRef(
                 onClick={clearValue}
                 kind={IconButton.kinds?.SECONDARY}
               />
-            </div>
+            </StyledClearIcon>
           )}
-        </div>
+        </StyledTextareaInnerWrapper>
         {hint && <div>{hint}</div>}
-      </div>
+      </StyledTextareaWrapper>
     )
   },
 )
 
 export default Textarea
+
+const StyledTextareaWrapper = styled.div``
+
+const StyledTextarea = styled.textarea`
+  width: 100%;
+  height: 100%;
+
+  padding: 10px 16px;
+  padding-right: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  box-sizing: border-box;
+  border: none;
+  font-size: 14px;
+
+  background: ${({ theme }) => theme.textFiled.primary.bgColor};
+  color: ${({ theme }) => theme.textFiled.primary.color};
+  outline: 4px solid ${({ theme }) => theme.textFiled.primary.borderColor};
+
+  border-radius: 6px;
+
+  &::placeholder {
+    /* @include theme-prop(color, text-field-placeholder-color); */
+  }
+  &:active,
+  &:focus {
+    border: none;
+    box-shadow: ${({ theme }) => theme.textFiled.primary.activeBoxShadow};
+    outline: 4px solid ${({ theme }) => theme.textFiled.primary.activeBorderColor};
+    background: ${({ theme }) => theme.textFiled.primary.activeBgColor};
+  }
+`
+
+const StyledTextareaInnerWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`
+const StyledClearIcon = styled.div`
+  width: 0px;
+  height: 0px;
+  margin-left: -26px;
+  margin-top: 10px;
+`

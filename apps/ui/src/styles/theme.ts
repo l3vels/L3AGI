@@ -163,11 +163,11 @@ const lightTheme: DefaultTheme = {
       pressedBorderColor: 'rgba(0, 0, 0, 0.2)',
     },
     secondary: {
-      color: 'rgba(0, 0, 0, 0.7)',
-      bgColor: 'rgba(255, 255, 255, 0.6)',
-      hoverBgColor: 'rgba(255, 255, 255, 0.3)',
-      pressedBgColor: 'rgba(255, 255, 255, 0.6)',
-      pressedBorderColor: 'rgba(255, 255, 255, 0.2)',
+      color: '#fff',
+      bgColor: '#111',
+      hoverBgColor: 'rgba(0, 0, 0, 0.5)',
+      pressedBgColor: 'rgba(0, 0, 0, 0.7)',
+      pressedBorderColor: 'rgba(0, 0, 0, 0.2)',
     },
     tertiary: {
       color: 'rgba(0, 0, 0, 0.7)',
@@ -179,7 +179,7 @@ const lightTheme: DefaultTheme = {
   },
   textFiled: {
     primary: {
-      bgColor: 'rgba(255, 255, 255, 0.3)',
+      bgColor: '#FFF',
       color: '#000',
       borderColor: 'rgba(0, 0, 0, 0.1)',
       activeBoxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
