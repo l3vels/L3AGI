@@ -62,9 +62,27 @@ const darkTheme: DefaultTheme = {
     contentTertiary: 'var(--color-transparent-white-04)',
   },
   button: {
-    primary: 'PRIMARY',
-    secondary: 'SECONDARY',
-    tertiary: 'TERTIARY',
+    primary: {
+      color: '#fff',
+      bgColor: '#111',
+      hoverBgColor: 'rgba(0, 0, 0, 0.5)',
+      pressedBgColor: 'rgba(0, 0, 0, 0.7)',
+      pressedBorderColor: 'rgba(0, 0, 0, 0.2)',
+    },
+    secondary: {
+      color: 'rgba(0, 0, 0, 0.7)',
+      bgColor: 'rgba(255, 255, 255, 0.6)',
+      hoverBgColor: 'rgba(255, 255, 255, 0.3)',
+      pressedBgColor: 'rgba(255, 255, 255, 0.6)',
+      pressedBorderColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    tertiary: {
+      color: '#fff',
+      bgColor: 'transparent',
+      hoverBgColor: 'rgba(255, 255, 255, 0.2)',
+      pressedBgColor: 'rgba(255, 255, 255, 0.2)',
+      pressedBorderColor: 'rgba(255, 255, 255, 0.1)',
+    },
   },
   textFiled: {
     primary: 'dark',
@@ -128,9 +146,27 @@ const lightTheme: DefaultTheme = {
     contentTertiary: 'rgb(172,172, 173)',
   },
   button: {
-    primary: 'PRIMARY',
-    secondary: 'PRIMARY',
-    tertiary: 'SECONDARY',
+    primary: {
+      color: '#fff',
+      bgColor: '#111',
+      hoverBgColor: 'rgba(0, 0, 0, 0.5)',
+      pressedBgColor: 'rgba(0, 0, 0, 0.7)',
+      pressedBorderColor: 'rgba(0, 0, 0, 0.2)',
+    },
+    secondary: {
+      color: 'rgba(0, 0, 0, 0.7)',
+      bgColor: 'rgba(255, 255, 255, 0.6)',
+      hoverBgColor: 'rgba(255, 255, 255, 0.3)',
+      pressedBgColor: 'rgba(255, 255, 255, 0.6)',
+      pressedBorderColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    tertiary: {
+      color: 'rgba(0, 0, 0, 0.7)',
+      bgColor: 'transparent',
+      hoverBgColor: 'rgba(0, 0, 0, 0.1)',
+      pressedBgColor: 'rgba(255, 255, 255, 0.2)',
+      pressedBorderColor: 'rgba(255, 255, 255, 0.1)',
+    },
   },
   textFiled: {
     primary: 'light',

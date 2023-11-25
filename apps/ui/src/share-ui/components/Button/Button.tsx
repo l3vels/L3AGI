@@ -214,47 +214,6 @@ const Button: L3Component<ButtonProps, unknown> & {
       [onMouseDown, disabled, loading, success],
     )
 
-    const classNames = useMemo(() => {
-      const calculatedColor = success ? ButtonColor.POSITIVE : color
-      return cx(
-        className,
-        'l3-style-button',
-        `l3-style-button--size-${getActualSize(size)}`,
-        `l3-style-button--kind-${kind}`,
-        `l3-style-button--color-${calculatedColor}`,
-        {
-          'has-style-size': hasSizeStyle,
-          'l3-style-button--loading': loading,
-          [`l3-style-button--color-${calculatedColor}-active`]: active,
-          'l3-style-button--margin-right': marginRight,
-          'l3-style-button--margin-left': marginLeft,
-          'l3-style-button--right-flat': rightFlat,
-          'l3-style-button--left-flat': leftFlat,
-          'l3-style-button--prevent-click-animation': preventClickAnimation,
-          'l3-style-button--no-side-padding': noSidePadding,
-          'l3-style-button--disabled': disabled,
-          'inset-focus-style': insetFocus,
-        },
-      )
-    }, [
-      success,
-      color,
-      className,
-      size,
-      kind,
-      hasSizeStyle,
-      loading,
-      active,
-      marginRight,
-      marginLeft,
-      rightFlat,
-      leftFlat,
-      preventClickAnimation,
-      noSidePadding,
-      disabled,
-      insetFocus,
-    ])
-
     const mergedRef = useMergeRefs({ refs: [ref, buttonRef] })
 
     const buttonProps = useMemo(() => {
@@ -284,7 +243,7 @@ const Button: L3Component<ButtonProps, unknown> & {
       disabled,
       mergedRef,
       type,
-      classNames,
+      className,
       name,
       onMouseUp,
       style,
@@ -312,46 +271,9 @@ const Button: L3Component<ButtonProps, unknown> & {
       return BUTTON_ICON_SIZE
     }, [rightIcon])
 
-    const successIconSize = useMemo(() => {
-      if (typeof successIcon !== 'function') return
-      return BUTTON_ICON_SIZE
-    }, [successIcon])
-
-    if (loading) {
-      return (
-        <button {...buttonProps}>
-          <span className='l3-style-button__loader'>
-            {/** Because typescript can't handle with this not converted component API*/}
-
-            <Loader svgClassName='l3-style-button-loader-svg' />
-          </span>
-        </button>
-      )
-    }
-
-    if (success) {
-      return (
-        <button {...buttonProps}>
-          {successIcon ? (
-            <Icon
-              iconType={Icon?.type?.ICON_FONT}
-              clickable={false}
-              icon={successIcon}
-              iconSize={successIconSize}
-              className={cx({
-                'l3-style-button--left-icon': !!successText,
-              })}
-              ignoreFocusStyle
-            />
-          ) : null}
-          {successText}
-        </button>
-      )
-    }
-
     return (
-      <StyledButton {...buttonProps} size={size} kind={kind}>
-        {leftIcon ? (
+      <StyledButton {...buttonProps} size={size} kind={kind} disabled={disabled}>
+        {!loading && leftIcon ? (
           <Icon
             iconType={Icon?.type?.ICON_FONT}
             clickable={false}
@@ -361,8 +283,10 @@ const Button: L3Component<ButtonProps, unknown> & {
             ignoreFocusStyle
           />
         ) : null}
-        {children}
-        {rightIcon ? (
+
+        {!loading ? children : <Loader svgClassName='l3-style-button-loader-svg' />}
+
+        {!loading && rightIcon ? (
           <Icon
             iconType={Icon?.type?.ICON_FONT}
             clickable={false}
@@ -426,10 +350,10 @@ Button.defaultProps = {
 
 export default Button
 
-const StyledButton = styled.button<{ size?: string; kind?: string }>`
+const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: boolean }>`
   /* background-color: red; */
   --loader-padding: 8px;
-  outline: none;
+  outline: 3px solid transparent;
   border: none;
   height: auto;
   border-radius: 60px;
@@ -506,32 +430,60 @@ const StyledButton = styled.button<{ size?: string; kind?: string }>`
     ${props =>
     props.kind === 'primary' &&
     css`
-      color: var(--text-color-on-primary);
-      /* background-color: var(--primary-background-color); */
-      background-color: #111;
-      &:active {
-        box-shadow: var(--primary-btn-shadow);
-        /* background-color: var(--primary-background-color); */
-        background-color: #111;
+      color: ${({ theme }) => theme.button.primary.color};
+      background-color: ${({ theme }) => theme.button.primary.bgColor};
+      &:hover {
+        background-color: ${({ theme }) => theme.button.primary.hoverBgColor};
       }
-      &:hover,
-      &:focus {
-        background-color: #e6e9ef;
-        backdrop-filter: brightness(85%);
+      &:active {
+        outline-color: ${({ theme }) => theme.button.primary.pressedBorderColor};
+        background-color: ${({ theme }) => theme.button.primary.pressedBgColor};
       }
     `}
     ${props =>
     props.kind === 'secondary' &&
     css`
-      color: var(--secondary-text-color);
-      /* background-color: blue; */
+      color: ${({ theme }) => theme.button.secondary.color};
+      background-color: ${({ theme }) => theme.button.secondary.bgColor};
+      &:hover {
+        background-color: ${({ theme }) => theme.button.secondary.hoverBgColor};
+      }
       &:active {
-        box-shadow: var(--secondary-btn-shadow);
-        background-color: var(--secondary-background-color);
+        outline-color: ${({ theme }) => theme.button.secondary.pressedBorderColor};
+        background-color: ${({ theme }) => theme.button.secondary.pressedBgColor};
       }
-      &:hover,
-      &:focus {
-        background-color: var(--secondary-hover-color);
+    `}
+    ${props =>
+    props.kind === 'tertiary' &&
+    css`
+      color: ${({ theme }) => theme.button.tertiary.color};
+      background-color: ${({ theme }) => theme.button.tertiary.bgColor};
+      &:hover {
+        background-color: ${({ theme }) => theme.button.tertiary.hoverBgColor};
       }
+      &:active {
+        outline-color: ${({ theme }) => theme.button.tertiary.pressedBorderColor};
+        background-color: ${({ theme }) => theme.button.tertiary.pressedBgColor};
+      }
+    `}
+
+    ${props =>
+    props.disabled &&
+    css`
+      pointer-events: none;
+      cursor: not-allowed;
+
+      color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(255, 255, 255, 0.2);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    `}
+    ${props =>
+    props.disabled &&
+    props.kind === 'tertiary' &&
+    css`
+      background-color: transparent;
     `}
 `

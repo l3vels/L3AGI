@@ -60,12 +60,20 @@ declare module 'styled-components' {
       contentTertiary: string
     }
     button: {
-      primary: string
-      secondary: string
-      tertiary: string
+      primary: ButtonStyleProps
+      secondary: ButtonStyleProps
+      tertiary: ButtonStyleProps
     }
     textFiled: {
       primary: string
     }
   }
+}
+
+type ButtonStyleProps = {
+  color: string
+  bgColor: string
+  hoverBgColor: string
+  pressedBgColor: string
+  pressedBorderColor: string
 }
