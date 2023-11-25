@@ -169,7 +169,7 @@ const Toast: FC<ToastProps> & {
             {(toastButtons || deprecatedAction) && (
               <div className='l3-style-toast-action'>{toastButtons || deprecatedAction}</div>
             )}
-            {closeable && (
+            {/* {closeable && (
               <Button
                 className='l3-style-toast_close-button'
                 onClick={handleClose}
@@ -186,7 +186,7 @@ const Toast: FC<ToastProps> & {
                   icon={closeIcon}
                 />
               </Button>
-            )}
+            )} */}
           </div>
         </>
       </div>

@@ -351,16 +351,13 @@ Button.defaultProps = {
 export default Button
 
 const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: boolean }>`
-  /* background-color: red; */
-  --loader-padding: 8px;
   outline: 3px solid transparent;
   border: none;
   height: auto;
   border-radius: 60px;
   cursor: pointer;
   white-space: nowrap;
-  transition: var(--motion-productive-short) transform,
-    var(--motion-productive-medium) var(--motion-timing-transition) min-width;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -370,10 +367,6 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
-  // Will be updated dynamically after render by js
-  --element-width: 32;
-  --element-height: 32;
 
   &--margin-right {
     margin-right: 8px;
@@ -456,7 +449,7 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
     ${props =>
     props.kind === 'tertiary' &&
     css`
-      color: ${({ theme }) => theme.button.tertiary.color};
+      color: ${({ theme }) => theme?.button.tertiary.color};
       background-color: ${({ theme }) => theme.button.tertiary.bgColor};
       &:hover {
         background-color: ${({ theme }) => theme.button.tertiary.hoverBgColor};

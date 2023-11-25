@@ -1,14 +1,14 @@
 import React, { ForwardedRef, forwardRef, useMemo } from 'react'
-import cx from 'classnames'
-import { backwardCompatibilityForProperties } from '../../helpers/backwardCompatibilityForProperties'
+
 import {
   LoaderColors,
   // LoaderSize,
   LoaderSizes,
 } from './LoaderConstants'
-import { getTestId } from '../../tests/test-ids-utils'
+
 import { L3Component, L3ComponentProps } from '../../types'
 import { ComponentDefaultTestId } from '../../tests/constants'
+import styled from 'styled-components'
 
 export interface LoaderProps extends L3ComponentProps {
   // Backward compatibility for props naming
@@ -39,8 +39,6 @@ const Loader: L3Component<LoaderProps, HTMLElement> & {
     },
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const overrideClassName = backwardCompatibilityForProperties([className, svgClassName], '')
-
     const sizeStyle = useMemo(() => {
       if (typeof size === 'number') {
         return { width: size, height: size }
@@ -48,37 +46,7 @@ const Loader: L3Component<LoaderProps, HTMLElement> & {
       return undefined
     }, [size])
 
-    return (
-      <div
-        className={cx('l3-loader-component')}
-        ref={ref}
-        role='alert'
-        title='loading'
-        style={sizeStyle}
-        id={id}
-        data-testid={dataTestId || getTestId(ComponentDefaultTestId.LOADER, id)}
-      >
-        <svg
-          className={cx('circle-loader-spinner', overrideClassName)}
-          viewBox='0 0 50 50'
-          color={color}
-          aria-hidden
-        >
-          {/* {hasBackground && ( */}
-          <circle cx='25' cy='25' r='20' fill='none' strokeWidth='5' />
-          {/* )} */}
-          <circle
-            className={cx('circle-loader-spinner-path')}
-            cx='25'
-            cy='25'
-            r='20'
-            fill='none'
-            strokeWidth='5'
-          />
-        </svg>
-        {label && <p>Uploading...</p>}
-      </div>
-    )
+    return <StyledLoaderContainer style={sizeStyle} />
   },
 )
 
@@ -89,3 +57,21 @@ Object.assign(Loader, {
 })
 
 export default Loader
+
+const StyledLoaderContainer = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.2);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.5s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`
