@@ -4,6 +4,7 @@ import { TypographySizes, TypographyTypes } from './TypographyConstants'
 import useStyle from '../../hooks/useStyle'
 
 import cx from 'classnames'
+import styled, { css } from 'styled-components'
 
 interface TypographyProps<T extends React.ElementType> {
   as?: T
@@ -30,11 +31,10 @@ function Typography<T extends React.ElementType = 'span'>({
   const finalStyle = useStyle(style, { color: customColor })
   const typograpghClassName = `${type}_${size}`
 
-  const Component = as || 'span'
   return (
-    <Component style={finalStyle} className={cx(typograpghClassName)}>
+    <StyledTypography style={finalStyle} size={size}>
       {value}
-    </Component>
+    </StyledTypography>
   )
 }
 
@@ -44,3 +44,31 @@ Object.assign(Typography, {
 })
 
 export default Typography
+
+const StyledTypography = styled.span<{ size: string }>`
+  font-weight: 450;
+  ${props =>
+    props.size === 'large' &&
+    css`
+      font-size: 18px;
+      line-height: 28px;
+    `}
+  ${props =>
+    props.size === 'medium' &&
+    css`
+      font-size: 16px;
+      line-height: 24px;
+    `}
+    ${props =>
+    props.size === 'small' &&
+    css`
+      font-size: 14px;
+      line-height: 22px;
+    `}
+    ${props =>
+    props.size === 'xs-small' &&
+    css`
+      font-size: 12px;
+      line-height: 20px;
+    `}
+`
