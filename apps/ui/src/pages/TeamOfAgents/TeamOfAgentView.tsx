@@ -115,7 +115,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                         }
                         icon={() => (
                           <StyledIconWrapper className='hiddenButton'>
-                            <StyledEyeOpenIcon size={50} />
+                            <StyledEyeOpenIcon />
                           </StyledIconWrapper>
                         )}
                         size={IconButton.sizes?.SMALL}

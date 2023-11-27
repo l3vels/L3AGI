@@ -135,7 +135,7 @@ const ChatMembers = ({
                         }
                         icon={() => (
                           <StyledIconWrapper>
-                            <StyledEyeOpenIcon size={50} />
+                            <StyledEyeOpenIcon />
                           </StyledIconWrapper>
                         )}
                         size={IconButton.sizes?.SMALL}
@@ -222,7 +222,7 @@ const ChatMembers = ({
                             }
                             icon={() => (
                               <StyledIconWrapper>
-                                <StyledEyeOpenIcon size={50} />
+                                <StyledEyeOpenIcon />
                               </StyledIconWrapper>
                             )}
                             size={IconButton.sizes?.SMALL}

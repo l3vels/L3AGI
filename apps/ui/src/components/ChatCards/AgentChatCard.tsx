@@ -73,7 +73,7 @@ const AgentChatCard = ({
           onClick={handleView}
           icon={() => (
             <StyledIconWrapper>
-              <StyledEyeOpenIcon size={50} />
+              <StyledEyeOpenIcon />
             </StyledIconWrapper>
           )}
           size={IconButton.sizes?.SMALL}

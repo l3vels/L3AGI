@@ -146,7 +146,7 @@ const TeamOfAgentCard = ({
                 onClick={onViewClick}
                 icon={() => (
                   <StyledIconWrapper>
-                    <StyledEyeOpenIcon size={50} />
+                    <StyledEyeOpenIcon />
                   </StyledIconWrapper>
                 )}
                 size={Button.sizes?.SMALL}

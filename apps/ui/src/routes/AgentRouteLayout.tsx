@@ -108,7 +108,7 @@ const AgentRouteLayout = () => {
                     // }
                     icon={() => (
                       <StyledIconWrapper>
-                        <StyledEyeOpenIcon size={50} />
+                        <StyledEyeOpenIcon />
                       </StyledIconWrapper>
                     )}
                     size={IconButton.sizes?.SMALL}
@@ -191,7 +191,7 @@ const AgentRouteLayout = () => {
                       }
                       icon={() => (
                         <StyledIconWrapper>
-                          <StyledEyeOpenIcon size={50} />
+                          <StyledEyeOpenIcon />
                         </StyledIconWrapper>
                       )}
                       size={IconButton.sizes?.SMALL}
