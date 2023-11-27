@@ -22,7 +22,7 @@ import {
   StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
-import { StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
+import { StyledTabListWrapper } from 'styles/tabStyles.css'
 import AudioPlayer from 'components/AudioPlayer'
 import { Nullable } from 'types'
 import { CALL_LOGS_MODAL_NAME } from 'modals/CallLogsModal'
@@ -64,12 +64,8 @@ const ChatMembers = ({
       <StyledRoot>
         <StyledTabListWrapper>
           <TabList size='small'>
-            <Tab onClick={() => setActiveTab(0)}>
-              <StyledTabListSpan>{t('info')}</StyledTabListSpan>
-            </Tab>
-            <Tab onClick={() => setActiveTab(1)}>
-              <StyledTabListSpan>{t('members')}</StyledTabListSpan>
-            </Tab>
+            <Tab onClick={() => setActiveTab(0)}>{t('info')}</Tab>
+            <Tab onClick={() => setActiveTab(1)}>{t('members')}</Tab>
           </TabList>
         </StyledTabListWrapper>
 
@@ -168,12 +164,8 @@ const ChatMembers = ({
       <StyledRoot>
         <StyledTabListWrapper>
           <TabList size='small'>
-            <Tab onClick={() => setActiveTab(0)}>
-              <StyledTabListSpan>{t('info')}</StyledTabListSpan>
-            </Tab>
-            <Tab onClick={() => setActiveTab(1)}>
-              <StyledTabListSpan>{t('members')}</StyledTabListSpan>
-            </Tab>
+            <Tab onClick={() => setActiveTab(0)}>{t('info')}</Tab>
+            <Tab onClick={() => setActiveTab(1)}>{t('members')}</Tab>
           </TabList>
         </StyledTabListWrapper>
 

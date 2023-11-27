@@ -96,6 +96,13 @@ const darkTheme: DefaultTheme = {
       errorColor: '#e44258',
     },
   },
+  tabs: {
+    color: 'rgba(255, 255, 255, 0.6)',
+    hoverBgColor: 'rgba(0, 0, 0, 0.2)',
+    activeColor: '#fff',
+    activeBgColor: 'rgba(0, 0, 0, 0.5)',
+    borderColor: 'Transparent',
+  },
 }
 
 const lightTheme: DefaultTheme = {
@@ -188,6 +195,13 @@ const lightTheme: DefaultTheme = {
       errorBorderColor: '#ef5533',
       errorColor: '#ef5533',
     },
+  },
+  tabs: {
+    color: 'rgba(0, 0, 0, 0.6)',
+    hoverBgColor: 'rgba(0, 0, 0, 0.2)',
+    activeColor: '#fff',
+    activeBgColor: 'rgba(0, 0, 0, 0.5)',
+    borderColor: 'lightGray',
   },
 }
 

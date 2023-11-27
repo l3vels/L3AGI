@@ -22,7 +22,7 @@ import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
 import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
-import { StyledTab } from 'styles/tabStyles.css'
+
 import TextareaFormik from 'components/TextareaFormik'
 import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 
@@ -110,34 +110,23 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
-        <StyledFormTabList size='small'>
-          <StyledTab
+        <TabList isColumn noBorder size='small' customWidth={200}>
+          <Tab
             onClick={() => handleTabClick(0)}
             isError={validationError?.agent_name && activeTab !== 0}
           >
-            <StyledSpan
-              isActive={activeTab === 0}
-              isError={validationError?.agent_name && activeTab !== 0}
-            >
-              General
-            </StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(1)}>
-            <StyledSpan isActive={activeTab === 1}>Configuration</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(2)}>
-            <StyledSpan isActive={activeTab === 2}>Training Details</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(3)}>
-            <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(4)} isDisabled={!isVoice}>
-            <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
-          </StyledTab>
-          {/* <StyledTab onClick={() => handleTabClick(5)}>
-            <StyledSpan isActive={activeTab === 5}>Integrations</StyledSpan>
-          </StyledTab> */}
-        </StyledFormTabList>
+            General
+          </Tab>
+          <Tab onClick={() => handleTabClick(1)}>Configuration</Tab>
+          <Tab onClick={() => handleTabClick(2)}>Training Details</Tab>
+          <Tab onClick={() => handleTabClick(3)}>Onboarding</Tab>
+          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice}>
+            Voice Preferences
+          </Tab>
+          {/* <Tab onClick={() => handleTabClick(5)}>
+           Integrations
+          </Tab> */}
+        </TabList>
       </StyledFormTabsWrapper>
       <StyledForm>
         <div ref={topRef} />
@@ -525,19 +514,12 @@ export const StyledFormTabList = styled(TabList)`
 
 export const StyledSpan = styled.span<{ isActive: boolean; isError?: boolean }>`
   width: 150px;
-  color: ${({ theme }) => theme.body.textColorSecondary};
-
-  ${p =>
-    p.isActive &&
-    css`
-      color: ${({ theme }) => theme.body.textColorPrimary};
-    `};
-
+  /* 
   ${p =>
     p.isError &&
     css`
       color: #ef5533;
-    `};
+    `}; */
 `
 export const StyledTabPanelInnerWrapper = styled.div`
   display: flex;

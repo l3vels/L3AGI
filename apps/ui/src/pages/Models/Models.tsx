@@ -22,12 +22,7 @@ import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
 import { useState } from 'react'
-import {
-  StyledTab,
-  StyledTabListSpan,
-  StyledTabListWrapper,
-  StyledTabRootWrapper,
-} from 'styles/tabStyles.css'
+import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -65,12 +60,12 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
       {isModel && isFineTuning && (
         <StyledTabListWrapper>
           <TabList activeTabId={activeTab}>
-            <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')} isDisabled={!isFineTuning}>
-              <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
-            </StyledTab>
-            <StyledTab onClick={() => handleTabClick(1, 'model')} isDisabled={!isModel}>
-              <StyledTabListSpan>{t('models')}</StyledTabListSpan>
-            </StyledTab>
+            <Tab onClick={() => handleTabClick(0, 'fine-tuning')} disabled={!isFineTuning}>
+              {t('fine-tuning')}
+            </Tab>
+            <Tab onClick={() => handleTabClick(1, 'model')} disabled={!isModel}>
+              {t('models')}
+            </Tab>
           </TabList>
         </StyledTabListWrapper>
       )}

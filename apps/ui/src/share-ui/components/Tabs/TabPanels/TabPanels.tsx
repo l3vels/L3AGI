@@ -4,6 +4,7 @@ import useMergeRefs from '../../../hooks/useMergeRefs'
 import L3ComponentProps from '../../../types/L3ComponentProps'
 import { TabPanelsAnimationDirection } from './TabPanelsConstants'
 import { TabPanelProps } from '../TabPanel/TabPanel'
+import styled from 'styled-components'
 
 export interface TabPanelsProps extends L3ComponentProps {
   renderOnlyActiveTab?: boolean
@@ -51,9 +52,13 @@ const TabPanels: FC<TabPanelsProps> = forwardRef(
     }, [children, activeTabId, renderOnlyActiveTab, animationDirection])
 
     return (
-      <div ref={mergedRef} className={cx('tab-panels--wrapper', className)} id={id}>
+      <StyledTabPanelsWrapper
+        ref={mergedRef}
+        className={cx('tab-panels--wrapper', className)}
+        id={id}
+      >
         {renderedTabs}
-      </div>
+      </StyledTabPanelsWrapper>
     )
   },
 )
@@ -64,3 +69,32 @@ Object.assign(TabPanels, {
 })
 
 export default TabPanels
+
+const StyledTabPanelsWrapper = styled.div`
+  .tab-panel {
+    display: none;
+
+    &.animation-direction-rtl {
+      transform: translateX(8px);
+    }
+
+    &.animation-direction-ltr {
+      transform: translateX(-8px);
+    }
+
+    &.no-animation {
+      transform: unset;
+    }
+
+    &.active {
+      display: block;
+      animation: panel-slide-in var(--motion-productive-long) forwards var(--motion-timing-enter);
+    }
+  }
+
+  @keyframes panel-slide-in {
+    100% {
+      transform: translateX(0%);
+    }
+  }
+`

@@ -76,6 +76,13 @@ declare module 'styled-components' {
         errorColor: string
       }
     }
+    tabs: {
+      color: string
+      hoverBgColor: string
+      activeColor: string
+      activeBgColor: string
+      borderColor: string
+    }
   }
 }
 

@@ -17,6 +17,7 @@ import { NOOP } from '../../../utils/function-utils'
 import { TabProps } from '../Tab/Tab'
 
 import { TabSize } from '../Tab/TabConstants'
+import styled, { css } from 'styled-components'
 
 export interface TabListProps extends L3ComponentProps {
   onTabChange?: (tabId: number) => void
@@ -24,6 +25,9 @@ export interface TabListProps extends L3ComponentProps {
   tabType?: string
   size?: TabSize
   children?: ReactElement<TabProps>[]
+  isColumn?: boolean
+  noBorder?: boolean
+  customWidth?: number
 }
 
 // eslint-disable-next-line react/display-name
@@ -37,6 +41,9 @@ const TabList: FC<TabListProps> = forwardRef(
       tabType = 'Compact',
       size = TabSize.LARGE,
       children,
+      isColumn = false,
+      noBorder = false,
+      customWidth = 130,
     },
     ref,
   ) => {
@@ -112,11 +119,19 @@ const TabList: FC<TabListProps> = forwardRef(
     }, [children, activeTabState, focusIndex, onSelectionAction, size])
 
     return (
-      <div ref={mergedRef} className={cx('tabs--wrapper', className, tabType)} id={id}>
-        <ul ref={ulRef} tabIndex={0} className={cx('tabs-list', size)} role='tablist'>
+      <StyledTabWrapper ref={mergedRef} id={id}>
+        <StyledTabList
+          ref={ulRef}
+          tabIndex={0}
+          className={cx('tabs-list', size)}
+          role='tablist'
+          isColumn={isColumn}
+          noBorder={noBorder}
+          customWidth={customWidth}
+        >
           {tabsToRender}
-        </ul>
-      </div>
+        </StyledTabList>
+      </StyledTabWrapper>
     )
   },
 )
@@ -126,3 +141,39 @@ Object.assign(TabList, {
 })
 
 export default TabList
+
+const StyledTabWrapper = styled.div`
+  width: 100%;
+`
+const StyledTabList = styled.ul<{ isColumn: boolean; noBorder: boolean; customWidth: number }>`
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+
+  outline: none;
+  align-items: center;
+
+  width: fit-content;
+  border-radius: 60px;
+
+  border: 1px solid ${({ theme }) => theme.tabs.borderColor};
+
+  background-color: rgba(255, 255, 255, 0.2);
+
+  padding: 4px;
+  gap: 8px;
+
+  ${props =>
+    props.isColumn &&
+    css`
+      flex-direction: column;
+      border-radius: 20px;
+    `}
+  ${props =>
+    props.noBorder &&
+    css`
+      border-color: transparent;
+    `}
+
+    min-width: ${props => props.customWidth && `${props.customWidth}px`};
+`
