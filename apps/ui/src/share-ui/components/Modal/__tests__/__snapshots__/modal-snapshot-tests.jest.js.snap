@@ -1,0 +1,610 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal with Footer 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"key":null,"ref":null,"props":{"children":[{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}},{"key":null,"ref":null,"props":{"children":{"type":"p","key":null,"ref":null,"props":{"children":"footer"},"_owner":null,"_store":{}}},"_owner":null,"_store":{}}]},"_owner":null,"_store":{}}}
+
+@@ --- --- @@
+            <p>
+              content
+            </p>
++           <div
++             class="container"
++           >
++             <p>
++               footer
++             </p>
++           </div>
+          </div>
+        </div>
+      </div>
+`;
+
+exports[`Modal with Header 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"key":null,"ref":null,"props":{"children":[{"key":null,"ref":null,"props":{"title":"ModalHeader Title"},"_owner":null,"_store":{}},{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}}]},"_owner":null,"_store":{}}}
+
+@@ --- --- @@
+          <div
+            class="container"
+          >
++           <div
++             class="container"
++           >
++             <p
++               aria-level="1"
++               class="title"
++               role="heading"
++             >
++               ModalHeader Title
++             </p>
++             <div
++               class="closeButton"
++             >
++               <div
++                 class="iconButtonContainer"
++               >
++                 <button
++                   aria-busy="false"
++                   aria-disabled="false"
++                   class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
++                   data-testid="icon-button"
++                   style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
++                   type="button"
++                 >
++                   <svg
++                     aria-hidden="true"
++                     class="icon_component icon-button-padding icon_component--no-focus-style"
++                     fill="currentColor"
++                     height="16"
++                     viewBox="0 0 32 32"
++                     width="16"
++                   >
++                     <g
++                       filter="url(#filter0_bd_761_16730)"
++                     >
++                       <g
++                         clip-path="url(#clip0_761_16730)"
++                       >
++                         <path
++                           d="M23 9L9 23M23 23L9 9.00001"
++                           stroke="#fff"
++                           stroke-linecap="round"
++                         />
++                       </g>
++                     </g>
++                     <defs>
++                       <clippath
++                         id="clip0_761_16730"
++                       >
++                         <path
++                           d="M0 0H16V16H0z"
++                           fill="#fff"
++                           transform="translate(8 8)"
++                         />
++                       </clippath>
++                       <filter
++                         color-interpolation-filters="sRGB"
++                         filterUnits="userSpaceOnUse"
++                         height="52"
++                         id="filter0_bd_761_16730"
++                         width="52"
++                         x="-10"
++                         y="-10"
++                       >
++                         <feflood
++                           flood-opacity="0"
++                           result="BackgroundImageFix"
++                         />
++                         <fegaussianblur
++                           in="BackgroundImageFix"
++                           stdDeviation="5"
++                         />
++                         <fecomposite
++                           in2="SourceAlpha"
++                           operator="in"
++                           result="effect1_backgroundBlur_761_16730"
++                         />
++                         <fecolormatrix
++                           in="SourceAlpha"
++                           result="hardAlpha"
++                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
++                         />
++                         <feoffset
++                           dy="1"
++                         />
++                         <fegaussianblur
++                           stdDeviation="1.5"
++                         />
++                         <fecolormatrix
++                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
++                         />
++                         <feblend
++                           in2="effect1_backgroundBlur_761_16730"
++                           result="effect2_dropShadow_761_16730"
++                         />
++                         <feblend
++                           in="SourceGraphic"
++                           in2="effect2_dropShadow_761_16730"
++                           result="shape"
++                         />
++                       </filter>
++                     </defs>
++                   </svg>
++                 </button>
++               </div>
++             </div>
++           </div>
+            <p>
+              content
+            </p>
+`;
+
+exports[`Modal with alertDialog 1`] = `
+Snapshot Diff:
+Compared values have no visual difference.
+`;
+
+exports[`Modal with all parts 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"key":null,"ref":null,"props":{"children":[{"key":null,"ref":null,"props":{"title":"ModalHeader Title"},"_owner":null,"_store":{}},{"key":null,"ref":null,"props":{"children":{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}}},"_owner":null,"_store":{}},{"key":null,"ref":null,"props":{"children":{"type":"p","key":null,"ref":null,"props":{"children":"footer"},"_owner":null,"_store":{}}},"_owner":null,"_store":{}}]},"_owner":null,"_store":{}}}
+
+@@ --- --- @@
+          <div
+            class="container"
+          >
++           <div
++             class="container"
++           >
++             <p
++               aria-level="1"
++               class="title"
++               role="heading"
++             >
++               ModalHeader Title
++             </p>
++             <div
++               class="closeButton"
++             >
++               <div
++                 class="iconButtonContainer"
++               >
++                 <button
++                   aria-busy="false"
++                   aria-disabled="false"
++                   class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
++                   data-testid="icon-button"
++                   style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
++                   type="button"
++                 >
++                   <svg
++                     aria-hidden="true"
++                     class="icon_component icon-button-padding icon_component--no-focus-style"
++                     fill="currentColor"
++                     height="16"
++                     viewBox="0 0 32 32"
++                     width="16"
++                   >
++                     <g
++                       filter="url(#filter0_bd_761_16730)"
++                     >
++                       <g
++                         clip-path="url(#clip0_761_16730)"
++                       >
++                         <path
++                           d="M23 9L9 23M23 23L9 9.00001"
++                           stroke="#fff"
++                           stroke-linecap="round"
++                         />
++                       </g>
++                     </g>
++                     <defs>
++                       <clippath
++                         id="clip0_761_16730"
++                       >
++                         <path
++                           d="M0 0H16V16H0z"
++                           fill="#fff"
++                           transform="translate(8 8)"
++                         />
++                       </clippath>
++                       <filter
++                         color-interpolation-filters="sRGB"
++                         filterUnits="userSpaceOnUse"
++                         height="52"
++                         id="filter0_bd_761_16730"
++                         width="52"
++                         x="-10"
++                         y="-10"
++                       >
++                         <feflood
++                           flood-opacity="0"
++                           result="BackgroundImageFix"
++                         />
++                         <fegaussianblur
++                           in="BackgroundImageFix"
++                           stdDeviation="5"
++                         />
++                         <fecomposite
++                           in2="SourceAlpha"
++                           operator="in"
++                           result="effect1_backgroundBlur_761_16730"
++                         />
++                         <fecolormatrix
++                           in="SourceAlpha"
++                           result="hardAlpha"
++                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
++                         />
++                         <feoffset
++                           dy="1"
++                         />
++                         <fegaussianblur
++                           stdDeviation="1.5"
++                         />
++                         <fecolormatrix
++                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
++                         />
++                         <feblend
++                           in2="effect1_backgroundBlur_761_16730"
++                           result="effect2_dropShadow_761_16730"
++                         />
++                         <feblend
++                           in="SourceGraphic"
++                           in2="effect2_dropShadow_761_16730"
++                           result="shape"
++                         />
++                       </filter>
++                     </defs>
++                   </svg>
++                 </button>
++               </div>
++             </div>
++           </div>
++           <div
++             class="container"
++           >
+              <p>
+                content
+              </p>
++           </div>
++           <div
++             class="container"
++           >
++             <p>
++               footer
++             </p>
++           </div>
+          </div>
+        </div>
+      </div>
+`;
+
+exports[`Modal with base props 1`] = `
+<div>
+  <div
+    aria-labelledby="modal-id-title"
+    aria-modal="true"
+    class="container"
+    data-testid="l3-dialog-container"
+    id="modal-id"
+    role="dialog"
+    style="z-index: 10000;"
+    tabindex="-1"
+  >
+    <div
+      class="overlay"
+      data-testid="l3-modal-overlay"
+    />
+    <div
+      class="dialog light"
+      role="document"
+    >
+      <div>
+        <div
+          class="container"
+        >
+          <p
+            aria-level="1"
+            class="title"
+            id="modal-id-title"
+            role="heading"
+          >
+            Modal Title
+          </p>
+          <div
+            class="closeButton"
+          >
+            <div
+              class="iconButtonContainer"
+            >
+              <span
+                class="referenceWrapper"
+              >
+                <button
+                  aria-busy="false"
+                  aria-disabled="false"
+                  aria-label="close"
+                  class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
+                  data-testid="icon-button"
+                  style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="icon_component icon-button-padding icon_component--no-focus-style"
+                    fill="currentColor"
+                    height="16"
+                    viewBox="0 0 32 32"
+                    width="16"
+                  >
+                    <g
+                      filter="url(#filter0_bd_761_16730)"
+                    >
+                      <g
+                        clip-path="url(#clip0_761_16730)"
+                      >
+                        <path
+                          d="M23 9L9 23M23 23L9 9.00001"
+                          stroke="#fff"
+                          stroke-linecap="round"
+                        />
+                      </g>
+                    </g>
+                    <defs>
+                      <clippath
+                        id="clip0_761_16730"
+                      >
+                        <path
+                          d="M0 0H16V16H0z"
+                          fill="#fff"
+                          transform="translate(8 8)"
+                        />
+                      </clippath>
+                      <filter
+                        color-interpolation-filters="sRGB"
+                        filterUnits="userSpaceOnUse"
+                        height="52"
+                        id="filter0_bd_761_16730"
+                        width="52"
+                        x="-10"
+                        y="-10"
+                      >
+                        <feflood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <fegaussianblur
+                          in="BackgroundImageFix"
+                          stdDeviation="5"
+                        />
+                        <fecomposite
+                          in2="SourceAlpha"
+                          operator="in"
+                          result="effect1_backgroundBlur_761_16730"
+                        />
+                        <fecolormatrix
+                          in="SourceAlpha"
+                          result="hardAlpha"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        />
+                        <feoffset
+                          dy="1"
+                        />
+                        <fegaussianblur
+                          stdDeviation="1.5"
+                        />
+                        <fecolormatrix
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+                        />
+                        <feblend
+                          in2="effect1_backgroundBlur_761_16730"
+                          result="effect2_dropShadow_761_16730"
+                        />
+                        <feblend
+                          in="SourceGraphic"
+                          in2="effect2_dropShadow_761_16730"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="container"
+        >
+          <p>
+            content
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Modal with class names 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}},"classNames":{"container":"container","overlay":"overlay","modal":"modal"}}
+
+@@ --- --- @@
+    <div
+      aria-labelledby="modal-id-title"
+      aria-modal="true"
+-     class="container"
++     class="container container"
+      data-testid="l3-dialog-container"
+      id="modal-id"
+      role="dialog"
+@@ --- --- @@
+      tabindex="-1"
+    >
+      <div
+-       class="overlay"
++       class="overlay overlay"
+        data-testid="l3-modal-overlay"
+      />
+      <div
+-       class="dialog light"
++       class="dialog modal light"
+        role="document"
+      >
+        <div>
+`;
+
+exports[`Modal with closeButtonAriaLabel 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}},"closeButtonAriaLabel":"closeButtonAriaLabel"}
+
+@@ --- --- @@
+                  <button
+                    aria-busy="false"
+                    aria-disabled="false"
+-                   aria-label="close"
++                   aria-label="closeButtonAriaLabel"
+                    class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
+                    data-testid="icon-button"
+                    style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
+`;
+
+exports[`Modal with description 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}},"description":"description"}
+
+@@ --- --- @@
+              Modal Title
+            </p>
+            <div
++             class="description"
++           >
++             description
++           </div>
++           <div
+              class="closeButton"
+            >
+              <div
+`;
+
+exports[`Modal with hideCloseButton 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"content":{"type":"p","key":null,"ref":null,"props":{"children":"content"},"_owner":null,"_store":{}},"hideCloseButton":true}
+
+@@ --- --- @@
+            >
+              Modal Title
+            </p>
+-           <div
+-             class="closeButton"
+-           >
+-             <div
+-               class="iconButtonContainer"
+-             >
+-               <span
+-                 class="referenceWrapper"
+-               >
+-                 <button
+-                   aria-busy="false"
+-                   aria-disabled="false"
+-                   aria-label="close"
+-                   class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
+-                   data-testid="icon-button"
+-                   style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
+-                   type="button"
+-                 >
+-                   <svg
+-                     aria-hidden="true"
+-                     class="icon_component icon-button-padding icon_component--no-focus-style"
+-                     fill="currentColor"
+-                     height="16"
+-                     viewBox="0 0 32 32"
+-                     width="16"
+-                   >
+-                     <g
+-                       filter="url(#filter0_bd_761_16730)"
+-                     >
+-                       <g
+-                         clip-path="url(#clip0_761_16730)"
+-                       >
+-                         <path
+-                           d="M23 9L9 23M23 23L9 9.00001"
+-                           stroke="#fff"
+-                           stroke-linecap="round"
+-                         />
+-                       </g>
+-                     </g>
+-                     <defs>
+-                       <clippath
+-                         id="clip0_761_16730"
+-                       >
+-                         <path
+-                           d="M0 0H16V16H0z"
+-                           fill="#fff"
+-                           transform="translate(8 8)"
+-                         />
+-                       </clippath>
+-                       <filter
+-                         color-interpolation-filters="sRGB"
+-                         filterUnits="userSpaceOnUse"
+-                         height="52"
+-                         id="filter0_bd_761_16730"
+-                         width="52"
+-                         x="-10"
+-                         y="-10"
+-                       >
+-                         <feflood
+-                           flood-opacity="0"
+-                           result="BackgroundImageFix"
+-                         />
+-                         <fegaussianblur
+-                           in="BackgroundImageFix"
+-                           stdDeviation="5"
+-                         />
+-                         <fecomposite
+-                           in2="SourceAlpha"
+-                           operator="in"
+-                           result="effect1_backgroundBlur_761_16730"
+-                         />
+-                         <fecolormatrix
+-                           in="SourceAlpha"
+-                           result="hardAlpha"
+-                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+-                         />
+-                         <feoffset
+-                           dy="1"
+-                         />
+-                         <fegaussianblur
+-                           stdDeviation="1.5"
+-                         />
+-                         <fecolormatrix
+-                           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+-                         />
+-                         <feblend
+-                           in2="effect1_backgroundBlur_761_16730"
+-                           result="effect2_dropShadow_761_16730"
+-                         />
+-                         <feblend
+-                           in="SourceGraphic"
+-                           in2="effect2_dropShadow_761_16730"
+-                           result="shape"
+-                         />
+-                       </filter>
+-                     </defs>
+-                   </svg>
+-                 </button>
+-               </span>
+-             </div>
+-           </div>
+          </div>
+          <div
+            class="container"
+`;

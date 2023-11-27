@@ -1,6 +1,7 @@
 import withRenderModal from 'hocs/withRenderModal'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
+
 import { useModal } from 'hooks'
 import styled from 'styled-components'
 import AgentView from 'pages/Agents/AgentView'

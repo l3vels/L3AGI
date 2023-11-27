@@ -1,6 +1,6 @@
 import withRenderModal from 'hocs/withRenderModal'
 import styled from 'styled-components'
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import { useModal } from 'hooks'

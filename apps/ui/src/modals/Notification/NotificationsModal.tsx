@@ -18,7 +18,7 @@ import SearchOutline from 'share-ui/components/Icon/Icons/components/SearchOutli
 
 import NotificationsDateGroup from './NotificationsDateGroup'
 import { useNotificationsByDateService } from 'services/useNotificationService'
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import BgWrapper from 'modals/components/BgWrapper'
 
 type NotificationsModalProps = {

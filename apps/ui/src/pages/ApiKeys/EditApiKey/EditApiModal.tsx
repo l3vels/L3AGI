@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import withRenderModal from 'hocs/withRenderModal'
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
-import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
+
 import Tags from 'share-ui/components/Tags/Tags'
 
 import { useTranslation } from 'react-i18next'
@@ -26,6 +26,7 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
+import ModalContent from 'share-ui/components/ModalContent/ModalContent'
 
 // import { StyledFormSection } from '../ApiKeysStyle'
 

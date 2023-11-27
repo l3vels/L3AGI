@@ -1,0 +1,54 @@
+@import "../../../styles/themes";
+
+// .l3-storybook-modal-new {
+//   &-content-wrapper {
+//     flex-grow: 1;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     padding-block-end: 24px;
+//   }
+
+//   &-buttons {
+//     display: flex;
+//     justify-content: end;
+//     margin-top: 24px;
+//     button + button {
+//       margin-inline-start: 12px;
+//     }
+//   }
+
+//   &-display-none {
+//     display: none;
+//   }
+// }
+
+.modal-content {
+  color: var(--primary-text-color);
+}
+.modalWidth {
+  width: 830px;
+}
+.modalHeight {
+  height: 830px;
+}
+
+.modalClassName {
+  width: 480px;
+  height: 664px;
+}
+.modalClassName2 {
+  width: 664px;
+  height: 376px;
+}
+.modalFooter {
+  display: flex;
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+}
+
+.fullscreen {
+  width: 100vw;
+  height: 100vh;
+}

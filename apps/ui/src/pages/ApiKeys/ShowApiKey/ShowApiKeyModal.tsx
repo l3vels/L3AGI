@@ -8,9 +8,8 @@ import { useTranslation } from 'react-i18next'
 import Button from 'share-ui/components/Button/Button'
 import Typography from 'share-ui/components/typography/Typography'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
-import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
 
 import Warning from 'share-ui/components/Icon/Icons/components/Warning'
 import Copy from 'share-ui/components/Icon/Icons/components/Copy'

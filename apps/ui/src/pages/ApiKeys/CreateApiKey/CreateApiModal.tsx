@@ -11,8 +11,8 @@ import styled from 'styled-components'
 import Button from 'share-ui/components/Button/Button'
 import Typography from 'share-ui/components/typography/Typography'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
 
 import Heading from 'share-ui/components/Heading/Heading'
 
