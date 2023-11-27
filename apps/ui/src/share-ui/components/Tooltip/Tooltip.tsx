@@ -10,6 +10,7 @@ import L3ComponentProps from '../../types/L3ComponentProps'
 import { TooltipArrowPosition, TooltipSize, TooltipTheme } from './TooltipConstants'
 import { ElementContent } from '../../types/ElementContent'
 import { MoveBy } from '../../types/MoveBy'
+import styled, { css } from 'styled-components'
 
 // TODO TS-migration extend DialogProps, once Dialog is migrated to TS
 export interface TooltipProps extends L3ComponentProps {
@@ -137,7 +138,14 @@ export default class Tooltip extends PureComponent<TooltipProps> {
   }
 
   renderTooltipContent() {
-    const { theme, content, paddingSize, className, style, tooltipSize } = this.props
+    const {
+      theme,
+      content,
+      paddingSize,
+      className,
+      style,
+      tooltipSize = TooltipSize.Small,
+    } = this.props
     if (!content) {
       // don't render empty tooltip
       return null
@@ -156,15 +164,9 @@ export default class Tooltip extends PureComponent<TooltipProps> {
     }
 
     return (
-      <div
-        style={style}
-        className={classnames(
-          `l3-style-tooltip l3-style-tooltip-${theme} padding-size-${paddingSize} tooptip-size-${tooltipSize}`,
-          className,
-        )}
-      >
+      <StyledTooltip style={style} size={tooltipSize}>
         {contentValue}
-      </div>
+      </StyledTooltip>
     )
   }
 
@@ -255,3 +257,40 @@ export default class Tooltip extends PureComponent<TooltipProps> {
     return <Dialog {...dialogProps}>{children}</Dialog>
   }
 }
+
+const StyledTooltip = styled.div<{ size: string }>`
+  position: relative;
+  display: inline-block;
+  border-radius: 4px;
+  padding: 8px 12px;
+
+  box-shadow: 0 6px 20px rgb(0 0 0 / 20%);
+
+  max-width: 50vw;
+  word-break: break-word;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.3);
+  /* Basic foreground/black.3 */
+
+  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(150px);
+
+  a.tooltip-white-link {
+    color: #fff;
+  }
+  ${props =>
+    props.size === 'small' &&
+    css`
+      padding: 4px 8px;
+      font-size: 12px;
+      line-height: 20px;
+    `}
+  ${props =>
+    props.size === 'large' &&
+    css`
+      padding: 8px 12px;
+      font-size: 18px;
+      line-height: 28px;
+    `}
+`

@@ -11,6 +11,7 @@ import { getTestId } from '../../tests/test-ids-utils'
 import { ComponentDefaultTestId } from '../../tests/constants'
 import Button from '../Button/Button'
 import { BUTTON_ICON_SIZE, ButtonColor, ButtonType } from '../Button/ButtonConstants'
+import styled from 'styled-components'
 
 export interface IconButtonProps extends L3ComponentProps {
   /**
@@ -124,7 +125,7 @@ const IconButton: L3Component<IconButtonProps> & {
         case Button.sizes?.XXS:
         case Button.sizes?.XS:
         case Button.sizes?.SMALL:
-          return 16
+          return 18
         case Button.sizes?.LARGE:
           return BUTTON_ICON_SIZE
         default:
@@ -152,87 +153,34 @@ const IconButton: L3Component<IconButtonProps> & {
       return ariaLabel
     }, [hideTooltip, disabled, disabledReason, overrideTooltipContent, ariaLabel])
 
-    const IconButtonWrapper = wrapperClassName ? 'div' : Fragment
-    const iconButtonWrapperProps = useMemo(() => {
-      return wrapperClassName ? { className: cx(wrapperClassName) } : {}
-    }, [wrapperClassName])
-
     return (
       <>
-        {label ? (
-          <div>
-            <IconButtonWrapper {...iconButtonWrapperProps}>
-              <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
-                <Button
-                  onClick={onClick}
-                  disabled={disabled}
-                  color={color}
-                  kind={kind}
-                  ariaLabel={buttonAriaLabel}
-                  ref={mergedRef}
-                  id={id}
-                  dataTestId={dataTestId || getTestId(ComponentDefaultTestId.ICON_BUTTON, id)}
-                  noSidePadding
-                  active={active}
-                  style={overrideStyle}
-                  insetFocus={insetFocus}
-                >
-                  {labelInButton ? (
-                    <>
-                      <span>{labelInButton}</span>
-                    </>
-                  ) : (
-                    <Icon
-                      icon={icon}
-                      iconType={Icon.type?.SVG}
-                      iconSize={iconSize}
-                      ignoreFocusStyle
-                      className='icon-button-padding'
-                      clickable={false}
-                    />
-                  )}
-                </Button>
-              </Tooltip>
-            </IconButtonWrapper>
-            <span>{label}</span>
-          </div>
-        ) : (
-          <div>
-            <IconButtonWrapper {...iconButtonWrapperProps}>
-              <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
-                <Button
-                  onClick={onClick}
-                  disabled={disabled}
-                  color={color}
-                  kind={kind}
-                  ariaLabel={buttonAriaLabel}
-                  ref={mergedRef}
-                  id={id}
-                  dataTestId={dataTestId || getTestId(ComponentDefaultTestId.ICON_BUTTON, id)}
-                  noSidePadding
-                  active={active}
-                  style={overrideStyle}
-                  insetFocus={insetFocus}
-                >
-                  {labelInButton ? (
-                    <>
-                      <span>{labelInButton}</span>
-                    </>
-                  ) : (
-                    <Icon
-                      icon={icon || null}
-                      iconType={Icon.type?.SVG}
-                      iconSize={iconSize}
-                      ignoreFocusStyle
-                      className='icon-button-padding'
-                      clickable={false}
-                    />
-                  )}
-                </Button>
-              </Tooltip>
-            </IconButtonWrapper>
-          </div>
-        )}
+        <StyledIconButtonWrapper>
+          <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
+            <Button
+              onClick={onClick}
+              disabled={disabled}
+              color={color}
+              kind={kind}
+              ariaLabel={buttonAriaLabel}
+              ref={mergedRef}
+              id={id}
+              dataTestId={dataTestId || getTestId(ComponentDefaultTestId.ICON_BUTTON, id)}
+              noSidePadding
+              active={active}
+              style={overrideStyle}
+              insetFocus={insetFocus}
+            >
+              <Icon
+                icon={icon || null}
+                iconType={Icon.type?.SVG}
+                iconSize={iconSize}
+                ignoreFocusStyle
+                clickable={false}
+              />
+            </Button>
+          </Tooltip>
+        </StyledIconButtonWrapper>
       </>
     )
   },
@@ -266,3 +214,7 @@ IconButton.defaultProps = {
 }
 
 export default IconButton
+
+const StyledIconButtonWrapper = styled.div`
+  max-height: 36px;
+`

@@ -14,6 +14,7 @@ import { L3ComponentProps } from '../../types'
 import * as PopperJS from '@popperjs/core'
 
 import TooltipArrow from './arrow-svg'
+import styled from 'styled-components'
 
 export interface DialogProps extends L3ComponentProps {
   /**
@@ -555,15 +556,12 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                 >
                   {contentRendered}
                   {tooltip && (
-                    <TooltipArrow
+                    <StyledTooltipArrow
                       style={arrowProps.style}
                       ref={arrowProps.ref}
                       className={cx('l3-style-tooltip-arrow', tooltipClassName)}
                       data-placement={placement}
                     />
-                    // <div
-
-                    // />
                   )}
                 </DialogContent>
               )
@@ -579,3 +577,34 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
 function chainOnPropsAndInstance(name: string, instance: Dialog, props: DialogProps) {
   return chainFunctions([props[name], instance[name]], true)
 }
+
+const StyledTooltipArrow = styled(TooltipArrow)`
+  position: absolute;
+  border-radius: 2px;
+
+  svg {
+    position: absolute;
+  }
+
+  &[data-placement*='bottom'] {
+    top: -4px;
+    right: calc(50% - 14px);
+  }
+
+  &[data-placement*='top'] {
+    bottom: -4px;
+    rotate: 180deg;
+    left: calc(50% - 14px);
+  }
+  &[data-placement*='right'] {
+    left: -16px;
+    rotate: 270deg;
+    bottom: calc(50% - 2px);
+  }
+
+  &[data-placement*='left'] {
+    right: -15px;
+    rotate: 90deg;
+    bottom: calc(50% - 2px);
+  }
+`
