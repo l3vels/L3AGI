@@ -15,6 +15,7 @@ import {
   validateTitleProp,
 } from './ModalHelper'
 import { NOOP } from '../../utils/function-utils'
+import styled, { css } from 'styled-components'
 // import styles from "./Modal.module.scss";
 
 interface ModalProps extends L3ComponentProps {
@@ -99,9 +100,9 @@ const Modal: FC<ModalProps> & {
   modalWidth,
   modalHeight,
   className,
-  fullscreen,
+  fullscreen = false,
   isClean,
-  isTransparent,
+  isTransparent = false,
   zIndex = 10000,
 }) => {
   const childrenArray: ReactElement[] = useMemo(
@@ -170,17 +171,25 @@ const Modal: FC<ModalProps> & {
 
   const dialog = ReactDOM.createPortal(
     <div className={className}>
-      <div {...attr.container} data-testid='l3-dialog-container' style={{ zIndex: zIndex }}>
+      <StyledModalContainer
+        {...attr.container}
+        data-testid='l3-dialog-container'
+        style={{ zIndex: zIndex }}
+      >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <div onClick={closeDialogIfNeeded} data-testid='l3-modal-overlay' />
-        <div {...attr.dialog}>
+        <StyledOverlay onClick={closeDialogIfNeeded} data-testid='l3-modal-overlay' />
+        <StyledDialog
+          backgroundColor={backgroundColor}
+          fullscreen={fullscreen}
+          isTransparent={isTransparent}
+        >
           <div className={className}>
             {!isClean && header}
             {content}
             {!isClean && footer}
           </div>
-        </div>
-      </div>
+        </StyledDialog>
+      </StyledModalContainer>
     </div>,
     document.body,
   )
@@ -193,3 +202,83 @@ Object.assign(Modal, {
 })
 
 export default Modal
+
+const StyledModalContainer = styled.div`
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+`
+const StyledOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  animation: overlay-fade-in 70ms var(--motion-timing-enter);
+
+  @keyframes overlay-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes overlay-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+`
+const StyledDialog = styled.div<{
+  backgroundColor: string
+  fullscreen: boolean
+  isTransparent: boolean
+}>`
+  z-index: 2;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  padding: 16px;
+  overflow: auto;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(50px);
+
+  border-radius: 14px;
+
+  ${props =>
+    props.backgroundColor === 'dark' &&
+    css`
+      background-color: rgba(0, 0, 0, 0.3);
+    `}
+  ${props =>
+    props.backgroundColor === 'light' &&
+    css`
+      background-color: rgba(255, 255, 255, 0.2);
+    `}
+
+  ${props =>
+    props.fullscreen &&
+    css`
+      padding: 0px;
+      border-radius: 0px;
+    `}
+
+  ${props =>
+    props.isTransparent &&
+    css`
+      background: transparent;
+      backdrop-filter: unset;
+      box-shadow: unset;
+      border: unset;
+    `}
+`
