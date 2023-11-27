@@ -44,7 +44,7 @@ class ZapierSendTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Send Zapier and return the results."""
-        zapier_api = os.environ.get("ZAPIER_API")
+        base_url = "https://actions.zapier.com/api/v1"
         zapier_nla_api_key = self.get_env_key("ZAPIER_NLA_API_KEY")
 
         if not zapier_nla_api_key:
@@ -55,7 +55,7 @@ class ZapierSendTool(BaseTool):
         data = json.loads(query)
         try:
             response = requests.get(
-                f"{zapier_api}/exposed/", params={"api_key": zapier_nla_api_key}
+                f"{base_url}/exposed/", params={"api_key": zapier_nla_api_key}
             )
 
             result = response.json().get("results")
@@ -80,7 +80,7 @@ class ZapierSendTool(BaseTool):
                 raise ToolException(error)
 
             executionResponse = requests.post(
-                f"{zapier_api}/exposed/{action_id}/execute/",
+                f"{base_url}/exposed/{action_id}/execute/",
                 params={"api_key": zapier_nla_api_key},
                 json={
                     "instructions": data.get("instructions"),
