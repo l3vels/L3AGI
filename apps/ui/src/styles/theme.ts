@@ -51,15 +51,15 @@ const darkTheme: DefaultTheme = {
     sessionDropdownBorder: 'none',
   },
   typography: {
-    contentPrimary: 'var(--color-primitive-white)',
-    contentSecondary: 'var(--color-transparent-white-08)',
-    contentTertiary: 'var(--color-transparent-white-06',
-    contentQuaternary: 'var(--color-transparent-white-04)',
+    contentPrimary: '#FFF',
+    contentSecondary: 'rgba(255, 255, 255, 0.8)',
+    contentTertiary: 'rgba(255, 255, 255, 0.6)',
+    contentQuaternary: 'rgba(255, 255, 255, 0.4)',
   },
   heading: {
-    contentPrimary: 'var(--color-snow_white)',
-    contentSecondary: 'var(--color-transparent-white-09)',
-    contentTertiary: 'var(--color-transparent-white-04)',
+    contentPrimary: '#FFF',
+    contentSecondary: 'rgba(255, 255, 255, 0.9)',
+    contentTertiary: 'rgba(255, 255, 255, 0.4)',
   },
   button: {
     primary: {
