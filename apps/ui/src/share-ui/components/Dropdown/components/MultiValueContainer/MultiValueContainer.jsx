@@ -8,6 +8,7 @@ import Dialog from '../../../Dialog/Dialog'
 import DialogContentContainer from '../../../DialogContentContainer/DialogContentContainer'
 import Tags from '../../../Tags/Tags'
 import { DROPDOWN_TAG_COLORS } from '../../dropdown-constants'
+import styled from 'styled-components'
 
 export default function Container({ children, selectProps, ...otherProps }) {
   const {
@@ -62,7 +63,7 @@ export default function Container({ children, selectProps, ...otherProps }) {
 
   return (
     <components.ValueContainer selectProps={selectProps} {...otherProps}>
-      <div>
+      <StyledValueContainer>
         {showPlaceholder && (
           <div>
             <components.Placeholder {...otherProps}>{placeholder}</components.Placeholder>
@@ -70,22 +71,22 @@ export default function Container({ children, selectProps, ...otherProps }) {
         )}
         <div ref={newRef => setRef(newRef)} data-testid='value-container-tags'>
           {isCounterShown ? (
-            <>
+            <StyledValues>
               {renderOptions(0, overflowIndex - 1)}
               <div>
                 {renderOptions(overflowIndex - 1, overflowIndex)}
                 {clickHandler}
               </div>
               {renderOptions(overflowIndex)}
-            </>
+            </StyledValues>
           ) : (
-            <>
-              {renderOptions(0, selectedOptions.length - 1)}
-              <div>
+            <StyledValues>
+              <>{renderOptions(0, selectedOptions.length - 1)}</>
+              <>
                 {renderOptions(selectedOptions.length - 1)}
                 {clickHandler}
-              </div>
-            </>
+              </>
+            </StyledValues>
           )}
         </div>
         <div>
@@ -113,7 +114,24 @@ export default function Container({ children, selectProps, ...otherProps }) {
             </Dialog>
           )}
         </div>
-      </div>
+      </StyledValueContainer>
     </components.ValueContainer>
   )
 }
+
+const StyledValueContainer = styled.div`
+  display: flex;
+  /* min-height: 30px; */
+  align-items: center;
+`
+const StyledValues = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  overflow: hidden;
+  gap: 5px;
+
+  height: fit-content;
+  padding: 5px 0px;
+`

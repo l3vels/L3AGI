@@ -335,6 +335,8 @@ const StyledCloseButton = styled.div<{ outlined: boolean; disabled: boolean; siz
   justify-content: center;
   color: rgba(0, 0, 0, 0.5);
 
+  margin-top: 4px;
+
   ${props =>
     props.outlined &&
     css`
