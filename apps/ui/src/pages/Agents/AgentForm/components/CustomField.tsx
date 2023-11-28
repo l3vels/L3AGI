@@ -35,7 +35,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
                 <FormikTextField name={`${formikField}.${index}`} />
 
                 <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes?.SMALL}>
-                  <StyledDeleteIcon siz={50} />
+                  <StyledDeleteIcon size={32} />
                 </StyledButtonTertiary>
               </StyledCustomFieldWrapper>
             </>
@@ -61,11 +61,11 @@ const StyledFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 5px;
 `
 const StyledCustomFieldWrapper = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 
   gap: 5px;
 `
@@ -74,4 +74,5 @@ const StyledButtonWrapper = styled.div`
 `
 const StyledButtonTertiary = styled(ButtonTertiary)`
   padding: 0 4px;
+  margin-bottom: 6px;
 `
