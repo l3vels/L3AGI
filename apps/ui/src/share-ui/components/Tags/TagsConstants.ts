@@ -1,8 +1,9 @@
 export enum TagsSize {
-  XXS = "xxs"
+  XXS = 'xxs',
 }
 
 export enum TagSizes {
-  LARGE = "large",
-  SMALL = "small"
+  LARGE = 'large',
+  SMALL = 'small',
+  XS = 'xs',
 }

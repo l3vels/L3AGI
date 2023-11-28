@@ -31,11 +31,11 @@ const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes)
 
       <StyledLogoWrapper to='/'>
         <StyledLogo src={logo} alt='Logo' />
-        <StyledTags
+        <Tags
           label={t('beta')}
           readOnly
           color={'gradient_yellow'}
-          size={Tags.sizes?.SMALL}
+          size={Tags.sizes?.XS}
           noAnimation
         />
       </StyledLogoWrapper>
@@ -59,11 +59,4 @@ const StyledHeaderButtonWrapper = styled.div`
 const StyledLogo = styled.img`
   width: 48px;
   height: 48px;
-`
-
-const StyledTags = styled(Tags)`
-  div {
-    font-size: x-small !important;
-    padding: 0px 2px !important;
-  }
 `

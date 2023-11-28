@@ -47,6 +47,7 @@ declare module 'styled-components' {
       commandMenuBackgroundColor: string
       warningToastTextColor: string
       sessionDropdownBorder: string
+      tagColor: string
     }
     typography: {
       contentPrimary: string

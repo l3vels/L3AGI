@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import Typography from 'share-ui/components/typography/Typography'
 import Tags from 'share-ui/components/Tags/Tags'
@@ -11,6 +11,8 @@ type TagsRowProps = {
 }
 
 const TagsRow = ({ items, title }: TagsRowProps) => {
+  const theme = useTheme()
+
   return (
     <StyledRow>
       <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
@@ -20,14 +22,8 @@ const TagsRow = ({ items, title }: TagsRowProps) => {
           return (
             <Tags
               key={index}
-              label={
-                <TypographySecondary
-                  value={item}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                />
-              }
-              color='Tags.colors.gradient_dark_blue'
+              label={item}
+              color={theme.body.tagColor}
               readOnly
               size={Tags.sizes?.SMALL}
               outlined

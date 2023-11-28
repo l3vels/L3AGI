@@ -14,6 +14,7 @@ import { SubIcon, L3Component, L3ComponentProps } from '../../types'
 import useHover from '../../hooks/useHover'
 import ClickableWrapper from '../Clickable/ClickableWrapper'
 import { ComponentDefaultTestId } from '../../tests/constants'
+import styled, { css } from 'styled-components'
 
 interface TagsProps extends L3ComponentProps {
   label?: string | ReactNode
@@ -143,8 +144,8 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
     )
 
     return (
-      <div>
-        <ClickableWrapper
+      <StyledWrapper>
+        <StyledClickableWrapper
           isClickable={hasClickableWrapper}
           clickableProps={{
             onClick: onClickCallback,
@@ -153,8 +154,10 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
             ariaLabel: ariaLabel || label,
           }}
         >
-          <div
+          <StyledTag
             ref={mergedRef}
+            outlined={outlined}
+            size={size}
             id={id}
             style={backgroundColorStyle}
             data-testid={overrideDataTestId}
@@ -178,7 +181,9 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
                 ignoreFocusStyle
               />
             ) : null}
-            <div>{label}</div>
+            <StyledLabel disabled={disabled} outlined={outlined} size={size}>
+              {label}
+            </StyledLabel>
             {rightIcon ? (
               <Icon
                 iconType={Icon.type?.ICON_FONT}
@@ -199,7 +204,7 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
               />
             ) : null} */}
             {hasCloseButton && (
-              <div>
+              <StyledCloseButton outlined={outlined} disabled={disabled} size={size}>
                 <IconButton
                   size={TagsSize.XXS}
                   color={IconButton.colors?.ON_PRIMARY_COLOR}
@@ -215,11 +220,11 @@ const Tags: L3Component<TagsProps, HTMLElement> & {
                   ref={iconButtonRef}
                   kind={IconButton.kinds?.TERTIARY}
                 />
-              </div>
+              </StyledCloseButton>
             )}
-          </div>
-        </ClickableWrapper>
-      </div>
+          </StyledTag>
+        </StyledClickableWrapper>
+      </StyledWrapper>
     )
   },
 )
@@ -231,3 +236,120 @@ Object.assign(Tags, {
 })
 
 export default Tags
+
+const StyledWrapper = styled.div`
+  align-items: center;
+  display: inline-flex;
+  height: fit-content;
+  position: relative;
+`
+const StyledClickableWrapper = styled(ClickableWrapper)`
+  height: 100%;
+  width: 100%;
+`
+const StyledTag = styled.div<{ outlined: boolean; size: string }>`
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 6px 8px;
+  align-items: center;
+  user-select: none;
+  /* animation: tags-pop-in-emphasized var(--motion-productive-medium) var(--motion-timing-emphasize); */
+
+  gap: 2px;
+
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+
+  ${props =>
+    props.outlined &&
+    css`
+      background-color: rgba(0, 0, 0, 0.2);
+
+      display: flex;
+      position: relative;
+      z-index: 0;
+
+      ::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        padding: 1px;
+        border-radius: 4px;
+        background: var(--outline-border-color-var);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+    `}
+
+  ${props =>
+    props.size === 'small' &&
+    css`
+      /* height: 24px; */
+      padding: 4px 6px;
+    `}
+  ${props =>
+    props.size === 'xs' &&
+    css`
+      padding: 2px 4px;
+    `}
+`
+const StyledLabel = styled.span<{ outlined: boolean; disabled: boolean; size: string }>`
+  color: rgba(0, 0, 0, 0.5);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+  ${props =>
+    props.disabled &&
+    css`
+      color: rgba(255, 255, 255, 0.4);
+    `}
+
+  ${props =>
+    props.outlined &&
+    css`
+      /* color: #fff; */
+      color: rgba(0, 0, 0, 0.5);
+    `}
+
+    ${props =>
+    props.size === 'small' &&
+    css`
+      font-size: 12px;
+      line-height: 12px;
+    `}
+    ${props =>
+    props.size === 'xs' &&
+    css`
+      font-size: x-small;
+      line-height: 12px;
+    `}
+`
+const StyledCloseButton = styled.div<{ outlined: boolean; disabled: boolean; size: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.5);
+
+  ${props =>
+    props.outlined &&
+    css`
+      color: #fff;
+    `}
+
+  ${props =>
+    props.disabled &&
+    css`
+      color: rgba(255, 255, 255, 0.4);
+    `}
+
+    ${props =>
+    props.size === 'small' &&
+    css`
+      margin-left: 4px;
+    `}
+`
