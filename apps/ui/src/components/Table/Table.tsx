@@ -6,6 +6,9 @@ import TableCell from './components/TableCell'
 
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
+import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
+import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
 
 type ColumnProps = {
   Header: any
@@ -21,14 +24,16 @@ type TableProps = {
   columns: ColumnProps[]
   data: any
   expand?: boolean
+  pagination?: boolean
 }
 
-const Table = ({ columns, data, expand }: TableProps) => {
+const Table = ({ columns, data, expand, pagination }: TableProps) => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 20
+
   const defaultColumn = useMemo(
     () => ({
       width: 300,
-      // minWidth: 100,
-      // maxWidth: 100,
     }),
     [],
   )
@@ -43,6 +48,27 @@ const Table = ({ columns, data, expand }: TableProps) => {
     useBlockLayout,
     useResizeColumns,
   )
+
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem)
+  const totalPages = Math.ceil(rows.length / itemsPerPage)
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
 
   return (
     <StyledRoot>
@@ -70,7 +96,7 @@ const Table = ({ columns, data, expand }: TableProps) => {
           ))}
         </StyledThead>
         <StyledTbody {...getTableBodyProps()}>
-          {rows.map((row: any, index: number) => {
+          {currentItems.map((row: any, index: number) => {
             prepareRow(row)
             return (
               <StyledTr {...row.getRowProps()} key={index} bodyRow>
@@ -81,6 +107,21 @@ const Table = ({ columns, data, expand }: TableProps) => {
             )
           })}
         </StyledTbody>
+        {pagination && (
+          <PaginationWrapper>
+            <PageNumber onClick={handlePrevPage}>
+              <StyledNavigationChevronLeft size={16} />
+            </PageNumber>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === currentPage}>
+                {i + 1}
+              </PageNumber>
+            ))}
+            <PageNumber onClick={handleNextPage}>
+              <StyledNavigationChevronRight size={16} />
+            </PageNumber>
+          </PaginationWrapper>
+        )}
       </StyledTable>
     </StyledRoot>
   )
@@ -135,7 +176,6 @@ const StyledTr = styled.tr<{ bodyRow?: boolean }>`
   height: 35px;
 
   display: flex;
-
   :hover {
     ${p =>
       p.bodyRow &&
@@ -160,4 +200,56 @@ const StyledTh = styled.th`
   }
 
   user-select: none;
+`
+
+const PaginationWrapper = styled.div`
+  position: fixed;
+  bottom: 200px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px;
+  z-index: 100;
+`
+
+const PageNumber = styled.div<{ active?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: Circular, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  width: 30px;
+  height: 30px;
+  &:hover {
+    background: ${({ theme }) => theme.body.humanMessageBgColor};
+    border-radius: 5px;
+  }
+  ${({ active }) =>
+    active &&
+    css`
+      font-weight: bold;
+      border: ${({ theme }) => theme.body.border};
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+    `}
+`
+
+const StyledNavigationChevronLeft = styled(NavigationChevronLeft)`
+  path {
+    color: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledNavigationChevronRight = styled(NavigationChevronRight)`
+  path {
+    color: ${({ theme }) => theme.body.iconColor};
+  }
 `

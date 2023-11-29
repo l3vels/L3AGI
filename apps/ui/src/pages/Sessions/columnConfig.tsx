@@ -272,6 +272,8 @@ export const StyledOutlineIcon = styled.div`
 
 const StyledActionWrapper = styled.div`
   display: flex;
+  position: relative;
+  bottom: 5px;
   justify-content: center;
   align-items: center;
 
@@ -316,6 +318,8 @@ const StyledAgentIconsWrapper = styled.div`
 
 const StyledDateWrapper = styled.div`
   display: flex;
+  position: relative;
+  top: 5px;
   align-items: center;
   gap: 12px;
 `
