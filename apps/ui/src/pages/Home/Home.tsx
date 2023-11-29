@@ -44,7 +44,7 @@ const Home = () => {
               {agentModules?.list && agentsData?.length > 0 ? (
                 <Agents isHome />
               ) : (
-                <DiscoverSystemAgents />
+                <DiscoverTemplateAgents />
               )}
 
               {teamModules?.list &&
