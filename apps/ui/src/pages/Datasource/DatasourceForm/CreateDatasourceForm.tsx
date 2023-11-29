@@ -3,6 +3,9 @@ import DatasourceForm from './DatasourceForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
 import Loader from '@l3-lib/ui-core/dist/Loader'
+import Typography from '@l3-lib/ui-core/dist/Typography'
+
+import Play from '@l3-lib/ui-core/dist/icons/PlayOutline'
 
 import {
   StyledHeaderGroup,
@@ -15,9 +18,11 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateDatasource } from '../useCreateDatasource'
 import BackButton from 'components/BackButton'
-import { ButtonPrimary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import styled from 'styled-components'
+import DemoButton from 'components/DemoButton'
 
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()
@@ -33,6 +38,9 @@ const CreateDatasourceForm = () => {
                 {`${t('datasource-description')}`}
               </StyledSectionDescription>
             </div>
+            <StyledCustomButton>
+              <DemoButton />
+            </StyledCustomButton>
 
             <StyledButtonWrapper>
               <BackButton />
@@ -58,3 +66,7 @@ const CreateDatasourceForm = () => {
 }
 
 export default CreateDatasourceForm
+
+const StyledCustomButton = styled.div`
+  margin-right: auto;
+`
