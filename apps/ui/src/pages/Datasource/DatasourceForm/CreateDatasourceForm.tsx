@@ -23,9 +23,12 @@ import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 import styled from 'styled-components'
 import DemoButton from 'components/DemoButton'
+import { useModal } from 'hooks'
 
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()
+
+  const { openModal } = useModal()
 
   return (
     <>
@@ -39,7 +42,14 @@ const CreateDatasourceForm = () => {
               </StyledSectionDescription>
             </div>
             <StyledCustomButton>
-              <DemoButton />
+              <DemoButton
+                onClick={() =>
+                  openModal({
+                    name: 'video-modal',
+                    data: { videoSrc: import.meta.env.REACT_APP_YOUTUBE_VIDEO_DATA_SOURCE_ID },
+                  })
+                }
+              />
             </StyledCustomButton>
 
             <StyledButtonWrapper>
