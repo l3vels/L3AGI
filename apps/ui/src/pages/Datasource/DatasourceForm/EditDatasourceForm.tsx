@@ -20,6 +20,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 import DatasourceDemoButton from './components/DatasourceDemoButton'
+import { StyledCombiner } from './CreateDatasourceForm'
 
 const EditDatasourceForm = () => {
   const { formik, isLoading } = useEditDatasource()
@@ -31,11 +32,13 @@ const EditDatasourceForm = () => {
           <StyledHeaderGroup className='header_group'>
             <div>
               <StyledSectionTitle>{`${t('edit-datasource')}`}</StyledSectionTitle>
-              <StyledSectionDescription>
-                {`${t('datasource-description')}`}
-              </StyledSectionDescription>
+              <StyledCombiner>
+                <StyledSectionDescription>
+                  {`${t('datasource-description')}`}
+                </StyledSectionDescription>
+                <DatasourceDemoButton />
+              </StyledCombiner>
             </div>
-            <DatasourceDemoButton />
 
             <StyledButtonWrapper>
               <BackButton />
