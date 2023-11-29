@@ -42,15 +42,17 @@ const RunLogs = ({ runId }: RunLogsProps) => {
         </StyledFormTabList>
       </StyledFormTabsWrapper>
 
-      <TabsContext activeTabId={activeTab}>
-        <TabPanels noAnimation>
-          {data.map((log, index) => (
-            <TabPanel key={index}>
-              <RunLogMessages log={log} />
-            </TabPanel>
-          ))}
-        </TabPanels>
-      </TabsContext>
+      <StyledTabContextWrapper>
+        <TabsContext activeTabId={activeTab}>
+          <TabPanels noAnimation>
+            {data.map((log, index) => (
+              <TabPanel key={index}>
+                <RunLogMessages log={log} />
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </TabsContext>
+      </StyledTabContextWrapper>
     </StyledWrapper>
   )
 }
@@ -74,4 +76,8 @@ const StyledLoaderWrapper = styled.div`
 
   margin-bottom: 20px;
   margin-left: 5px;
+`
+const StyledTabContextWrapper = styled.div`
+  /* overflow: hidden; */
+  max-height: calc(100vh - 120px);
 `
