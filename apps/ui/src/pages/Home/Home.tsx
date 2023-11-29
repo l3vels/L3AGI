@@ -1,5 +1,4 @@
 import React from 'react'
-import GetStartedComponent from './HomeComponents/GetStartedComponent'
 
 import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
 
@@ -18,6 +17,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 
 import HeaderText from './HomeComponents/HeaderText'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import DiscoverSystemAgents from 'pages/Discover/components/DiscoverSystemAgents'
 
 const Home = () => {
   // const isProduction = import.meta.env.REACT_APP_ENV === 'production'
@@ -43,7 +43,7 @@ const Home = () => {
               {agentModules?.list && agentsData?.length > 0 ? (
                 <Agents isHome />
               ) : (
-                <DiscoverSystemAgents />
+                <DiscoverTemplateAgents />
               )}
             </StyledWrapper>
           </>
@@ -60,7 +60,7 @@ const Home = () => {
             ></StyledIframe>
 
             <DiscoverTeamAgents />
-            <DiscoverTemplateAgents />
+            <DiscoverSystemAgents />
           </>
         )}
       </StyledInnerWrapperEdit>
