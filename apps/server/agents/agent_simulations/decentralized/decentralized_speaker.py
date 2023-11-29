@@ -145,9 +145,8 @@ class DecentralizedSpeaker(BaseAgent):
         return f"""{game_description}
 Your name is {character_name}.
 Your role is: {role}
-You are a speaker.
-You are speaking on the topic: {topic}.
-Your goal is to be as creative as possible and speak in the style of {character_name}.
+Your goal is to accomplish tasks.
+Here is task or topic: {topic}.
     """
 
     #     def generate_character_system_message(
@@ -171,14 +170,14 @@ Your goal is to be as creative as possible and speak in the style of {character_
     #             )
     #         )
 
-    def generate_character_bidding_template(self, header: str):
+    def generate_character_bidding_template(self, header: str, name: str, role: str):
         bidding_template = f"""{header}
 
     ```
     {{message_history}}
     ```
 
-    On the scale of 1 to 10, where 1 is not contradictory and 10 is extremely contradictory, rate how contradictory the following message is to your ideas.
+    In the context of {name}, On the scale of 1 to 10, where 1 is not relevant and 10 is extremely relevant, rate how relevant are you to accomplish task.
 
     ```
     {{recent_message}}
@@ -234,7 +233,7 @@ Your goal is to be as creative as possible and speak in the style of {character_
             )
 
             bidding_template = self.generate_character_bidding_template(
-                character_header
+                character_header, name, agent_with_configs.agent.role
             )
 
             # character_system_message = self.generate_character_system_message(
@@ -257,7 +256,7 @@ Your goal is to be as creative as possible and speak in the style of {character_
                 )
             )
 
-        max_iters = 10
+        max_iters = 1
 
         n = 0
 
