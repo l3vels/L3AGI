@@ -40,24 +40,25 @@ class DialogueAgentWithTools(DialogueAgent):
         and returns the message string
         """
 
-        memory: ConversationBufferMemory
+        memory: ZepMemory
 
-        if self.is_memory:
-            memory = ZepMemory(
-                session_id=self.session_id,
-                url=Config.ZEP_API_URL,
-                api_key=Config.ZEP_API_KEY,
-                memory_key="chat_history",
-                return_messages=True,
-            )
+        # FIXME: This is a hack to get the memory working
+        # if self.is_memory:
+        memory = ZepMemory(
+            session_id=self.session_id,
+            url=Config.ZEP_API_URL,
+            api_key=Config.ZEP_API_KEY,
+            memory_key="chat_history",
+            return_messages=True,
+        )
 
-            memory.human_name = self.sender_name
-            memory.ai_name = self.agent_with_configs.agent.name
-            memory.auto_save = False
-        else:
-            memory = ConversationBufferMemory(
-                memory_key="chat_history", return_messages=True
-            )
+        memory.human_name = self.sender_name
+        memory.ai_name = self.agent_with_configs.agent.name
+        memory.auto_save = False
+        # else:
+        #     memory = ConversationBufferMemory(
+        #         memory_key="chat_history", return_messages=True
+        #     )
 
         callbacks = []
 
@@ -82,6 +83,9 @@ class DialogueAgentWithTools(DialogueAgent):
         prompt = "\n".join(self.message_history + [self.prefix])
 
         res = agent.run(input=prompt)
+
+        # FIXME: is memory
+        memory.save_ai_message(res)
 
         message = AIMessage(content=res)
 
