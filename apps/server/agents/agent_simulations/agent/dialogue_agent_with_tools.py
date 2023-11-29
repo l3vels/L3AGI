@@ -1,18 +1,15 @@
 from typing import List
+
+from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
-from langchain.schema import (
-    AIMessage,
-)
+from langchain.schema import AIMessage, SystemMessage
+
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent
-from langchain.agents import initialize_agent
-from langchain.agents import AgentType
-from langchain.schema import (
-    SystemMessage,
-)
-from typings.agent import AgentWithConfigsOutput
-from memory.zep.zep_memory import ZepMemory
+from agents.conversational.output_parser import ConvoOutputParser
 from config import Config
+from memory.zep.zep_memory import ZepMemory
+from typings.agent import AgentWithConfigsOutput
 
 
 class DialogueAgentWithTools(DialogueAgent):
@@ -68,6 +65,7 @@ class DialogueAgentWithTools(DialogueAgent):
             memory=memory,
             agent_kwargs={
                 "system_message": self.system_message.content,
+                "output_parser": ConvoOutputParser(),
             },
         )
 
