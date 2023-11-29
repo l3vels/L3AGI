@@ -80,29 +80,30 @@ const ChatMembers = ({
                 <AgentViewDetailBox agentData={agentById} />
                 <div style={{ height: '200px', width: '100%' }}>
                   {voiceUrl && (
-                    <StyledAudioPlayerWrapper>
-                      <AudioPlayer audioUrl={voiceUrl} />
-                    </StyledAudioPlayerWrapper>
+                    <>
+                      <StyledAudioPlayerWrapper>
+                        <AudioPlayer audioUrl={voiceUrl} />
+                      </StyledAudioPlayerWrapper>{' '}
+                      <StyledLogsButton
+                        onClick={() =>
+                          openModal({
+                            name: CALL_LOGS_MODAL_NAME,
+                            data: {
+                              chatId: call?.chat_id,
+                            },
+                          })
+                        }
+                      >
+                        <StyledLogsIcon size={32} />
+
+                        <TypographyPrimary
+                          value={t('logs')}
+                          type={Typography.types.P}
+                          size={Typography.sizes.sm}
+                        />
+                      </StyledLogsButton>
+                    </>
                   )}
-
-                  <StyledLogsButton
-                    onClick={() =>
-                      openModal({
-                        name: CALL_LOGS_MODAL_NAME,
-                        data: {
-                          chatId: call?.chat_id,
-                        },
-                      })
-                    }
-                  >
-                    <StyledLogsIcon size={32} />
-
-                    <TypographyPrimary
-                      value={t('logs')}
-                      type={Typography.types.P}
-                      size={Typography.sizes.sm}
-                    />
-                  </StyledLogsButton>
                 </div>
               </TabPanel>
 
