@@ -53,7 +53,7 @@ default_configs = {
         "toolkit": True,  # True
         "datasource": True,
         "discovery": True,
-        "Session": True,
+        "Session": False,
         "schedule": True,
         "integration": {
             "active": True,
