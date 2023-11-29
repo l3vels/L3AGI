@@ -165,6 +165,21 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
         {
             "is_public": True,
             "is_active": True,
+            "name": "Decentralized Speaker",
+            "description": "This notebook showcases how to implement a multi-agent simulation where a privileged agent decides who to speak",
+            "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKER,
+            "fields": [],
+            "agents": [
+                {"id": 1, "role": "Speaker"},
+                {"id": 2, "role": "Speaker"},
+                {"id": 3, "role": "Speaker"},
+                {"id": 4, "role": "Speaker"},
+                {"id": 5, "role": "Speaker"},
+            ],
+        },
+        {
+            "is_public": True,
+            "is_active": True,
             "name": "Debates",
             "description": "This example shows how to simulate multi-agent dialogues where agents have access to tools.",
             "team_type": TeamOfAgentsType.DEBATES,
@@ -227,21 +242,6 @@ def get_team_type(auth: UserAccount = Depends(authenticate)) -> List[object]:
             "team_type": TeamOfAgentsType.PLAN_AND_EXECUTE,
             "fields": [],
             "agents": [{"id": 1, "role": "Planner"}, {"id": 2, "role": "Executor"}],
-        },
-        {
-            "is_public": True,
-            "is_active": True,
-            "name": "Decentralized Speaker",
-            "description": "This notebook showcases how to implement a multi-agent simulation where a privileged agent decides who to speak",
-            "team_type": TeamOfAgentsType.DECENTRALIZED_SPEAKER,
-            "fields": [],
-            "agents": [
-                {"id": 1, "role": "Speaker"},
-                {"id": 2, "role": "Speaker"},
-                {"id": 3, "role": "Speaker"},
-                {"id": 4, "role": "Speaker"},
-                {"id": 5, "role": "Speaker"},
-            ],
         },
     ]
 
