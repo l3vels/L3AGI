@@ -27,6 +27,7 @@ from models.datasource import DatasourceModel
 from models.team import TeamModel
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
+from services.run_log import RunLogsManager
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput
@@ -48,6 +49,7 @@ class DecentralizedSpeaker(BaseAgent):
         provider_account,
         stopping_probability: int,
         word_limit: Optional[int] = 50,
+        run_logs_manager: Optional[RunLogsManager] = None,
     ) -> None:
         super().__init__(
             sender_name=sender_name,
@@ -58,6 +60,7 @@ class DecentralizedSpeaker(BaseAgent):
         self.stopping_probability = stopping_probability
         self.settings = settings
         self.chat_pubsub_service = chat_pubsub_service
+        self.run_logs_manager = run_logs_manager
 
     @tenacity.retry(
         stop=tenacity.stop_after_attempt(2),
@@ -102,13 +105,19 @@ class DecentralizedSpeaker(BaseAgent):
     def get_tools(
         self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings
     ):
+        tool_callback_handler = self.run_logs_manager.get_tool_callback_handler()
+
         datasources = (
             db.session.query(DatasourceModel)
             .filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources))
             .all()
         )
         datasource_tools = get_datasource_tools(
-            datasources, settings, self.provider_account, agent_with_configs, None
+            datasources,
+            settings,
+            self.provider_account,
+            agent_with_configs,
+            tool_callback_handler,
         )
         agent_tools = get_agent_tools(
             agent_with_configs.configs.tools,
@@ -116,7 +125,7 @@ class DecentralizedSpeaker(BaseAgent):
             self.provider_account,
             settings,
             agent_with_configs,
-            None,
+            tool_callback_handler,
         )
         return datasource_tools + agent_tools
 
@@ -253,6 +262,7 @@ Here is task or topic: {topic}.
                     tools=self.get_tools(agent_with_configs, self.settings),
                     sender_name=self.sender_name,
                     is_memory=team.is_memory,
+                    run_logs_manager=self.run_logs_manager,
                 )
             )
 
