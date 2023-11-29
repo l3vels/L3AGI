@@ -216,6 +216,7 @@ class ChatModel(BaseModel):
             .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)
             .outerjoin(TeamModel, ChatModel.team_id == TeamModel.id)
             .outerjoin(AgentModel, ChatModel.agent_id == AgentModel.id)
+            .order_by(ChatModel.created_on.desc())
             .filter(
                 ChatModel.creator_account_id == account.id,
                 or_(
