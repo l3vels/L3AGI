@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { RunLog } from 'types'
+import HistoryCollapse from './HistoryCollapse'
 
 type RunLogMessagesProps = {
   log: RunLog
@@ -8,10 +9,17 @@ type RunLogMessagesProps = {
 const RunLogMessages = ({ log }: RunLogMessagesProps) => {
   const { messages } = log
 
+  const filteredMessages = messages?.filter((message: any) => message.is_chat_history !== true)
+  const historyMessages = messages?.filter((message: any) => message.is_chat_history === true)
+
   return (
     <StyledCards>
-      {messages.map(({ name, content, is_chat_history }, index: number) => {
+      <HistoryCollapse historyMessages={historyMessages} />
+
+      {filteredMessages.map(({ name, content, is_chat_history }, index: number) => {
         // TODO: use is_chat_history to render chat history in collapse
+        if (content?.length === 0) return <div />
+
         return (
           <StyledCard key={index}>
             <StyledTitle>{name}</StyledTitle>
@@ -37,7 +45,7 @@ const StyledCards = styled.div`
   width: 100%;
   gap: 20px;
 `
-
+//todo colors from theme
 const StyledCard = styled.div`
   border-radius: 10px;
   padding: 20px;
@@ -46,7 +54,7 @@ const StyledCard = styled.div`
   color: #000;
 `
 
-const StyledTitle = styled.h2`
+export const StyledTitle = styled.h2`
   margin: 0;
   padding: 0;
   font-size: 18px;

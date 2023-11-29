@@ -80,4 +80,5 @@ const StyledLoaderWrapper = styled.div`
 const StyledTabContextWrapper = styled.div`
   /* overflow: hidden; */
   max-height: calc(100vh - 120px);
+  margin-right: 10px;
 `
