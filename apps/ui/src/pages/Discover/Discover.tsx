@@ -2,17 +2,15 @@ import styled from 'styled-components'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'
 import DiscoverTemplateAgents from './components/DiscoverTemplateAgents'
 import HeadingPrimary from 'components/Heading/Primary'
+import DiscoverSystemAgents from './components/DiscoverSystemAgents'
 const Discover = () => {
-
   return (
     <StyledRoot>
-      
-      {/* {<DiscoverSystemAgents />} */}
+      <DiscoverSystemAgents />
 
-      <DiscoverTemplateAgents/>
+      {/* <DiscoverTemplateAgents/> */}
 
       <DiscoverTeamAgents />
-
 
       {/* {!user && <Toolkit isPublic />} */}
     </StyledRoot>
@@ -20,9 +18,6 @@ const Discover = () => {
 }
 
 export default Discover
-
-
-
 
 export const StyledRoot = styled.div`
   display: flex;
@@ -40,4 +35,3 @@ const StyledHeadingWrapper = styled.div`
 const StyledHeadingPrimary = styled(HeadingPrimary)`
   font-size: 40px;
 `
-
