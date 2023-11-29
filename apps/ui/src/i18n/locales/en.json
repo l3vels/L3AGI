@@ -354,5 +354,6 @@
   "contacts": "$t(contact)s",
   "groups": "$t(group)s",
   "integrations": "$t(integration)s",
-  "models": "$t(model)s"
+  "models": "$t(model)s",
+  "type": "Type"
 }
