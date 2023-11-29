@@ -19,6 +19,7 @@ import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import DatasourceDemoButton from './components/DatasourceDemoButton'
 
 const EditDatasourceForm = () => {
   const { formik, isLoading } = useEditDatasource()
@@ -34,6 +35,7 @@ const EditDatasourceForm = () => {
                 {`${t('datasource-description')}`}
               </StyledSectionDescription>
             </div>
+            <DatasourceDemoButton />
 
             <StyledButtonWrapper>
               <BackButton />

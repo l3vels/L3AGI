@@ -18,17 +18,14 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useCreateDatasource } from '../useCreateDatasource'
 import BackButton from 'components/BackButton'
-import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
-import styled from 'styled-components'
-import DemoButton from 'components/DemoButton'
-import { useModal } from 'hooks'
+
+import DatasourceDemoButton from './components/DatasourceDemoButton'
 
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()
-
-  const { openModal } = useModal()
 
   return (
     <>
@@ -41,16 +38,8 @@ const CreateDatasourceForm = () => {
                 {`${t('datasource-description')}`}
               </StyledSectionDescription>
             </div>
-            <StyledCustomButton>
-              <DemoButton
-                onClick={() =>
-                  openModal({
-                    name: 'video-modal',
-                    data: { videoSrc: import.meta.env.REACT_APP_YOUTUBE_VIDEO_DATA_SOURCE_ID },
-                  })
-                }
-              />
-            </StyledCustomButton>
+
+            <DatasourceDemoButton />
 
             <StyledButtonWrapper>
               <BackButton />
@@ -76,7 +65,3 @@ const CreateDatasourceForm = () => {
 }
 
 export default CreateDatasourceForm
-
-const StyledCustomButton = styled.div`
-  margin-right: auto;
-`
