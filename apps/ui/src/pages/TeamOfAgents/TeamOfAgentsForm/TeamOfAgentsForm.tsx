@@ -193,7 +193,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <TextareaFormik
           setFieldValue={setFieldValue}
-          label={'greeting'}
+          label={t('greeting')}
           value={team_greeting}
           fieldName={'team_greeting'}
         />
