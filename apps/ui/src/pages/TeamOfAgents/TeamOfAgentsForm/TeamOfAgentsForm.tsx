@@ -185,7 +185,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
 
-        <CustomField
+        {/* <CustomField
           formik={formik}
           formikField={'team_suggestions'}
           placeholder={t('suggestions')}
@@ -260,7 +260,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
               />
             </StyledCombinedFields>
           </>
-        )}
+        )} */}
 
         <div ref={advancedRef} />
       </StyledInputWrapper>
