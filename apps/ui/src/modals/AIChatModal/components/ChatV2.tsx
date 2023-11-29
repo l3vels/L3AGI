@@ -408,10 +408,12 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-              <AudioRecorder
+
+              {/* <AudioRecorder
                 setVoicePreview={setVoicePreview}
                 setStartedRecording={setStartedRecording}
-              />
+              /> */}
+
               {voicePreview && (
                 <AudioPlayer
                   audioUrl={voicePreview || ''}
