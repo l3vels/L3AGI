@@ -41,11 +41,14 @@ const Home = () => {
           <>
             {/* <GetStartedComponent /> */}
             <StyledWrapper>
-              {agentModules?.list && agentsData?.length > 0 ? <Agents isHome />: <DiscoverTemplateAgents/> }
+              {agentModules?.list && agentsData?.length > 0 ? (
+                <Agents isHome />
+              ) : (
+                <DiscoverTemplateAgents />
+              )}
 
               {teamModules?.list &&
                 (teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />)}
-              
             </StyledWrapper>
           </>
         ) : (

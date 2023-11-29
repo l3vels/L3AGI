@@ -1,20 +1,24 @@
+import json
+import os
 from typing import Optional, Type
 
-from langchain.agents import AgentType, initialize_agent
-from langchain.agents.agent_toolkits import ZapierToolkit
+import requests
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from langchain.utilities.zapier import ZapierNLAWrapper
 from pydantic import BaseModel, Field
 
-from exceptions import ToolEnvKeyException
+from exceptions import ToolEnvKeyException, ToolException
 from tools.base import BaseTool
-from utils.model import get_llm
 
 
 class ZapierSendSchema(BaseModel):
     query: str = Field(
         ...,
-        description="use zapier",
+        description=(
+            "Your task is to process a JSON string representing an instruction-related query for a specific action.\n"
+            "Extract the 'instructions' field from the JSON, containing clear, human-readable instructions.\n"
+            "Retrieve the 'action_id' separately if provided by the user; if not, set it as an empty string.\n"
+            "Ensure 'action_id' is not included inside the 'instructions' field in the returned JSON.\n"
+        ),
     )
 
 
@@ -25,7 +29,12 @@ class ZapierSendTool(BaseTool):
 
     slug = "zapierSend"
 
-    description = "use zapier"
+    description = (
+        "Your task is to process a JSON string representing an instruction-related query for a specific action.\n"
+        "Extract the 'instructions' field from the JSON, containing clear, human-readable instructions.\n"
+        "Retrieve the 'action_id' separately if provided by the user; if not, set it as an empty string.\n"
+        "Ensure 'action_id' is not included inside the 'instructions' field in the returned JSON.\n"
+    )
 
     args_schema: Type[ZapierSendSchema] = ZapierSendSchema
 
@@ -35,6 +44,7 @@ class ZapierSendTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Send Zapier and return the results."""
+        base_url = "https://actions.zapier.com/api/v1"
         zapier_nla_api_key = self.get_env_key("ZAPIER_NLA_API_KEY")
 
         if not zapier_nla_api_key:
@@ -42,16 +52,42 @@ class ZapierSendTool(BaseTool):
                 "Please fill Zapier API Key in the [Zapier Toolkit](/toolkits/zapier)"
             )
 
-        llm = get_llm(
-            self.settings,
-            self.agent_with_configs,
-        )
-        zapier = ZapierNLAWrapper(zapier_nla_api_key=zapier_nla_api_key)
-        toolkit = ZapierToolkit.from_zapier_nla_wrapper(zapier)
-        agent = initialize_agent(
-            toolkit.get_tools(),
-            llm,
-            agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-            verbose=True,
-        )
-        return agent.run(query)
+        data = json.loads(query)
+        try:
+            response = requests.get(
+                f"{base_url}/exposed/", params={"api_key": zapier_nla_api_key}
+            )
+
+            result = response.json().get("results")
+            if not result:
+                raise ToolException(
+                    "Please set up at least one Zap in the [Zapier Dashboard](https://zapier.com/app/dashboard)"
+                )
+
+            action_id = next(
+                (
+                    result_item.get("id")
+                    for result_item in result
+                    if result_item.get("id") == data.get("action_id")
+                ),
+                None,
+            )
+            if not action_id:
+                error = "Action with provided 'id' not found, Here is your available actions that you can use with Zapier Integration:\n"
+                for result_item in result:
+                    error += f'- {result_item["id"]} | {result_item["description"]}\n'
+
+                raise ToolException(error)
+
+            executionResponse = requests.post(
+                f"{base_url}/exposed/{action_id}/execute/",
+                params={"api_key": zapier_nla_api_key},
+                json={
+                    "instructions": data.get("instructions"),
+                    "preview_only": False,
+                },
+            )
+
+            return str(executionResponse.json())
+        except Exception as e:
+            raise ToolException(str(e))
