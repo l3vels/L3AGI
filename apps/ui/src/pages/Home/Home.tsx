@@ -37,14 +37,14 @@ const Home = () => {
         {user ? (
           <>
             <StyledWrapper>
+              {teamModules?.list &&
+                (teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />)}
+
               {agentModules?.list && agentsData?.length > 0 ? (
                 <Agents isHome />
               ) : (
                 <DiscoverTemplateAgents />
               )}
-
-              {teamModules?.list &&
-                (teamOfAgents?.length > 0 ? <TeamOfAgents isHome /> : <DiscoverTeamAgents />)}
             </StyledWrapper>
           </>
         ) : (
@@ -59,9 +59,8 @@ const Home = () => {
               allowFullScreen
             ></StyledIframe>
 
-            <DiscoverTemplateAgents />
-
             <DiscoverTeamAgents />
+            <DiscoverTemplateAgents />
           </>
         )}
       </StyledInnerWrapperEdit>

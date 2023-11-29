@@ -21,8 +21,8 @@ const Discover = () => {
   const tabQuery = urlParams.get('tab')
 
   const defaultActiveTab = () => {
-    if (tabQuery === 'agent') return 0
-    if (tabQuery === 'team') return 1
+    if (tabQuery === 'team') return 0
+    if (tabQuery === 'agent') return 1
   }
 
   const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
@@ -35,11 +35,11 @@ const Discover = () => {
     <StyledRoot>
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
-          <StyledTab onClick={() => handleTabClick(0, 'agent')}>
-            <StyledTabListSpan>{`${t('agent')}s`}</StyledTabListSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(1, 'team')}>
+          <StyledTab onClick={() => handleTabClick(0, 'team')}>
             <StyledTabListSpan>{`${t('team')}s`}</StyledTabListSpan>
+          </StyledTab>
+          <StyledTab onClick={() => handleTabClick(1, 'agent')}>
+            <StyledTabListSpan>{`${t('agent')}s`}</StyledTabListSpan>
           </StyledTab>
         </TabList>
       </StyledTabListWrapper>
@@ -47,10 +47,10 @@ const Discover = () => {
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
           <TabPanel>
-            <DiscoverTemplateAgents />
+            <DiscoverTeamAgents />
           </TabPanel>
           <TabPanel>
-            <DiscoverTeamAgents />
+            <DiscoverTemplateAgents />
           </TabPanel>
         </TabPanels>
       </TabsContext>
