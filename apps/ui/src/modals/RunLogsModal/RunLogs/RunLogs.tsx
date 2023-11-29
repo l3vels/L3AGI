@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useRunLogsService } from 'services/run'
 import Loader from '@l3-lib/ui-core/dist/Loader'
-import { StyledTab, StyledTabListSpan } from 'styles/tabStyles.css'
+import { StyledTab } from 'styles/tabStyles.css'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
 import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
@@ -34,9 +34,9 @@ const RunLogs = ({ runId }: RunLogsProps) => {
         <StyledFormTabList size='small' activeTabId={activeTab}>
           {data.map(({ name }, index) => (
             <StyledTab key={index} onClick={() => handleTabClick(index)}>
-              <StyledTabListSpan>
+              <StyledSpan>
                 {index + 1}. {name}
-              </StyledTabListSpan>
+              </StyledSpan>
             </StyledTab>
           ))}
         </StyledFormTabList>
@@ -81,4 +81,8 @@ const StyledTabContextWrapper = styled.div`
   /* overflow: hidden; */
   max-height: calc(100vh - 120px);
   margin-right: 10px;
+`
+const StyledSpan = styled.span`
+  color: ${({ theme }) => theme.body.textColorPrimary};
+  width: 150px;
 `
