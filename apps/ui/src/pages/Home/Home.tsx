@@ -74,7 +74,7 @@ export default Home
 const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
   display: grid;
   grid-auto-rows: max-content;
-  gap: 20px;
+  gap: 30px;
 `
 
 const StyledWrapper = styled.div`
