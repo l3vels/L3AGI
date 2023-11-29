@@ -361,22 +361,24 @@ const ChatV2 = () => {
       <StyledChatFooter>
         <StyledChatInputWrapper>
           <StyledButtonGroup>
-            <StyledSuggestionsContainer>
-              {chatSuggestions.map((chatSuggestion: string, index: number) => {
-                const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
+            {!canStopGenerating && (
+              <StyledSuggestionsContainer>
+                {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                  const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
 
-                return (
-                  <StyledOption
-                    key={index}
-                    onClick={() => {
-                      handlePickedSuggestion(chatSuggestion)
-                    }}
-                  >
-                    {shortSuggestion}
-                  </StyledOption>
-                )
-              })}
-            </StyledSuggestionsContainer>
+                  return (
+                    <StyledOption
+                      key={index}
+                      onClick={() => {
+                        handlePickedSuggestion(chatSuggestion)
+                      }}
+                    >
+                      {shortSuggestion}
+                    </StyledOption>
+                  )
+                })}
+              </StyledSuggestionsContainer>
+            )}
 
             {canStopGenerating && (
               <StyledStopGeneratingButton>
@@ -629,6 +631,9 @@ const StyledSuggestionsContainer = styled.div`
 
 const StyledStopGeneratingButton = styled.div`
   margin-right: 94px;
+
+  position: absolute;
+  backdrop-filter: blur(100px);
 `
 
 const StyledFileWrapper = styled.div`
