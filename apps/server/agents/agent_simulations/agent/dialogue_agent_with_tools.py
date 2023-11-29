@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
@@ -9,6 +9,7 @@ from agents.agent_simulations.agent.dialogue_agent import DialogueAgent
 from agents.conversational.output_parser import ConvoOutputParser
 from config import Config
 from memory.zep.zep_memory import ZepMemory
+from services.run_log import RunLogsManager
 from typings.agent import AgentWithConfigsOutput
 
 
@@ -23,6 +24,7 @@ class DialogueAgentWithTools(DialogueAgent):
         session_id: str,
         sender_name: str,
         is_memory: bool = False,
+        run_logs_manager: Optional[RunLogsManager] = None,
         **tool_kwargs,
     ) -> None:
         super().__init__(name, agent_with_configs, system_message, model)
@@ -30,6 +32,7 @@ class DialogueAgentWithTools(DialogueAgent):
         self.session_id = session_id
         self.sender_name = sender_name
         self.is_memory = is_memory
+        self.run_logs_manager = run_logs_manager
 
     def send(self) -> str:
         """
@@ -56,6 +59,12 @@ class DialogueAgentWithTools(DialogueAgent):
                 memory_key="chat_history", return_messages=True
             )
 
+        callbacks = []
+
+        if self.run_logs_manager:
+            self.model.callbacks = [self.run_logs_manager.get_agent_callback_handler()]
+            callbacks.append(self.run_logs_manager.get_agent_callback_handler())
+
         agent = initialize_agent(
             self.tools,
             self.model,
@@ -63,6 +72,7 @@ class DialogueAgentWithTools(DialogueAgent):
             verbose=True,
             handle_parsing_errors=True,
             memory=memory,
+            callbacks=callbacks,
             agent_kwargs={
                 "system_message": self.system_message.content,
                 "output_parser": ConvoOutputParser(),
