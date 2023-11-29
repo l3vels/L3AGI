@@ -251,7 +251,7 @@ const ChatRouteLayout = () => {
 
             {sessionModule?.list && chatsData?.length > 0 && (
               <>
-                <ListHeader title='Session' />
+                <ListHeader title={t('session')} />
 
                 {chatsData?.map((chat: any) => {
                   const { agent, name, id } = chat
