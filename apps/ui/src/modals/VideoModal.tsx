@@ -29,8 +29,8 @@ const VideoModal = ({ data }: VideoModalProps) => {
     >
       <StyledModalBody>
         <StyledIframe
-          width='560'
-          height='315'
+          width='900'
+          height='600'
           src={`https://www.youtube.com/embed/${videoSrc}`}
           title='YouTube video player'
           frameBorder='0'
