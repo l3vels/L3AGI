@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <>
       <StyledInnerWrapperEdit>
-        {!user && <HeaderText />}
+        {/* {!user && <HeaderText />} */}
         {user ? (
           <>
             <StyledWrapper>
@@ -49,7 +49,7 @@ const Home = () => {
           </>
         ) : (
           <>
-            <StyledIframe
+            {/* <StyledIframe
               width='560'
               height='315'
               src={`https://www.youtube.com/embed/${import.meta.env.REACT_APP_YOUTUBE_VIDEO_ID}`}
@@ -57,7 +57,7 @@ const Home = () => {
               frameBorder='0'
               allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
               allowFullScreen
-            ></StyledIframe>
+            ></StyledIframe> */}
 
             <DiscoverTeamAgents />
             <DiscoverSystemAgents />
