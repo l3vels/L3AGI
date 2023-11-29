@@ -85,7 +85,7 @@ class DialogueAgentWithTools(DialogueAgent):
         res = agent.run(input=prompt)
 
         # FIXME: is memory
-        memory.save_ai_message(res)
+        # memory.save_ai_message(res)
 
         message = AIMessage(content=res)
 

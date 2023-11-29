@@ -300,9 +300,9 @@ Here is task or topic: {topic}.
 
             ai_message = history.create_ai_message(message, None, agent_id)
 
-            if team.is_memory:
-                memory.ai_name = agent_name
-                memory.save_ai_message(message)
+            # if team.is_memory:
+            memory.ai_name = agent_name
+            memory.save_ai_message(message)
 
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
