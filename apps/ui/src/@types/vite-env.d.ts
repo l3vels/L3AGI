@@ -18,6 +18,7 @@ interface ImportMetaEnv {
   readonly REACT_APP_TWITTER_LINK: string
   readonly REACT_APP_YOUTUBE_LINK: string
   readonly REACT_APP_YOUTUBE_VIDEO_ID: string
+  readonly REACT_APP_YOUTUBE_VIDEO_DATA_SOURCE_ID: string
   readonly REACT_APP_TERMS_LINK: string
   readonly REACT_APP_PRIVACY: string
   readonly REACT_APP_BASICS_LINK: string

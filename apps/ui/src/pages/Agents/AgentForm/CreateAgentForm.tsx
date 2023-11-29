@@ -21,6 +21,9 @@ import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 
+import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import AgentDemoButton from './components/AgentDemoButton'
+
 const CreateAgentForm = () => {
   const { formik, isLoading } = useCreateAgent()
 
@@ -34,7 +37,11 @@ const CreateAgentForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
+            <StyledCombiner>
+              <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
+
+              <AgentDemoButton />
+            </StyledCombiner>
             {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
           </div>
 

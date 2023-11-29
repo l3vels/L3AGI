@@ -23,7 +23,7 @@ export const useCreateTeamOfAgents = () => {
   const initialValues = {
     teamOfAgents_name: '',
     teamOfAgents_description: '',
-    teamOfAgents_team_type: 'Plan and Execute',
+    teamOfAgents_team_type: 'Decentralized Speaker',
     agents: [],
     is_memory: true,
     // TODO: add agents selected in form

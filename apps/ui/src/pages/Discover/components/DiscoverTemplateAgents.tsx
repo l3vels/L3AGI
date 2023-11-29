@@ -5,9 +5,7 @@ import AgentCard from 'pages/Agents/AgentCard'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
-import {
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
+import { StyledSectionWrapper } from 'pages/Home/homeStyle.css'
 import TypographySecondary from 'components/Typography/Secondary'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,21 +24,26 @@ const Discover = () => {
   const { templateAgents } = useDiscover()
 
   return (
-    <>      
+    <>
       {/* {<DiscoverSystemAgents />} */}
 
       {templateAgents?.length > 0 && (
         <StyledSectionWrapper>
           <StyledHeadingWrapper>
-            <StyledHeadingPrimary type={Heading.types.h1} value={'Discover AI Agents built with L3'} />
+            <StyledHeadingPrimary
+              type={Heading.types.h1}
+              value={'Discover AI Agents built with L3'}
+            />
             <TypographySecondary
-              value={"Chat with the foremost minds shaping AI's future or create your own innovative ideas"}
+              value={
+                "Chat with the foremost minds shaping AI's future or create your own innovative ideas"
+              }
               type={Typography.types.LABEL}
               size={Typography.sizes.lg}
             />
           </StyledHeadingWrapper>
           <ComponentsWrapper noPadding>
-            <StyledCardsWrapper>
+            <StyledTabCardsWrapper>
               {templateAgents?.map((agentObj: any, index: number) => {
                 const { agent } = agentObj
 
@@ -62,7 +65,7 @@ const Discover = () => {
                   />
                 )
               })}
-            </StyledCardsWrapper>
+            </StyledTabCardsWrapper>
           </ComponentsWrapper>
         </StyledSectionWrapper>
       )}
@@ -72,8 +75,17 @@ const Discover = () => {
 
 export default Discover
 
-
-
+export const StyledTabCardsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  max-height: calc(100vh - 370px);
+  height: 100%;
+  overflow-y: auto;
+  padding: 5px 32px;
+`
 
 export const StyledRoot = styled.div`
   display: flex;
@@ -91,4 +103,3 @@ const StyledHeadingWrapper = styled.div`
 const StyledHeadingPrimary = styled(HeadingPrimary)`
   font-size: 40px;
 `
-

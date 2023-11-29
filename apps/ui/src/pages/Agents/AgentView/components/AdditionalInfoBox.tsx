@@ -7,12 +7,33 @@ import TypographySecondary from 'components/Typography/Secondary'
 type AdditionalInfoBoxProps = {
   items: string[]
   title: string
+  noCount?: boolean
 }
 
-const AdditionalInfoBox = ({ items, title }: AdditionalInfoBoxProps) => {
+const AdditionalInfoBox = ({ items, title, noCount }: AdditionalInfoBoxProps) => {
+  const getCountOfNonEmptyItems = (items: string[]) => {
+    const nonEmptyItems = items.filter(item => item.length > 0)
+    return nonEmptyItems.length
+  }
+  const count = getCountOfNonEmptyItems(items)
+  let convertedTitle
+  if (noCount) {
+    convertedTitle = title
+  } else if (count === 1) {
+    convertedTitle = `1 ${title}`
+  } else {
+    convertedTitle = `${count} ${title}s`
+  }
+
+  if (count === 0) return <div />
+
   return (
     <StyledAdditionalInfo>
-      <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.lg} />
+      <TypographyPrimary
+        value={convertedTitle}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+      />
 
       {items.map((item: string, index: number) => {
         return (

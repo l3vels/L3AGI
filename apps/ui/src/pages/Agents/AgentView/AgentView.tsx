@@ -61,57 +61,33 @@ const AgentView = ({ agentData }: { agentData?: AgentWithConfigs }) => {
 
           <StyledRightColumn>
             {system_message?.length ? (
-              <AdditionalInfoBox items={[system_message]} title={t('system-message')} />
+              <AdditionalInfoBox items={[system_message]} title={t('system-message')} noCount />
             ) : null}
 
             {tools?.length > 0 && <AgentToolkits tools={tools} />}
 
             {datasources?.length > 0 && <AgentDatasources datasources={datasources} />}
 
-            {goals?.length > 0 && (
-              <AdditionalInfoBox
-                items={goals}
-                title={goals.length === 1 ? `${t('goal')}` : `${goals.length} ${t('goals')}`}
-              />
-            )}
+            {goals?.length > 0 && <AdditionalInfoBox items={goals} title={'goal'} />}
 
             {constraints?.length > 0 && (
-              <AdditionalInfoBox
-                items={constraints}
-                title={
-                  constraints.length === 1
-                    ? `${t('constraint')}`
-                    : `${constraints.length} ${t('constraints')}`
-                }
-              />
+              <AdditionalInfoBox items={constraints} title={'constraint'} />
             )}
 
             {instructions?.length > 0 && (
-              <AdditionalInfoBox
-                items={instructions}
-                title={
-                  instructions.length === 1
-                    ? `${t('instruction')}`
-                    : `${instructions.length} ${t('instructions')}`
-                }
-              />
+              <AdditionalInfoBox items={instructions} title={'instruction'} />
             )}
 
             {suggestions?.length > 0 && (
-              <AdditionalInfoBox
-                items={suggestions}
-                title={
-                  suggestions.length === 1
-                    ? `${t('suggestion')}`
-                    : `${suggestions.length} ${t('suggestions')}`
-                }
-              />
+              <AdditionalInfoBox items={suggestions} title={'suggestion'} />
             )}
 
-            {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={t('greeting')} />}
+            {greeting?.length > 0 && (
+              <AdditionalInfoBox items={[greeting]} title={t('greeting')} noCount />
+            )}
 
             {text?.length > 0 && (
-              <AdditionalInfoBox items={[text]} title={t('base-system-message')} />
+              <AdditionalInfoBox items={[text]} title={t('base-system-message')} noCount />
             )}
           </StyledRightColumn>
         </StyledInnerWrapper>

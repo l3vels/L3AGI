@@ -20,6 +20,8 @@ import { useAgentTemplatesService } from 'services/discover/useAgentTemplatesSer
 import TypographyPrimary from 'components/Typography/Primary'
 import { useCreateAgent } from '../useCreateAgent'
 import { t } from 'i18next'
+import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import AgentDemoButton from './components/AgentDemoButton'
 
 const CreateAgentTemplate = () => {
   const { refetchAgent } = useCreateAgent()
@@ -34,7 +36,11 @@ const CreateAgentTemplate = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
+          <StyledCombiner>
+            <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
+
+            <AgentDemoButton />
+          </StyledCombiner>
           {/* <StyledSectionDescription>
             Here are all your agents, managing tasks and operations.
           </StyledSectionDescription> */}
@@ -96,7 +102,7 @@ const StyledTemplatesWrapper = styled.div`
 
   height: calc(100vh - 225px);
 
-  max-height: 1000px;
+  max-height: 2500px;
   overflow-y: auto;
   padding: 0 20px;
   width: 100%;

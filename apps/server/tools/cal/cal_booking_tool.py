@@ -53,7 +53,7 @@ class CalBookingTool(BaseTool):
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
-        api = os.environ.get("CALCOM_API")
+        base_url = "https://api.cal.com/v1"
         cal_api_key = self.get_env_key("CALCOM_API_KEY")
         cal_username = self.get_env_key("CALCOM_USERNAME")
 
@@ -70,7 +70,9 @@ class CalBookingTool(BaseTool):
         duration = action.get("duration")
 
         try:
-            res = requests.get(f"{api}/event-types", params={"apiKey": cal_api_key})
+            res = requests.get(
+                f"{base_url}/event-types", params={"apiKey": cal_api_key}
+            )
             event_types = res.json().get("event_types", [])
             if not event_types:
                 raise ToolException(
@@ -93,7 +95,7 @@ class CalBookingTool(BaseTool):
 
         try:
             response = requests.post(
-                f"{api}/bookings",
+                f"{base_url}/bookings",
                 params={"apiKey": cal_api_key},
                 json={
                     "eventTypeId": duration,

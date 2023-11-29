@@ -4,7 +4,7 @@ import { useVoicesService } from 'plugins/contact/services/voice/useVoicesServic
 import { useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useConfigsService } from 'services/config/useConfigsService'
-import { useCreateConfigService } from 'services/config/useCreateConfigService'
+import { ConfigInput, useCreateConfigService } from 'services/config/useCreateConfigService'
 import { useUpdateConfigService } from 'services/config/useUpdateConfigService'
 
 export const useVoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
@@ -43,10 +43,10 @@ export const useVoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
 
-    const configs = []
+    const configs: ConfigInput[] = []
 
     for (const key in values) {
-      const value = values[key]
+      const value = values[key] || ''
       const field = voice?.fields.find((field: any) => field.key === key)
 
       configs.push({
@@ -60,17 +60,18 @@ export const useVoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
     }
 
     try {
-      if (filteredConfig.length === 0) {
-        const promises = configs.map((config: any) => createConfig(config))
-        await Promise.all(promises)
-      } else {
-        const promises = configs.map((config: any) =>
-          updateConfig(filteredConfig.find((cfg: any) => cfg.key === config.key).id, config),
-        )
+      const promises = voice?.fields.map((field: any) => {
+        const existingConfig = filteredConfig?.find((config: any) => config.key === field.key)
+        const config = configs.find((config: any) => config.key === field.key)
 
-        await Promise.all(promises)
-      }
+        if (!config) return
+        if (!existingConfig) return createConfig(config)
+        return updateConfig(existingConfig.id, config)
+      })
+
+      await Promise.all(promises)
       await refetchConfigs()
+
       setToast({
         message: 'Voice was updated!',
         type: 'positive',

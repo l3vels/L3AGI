@@ -20,6 +20,8 @@ const AgentDatasources = ({ datasources }: AgentDataSourcesProps) => {
     return datasources?.includes(id)
   })
 
+  if (filteredDatasources?.length === 0) return <div />
+
   return (
     <StyledWrapper>
       <TypographyPrimary
