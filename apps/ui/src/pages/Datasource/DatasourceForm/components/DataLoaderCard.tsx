@@ -69,4 +69,6 @@ const StyledIcon = styled.img`
   width: 24px;
   height: 24px;
   border-radius: 8px;
+
+  object-fit: cover;
 `
