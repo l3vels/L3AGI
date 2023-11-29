@@ -96,7 +96,7 @@ const StyledTemplatesWrapper = styled.div`
 
   height: calc(100vh - 225px);
 
-  max-height: 1000px;
+  max-height: 2500px;
   overflow-y: auto;
   padding: 0 20px;
   width: 100%;
