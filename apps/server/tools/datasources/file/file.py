@@ -33,8 +33,11 @@ class FileDatasourceTool(BaseTool):
         """Ask questions over file datasource. Return result."""
 
         configs = ConfigModel.get_configs(
-            db, ConfigQueryParams(datasource_id=self.data_source_id), self.account
+            db, ConfigQueryParams(datasource_id=self.data_source_id), None
         )
+
+        data_source_account_id = configs[0].account_id
+
         files_config = [config for config in configs if config.key == "files"][0]
 
         value = json.loads(files_config.value)
@@ -50,6 +53,7 @@ class FileDatasourceTool(BaseTool):
             response_mode,
             vector_store,
             str(self.account.id),
+            str(data_source_account_id),
             self.data_source_id,
             self.agent_with_configs,
             chunk_size,

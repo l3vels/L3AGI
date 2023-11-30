@@ -161,12 +161,14 @@ class ConfigModel(BaseModel):
     @classmethod
     def get_configs(cls, db, query: ConfigQueryParams, account):
         filter_conditions = [
-            ConfigModel.account_id == account.id,
             or_(
                 or_(ConfigModel.is_deleted.is_(False), ConfigModel.is_deleted is None),
                 ConfigModel.is_deleted is None,
             ),
         ]
+
+        if account:
+            filter_conditions.append(ConfigModel.account_id == account.id)
 
         # Iterate over fields in ConfigQueryParams
         for field in ConfigQueryParams.__annotations__.keys():

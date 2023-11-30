@@ -47,6 +47,9 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
             response_mode,
             vector_store,
             str(account.id),
+            str(
+                account.id
+            ),  # data source account id. used to read template data source account id
             str(datasource_id),
             None,
             chunk_size,

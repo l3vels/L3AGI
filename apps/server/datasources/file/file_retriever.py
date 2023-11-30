@@ -44,7 +44,6 @@ class FileDatasourceRetriever:
     settings: AccountSettings
     datasource_id = None
     index: SummaryIndex
-    index_persist_dir: str
     datasource_path: Path
     index_type: str
     response_mode: str
@@ -52,6 +51,8 @@ class FileDatasourceRetriever:
     similarity_top_k: int
     chunk_size: int
     agent_with_configs: AgentWithConfigsOutput
+    account_id: str
+    data_source_account_id: str
 
     def __init__(
         self,
@@ -60,6 +61,7 @@ class FileDatasourceRetriever:
         response_mode: str,
         vector_store: str,
         account_id: str,
+        data_source_account_id: str,
         datasource_id: str,
         agent_with_configs: Optional[AgentWithConfigsOutput] = None,
         chunk_size: Optional[int] = 1024,
@@ -74,8 +76,8 @@ class FileDatasourceRetriever:
         self.chunk_size = chunk_size
         self.similarity_top_k = similarity_top_k
         self.agent_with_configs = agent_with_configs
-
-        self.index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{account_id}/index/datasource_{self.datasource_id}"
+        self.account_id = account_id
+        self.data_source_account_id = data_source_account_id
 
     def get_vector_store(self, is_retriever: bool = False):
         vector_store: VectorStore
@@ -184,12 +186,16 @@ class FileDatasourceRetriever:
         # )
 
         # Persist index to S3
-        self.index.storage_context.persist(persist_dir=self.index_persist_dir, fs=s3)
+        index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{self.account_id}/index/datasource_{self.datasource_id}"
+
+        self.index.storage_context.persist(persist_dir=index_persist_dir, fs=s3)
 
     def load_index(self):
+        index_persist_dir = f"{Config.AWS_S3_BUCKET}/account_{self.data_source_account_id}/index/datasource_{self.datasource_id}"
+
         vector_store = self.get_vector_store(is_retriever=True)
         storage_context = StorageContext.from_defaults(
-            persist_dir=self.index_persist_dir, fs=s3, vector_store=vector_store
+            persist_dir=index_persist_dir, fs=s3, vector_store=vector_store
         )
         self.index = load_index_from_storage(storage_context, self.datasource_id)
 
