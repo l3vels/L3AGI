@@ -50,7 +50,7 @@ def execute_scheduled_run(
                     name=f"{schedule.name} - {arrow.get(datetime.now()).format('DD MMM, YYYY, HH:mm')}",
                     is_public=True,
                     agent_id=configs.agent_id,
-                    team_id=None,
+                    team_id=configs.team_id,
                 ),
                 user=user,
                 account=account,
