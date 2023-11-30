@@ -87,6 +87,7 @@ const TableCell = ({ cell }: TableCellProps) => {
       minWidth={minWidth}
       width={width}
       isEditing={isEditing}
+      cursorPointer={isEdit}
     >
       {isEditing ? (
         <StyledWrapper>
@@ -107,7 +108,7 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td<{ isEditing: boolean }>`
+const StyledTd = styled.td<{ isEditing: boolean; cursorPointer: boolean }>`
   padding: 5px 10px;
   position: relative;
 
@@ -130,9 +131,15 @@ const StyledTd = styled.td<{ isEditing: boolean }>`
       padding: 0;
       overflow: visible;
     `};
+  ${p =>
+    p.cursorPointer &&
+    css`
+      cursor: pointer;
+    `};
 `
 const StyledWrapper = styled.div`
   border: 1px solid #000;
+  border-radius: 5px;
 `
 
 const StyledTypographyWrapper = styled.div`
