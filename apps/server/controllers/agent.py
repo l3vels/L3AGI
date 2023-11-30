@@ -134,7 +134,9 @@ def get_agents(
 # todo need remove, is depricated
 @router.get("/discover", response_model=Dict[str, List[AgentWithConfigsOutput]])
 def get_template_and_system_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
-    template_agents = AgentModel.get_template_agents(db=db)
+    template_agents = AgentModel.get_template_agents(
+        session=db.session, account_id=None
+    )
     system_agents = AgentModel.get_public_agents(db=db)
 
     template_agents_list = convert_agents_to_agent_list(template_agents)
@@ -156,8 +158,12 @@ def get_public_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
 
 
 @router.get("/discover/templates", response_model=List[AgentWithConfigsOutput])
-def get_template_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
-    template_agents = AgentModel.get_template_agents(db=db)
+def get_template_agents(
+    auth: UserAccount = Depends(authenticate),
+) -> Dict[str, List[AgentWithConfigsOutput]]:
+    template_agents = AgentModel.get_template_agents(
+        session=db.session, account_id=auth.account.id
+    )
     return convert_agents_to_agent_list(template_agents)
 
 

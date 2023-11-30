@@ -4,6 +4,8 @@ import fileImg from 'assets/images/file.jpg'
 import webImg from 'assets/images/web.jpg'
 import notionImg from 'assets/images/notion.png'
 import shopifyImg from 'assets/images/shopify.png'
+import googleAnalyticsLogo from 'assets/images/googleAnalytics.png'
+import firebaseLogo from 'assets/images/firebase.png'
 
 export const DATA_LOADER_IMAGES = [
   {
@@ -29,5 +31,13 @@ export const DATA_LOADER_IMAGES = [
   {
     sourceName: 'Shopify',
     imageSrc: shopifyImg,
+  },
+  {
+    sourceName: 'Google Analytics',
+    imageSrc: googleAnalyticsLogo,
+  },
+  {
+    sourceName: 'Firebase',
+    imageSrc: firebaseLogo,
   },
 ]

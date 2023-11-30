@@ -10,6 +10,7 @@ from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
 
 from agents.agent_simulations.agent.dialogue_agent_with_tools import \
     DialogueAgentWithTools
+from services.run_log import RunLogsManager
 from typings.agent import AgentWithConfigsOutput
 
 
@@ -24,6 +25,7 @@ class BiddingDialogueAgent(DialogueAgentWithTools):
         tools: List[any],
         session_id: str,
         sender_name: str,
+        run_logs_manager: RunLogsManager,
         is_memory: bool = False,
     ) -> None:
         super().__init__(
@@ -35,6 +37,7 @@ class BiddingDialogueAgent(DialogueAgentWithTools):
             session_id,
             sender_name,
             is_memory,
+            run_logs_manager,
         )
         self.bidding_template = bidding_template
 

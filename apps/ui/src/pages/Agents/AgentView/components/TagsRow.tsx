@@ -4,6 +4,7 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Tags from '@l3-lib/ui-core/dist/Tags'
 
 import TypographySecondary from 'components/Typography/Secondary'
+import { textSlicer } from 'utils/textSlicer'
 
 type TagsRowProps = {
   items: string[]
@@ -17,12 +18,13 @@ const TagsRow = ({ items, title }: TagsRowProps) => {
 
       <StyledContainer>
         {items.map((item: string, index: number) => {
+          const { shortText: shortName } = textSlicer(item, 35)
           return (
             <Tags
               key={index}
               label={
                 <TypographySecondary
-                  value={item}
+                  value={shortName}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.xss}
                 />

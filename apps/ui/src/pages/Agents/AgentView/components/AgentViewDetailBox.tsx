@@ -100,7 +100,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               <StyledMenuDots>
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
-                    <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary>
+                    <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
                     <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
                     <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
                       {t('delete-agent')}

@@ -30,12 +30,12 @@ const StyledAdvancedButton = styled.div`
   gap: 5px;
 `
 
-const StyledNavigationChevronUp = styled(NavigationChevronUp)`
+export const StyledNavigationChevronUp = styled(NavigationChevronUp)`
   path {
     color: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledNavigationChevronDown = styled(NavigationChevronDown)`
+export const StyledNavigationChevronDown = styled(NavigationChevronDown)`
   path {
     color: ${({ theme }) => theme.body.iconColor};
   }

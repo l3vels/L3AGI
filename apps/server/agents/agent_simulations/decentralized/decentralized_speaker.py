@@ -27,6 +27,7 @@ from models.datasource import DatasourceModel
 from models.team import TeamModel
 from postgres import PostgresChatMessageHistory
 from services.pubsub import ChatPubSubService
+from services.run_log import RunLogsManager
 from tools.datasources.get_datasource_tools import get_datasource_tools
 from tools.get_tools import get_agent_tools
 from typings.agent import AgentWithConfigsOutput
@@ -48,6 +49,7 @@ class DecentralizedSpeaker(BaseAgent):
         provider_account,
         stopping_probability: int,
         word_limit: Optional[int] = 50,
+        run_logs_manager: Optional[RunLogsManager] = None,
     ) -> None:
         super().__init__(
             sender_name=sender_name,
@@ -58,6 +60,7 @@ class DecentralizedSpeaker(BaseAgent):
         self.stopping_probability = stopping_probability
         self.settings = settings
         self.chat_pubsub_service = chat_pubsub_service
+        self.run_logs_manager = run_logs_manager
 
     @tenacity.retry(
         stop=tenacity.stop_after_attempt(2),
@@ -102,13 +105,19 @@ class DecentralizedSpeaker(BaseAgent):
     def get_tools(
         self, agent_with_configs: AgentWithConfigsOutput, settings: AccountSettings
     ):
+        tool_callback_handler = self.run_logs_manager.get_tool_callback_handler()
+
         datasources = (
             db.session.query(DatasourceModel)
             .filter(DatasourceModel.id.in_(agent_with_configs.configs.datasources))
             .all()
         )
         datasource_tools = get_datasource_tools(
-            datasources, settings, self.provider_account, agent_with_configs, None
+            datasources,
+            settings,
+            self.provider_account,
+            agent_with_configs,
+            tool_callback_handler,
         )
         agent_tools = get_agent_tools(
             agent_with_configs.configs.tools,
@@ -116,7 +125,7 @@ class DecentralizedSpeaker(BaseAgent):
             self.provider_account,
             settings,
             agent_with_configs,
-            None,
+            tool_callback_handler,
         )
         return datasource_tools + agent_tools
 
@@ -145,9 +154,8 @@ class DecentralizedSpeaker(BaseAgent):
         return f"""{game_description}
 Your name is {character_name}.
 Your role is: {role}
-You are a speaker.
-You are speaking on the topic: {topic}.
-Your goal is to be as creative as possible and speak in the style of {character_name}.
+Your goal is to accomplish tasks.
+Here is task or topic: {topic}.
     """
 
     #     def generate_character_system_message(
@@ -171,14 +179,14 @@ Your goal is to be as creative as possible and speak in the style of {character_
     #             )
     #         )
 
-    def generate_character_bidding_template(self, header: str):
+    def generate_character_bidding_template(self, header: str, name: str, role: str):
         bidding_template = f"""{header}
 
     ```
     {{message_history}}
     ```
 
-    On the scale of 1 to 10, where 1 is not contradictory and 10 is extremely contradictory, rate how contradictory the following message is to your ideas.
+    In the context of {name}, On the scale of 1 to 10, where 1 is not relevant and 10 is extremely relevant, rate how relevant are you to accomplish task.
 
     ```
     {{recent_message}}
@@ -234,7 +242,7 @@ Your goal is to be as creative as possible and speak in the style of {character_
             )
 
             bidding_template = self.generate_character_bidding_template(
-                character_header
+                character_header, name, agent_with_configs.agent.role
             )
 
             # character_system_message = self.generate_character_system_message(
@@ -254,10 +262,11 @@ Your goal is to be as creative as possible and speak in the style of {character_
                     tools=self.get_tools(agent_with_configs, self.settings),
                     sender_name=self.sender_name,
                     is_memory=team.is_memory,
+                    run_logs_manager=self.run_logs_manager,
                 )
             )
 
-        max_iters = 10
+        max_iters = 1
 
         n = 0
 
@@ -291,9 +300,9 @@ Your goal is to be as creative as possible and speak in the style of {character_
 
             ai_message = history.create_ai_message(message, None, agent_id)
 
-            if team.is_memory:
-                memory.ai_name = agent_name
-                memory.save_ai_message(message)
+            # if team.is_memory:
+            memory.ai_name = agent_name
+            memory.save_ai_message(message)
 
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
 
