@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 
 import CREATE_SCHEDULE_GQL from '../../gql/schedule/createSchedule.gql'
+import { Nullable } from 'types'
 
 export interface ScheduleInput {
   schedule: {
@@ -11,7 +12,7 @@ export interface ScheduleInput {
     cron_expression?: string
     schedule_type?: string
     start_date: string
-    end_date: string
+    end_date: Nullable<string>
     interval?: string
   }
   configs: {
