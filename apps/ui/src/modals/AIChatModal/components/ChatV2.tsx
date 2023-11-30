@@ -345,6 +345,7 @@ const ChatV2 = () => {
           <ChatMessageListV2
             data={chatMessages}
             thinking={thinking}
+            sessionId={sessionId}
             // @ts-expect-error TODO: fix type
             isNewMessage={socket?.isNewMessage}
             // @ts-expect-error TODO: fix type
