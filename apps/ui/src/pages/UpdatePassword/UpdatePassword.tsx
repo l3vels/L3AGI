@@ -1,4 +1,3 @@
-import React from 'react'
 // import TextField from 'bf-ui/dist/TextField'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
@@ -7,7 +6,6 @@ import styled from 'styled-components'
 import useUpdatePassword from './useUpdatePassword'
 import TextField from '@l3-lib/ui-core/dist/TextField'
 
-import Button from '@l3-lib/ui-core/dist/Button'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const UpdatePassword = () => {
