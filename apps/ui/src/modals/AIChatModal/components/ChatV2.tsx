@@ -412,10 +412,12 @@ const ChatV2 = () => {
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
 
-              {/* <AudioRecorder
-                setVoicePreview={setVoicePreview}
-                setStartedRecording={setStartedRecording}
-              /> */}
+              {!teamId && (
+                <AudioRecorder
+                  setVoicePreview={setVoicePreview}
+                  setStartedRecording={setStartedRecording}
+                />
+              )}
 
               {voicePreview && (
                 <AudioPlayer
