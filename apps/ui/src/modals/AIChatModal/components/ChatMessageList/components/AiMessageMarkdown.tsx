@@ -10,7 +10,7 @@ const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
 const SETTINGS_REGEX = /\/setting/
 const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
-const VOICE_REGEX = /\/voices\/[^/]+/
+const VOICE_REGEX = /\/integrations\/voice\/[^/]+/
 // const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
 
 const AiMessageMarkdown = ({ children }: { children: any }) => {
@@ -40,6 +40,7 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
                   allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                   allowFullScreen
                 ></iframe>
+                <br />
               </>
             )
           }
@@ -74,7 +75,7 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
 
           if (VOICE_REGEX.test(href as string)) {
             const inputString = href
-            const staticPart = '/voices/'
+            const staticPart = '/integrations/voice/'
             const extractedPart = inputString?.replace(staticPart, '')
 
             return (
