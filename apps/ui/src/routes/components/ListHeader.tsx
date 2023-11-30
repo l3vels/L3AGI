@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 import IconButton from '@l3-lib/ui-core/dist/IconButton'
 
-import Add from '@l3-lib/ui-core/dist/icons/Add'
-
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
