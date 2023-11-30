@@ -3,27 +3,48 @@ import { useModal } from 'hooks'
 
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import {
-  StyledHeaderGroup,
+  // StyledHeaderGroup,
   // StyledSectionDescription,
   // StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import TeamOfAgentsCard from 'pages/TeamOfAgents/TeamOfAgentsCard'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTeamOfAgentsPublicService } from 'services/team/useTeamOfAgentsPublicService'
 import TypographySecondary from 'components/Typography/Secondary'
 import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 import HeadingPrimary from 'components/Heading/Primary'
 import styled from 'styled-components'
-import { AuthContext } from 'contexts'
+import { AgentWithConfigs } from 'types'
+// import { AuthContext } from 'contexts'
+type Agent = {
+  id: string
+  role: string
+  agent: AgentWithConfigs
+}
+
+type TeamOfAgents = {
+  id: string
+  name: string
+  description: string
+  avatar: string
+  creator: {
+    avatar: string
+    email: string
+    id: string
+    name: string
+  }
+  team_agents: Agent[]
+  team_type: string
+}
 
 const DiscoverTeamAgents = () => {
   const navigate = useNavigate()
   const { openModal } = useModal()
 
   const { data: publicTeamAgents } = useTeamOfAgentsPublicService()
-  const location = useLocation()
+  // const location = useLocation()
 
   return (
     <StyledSectionWrapper>
@@ -37,7 +58,7 @@ const DiscoverTeamAgents = () => {
       </StyledHeadingWrapper>
       <ComponentsWrapper noPadding>
         <StyledCardsWrapper>
-          {publicTeamAgents?.map((teamOfAgents: any) => {
+          {publicTeamAgents?.map((teamOfAgents: TeamOfAgents) => {
             return (
               <TeamOfAgentsCard
                 key={teamOfAgents.id}
