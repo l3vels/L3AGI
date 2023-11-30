@@ -1,5 +1,4 @@
 import { FormikProvider } from 'formik'
-import { useTranslation } from 'react-i18next'
 import AgentForm from './AgentForm'
 
 import Button from '@l3-lib/ui-core/dist/Button'
@@ -7,7 +6,7 @@ import Loader from '@l3-lib/ui-core/dist/Loader'
 
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'

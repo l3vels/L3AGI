@@ -4,7 +4,7 @@ import styled, { DefaultTheme, css } from 'styled-components'
 
 // import Mention from '@l3-lib/ui-core/dist/icons/Mention'
 
-import Collection from '@l3-lib/ui-core/dist/icons/Collection'
+// import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 // import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
 import { useChatSwitcher } from './useChatSwitcher'
 import MainNavigation from 'pages/Navigation/MainNavigation'
@@ -249,61 +249,61 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
 //     `};
 // `
 
-const StyledChatSwitcher = styled.div`
-  display: inline-flex;
-  padding: 10px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 100px;
-  border: ${({ theme }) => theme.body.border};
-  background: ${({ theme }) => theme.body.cardBgColor};
-  /* Style */
-  box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
-    0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
+// const StyledChatSwitcher = styled.div`
+//   display: inline-flex;
+//   padding: 10px;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 10px;
+//   border-radius: 100px;
+//   border: ${({ theme }) => theme.body.border};
+//   background: ${({ theme }) => theme.body.cardBgColor};
+//   /* Style */
+//   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
+//     0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
+//   backdrop-filter: blur(50px);
+//   -webkit-backdrop-filter: blur(50px);
 
-  margin-left: 10px;
+//   margin-left: 10px;
 
-  width: fit-content;
-`
-const StyledIcon = styled.div<{ picked: boolean }>`
-  color: transparent;
+//   width: fit-content;
+// `
+// const StyledIcon = styled.div<{ picked: boolean }>`
+//   color: transparent;
 
-  border-radius: 100px;
+//   border-radius: 100px;
 
-  width: 48px;
-  height: 48px;
+//   width: 48px;
+//   height: 48px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  &:hover {
-    background: ${({ theme }) => theme.body.breadCrumbsBg};
-    cursor: pointer;
-  }
+//   &:hover {
+//     background: ${({ theme }) => theme.body.breadCrumbsBg};
+//     cursor: pointer;
+//   }
 
-  ${p =>
-    p.picked &&
-    css`
-      background: rgba(255, 255, 255, 0.3);
-      &:hover {
-        background: rgba(255, 255, 255, 0.3);
-        background: ${({ theme }) => theme.body.breadCrumbsBg};
-    }
-        cursor: auto;
-      }
-    `};
-`
+//   ${p =>
+//     p.picked &&
+//     css`
+//       background: rgba(255, 255, 255, 0.3);
+//       &:hover {
+//         background: rgba(255, 255, 255, 0.3);
+//         background: ${({ theme }) => theme.body.breadCrumbsBg};
+//     }
+//         cursor: auto;
+//       }
+//     `};
+// `
 
-const StyledCollectionIcon = styled(Collection)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
+// const StyledCollectionIcon = styled(Collection)`
+//   path {
+//     fill: ${({ theme }) => theme.body.iconColor};
+//   }
+// `
 
 export const StyledBasicIcon = styled(Basic)`
   path {
