@@ -22,7 +22,7 @@ import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 // import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
 // import { useRef } from 'react'
 import useTeams from './useTeams'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 // import { useModal } from 'hooks'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
@@ -31,7 +31,7 @@ import HeadingPrimary from 'components/Heading/Primary'
 // import useTeams from './useTeams'
 
 const Teams = () => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const { openCreateTeamsModal, assignedUserList } = useTeams()
 
   // const gridRef = useRef({})
