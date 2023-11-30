@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
 
 import styled from 'styled-components'
@@ -7,7 +7,7 @@ import outsideClick from 'helpers/outsideClick'
 import Calendar from '@l3-lib/ui-core/dist/icons/Calendar'
 
 const DatePickerField = ({ start_date, end_date, onChange, onApply, onClear }: any) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const [is_open, setIsOpen] = React.useState(false)
 
   const ref = useRef(null)

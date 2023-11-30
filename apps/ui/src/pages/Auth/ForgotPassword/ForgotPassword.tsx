@@ -12,7 +12,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
-  const { formik, alertMessage, handleCloseAlert } = useForgotPassword()
+  const { formik } = useForgotPassword()
   return (
     <StyledCenterFormContainer>
       <HeadingTertiary

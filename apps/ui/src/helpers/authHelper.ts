@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie'
 
 const cookies: any = new Cookies()
 
-export const setAccountId = (accountId: string, location?: string) => {
+export const setAccountId = (accountId: string) => {
   localStorage.setItem('account_id', accountId)
   cookies.set('account_id', accountId, {
     path: '/',
