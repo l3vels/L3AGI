@@ -40,6 +40,7 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
                   allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                   allowFullScreen
                 ></iframe>
+                <br />
               </>
             )
           }
