@@ -28,7 +28,7 @@ const DiscoverTeamAgents = () => {
   return (
     <StyledSectionWrapper>
       <StyledHeadingWrapper>
-        <StyledHeadingPrimary type={Heading.types.h1} value={'Discover Multi-Agents'} />
+        <StyledHeadingPrimary type={Heading.types.h1} value={'Discover Team of AI Agents'} />
         <TypographySecondary
           value={'Create and manage your team of AI agents for interactive experiences'}
           type={Typography.types.LABEL}

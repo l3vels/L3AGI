@@ -3,7 +3,7 @@ default_configs = {
     "naming": {
         "home": "Home",
         "agent": "Agent",
-        "team": "Multi-Agent",
+        "team": "Team",
         "datasource": "Knowledge",
         "model": "Model",
         "discovery": "Discovery",
