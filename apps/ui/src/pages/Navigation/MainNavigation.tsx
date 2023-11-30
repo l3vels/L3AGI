@@ -9,7 +9,7 @@ import Team from '@l3-lib/ui-core/dist/icons/Team'
 import Launch from '@l3-lib/ui-core/dist/icons/Launch'
 import MyWeek from '@l3-lib/ui-core/dist/icons/MyWeek'
 import Mobile from '@l3-lib/ui-core/dist/icons/Mobile'
-import Group from '@l3-lib/ui-core/dist/icons/Group'
+// import Group from '@l3-lib/ui-core/dist/icons/Group'
 import Session from '@l3-lib/ui-core/dist/icons/Teams'
 
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -32,30 +32,30 @@ const MainNavigation = () => {
     getHomeModules,
     getChatModules,
     getModelModules,
-    getToolkitModules,
+    // getToolkitModules,
     getDiscoveryModules,
     getDatasourceModules,
     getScheduleModules,
     getContactModules,
-    getGroupModules,
+    // getGroupModules,
     getIntegrationModules,
     getSessionModules,
-    moduleNames,
+    // moduleNames,
   } = useGetAccountModule()
 
   const isHome = getHomeModules('active')
   const isChat = getChatModules('active')
   const isModel = getModelModules('active')
   const isIntegration = getIntegrationModules('active')
-  const isToolkit = getToolkitModules()
+  // const isToolkit = getToolkitModules()
   const isDiscover = getDiscoveryModules()
   const isDatasource = getDatasourceModules()
   const isSchedule = getScheduleModules()
   const isContact = getContactModules()
-  const isGroup = getGroupModules()
+  // const isGroup = getGroupModules()
   const isSession = getSessionModules()
 
-  const { chat, home, datasource, models, discovery, schedule, toolkits, sessions } = moduleNames
+  // const { chat, home, datasource, models, discovery, schedule, toolkits, sessions } = moduleNames
 
   const navigate = useNavigate()
 
@@ -313,12 +313,6 @@ const StyledMyWeekIcon = styled(MyWeek)`
   }
 `
 const StyledMobileIcon = styled(Mobile)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
-
-const StyledGroupIcon = styled(Group)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
