@@ -1,7 +1,7 @@
 import { FormikProvider } from 'formik'
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
