@@ -1,20 +1,20 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import About from '@l3-lib/ui-core/dist/icons/About'
-import Home from '@l3-lib/ui-core/dist/icons/Home'
+// import Home from '@l3-lib/ui-core/dist/icons/Home'
 
-import API from '@l3-lib/ui-core/dist/icons/API'
-import Doc from '@l3-lib/ui-core/dist/icons/Doc'
-import Games from '@l3-lib/ui-core/dist/icons/Games'
+// import API from '@l3-lib/ui-core/dist/icons/API'
+// import Doc from '@l3-lib/ui-core/dist/icons/Doc'
+// import Games from '@l3-lib/ui-core/dist/icons/Games'
 import Teams from '@l3-lib/ui-core/dist/icons/Teams'
-import Players from '@l3-lib/ui-core/dist/icons/Players'
-import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
+// import Players from '@l3-lib/ui-core/dist/icons/Players'
+// import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
 import Collection from '@l3-lib/ui-core/dist/icons/Collection'
 import Value from '@l3-lib/ui-core/dist/icons/Value'
 import Add from '@l3-lib/ui-core/dist/icons/Add'
 import Sun from '@l3-lib/ui-core/dist/icons/Sun'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
-import StarVector from 'assets/svgComponents/StarVector'
+// import StarVector from 'assets/svgComponents/StarVector'
 import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
 import styled from 'styled-components'
 
@@ -199,8 +199,8 @@ const StyledTeamsIcon = styled(Teams)`
   }
 `
 
-const StyledIcon = styled(Value)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
+// const StyledIcon = styled(Value)`
+//   path {
+//     fill: ${({ theme }) => theme.body.iconColor};
+//   }
+// `

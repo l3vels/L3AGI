@@ -7,23 +7,23 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 import Heading from '@l3-lib/ui-core/dist/Heading'
 
 import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+// import IconButton from '@l3-lib/ui-core/dist/IconButton'
+// import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+// import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
 
 // import DataGrid from 'components/DataGrid'
-import columnConfig from './columnConfig'
+// import columnConfig from './columnConfig'
 
-import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
-import Description from '@l3-lib/ui-core/dist/icons/Description'
+// import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
+// import Description from '@l3-lib/ui-core/dist/icons/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
 // import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import { useRef, useState } from 'react'
+// import { useRef } from 'react'
 import useTeams from './useTeams'
 import { useTranslation } from 'react-i18next'
-import { useModal } from 'hooks'
+// import { useModal } from 'hooks'
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
@@ -32,49 +32,49 @@ import HeadingPrimary from 'components/Heading/Primary'
 
 const Teams = () => {
   const { t } = useTranslation()
-  const { openCreateTeamsModal, assignedUserList, handleDeleteAccountAccess, refetch } = useTeams()
+  const { openCreateTeamsModal, assignedUserList } = useTeams()
 
-  const gridRef = useRef({})
+  // const gridRef = useRef({})
 
-  const config = columnConfig()
-  const { openModal, closeModal } = useModal()
+  // const config = columnConfig()
+  // const { openModal, closeModal } = useModal()
 
-  const deleteRow = async (itemId: string) => {
-    await handleDeleteAccountAccess(itemId)
-    refetch()
-  }
+  // const deleteRow = async (itemId: string) => {
+  //   await handleDeleteAccountAccess(itemId)
+  //   refetch()
+  // }
 
-  const getContextMenuItems = (params: any) => {
-    const itemId = params.node.data?.id
+  // const getContextMenuItems = (params: any) => {
+  //   const itemId = params.node.data?.id
 
-    const result = [
-      ...params.defaultItems,
-      {
-        // custom item
-        name: 'Delete',
-        // disabled: true,
-        action: () => {
-          // console.log('params', params.node.data.id)
-          // console.log('params', params)
-          const deleteFunc = async () => {
-            await deleteRow(itemId)
-            closeModal('delete-confirmation-modal')
-          }
-          openModal({
-            name: 'delete-confirmation-modal',
-            data: {
-              deleteItem: deleteFunc,
-              closeModal: () => closeModal('delete-confirmation-modal'),
-              label: t('are-you-sure-you-want-to-delete-this-row?'),
-              title: t('delete-row'),
-            },
-          })
-        },
-      },
-    ]
+  //   const result = [
+  //     ...params.defaultItems,
+  //     {
+  //       // custom item
+  //       name: 'Delete',
+  //       // disabled: true,
+  //       action: () => {
+  //         // console.log('params', params.node.data.id)
+  //         // console.log('params', params)
+  //         const deleteFunc = async () => {
+  //           await deleteRow(itemId)
+  //           closeModal('delete-confirmation-modal')
+  //         }
+  //         openModal({
+  //           name: 'delete-confirmation-modal',
+  //           data: {
+  //             deleteItem: deleteFunc,
+  //             closeModal: () => closeModal('delete-confirmation-modal'),
+  //             label: t('are-you-sure-you-want-to-delete-this-row?'),
+  //             title: t('delete-row'),
+  //           },
+  //         })
+  //       },
+  //     },
+  //   ]
 
-    return result
-  }
+  //   return result
+  // }
 
   return (
     <StyledGroupContainer mt='20'>
