@@ -62,7 +62,7 @@ export const useEditTeamOfAgents = () => {
     team_goals: teamOfAgentsById?.configs.goals,
     team_greeting: teamOfAgentsById?.configs.greeting,
     team_instructions: teamOfAgentsById?.configs.instructions,
-    team_suggestions: teamOfAgentsById?.configs.suggestions,
+    team_suggestions: teamOfAgentsById?.configs.suggestions || [],
     team_temperature: teamOfAgentsById?.configs.temperature,
     team_text: teamOfAgentsById?.configs.text,
     team_tools: teamOfAgentsById?.configs.tools,
