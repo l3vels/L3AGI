@@ -135,11 +135,11 @@ const StyledInnerWrapper = styled.div`
 
   gap: 5px;
 `
-const StyledImg = styled.img`
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-`
+// const StyledImg = styled.img`
+//   width: 48px;
+//   height: 48px;
+//   border-radius: 10px;
+// `
 const StyledTextWrapper = styled.div`
   display: flex;
   gap: 4px;
