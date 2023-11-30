@@ -198,7 +198,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   <StyledCombinedFields>
                     <AgentDropdown
                       isMulti
-                      label={t('datasource')}
+                      label={t('datasources')}
                       fieldName={'agent_datasources'}
                       fieldValue={agent_datasources}
                       setFieldValue={setFieldValue}
