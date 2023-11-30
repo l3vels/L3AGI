@@ -42,10 +42,10 @@ class ScheduleModel(BaseModel):
     status = Column(String, nullable=True, default=ScheduleStatus.PENDING.value)
     schedule_type = Column(String)  # `Outbound & Inbound`
     cron_expression = Column(String)
-    start_date = Column(DateTime, nullable=True)
-    end_date = Column(DateTime, nullable=True)
+    start_date = Column(DateTime(timezone=True), nullable=True)
+    end_date = Column(DateTime(timezone=True), nullable=True)
     interval = Column(String, nullable=True)
-    next_run_date = Column(DateTime, nullable=True, index=True)
+    next_run_date = Column(DateTime(timezone=True), nullable=True, index=True)
     max_daily_budget = Column(Numeric(precision=5, scale=2), nullable=True)
     is_active = Column(Boolean, default=True, index=True)
     is_deleted = Column(Boolean, default=False, index=True)

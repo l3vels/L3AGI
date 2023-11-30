@@ -345,6 +345,7 @@ const ChatV2 = () => {
           <ChatMessageListV2
             data={chatMessages}
             thinking={thinking}
+            sessionId={sessionId}
             // @ts-expect-error TODO: fix type
             isNewMessage={socket?.isNewMessage}
             // @ts-expect-error TODO: fix type
@@ -411,10 +412,12 @@ const ChatV2 = () => {
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
 
-              {/* <AudioRecorder
-                setVoicePreview={setVoicePreview}
-                setStartedRecording={setStartedRecording}
-              /> */}
+              {!teamId && (
+                <AudioRecorder
+                  setVoicePreview={setVoicePreview}
+                  setStartedRecording={setStartedRecording}
+                />
+              )}
 
               {voicePreview && (
                 <AudioPlayer

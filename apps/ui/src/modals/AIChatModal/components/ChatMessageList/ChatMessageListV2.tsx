@@ -31,6 +31,7 @@ type ChatMessageListV2Props = {
   reply: ReplyStateProps
   greeting: string | null
   agentName: string
+  sessionId?: string
 }
 
 const ChatMessageListV2 = ({
@@ -42,6 +43,7 @@ const ChatMessageListV2 = ({
   reply,
   greeting,
   agentName,
+  sessionId,
 }: ChatMessageListV2Props) => {
   const { t } = useTranslation()
   const [listIsReady, setListIsReady] = useState(false)
@@ -91,6 +93,13 @@ const ChatMessageListV2 = ({
     initialChat = filteredData
   }
 
+  const scrollToEnd = () => {
+    virtuoso.current?.scrollToIndex({
+      index: initialChat.length + 1,
+      align: 'end',
+    })
+  }
+
   const loader = useMemo(() => {
     return (
       <ChatMessage
@@ -109,10 +118,7 @@ const ChatMessageListV2 = ({
   useEffect(() => {
     if (thinking) {
       setTimeout(() => {
-        virtuoso.current?.scrollToIndex({
-          index: initialChat.length + 2,
-          align: 'end',
-        })
+        scrollToEnd()
       }, 100)
 
       return
@@ -126,17 +132,24 @@ const ChatMessageListV2 = ({
 
     if (data.length > 0) {
       setTimeout(() => {
-        virtuoso.current?.scrollToIndex({
-          index: initialChat.length + 1,
-          align: 'end',
-        })
+        scrollToEnd()
         setListIsReady(true)
       }, 100)
     }
 
     // eslint-disable-next-line
   }, [data])
-  // console.log('messages', data)
+
+  useEffect(() => {
+    if (data.length > 0) {
+      scrollToEnd()
+    } else {
+      setListIsReady(false)
+    }
+
+    // eslint-disable-next-line
+  }, [sessionId])
+
   return (
     <StyledRoot show={true}>
       <Virtuoso

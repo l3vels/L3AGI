@@ -5,9 +5,9 @@ from fastapi_sqlalchemy import db
 
 from models.chat import ChatModel
 from models.schedule import ScheduleModel
-from services.chat import create_client_message
+from services.chat import create_client_message, create_user_message
 from typings.auth import UserAccount
-from typings.chat import ChatInput, ChatMessageInput
+from typings.chat import ChatInput, ChatMessageInput, ChatUserMessageInput
 from typings.schedule import ScheduleStatus
 from utils.schedule import convert_model_to_response
 
@@ -50,7 +50,7 @@ def execute_scheduled_run(
                     name=f"{schedule.name} - {arrow.get(datetime.now()).format('DD MMM, YYYY, HH:mm')}",
                     is_public=True,
                     agent_id=configs.agent_id,
-                    team_id=None,
+                    team_id=configs.team_id,
                 ),
                 user=user,
                 account=account,
@@ -61,10 +61,18 @@ def execute_scheduled_run(
         for task in configs.tasks:
             prompt += f"- {task}\n"
 
-        create_client_message(
-            body=ChatMessageInput(prompt=prompt, chat_id=chat.id if chat else None),
-            auth=UserAccount(user=user.to_dict(), account=account.to_dict()),
-        )
+        if chat:
+            create_client_message(
+                body=ChatMessageInput(prompt=prompt, chat_id=chat.id if chat else None),
+                auth=UserAccount(user=user.to_dict(), account=account.to_dict()),
+            )
+        else:
+            create_user_message(
+                body=ChatUserMessageInput(
+                    prompt=prompt, agent_id=configs.agent_id, team_id=configs.team_id
+                ),
+                auth=UserAccount(user=user.to_dict(), account=account.to_dict()),
+            )
 
         # Check if the schedule is recurring and the end date is not exceeded
         if schedule_with_configs.configs.is_recurring:

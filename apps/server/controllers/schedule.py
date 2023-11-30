@@ -1,9 +1,10 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi_sqlalchemy import db
 
 from exceptions import ScheduleNotFoundException
+from models.db import create_session
 from models.schedule import ScheduleModel
 from services.schedule import execute_scheduled_run
 from typings.auth import UserAccount
@@ -28,7 +29,7 @@ def run_schedule(schedule_id: str):
         raise HTTPException(status_code=404, detail="Schedule not found")
 
     if schedule.status == ScheduleStatus.PROCESSING.value:
-        raise HTTPException(status_code=400, detail="Schedule already is processing")
+        return {"message": "Schedule is already running"}
 
     try:
         execute_scheduled_run(db.session, schedule)
@@ -40,6 +41,7 @@ def run_schedule(schedule_id: str):
 @router.post("", status_code=201, response_model=ScheduleWithConfigsOutput)
 def create_schedule(
     schedule_with_configs: ScheduleConfigInput,
+    background_tasks: BackgroundTasks,
     auth: UserAccount = Depends(authenticate),
 ) -> ScheduleWithConfigsOutput:
     """
@@ -68,6 +70,9 @@ def create_schedule(
         ScheduleModel.get_schedule_by_id(db, db_schedule.id, auth.account)
     )
 
+    if not schedule_with_configs.configs.is_recurring:
+        background_tasks.add_task(execute_scheduled_run, create_session(), db_schedule)
+
     return schedule_with_configs
 
 
@@ -77,6 +82,7 @@ def create_schedule(
 def update_schedule(
     id: str,
     schedule_with_configs: ScheduleConfigInput,
+    background_tasks: BackgroundTasks,
     auth: UserAccount = Depends(authenticate),
 ) -> ScheduleWithConfigsOutput:
     """
@@ -101,8 +107,13 @@ def update_schedule(
         )
 
         db_schedule.next_run_date = schedule_with_configs.schedule.start_date
-
         db.session.commit()
+
+        if not schedule_with_configs.configs.is_recurring:
+            background_tasks.add_task(
+                execute_scheduled_run, create_session(), db_schedule
+            )
+
         return convert_model_to_response(
             ScheduleModel.get_schedule_by_id(db, db_schedule.id, auth.account)
         )

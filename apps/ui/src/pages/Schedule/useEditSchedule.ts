@@ -8,6 +8,7 @@ import { useScheduleByIdService } from 'services/schedule/useScheduleByIdService
 import { useSchedulesService } from 'services/schedule/useSchedulesService'
 import { useUpdateScheduleService } from 'services/schedule/useUpdateScheduleService'
 import { scheduleValidationSchema } from 'utils/validationsSchema'
+import { getDateTime } from './Schedule.utils'
 
 export const useEditSchedule = () => {
   const { setToast } = useContext(ToastContext)
@@ -36,8 +37,6 @@ export const useEditSchedule = () => {
     if (configs.chat_id) return 'chat'
   }
 
-  console.log(schedule?.start_date)
-
   const defaultValues = {
     name: schedule?.name,
     description: schedule?.description,
@@ -52,8 +51,8 @@ export const useEditSchedule = () => {
     tasks: configs?.tasks,
     is_recurring: configs?.is_recurring,
     create_session_on_run: configs?.create_session_on_run,
-    start_date: schedule?.start_date?.split('T')[0],
-    end_date: schedule?.end_date,
+    start_date: getDateTime(schedule?.start_date),
+    end_date: getDateTime(schedule?.end_date),
     interval: schedule?.interval?.split(' ')[0],
     interval_unit: schedule?.interval?.split(' ')[1],
   }
@@ -71,8 +70,8 @@ export const useEditSchedule = () => {
           name: values.name,
           description: values.description,
           schedule_type: values.schedule_type,
-          start_date: values.start_date,
-          end_date: values.end_date,
+          start_date: new Date(values.start_date).toISOString(),
+          end_date: values.end_date ? new Date(values.end_date).toISOString() : null,
           interval: values.is_recurring ? `${values.interval} ${values.interval_unit}` : undefined,
           is_active: values.is_active,
           cron_expression: values.cron_expression,
