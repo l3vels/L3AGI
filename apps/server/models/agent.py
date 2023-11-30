@@ -4,7 +4,8 @@ import uuid
 from typing import List
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String, or_
-from sqlalchemy.orm import joinedload, relationship
+from sqlalchemy.orm import Session, joinedload, relationship
+from sqlalchemy.sql import and_
 
 from exceptions import AgentNotFoundException
 from models.agent_config import AgentConfigModel
@@ -216,17 +217,28 @@ class AgentModel(BaseModel):
         return agents
 
     @classmethod
-    def get_template_agents(cls, db):
+    def get_template_agents(cls, session: Session, account_id: UUID):
+        query = session.query(AgentModel)
+
+        if account_id is not None:
+            query = query.filter(
+                or_(
+                    and_(
+                        AgentModel.account_id == account_id,
+                        AgentModel.is_template.is_(True),
+                    ),
+                    AgentModel.is_public.is_(True),
+                )
+            )
+        else:
+            query = query.filter(AgentModel.is_public.is_(True))
+
         agents = (
-            db.session.query(AgentModel)
-            .filter(
-                or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
-                AgentModel.is_template.is_(True),
+            query.filter(
+                AgentModel.is_deleted.is_(False),
             )
             .options(joinedload(AgentModel.creator))
-            .options(
-                joinedload(AgentModel.configs)
-            )  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.configs))
             .all()
         )
         return agents

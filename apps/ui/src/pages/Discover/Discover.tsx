@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'
-import DiscoverTemplateAgents from './components/DiscoverTemplateAgents'
 
 import { StyledTab, StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
 
-import Tab from '@l3-lib/ui-core/dist/Tab'
 import TabList from '@l3-lib/ui-core/dist/TabList'
 import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
 import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
@@ -12,6 +10,7 @@ import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { t } from 'i18next'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import DiscoverSystemAgents from './components/DiscoverSystemAgents'
 
 const Discover = () => {
   const navigate = useNavigate()
@@ -50,14 +49,10 @@ const Discover = () => {
             <DiscoverTeamAgents />
           </TabPanel>
           <TabPanel>
-            <DiscoverTemplateAgents />
+            <DiscoverSystemAgents />
           </TabPanel>
         </TabPanels>
       </TabsContext>
-
-      {/* {<DiscoverSystemAgents />} */}
-
-      {/* {!user && <Toolkit isPublic />} */}
     </StyledRoot>
   )
 }
