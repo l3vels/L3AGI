@@ -28,7 +28,7 @@ def run_schedule(schedule_id: str):
         raise HTTPException(status_code=404, detail="Schedule not found")
 
     if schedule.status == ScheduleStatus.PROCESSING.value:
-        raise HTTPException(status_code=400, detail="Schedule already is processing")
+        return {"message": "Schedule is already running"}
 
     try:
         execute_scheduled_run(db.session, schedule)
