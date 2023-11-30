@@ -4,8 +4,6 @@ import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import UploadedFile from 'components/UploadedFile'
 
-import HumanMessageText from './HumanMessageText'
-
 import MessageActions from './MessageActions'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
@@ -33,11 +31,11 @@ const HumanMessage = ({
   messageText,
   userId,
   userName,
-  runId,
+  // runId,
   onReplyClick,
   voice,
 }: HumanMessageProps) => {
-  const { wordArray, handleFileClick, fileUrlMatch, fileName } = useHumanMessage({
+  const { handleFileClick, fileUrlMatch, fileName } = useHumanMessage({
     userId,
     messageText,
   })
