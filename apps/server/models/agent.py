@@ -48,7 +48,7 @@ class AgentModel(BaseModel):
     is_deleted = Column(Boolean, default=False, index=True)
     is_template = Column(Boolean, default=False, index=True)
     is_memory = Column(Boolean, default=True)
-    avatar = Column(String)
+    # avatar = Column(String)
     account_id = Column(
         UUID, ForeignKey("account.id", ondelete="CASCADE"), nullable=True, index=True
     )
@@ -181,6 +181,7 @@ class AgentModel(BaseModel):
             account_id=account.id,
             modified_by=None,
             parent_id=template_agent.id,
+            avatar=template_agent.avatar,
         )
 
         db.session.add(new_agent)

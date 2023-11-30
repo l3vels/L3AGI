@@ -15,7 +15,7 @@ import TeamOfAgents from 'pages/TeamOfAgents'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { useAgents } from 'pages/Agents/useAgents'
 
-import HeaderText from './HomeComponents/HeaderText'
+
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import DiscoverSystemAgents from 'pages/Discover/components/DiscoverSystemAgents'
 
