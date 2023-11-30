@@ -57,8 +57,11 @@ def convert_model_to_response(team_model: TeamModel) -> TeamOutput:
             # Convert value to the type specified in ConfigsOutput
             target_type = ConfigsOutput.__annotations__.get(key)
 
-            if target_type:
-                value = convert_value_to_type(value, target_type)
+            if target_type and value is not None:
+                if value == "None":
+                    value = None
+                else:
+                    value = convert_value_to_type(value, target_type)
 
             configs[key] = value
         if configs:
