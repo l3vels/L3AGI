@@ -16,6 +16,8 @@ import DatasourceCard from './DatasourceCard'
 import { useDatasource } from './useDatasource'
 import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
+import DatasourceDemoButton from './DatasourceForm/components/DatasourceDemoButton'
+import { StyledCombiner } from './DatasourceForm/CreateDatasourceForm'
 
 const Datasource = () => {
   const { datasources, deleteDatasourceHandler } = useDatasource()
@@ -27,7 +29,10 @@ const Datasource = () => {
       <StyledHeaderGroup className='header_group'>
         <div>
           <StyledSectionTitle>{`${t('datasource')}`}</StyledSectionTitle>
-          <StyledSectionDescription>{`${t('datasource-description')}`}</StyledSectionDescription>
+          <StyledCombiner>
+            <StyledSectionDescription>{`${t('datasource-description')}`}</StyledSectionDescription>
+            <DatasourceDemoButton />
+          </StyledCombiner>
         </div>
         <div>
           <ButtonPrimary

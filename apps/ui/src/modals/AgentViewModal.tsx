@@ -25,9 +25,9 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
 
   const { id, agent } = data
 
-  const { data: agentObj } = useAgentByIdService({ id: agent.agent.id })
+  const { data: agentObj } = useAgentByIdService({ id })
 
-  const { data: agentById } = useDiscoverAgentByIdService({ id: id })
+  const { data: agentById } = useDiscoverAgentByIdService({ id })
 
   return (
     <>

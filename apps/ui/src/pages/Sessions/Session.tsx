@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Table from 'components/Table'
 
 import Heading from 'share-ui/components/Heading/Heading'
+import { useTranslation } from 'react-i18next'
 
 import TextField from 'share-ui/components/TextField/TextField'
 import {
@@ -23,6 +24,7 @@ import DatePickerField from 'components/DatePicker/DatePicker'
 import { Moment } from 'moment'
 
 const Sessions = () => {
+  const { t } = useTranslation()
   const {
     scheduleOptions,
     agentOptions,
@@ -42,7 +44,7 @@ const Sessions = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Sessions</StyledSectionTitle>
+          <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
         </div>
 
         <StyledRightSideWrapper>

@@ -6,9 +6,10 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import { useState } from 'react'
-import { StyledFormTabList, StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
+
 import RunLogMessages from './RunLogMessages'
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import { StyledFormTabList, StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
 
 type RunLogsProps = {
   runId: string
@@ -41,15 +42,17 @@ const RunLogs = ({ runId }: RunLogsProps) => {
         </StyledFormTabList>
       </StyledFormTabsWrapper>
 
-      <TabsContext activeTabId={activeTab}>
-        <TabPanels noAnimation>
-          {data.map((log, index) => (
-            <TabPanel key={index}>
-              <RunLogMessages log={log} />
-            </TabPanel>
-          ))}
-        </TabPanels>
-      </TabsContext>
+      <StyledTabContextWrapper>
+        <TabsContext activeTabId={activeTab}>
+          <TabPanels noAnimation>
+            {data.map((log, index) => (
+              <TabPanel key={index}>
+                <RunLogMessages log={log} />
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </TabsContext>
+      </StyledTabContextWrapper>
     </StyledWrapper>
   )
 }
@@ -73,4 +76,13 @@ const StyledLoaderWrapper = styled.div`
 
   margin-bottom: 20px;
   margin-left: 5px;
+`
+const StyledTabContextWrapper = styled.div`
+  /* overflow: hidden; */
+  max-height: calc(100vh - 120px);
+  margin-right: 10px;
+`
+const StyledSpan = styled.span`
+  color: ${({ theme }) => theme.body.textColorPrimary};
+  width: 150px;
 `

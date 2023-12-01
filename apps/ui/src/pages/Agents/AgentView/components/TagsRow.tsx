@@ -4,6 +4,7 @@ import Typography from 'share-ui/components/typography/Typography'
 import Tags from 'share-ui/components/Tags/Tags'
 
 import TypographySecondary from 'components/Typography/Secondary'
+import { textSlicer } from 'utils/textSlicer'
 
 type TagsRowProps = {
   items: string[]
@@ -19,6 +20,7 @@ const TagsRow = ({ items, title }: TagsRowProps) => {
 
       <StyledContainer>
         {items.map((item: string, index: number) => {
+          const { shortText: shortName } = textSlicer(item, 35)
           return (
             <Tags
               key={index}

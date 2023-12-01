@@ -123,9 +123,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <Tab onClick={() => handleTabClick(4)} disabled={!isVoice}>
             Voice Preferences
           </Tab>
-          {/* <Tab onClick={() => handleTabClick(5)}>
-           Integrations
-          </Tab> */}
         </TabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -187,7 +184,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   <StyledCombinedFields>
                     <AgentDropdown
                       isMulti
-                      label={t('datasource')}
+                      label={t('datasources')}
                       fieldName={'agent_datasources'}
                       fieldValue={agent_datasources}
                       setFieldValue={setFieldValue}

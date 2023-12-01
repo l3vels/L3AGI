@@ -1,18 +1,16 @@
-from typing import List
+from typing import List, Optional
+
+from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
-from langchain.schema import (
-    AIMessage,
-)
+from langchain.schema import AIMessage, SystemMessage
+
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent
-from langchain.agents import initialize_agent
-from langchain.agents import AgentType
-from langchain.schema import (
-    SystemMessage,
-)
-from typings.agent import AgentWithConfigsOutput
-from memory.zep.zep_memory import ZepMemory
+from agents.conversational.output_parser import ConvoOutputParser
 from config import Config
+from memory.zep.zep_memory import ZepMemory
+from services.run_log import RunLogsManager
+from typings.agent import AgentWithConfigsOutput
 
 
 class DialogueAgentWithTools(DialogueAgent):
@@ -26,6 +24,7 @@ class DialogueAgentWithTools(DialogueAgent):
         session_id: str,
         sender_name: str,
         is_memory: bool = False,
+        run_logs_manager: Optional[RunLogsManager] = None,
         **tool_kwargs,
     ) -> None:
         super().__init__(name, agent_with_configs, system_message, model)
@@ -33,6 +32,7 @@ class DialogueAgentWithTools(DialogueAgent):
         self.session_id = session_id
         self.sender_name = sender_name
         self.is_memory = is_memory
+        self.run_logs_manager = run_logs_manager
 
     def send(self) -> str:
         """
@@ -40,24 +40,31 @@ class DialogueAgentWithTools(DialogueAgent):
         and returns the message string
         """
 
-        memory: ConversationBufferMemory
+        memory: ZepMemory
 
-        if self.is_memory:
-            memory = ZepMemory(
-                session_id=self.session_id,
-                url=Config.ZEP_API_URL,
-                api_key=Config.ZEP_API_KEY,
-                memory_key="chat_history",
-                return_messages=True,
-            )
+        # FIXME: This is a hack to get the memory working
+        # if self.is_memory:
+        memory = ZepMemory(
+            session_id=self.session_id,
+            url=Config.ZEP_API_URL,
+            api_key=Config.ZEP_API_KEY,
+            memory_key="chat_history",
+            return_messages=True,
+        )
 
-            memory.human_name = self.sender_name
-            memory.ai_name = self.agent_with_configs.agent.name
-            memory.auto_save = False
-        else:
-            memory = ConversationBufferMemory(
-                memory_key="chat_history", return_messages=True
-            )
+        memory.human_name = self.sender_name
+        memory.ai_name = self.agent_with_configs.agent.name
+        memory.auto_save = False
+        # else:
+        #     memory = ConversationBufferMemory(
+        #         memory_key="chat_history", return_messages=True
+        #     )
+
+        callbacks = []
+
+        if self.run_logs_manager:
+            self.model.callbacks = [self.run_logs_manager.get_agent_callback_handler()]
+            callbacks.append(self.run_logs_manager.get_agent_callback_handler())
 
         agent = initialize_agent(
             self.tools,
@@ -66,14 +73,19 @@ class DialogueAgentWithTools(DialogueAgent):
             verbose=True,
             handle_parsing_errors=True,
             memory=memory,
+            callbacks=callbacks,
             agent_kwargs={
                 "system_message": self.system_message.content,
+                "output_parser": ConvoOutputParser(),
             },
         )
 
         prompt = "\n".join(self.message_history + [self.prefix])
 
         res = agent.run(input=prompt)
+
+        # FIXME: is memory
+        # memory.save_ai_message(res)
 
         message = AIMessage(content=res)
 

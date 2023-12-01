@@ -2,20 +2,16 @@ import Typography from 'share-ui/components/typography/Typography'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import TextField from 'share-ui/components/TextField/TextField'
+import { useTranslation } from 'react-i18next'
 
 import FormikTextField from 'components/TextFieldFormik'
-
-import TypographyPrimary from 'components/Typography/Primary'
 import { useScheduleForm } from './useScheduleForm'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import styled from 'styled-components'
-
-import cronstrue from 'cronstrue'
-import { useEffect, useState } from 'react'
 import CustomField from 'pages/Agents/AgentForm/components/CustomField'
-import DatePickerField from 'components/DatePicker/DatePicker'
 
 const ScheduleForm = ({ formik }: { formik: any }) => {
+  const { t } = useTranslation()
   const { values, setFieldValue } = formik
   const {
     // schedule_description,
@@ -26,8 +22,6 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
     // schedule_cron_expression,
     is_recurring,
     create_session_on_run,
-    start_date,
-    interval,
     interval_unit,
   } = values
 
@@ -179,7 +173,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
           <StyledCheckboxWrapper>
             <Checkbox
-              label='Create session for each run'
+              label={t('create-session-each-run')}
               kind='secondary'
               name='create_session_on_run'
               checked={create_session_on_run}

@@ -43,7 +43,7 @@ const Discover = () => {
             />
           </StyledHeadingWrapper>
           <ComponentsWrapper noPadding>
-            <StyledCardsWrapper>
+            <StyledTabCardsWrapper>
               {templateAgents?.map((agentObj: any, index: number) => {
                 const { agent } = agentObj
 
@@ -65,7 +65,7 @@ const Discover = () => {
                   />
                 )
               })}
-            </StyledCardsWrapper>
+            </StyledTabCardsWrapper>
           </ComponentsWrapper>
         </StyledSectionWrapper>
       )}
@@ -74,6 +74,18 @@ const Discover = () => {
 }
 
 export default Discover
+
+export const StyledTabCardsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  max-height: calc(100vh - 370px);
+  height: 100%;
+  overflow-y: auto;
+  padding: 5px 32px;
+`
 
 export const StyledRoot = styled.div`
   display: flex;

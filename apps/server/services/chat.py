@@ -241,6 +241,7 @@ def process_chat_message(
             team_configs=team_configs,
             provider_account=provider_account,
             provider_user=provider_user,
+            run_logs_manager=run_logs_manager,
         )
 
 
@@ -311,6 +312,7 @@ def handle_team_types(
     team_configs,
     provider_account,
     provider_user,
+    run_logs_manager: RunLogsManager,
 ):
     team_status_config: Optional[ConfigModel] = None
     if team.team_type == TeamOfAgentsType.PLAN_AND_EXECUTE.value:
@@ -386,6 +388,7 @@ def handle_team_types(
             history=history,
             team_configs=team_configs,
             provider_account=provider_account,
+            run_logs_manager=run_logs_manager,
         )
 
     team_status_config.value = ChatStatus.IDLE.value
@@ -464,6 +467,7 @@ def handle_decentralized_speaker(
     history: ZepMemory,
     team_configs: Dict[str, Union[str, int, float]],
     provider_account: AccountModel,
+    run_logs_manager: RunLogsManager,
 ):
     topic = prompt
     agents = [
@@ -482,6 +486,7 @@ def handle_decentralized_speaker(
         stopping_probability=float(stopping_probability),
         word_limit=int(word_limit),
         provider_account=provider_account,
+        run_logs_manager=run_logs_manager,
     )
 
     decentralized_speaker.run(

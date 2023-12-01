@@ -49,7 +49,7 @@ class CalGetAvailableDatesTool(BaseTool):
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
-        api = os.environ.get("CALCOM_API")
+        base_url = "https://api.cal.com/v1"
         cal_api_key = self.get_env_key("CALCOM_API_KEY")
         cal_username = self.get_env_key("CALCOM_USERNAME")
 
@@ -69,7 +69,7 @@ class CalGetAvailableDatesTool(BaseTool):
         dateFrom = datetime.strptime(dates["dateFrom"], "%d/%m/%Y").timestamp()
         dateTo = datetime.strptime(dates["dateTo"], "%d/%m/%Y").timestamp()
         try:
-            api = f"{api}/availability"
+            api = f"{base_url}/availability"
             response = requests.get(
                 api,
                 params={

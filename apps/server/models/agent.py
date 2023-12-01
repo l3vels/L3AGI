@@ -4,7 +4,8 @@ import uuid
 from typing import List
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, Index, String, or_
-from sqlalchemy.orm import joinedload, relationship
+from sqlalchemy.orm import Session, joinedload, relationship
+from sqlalchemy.sql import and_
 
 from exceptions import AgentNotFoundException
 from models.agent_config import AgentConfigModel
@@ -48,7 +49,7 @@ class AgentModel(BaseModel):
     is_deleted = Column(Boolean, default=False, index=True)
     is_template = Column(Boolean, default=False, index=True)
     is_memory = Column(Boolean, default=True)
-    avatar = Column(String)
+    # avatar = Column(String)
     account_id = Column(
         UUID, ForeignKey("account.id", ondelete="CASCADE"), nullable=True, index=True
     )
@@ -181,6 +182,7 @@ class AgentModel(BaseModel):
             account_id=account.id,
             modified_by=None,
             parent_id=template_agent.id,
+            avatar=template_agent.avatar,
         )
 
         db.session.add(new_agent)
@@ -215,17 +217,28 @@ class AgentModel(BaseModel):
         return agents
 
     @classmethod
-    def get_template_agents(cls, db):
+    def get_template_agents(cls, session: Session, account_id: UUID):
+        query = session.query(AgentModel)
+
+        if account_id is not None:
+            query = query.filter(
+                or_(
+                    and_(
+                        AgentModel.account_id == account_id,
+                        AgentModel.is_template.is_(True),
+                    ),
+                    AgentModel.is_public.is_(True),
+                )
+            )
+        else:
+            query = query.filter(AgentModel.is_public.is_(True))
+
         agents = (
-            db.session.query(AgentModel)
-            .filter(
-                or_(AgentModel.is_deleted.is_(False), AgentModel.is_deleted.is_(None)),
-                AgentModel.is_template.is_(True),
+            query.filter(
+                AgentModel.is_deleted.is_(False),
             )
             .options(joinedload(AgentModel.creator))
-            .options(
-                joinedload(AgentModel.configs)
-            )  # if you have a relationship set up named "configs"
+            .options(joinedload(AgentModel.configs))
             .all()
         )
         return agents
@@ -320,7 +333,7 @@ class AgentModel(BaseModel):
             .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
             .filter(
                 AgentModel.parent_id == parent_id,
-                # AgentModel.account_id == account.id,
+                AgentModel.account_id == account.id,
                 or_(
                     or_(
                         AgentModel.is_deleted.is_(False), AgentModel.is_deleted is None

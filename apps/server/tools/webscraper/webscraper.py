@@ -92,14 +92,18 @@ class WebScraperTool(BaseTool):
                     content_tags = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "a"]
                     content = " ".join(
                         [
-                            tag.text.strip()
+                            (tag.text.strip() + " " + tag.get("href", ""))
+                            if tag.name == "a"
+                            else tag.text.strip()
                             for tag in main_content.find_all(content_tags)
                         ]
                     )
                 else:
                     content = " ".join(
                         [
-                            tag.text.strip()
+                            (tag.text.strip() + " " + tag.get("href", ""))
+                            if tag.name == "a"
+                            else tag.text.strip()
                             for tag in soup.find_all(
                                 ["p", "h1", "h2", "h3", "h4", "h5", "h6"]
                             )

@@ -19,6 +19,9 @@ import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 
+import DatasourceDemoButton from './components/DatasourceDemoButton'
+import styled from 'styled-components'
+
 const CreateDatasourceForm = () => {
   const { formik, isLoading } = useCreateDatasource()
 
@@ -29,9 +32,12 @@ const CreateDatasourceForm = () => {
           <StyledHeaderGroup className='header_group'>
             <div>
               <StyledSectionTitle>{`${t('add-datasource')}`}</StyledSectionTitle>
-              <StyledSectionDescription>
-                {`${t('datasource-description')}`}
-              </StyledSectionDescription>
+              <StyledCombiner>
+                <StyledSectionDescription>
+                  {`${t('datasource-description')}`}
+                </StyledSectionDescription>
+                <DatasourceDemoButton />
+              </StyledCombiner>
             </div>
 
             <StyledButtonWrapper>
@@ -58,3 +64,9 @@ const CreateDatasourceForm = () => {
 }
 
 export default CreateDatasourceForm
+
+export const StyledCombiner = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`

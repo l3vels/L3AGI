@@ -139,6 +139,7 @@ class TeamModel(BaseModel):
             account_id=account.id,
             modified_by=None,
             parent_id=template_team.id,
+            avatar=template_team.avatar,
         )
 
         db.session.add(new_team)

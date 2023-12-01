@@ -96,7 +96,6 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
               <StyledMenuDots>
                 <MenuButton component={MenuDots}>
                   <StyledMenuButtonsWrapper>
-                    {/* <ButtonTertiary onClick={handleCreateChat}>Create Session</ButtonTertiary> */}
                     <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
                       {t('delete-team')}
                     </ButtonTertiary>

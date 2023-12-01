@@ -345,6 +345,7 @@ const ChatV2 = () => {
           <ChatMessageListV2
             data={chatMessages}
             thinking={thinking}
+            sessionId={sessionId}
             // @ts-expect-error TODO: fix type
             isNewMessage={socket?.isNewMessage}
             // @ts-expect-error TODO: fix type
@@ -361,22 +362,24 @@ const ChatV2 = () => {
       <StyledChatFooter>
         <StyledChatInputWrapper>
           <StyledButtonGroup>
-            <StyledSuggestionsContainer>
-              {chatSuggestions.map((chatSuggestion: string, index: number) => {
-                const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
+            {!canStopGenerating && (
+              <StyledSuggestionsContainer>
+                {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                  const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
 
-                return (
-                  <StyledOption
-                    key={index}
-                    onClick={() => {
-                      handlePickedSuggestion(chatSuggestion)
-                    }}
-                  >
-                    {shortSuggestion}
-                  </StyledOption>
-                )
-              })}
-            </StyledSuggestionsContainer>
+                  return (
+                    <StyledOption
+                      key={index}
+                      onClick={() => {
+                        handlePickedSuggestion(chatSuggestion)
+                      }}
+                    >
+                      {shortSuggestion}
+                    </StyledOption>
+                  )
+                })}
+              </StyledSuggestionsContainer>
+            )}
 
             {canStopGenerating && (
               <StyledStopGeneratingButton>
@@ -408,10 +411,14 @@ const ChatV2 = () => {
               {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
-              <AudioRecorder
-                setVoicePreview={setVoicePreview}
-                setStartedRecording={setStartedRecording}
-              />
+
+              {!teamId && (
+                <AudioRecorder
+                  setVoicePreview={setVoicePreview}
+                  setStartedRecording={setStartedRecording}
+                />
+              )}
+
               {voicePreview && (
                 <AudioPlayer
                   audioUrl={voicePreview || ''}
@@ -629,6 +636,9 @@ const StyledSuggestionsContainer = styled.div`
 
 const StyledStopGeneratingButton = styled.div`
   margin-right: 94px;
+
+  position: absolute;
+  backdrop-filter: blur(100px);
 `
 
 const StyledFileWrapper = styled.div`

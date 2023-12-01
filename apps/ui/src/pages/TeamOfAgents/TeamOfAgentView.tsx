@@ -146,46 +146,26 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
 
             {datasources?.length > 0 && <AgentDatasources datasources={datasources} />}
 
-            {goals?.length > 0 && (
-              <AdditionalInfoBox
-                items={goals}
-                title={goals.length === 1 ? '1 Goal' : `${goals.length} Goals`}
-              />
-            )}
+            {goals?.length > 0 && <AdditionalInfoBox items={goals} title={'goal'} />}
 
             {constraints?.length > 0 && (
-              <AdditionalInfoBox
-                items={constraints}
-                title={
-                  constraints.length === 1 ? '1 Constraint' : `${constraints.length} Constraints`
-                }
-              />
+              <AdditionalInfoBox items={constraints} title={'constraint'} />
             )}
 
             {instructions?.length > 0 && (
-              <AdditionalInfoBox
-                items={instructions}
-                title={
-                  instructions.length === 1
-                    ? '1 Instruction'
-                    : `${instructions.length} Instructions`
-                }
-              />
+              <AdditionalInfoBox items={instructions} title={'instruction'} />
             )}
 
             {suggestions?.length > 0 && (
-              <AdditionalInfoBox
-                items={suggestions}
-                title={
-                  suggestions.length === 1 ? '1 Suggestion' : `${suggestions.length} Suggestions`
-                }
-              />
+              <AdditionalInfoBox items={suggestions} title={'suggestion'} />
             )}
 
-            {greeting?.length > 0 && <AdditionalInfoBox items={[greeting]} title={'Greeting'} />}
+            {greeting?.length > 0 && (
+              <AdditionalInfoBox items={[greeting]} title={'Greeting'} noCount />
+            )}
 
             {text?.length > 0 && (
-              <AdditionalInfoBox items={[text]} title={t('base-system-message')} />
+              <AdditionalInfoBox items={[text]} title={t('base-system-message')} noCount />
             )}
           </StyledRightColumn>
         </StyledInnerWrapper>

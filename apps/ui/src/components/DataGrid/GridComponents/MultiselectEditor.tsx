@@ -107,6 +107,8 @@ export default MultiselectEditor
 
 const StyledDiv = styled.div`
   width: 100%;
+
+  background: #585858;
 `
 
 const StyledDropDown = styled(Dropdown)`
@@ -130,6 +132,6 @@ const StyledDropDown = styled(Dropdown)`
   }
 
   .components-Dropdown-components-ChildrenContent-ChildrenContent-module__valueContainer--Tblnq {
-    color: ${({ theme }) => theme.body.textColorPrimary} !important;
+    color: ${({ theme }) => theme.body.textColorTertiary} !important;
   }
 `

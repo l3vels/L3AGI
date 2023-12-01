@@ -19,6 +19,8 @@ import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { t } from 'i18next'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import TeamDemoButton from './components/TeamDemoButton'
 
 const EditTeamOfAgentsForm = () => {
   const { t } = useTranslation()
@@ -30,7 +32,11 @@ const EditTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>{`${t('edit-team')}`}</StyledSectionTitle>
+              <StyledCombiner>
+                <StyledSectionTitle>{`${t('edit-team')}`}</StyledSectionTitle>
+
+                <TeamDemoButton />
+              </StyledCombiner>
               {/* <StyledSectionDescription>
                 Edit and manage your team of AI agents for interactive experiences
               </StyledSectionDescription> */}

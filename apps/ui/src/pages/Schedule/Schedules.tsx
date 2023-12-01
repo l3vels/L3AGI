@@ -29,10 +29,13 @@ const Schedules = () => {
       recurring: schedule.interval ? schedule.interval : '-',
       status: schedule.is_active ? 'Active' : 'Inactive',
       create_session: configs.create_session_on_run ? 'True' : 'False',
-      runner:
-        options?.filter((option: any) => option.value === configs?.agent_id).length > 0
-          ? options?.filter((option: any) => option.value === configs?.agent_id)?.[0].label
-          : '',
+      runner: options?.find((option: { label: string; value: string }) => {
+        return (
+          option.value === configs.agent_id ||
+          option.value === configs.team_id ||
+          option.value === configs.chat_id
+        )
+      })?.label,
     })) || []
 
   const columns = useMemo(

@@ -31,8 +31,8 @@ class DatasourceModel(BaseModel):
 
     id = Column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
-    source_type = Column(String)  # Later add as Enum
-    status = Column(String)  # Later add as Enum
+    source_type = Column(String)
+    status = Column(String, default=DatasourceStatus.INDEXING.value)
     description = Column(String, nullable=True)
     error = Column(String)
     is_deleted = Column(Boolean, default=False, index=True)

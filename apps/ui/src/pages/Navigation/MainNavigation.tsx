@@ -98,6 +98,20 @@ const MainNavigation = () => {
         </StyledLi>
       )}
 
+      {isSchedule && (
+        <StyledLi
+          isActive={includes(active, 'schedules')}
+          onClick={() => onHandleClick('/schedules')}
+        >
+          <StyledMyWeekIcon size={30} />
+          <TypographySecondary
+            value={t('schedule')}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.sm}
+          />
+        </StyledLi>
+      )}
+
       {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
         <StyledValueIcon>
           <StyledValueOutLineIcon size={38} />
@@ -180,20 +194,6 @@ const MainNavigation = () => {
           <StyledSessionIcon size={30} />
           <TypographySecondary
             value={t('sessions')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          />
-        </StyledLi>
-      )}
-
-      {isSchedule && (
-        <StyledLi
-          isActive={includes(active, 'schedules')}
-          onClick={() => onHandleClick('/schedules')}
-        >
-          <StyledMyWeekIcon size={30} />
-          <TypographySecondary
-            value={t('schedule')}
             type={Typography.types.LABEL}
             size={Typography.sizes.sm}
           />

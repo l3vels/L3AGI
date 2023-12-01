@@ -8,6 +8,7 @@ import { useSchedulesService } from 'services/schedule/useSchedulesService'
 import { useCreateScheduleService } from 'services/schedule/useCreateScheduleService'
 import { scheduleValidationSchema } from 'utils/validationsSchema'
 import { useModal } from 'hooks'
+import { getDateTimeFromDate } from './Schedule.utils'
 
 type UseCreateScheduleProps = {
   initialValues: Record<string, unknown>
@@ -40,7 +41,7 @@ export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => 
     tasks: ['Enter you task'],
     is_recurring: false,
     create_session_on_run: false,
-    start_date: new Date().toISOString().split('T')[0],
+    start_date: getDateTimeFromDate(new Date()),
     end_date: null,
     interval: '',
     interval_unit: '',
@@ -59,8 +60,8 @@ export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => 
           name: values.name,
           description: values.description,
           schedule_type: values.schedule_type,
-          start_date: values.start_date,
-          end_date: values.end_date,
+          start_date: new Date(values.start_date).toISOString(),
+          end_date: values.end_date ? new Date(values.end_date).toISOString() : null,
           interval: values.is_recurring ? `${values.interval} ${values.interval_unit}` : undefined,
           is_active: values.is_active,
           cron_expression: values.cron_expression,

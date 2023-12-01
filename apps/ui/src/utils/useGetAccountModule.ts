@@ -121,7 +121,7 @@ export const useGetAccountModule = () => {
     return values
   }
   const getSessionModules = () => {
-    const values = getMainModule('sessions')
+    const values = getMainModule('session')
     return values
   }
   const getScheduleModules = () => {

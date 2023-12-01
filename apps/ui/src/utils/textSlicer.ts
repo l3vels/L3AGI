@@ -1,6 +1,8 @@
-export const textSlicer = (text: string, maxLength: number) => {
-  let shortText = text?.slice(0, maxLength) || ''
+export const textSlicer = (text: string | number | undefined, maxLength: number) => {
+  text = String(text)
+  if (!text) return { shortText: '' }
 
+  let shortText = text?.slice(0, maxLength) || ''
 
   // Check if the last character is a space and remove it if it is
   if (shortText.charAt(shortText.length - 1) === ' ') {

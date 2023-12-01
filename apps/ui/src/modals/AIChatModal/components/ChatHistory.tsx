@@ -164,6 +164,8 @@ const StyledMembersWrapper = styled.div`
 
   z-index: 12000000;
 
+  overflow: auto;
+
   padding: 10px;
 
   display: flex;

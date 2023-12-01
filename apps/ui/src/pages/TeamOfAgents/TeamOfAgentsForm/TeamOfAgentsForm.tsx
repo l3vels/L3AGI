@@ -193,12 +193,12 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
         <TextareaFormik
           setFieldValue={setFieldValue}
-          label={'greeting'}
+          label={t('greeting')}
           value={team_greeting}
           fieldName={'team_greeting'}
         />
 
-        <AgentDropdown
+        {/* <AgentDropdown
           isMulti
           label={t('datasource')}
           fieldName={'team_datasources'}
@@ -260,7 +260,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
               />
             </StyledCombinedFields>
           </>
-        )}
+        )} */}
 
         <div ref={advancedRef} />
       </StyledInputWrapper>

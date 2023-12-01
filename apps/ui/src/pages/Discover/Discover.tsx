@@ -1,43 +1,62 @@
 import styled from 'styled-components'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'
-import DiscoverTemplateAgents from './components/DiscoverTemplateAgents'
-import HeadingPrimary from 'components/Heading/Primary'
+
+import { StyledTabListWrapper } from 'styles/tabStyles.css'
+
+import { t } from 'i18next'
+import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import DiscoverSystemAgents from './components/DiscoverSystemAgents'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+
 const Discover = () => {
+  const navigate = useNavigate()
+
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const tabQuery = urlParams.get('tab')
+
+  const defaultActiveTab = () => {
+    if (tabQuery === 'team') return 0
+    if (tabQuery === 'agent') return 1
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    navigate(`/discover?tab=${tabName}`)
+  }
 
   return (
     <StyledRoot>
-      
-      {/* {<DiscoverSystemAgents />} */}
+      <StyledTabListWrapper>
+        <TabList activeTabId={activeTab}>
+          <Tab onClick={() => handleTabClick(0, 'team')}>{`${t('team')}s`}</Tab>
+          <Tab onClick={() => handleTabClick(1, 'agent')}>{`${t('agent')}s`}</Tab>
+        </TabList>
+      </StyledTabListWrapper>
 
-      <DiscoverTemplateAgents/>
-
-      <DiscoverTeamAgents />
-
-
-      {/* {!user && <Toolkit isPublic />} */}
+      <TabsContext activeTabId={activeTab}>
+        <TabPanels noAnimation>
+          <TabPanel>
+            <DiscoverTeamAgents />
+          </TabPanel>
+          <TabPanel>
+            <DiscoverSystemAgents />
+          </TabPanel>
+        </TabPanels>
+      </TabsContext>
     </StyledRoot>
   )
 }
 
 export default Discover
 
-
-
-
 export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 100px;
 `
-
-const StyledHeadingWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 16px 10px;
-`
-const StyledHeadingPrimary = styled(HeadingPrimary)`
-  font-size: 40px;
-`
-

@@ -144,6 +144,17 @@ const columns = [
     accessor: 'sender_name',
     minWidth: 343,
     width: '24.8%',
+    Cell: (props: { row: { original: any } }) => {
+      const { original: data } = props.row
+
+      if (data.voice_url !== null) {
+        const audioUrl = data.voice_url
+
+        return <AudioPlayer audioUrl={audioUrl} />
+      }
+
+      return null
+    },
   },
   // {
   //   Header: 'Schedule Name',
@@ -167,6 +178,7 @@ const columns = [
     Cell: (props: { row: { original: any } }) => {
       const { original: data } = props.row
       const { refetch: refetchChat } = useChatsService()
+
       const { deleteChat } = useDeleteChatService()
       const { openModal, closeModal } = useModal()
       const { setToast } = useContext(ToastContext)

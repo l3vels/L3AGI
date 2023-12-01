@@ -166,6 +166,9 @@ const StyledFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  height: calc(100vh - 400px);
+  overflow: auto;
 `
 const StyledModalButton = styled.div`
   margin-left: auto;
