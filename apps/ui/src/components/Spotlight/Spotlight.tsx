@@ -8,7 +8,6 @@ import TypographyQuaternary from 'components/Typography/Quaternary'
 import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
 
 import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
-import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
@@ -474,21 +473,6 @@ const StyledRow = styled.div`
   text-align: center;
 `
 
-const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
-  display: none;
-
-  ${props =>
-    props.showPlugins &&
-    css`
-      display: block;
-      position: fixed;
-      left: 50%;
-      bottom: 70px;
-      transform: translateX(-50%);
-
-      z-index: 101;
-    `}
-`
 const StyledTypewriterWrapper = styled.div`
   width: 600px;
   padding-left: 2px;

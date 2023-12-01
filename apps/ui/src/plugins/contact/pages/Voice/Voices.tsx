@@ -3,7 +3,7 @@ import { t } from 'i18next'
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'

@@ -9,9 +9,9 @@ import { apiKeyValidation } from 'utils/validationsSchema' // Import the appropr
 
 export const useCreateApiKey = () => {
   const { setToast } = useContext(ToastContext)
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
   const navigate = useNavigate()
-  const { refetch: refetchApiKeys, data: apiKeys } = useApiKeysService()
+  const { refetch: refetchApiKeys } = useApiKeysService()
   const [createApiKeyService] = useCreateApiKeyService()
   const [isLoading, setIsLoading] = useState(false)
 
