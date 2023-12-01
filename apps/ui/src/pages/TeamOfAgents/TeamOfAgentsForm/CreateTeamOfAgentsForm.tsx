@@ -18,6 +18,8 @@ import BackButton from 'components/BackButton'
 // import { useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import TeamDemoButton from './components/TeamDemoButton'
 
 const CreateTeamOfAgentsForm = () => {
   const { t } = useTranslation()
@@ -31,7 +33,11 @@ const CreateTeamOfAgentsForm = () => {
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
             <div>
-              <StyledSectionTitle>{`${t('add-team')}`}</StyledSectionTitle>
+              <StyledCombiner>
+                <StyledSectionTitle>{`${t('add-team')}`}</StyledSectionTitle>
+
+                <TeamDemoButton />
+              </StyledCombiner>
               {/* <StyledSectionDescription>
                 Create and manage your team of AI agents for interactive experiences.
               </StyledSectionDescription> */}

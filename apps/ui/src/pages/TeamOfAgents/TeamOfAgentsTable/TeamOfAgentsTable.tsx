@@ -32,10 +32,13 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
     {
       Header: `${t('role')}`,
       accessor: 'role',
+      width: '50%',
     },
     {
       Header: `${t('agent')}`,
       accessor: 'agent_id',
+      width: '50%',
+
       isEdit: true,
       Cell: ({ cell }: any) => {
         return <AgentRenderer params={cell} options={agents} />
