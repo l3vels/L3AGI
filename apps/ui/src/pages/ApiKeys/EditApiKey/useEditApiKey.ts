@@ -1,10 +1,9 @@
 import { useFormik } from 'formik'
 import { apiKeyValidation } from 'utils/validationsSchema'
 import { ToastContext } from 'contexts'
-import { useEffect, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
-import moment from 'moment'
 import { useUpdateApiKeyService } from 'services/apiKey/useUpdateApiKeyService'
 import { useApiKeyByIdService } from 'services/apiKey/useApiKeyByIdService'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -19,7 +18,6 @@ const useEditApiKey = () => {
   const { data: apiKeyById, refetch: apiKeyRefetch } = useApiKeyByIdService({ id: apiKeyId || '' })
   const [updateApiKeyById] = useUpdateApiKeyService()
   const [isLoading, setIsLoading] = useState(false)
-  // console.log('apiKeyById', apiKeyById)
 
   const defaultValues = {
     name: apiKeyById?.name,
@@ -37,7 +35,6 @@ const useEditApiKey = () => {
       if (apiKeyId) {
         await updateApiKeyById(apiKeyId, { ...newValues })
       }
-      console.log('newValues', newValues)
       navigate('/api-key')
       setToast({
         message: t('API key successfully updated'),
