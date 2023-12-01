@@ -21,6 +21,7 @@ const AgentSlider = ({ onChange, value }: { value: number; onChange: (value: num
         className='slider'
         color={Slider.colors?.POSITIVE}
         defaultValue={value * 10 || 2}
+        value={value * 10}
         min={0}
         max={10}
         onChange={onChange}

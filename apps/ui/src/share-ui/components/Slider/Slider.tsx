@@ -8,6 +8,7 @@ import SliderBase from './SliderBase/SliderBase'
 import SliderInfix from './SliderInfix'
 import { IconType } from '../Icon/IconConstants'
 import { SliderColor, SliderSize } from './SliderConstants'
+import styled from 'styled-components'
 
 export type SliderProps = {
   // ------ SliderBase props
@@ -196,7 +197,7 @@ const Slider: React.FC<SliderProps> & {
           valueFormatter={valueFormatter}
           valueText={valueText}
         >
-          <div
+          <StyledSlider
             className={bem('', { disabled, 'value-shown': showValue }, className)}
             data-testid={dataTestId}
             id={id}
@@ -205,7 +206,7 @@ const Slider: React.FC<SliderProps> & {
             <SliderInfix kind={SliderInfix.kinds?.PREFIX} />
             <SliderBase />
             <SliderInfix kind={SliderInfix.kinds?.POSTFIX} />
-          </div>
+          </StyledSlider>
         </SliderProvider>
       </div>
     )
@@ -218,3 +219,11 @@ Object.assign(Slider, {
 })
 
 export default Slider
+
+const StyledSlider = styled.div`
+  align-items: center;
+  display: flex;
+  max-width: 500px;
+  min-width: 200px;
+  width: 100%;
+`

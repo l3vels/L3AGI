@@ -20,9 +20,11 @@ import L3ComponentProps from '../../../types/L3ComponentProps'
 
 import { SliderTextSize } from '../SliderConstants'
 import SliderInText from '../SliderInText'
+import styled from 'styled-components'
 
 export type SliderBaseProps = L3ComponentProps
 
+// eslint-disable-next-line react/display-name
 const SliderBase: FC<SliderBaseProps> = forwardRef(({ className }, _ref) => {
   const { color, disabled, size, shapeTestId } = useSliderUi()
   const { min, max, ranged, step, value } = useSliderSelection()
@@ -76,14 +78,10 @@ const SliderBase: FC<SliderBaseProps> = forwardRef(({ className }, _ref) => {
 
   return (
     <div style={{ width: '100%' }}>
-      <div
-        className={bem('base', { [size]: size, [color]: color, disabled }, className)}
-        data-testid={shapeTestId('base')}
-        onKeyDown={handleKeyDown}
-      >
+      <StyledBase data-testid={shapeTestId('base')} onKeyDown={handleKeyDown}>
         <SliderRail onClick={handleRailClick} ref={railRef}>
           <SliderTrack />
-          {railRef.current && (
+          {railRef.current ? (
             <>
               <SliderFilledTrack dimension={dimension} offset={offset} />
               {positions.map((position, index) => {
@@ -97,11 +95,13 @@ const SliderBase: FC<SliderBaseProps> = forwardRef(({ className }, _ref) => {
                 )
               })}
             </>
+          ) : (
+            <div />
           )}
         </SliderRail>
-      </div>
+      </StyledBase>
       <SliderInText
-        kind={SliderInText.kinds.TEXTFIX}
+        kind={SliderInText.kinds?.TEXTFIX}
         textSize={
           size === 'small'
             ? SliderTextSize.SMALL
@@ -115,3 +115,11 @@ const SliderBase: FC<SliderBaseProps> = forwardRef(({ className }, _ref) => {
 })
 
 export default SliderBase
+
+const StyledBase = styled.div`
+  display: flex;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  padding: 0 8px;
+`
