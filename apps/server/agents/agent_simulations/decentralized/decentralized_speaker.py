@@ -228,82 +228,90 @@ Here is task or topic: {topic}.
             content="You can add detail to the description of each debate candidate."
         )
 
-        dialogue_agents = []
+        try:
+            dialogue_agents = []
 
-        for agent_with_configs in agents_with_configs:
-            name = agent_with_configs.agent.name
+            for agent_with_configs in agents_with_configs:
+                name = agent_with_configs.agent.name
 
-            # description = self.generate_character_description(
-            #     player_descriptor_system_message, game_description, name, llm
-            # )
+                # description = self.generate_character_description(
+                #     player_descriptor_system_message, game_description, name, llm
+                # )
 
-            character_header = self.generate_character_header(
-                specified_topic, game_description, name, agent_with_configs.agent.role
-            )
-
-            bidding_template = self.generate_character_bidding_template(
-                character_header, name, agent_with_configs.agent.role
-            )
-
-            # character_system_message = self.generate_character_system_message(
-            #     specified_topic, name, character_header
-            # )
-
-            dialogue_agents.append(
-                BiddingDialogueAgent(
-                    name=name,
-                    agent_with_configs=agent_with_configs,
-                    system_message=SystemMessage(
-                        content=SystemMessageBuilder(agent_with_configs).build()
-                    ),
-                    bidding_template=bidding_template,
-                    model=get_llm(self.settings, agent_with_configs),
-                    session_id=self.session_id,
-                    tools=self.get_tools(agent_with_configs, self.settings),
-                    sender_name=self.sender_name,
-                    is_memory=team.is_memory,
-                    run_logs_manager=self.run_logs_manager,
+                character_header = self.generate_character_header(
+                    specified_topic,
+                    game_description,
+                    name,
+                    agent_with_configs.agent.role,
                 )
+
+                bidding_template = self.generate_character_bidding_template(
+                    character_header, name, agent_with_configs.agent.role
+                )
+
+                # character_system_message = self.generate_character_system_message(
+                #     specified_topic, name, character_header
+                # )
+
+                dialogue_agents.append(
+                    BiddingDialogueAgent(
+                        name=name,
+                        agent_with_configs=agent_with_configs,
+                        system_message=SystemMessage(
+                            content=SystemMessageBuilder(agent_with_configs).build()
+                        ),
+                        bidding_template=bidding_template,
+                        model=get_llm(self.settings, agent_with_configs),
+                        session_id=self.session_id,
+                        tools=self.get_tools(agent_with_configs, self.settings),
+                        sender_name=self.sender_name,
+                        is_memory=team.is_memory,
+                        run_logs_manager=self.run_logs_manager,
+                    )
+                )
+
+            max_iters = 1
+
+            n = 0
+
+            simulator = DialogueSimulator(
+                agents=dialogue_agents,
+                selection_function=self.select_next_speaker,
+                is_memory=team.is_memory,
             )
-
-        max_iters = 1
-
-        n = 0
-
-        simulator = DialogueSimulator(
-            agents=dialogue_agents,
-            selection_function=self.select_next_speaker,
-            is_memory=team.is_memory,
-        )
-        simulator.reset()
-        simulator.inject("Debate Moderator", specified_topic)
-        print(f"(Debate Moderator): {specified_topic}")
-        print("\n")
-
-        while n < max_iters:
-            status_config = ConfigModel.get_config_by_session_id(
-                db, self.session_id, self.provider_account
-            )
-
-            if status_config.value == ChatStatus.STOPPED.value:
-                break
-
-            agent_id, agent_name, message = simulator.step()
-
-            print(f"({agent_name}): {message}")
+            simulator.reset()
+            simulator.inject("Debate Moderator", specified_topic)
+            print(f"(Debate Moderator): {specified_topic}")
             print("\n")
 
-            db.session.refresh(status_config)
+            while n < max_iters:
+                status_config = ConfigModel.get_config_by_session_id(
+                    db, self.session_id, self.provider_account
+                )
 
-            if status_config.value == ChatStatus.STOPPED.value:
-                break
+                if status_config.value == ChatStatus.STOPPED.value:
+                    break
 
-            ai_message = history.create_ai_message(message, None, agent_id)
+                agent_id, agent_name, message = simulator.step()
 
-            # if team.is_memory:
-            memory.ai_name = agent_name
-            memory.save_ai_message(message)
+                print(f"({agent_name}): {message}")
+                print("\n")
 
+                db.session.refresh(status_config)
+
+                if status_config.value == ChatStatus.STOPPED.value:
+                    break
+
+                ai_message = history.create_ai_message(message, None, agent_id)
+
+                # if team.is_memory:
+                memory.ai_name = agent_name
+                memory.save_ai_message(message)
+
+                self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
+
+                n += 1
+        except Exception as err:
+            ai_message = history.create_ai_message(str(err))
+            memory.save_ai_message(str(err))
             self.chat_pubsub_service.send_chat_message(chat_message=ai_message)
-
-            n += 1
