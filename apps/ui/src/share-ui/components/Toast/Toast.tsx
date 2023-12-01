@@ -18,6 +18,7 @@ import { NOOP } from '../../utils/function-utils'
 
 import { ArtWork } from './ToastArtWork/ToastArtWork'
 import Loader from '../Loader/Loader'
+import styled, { css } from 'styled-components'
 
 interface ToastProps extends L3ComponentProps {
   actions?: ToastAction[]
@@ -135,41 +136,40 @@ const Toast: FC<ToastProps> & {
 
   return (
     <CSSTransition in={open} classNames='l3-style-toast-animation' timeout={400} unmountOnExit>
-      <div className='l3-style-toast--position'>
+      <StyledToast position={position} type={type} isOpen={open}>
         <>
-          <div className={classNames} role='alert' aria-live='polite'>
-            {/* {avatarSrc && (
+          {/* {avatarSrc && (
               <div className="l3-style-toast-avatar">
                 <Avatar type={Avatar.types.IMG} size={Avatar.sizes.SMALL} src={avatarSrc} rectangle withoutBorder />
               </div>
             )} */}
-            {(!artWork || !avatarSrc || loader) && iconSize && (
-              <div className='l3-style-toast-icon-large'>{iconElement}</div>
-            )}
-            {loader && (
-              <div className='l3-loader-toast-loader'>
-                <Loader size={Loader.sizes?.XS} />
-              </div>
-            )}
-            {artWork && (
-              <div className='l3-style-toast-artwork'>
-                <ArtWork type={ArtWork.types?.IMG} src={artWork} ariaLabel='label' />
-              </div>
-            )}
-            <div
-              className={cx('l3-style-toast-content', {
-                'l3-style-toast-content-no-icon': !iconElement,
-              })}
-            >
-              <>
-                {label && <div className='l3-style-toast-label'>{label || children}</div>}
-                {paragraph && <div className='l3-style-toast-paragraph'>{paragraph}</div>}
-              </>
+          {(!artWork || !avatarSrc || loader) && iconSize && (
+            <div className='l3-style-toast-icon-large'>{iconElement}</div>
+          )}
+          {loader && (
+            <div className='l3-loader-toast-loader'>
+              <Loader size={Loader.sizes?.XS} />
             </div>
-            {(toastButtons || deprecatedAction) && (
-              <div className='l3-style-toast-action'>{toastButtons || deprecatedAction}</div>
-            )}
-            {/* {closeable && (
+          )}
+          {artWork && (
+            <div className='l3-style-toast-artwork'>
+              <ArtWork type={ArtWork.types?.IMG} src={artWork} ariaLabel='label' />
+            </div>
+          )}
+          <div
+            className={cx('l3-style-toast-content', {
+              'l3-style-toast-content-no-icon': !iconElement,
+            })}
+          >
+            <>
+              {label && <div className='l3-style-toast-label'>{label || children}</div>}
+              {paragraph && <div className='l3-style-toast-paragraph'>{paragraph}</div>}
+            </>
+          </div>
+          {(toastButtons || deprecatedAction) && (
+            <div className='l3-style-toast-action'>{toastButtons || deprecatedAction}</div>
+          )}
+          {/* {closeable && (
               <Button
                 className='l3-style-toast_close-button'
                 onClick={handleClose}
@@ -187,9 +187,8 @@ const Toast: FC<ToastProps> & {
                 />
               </Button>
             )} */}
-          </div>
         </>
-      </div>
+      </StyledToast>
     </CSSTransition>
   )
 }
@@ -200,3 +199,54 @@ Object.assign(Toast, {
 })
 
 export default Toast
+
+const StyledToast = styled.div<{ position: string; type: string; isOpen: boolean }>`
+  position: absolute;
+  width: 343px;
+  height: 72px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0 10px;
+  /* justify-content: center; */
+  border-radius: 12px;
+
+  z-index: 1000000000;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+
+  transition: all 0.1s ease; /* Add a transition for smooth animation */
+
+  /* Slide from top and disappear when isOpen is false */
+  transform: translateY(${props => (props.isOpen ? '0' : '-100%')});
+  opacity: ${props => (props.isOpen ? '1' : '0')};
+
+  ${props =>
+    props.position === 'bottom-right' &&
+    css`
+      position: fixed;
+      bottom: 30px;
+      right: 16px;
+    `}
+
+  ${props =>
+    props.type === 'positive' &&
+    css`
+      color: #000;
+      background: linear-gradient(180deg, #cefb53 0%, #7af94b 100%);
+    `}
+  ${props =>
+    props.type === 'negative' &&
+    css`
+      color: #000;
+      background: linear-gradient(180deg, #e96878 0%, #d62e2e 100%);
+    `}
+  ${props =>
+    props.type === 'warning' &&
+    css`
+      color: #000;
+      background: linear-gradient(180deg, #fdfe53 0%, #eb9b3a 100%);
+    `}
+`

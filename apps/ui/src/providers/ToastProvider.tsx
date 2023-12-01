@@ -33,6 +33,7 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
       <Toast
         label={toast.message}
         type={toast.type}
+        position={Toast.positions?.BOTTOM_RIGHT}
         autoHideDuration={toast.autoHideDuration || 5000}
         open={toast.open}
         // action={
