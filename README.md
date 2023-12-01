@@ -62,7 +62,7 @@ Of course! Here's the revised "Features" section with the requested emojis and i
 
 ## ✨ Features
 
-<a href="https://youtu.be/i84RodECglM" target="_blank" rel="noopener noreferrer">
+<a href="https://youtu.be/R2hYNONKwKI" target="_blank" rel="noopener noreferrer">
     <img src="docs/assets/playYTFeatures.png" alt="Watch the video">
 </a>
 
