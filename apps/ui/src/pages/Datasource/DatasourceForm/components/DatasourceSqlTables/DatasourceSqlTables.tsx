@@ -40,6 +40,7 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
           )
         },
         accessor: 'id',
+        width: 50,
         maxWidth: 50,
 
         Cell: ({ cell }: any) => {
@@ -69,10 +70,12 @@ const DatasourceSqlTables = ({ data, tables, onTablesSelected }: DatasourceSqlTa
       {
         Header: 'Table',
         accessor: 'name',
+        width: '50%',
       },
       {
         Header: 'Rows',
         accessor: 'count',
+        width: '50%',
       },
     ],
     [selectedTables, onTablesSelected],
