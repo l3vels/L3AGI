@@ -37,7 +37,7 @@ const DataLoaderCard = ({
         <IconButton
           onClick={onHelpClick}
           icon={Help}
-          kind={IconButton.kinds.SECONDARY}
+          kind={IconButton.kinds.PRIMARY}
           // ariaLabel='Help'
           size={IconButton.sizes.XXS}
         />

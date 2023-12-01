@@ -9,7 +9,7 @@ export const teamTypeDocs = [
   },
   { name: 'Debates', link: import.meta.env.REACT_APP_DEBATES_LINK },
   {
-    name: 'Decentralized speaker',
+    name: 'Decentralized Speaker',
     link: import.meta.env.REACT_APP_DECENTRALIZED_SPEAKER_LINK,
   },
 ]
