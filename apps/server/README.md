@@ -63,4 +63,3 @@ This will result in creating new migration file in `migrations/versions` folder.
 
 lt --port 4000 --print-requests
 ngrok http 4000
-
