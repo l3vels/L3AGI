@@ -68,7 +68,7 @@ export const useCreateAgent = () => {
       agent_tools: agentById.configs?.tools,
       agent_instructions: agentById.configs?.instructions,
       agent_datasources: agentById.configs?.datasources,
-      agent_model: agentById?.configs?.agent_model,
+      agent_model: agentById?.configs?.model,
       agent_suggestions: agentById.configs?.suggestions,
       agent_greeting: agentById.configs?.greeting,
       agent_text: agentById.configs?.text || '',
