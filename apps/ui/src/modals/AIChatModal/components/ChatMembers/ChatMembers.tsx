@@ -28,7 +28,6 @@ import { StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
 import AudioPlayer from 'components/AudioPlayer'
 import { Nullable } from 'types'
 import { CALL_LOGS_MODAL_NAME } from 'modals/CallLogsModal'
-import { StyledActionButton } from 'components/CopyButton/CopyButton'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const ChatMembers = ({

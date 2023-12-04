@@ -17,7 +17,7 @@ export const contactValidationSchema = yup.object().shape({
 })
 
 export const useContactForm = () => {
-  const { data: groups, refetch: refetchGroups } = useGroupsService()
+  const { data: groups } = useGroupsService()
 
   const groupOptions = groups?.map((group: any) => {
     return { label: group.name, value: group.id }
