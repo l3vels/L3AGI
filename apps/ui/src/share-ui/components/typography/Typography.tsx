@@ -47,28 +47,29 @@ export default Typography
 
 const StyledTypography = styled.span<{ size: string }>`
   font-weight: 450;
+  font-style: normal;
   ${props =>
     props.size === 'large' &&
     css`
       font-size: 18px;
-      line-height: 26px;
+      line-height: 24px;
     `}
   ${props =>
     props.size === 'medium' &&
     css`
       font-size: 16px;
-      line-height: 22px;
+      line-height: 20px;
     `}
     ${props =>
     props.size === 'small' &&
     css`
       font-size: 14px;
-      line-height: 18px;
+      line-height: 16px;
     `}
     ${props =>
     props.size === 'xs-small' &&
     css`
       font-size: 12px;
-      line-height: 14px;
+      line-height: 16px;
     `}
 `
