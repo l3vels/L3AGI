@@ -7,6 +7,7 @@ import { baseClassName, RadioButtonSize, RadioButtonType } from './RadioButtonCo
 import L3ComponentProps from '../../types/L3ComponentProps'
 import L3Component from '../../types/L3Component'
 import Tooltip from '../Tooltip/Tooltip'
+import styled, { css } from 'styled-components'
 
 interface RadioButtonProps extends L3ComponentProps {
   className?: string
@@ -77,59 +78,63 @@ const RadioButton: L3Component<RadioButtonProps, HTMLElement> = forwardRef(
 
     return (
       <Tooltip content={tooltipContent}>
-        <div className={cx(`wrapper`, description && `wrapper--size-${size}`)}>
+        <>
           <label className={cx(baseClassName, overrideClassName, { disabled })}>
-            <span
-              className={cx(
-                `${baseClassName}__radio-input-container`,
-                `${baseClassName}__radio-input-container--kind-${kind}`,
+            <StyledWrapper>
+              <StyledContainer
+                className={cx(
+                  `${baseClassName}__radio-input-container`,
+                  `${baseClassName}__radio-input-container--kind-${kind}`,
+                )}
+              >
+                <StyledInput
+                  className={`${baseClassName}__radio-input-container__radio-input`}
+                  type='radio'
+                  value={value}
+                  name={name}
+                  disabled={disabled}
+                  {...checkedProps}
+                  onChange={onSelect}
+                  ref={mergedRef}
+                />
+                <StyledControl
+                  checked={checked}
+                  defaultChecked={defaultChecked}
+                  className={cx(
+                    `${baseClassName}__radio-input-container__radio-control`,
+                    `${baseClassName}__radio-input-container__radio-control--size-${size}`,
+                    {
+                      [`${baseClassName}__radio-input-container__radio-control--label-animation`]:
+                        !noLabelAnimation,
+                    },
+                    {
+                      [`${baseClassName}__radio-input-container__radio-control--label-animation--size-${size}`]:
+                        !noLabelAnimation,
+                    },
+                  )}
+                />
+              </StyledContainer>
+              {text && (
+                <span
+                  className={cx(
+                    `${baseClassName}__radio-label`,
+                    `${baseClassName}__radio-label--kind-${kind}`,
+                    `${baseClassName}__radio-label--size-${size}`,
+                  )}
+                >
+                  {text}
+                </span>
               )}
-            >
-              <input
-                className={`${baseClassName}__radio-input-container__radio-input`}
-                type='radio'
-                value={value}
-                name={name}
-                disabled={disabled}
-                {...checkedProps}
-                onChange={onSelect}
-                ref={mergedRef}
-              />
-              <span
-                className={cx(
-                  `${baseClassName}__radio-input-container__radio-control`,
-                  `${baseClassName}__radio-input-container__radio-control--size-${size}`,
-                  {
-                    [`${baseClassName}__radio-input-container__radio-control--label-animation`]:
-                      !noLabelAnimation,
-                  },
-                  {
-                    [`${baseClassName}__radio-input-container__radio-control--label-animation--size-${size}`]:
-                      !noLabelAnimation,
-                  },
-                )}
-              />
-            </span>
-            {text && (
-              <span
-                className={cx(
-                  `${baseClassName}__radio-label`,
-                  `${baseClassName}__radio-label--kind-${kind}`,
-                  `${baseClassName}__radio-label--size-${size}`,
-                )}
-              >
-                {text}
-              </span>
-            )}
-            {children && (
-              <Clickable
-                className='radio-children-wrapper'
-                onClick={onChildClick}
-                tabIndex={childrenTabIndex}
-              >
-                {children}
-              </Clickable>
-            )}
+              {children && (
+                <Clickable
+                  className='radio-children-wrapper'
+                  onClick={onChildClick}
+                  tabIndex={childrenTabIndex}
+                >
+                  {children}
+                </Clickable>
+              )}
+            </StyledWrapper>
           </label>
           {description && (
             <span
@@ -142,10 +147,67 @@ const RadioButton: L3Component<RadioButtonProps, HTMLElement> = forwardRef(
               {description}
             </span>
           )}
-        </div>
+        </>
       </Tooltip>
     )
   },
 )
 
 export default RadioButton
+
+const StyledWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+`
+
+const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+`
+
+const StyledInput = styled.input`
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+`
+
+const StyledControl = styled.div<{ checked: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // width: 1em;
+  // height: 1em;
+  width: 20px;
+  height: 20px;
+  // border: 0.1em solid;
+  // @include theme-prop(border-color, ui-border-color);
+  border: 3.5px solid #000;
+  box-sizing: border-box;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  :hover {
+    border-color: #4ca6f8;
+  }
+  :active {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+  }
+
+  ${props =>
+    props.checked &&
+    css`
+      border-color: #4ca6f8;
+      border-width: 6px;
+
+      width: 18px;
+      height: 18px;
+    `}
+`
