@@ -199,7 +199,8 @@ class AgentModel(BaseModel):
         agents = (
             db.session.query(AgentModel)
             # .join(AgentConfigModel, AgentModel.id == AgentConfigModel.agent_id)
-            .outerjoin(UserModel, AgentModel.created_by == UserModel.id).filter(
+            .outerjoin(UserModel, AgentModel.created_by == UserModel.id)
+            .filter(
                 AgentModel.account_id == account.id,
                 or_(
                     or_(
@@ -210,6 +211,7 @@ class AgentModel(BaseModel):
             )
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             .options(joinedload(AgentModel.creator))
+            .order_by(AgentModel.created_on.desc())
             # .options(joinedload(AgentModel.configs))  # if you have a relationship set up named "configs"
             # .options(joinedload(UserModel.agents))
             .all()
