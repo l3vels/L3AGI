@@ -59,36 +59,3 @@ const StyledInputWrapper = styled.div`
 
   padding: 0 20px;
 `
-const StyledSourceTypeWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`
-const StyledCardWrapper = styled.div`
-  display: flex;
-
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-`
-const StyledText = styled.span`
-  color: #fff;
-`
-const StyledUploadFileWrapper = styled.div`
-  display: flex;
-  gap: 20px;
-  flex-direction: column;
-`
-
-const StyledUploadedFiles = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-`
