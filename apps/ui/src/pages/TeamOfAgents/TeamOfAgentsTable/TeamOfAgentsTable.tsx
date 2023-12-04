@@ -4,10 +4,30 @@ import MultiselectEditor from 'components/DataGrid/GridComponents/MultiselectEdi
 import AgentRenderer from './AgentRenderer'
 import Table from 'components/Table'
 
-import styled from 'styled-components'
+type Agent = {
+  id: number
+  role: string
+}
+
+type TeamTypes = {
+  agents: Array<{ id: number; role: string }>
+  description: string
+  fields: Array<{
+    default: number
+    is_required: string
+    is_secret: boolean
+    key: string
+    label: string
+    type: string
+  }>
+  is_active: boolean
+  name: string
+  team_type: string
+  __typename: string
+}
 
 type TeamOfAgentsTableProps = {
-  selectedTeamType?: any
+  selectedTeamType?: TeamTypes
   formik: any
 }
 
@@ -22,7 +42,7 @@ const TeamOfAgentsTable = ({ selectedTeamType, formik }: TeamOfAgentsTableProps)
   if (!selectedTeamType) return null
 
   const gridData =
-    selectedTeamType.agents.map((agent: any) => ({
+    selectedTeamType.agents.map((agent: Agent) => ({
       id: agent.id,
       role: agent.role,
       agent_id: selectedAgents[agent.id - 1]?.agent_id,
