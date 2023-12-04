@@ -34,7 +34,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
         <StyledMainHeaderWrapper>
           <HeadingPrimary
             type={Heading.types?.h1}
-            size='medium'
+            size='xss'
             value={`${t('agent').toUpperCase()}S`}
           />
           <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription>

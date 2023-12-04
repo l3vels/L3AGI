@@ -8,6 +8,7 @@ import useRefWithCallback from '../../hooks/useRefWithCallback'
 import TextWithHighlight from '../TextWithHighlight/TextWithHighlight'
 import { HeadingSizes, HeadingTypes } from './HeadingConstants'
 import L3ComponentProps from '../../types/L3ComponentProps'
+import styled, { css } from 'styled-components'
 
 export interface HeadingProps extends L3ComponentProps {
   type?: HeadingTypes
@@ -57,16 +58,20 @@ const Heading: React.FC<HeadingProps> & {
     type,
     { className: classNames, 'aria-label': ariaLabel, id, ref: setRef, style: finalStyle },
     highlightTerm ? (
-      <TextWithHighlight
-        highlightTerm={highlightTerm}
-        text={value}
-        linesToClamp={ellipsisMaxLines}
-        useEllipsis={ellipsis}
-        nonEllipsisTooltip={nonEllipsisTooltip}
-        tooltipPosition={tooltipPosition}
-      />
+      <StyledText size={size} style={finalStyle}>
+        <TextWithHighlight
+          highlightTerm={highlightTerm}
+          text={value}
+          linesToClamp={ellipsisMaxLines}
+          useEllipsis={ellipsis}
+          nonEllipsisTooltip={nonEllipsisTooltip}
+          tooltipPosition={tooltipPosition}
+        />
+      </StyledText>
     ) : (
-      value
+      <StyledText size={size} style={finalStyle}>
+        {value}
+      </StyledText>
     ),
   )
 
@@ -98,3 +103,35 @@ Object.assign(Heading, {
 })
 
 export default Heading
+
+const StyledText = styled.div<{ size: string }>`
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 52px;
+
+  ${props =>
+    props.size === 'medium' &&
+    css`
+      font-size: 36px;
+      line-height: 44px;
+    `}
+  ${props =>
+    props.size === 'small' &&
+    css`
+      font-size: 32px;
+      line-height: 40px;
+    `}
+  ${props =>
+    props.size === 'xs' &&
+    css`
+      font-size: 28px;
+      line-height: 36px;
+    `}
+  ${props =>
+    props.size === 'xss' &&
+    css`
+      font-size: 24px;
+      line-height: 32px;
+    `}
+`

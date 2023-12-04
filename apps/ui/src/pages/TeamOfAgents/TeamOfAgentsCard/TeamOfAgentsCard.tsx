@@ -68,7 +68,7 @@ const TeamOfAgentCard = ({
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
-        <HeadingSecondary type={Heading.types?.h1} value={name} size='medium' />
+        <HeadingSecondary type={Heading.types?.h1} value={name} size='xss' />
 
         <TypographySecondary
           value={shortDescription}

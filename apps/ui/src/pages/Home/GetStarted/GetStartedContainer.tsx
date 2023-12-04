@@ -32,7 +32,7 @@ const GetStartedContainer = ({
           <StyledCloseButton onClick={() => setShow(false)}>
             <StyledCloseIcon />
           </StyledCloseButton>
-          {!noText && <HeadingPrimary type={Heading.types?.h1} value='Get Started' size='medium' />}
+          {!noText && <HeadingPrimary type={Heading.types?.h1} value='Get Started' size='xss' />}
         </StyledColumn>
         {!noText && (
           <StyledColumn>
