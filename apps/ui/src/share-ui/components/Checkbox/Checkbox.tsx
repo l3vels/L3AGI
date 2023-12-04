@@ -8,6 +8,7 @@ import Remove from '../Icon/Icons/components/Remove'
 import { backwardCompatibilityForProperties } from '../../helpers/backwardCompatibilityForProperties'
 import { useSupportFirefoxLabelClick } from './hooks/useSupportFirefoxLabelClick'
 import useMergeRefs from '../../hooks/useMergeRefs'
+import styled, { css } from 'styled-components'
 
 const BASE_CLASS_NAME = 'l3-style-checkbox'
 
@@ -47,7 +48,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       ariaLabelledBy,
       onChange,
       checked,
-      indeterminate,
+      indeterminate = false,
       disabled,
       defaultChecked,
       value,
@@ -73,7 +74,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
         })
       })
     }, [inputRef])
-
+    console.log('checked', checked)
     const checkboxClassNames = [
       `${BASE_CLASS_NAME}__checkbox`,
       `${BASE_CLASS_NAME}__prevent-animation`,
@@ -109,37 +110,46 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
           htmlFor={id}
           onClickCapture={onClickCaptureLabel}
         >
-          <input
-            ref={mergedInputRef}
-            id={id}
-            className={`${BASE_CLASS_NAME}__input`}
-            value={value}
-            name={name}
-            type='checkbox'
-            onChange={onChange}
-            defaultChecked={overrideDefaultChecked}
-            disabled={disabled}
-            aria-label={ariaLabel || label}
-            aria-labelledby={ariaLabelledBy}
-            checked={checked}
-          />
-          <div className={cx(...checkboxClassNames)} ref={iconContainerRef}>
-            <Icon
-              className={`${BASE_CLASS_NAME}__icon`}
-              iconType={Icon.type?.SVG}
-              icon={indeterminate ? Remove : Check}
-              ignoreFocusStyle
-              clickable={false}
-              ariaHidden={true}
-              iconSize='16'
+          <StyledInnerWrapper>
+            <StyledInput
+              ref={mergedInputRef}
+              id={id}
+              className={`${BASE_CLASS_NAME}__input`}
+              value={value}
+              name={name}
+              type='checkbox'
+              onChange={onChange}
+              defaultChecked={overrideDefaultChecked}
+              disabled={disabled}
+              aria-label={ariaLabel || label}
+              aria-labelledby={ariaLabelledBy}
+              checked={checked}
             />
-          </div>
-
-          {label?.length > 0 ? null : (
-            <span className={cx(`${BASE_CLASS_NAME}__label`, labelClassName)}>{label}</span>
-          )}
+            <StyledCustomInput
+              size={size}
+              checked={checked}
+              className={'customInput'}
+              ref={iconContainerRef}
+              indeterminate={indeterminate}
+            >
+              <Icon
+                className={`checkboxIcon`}
+                iconType={Icon.type?.SVG}
+                icon={indeterminate ? Remove : Check}
+                ignoreFocusStyle
+                clickable={false}
+                ariaHidden={true}
+                iconSize='16'
+              />
+            </StyledCustomInput>
+            {label?.length === 0 ? null : (
+              <StyledLabel size={size} className={cx(`${BASE_CLASS_NAME}__label`, labelClassName)}>
+                {label}
+              </StyledLabel>
+            )}
+          </StyledInnerWrapper>
         </label>
-        {description?.length > 0 ? null : (
+        {description?.length === 0 ? null : (
           <span
             className={cx(
               `${BASE_CLASS_NAME}__description`,
@@ -156,3 +166,74 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
 )
 
 export default Checkbox
+
+const StyledInnerWrapper = styled.div`
+  display: flex;
+
+  gap: 8px;
+`
+
+const StyledLabel = styled.span<{ size: string }>`
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+
+  cursor: pointer;
+
+  ${props =>
+    props.size === 'small' &&
+    css`
+      font-size: 12px;
+      line-height: 16px;
+    `}
+`
+const StyledInput = styled.input`
+  display: none;
+`
+const StyledCustomInput = styled.div<{ checked: boolean; size: string; indeterminate: boolean }>`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 21px;
+  height: 21px;
+
+  border: 3.5px solid #000;
+  border-radius: 3.5px;
+
+  /* position: relative;
+  overflow: hidden; */
+
+  .checkboxIcon {
+    opacity: 0;
+  }
+
+  ${props =>
+    props.checked &&
+    css`
+      outline: 2px solid rgba(0, 0, 0, 0.2);
+      .checkboxIcon {
+        opacity: 1;
+        background-color: #4ca6f8;
+        color: #fff;
+      }
+    `}
+  ${props =>
+    props.size === 'small' &&
+    css`
+      width: 16px;
+      height: 16px;
+    `}
+
+
+  ${props =>
+    props.indeterminate &&
+    css`
+      outline: 2px solid rgba(0, 0, 0, 0.2);
+      .checkboxIcon {
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: #fff;
+      }
+    `}
+`
