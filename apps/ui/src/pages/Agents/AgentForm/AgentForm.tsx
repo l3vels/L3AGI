@@ -67,6 +67,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     avatarIsLoading,
     integrationOptions,
     voiceToolOptions,
+    voiceModelOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {
@@ -131,7 +132,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <Tab onClick={() => handleTabClick(1)}>Configuration</Tab>
           <Tab onClick={() => handleTabClick(2)}>Training Details</Tab>
           <Tab onClick={() => handleTabClick(3)}>Onboarding</Tab>
-          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice}>
+          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice || agentType === 'text'}>
             Voice Preferences
           </Tab>
         </TabList>
@@ -223,7 +224,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       fieldName={'agent_model'}
                       setFieldValue={setFieldValue}
                       fieldValue={agent_model}
-                      options={modelOptions}
+                      options={agentType === 'voice' ? voiceModelOptions : modelOptions}
                       onChange={() => {
                         setFieldValue('agent_model', '')
                       }}

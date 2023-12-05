@@ -22,6 +22,13 @@ export const useAgentForm = (formik: any) => {
     label: `${name} (${provider})`,
   }))
 
+  const voiceModelOptions = models
+    ?.filter((model: any) => model.is_voice)
+    ?.map(({ id, name, provider }) => ({
+      value: id,
+      label: `${name} (${provider})`,
+    }))
+
   const datasourceOptions = dataSources?.map(({ id, name }) => {
     return { value: id, label: name }
   })
@@ -105,5 +112,6 @@ export const useAgentForm = (formik: any) => {
     avatarIsLoading,
     voiceSynthesizerOptions,
     voiceTranscriberOptions,
+    voiceModelOptions,
   }
 }
