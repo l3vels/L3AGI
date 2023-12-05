@@ -13,6 +13,7 @@ class CalToolkit(BaseToolkit, ABC):
     )
     slug: str = "cal"
     toolkit_id = "be23abc5-1e33-431e-8a9a-9233c527143b"
+    is_voice = True
 
     def get_tools(self) -> List[BaseTool]:
         return [CalGetAvailableDatesTool(), CalBookingTool()]

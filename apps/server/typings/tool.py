@@ -1,5 +1,6 @@
-from pydantic import BaseModel, UUID4
 from typing import List, Optional
+
+from pydantic import UUID4, BaseModel
 
 
 class ToolInput(BaseModel):
@@ -27,6 +28,7 @@ class ToolOutput(BaseModel):
     toolkit_id: UUID4
     is_active: bool
     is_public: bool
+    is_voice: bool
     name: str
     description: str
     slug: str

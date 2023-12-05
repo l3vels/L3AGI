@@ -58,6 +58,7 @@ def get_all_tools():
                 "toolkit_id": toolkit.toolkit_id,
                 "is_public": True,
                 "is_active": toolkit.is_active,
+                "is_voice": toolkit.is_voice,
                 "name": toolkit.name,
                 "slug": toolkit.slug,
                 "description": toolkit.description,

@@ -66,7 +66,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     handleUploadAvatar,
     avatarIsLoading,
     integrationOptions,
-    voiceAgentToolOptions,
+    voiceToolOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {
@@ -206,7 +206,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     fieldName={'agent_tools'}
                     fieldValue={agent_tools}
                     setFieldValue={setFieldValue}
-                    options={agentType === 'voice' ? voiceAgentToolOptions : toolOptions}
+                    options={agentType === 'voice' ? voiceToolOptions : toolOptions}
                   />
 
                   {agentType === 'text' && (

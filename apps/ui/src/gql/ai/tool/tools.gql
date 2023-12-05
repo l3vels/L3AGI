@@ -3,6 +3,7 @@ query GetTools @api(name: "ai") {
     toolkit_id
     is_active
     is_public
+    is_voice
     name
     description
     slug

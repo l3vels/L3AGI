@@ -57,6 +57,7 @@ class BaseTool(LangchainBaseTool):
     account: Optional[AccountOutput] = None
     agent_with_configs: Optional[AgentWithConfigsOutput] = None
     data_source_id: Optional[str] = None
+    is_voice: Optional[bool] = None
 
     def get_env_key(self, key: str):
         return self.configs.get(key)
@@ -68,6 +69,7 @@ class BaseToolkit(BaseModel):
     description: str
     slug: str
     is_active: bool = Field(default=True)
+    is_voice: bool = False
 
     def get_tools_with_configs(
         self, db, account, settings, agent_with_configs, callback_handler
