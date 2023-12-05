@@ -9,7 +9,6 @@ import {
   StyledMenuButtonsWrapper,
   StyledNameWrapper,
   StyledWrapper,
-  StyledMenuDots,
   StyledIconButton,
 } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
@@ -93,17 +92,15 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
             )}
 
             {teamModule?.delete && isCreator && (
-              <StyledMenuDots>
-                <MenuButton component={MenuDots}>
-                  <StyledMenuButtonsWrapper>
-                    <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
-                      {t('delete-team')}
-                    </ButtonTertiary>
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
+                    {t('delete-team')}
+                  </ButtonTertiary>
 
-                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
-                  </StyledMenuButtonsWrapper>
-                </MenuButton>
-              </StyledMenuDots>
+                  <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>

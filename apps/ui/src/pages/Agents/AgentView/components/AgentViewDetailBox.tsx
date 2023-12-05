@@ -98,17 +98,15 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             )}
 
             {agentModule?.delete && isCreator && (
-              <StyledMenuDots>
-                <MenuButton component={MenuDots}>
-                  <StyledMenuButtonsWrapper>
-                    <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
-                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
-                    <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
-                      {t('delete-agent')}
-                    </ButtonTertiary>
-                  </StyledMenuButtonsWrapper>
-                </MenuButton>
-              </StyledMenuDots>
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
+                  <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
+                  <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
+                    {t('delete-agent')}
+                  </ButtonTertiary>
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
@@ -229,16 +227,7 @@ export const StyledButtonsWrapper = styled.div`
   align-items: center;
   gap: 2px;
 `
-export const StyledMenuDots = styled.div`
-  .menu-button--wrapper.menu-button--wrapper--size-32 {
-    &:hover {
-      background: ${({ theme }) => theme.body.humanMessageBgColor};
-    }
-    path {
-      stroke: ${({ theme }) => theme.body.iconColor};
-    }
-  }
-`
+
 export const StyledIconButton = styled.div`
   .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
     &:hover {
