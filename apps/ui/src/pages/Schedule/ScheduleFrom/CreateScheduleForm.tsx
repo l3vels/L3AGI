@@ -9,8 +9,8 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import { FormikProvider } from 'formik'
 
@@ -37,7 +37,7 @@ const CreateScheduleForm = ({ initialValues = {} }: CreateScheduleFormProps) => 
             <BackButton />
             <ButtonPrimary
               onClick={formik.handleSubmit}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               disabled={isLoading}
             >
               {isLoading ? <Loader size={32} /> : 'Save'}

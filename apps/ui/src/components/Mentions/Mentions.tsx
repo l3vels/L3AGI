@@ -7,8 +7,7 @@ import defaultStyle from './defaultStyle'
 import styled from 'styled-components'
 import { useAssignedUserListService } from 'services'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Avatar from '@l3-lib/ui-core/dist/Avatar'
+import Typography from 'share-ui/components/typography/Typography'
 
 import l3Icon from 'assets/avatars/l3.png'
 import { useAgentsService } from 'services/agent/useAgentsService'
@@ -16,6 +15,7 @@ import { useTeamOfAgentsService } from 'services/team/useTeamOfAgentsService'
 import { Nullable } from 'types'
 import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdService'
 import TypographyQuaternary from 'components/Typography/Quaternary'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 type OnChangeHandlerType = (event: { target: { value: string } }) => void
 
@@ -56,7 +56,7 @@ const Mentions = ({
       display: name,
       id: `agent__${id}`,
       type: 'Agent',
-      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+      icon: <AvatarGenerator name={name} size={25} />,
     }
   })
 
@@ -67,7 +67,7 @@ const Mentions = ({
       display: name,
       id: `team__${id}`,
       type: 'Team Of Agents',
-      icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+      icon: <AvatarGenerator name={name} size={25} />,
     }
   })
 
@@ -85,7 +85,7 @@ const Mentions = ({
         display: teamAgent.agent.name,
         id: `agent__${teamAgent.agent.id}`,
         type: 'Agent',
-        icon: <Avatar size={Avatar.sizes.SMALL} src={l3Icon} type={Avatar.types.IMG} rectangle />,
+        icon: <AvatarGenerator name={teamAgent.agent.name} size={25} />,
       }
     }) || []
 

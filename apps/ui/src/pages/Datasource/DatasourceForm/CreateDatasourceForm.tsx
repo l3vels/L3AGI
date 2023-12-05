@@ -1,11 +1,8 @@
 import { FormikProvider } from 'formik'
 import DatasourceForm from './DatasourceForm'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-
-import Play from '@l3-lib/ui-core/dist/icons/PlayOutline'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import {
   StyledHeaderGroup,
@@ -47,7 +44,7 @@ const CreateDatasourceForm = () => {
               <BackButton />
               <ButtonPrimary
                 onClick={formik?.handleSubmit}
-                size={Button.sizes.SMALL}
+                size={Button.sizes?.SMALL}
                 disabled={isLoading}
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}

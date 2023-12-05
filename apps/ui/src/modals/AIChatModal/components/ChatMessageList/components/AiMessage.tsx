@@ -8,7 +8,7 @@ import {
   StyledMessageInfo,
   StyledMessageActionsWrapper,
 } from './HumanMessage'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import AiMessageThoughts from './AiMessageThoughts'
 import { ChatMessageVersionEnum } from 'services'

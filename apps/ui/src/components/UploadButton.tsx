@@ -1,9 +1,9 @@
 import { ChangeEvent, useRef } from 'react'
 import styled from 'styled-components'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 import { ButtonPrimary } from './Button/Button'
@@ -27,14 +27,14 @@ const UploadButton = ({ onChange, isLoading, label }: UploadButtonProps) => {
       {isLoading ? (
         <Loader size={20} />
       ) : label ? (
-        <ButtonPrimary onClick={onAddButtonClick} size={Button.sizes.SMALL}>
+        <ButtonPrimary onClick={onAddButtonClick} size={Button.sizes?.SMALL}>
           {label}
         </ButtonPrimary>
       ) : (
         <IconButton
-          size={IconButton.sizes.SMALL}
+          size={IconButton.sizes?.SMALL}
           icon={() => <StyledAddIcon />}
-          kind={IconButton.kinds.TERTIARY}
+          kind={IconButton.kinds?.TERTIARY}
           onClick={onAddButtonClick}
         />
       )}

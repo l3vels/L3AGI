@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
+import DatePicker from 'share-ui/components/DatePicker/DatePicker'
 
 import { useState } from 'react'
 import useLog from 'pages/Log/useLog'

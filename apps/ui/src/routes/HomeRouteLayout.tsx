@@ -9,7 +9,7 @@ import { StyledAppContainer, StyledMainContainer } from '../components/Layout/La
 import { Footer, Header } from 'components/Layout'
 import MainNavigation from 'pages/Navigation/MainNavigation'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import { useModal } from 'hooks'
 import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'

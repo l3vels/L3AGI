@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toggle renders correctly renders correctly when disabled 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_wrapper--disabled l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={true}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly when labels are hidden 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly when selection defined by default selected (off)  1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={false}
+    checked={false}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle dummy-class-name l3-style-toggle_toggle--not-selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly when selection defined by default selected (on)  1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle dummy-class-name l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly when selection defined by isSelected (off) 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={false}
+    checked={false}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle dummy-class-name l3-style-toggle_toggle--not-selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly when selection defined by isSelected (on) 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle dummy-class-name l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly with aria controls 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    aria-controls="aria controls"
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly with empty props 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly with not default offOverrideText 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle l3-style-toggle_toggle--selected"
+  />
+</label>
+`;
+
+exports[`Toggle renders correctly renders correctly with not default onOverrideText 1`] = `
+<label
+  className="l3-style-toggle_wrapper l3-style-toggle_size_large l3-style-toggle_kind_primary"
+>
+  <input
+    aria-checked={true}
+    checked={true}
+    className="hidden-switch l3-style-toggle_input"
+    disabled={false}
+    onChange={[Function]}
+    role="switch"
+    type="checkbox"
+  />
+  <div
+    aria-hidden="true"
+    className="l3-style-toggle_toggle l3-style-toggle_toggle--selected"
+  />
+</label>
+`;

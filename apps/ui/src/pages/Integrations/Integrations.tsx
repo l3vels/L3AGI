@@ -3,18 +3,13 @@ import { useEffect, useState } from 'react'
 import Toolkit from 'pages/Toolkit'
 import Voices from 'plugins/contact/pages/Voice'
 
-import Tab from '@l3-lib/ui-core/dist/Tab'
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import { t } from 'i18next'
-import {
-  StyledTab,
-  StyledTabListSpan,
-  StyledTabListWrapper,
-  StyledTabRootWrapper,
-} from 'styles/tabStyles.css'
+import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -50,12 +45,12 @@ const Integrations = () => {
       {isVoice && isToolkit && (
         <StyledTabListWrapper>
           <TabList activeTabId={activeTab}>
-            <StyledTab onClick={() => handleTabClick(0, 'toolkit')} isDisabled={!isToolkit}>
-              <StyledTabListSpan>{t('toolkit')}</StyledTabListSpan>
-            </StyledTab>
-            <StyledTab onClick={() => handleTabClick(1, 'voice')} isDisabled={!isVoice}>
-              <StyledTabListSpan>{t('voices')}</StyledTabListSpan>
-            </StyledTab>
+            <Tab onClick={() => handleTabClick(0, 'toolkit')} disabled={!isToolkit}>
+              {t('toolkit')}
+            </Tab>
+            <Tab onClick={() => handleTabClick(1, 'voice')} disabled={!isVoice}>
+              {t('voices')}
+            </Tab>
           </TabList>
         </StyledTabListWrapper>
       )}

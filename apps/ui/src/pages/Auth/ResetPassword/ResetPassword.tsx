@@ -2,12 +2,13 @@ import useResetPassword from 'pages/Auth/ResetPassword/useResetPassword'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import TextFieldFormik from 'components/TextFieldFormik'
 
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Heading from 'share-ui/components/Heading/Heading'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
 import HeadingTertiary from 'components/Heading/Tertiary'
 import { ButtonPrimary } from 'components/Button/Button'
 
@@ -20,7 +21,7 @@ const ResetPassword = () => {
       {alertMessage.message && alertMessage.type && <span>{alertMessage.message}</span>}
       <HeadingTertiary
         value={t('forgot-password')}
-        type={Heading.types.h1}
+        type={Heading.types?.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
@@ -47,7 +48,7 @@ const ResetPassword = () => {
         <ButtonPrimary
           style={{ width: 'fit-content', justifySelf: 'center', marginTop: 66 }}
           onClick={() => formik.handleSubmit()}
-          size={Button.sizes.LARGE}
+          size={Button.sizes?.LARGE}
         >
           {t('update')}
         </ButtonPrimary>

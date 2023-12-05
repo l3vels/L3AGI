@@ -1,0 +1,199 @@
+import Loader from "../Loader";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import {
+  ComponentRules,
+  createComponentTemplate,
+  createStoryMetaSettings,
+  RelatedComponents,
+  Tip,
+  UsageGuidelines
+} from "../../../storybook";
+import { StoryDescription } from "../../../storybook/components/story-description/story-description";
+import { Button, DialogContentContainer, Flex, Search } from "../..";
+import { Link } from "../../../storybook/components";
+import { useCallback, useState } from "react";
+import {
+  BUTTON,
+  PROGRESS_BAR,
+  SKELETON
+} from "../../../storybook/components/related-components/component-description-map";
+
+import "./Loader.stories.scss";
+
+export const metaSettings = createStoryMetaSettings({
+  component: Loader,
+  enumPropNamesArray: ["size"]
+});
+
+<Meta
+  title="Feedback/Loader"
+  component={Loader}
+  argTypes={metaSettings.argTypes}
+  decorators={metaSettings.decorators}
+/>
+
+<!--- Component template -->
+
+export const loaderTemplate = createComponentTemplate(Loader);
+
+<!--- Component documentation -->
+
+# Loader
+
+- [Overview](#overview)
+- [Props](#props)
+- [Usage](#usage)
+- [Variants](#variants)
+- [Do’s and don’ts](#dos-and-donts)
+- [Use cases and examples](#use-cases-and-examples)
+- [Related components](#related-components)
+- [Feedback](#feedback)
+
+## Overview
+
+Circular loader indicates to user waiting state.
+
+<Canvas>
+  <Story name="Overview" args={{ size: Loader.sizes.MEDIUM }}>
+    {loaderTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable story="Overview" />
+
+## Usage
+
+<UsageGuidelines
+  guidelines={[
+    "Use this loader to load small parts of the system, not the whole pages.",
+    "Use sizes of loader in context to its position. The bigger the loading area gets, the bigger loader should be used.",
+    "Always place loader in context to the loading content."
+  ]}
+/>
+
+<Tip>
+  While loading content consider using
+  <Link href="/?path=/docs/feedback-skeleton--overview" size={Link.sizes.SMALL}>
+    Skeleton loading
+  </Link>
+</Tip>
+
+## Variants
+
+### Size variants
+
+<Canvas>
+  <Story name="Size variants">
+    <Flex direction={Flex.directions.ROW} gap={Flex.gaps.SMALL}>
+      <StoryDescription description="Xs" vertical align={Flex.align.START}>
+        <div className="l3-storybook-loader_size-variants_container">
+          <Loader size={Loader.sizes.XS} />
+        </div>
+      </StoryDescription>
+      <StoryDescription description="S" vertical align={Flex.align.START}>
+        <div className="l3-storybook-loader_size-variants_container">
+          <Loader size={Loader.sizes.SMALL} />
+        </div>
+      </StoryDescription>
+      <StoryDescription description="M" vertical align={Flex.align.START}>
+        <div className="l3-storybook-loader_size-variants_container">
+          <Loader size={Loader.sizes.MEDIUM} />
+        </div>
+      </StoryDescription>
+      <StoryDescription description="L" vertical align={Flex.align.START}>
+        <div className="l3-storybook-loader_size-variants_container">
+          <Loader size={Loader.sizes.LARGE} />
+        </div>
+      </StoryDescription>
+    </Flex>
+  </Story>
+</Canvas>
+
+### Label
+
+<Canvas>
+  <Story name="Label">
+    <div style={{ margin: "20px", marginTop: "0" }}>
+      <Loader size={Loader.sizes.MEDIUM} label={true} />
+    </div>
+  </Story>
+</Canvas>
+
+### Custom colors
+
+If there is a need for color customization, css `color` attribute of a parent component can be used.
+
+<Canvas>
+  <Story name="Custom colors">
+    <div style={{ color: "var(--color-dark-red)" }}>
+      <Loader size={Loader.sizes.MEDIUM} />
+    </div>
+  </Story>
+</Canvas>
+
+## Do’s and Don’ts
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: (
+          <Flex direction={Flex.directions.ROW}>
+            <div className="l3-storybook-loader_dos-and-donts_heading">H1 heading component</div>
+            <Loader size={Loader.sizes.SMALL} hasBackground />
+          </Flex>
+        ),
+        description: "Place loader in context to the loading content and keep its size proportional to the content."
+      },
+      negative: {
+        component: (
+          <Flex direction={Flex.directions.ROW}>
+            <div className="l3-storybook-loader_dos-and-donts_heading">H1 heading component</div>
+            <Loader size={Loader.sizes.LARGE} hasBackground />
+          </Flex>
+        ),
+        description: "Don’t leave the size visually unmaintained."
+      }
+    }
+  ]}
+/>
+
+## Use cases and examples
+
+### Loader in text field
+
+Use loader in search field while filtering results.
+
+<Canvas>
+  <Story name="Loader in text field">
+    <DialogContentContainer>
+      <Search loading placeholder="Board name" />
+    </DialogContentContainer>
+  </Story>
+</Canvas>
+
+### Loader in button
+
+Indicate the loading status in button if content or an action is loading.
+
+<Canvas>
+  <Story name="Loader in button">
+    {() => {
+      const [loading, setLoading] = useState(false);
+      const onClick = useCallback(() => {
+        setLoading(true);
+      }, [setLoading]);
+      return (
+        <Button loading={loading} onClick={onClick}>
+          Click here for loading
+        </Button>
+      );
+    }}
+  </Story>
+</Canvas>
+
+## Related components
+
+<RelatedComponents componentsNames={[SKELETON, PROGRESS_BAR, BUTTON]} />

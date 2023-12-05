@@ -1,0 +1,1213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IconButton renders correctly with 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "56px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "56px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="20"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="20"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with active 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--color-primary-active l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "56px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "56px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="20"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="20"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with aria label 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <span
+    className="referenceWrapper"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <button
+      aria-busy={false}
+      aria-disabled={false}
+      aria-label="My aria label"
+      className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+      data-testid="icon-button"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "height": "56px",
+          "justifyContent": "center",
+          "padding": 0,
+          "width": "56px",
+        }
+      }
+      type="button"
+    >
+      <svg
+        aria-hidden={true}
+        className="icon_component icon-button-padding icon_component--no-focus-style"
+        fill="currentColor"
+        height="20"
+        onClick={[Function]}
+        viewBox="0 0 32 32"
+        width="20"
+      >
+        <g
+          filter="url(#filter0_bd_761_16730)"
+        >
+          <g
+            clipPath="url(#clip0_761_16730)"
+          >
+            <path
+              d="M23 9L9 23M23 23L9 9.00001"
+              stroke="#fff"
+              strokeLinecap="round"
+            />
+          </g>
+        </g>
+        <defs>
+          <clipPath
+            id="clip0_761_16730"
+          >
+            <path
+              d="M0 0H16V16H0z"
+              fill="#fff"
+              transform="translate(8 8)"
+            />
+          </clipPath>
+          <filter
+            colorInterpolationFilters="sRGB"
+            filterUnits="userSpaceOnUse"
+            height="52"
+            id="filter0_bd_761_16730"
+            width="52"
+            x="-10"
+            y="-10"
+          >
+            <feFlood
+              floodOpacity="0"
+              result="BackgroundImageFix"
+            />
+            <feGaussianBlur
+              in="BackgroundImageFix"
+              stdDeviation="5"
+            />
+            <feComposite
+              in2="SourceAlpha"
+              operator="in"
+              result="effect1_backgroundBlur_761_16730"
+            />
+            <feColorMatrix
+              in="SourceAlpha"
+              result="hardAlpha"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            />
+            <feOffset
+              dy="1"
+            />
+            <feGaussianBlur
+              stdDeviation="1.5"
+            />
+            <feColorMatrix
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+            />
+            <feBlend
+              in2="effect1_backgroundBlur_761_16730"
+              result="effect2_dropShadow_761_16730"
+            />
+            <feBlend
+              in="SourceGraphic"
+              in2="effect2_dropShadow_761_16730"
+              result="shape"
+            />
+          </filter>
+        </defs>
+      </svg>
+    </button>
+  </span>
+</div>
+`;
+
+exports[`IconButton renders correctly with disabled 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={true}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding l3-style-button--disabled"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "56px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "56px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="20"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="20"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with empty props 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "56px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "56px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="20"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="20"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with id 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button_icon-button"
+    id="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "56px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "56px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="20"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="20"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with size - large 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "56px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "56px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="20"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="20"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with size - medium 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "40px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "40px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="24"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="24"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with size - small 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "36px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "36px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="16"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="16"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with size - xs 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "24px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "24px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="16"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="16"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`IconButton renders correctly with size - xxs 1`] = `
+<div
+  className="iconButtonContainer"
+>
+  <button
+    aria-busy={false}
+    aria-disabled={false}
+    className="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-primary l3-style-button--color-primary l3-style-button--no-side-padding"
+    data-testid="icon-button"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    onMouseUp={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "16px",
+        "justifyContent": "center",
+        "padding": 0,
+        "width": "16px",
+      }
+    }
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="icon_component icon-button-padding icon_component--no-focus-style"
+      fill="currentColor"
+      height="16"
+      onClick={[Function]}
+      viewBox="0 0 32 32"
+      width="16"
+    >
+      <g
+        filter="url(#filter0_bd_761_16730)"
+      >
+        <g
+          clipPath="url(#clip0_761_16730)"
+        >
+          <path
+            d="M23 9L9 23M23 23L9 9.00001"
+            stroke="#fff"
+            strokeLinecap="round"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath
+          id="clip0_761_16730"
+        >
+          <path
+            d="M0 0H16V16H0z"
+            fill="#fff"
+            transform="translate(8 8)"
+          />
+        </clipPath>
+        <filter
+          colorInterpolationFilters="sRGB"
+          filterUnits="userSpaceOnUse"
+          height="52"
+          id="filter0_bd_761_16730"
+          width="52"
+          x="-10"
+          y="-10"
+        >
+          <feFlood
+            floodOpacity="0"
+            result="BackgroundImageFix"
+          />
+          <feGaussianBlur
+            in="BackgroundImageFix"
+            stdDeviation="5"
+          />
+          <feComposite
+            in2="SourceAlpha"
+            operator="in"
+            result="effect1_backgroundBlur_761_16730"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            result="hardAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset
+            dy="1"
+          />
+          <feGaussianBlur
+            stdDeviation="1.5"
+          />
+          <feColorMatrix
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+          />
+          <feBlend
+            in2="effect1_backgroundBlur_761_16730"
+            result="effect2_dropShadow_761_16730"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect2_dropShadow_761_16730"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  </button>
+</div>
+`;

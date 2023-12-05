@@ -3,19 +3,20 @@ import styled from 'styled-components'
 
 // import { CustomTable } from 'oldComponents/atoms/CustomTable'
 // import { StyledButton, StyledInputContainer, StyledTextField } from './teamsStyle'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from 'share-ui/components/typography/Typography'
+import Heading from 'share-ui/components/Heading/Heading'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import Button from 'share-ui/components/Button/Button'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
+import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 
 // import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
 
-import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
-import Description from '@l3-lib/ui-core/dist/icons/Description'
+import SearchIcon from 'share-ui/components/Icon/Icons/components/SearchOutline'
+import Description from 'share-ui/components/Icon/Icons/components/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
@@ -82,8 +83,8 @@ const Teams = () => {
         <StyledHeaderGroup>
           <StyledHeadingWrapper>
             <HeadingPrimary
-              type={Heading.types.h1}
-              size={Heading.sizes.lg}
+              type={Heading.types?.h1}
+              size={Heading.sizes?.LARGE}
               value={`${assignedUserList.length} Members`}
             />
           </StyledHeadingWrapper>
@@ -91,21 +92,21 @@ const Teams = () => {
           <StyledIconButtonWrapper>
             {/* <IconButton
             icon={SearchIcon}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
             // shape='Square'
           />
 
           <IconButton
             icon={Description}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
             // shape='Square'
           /> */}
 
             <Button
-              kind={Button.kinds.PRIMARY}
-              size={Button.sizes.MEDIUM}
+              kind={Button.kinds?.PRIMARY}
+              size={Button.sizes?.MEDIUM}
               // leftIcon={Add}
               onClick={openCreateTeamsModal}
             >

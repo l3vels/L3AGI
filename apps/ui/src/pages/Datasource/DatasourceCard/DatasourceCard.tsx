@@ -1,15 +1,16 @@
 import styled from 'styled-components'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import CheckIcon from '@l3-lib/ui-core/dist/icons/Check'
-import BulletIcon from '@l3-lib/ui-core/dist/icons/Bullet'
-import CloseIcon from '@l3-lib/ui-core/dist/icons/CloseSmall'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import Typography from 'share-ui/components/typography/Typography'
+import CheckIcon from 'share-ui/components/Icon/Icons/components/Check'
+import BulletIcon from 'share-ui/components/Icon/Icons/components/Bullet'
+import CloseIcon from 'share-ui/components/Icon/Icons/components/CloseSmall'
 
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
-import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -68,10 +69,9 @@ const DatasourceCard = ({
 
       <StyledCardFooter>
         <Tooltip
-          content={() => (error ? <span>{error}</span> : null)}
+          content={error ? <span>{error}</span> : <span>Ready</span>}
           position={Tooltip.positions.BOTTOM}
           showDelay={100}
-          disabled
         >
           <StyledStatus>
             {statusIcon}
@@ -88,15 +88,15 @@ const DatasourceCard = ({
           <IconButton
             onClick={onDeleteClick}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Delete'
           />
           <IconButton
             onClick={onEditClick}
             icon={() => <StyledEditIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Edit'
           />
         </StyledButtonsWrapper>

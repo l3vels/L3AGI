@@ -1,7 +1,7 @@
-import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
+import DatePicker from 'share-ui/components/DatePicker/DatePicker'
 
 const DatePickerEditor = forwardRef((props: any, ref) => {
   const currentDate = moment(props.value)

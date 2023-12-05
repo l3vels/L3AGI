@@ -18,6 +18,6 @@
     "typeRoots": ["node_modules/@types", "src/@types", "./node_modules"],
     "types": ["vite/client"]
   },
-  "include": ["src", "Routes_old", "src/modals/AIChatModal/components/.tsx"],
+  "include": ["src", "Routes_old", "src/modals/AIChatModal/components/.tsx", "../base"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

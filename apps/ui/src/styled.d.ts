@@ -47,6 +47,7 @@ declare module 'styled-components' {
       commandMenuBackgroundColor: string
       warningToastTextColor: string
       sessionDropdownBorder: string
+      tagColor: string
     }
     typography: {
       contentPrimary: string
@@ -60,12 +61,36 @@ declare module 'styled-components' {
       contentTertiary: string
     }
     button: {
-      primary: string
-      secondary: string
-      tertiary: string
+      primary: ButtonStyleProps
+      secondary: ButtonStyleProps
+      tertiary: ButtonStyleProps
     }
     textFiled: {
-      primary: string
+      primary: {
+        color: string
+        bgColor: string
+        borderColor: string
+        activeBoxShadow: string
+        activeBorderColor: string
+        activeBgColor: string
+        errorBorderColor: string
+        errorColor: string
+      }
+    }
+    tabs: {
+      color: string
+      hoverBgColor: string
+      activeColor: string
+      activeBgColor: string
+      borderColor: string
     }
   }
+}
+
+type ButtonStyleProps = {
+  color: string
+  bgColor: string
+  hoverBgColor: string
+  pressedBgColor: string
+  pressedBorderColor: string
 }

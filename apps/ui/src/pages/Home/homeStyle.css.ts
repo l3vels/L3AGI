@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 import { StyledInnerWrapper } from 'styles/globalStyle.css'
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
 const StyledSectionTitle = styled.h2`
   font-style: normal;

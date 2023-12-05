@@ -1,0 +1,62 @@
+@import "../../../styles/themes";
+
+.l3-storybook-toast-container {
+  display: inline-block;
+  width: auto;
+  height: 100px;
+  border: 1px solid red;
+}
+
+.l3-storybook-toast {
+  &_wrapper {
+    position: static;
+    // width: 390px;
+    margin: 0;
+    transform: translate(0, 0);
+  }
+
+  &_inline-wrapper {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &_big {
+    width: 420px;
+    .l3-style-toast-content {
+      justify-content: center;
+    }
+  }
+
+  &_toast-line-wrapper {
+    position: static;
+    left: 0;
+    right: 0;
+    margin: 0;
+    transform: translate(0, 0);
+  }
+
+  &_box {
+    width: 390px;
+  }
+}
+
+// overriding margin for storybook wrapper
+.l3-storybook_multiple-story-elements-wrapper .l3-style-toast {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.icon-story-custom--close-icon-white {
+  color: var(--color-transparent-white-08);
+  width: 16px;
+  height: 15.79px;
+}
+
+.icon-story-custom--close-icon-black {
+  color: var(--color-transparent-black-05);
+  width: 16px;
+  height: 15.79px;
+}

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
 import styled from 'styled-components'
 
 const useCheckboxRenderer = () => {

@@ -8,7 +8,6 @@ import envCompatible from 'vite-plugin-env-compatible'
 import eslint from 'vite-plugin-eslint'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-
 // import packageJson from "./package.json";
 // const deps = packageJson.dependencies;
 
@@ -32,10 +31,10 @@ export default defineConfig({
       targets: [
         {
           src: 'staticwebapp.config.json',
-          dest: ''
-        }
-      ]
-    })
+          dest: '',
+        },
+      ],
+    }),
   ],
   server: {
     port: 3000,

@@ -1,18 +1,19 @@
 import styled, { css } from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Delete from '@l3-lib/ui-core/dist/icons/Delete'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+import Typography from 'share-ui/components/typography/Typography'
+
+import Delete from 'share-ui/components/Icon/Icons/components/Delete'
+import Edit from 'share-ui/components/Icon/Icons/components/Edit'
+import MoveArrowRight from 'share-ui/components/Icon/Icons/components/MoveArrowRight'
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
@@ -67,7 +68,7 @@ const TeamOfAgentCard = ({
         </StyledCreatorWrapper>
       </StyledMainAvatarWrapper>
       <StyledBody>
-        <HeadingSecondary type={Heading.types.h1} value={name} size='medium' />
+        <HeadingSecondary type={Heading.types?.h1} value={name} size='xss' />
 
         <TypographySecondary
           value={shortDescription}
@@ -120,8 +121,8 @@ const TeamOfAgentCard = ({
               <IconButton
                 onClick={onDeleteClick}
                 icon={() => <StyledDeleteIcon />}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={Button.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Delete'
               />
             </StyledButtonWrapper>
@@ -132,8 +133,8 @@ const TeamOfAgentCard = ({
               <IconButton
                 onClick={onEditClick}
                 icon={() => <StyledEditIcon />}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={Button.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Edit'
               />
             </StyledButtonWrapper>
@@ -145,11 +146,11 @@ const TeamOfAgentCard = ({
                 onClick={onViewClick}
                 icon={() => (
                   <StyledIconWrapper>
-                    <StyledEyeOpenIcon size={50} />
+                    <StyledEyeOpenIcon />
                   </StyledIconWrapper>
                 )}
-                size={Button.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={Button.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='View'
               />
             </StyledButtonWrapper>
@@ -157,7 +158,7 @@ const TeamOfAgentCard = ({
 
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes?.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper>
                   Chat
                   <MoveArrowRight size={14} />

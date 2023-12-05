@@ -1,0 +1,102 @@
+:root {
+  --box-shadow-small: 0 4px 8px -1px rgba(0, 0, 0, 0.2);
+  --box-shadow-medium: 0px 6px 20px -2px rgba(0, 0, 0, 0.2);
+  --box-shadow-large: 0px 15px 50px -10px rgba(0, 0, 0, 0.3);
+
+  --border-radius-extra-small: 2px;
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-big: 60px;
+  --border-radius-extra-big: 50%;
+
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-xs-small: 6px;
+  --spacing-small: 8px;
+  --spacing-small-medium: 12px;
+  --spacing-medium: 16px;
+  --spacing-xs-medium: 20px;
+  --spacing-large: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-xxxl: 64px;
+
+  --grid-auto-fit-cell-width-small: 120px;
+  --grid-auto-fit-cell-width-medium: 180px;
+  --grid-auto-fit-cell-width-large: 240px;
+  --grid-auto-fit-cell-width-xl: 300px;
+
+  --btn-size-big: 56px;
+  --btn-size-medium: 44px;
+  --btn-size-small: 36px;
+
+  --progress-large: 6px;
+  --progress-medium: 4px;
+  --progress-small: 2px;
+
+  --tab-font-size-large: 18px;
+  --tab-font-size-small: 16px;
+  --tab-line-height-large: 24px;
+  --tab-line-height-small: 20px;
+  --tab-height-large: 46px;
+  --tab-height-small: 32px;
+
+  --primary-btn-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.2);
+  --secondary-btn-shadow: 0px 0px 0px 3px rgba(255, 255, 255, 0.2);
+
+  --text-field-size-large: 56px;
+  --text-field-size-medium: 50px;
+  --text-field-size-small: 44px;
+
+  --checkbox-size-large: 21px;
+  --checkbox-size-small: 12px;
+  --checkbox-outline-checked: 2px solid rgba(0, 0, 0, 0.2);
+  --checkbox-outline-active: 2px solid #4ca6f8;
+
+  --toggle-selected-box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3), 0px 3px 1px rgba(0, 0, 0, 0.05);
+  --toggle-not-selected-box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 1px rgba(0, 0, 0, 0.06);
+  --toggle-small-selected-box-shadow: 0px 1.6px 4.26667px rgba(0, 0, 0, 0.3),
+    0px 1.6px 0.533333px rgba(0, 0, 0, 0.05);
+  --toggle-small-not-selected-box-shadow: 0px 1.6px 4.26667px rgba(0, 0, 0, 0.15),
+    0px 1.6px 0.533333px rgba(0, 0, 0, 0.06);
+
+  --radio-button-large: 20px;
+  --radio-button-small: 12px;
+  --radio-button-outline-primary: 2.5px solid rgba(0, 0, 0, 0.2);
+  --radio-button-outline-secondary: 2.5px solid rgba(255, 255, 255, 0.2);
+
+  --text-field-icon-container-size-sm: 14px;
+  --text-field-icon-container-size-md: 14px;
+  --text-field-icon-container-size-lg: 14px;
+
+  --date-picker-border-radius-start: 50px 0px 0px 50px;
+  --date-picker-border-radius-end: 0px 50px 50px 0px;
+
+  --tags-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Usage example: */
+.element {
+  box-shadow: var(--box-shadow-small);
+  border-radius: var(--border-radius-small);
+  margin: var(--spacing-medium);
+}
+
+/* Plain CSS equivalent of the mixins */
+.hidden-element {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+/* Add other styles here */
+
+/* Plain CSS equivalent of the grid-auto-fit mixin */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(calc(180px), 120px, 100%), 1fr));
+  gap: var(--grid-gap); /* Add appropriate variable here */
+  column-gap: var(--grid-column-gap); /* Add appropriate variable here */
+  row-gap: var(--grid-row-gap); /* Add appropriate variable here */
+}

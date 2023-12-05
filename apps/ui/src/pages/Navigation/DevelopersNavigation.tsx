@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import includes from 'lodash/includes'
 
-import Games from '@l3-lib/ui-core/dist/icons/Games'
-import Logs from '@l3-lib/ui-core/dist/icons/Logs'
-import TagsOutline from '@l3-lib/ui-core/dist/icons/TagsOutline'
+import Games from 'share-ui/components/Icon/Icons/components/Games'
+import Logs from 'share-ui/components/Icon/Icons/components/Logs'
+import TagsOutline from 'share-ui/components/Icon/Icons/components/TagsOutline'
 
 const DevelopersNavigation = () => {
   const { t } = useTranslation()

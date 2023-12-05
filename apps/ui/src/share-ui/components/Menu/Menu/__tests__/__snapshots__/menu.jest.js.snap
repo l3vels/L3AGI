@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshots renders correctly with children 1`] = `
+<ul
+  aria-activedescendant="undefined--1"
+  aria-label="Menu"
+  className="l3-style-menu dummy-class-name l3-style-menu--medium false"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onMouseOver={[Function]}
+  role="menu"
+  tabIndex={0}
+>
+  <div
+    className="l3-style-menu-title"
+  >
+    <div
+      className="polygon-main-container"
+    >
+      <div
+        className="l3-style-avatar l3-style-avatar--medium"
+        style={Object {}}
+      >
+        <div
+          className="polygon polygon_none"
+        >
+          <svg
+            className="svg"
+          >
+            <clipPath
+              clipPathUnits="objectBoundingBox"
+              id="my-clip-path"
+            >
+              <path
+                d="M0.405,0.022 C0.465,-0.007,0.535,-0.007,0.595,0.022 L0.822,0.133 C0.881,0.162,0.923,0.215,0.937,0.278 L0.995,0.536 C1,0.598,0.994,0.663,0.955,0.714 L0.795,0.918 C0.754,0.97,0.691,1,0.625,1 H0.375 C0.309,1,0.246,0.97,0.205,0.918 L0.045,0.714 C0.006,0.663,-0.009,0.598,0.005,0.536 L0.063,0.278 C0.077,0.215,0.119,0.162,0.178,0.133 L0.405,0.022,NaN f, i, l0 lNaN u, r, p, a0 i, n, tNaN r, a0 d, i, a0 lNaN"
+              />
+            </clipPath>
+          </svg>
+          <div
+            className="clipped"
+          >
+            <img
+              className="l3-style-avatar-content_img l3-style-avatar-content_img--medium"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <label
+      className="l3-style-menu-title__caption l3-style-menu-title__caption--bottom menu-title-size__lg"
+      contentEditable={true}
+    >
+      my title
+    </label>
+  </div>
+  <li
+    aria-current={false}
+    className="l3-style-menu-item"
+    id="undefined-1"
+    onClick={[Function]}
+    role="menuitem"
+    tabIndex={-1}
+  >
+    <div
+      className="l3-style-menu-item__title"
+    >
+      item 1
+      
+    </div>
+    
+    <div
+      className="l3-style-menu-item__popover"
+      style={
+        Object {
+          "left": "0",
+          "position": "absolute",
+          "top": "0",
+          "visibility": "hidden",
+        }
+      }
+    />
+    <svg
+      aria-hidden={false}
+      aria-label="my bolt svg icon"
+      className="icon_component icon_component--clickable"
+      fill="currentColor"
+      height="27"
+      onClick={[Function]}
+      role="button"
+      tabIndex={0}
+      viewBox="0 0 20 20"
+      width="27"
+    >
+      <path
+        clipRule="evenodd"
+        d="M12.5303 9.46967L12 10L12.5303 10.5303C12.8232 10.2374 12.8232 9.76256 12.5303 9.46967ZM10.9393 10L7.46967 13.4697C7.17678 13.7626 7.17678 14.2374 7.46967 14.5303C7.76256 14.8232 8.23744 14.8232 8.53033 14.5303L12.5303 10.5303L12 10L12.5303 9.46967L8.53033 5.46967C8.23744 5.17678 7.76256 5.17678 7.46967 5.46967C7.17678 5.76256 7.17678 6.23744 7.46967 6.53033L10.9393 10Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  </li>
+  <li
+    aria-current={false}
+    className="l3-style-menu-item"
+    id="undefined-2"
+    onClick={[Function]}
+    role="menuitem"
+    tabIndex={-1}
+  >
+    <div
+      className="l3-style-menu-item__title"
+    >
+      item 2
+      
+    </div>
+    
+    <div
+      className="l3-style-menu-item__popover"
+      style={
+        Object {
+          "left": "0",
+          "position": "absolute",
+          "top": "0",
+          "visibility": "hidden",
+        }
+      }
+    />
+    <svg
+      aria-hidden={false}
+      aria-label="my bolt svg icon"
+      className="icon_component icon_component--clickable"
+      fill="currentColor"
+      height="27"
+      onClick={[Function]}
+      role="button"
+      tabIndex={0}
+      viewBox="0 0 20 20"
+      width="27"
+    >
+      <path
+        clipRule="evenodd"
+        d="M12.5303 9.46967L12 10L12.5303 10.5303C12.8232 10.2374 12.8232 9.76256 12.5303 9.46967ZM10.9393 10L7.46967 13.4697C7.17678 13.7626 7.17678 14.2374 7.46967 14.5303C7.76256 14.8232 8.23744 14.8232 8.53033 14.5303L12.5303 10.5303L12 10L12.5303 9.46967L8.53033 5.46967C8.23744 5.17678 7.76256 5.17678 7.46967 5.46967C7.17678 5.76256 7.17678 6.23744 7.46967 6.53033L10.9393 10Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  </li>
+</ul>
+`;
+
+exports[`Snapshots renders correctly with custom class name 1`] = `
+<ul
+  aria-activedescendant="undefined--1"
+  aria-label="Menu"
+  className="l3-style-menu dummy-class-name l3-style-menu--medium false"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onMouseOver={[Function]}
+  role="menu"
+  tabIndex={0}
+/>
+`;
+
+exports[`Snapshots renders correctly with empty props 1`] = `
+<ul
+  aria-activedescendant="undefined--1"
+  aria-label="Menu"
+  className="l3-style-menu l3-style-menu--medium false"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onMouseOver={[Function]}
+  role="menu"
+  tabIndex={0}
+/>
+`;

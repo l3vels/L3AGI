@@ -1,0 +1,167 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import {
+  createComponentTemplate,
+  createStoryMetaSettings,
+  Link,
+  RelatedComponents,
+  Tip,
+  UsageGuidelines,
+  VerticalStories
+} from "../../../storybook";
+import {
+  PROGRESS_BAR,
+  TOGGLE,
+  WIZARD
+} from "../../../storybook/components/related-components/component-description-map";
+import "./Slider.stories.scss";
+import Slider from "../Slider";
+import Sound from "../../Icon/Icons/components/Sound";
+import Video from "../../Icon/Icons/components/Video";
+import Tags from "../../Tags/Tags";
+import {
+  nonRangedSliderMouseEventsPlaySuite,
+  rangedSliderMouseEventsPlaySuite
+} from "../__tests__/Slider.interactions";
+
+export const argTypes = createStoryMetaSettings({
+  component: Slider,
+  enumPropNamesArray: ["color", "size"]
+});
+
+<Meta title="Inputs/Slider" component={Slider} argTypes={argTypes} />
+
+<!--- Component template -->
+
+export const sliderTemplate = createComponentTemplate(Slider);
+
+<!--- Component documentation -->
+
+# Slider
+
+- [Overview](#overview)
+- [Props](#props)
+- [Usage](#usage)
+- [Variants](#variants)
+- [Related components](#related-components)
+- [Feedback](#feedback)
+
+## Overview
+
+Slider is a visual input component that reflects current state status in its appearance.
+
+<Canvas>
+  <Story name="Overview" args={{}}>
+    {sliderTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable story="Overview" />
+
+## Usage
+
+<UsageGuidelines
+  guidelines={[
+    "Slider adjustment makes immediate changes to its content without need of saving",
+    "Slider works best when the exact value does not matter for the user",
+    "Slider works best for adjusting volume, setting playback time within a music player, adjusting brightness.",
+    "If exact value is necessary use slider with label"
+  ]}
+/>
+<Tip title="Not what you were looking for?">
+  If you need to visualize progress use Wizard component instead{" "}
+  <Link href="/?path=/docs/navigation-wizard--overview" size={Link.sizes.SMALL} withoutSpacing>
+    See link
+  </Link>
+</Tip>
+
+## Variants
+
+### Sizes
+
+Sizes small/medium/large are available.
+
+<Canvas>
+  <Story name="Sizes">
+    <div style={{ width: "343px" }}>
+      <Slider size={Slider.sizes.SMALL} defaultValue={12} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider size={Slider.sizes.MEDIUM} defaultValue={24} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider size={Slider.sizes.LARGE} defaultValue={35} />
+    </div>
+  </Story>
+</Canvas>
+
+### Colors
+
+Color Modes positive/negative/normal are available.
+
+<Canvas>
+  <Story name="Colors">
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.POSITIVE} defaultValue={34} size={Slider.sizes.MEDIUM} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NEGATIVE} defaultValue={55} size={Slider.sizes.MEDIUM} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} defaultValue={12} size={Slider.sizes.MEDIUM} />
+    </div>
+  </Story>
+</Canvas>
+
+### Normal
+
+Normal small/medium/large are available.
+
+<Canvas>
+  <Story name="Normal">
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} size={Slider.sizes.SMALL} defaultValue={12} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} size={Slider.sizes.MEDIUM} defaultValue={24} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} size={Slider.sizes.LARGE} defaultValue={35} />
+    </div>
+  </Story>
+</Canvas>
+
+### Normal with Text
+
+<Canvas>
+  <Story name="Normal with Text">
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} size={Slider.sizes.SMALL} indicateTextSelection={true} defaultValue={10} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} size={Slider.sizes.MEDIUM} indicateTextSelection={true} defaultValue={24} />
+    </div>
+    <div style={{ width: "343px" }}>
+      <Slider color={Slider.colors.NORMAL} size={Slider.sizes.LARGE} indicateTextSelection={true} defaultValue={35} />
+    </div>
+  </Story>
+</Canvas>
+
+### With postfix and prefix
+
+Indicate selection at Label, Add Prefix and/or Postfix Icons or Labels
+
+<Canvas>
+  <Story name="WithLabels" decorators={[VerticalStories]}>
+    <Slider indicateSelection={true} defaultValue={12} size={Slider.sizes.SMALL} />
+    <Slider indicateSelection={true} ranged={true} defaultValue={[12, 55]} size={Slider.sizes.SMALL} />
+    <Slider prefix={{ icon: Sound }} indicateSelection={true} defaultValue={70} size={Slider.sizes.SMALL} />
+    <Slider prefix={{ icon: Video }} postfix={{ icon: Sound }} defaultValue={45} size={Slider.sizes.MEDIUM} />
+    <Slider prefix="Vol" indicateSelection={true} defaultValue={0} size={Slider.sizes.LARGE} />
+  </Story>
+</Canvas>
+
+## Related components
+
+<RelatedComponents componentsNames={[PROGRESS_BAR, TOGGLE, WIZARD]} />

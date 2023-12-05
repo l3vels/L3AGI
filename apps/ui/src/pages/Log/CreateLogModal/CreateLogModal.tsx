@@ -1,18 +1,20 @@
 import styled from 'styled-components'
-// import IconButton from '@l3-lib/ui-core/dist/IconButton'
-// import Close from '@l3-lib/ui-core/dist/icons/Close'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+// import IconButton from 'share-ui/components/IconButton/IconButton'
+
+// import Close from 'share-ui/components/Icon/Icons/components/Close'
+import Toggle from 'share-ui/components/Toggle/Toggle'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
+import Heading from 'share-ui/components/Heading/Heading'
+import Typography from 'share-ui/components/typography/Typography'
+import TextField from 'share-ui/components/TextField/TextField'
 
 // import useFilter from '../useFilter'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 // import useFilter from '../Components/useFilter'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
 import withRenderModal from 'hocs/withRenderModal'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -30,7 +32,9 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
         onClose={closeModal}
         show
         backgroundColor='dark'
-        title={<HeadingPrimary type={Heading.types.h1} size={Heading.sizes.sm} value='Filer' />}
+        title={
+          <HeadingPrimary type={Heading.types?.h1} size={Heading.sizes?.SMALL} value='Filer' />
+        }
       >
         <StyledApiAddressContainerWrapper>
           <StyledIPAddressContainer>
@@ -191,11 +195,11 @@ const CreateLogModal = ({ closeModal }: CreateLogModalProps) => {
         </StyledApiVersionContainerWrapper>
         <StyledModalFooter>
           <StyledActionsContainer>
-            <Button onClick={closeModal} kind={Button.kinds.TERTIARY} size={Button.sizes.LARGE}>
+            <Button onClick={closeModal} kind={Button.kinds?.TERTIARY} size={Button.sizes?.LARGE}>
               <Typography value='Clear' type={Typography.types.LABEL} size={Typography.sizes.md} />
             </Button>
 
-            <Button kind={Button.kinds.PRIMARY} size={Button.sizes.LARGE}>
+            <Button kind={Button.kinds?.PRIMARY} size={Button.sizes?.LARGE}>
               <StyledLabelTypography
                 value='Create'
                 type={Typography.types.LABEL}

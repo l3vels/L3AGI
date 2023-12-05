@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import useRegister from 'pages/Auth/Register/useRegister'
 import TextFieldFormik from 'components/TextFieldFormik'
-import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import { useModal } from 'hooks'
 
@@ -17,7 +17,7 @@ import {
 } from 'components/HeaderButtons/HeaderButtons'
 import { StyledHeaderWrapper, StyledInputWrapper } from '../Login/Login'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import OrDivider from 'components/OrDivider/OrDivider'
 import useGithubLogin from '../Login/useGithubLogin'
@@ -40,7 +40,7 @@ const Register = () => {
       <StyledHeaderWrapper>
         <HeadingSecondary
           value={t('join-our-community')}
-          type={Heading.types.h2}
+          type={Heading.types?.h2}
           customColor='rgba(255, 255, 255, 0.9)'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />

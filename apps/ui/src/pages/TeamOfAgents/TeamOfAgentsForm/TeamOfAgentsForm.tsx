@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import { StyledCombinedFields } from 'pages/Agents/AgentForm/AgentForm'
 import { useTeamOfAgentsForm } from './useTeamOfAgentsForm'
@@ -173,7 +173,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             )
           })}
         </StyledFields>
-        <StyledCheckbox>
+        {/* <StyledCheckbox>
           <Checkbox
             label={t('memory')}
             kind='secondary'
@@ -181,7 +181,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             checked={is_memory}
             onChange={() => setFieldValue('is_memory', !is_memory)}
           />
-        </StyledCheckbox>
+        </StyledCheckbox> */}
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
 

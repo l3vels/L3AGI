@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from 'react'
 
 import withRenderModal from 'hocs/withRenderModal'
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
-import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
+
+import Tags from 'share-ui/components/Tags/Tags'
+
 import { useTranslation } from 'react-i18next'
 
 import { FormikProvider } from 'formik'
 import useEditApiKey from './useEditApiKey'
 
 // import Button from 'oldComponents/atoms/Button'
-import Button from '@l3-lib/ui-core/dist/Button'
-import DropDown from '@l3-lib/ui-core/dist/Dropdown'
-// import TextField from '@l3-lib/ui-core/dist/TextField'
-// import TextArea from '@l3-lib/ui-core/dist/Textarea'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Button from 'share-ui/components/Button/Button'
+import Dropdown from 'share-ui/components/Dropdown/Dropdown'
+
+// import TextField from 'share-ui/components/TextField/TextField'
+// import Textarea from 'share-ui/components/Textarea/Textarea'
+import Heading from 'share-ui/components/Heading/Heading'
 // import DatePickerField from 'oldComponents/atoms/DatePickerField'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import info from '../../../assets/images/info.png'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 // import TextareaFormik from 'components/TextareaFormik'
 
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
+import ModalContent from 'share-ui/components/ModalContent/ModalContent'
 
 // import { StyledFormSection } from '../ApiKeysStyle'
 
@@ -120,8 +123,8 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
             show
             title={
               <StyledModalHeading
-                type={Heading.types.h1}
-                size={Heading.sizes.md}
+                type={Heading.types?.h1}
+                size={Heading.sizes?.MEDIUM}
                 value={t('edit-api-keys')}
               />
             }
@@ -191,17 +194,17 @@ const EditApiModal = ({ closeModal, data, callback }: EditApiModalProps) => {
               <StyledActionsContainer>
                 <Button
                   onClick={closeModal}
-                  kind={Button.kinds.TERTIARY}
-                  size={Button.sizes.MEDIUM}
+                  kind={Button.kinds?.TERTIARY}
+                  size={Button.sizes?.MEDIUM}
                 >
                   <StyledLabelTypography value={t('cancel')} type={Typography.types.P} />
                 </Button>
 
                 <Button
-                  type={Button.types.SUBMIT}
+                  type={Button.types?.SUBMIT}
                   onClick={formik.handleSubmit}
-                  kind={Button.kinds.PRIMARY}
-                  size={Button.sizes.MEDIUM}
+                  kind={Button.kinds?.PRIMARY}
+                  size={Button.sizes?.MEDIUM}
                 >
                   <StyledLabelTypography value={t('update')} type={Typography.types.P} />
                 </Button>

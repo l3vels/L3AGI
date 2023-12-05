@@ -9,13 +9,13 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import AgentCard from './AgentCard'
 import { useAgents } from './useAgents'
 import { ButtonPrimary } from 'components/Button/Button'
 
 import HeadingPrimary from 'components/Heading/Primary'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { AgentWithConfigs } from 'types'
 
@@ -33,8 +33,8 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
       <StyledHeaderGroup className='header_group'>
         <StyledMainHeaderWrapper>
           <HeadingPrimary
-            type={Heading.types.h1}
-            size='medium'
+            type={Heading.types?.h1}
+            size='xss'
             value={`${t('agent').toUpperCase()}S`}
           />
           <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription>
@@ -44,7 +44,7 @@ const Agents = ({ isHome }: { isHome?: boolean }) => {
           {!isHome && (
             <ButtonPrimary
               onClick={() => navigate('/agents/create-agent-template')}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               {t('add-agent')}
             </ButtonPrimary>

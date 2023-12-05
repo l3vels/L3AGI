@@ -5,9 +5,8 @@ import ImportFileTable from './ImportFileTable'
 
 import useImportFile from './useImportFile'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
 
 import UploadButton from 'components/UploadButton'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
@@ -17,6 +16,7 @@ import { t } from 'i18next'
 
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 
 const ImportFile = ({
   setFieldValue,
@@ -92,10 +92,10 @@ const ImportFile = ({
             zIndex={2}
           >
             <StyledMenuButtonsWrapper>
-              <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes.SMALL}>
+              <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes?.SMALL}>
                 {t('download-json')}
               </ButtonTertiary>
-              <ButtonTertiary onClick={handleDownloadTemplateCSV} size={Button.sizes.SMALL}>
+              <ButtonTertiary onClick={handleDownloadTemplateCSV} size={Button.sizes?.SMALL}>
                 {t('download-csv')}
               </ButtonTertiary>
             </StyledMenuButtonsWrapper>
@@ -114,7 +114,7 @@ const ImportFile = ({
                 setParsedData([])
                 setFieldValue(fieldName, '')
               }}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               {t('start-over')}
             </ButtonPrimary>

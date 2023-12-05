@@ -1,20 +1,15 @@
 import styled from 'styled-components'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Button from '@l3-lib/ui-core/dist/Button'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Add from '@l3-lib/ui-core/dist/icons/Add'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
-import {
-  StyledMenuButtonsWrapper,
-  StyledMenuDots,
-} from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import { ButtonTertiary } from 'components/Button/Button'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 
 type ListHeaderProps = {
   title: string
@@ -32,37 +27,31 @@ const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
       />
       {onAddClick && (
         <IconButton
-          icon={() => (
-            <StyledIconWrapper>
-              <StyledAddIcon size={30} />
-            </StyledIconWrapper>
-          )}
+          icon={() => <StyledAddIcon size={30} />}
           onClick={onAddClick}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
           ariaLabel={`Add ${title}`}
         />
       )}
 
       {multiOption && (
-        <StyledMenuDots>
-          <MenuButton component={StyledAddIcon} closeDialogOnContentClick>
-            <StyledMenuButtonsWrapper>
-              {multiOption.map((item: any, index: number) => {
-                return (
-                  <ButtonTertiary
-                    key={index}
-                    onClick={item.function}
-                    size={Button.sizes.SMALL}
-                    ariaLabel={`Add ${title}`}
-                  >
-                    {item.label}
-                  </ButtonTertiary>
-                )
-              })}
-            </StyledMenuButtonsWrapper>
-          </MenuButton>
-        </StyledMenuDots>
+        <MenuButton component={() => <StyledAddIcon size={30} />} closeDialogOnContentClick>
+          <StyledMenuButtonsWrapper>
+            {multiOption.map((item: any, index: number) => {
+              return (
+                <ButtonTertiary
+                  key={index}
+                  onClick={item.function}
+                  size={IconButton.sizes?.SMALL}
+                  ariaLabel={`Add ${title}`}
+                >
+                  {item.label}
+                </ButtonTertiary>
+              )
+            })}
+          </StyledMenuButtonsWrapper>
+        </MenuButton>
       )}
     </StyledListHeader>
   )
@@ -78,7 +67,4 @@ const StyledListHeader = styled.div`
   width: 100%;
 
   min-height: 50px;
-`
-const StyledIconWrapper = styled.div`
-  color: transparent;
 `

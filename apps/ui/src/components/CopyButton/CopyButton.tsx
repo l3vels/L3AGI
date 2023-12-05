@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import Copy from '@l3-lib/ui-core/dist/icons/Copy'
-import Check from '@l3-lib/ui-core/dist/icons/Check'
+import Check from 'share-ui/components/Icon/Icons/components/Check'
+import Copy from 'share-ui/components/Icon/Icons/components/Copy'
 
 type CopyButtonProps = {
   onCopyClick: () => void

@@ -1,0 +1,270 @@
+import { chunk as _chunk } from "lodash-es";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import Flex from "../../Flex/Flex";
+import Tags from "../Tags";
+import { COUNTER, LABEL, TOOLTIP } from "../../../storybook/components/related-components/component-description-map";
+import { createComponentTemplate, createStoryMetaSettings, Link } from "../../../storybook";
+import Search from "../../Search/Search";
+import Avatar from "../../Avatar/Avatar";
+import DialogContentContainer from "../../DialogContentContainer/DialogContentContainer";
+import { CloseOutline } from "../../Icon/Icons";
+import person1 from "./assets/person1.png";
+import { NOOP } from "../../../utils/function-utils";
+import "./tags.stories.scss";
+
+export const metaSettings = createStoryMetaSettings({
+  component: Tags,
+  enumPropNamesArray: ["color"],
+  iconPropNamesArray: ["rightIcon", "leftIcon"],
+  actionPropsArray: ["onDelete", "onMouseDown", "onClick"]
+});
+
+<Meta
+  title="Data display/Tags"
+  component={Tags}
+  argTypes={metaSettings.argTypes}
+  decorators={metaSettings.decorators}
+/>
+
+<!--- Component template -->
+
+export const tagsTemplate = createComponentTemplate(Tags);
+
+<!--- Component documentation -->
+
+# Tag
+
+- [Overview](#overview)
+- [Props](#props)
+- [Usage](#usage)
+- [Variants](#variants)
+- [Do’s and don’ts](#dos-and-donts)
+- [Use cases and examples](#use-cases-and-examples)
+- [Related components](#related-components)
+- [Feedback](#feedback)
+
+## Overview
+
+Tags are compact elements that represent an input, attribute, or action. They may display text, icons, or both.
+
+<Canvas>
+  <Story name="Overview" args={{ label: "Tag", onMouseDown: undefined, onClick: undefined }}>
+    {tagsTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable story="Overview" />
+
+## Usage
+
+<UsageGuidelines
+  guidelines={[
+    "Tags represent a complex piece of information in compact form, such as an entity (person, place, or thing) or text. They enable user input and verify that input by converting text into tags.",
+    "Use 8px spacing between tags.",
+    "Use tags when content is mapped to multiple categories, and the user needs a way to differentiate between them."
+  ]}
+/>
+
+<Tip>
+  Tags will always show up in context of a field. If you just need to add information, use
+  <Link href="/?path=/docs/data-display-label--overview" size={Link.sizes.SMALL}>
+    Label.
+  </Link>
+</Tip>
+
+## Variants
+
+### Sizes
+
+<Canvas>
+  <Story name="Sizes">
+    <Tags label="Tag" size="large" />
+    <Tags label="Tag" size="small" />
+  </Story>
+</Canvas>
+
+### Outlined
+
+<Canvas>
+  <Story name="Outlined">
+    <Tags label="Tag" size="large" outlined={true} />
+    <Tags label="Tag" size="small" outlined={true} />
+  </Story>
+</Canvas>
+
+### With read only state
+
+<Canvas>
+  <Story name="Tags with read only state">
+    <Tags label="Read only tag" readOnly />
+  </Story>
+</Canvas>
+
+### With icons
+
+<Canvas>
+  <Story name="Tags with icons">
+    <Tags label="Tag with left icon" leftIcon={CloseOutline} readOnly />
+    <Tags label="Tag with right icon" rightIcon={CloseOutline} readOnly />
+  </Story>
+</Canvas>
+
+### With avatars
+
+<Canvas>
+  <Story name="Tags with avatars">
+    <Tags label="Tag with left avatar" leftAvatar={person1} readOnly />
+    <Tags label="Tag with right avatar" rightAvatar={person1} readOnly />
+  </Story>
+</Canvas>
+
+### Themes
+
+<Canvas>
+  <Story name="Themes">
+    <Tags label="This is a long tag" />
+    <Tags label="Tag negative" color={Tags.colors.NEGATIVE} />
+    <Tags label="Tag positive" color={Tags.colors.POSITIVE} />
+    <Tags label="Disabled" disabled />
+  </Story>
+</Canvas>
+
+### Clickable
+
+<Canvas>
+  <Story name="Clickable">
+    {() => {
+      return (
+        <Flex direction={Flex.directions.ROW} gap={Flex.gaps.MEDIUM} align={Flex.align.START}>
+          <Tags label="Clickable default tag" readOnly isClickable onClick={NOOP} />
+          <Tags label="Clickable removable tag" isClickable onClick={NOOP} />
+        </Flex>
+      );
+    }}
+  </Story>
+</Canvas>
+
+### Color coded tags
+
+Use tags with colors to indicate different categories.
+e.g. `<Tags label="GRASS_GREEN" color={Tags.colors.GRASS_GREEN} />`
+
+<Canvas>
+  <Story name="Tags palette">
+    <div>
+      {_chunk(Object.keys(Tags.colors), 7).map(colorChunk => {
+        return (
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {colorChunk.map(colorName => (
+              <div style={{ margin: "5px" }}>
+                <Tags label={colorName} color={Tags.colors[colorName]} readOnly />
+              </div>
+            ))}
+            {colorChunk.map(colorName => (
+              <div style={{ margin: "5px" }}>
+                <Tags label={colorName} color={Tags.colors[colorName]} readOnly outlined />
+              </div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  </Story>
+</Canvas>
+
+## Do’s and Don’ts
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: <Tags label="Jason Tal" readOnly />,
+        description: "When using a tag, the width will automatically size itself to fit the content."
+      },
+      negative: {
+        component: <Tags label="This is a tag" className="l3-style-story-tags_tag-padding" readOnly />,
+        description: "Don’t change the tag width."
+      }
+    }
+  ]}
+/>
+
+## Use cases and examples
+
+### Colorful tags for different content
+
+Sometimes when needed, tags can change fill color.
+
+<Canvas>
+  <Story name="Colorful tags for different content">
+    <DialogContentContainer className="l3-style-story-tags_search-bar">
+      <div className="l3-style-story-tags_item">
+        <Tags label="January" color={Tags.colors.POSITIVE} />
+      </div>
+      <Search />
+      <div className="l3-style-story-tags_item">
+        <Tags label="August" readOnly color={Tags.colors.LIPSTICK} />
+      </div>
+      <div className="l3-style-story-tags_item">
+        <Tags label="April" readOnly color={Tags.colors.BUBBLE} />
+      </div>
+      <div className="l3-style-story-tags_item">
+        <Tags label="March" readOnly color={Tags.colors.EGG_YOLK} />
+      </div>
+    </DialogContentContainer>
+  </Story>
+</Canvas>
+
+### Tags in person column
+
+Tags can be removable.
+
+<Canvas>
+  <Story name="Tags in Person Column">
+    <DialogContentContainer className="l3-style-story-tags_search-bar">
+      <Search placeholder="Search names, positions, or a team" />
+      <div className="l3-style-story-tags_inline-container">
+        <Tags label="Esther Schanler" />
+        <Tags label="Itai Shabtai" />
+      </div>
+      <div className="l3-style-story-tags_lable">Suggested people</div>
+      <div className="l3-style-story-tags_search">
+        <div className="l3-style-story-tags_inline-container" key="cont-1">
+          <Avatar size={Avatar.sizes.MEDIUM} src={person1} type={Avatar.types.IMG} />
+          <span className="l3-style-story-tags_name">
+            May Kishon <span>(UX/UI Product Designer)</span>
+          </span>
+        </div>
+        <div className="l3-style-story-tags_inline-container" key="cont-2">
+          <Avatar
+            size={Avatar.sizes.MEDIUM}
+            backgroundColor={Avatar.colors.DARK_PURPLE}
+            text="LC"
+            type={Avatar.types.TEXT}
+          />
+          <span className="l3-style-story-tags_name">
+            Liron Cohen <span>(Customer Experience)</span>
+          </span>
+        </div>
+        <div className="l3-style-story-tags_inline-container" key="cont-3">
+          <Avatar size={Avatar.sizes.MEDIUM} text="DY" type={Avatar.types.TEXT} />
+          <span className="l3-style-story-tags_name">
+            Amanda Lawrence <span>(Customer Experience Designer)</span>
+          </span>
+        </div>
+        <div className="l3-style-story-tags_inline-container" key="cont-4">
+          <Avatar size={Avatar.sizes.MEDIUM} src={person1} type={Avatar.types.IMG} />
+          <span className="l3-style-story-tags_name">
+            Dor Yehuda <span>(Customer Experience Designer)</span>
+          </span>
+        </div>
+      </div>
+    </DialogContentContainer>
+  </Story>
+</Canvas>
+
+## Related components
+
+<RelatedComponents componentsNames={[LABEL, TOOLTIP, COUNTER]} />

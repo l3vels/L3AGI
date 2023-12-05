@@ -13,13 +13,14 @@ import AgentCard from 'pages/Agents/AgentCard'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import MemberText from 'modals/AIChatModal/components/ChatMembers/components/MemberText'
 import { useModal } from 'hooks'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
-import Add from '@l3-lib/ui-core/dist/icons/Add'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import Edit from 'share-ui/components/Icon/Icons/components/Edit'
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
 import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { StyledSectionTitle } from 'pages/Home/homeStyle.css'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import {
   StyledEditIcon,
@@ -65,8 +66,8 @@ const AgentRouteLayout = () => {
                 </StyledIconWrapper>
               )}
               onClick={() => navigate('/team-of-agents/create-team')}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
               ariaLabel='Add Team'
             />
           </StyledListHeader>
@@ -107,11 +108,11 @@ const AgentRouteLayout = () => {
                     // }
                     icon={() => (
                       <StyledIconWrapper>
-                        <StyledEyeOpenIcon size={50} />
+                        <StyledEyeOpenIcon />
                       </StyledIconWrapper>
                     )}
-                    size={IconButton.sizes.SMALL}
-                    kind={IconButton.kinds.TERTIARY}
+                    size={IconButton.sizes?.SMALL}
+                    kind={IconButton.kinds?.TERTIARY}
                     // ariaLabel='View'
                   />
 
@@ -119,8 +120,8 @@ const AgentRouteLayout = () => {
                     <IconButton
                       onClick={handleEdit}
                       icon={() => <Edit />}
-                      size={IconButton.sizes.SMALL}
-                      kind={IconButton.kinds.TERTIARY}
+                      size={IconButton.sizes?.SMALL}
+                      kind={IconButton.kinds?.TERTIARY}
                       // ariaLabel='Edit'
                     />
                   )} */}
@@ -142,8 +143,8 @@ const AgentRouteLayout = () => {
                 </StyledIconWrapper>
               )}
               onClick={() => navigate('/agents/create-agent-template')}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
               ariaLabel='Add Agent'
             />
           </StyledListHeader>
@@ -190,11 +191,11 @@ const AgentRouteLayout = () => {
                       }
                       icon={() => (
                         <StyledIconWrapper>
-                          <StyledEyeOpenIcon size={50} />
+                          <StyledEyeOpenIcon />
                         </StyledIconWrapper>
                       )}
-                      size={IconButton.sizes.SMALL}
-                      kind={IconButton.kinds.TERTIARY}
+                      size={IconButton.sizes?.SMALL}
+                      kind={IconButton.kinds?.TERTIARY}
                       // ariaLabel='View'
                     />
 
@@ -202,8 +203,8 @@ const AgentRouteLayout = () => {
                       <IconButton
                         onClick={handleEdit}
                         icon={() => <StyledEditIcon />}
-                        size={IconButton.sizes.SMALL}
-                        kind={IconButton.kinds.TERTIARY}
+                        size={IconButton.sizes?.SMALL}
+                        kind={IconButton.kinds?.TERTIARY}
                         // ariaLabel='Edit'
                       />
                     )}

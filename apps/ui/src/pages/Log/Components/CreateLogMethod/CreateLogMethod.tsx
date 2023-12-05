@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
+import Toggle from 'share-ui/components/Toggle/Toggle'
 import useLog from 'pages/Log/useLog'
 import TypographyPrimary from 'components/Typography/Primary'
 
@@ -57,8 +57,8 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
 
         <StyledButtonContainer>
           <StyledTertiaryButton
-            kind={Button.kinds.TERTIARY}
-            size={Button.sizes.SMALL}
+            kind={Button.kinds?.TERTIARY}
+            size={Button.sizes?.SMALL}
             onClick={onClose}
           >
             <TypographyPrimary
@@ -68,7 +68,7 @@ const CreateLogMethod = ({ onClose }: { onClose: Function }) => {
             />
           </StyledTertiaryButton>
 
-          <StyledPrimaryButton kind={Button.kinds.PRIMARY} size={Button.sizes.SMALL}>
+          <StyledPrimaryButton kind={Button.kinds?.PRIMARY} size={Button.sizes?.SMALL}>
             <TypographyPrimary
               value='Apply'
               type={Typography.types.LABEL}
