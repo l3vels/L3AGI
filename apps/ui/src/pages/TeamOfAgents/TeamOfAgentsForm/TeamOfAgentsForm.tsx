@@ -173,7 +173,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             )
           })}
         </StyledFields>
-        <StyledCheckbox>
+        {/* <StyledCheckbox>
           <Checkbox
             label={t('memory')}
             kind='secondary'
@@ -181,7 +181,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
             checked={is_memory}
             onChange={() => setFieldValue('is_memory', !is_memory)}
           />
-        </StyledCheckbox>
+        </StyledCheckbox> */}
 
         <TeamOfAgentsTable selectedTeamType={teamType} formik={formik} />
 
