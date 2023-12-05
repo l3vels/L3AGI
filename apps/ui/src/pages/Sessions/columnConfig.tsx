@@ -17,8 +17,7 @@ import { useChatsService } from 'services/chat/useChatsService'
 import { useDeleteChatService } from 'services/chat/useDeleteChatService'
 import { ToastContext } from 'contexts'
 import { AgentWithConfigs, Nullable } from 'types'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+
 import { useAgentsService } from 'services/agent/useAgentsService'
 import AudioPlayer from 'components/AudioPlayer'
 

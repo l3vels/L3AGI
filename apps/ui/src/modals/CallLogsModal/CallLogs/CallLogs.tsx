@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+
 import { useCallByIdService } from 'plugins/contact/services/call/useCallByIdService'
+import Loader from 'share-ui/components/Loader/Loader'
 
 type CallLogsProps = {
   chatId: string

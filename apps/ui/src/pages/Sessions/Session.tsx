@@ -18,7 +18,7 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useSession } from './useSession'
 import SessionDropdown from './SessionDropdown'
 import columnConfig from './columnConfig'
-// import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
+
 import { SetStateAction, useState } from 'react'
 import DatePickerField from 'components/DatePicker/DatePicker'
 import { Moment } from 'moment'
