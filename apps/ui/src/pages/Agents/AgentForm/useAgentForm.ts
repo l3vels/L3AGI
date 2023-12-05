@@ -32,6 +32,16 @@ export const useAgentForm = (formik: any) => {
       return { value: tool.toolkit_id, label: tool.name }
     })
 
+  const voiceAgentToolOptions = toolOptions?.filter((tool: any) => {
+    const allowedToolLabels = [
+      'Cal.com Toolkit',
+      'Zapier Toolkit',
+      'SendGrid Toolkit',
+      'Twilio Toolkit',
+    ]
+    return allowedToolLabels.includes(tool.label)
+  })
+
   const voiceSynthesizerOptions = voices
     ?.filter((voice: any) => voice.is_active && voice.is_synthesizer)
     .map((voice: any) => {
@@ -93,7 +103,7 @@ export const useAgentForm = (formik: any) => {
     datasourceOptions,
     toolOptions,
     integrationOptions,
-
+    voiceAgentToolOptions,
     handleUploadAvatar,
     avatarIsLoading,
     voiceSynthesizerOptions,

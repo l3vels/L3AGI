@@ -44,6 +44,8 @@ export type AgentInput = {
   input_mode?: string[]
 
   integrations?: IntegrationInput[]
+
+  agent_type?: string
 }
 
 export const useCreateAgentService = () => {
@@ -77,6 +79,8 @@ export const useCreateAgentService = () => {
       input_mode,
 
       integrations,
+
+      agent_type,
     } = input
 
     const {
@@ -91,6 +95,7 @@ export const useCreateAgentService = () => {
             is_template,
             is_memory,
             avatar,
+            agent_type,
           },
           configs: {
             goals,

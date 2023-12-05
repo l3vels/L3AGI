@@ -25,6 +25,7 @@ import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 import { StyledTab } from 'styles/tabStyles.css'
 import TextareaFormik from 'components/TextareaFormik'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 type AgentFormProps = {
   formik: any
@@ -53,6 +54,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_voice_input_mode,
     agent_voice_response,
     agent_integrations,
+    agent_type,
   } = values
 
   const {
@@ -64,6 +66,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     handleUploadAvatar,
     avatarIsLoading,
     integrationOptions,
+    voiceAgentToolOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {
@@ -107,6 +110,14 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     scrollToTop()
   }
 
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const agentType = urlParams.get('type') || agent_type || 'text'
+
+  useEffect(() => {
+    setFieldValue('agent_type', agentType)
+  }, [agentType])
+
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
@@ -131,7 +142,10 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <StyledTab onClick={() => handleTabClick(3)}>
             <StyledSpan isActive={activeTab === 3}>Onboarding</StyledSpan>
           </StyledTab>
-          <StyledTab onClick={() => handleTabClick(4)} isDisabled={!isVoice}>
+          <StyledTab
+            onClick={() => handleTabClick(4)}
+            isDisabled={!isVoice || agentType === 'text'}
+          >
             <StyledSpan isActive={activeTab === 4}>Voice Preferences</StyledSpan>
           </StyledTab>
           {/* <StyledTab onClick={() => handleTabClick(5)}>
@@ -192,31 +206,33 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     fieldName={'agent_tools'}
                     fieldValue={agent_tools}
                     setFieldValue={setFieldValue}
-                    options={toolOptions}
+                    options={agentType === 'voice' ? voiceAgentToolOptions : toolOptions}
                   />
 
-                  <StyledCombinedFields>
-                    <AgentDropdown
-                      isMulti
-                      label={t('datasources')}
-                      fieldName={'agent_datasources'}
-                      fieldValue={agent_datasources}
-                      setFieldValue={setFieldValue}
-                      options={datasourceOptions}
-                    />
+                  {agentType === 'text' && (
+                    <StyledCombinedFields>
+                      <AgentDropdown
+                        isMulti
+                        label={t('datasources')}
+                        fieldName={'agent_datasources'}
+                        fieldValue={agent_datasources}
+                        setFieldValue={setFieldValue}
+                        options={datasourceOptions}
+                      />
 
-                    <AgentDropdown
-                      label={'Data Process Flow'}
-                      fieldName={'agent_source_flow'}
-                      setFieldValue={setFieldValue}
-                      fieldValue={agent_source_flow}
-                      options={data_process_flow}
-                      onChange={() => {
-                        setFieldValue('agent_source_flow', '')
-                      }}
-                      optionSize={'small'}
-                    />
-                  </StyledCombinedFields>
+                      <AgentDropdown
+                        label={'Data Process Flow'}
+                        fieldName={'agent_source_flow'}
+                        setFieldValue={setFieldValue}
+                        fieldValue={agent_source_flow}
+                        options={data_process_flow}
+                        onChange={() => {
+                          setFieldValue('agent_source_flow', '')
+                        }}
+                        optionSize={'small'}
+                      />
+                    </StyledCombinedFields>
+                  )}
 
                   <StyledCombinedFields>
                     <AgentDropdown

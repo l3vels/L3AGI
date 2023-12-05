@@ -56,6 +56,8 @@ export const useEditAgent = () => {
     agent_voice_input_mode: agentById?.configs?.input_mode || ['Text'],
 
     agent_integrations: agentById?.configs?.integrations || [],
+
+    agent_type: agentById?.agent?.agent_type,
   }
 
   const handleSubmit = async (values: any) => {

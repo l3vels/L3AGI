@@ -52,6 +52,8 @@ export const useCreateAgent = () => {
     agent_voice_input_mode: ['Text'],
 
     agent_integrations: [],
+
+    agent_type: 'text',
   }
 
   if (agentById) {
@@ -82,6 +84,8 @@ export const useCreateAgent = () => {
       agent_voice_input_mode: agentById.configs?.input_mode || ['Text'],
 
       agent_integrations: agentById.configs?.integrations || [],
+
+      agent_type: agentById.agent?.agent_type,
     }
   }
 
@@ -115,9 +119,11 @@ export const useCreateAgent = () => {
         input_mode: values.agent_voice_input_mode,
 
         integrations: values.agent_integrations,
+        agent_type: values.agent_type,
       }
 
       const newAgent = await createAgentService(agentInput)
+
       await refetchAgents()
       setToast({
         message: 'New Agent was Created!',
