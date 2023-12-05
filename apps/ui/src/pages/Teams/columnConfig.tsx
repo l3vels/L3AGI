@@ -4,8 +4,6 @@ import styled from 'styled-components'
 
 import Typography from 'share-ui/components/typography/Typography'
 
-import menuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
-
 import PersonaIcon from 'share-ui/components/Icon/Icons/components/Person'
 import EmailIcon from 'share-ui/components/Icon/Icons/components/Email'
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
@@ -21,6 +19,7 @@ import { useModal } from 'hooks'
 import { ToastContext } from 'contexts'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
+import { MenuDotsOutline } from 'share-ui/components/Icon/Icons'
 
 export default () => {
   type RendererProps = {
@@ -99,7 +98,7 @@ export default () => {
             alignItems: 'center',
           }}
         >
-          <MenuButton component={menuDots}>
+          <MenuButton component={() => <MenuDotsOutline size={20} />}>
             <StyledButtonsWrapper>
               <StyledClickableDiv onClick={handleDelete}>
                 <TypographySecondary

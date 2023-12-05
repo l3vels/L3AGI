@@ -29,10 +29,11 @@ import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyTertiary from 'components/Typography/Tertiary'
 
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
+
 import { useTeamOfAgents } from '../useTeamOfAgents'
 import { useModelsService } from 'services'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
+import { MenuDotsOutline } from 'share-ui/components/Icon/Icons'
 
 type TeamOfAgentsDetailsBoxProps = {
   teamData: any
@@ -92,7 +93,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
             )}
 
             {teamModule?.delete && isCreator && (
-              <MenuButton component={MenuDots}>
+              <MenuButton component={() => <MenuDotsOutline size={20} />}>
                 <StyledMenuButtonsWrapper>
                   <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
                     {t('delete-team')}

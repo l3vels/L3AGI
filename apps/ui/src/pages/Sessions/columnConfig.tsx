@@ -239,17 +239,6 @@ const columns = [
 
 export default columns
 
-export const StyledMenuDots = styled.div`
-  .menu-button--wrapper.menu-button--wrapper--size-32 {
-    &:hover {
-      background: ${({ theme }) => theme.body.humanMessageBgColor};
-    }
-    path {
-      stroke: ${({ theme }) => theme.body.iconColor};
-    }
-  }
-`
-
 export const StyledMenuButtonsWrapper = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorSecondary};
   border: ${({ theme }) => theme.body.secondaryBorder};

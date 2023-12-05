@@ -370,6 +370,8 @@ const StyledButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.body.humanMessageBgColor};
   }
+`
+const StyledMenuIconWrapper = styled.div`
   path {
     stroke: ${({ theme }) => theme.body.iconColor};
   }
