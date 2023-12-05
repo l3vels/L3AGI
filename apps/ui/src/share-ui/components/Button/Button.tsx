@@ -405,18 +405,21 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
       padding: var(--spacing-xs) var(--spacing-small);
       height: var(--btn-size-small);
       line-height: 24px;
+      font-size: 14px;
     `}
   ${props =>
     props.size === 'medium' &&
     css`
       padding: var(--spacing-small) var(--spacing-medium);
       height: var(--btn-size-medium);
+      font-size: 16px;
     `}
   ${props =>
     props.size === 'large' &&
     css`
       padding: var(--spacing-small-medium) var(--spacing-large);
       height: var(--btn-size-big);
+      font-size: 18px;
     `}
 
 
