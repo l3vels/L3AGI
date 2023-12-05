@@ -36,7 +36,11 @@ const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
       )}
 
       {multiOption && (
-        <MenuButton component={() => <StyledAddIcon size={30} />} closeDialogOnContentClick>
+        <MenuButton
+          component={() => <StyledAddIcon size={30} />}
+          closeDialogOnContentClick
+          ariaLabel={`Add ${title}`}
+        >
           <StyledMenuButtonsWrapper>
             {multiOption.map((item: any, index: number) => {
               return (
