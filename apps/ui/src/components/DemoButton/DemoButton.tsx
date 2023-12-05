@@ -8,7 +8,7 @@ const DemoButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <ButtonTertiary onClick={onClick} size={Button.sizes?.SMALL}>
       <Play size={18} color={'#E332E6'} />
-      <Typography customColor={'#E332E6'} value={'Demo'} size={Typography.sizes?.SMALL} />
+      <Typography customColor={'#E332E6'} value={'Demo'} size={Typography.sizes?.sm} />
     </ButtonTertiary>
   )
 }
