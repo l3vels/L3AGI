@@ -336,6 +336,8 @@ const StyledInput = styled.input<{ isError: boolean; size: string }>`
 
   width: 100%;
 
+  font-weight: 500;
+
   border: none;
   border-radius: 6px;
   background: ${({ theme }) => theme.textFiled.primary.bgColor};

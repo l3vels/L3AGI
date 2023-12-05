@@ -177,6 +177,7 @@ const StyledTextarea = styled.textarea`
   box-sizing: border-box;
   border: none;
   font-size: 14px;
+  font-weight: 500;
 
   background: ${({ theme }) => theme.textFiled.primary.bgColor};
   color: ${({ theme }) => theme.textFiled.primary.color};
