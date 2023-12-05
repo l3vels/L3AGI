@@ -12,6 +12,7 @@ import {
 
 import API from '@l3-lib/ui-core/dist/icons/API'
 import Typography from '@l3-lib/ui-core/dist/Typography'
+
 import styled, { css, keyframes } from 'styled-components'
 
 import { logout as logOutCookies } from 'helpers/authHelper'
@@ -19,12 +20,16 @@ import { useNavigate } from 'react-router-dom'
 import { useLogoutService } from 'services'
 import { useTranslation } from 'react-i18next'
 
-import Settings from '@l3-lib/ui-core/dist/icons/Settings'
-import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
+import Settings from 'share-ui/components/Icon/Icons/components/Settings'
+import LogOut from 'share-ui/components/Icon/Icons/components/LogOut'
 import AvatarGenerator from './AvatarGenerator/AvatarGenerator'
 import React from 'react'
 import { AuthContext } from 'contexts'
 import TypographyPrimary from './Typography/Primary'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
@@ -94,8 +99,8 @@ const AvatarDropDown = () => {
 
           <TypographyPrimary
             value={t('settings')}
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
           />
         </StyledDropDownMenuItem>
@@ -104,8 +109,8 @@ const AvatarDropDown = () => {
 
           <TypographyPrimary
             value='API Keys'
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
             style={{
               fontSize: '12px',
               fontStyle: 'normal',
@@ -118,8 +123,8 @@ const AvatarDropDown = () => {
           <StyledLogOutIcon size={20} />
           <TypographyPrimary
             value={t('logout')}
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
           />
         </StyledDropDownMenuItem>

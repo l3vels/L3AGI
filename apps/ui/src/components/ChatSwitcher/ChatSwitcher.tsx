@@ -2,25 +2,25 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import styled, { DefaultTheme, css } from 'styled-components'
 
-// import Mention from '@l3-lib/ui-core/dist/icons/Mention'
+// import Mention from 'share-ui/components/Icon/Icons/components/Mention'
 
-// import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-// import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Collection from 'share-ui/components/Icon/Icons/components/Collection'
+
 import { useChatSwitcher } from './useChatSwitcher'
-import MainNavigation from 'pages/Navigation/MainNavigation'
 
-import About from '@l3-lib/ui-core/dist/icons/About'
-// import Add from '@l3-lib/ui-core/dist/icons/Add'
-import Games from '@l3-lib/ui-core/dist/icons/Games'
-import ValueOutline from '@l3-lib/ui-core/dist/icons/ValueOutline'
-import Robot from '@l3-lib/ui-core/dist/icons/Robot'
-import Basic from '@l3-lib/ui-core/dist/icons/Basic'
+import About from 'share-ui/components/Icon/Icons/components/About'
+// import Add from 'share-ui/components/Icon/Icons/components/Add'
+import Games from 'share-ui/components/Icon/Icons/components/Games'
+import ValueOutline from 'share-ui/components/Icon/Icons/components/ValueOutline'
+import Robot from 'share-ui/components/Icon/Icons/components/Robot'
+import Basic from 'share-ui/components/Icon/Icons/components/Basic'
 
-// import Team from '@l3-lib/ui-core/dist/icons/Team'
-// import Launch from '@l3-lib/ui-core/dist/icons/Launch'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+// import Team from 'share-ui/components/Icon/Icons/components/Team'
+// import Launch from 'share-ui/components/Icon/Icons/components/Launch'
+import SearchOutline from 'share-ui/components/Icon/Icons/components/SearchOutline'
 
 import { useEffect, useState } from 'react'
+import MainNavigation from 'pages/Navigation/MainNavigation'
 
 // import includes from 'lodash/includes'
 
@@ -203,10 +203,8 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   }
 
   /* Hide scrollbar for IE, Edge add Firefox */
-   {
-    -ms-overflow-style: none;
-    scrollbar-width: none; /* Firefox */
-  }
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
 `
 // const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
 //   position: absolute;

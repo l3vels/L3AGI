@@ -1,0 +1,342 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalHeader with classNames 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"className":"className","descriptionClassName":"descriptionClassName","iconClassName":"iconClassName","titleClassName":"titleClassName"}
+
+@@ --- --- @@
+  <div
+-   class="container"
++   class="container className"
+  >
+    <p
+      aria-level="1"
+-     class="title"
++     class="titleClassName title"
+      id="modal-title-id"
+      role="heading"
+    >
+`;
+
+exports[`ModalHeader with close button hidden 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"hideCloseButton":true}
+
+@@ --- --- @@
+    >
+      Default title
+    </p>
+-   <div
+-     class="closeButton"
+-   >
+-     <div
+-       class="iconButtonContainer"
+-     >
+-       <button
+-         aria-busy="false"
+-         aria-disabled="false"
+-         class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
+-         data-testid="icon-button"
+-         style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
+-         type="button"
+-       >
+-         <svg
+-           aria-hidden="true"
+-           class="icon_component icon-button-padding icon_component--no-focus-style"
+-           fill="currentColor"
+-           height="16"
+-           viewBox="0 0 32 32"
+-           width="16"
+-         >
+-           <g
+-             filter="url(#filter0_bd_761_16730)"
+-           >
+-             <g
+-               clip-path="url(#clip0_761_16730)"
+-             >
+-               <path
+-                 d="M23 9L9 23M23 23L9 9.00001"
+-                 stroke="#fff"
+-                 stroke-linecap="round"
+-               />
+-             </g>
+-           </g>
+-           <defs>
+-             <clippath
+-               id="clip0_761_16730"
+-             >
+-               <path
+-                 d="M0 0H16V16H0z"
+-                 fill="#fff"
+-                 transform="translate(8 8)"
+-               />
+-             </clippath>
+-             <filter
+-               color-interpolation-filters="sRGB"
+-               filterUnits="userSpaceOnUse"
+-               height="52"
+-               id="filter0_bd_761_16730"
+-               width="52"
+-               x="-10"
+-               y="-10"
+-             >
+-               <feflood
+-                 flood-opacity="0"
+-                 result="BackgroundImageFix"
+-               />
+-               <fegaussianblur
+-                 in="BackgroundImageFix"
+-                 stdDeviation="5"
+-               />
+-               <fecomposite
+-                 in2="SourceAlpha"
+-                 operator="in"
+-                 result="effect1_backgroundBlur_761_16730"
+-               />
+-               <fecolormatrix
+-                 in="SourceAlpha"
+-                 result="hardAlpha"
+-                 values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+-               />
+-               <feoffset
+-                 dy="1"
+-               />
+-               <fegaussianblur
+-                 stdDeviation="1.5"
+-               />
+-               <fecolormatrix
+-                 values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+-               />
+-               <feblend
+-                 in2="effect1_backgroundBlur_761_16730"
+-                 result="effect2_dropShadow_761_16730"
+-               />
+-               <feblend
+-                 in="SourceGraphic"
+-                 in2="effect2_dropShadow_761_16730"
+-                 result="shape"
+-               />
+-             </filter>
+-           </defs>
+-         </svg>
+-       </button>
+-     </div>
+-   </div>
+  </div>
+`;
+
+exports[`ModalHeader with description 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {"description":"description"}
+
+@@ --- --- @@
+      Default title
+    </p>
+    <div
++     class="description"
++   >
++     description
++   </div>
++   <div
+      class="closeButton"
+    >
+      <div
+`;
+
+exports[`ModalHeader with icon 1`] = `
+Snapshot Diff:
+- Default Render
++ Current Render: {}
+
+@@ --- --- @@
+      id="modal-title-id"
+      role="heading"
+    >
++     <span
++       class="icon"
++     >
++       <svg
++         aria-hidden="true"
++         class="icon_component icon_component--no-focus-style"
++         fill="currentColor"
++         height="24"
++         viewBox="0 0 32 32"
++         width="24"
++       >
++         <g
++           filter="url(#filter0_bd_761_16736)"
++         >
++           <path
++             d="M13.1429 22.2632L13.1429 13.4211M13.1429 13.4211C14.3263 13.4211 15.2857 12.4314 15.2857 11.2105C15.2857 9.98969 14.3263 9 13.1429 9C11.9594 9 11 9.98969 11 11.2105C11 12.4314 11.9594 13.4211 13.1429 13.4211ZM18.8571 18.5789L18.8571 10.4737M18.8571 18.5789C20.0406 18.5789 21 19.5686 21 20.7895C21 22.0103 20.0406 23 18.8571 23C17.6737 23 16.7143 22.0103 16.7143 20.7895C16.7143 19.5686 17.6737 18.5789 18.8571 18.5789Z"
++             stroke="#fff"
++             stroke-linecap="round"
++           />
++         </g>
++         <defs>
++           <filter
++             color-interpolation-filters="sRGB"
++             filterUnits="userSpaceOnUse"
++             height="52"
++             id="filter0_bd_761_16736"
++             width="52"
++             x="-10"
++             y="-10"
++           >
++             <feflood
++               flood-opacity="0"
++               result="BackgroundImageFix"
++             />
++             <fegaussianblur
++               in="BackgroundImageFix"
++               stdDeviation="5"
++             />
++             <fecomposite
++               in2="SourceAlpha"
++               operator="in"
++               result="effect1_backgroundBlur_761_16736"
++             />
++             <fecolormatrix
++               in="SourceAlpha"
++               result="hardAlpha"
++               values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
++             />
++             <feoffset
++               dy="1"
++             />
++             <fegaussianblur
++               stdDeviation="1.5"
++             />
++             <fecolormatrix
++               values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
++             />
++             <feblend
++               in2="effect1_backgroundBlur_761_16736"
++               result="effect2_dropShadow_761_16736"
++             />
++             <feblend
++               in="SourceGraphic"
++               in2="effect2_dropShadow_761_16736"
++               result="shape"
++             />
++           </filter>
++         </defs>
++       </svg>
++     </span>
+      Default title
+    </p>
+    <div
+`;
+
+exports[`ModalHeader with required props 1`] = `
+<div
+  class="container"
+>
+  <p
+    aria-level="1"
+    class="title"
+    id="modal-title-id"
+    role="heading"
+  >
+    Default title
+  </p>
+  <div
+    class="closeButton"
+  >
+    <div
+      class="iconButtonContainer"
+    >
+      <button
+        aria-busy="false"
+        aria-disabled="false"
+        class="l3_style_circle_button l3-style-button l3-style-button--size-medium l3-style-button--kind-tertiary l3-style-button--color-primary l3-style-button--no-side-padding"
+        data-testid="icon-button"
+        style="justify-content: center; align-items: center; padding: 0px; width: 36px; height: 36px;"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="icon_component icon-button-padding icon_component--no-focus-style"
+          fill="currentColor"
+          height="16"
+          viewBox="0 0 32 32"
+          width="16"
+        >
+          <g
+            filter="url(#filter0_bd_761_16730)"
+          >
+            <g
+              clip-path="url(#clip0_761_16730)"
+            >
+              <path
+                d="M23 9L9 23M23 23L9 9.00001"
+                stroke="#fff"
+                stroke-linecap="round"
+              />
+            </g>
+          </g>
+          <defs>
+            <clippath
+              id="clip0_761_16730"
+            >
+              <path
+                d="M0 0H16V16H0z"
+                fill="#fff"
+                transform="translate(8 8)"
+              />
+            </clippath>
+            <filter
+              color-interpolation-filters="sRGB"
+              filterUnits="userSpaceOnUse"
+              height="52"
+              id="filter0_bd_761_16730"
+              width="52"
+              x="-10"
+              y="-10"
+            >
+              <feflood
+                flood-opacity="0"
+                result="BackgroundImageFix"
+              />
+              <fegaussianblur
+                in="BackgroundImageFix"
+                stdDeviation="5"
+              />
+              <fecomposite
+                in2="SourceAlpha"
+                operator="in"
+                result="effect1_backgroundBlur_761_16730"
+              />
+              <fecolormatrix
+                in="SourceAlpha"
+                result="hardAlpha"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              />
+              <feoffset
+                dy="1"
+              />
+              <fegaussianblur
+                stdDeviation="1.5"
+              />
+              <fecolormatrix
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"
+              />
+              <feblend
+                in2="effect1_backgroundBlur_761_16730"
+                result="effect2_dropShadow_761_16730"
+              />
+              <feblend
+                in="SourceGraphic"
+                in2="effect2_dropShadow_761_16730"
+                result="shape"
+              />
+            </filter>
+          </defs>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;

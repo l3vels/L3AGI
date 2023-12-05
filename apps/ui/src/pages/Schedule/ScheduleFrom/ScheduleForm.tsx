@@ -1,6 +1,9 @@
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import Typography from 'share-ui/components/typography/Typography'
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
+
+import TextField from 'share-ui/components/TextField/TextField'
 import { useTranslation } from 'react-i18next'
+
 import FormikTextField from 'components/TextFieldFormik'
 import { useScheduleForm } from './useScheduleForm'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
@@ -98,7 +101,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
             field_name='start_date'
             placeholder='Run Date'
             label='Start Date'
-            size={TextField.sizes.SMALL}
+            size={TextField.sizes?.SMALL}
             type='datetime-local'
           />
 
@@ -145,7 +148,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
                 field_name='end_date'
                 placeholder='Recurring End Date'
                 label='Recurring End Date'
-                size={TextField.sizes.SMALL}
+                size={TextField.sizes?.SMALL}
                 type='datetime-local'
               />
             </StyledRepeatFields>
@@ -170,7 +173,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
 
           <StyledCheckboxWrapper>
             <Checkbox
-              label={t("create-session-each-run")}
+              label={t('create-session-each-run')}
               kind='secondary'
               name='create_session_on_run'
               checked={create_session_on_run}

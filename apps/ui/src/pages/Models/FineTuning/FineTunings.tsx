@@ -10,7 +10,7 @@ import {
 
 import { ButtonPrimary } from 'components/Button/Button'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -87,7 +87,7 @@ const FineTunings = () => {
           <StyledSectionTitle>{`${t('fine-tuning')}`}</StyledSectionTitle>
           {/* <StyledSectionDescription>{t('model-description')}</StyledSectionDescription> */}
         </div>
-        <ButtonPrimary size={Button.sizes.SMALL} onClick={handleAddFineTuning}>
+        <ButtonPrimary size={Button.sizes?.SMALL} onClick={handleAddFineTuning}>
           {t('add-fine-tuning')}
         </ButtonPrimary>
       </StyledHeaderGroup>

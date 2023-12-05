@@ -241,6 +241,7 @@ class TeamModel(BaseModel):
                 .joinedload(TeamAgentModel.agent)
                 .joinedload(AgentModel.configs)
             )
+            .order_by(TeamModel.created_on.desc())
             .options(joinedload(TeamModel.creator))
             .all()
         )

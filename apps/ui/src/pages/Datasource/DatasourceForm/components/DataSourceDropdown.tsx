@@ -1,8 +1,10 @@
 import styled from 'styled-components'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import HelpIcon from '@l3-lib/ui-core/dist/icons/Help'
+import Dropdown from 'share-ui/components/Dropdown/Dropdown'
+
+import Typography from 'share-ui/components/typography/Typography'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import HelpIcon from 'share-ui/components/Icon/Icons/components/Help'
 import TypographyPrimary from 'components/Typography/Primary'
 
 type DataSourceDropdownProps = {
@@ -72,9 +74,9 @@ const DataSourceDropdown = ({
           <IconButton
             onClick={onHelpClick}
             icon={HelpIcon}
-            kind={IconButton.kinds.SECONDARY}
+            kind={IconButton.kinds?.SECONDARY}
             ariaLabel='Help'
-            size={IconButton.sizes.XXS}
+            size={IconButton.sizes?.XXS}
           />
         )}
       </StyledHeader>
@@ -103,7 +105,7 @@ const StyledWrapper = styled.div`
   width: 100%;
   .css-7xl64p-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
-    min-height: 55px ;
+    min-height: 55px;
     background: ${({ theme }) => theme.body.dropdownBgColor};
   }
   .menu.dropdown-menu-wrapper.css-19zapvn-menu {
@@ -113,7 +115,6 @@ const StyledWrapper = styled.div`
   }
   .css-1aqeloh-singleValue {
     color: ${({ theme }) => theme.body.textColorPrimary};
-  
   }
   .dropdown-wrapper__option--reset {
     &:hover {
@@ -126,14 +127,15 @@ const StyledWrapper = styled.div`
       fill: ${({ theme }) => theme.body.iconColor};
     }
   }
-  .dropdown-indicator.css-12prnvf-indicatorContainer{
-    path{
-      fill:${({ theme }) => theme.body.iconColor}}
+  .dropdown-indicator.css-12prnvf-indicatorContainer {
+    path {
+      fill: ${({ theme }) => theme.body.iconColor};
     }
   }
+
   .dropdown-indicator.css-bfmogb-indicatorContainer {
-    path{
-      fill:${({ theme }) => theme.body.iconColor}}
+    path {
+      fill: ${({ theme }) => theme.body.iconColor};
     }
   }
 `

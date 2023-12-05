@@ -1,12 +1,12 @@
 import withRenderModal from 'hocs/withRenderModal'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 import ToolView from 'pages/Toolkit/ToolView'
 import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
 
@@ -37,9 +37,9 @@ const ToolkitModal = ({ data }: ToolkitModalProps) => {
 
         <StyledButtonWrapper>
           <IconButton
-            size={IconButton.sizes.XS}
+            size={IconButton.sizes?.XS}
             icon={() => <Close />}
-            kind={IconButton.kinds.TERTIARY}
+            kind={IconButton.kinds?.TERTIARY}
             onClick={() => closeModal('toolkit-modal')}
           />
         </StyledButtonWrapper>

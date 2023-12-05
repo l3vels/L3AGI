@@ -1,22 +1,14 @@
 import { v4 as uuidv4 } from 'uuid'
-
-import About from '@l3-lib/ui-core/dist/icons/About'
-// import Home from '@l3-lib/ui-core/dist/icons/Home'
-
-// import API from '@l3-lib/ui-core/dist/icons/API'
-// import Doc from '@l3-lib/ui-core/dist/icons/Doc'
-// import Games from '@l3-lib/ui-core/dist/icons/Games'
-import Teams from '@l3-lib/ui-core/dist/icons/Teams'
-// import Players from '@l3-lib/ui-core/dist/icons/Players'
-// import Contracts from '@l3-lib/ui-core/dist/icons/Contracts'
-import Collection from '@l3-lib/ui-core/dist/icons/Collection'
-import Value from '@l3-lib/ui-core/dist/icons/Value'
-import Add from '@l3-lib/ui-core/dist/icons/Add'
-import Sun from '@l3-lib/ui-core/dist/icons/Sun'
+import About from 'share-ui/components/Icon/Icons/components/About'
+import Teams from 'share-ui/components/Icon/Icons/components/Teams'
+import Collection from 'share-ui/components/Icon/Icons/components/Collection'
+import Value from 'share-ui/components/Icon/Icons/components/Value'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
+import Sun from 'share-ui/components/Icon/Icons/components/Sun'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
-// import StarVector from 'assets/svgComponents/StarVector'
-import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
+
 import styled from 'styled-components'
+import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
 
 export const defaultData = (path_id?: any) => {
   return [

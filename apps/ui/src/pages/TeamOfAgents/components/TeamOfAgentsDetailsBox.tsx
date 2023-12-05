@@ -1,5 +1,5 @@
 import React from 'react'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import { useTranslation } from 'react-i18next'
 import {
   StyledButtonsWrapper,
@@ -9,28 +9,27 @@ import {
   StyledMenuButtonsWrapper,
   StyledNameWrapper,
   StyledWrapper,
-  StyledMenuDots,
   StyledIconButton,
 } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import TagsRow from 'pages/Agents/AgentView/components/TagsRow'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
 import { useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
 import { AuthContext } from 'contexts'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
-import Download from '@l3-lib/ui-core/dist/icons/Download'
+import Download from 'share-ui/components/Icon/Icons/components/Download'
 import TypographyPrimary from 'components/Typography/Primary'
 
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 import { StyledEditIcon } from '../TeamOfAgentsCard/TeamOfAgentsCard'
 import TypographyTertiary from 'components/Typography/Tertiary'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
+import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 import { useTeamOfAgents } from '../useTeamOfAgents'
 import { useModelsService } from 'services'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
@@ -85,25 +84,23 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                 <IconButton
                   onClick={handleEdit}
                   icon={() => <StyledEditIcon />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Edit'
                 />
               </StyledIconButton>
             )}
 
             {teamModule?.delete && isCreator && (
-              <StyledMenuDots>
-                <MenuButton component={MenuDots}>
-                  <StyledMenuButtonsWrapper>
-                    <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
-                      {t('delete-team')}
-                    </ButtonTertiary>
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  <ButtonTertiary onClick={() => deleteTeamOfAgentsHandler(id)}>
+                    {t('delete-team')}
+                  </ButtonTertiary>
 
-                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
-                  </StyledMenuButtonsWrapper>
-                </MenuButton>
-              </StyledMenuDots>
+                  <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
@@ -111,7 +108,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
         {!isCreator && (
           <div>
             <ButtonPrimary
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               // onClick={() => navigate(`/agents/create-agent?agentId=${agentId}`)}
             >
               <StyledInnerButtonWrapper>

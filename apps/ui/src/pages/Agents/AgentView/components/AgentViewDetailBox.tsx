@@ -2,13 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TagsRow from './TagsRow'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Button from '@l3-lib/ui-core/dist/Button'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Download from '@l3-lib/ui-core/dist/icons/Download'
+import Button from 'share-ui/components/Button/Button'
+
+import Download from 'share-ui/components/Icon/Icons/components/Download'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useModal } from 'hooks'
@@ -20,8 +21,8 @@ import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
+import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useModelsService } from 'services'
@@ -89,25 +90,23 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                 <IconButton
                   onClick={handleEdit}
                   icon={() => <StyledEditIcon />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Edit'
                 />
               </StyledIconButton>
             )}
 
             {agentModule?.delete && isCreator && (
-              <StyledMenuDots>
-                <MenuButton component={MenuDots}>
-                  <StyledMenuButtonsWrapper>
-                    <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
-                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
-                    <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
-                      {t('delete-agent')}
-                    </ButtonTertiary>
-                  </StyledMenuButtonsWrapper>
-                </MenuButton>
-              </StyledMenuDots>
+              <MenuButton component={MenuDots}>
+                <StyledMenuButtonsWrapper>
+                  <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
+                  <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
+                  <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
+                    {t('delete-agent')}
+                  </ButtonTertiary>
+                </StyledMenuButtonsWrapper>
+              </MenuButton>
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
@@ -121,7 +120,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         {!isCreator && (
           <div>
             <ButtonPrimary
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               onClick={() => {
                 closeModal('agent-view-modal')
                 navigate(`/agents/create-agent?agentId=${agent.id}`)
@@ -228,16 +227,7 @@ export const StyledButtonsWrapper = styled.div`
   align-items: center;
   gap: 2px;
 `
-export const StyledMenuDots = styled.div`
-  .menu-button--wrapper.menu-button--wrapper--size-32 {
-    &:hover {
-      background: ${({ theme }) => theme.body.humanMessageBgColor};
-    }
-    path {
-      stroke: ${({ theme }) => theme.body.iconColor};
-    }
-  }
-`
+
 export const StyledIconButton = styled.div`
   .components-IconButton-IconButton-module__iconButtonContainer--ttuRB {
     &:hover {

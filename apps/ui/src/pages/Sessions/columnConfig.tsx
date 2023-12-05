@@ -2,12 +2,12 @@ import React, { FC, useContext } from 'react'
 import { useModal } from 'hooks'
 
 import moment from 'moment'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 
 import { Navigate, useNavigate } from 'react-router-dom'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -17,8 +17,7 @@ import { useChatsService } from 'services/chat/useChatsService'
 import { useDeleteChatService } from 'services/chat/useDeleteChatService'
 import { ToastContext } from 'contexts'
 import { AgentWithConfigs, Nullable } from 'types'
-import Edit from '@l3-lib/ui-core/dist/icons/Edit'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+
 import { useAgentsService } from 'services/agent/useAgentsService'
 import AudioPlayer from 'components/AudioPlayer'
 
@@ -114,8 +113,8 @@ const columns = [
             <IconButton
               onClick={() => handleAgentEditClick()}
               icon={() => <StyledEditIcon />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
               ariaLabel='Edit'
               className='eye-icon'
             />
@@ -123,8 +122,8 @@ const columns = [
             <IconButton
               onClick={() => handleViewClick()}
               icon={() => <StyledEyeOpenIcon />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
               ariaLabel='View'
               className='search-icon'
             />
@@ -220,16 +219,16 @@ const columns = [
           <IconButton
             onClick={() => deleteChatHandler(data.id)}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Delete'
           />
 
           <IconButton
             onClick={() => handleViewClick(data.id)}
             icon={() => <StyledEyeOpenIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='View'
           />
         </StyledActionWrapper>
@@ -272,6 +271,8 @@ export const StyledOutlineIcon = styled.div`
 
 const StyledActionWrapper = styled.div`
   display: flex;
+  position: relative;
+  bottom: 5px;
   justify-content: center;
   align-items: center;
 
@@ -316,6 +317,8 @@ const StyledAgentIconsWrapper = styled.div`
 
 const StyledDateWrapper = styled.div`
   display: flex;
+  position: relative;
+  top: 5px;
   align-items: center;
   gap: 12px;
 `

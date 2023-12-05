@@ -5,9 +5,9 @@ import { ChatContextProvider } from './context/ChatContext'
 import ChatV2 from './components/ChatV2'
 import styled from 'styled-components'
 
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import { useState } from 'react'
 
 const AIChat = () => {

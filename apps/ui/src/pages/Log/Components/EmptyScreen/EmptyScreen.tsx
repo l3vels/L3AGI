@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Heading from 'share-ui/components/Heading/Heading'
+import Typography from 'share-ui/components/typography/Typography'
 
 export const EmptyScreen = () => {
   return (

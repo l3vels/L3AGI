@@ -15,18 +15,14 @@ import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 import FineTunings from './FineTuning/FineTunings'
 
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
 import { useState } from 'react'
-import {
-  StyledTab,
-  StyledTabListSpan,
-  StyledTabListWrapper,
-  StyledTabRootWrapper,
-} from 'styles/tabStyles.css'
+import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -64,12 +60,12 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
       {isModel && isFineTuning && (
         <StyledTabListWrapper>
           <TabList activeTabId={activeTab}>
-            <StyledTab onClick={() => handleTabClick(0, 'fine-tuning')} isDisabled={!isFineTuning}>
-              <StyledTabListSpan>{t('fine-tuning')}</StyledTabListSpan>
-            </StyledTab>
-            <StyledTab onClick={() => handleTabClick(1, 'model')} isDisabled={!isModel}>
-              <StyledTabListSpan>{t('models')}</StyledTabListSpan>
-            </StyledTab>
+            <Tab onClick={() => handleTabClick(0, 'fine-tuning')} disabled={!isFineTuning}>
+              {t('fine-tuning')}
+            </Tab>
+            <Tab onClick={() => handleTabClick(1, 'model')} disabled={!isModel}>
+              {t('models')}
+            </Tab>
           </TabList>
         </StyledTabListWrapper>
       )}

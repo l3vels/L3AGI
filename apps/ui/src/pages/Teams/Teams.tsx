@@ -1,34 +1,21 @@
-// import { FormikProvider, useField } from 'formik'
 import styled from 'styled-components'
 
-// import { CustomTable } from 'oldComponents/atoms/CustomTable'
-// import { StyledButton, StyledInputContainer, StyledTextField } from './teamsStyle'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from 'share-ui/components/typography/Typography'
+import Heading from 'share-ui/components/Heading/Heading'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-// import IconButton from '@l3-lib/ui-core/dist/IconButton'
-// import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-// import MenuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
-
-// import DataGrid from 'components/DataGrid'
-// import columnConfig from './columnConfig'
-
-// import SearchIcon from '@l3-lib/ui-core/dist/icons/SearchOutline'
-// import Description from '@l3-lib/ui-core/dist/icons/Description'
+import Button from 'share-ui/components/Button/Button'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
-// import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-// import { useRef } from 'react'
 import useTeams from './useTeams'
-// import { useTranslation } from 'react-i18next'
-// import { useModal } from 'hooks'
+
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
-
-// import useTeams from './useTeams'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Teams = () => {
   // const { t } = useTranslation()
@@ -82,8 +69,8 @@ const Teams = () => {
         <StyledHeaderGroup>
           <StyledHeadingWrapper>
             <HeadingPrimary
-              type={Heading.types.h1}
-              size={Heading.sizes.lg}
+              type={Heading.types?.h1}
+              size={Heading.sizes?.LARGE}
               value={`${assignedUserList.length} Members`}
             />
           </StyledHeadingWrapper>
@@ -91,28 +78,28 @@ const Teams = () => {
           <StyledIconButtonWrapper>
             {/* <IconButton
             icon={SearchIcon}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
             // shape='Square'
           />
 
           <IconButton
             icon={Description}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
             // shape='Square'
           /> */}
 
             <Button
-              kind={Button.kinds.PRIMARY}
-              size={Button.sizes.MEDIUM}
+              kind={Button.kinds?.PRIMARY}
+              size={Button.sizes?.MEDIUM}
               // leftIcon={Add}
               onClick={openCreateTeamsModal}
             >
               <TypographyPrimary
                 value='Add member'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.md}
               />
             </Button>
             {/* <MenuButton component={MenuDots}>

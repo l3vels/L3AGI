@@ -2,15 +2,15 @@ import { FormikProvider } from 'formik'
 
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import useLogin from 'pages/Auth/Login/useLogin'
 import useGithubLogin from 'pages/Auth/Login/useGithubLogin'
 import TextFieldFormik from 'components/TextFieldFormik'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from 'share-ui/components/typography/Typography'
+import Button from 'share-ui/components/Button/Button'
 
 import githubIcon from 'assets/icons/githubIcon.png'
 
@@ -51,7 +51,7 @@ const Login = () => {
       <StyledHeaderWrapper>
         <HeadingSecondary
           value={t('complete-your-mission')}
-          type={Heading.types.h2}
+          type={Heading.types?.h2}
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
         <TypographyTertiary
@@ -118,7 +118,7 @@ const Login = () => {
           </StyledInputWrapper>
         </FormikProvider>
 
-        <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
+        <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes?.MEDIUM}>
           {t('start')}
         </ButtonPrimary>
 

@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from 'share-ui/components/typography/Typography'
+import Heading from 'share-ui/components/Heading/Heading'
+import Button from 'share-ui/components/Button/Button'
 
 import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import profile from 'assets/images/large.png'
@@ -15,6 +15,10 @@ import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Account = () => {
   const { t } = useTranslation()
@@ -25,17 +29,21 @@ const Account = () => {
       <div id='header_group'>
         <StyledHeaderGroup>
           <StyledTextHeaderWrapper>
-            <HeadingPrimary type={Heading.types.h1} size={Heading.sizes.lg} value='My Profile' />
+            <HeadingPrimary
+              type={Heading.types?.h1}
+              size={Heading.sizes?.LARGE}
+              value='My Profile'
+            />
           </StyledTextHeaderWrapper>
           <StyledButtonsContainer>
             <StyledChangePasswordButton
               onClick={openCreateChangePasswordModal}
-              size={Button.sizes.MEDIUM}
+              size={Button.sizes?.MEDIUM}
             >
               <TypographyPrimary
                 value={t('change-password')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.sm}
               />
             </StyledChangePasswordButton>
           </StyledButtonsContainer>

@@ -16,11 +16,12 @@ import { useTeamOfAgentsByIdService } from 'services/team/useTeamOfAgentsByIdSer
 
 import styled from 'styled-components'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tags from '@l3-lib/ui-core/dist/Tags'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import Typography from 'share-ui/components/typography/Typography'
+import Tags from 'share-ui/components/Tags/Tags'
 
-import EyeOpen from '@l3-lib/ui-core/dist/icons/EyeOpen'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
@@ -114,11 +115,11 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                         }
                         icon={() => (
                           <StyledIconWrapper className='hiddenButton'>
-                            <StyledEyeOpenIcon size={50} />
+                            <StyledEyeOpenIcon />
                           </StyledIconWrapper>
                         )}
-                        size={IconButton.sizes.SMALL}
-                        kind={IconButton.kinds.TERTIARY}
+                        size={IconButton.sizes?.SMALL}
+                        kind={IconButton.kinds?.TERTIARY}
                         // ariaLabel='View'
                       />
                       <Tags
@@ -132,7 +133,7 @@ const TeamOfAgentView = ({ teamOfAgentsData }: { teamOfAgentsData?: any }) => {
                         }
                         color='Tags.colors.gradient_dark_blue'
                         readOnly
-                        size='small'
+                        size={Tags.sizes?.SMALL}
                         outlined
                       />
                     </StyledSecondInfoWrapper>

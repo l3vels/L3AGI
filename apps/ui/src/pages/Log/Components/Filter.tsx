@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { FormikProvider } from 'formik'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 // import useFilter from './useFilter'
 import DatePicker from 'components/DatePicker'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Typography from 'share-ui/components/typography/Typography'
+import Button from 'share-ui/components/Button/Button'
 import AdditionalFilters from './AdditionalFilters'
 import CreateLogModal from '../CreateLogModal/CreateLogModal'
 import { useModal } from 'hooks'
@@ -91,22 +91,22 @@ const Filter = ({ filter }: any) => {
 
   return (
     <StyledContainer>
-      <TextField
+      {/* <TextField
         // field_name='search'
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
         placeholder='Filter by resource ID'
-      />
-      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowDate(true)}>
+      /> */}
+      <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowDate(true)}>
         <TypographyPrimary value='Date' type={Typography.types.LABEL} size={Typography.sizes.sm} />
       </ButtonTertiary>
-      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowMethod(true)}>
+      <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowMethod(true)}>
         <TypographyPrimary
           value='Method'
           type={Typography.types.LABEL}
           size={Typography.sizes.sm}
         />
       </ButtonTertiary>
-      <ButtonTertiary size={Button.sizes.SMALL} onClick={() => setShowEndpoint(true)}>
+      <ButtonTertiary size={Button.sizes?.SMALL} onClick={() => setShowEndpoint(true)}>
         <TypographyPrimary
           value='API endpoints'
           type={Typography.types.LABEL}
@@ -114,7 +114,7 @@ const Filter = ({ filter }: any) => {
         />
       </ButtonTertiary>
       {/* <StyledAdditionalFilterContainer>
-        <Button kind={Button.kinds.TERTIARY} size={Button.sizes.SMALL} onClick={openCreateLogModal}>
+        <Button kind={Button.kinds?.TERTIARY} size={Button.sizes?.SMALL} onClick={openCreateLogModal}>
           <Typography
             value='More...'
             type={Typography.types.LABEL}

@@ -6,8 +6,8 @@ import { useChatMessagesHistoryService } from 'services/chat/useChatMessagesServ
 
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 import { useNavigate } from 'react-router-dom'
 import { useCreateAgentFromTemplateService } from 'services/agent/useCreateAgentFromTemplateService'
 import { useCheckAgentIsCreatedService } from 'services/agent/useCheckAgentIsCreatedService'
@@ -110,7 +110,7 @@ const ChatHistory = () => {
       </StyledMessages>
 
       <StyledButtonWrapper>
-        <StyledButton onClick={handleCreate} disabled={isLoading} size={Button.sizes.MEDIUM}>
+        <StyledButton onClick={handleCreate} disabled={isLoading} size={Button.sizes?.MEDIUM}>
           {isLoading ? <Loader size={32} /> : `${t('start-your-chat')}`}
         </StyledButton>
       </StyledButtonWrapper>

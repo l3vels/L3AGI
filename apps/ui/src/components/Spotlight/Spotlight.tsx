@@ -3,11 +3,12 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyQuaternary from 'components/Typography/Quaternary'
-import Search from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import Search from 'share-ui/components/Icon/Icons/components/SearchOutline'
 
-import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
+import SendIcon from 'share-ui/components/Icon/Icons/components/Send'
+import SpotlightPlugins from './SpotlightPlugins'
 import ChatLoader from './ChatLoader'
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
@@ -17,6 +18,10 @@ import { ToastContext } from 'contexts'
 import Mentions from 'components/Mentions'
 import CommandIcon from './CommandIcon'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Spotlight = () => {
   const { t } = useTranslation()
@@ -179,8 +184,8 @@ const Spotlight = () => {
               <ChatLoader />
               <TypographyQuaternary
                 value={t('thinking')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.sm}
                 style={{ color: 'red' }}
               />
             </>
@@ -199,8 +204,8 @@ const Spotlight = () => {
                 {!expanded && (
                   <TypographyQuaternary
                     value={t('search')}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
+                    type={TypographyTypes.LABEL}
+                    size={TypographySizes.sm}
                   />
                 )}
                 {
@@ -300,7 +305,7 @@ const Spotlight = () => {
 
       {/* <StyledNotificationsButtonWrapper>
         <Button
-          kind={Button.kinds.TERTIARY}
+          kind={Button.kinds?.TERTIARY}
           onClick={() => openModal({ name: 'notifications-modal' })}
         >
           <StyledNotificationLabelWrapper>

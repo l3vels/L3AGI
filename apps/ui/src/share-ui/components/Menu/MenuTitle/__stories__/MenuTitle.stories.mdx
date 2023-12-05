@@ -1,0 +1,58 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { createStoryMetaSettings } from "../../../../storybook/functions/createStoryMetaSettings";
+import MenuTitle from "../MenuTitle";
+import { menuTitleCaptionPositionsTemplate, menuTitleTemplate } from "./MenuTitle.stories";
+
+export const metaSettings = createStoryMetaSettings({
+  component: MenuTitle,
+  enumPropNamesArray: ["captionPosition"]
+});
+
+<Meta
+  title="Navigation/Menu - (Coming Soon)/MenuTitle - (Coming Soon)"
+  component={MenuTitle}
+  argTypes={metaSettings.argTypes}
+  decorators={metaSettings.decorators}
+/>
+
+<!--- Component documentation -->
+
+# Menu Title
+
+- [Overview](#overview)
+- [Props](#props)
+- [Variants](#variants)
+- [Feedback](#feedback)
+
+## Overview
+
+<Canvas>
+  <Story
+    name="Overview"
+    args={{ caption: "Menu title", imageSrc: "https://picsum.photos/200", onImageClick: () => {} }}
+  >
+    {menuTitleTemplate.bind({})}
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={MenuTitle} />
+
+## Variants
+
+### Caption positions
+
+<Canvas>
+  <Story name="Caption placements">{menuTitleCaptionPositionsTemplate.bind({})}</Story>
+</Canvas>
+
+### Children Props
+
+<Canvas>
+  <Story name="Children Props">
+    <MenuTitle>
+      <span>Children Props Text</span>
+    </MenuTitle>
+  </Story>
+</Canvas>

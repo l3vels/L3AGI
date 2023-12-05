@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import useRegister from 'pages/Auth/Register/useRegister'
 import TextFieldFormik from 'components/TextFieldFormik'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
 import { StyledCenterFormContainer } from 'styles/globalStyle.css'
 import { useModal } from 'hooks'
 
@@ -16,7 +17,7 @@ import {
 } from 'components/HeaderButtons/HeaderButtons'
 import { StyledHeaderWrapper, StyledInputWrapper } from '../Login/Login'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import OrDivider from 'components/OrDivider/OrDivider'
 import useGithubLogin from '../Login/useGithubLogin'
@@ -24,6 +25,10 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Register = () => {
   const { t } = useTranslation()
@@ -39,15 +44,15 @@ const Register = () => {
       <StyledHeaderWrapper>
         <HeadingSecondary
           value={t('join-our-community')}
-          type={Heading.types.h2}
+          type={Heading.types?.h2}
           customColor='rgba(255, 255, 255, 0.9)'
           style={{ fontSize: 24, lineHeight: 'normal' }}
         />
 
         <TypographyTertiary
           value={t('ai-agents-description')}
-          type={Typography.types.label}
-          size={Typography.sizes.sm}
+          type={TypographyTypes.LABEL}
+          size={TypographySizes.sm}
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
@@ -96,8 +101,8 @@ const Register = () => {
         <StyledLoginWrapper>
           <TypographyTertiary
             value={t('already-have-an-account')}
-            type={Typography.types.label}
-            size={Typography.sizes.md}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.md}
           />
           <button
             onClick={() => {
@@ -106,8 +111,8 @@ const Register = () => {
           >
             <TypographyPrimary
               value={t('login')}
-              type={Typography.types.label}
-              size={Typography.sizes.md}
+              type={TypographyTypes.LABEL}
+              size={TypographySizes.md}
               as={'a'}
               style={{
                 textDecorationLine: 'underline',

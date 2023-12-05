@@ -1,23 +1,24 @@
 import styled from 'styled-components'
 
 import Table from 'components/Table'
-import { useTranslation } from 'react-i18next'
-import Heading from '@l3-lib/ui-core/dist/Heading'
 
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import Heading from 'share-ui/components/Heading/Heading'
+import { useTranslation } from 'react-i18next'
+
+import TextField from 'share-ui/components/TextField/TextField'
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import SearchOutline from 'share-ui/components/Icon/Icons/components/SearchOutline'
 import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useSession } from './useSession'
 import SessionDropdown from './SessionDropdown'
 import columnConfig from './columnConfig'
-// import DatePicker from '@l3-lib/ui-core/dist/DatePicker'
+
 import { SetStateAction, useState } from 'react'
 import DatePickerField from 'components/DatePicker/DatePicker'
 import { Moment } from 'moment'
@@ -30,6 +31,7 @@ const Sessions = () => {
     filteredData,
     searchText,
     setSearchText,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     selectedAgentNames,
     setSelectedAgentNames,
     startDate,
@@ -96,7 +98,7 @@ const Sessions = () => {
 
       <ComponentsWrapper noPadding>
         <StyledTableWrapper>
-          <StyledTable expand columns={columnConfig} data={filteredData} />
+          <StyledTable expand columns={columnConfig} data={filteredData} pagination />
         </StyledTableWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
@@ -226,6 +228,7 @@ const StyledRightSideWrapper = styled.div`
 
 const StyledDateWrapper = styled.div`
   z-index: 10;
+
   .input-component {
     width: 300px;
     border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
@@ -238,6 +241,9 @@ const StyledDateWrapper = styled.div`
   }
   .search_component_wrapper input[type='search'] {
     color: ${({ theme }) => theme.body.textColorSecondary};
+  }
+  .cvAljc {
+    font-size: 14px !important;
   }
 `
 
@@ -258,6 +264,7 @@ const StyledSearchInput = styled.input`
   border-radius: 8px;
   padding-left: 15px;
   padding-right: 40px;
+  font-size: 14px;
 `
 
 const StyledSearchIcon = styled(SearchOutline)`

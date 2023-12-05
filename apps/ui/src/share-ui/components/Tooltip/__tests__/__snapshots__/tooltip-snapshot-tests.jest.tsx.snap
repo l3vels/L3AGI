@@ -1,0 +1,455 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tooltip renders correctly with end arrowPosition 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={false}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component top edge-center has-tooltip"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        test
+      </div>
+      <svg
+        className="l3-style-tooltip-arrow l3-style-arrow l3-style-arrow-dark padding-size-undefined"
+        data-placement="top"
+        fill="none"
+        height={5}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "position": "absolute",
+          }
+        }
+        width={28}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.971 1.617 8.046 4.572A3 3 0 0 1 6.502 5h14.996a3 3 0 0 1-1.544-.428L15.03 1.617a2 2 0 0 0-2.058 0Z"
+          fill="#000"
+          fillOpacity={0.3}
+        />
+        <path
+          clipRule="evenodd"
+          d="M6.66 4H4v1h2.66a4.5 4.5 0 0 0 2.453-.727l3.524-2.291a2.5 2.5 0 0 1 2.726 0l3.524 2.291A4.5 4.5 0 0 0 21.34 5H24V4h-2.66a3.5 3.5 0 0 1-1.908-.565l-3.524-2.292a3.5 3.5 0 0 0-3.816 0L8.569 3.436A3.5 3.5 0 0 1 6.66 4Z"
+          fill="#000"
+          fillOpacity={0.3}
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </span>,
+]
+`;
+
+exports[`Tooltip renders correctly with hideWhenReferenceHidden 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={null}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component top edge-center has-tooltip"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        test
+      </div>
+      <svg
+        className="l3-style-tooltip-arrow l3-style-arrow l3-style-arrow-dark padding-size-undefined"
+        data-placement="top"
+        fill="none"
+        height={5}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "position": "absolute",
+          }
+        }
+        width={28}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.971 1.617 8.046 4.572A3 3 0 0 1 6.502 5h14.996a3 3 0 0 1-1.544-.428L15.03 1.617a2 2 0 0 0-2.058 0Z"
+          fill="#000"
+          fillOpacity={0.3}
+        />
+        <path
+          clipRule="evenodd"
+          d="M6.66 4H4v1h2.66a4.5 4.5 0 0 0 2.453-.727l3.524-2.291a2.5 2.5 0 0 1 2.726 0l3.524 2.291A4.5 4.5 0 0 0 21.34 5H24V4h-2.66a3.5 3.5 0 0 1-1.908-.565l-3.524-2.292a3.5 3.5 0 0 0-3.816 0L8.569 3.436A3.5 3.5 0 0 1 6.66 4Z"
+          fill="#000"
+          fillOpacity={0.3}
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </span>,
+]
+`;
+
+exports[`Tooltip renders correctly with justify 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={false}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component top edge-end has-tooltip"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        test
+      </div>
+      <svg
+        className="l3-style-tooltip-arrow l3-style-arrow l3-style-arrow-dark padding-size-undefined"
+        data-placement="top"
+        fill="none"
+        height={5}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "position": "absolute",
+          }
+        }
+        width={28}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.971 1.617 8.046 4.572A3 3 0 0 1 6.502 5h14.996a3 3 0 0 1-1.544-.428L15.03 1.617a2 2 0 0 0-2.058 0Z"
+          fill="#000"
+          fillOpacity={0.3}
+        />
+        <path
+          clipRule="evenodd"
+          d="M6.66 4H4v1h2.66a4.5 4.5 0 0 0 2.453-.727l3.524-2.291a2.5 2.5 0 0 1 2.726 0l3.524 2.291A4.5 4.5 0 0 0 21.34 5H24V4h-2.66a3.5 3.5 0 0 1-1.908-.565l-3.524-2.292a3.5 3.5 0 0 0-3.816 0L8.569 3.436A3.5 3.5 0 0 1 6.66 4Z"
+          fill="#000"
+          fillOpacity={0.3}
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </span>,
+]
+`;
+
+exports[`Tooltip renders correctly with position 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={false}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component left edge-center has-tooltip"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        test
+      </div>
+      <svg
+        className="l3-style-tooltip-arrow l3-style-arrow l3-style-arrow-dark padding-size-undefined"
+        data-placement="left"
+        fill="none"
+        height={5}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "position": "absolute",
+          }
+        }
+        width={28}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.971 1.617 8.046 4.572A3 3 0 0 1 6.502 5h14.996a3 3 0 0 1-1.544-.428L15.03 1.617a2 2 0 0 0-2.058 0Z"
+          fill="#000"
+          fillOpacity={0.3}
+        />
+        <path
+          clipRule="evenodd"
+          d="M6.66 4H4v1h2.66a4.5 4.5 0 0 0 2.453-.727l3.524-2.291a2.5 2.5 0 0 1 2.726 0l3.524 2.291A4.5 4.5 0 0 0 21.34 5H24V4h-2.66a3.5 3.5 0 0 1-1.908-.565l-3.524-2.292a3.5 3.5 0 0 0-3.816 0L8.569 3.436A3.5 3.5 0 0 1 6.66 4Z"
+          fill="#000"
+          fillOpacity={0.3}
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </span>,
+]
+`;
+
+exports[`Tooltip renders correctly with style 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={false}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component top edge-center has-tooltip"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "width": "200px",
+          }
+        }
+      >
+        test
+      </div>
+      <svg
+        className="l3-style-tooltip-arrow l3-style-arrow l3-style-arrow-dark padding-size-undefined"
+        data-placement="top"
+        fill="none"
+        height={5}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "position": "absolute",
+          }
+        }
+        width={28}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.971 1.617 8.046 4.572A3 3 0 0 1 6.502 5h14.996a3 3 0 0 1-1.544-.428L15.03 1.617a2 2 0 0 0-2.058 0Z"
+          fill="#000"
+          fillOpacity={0.3}
+        />
+        <path
+          clipRule="evenodd"
+          d="M6.66 4H4v1h2.66a4.5 4.5 0 0 0 2.453-.727l3.524-2.291a2.5 2.5 0 0 1 2.726 0l3.524 2.291A4.5 4.5 0 0 0 21.34 5H24V4h-2.66a3.5 3.5 0 0 1-1.908-.565l-3.524-2.292a3.5 3.5 0 0 0-3.816 0L8.569 3.436A3.5 3.5 0 0 1 6.66 4Z"
+          fill="#000"
+          fillOpacity={0.3}
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </span>,
+]
+`;
+
+exports[`Tooltip renders correctly with theme 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={false}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component top edge-center has-tooltip"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-error padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        test
+      </div>
+      <svg
+        className="l3-style-tooltip-arrow l3-style-arrow l3-style-arrow-error padding-size-undefined"
+        data-placement="top"
+        fill="none"
+        height={5}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "position": "absolute",
+          }
+        }
+        width={28}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.971 1.617 8.046 4.572A3 3 0 0 1 6.502 5h14.996a3 3 0 0 1-1.544-.428L15.03 1.617a2 2 0 0 0-2.058 0Z"
+          fill="#000"
+          fillOpacity={0.3}
+        />
+        <path
+          clipRule="evenodd"
+          d="M6.66 4H4v1h2.66a4.5 4.5 0 0 0 2.453-.727l3.524-2.291a2.5 2.5 0 0 1 2.726 0l3.524 2.291A4.5 4.5 0 0 0 21.34 5H24V4h-2.66a3.5 3.5 0 0 1-1.908-.565l-3.524-2.292a3.5 3.5 0 0 0-3.816 0L8.569 3.436A3.5 3.5 0 0 1 6.66 4Z"
+          fill="#000"
+          fillOpacity={0.3}
+          fillRule="evenodd"
+        />
+      </svg>
+    </div>
+  </span>,
+]
+`;
+
+exports[`Tooltip renders correctly with withoutDialog 1`] = `
+<div
+  className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+>
+  test
+</div>
+`;
+
+exports[`Tooltip renders correctly without arrow 1`] = `
+Array [
+  <div
+    className=""
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  />,
+  <span
+    className="l3-style-dialog-content-wrapper"
+    data-popper-reference-hidden={false}
+    onClickCapture={[Function]}
+    style={
+      Object {
+        "left": "0",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    <div
+      className="l3-style-dialog-content-component top edge-center"
+    >
+      <div
+        className="l3-style-tooltip l3-style-tooltip-dark padding-size-undefined tooptip-size-small"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        test
+      </div>
+    </div>
+  </span>,
+]
+`;

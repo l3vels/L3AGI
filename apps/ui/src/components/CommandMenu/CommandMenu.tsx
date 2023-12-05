@@ -7,7 +7,7 @@ import { useModal } from 'hooks'
 
 import { Command } from 'cmdk'
 import { get, groupBy, has, slice } from 'lodash'
-import Games from '@l3-lib/ui-core/dist/icons/Games'
+import Games from 'share-ui/components/Icon/Icons/components/Games'
 
 import {
   StyledCommandInput,

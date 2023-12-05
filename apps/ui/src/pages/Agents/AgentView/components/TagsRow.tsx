@@ -1,7 +1,7 @@
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+import Typography from 'share-ui/components/typography/Typography'
+import Tags from 'share-ui/components/Tags/Tags'
 
 import TypographySecondary from 'components/Typography/Secondary'
 import { textSlicer } from 'utils/textSlicer'
@@ -12,6 +12,8 @@ type TagsRowProps = {
 }
 
 const TagsRow = ({ items, title }: TagsRowProps) => {
+  const theme = useTheme()
+
   return (
     <StyledRow>
       <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
@@ -22,16 +24,10 @@ const TagsRow = ({ items, title }: TagsRowProps) => {
           return (
             <Tags
               key={index}
-              label={
-                <TypographySecondary
-                  value={shortName}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.xss}
-                />
-              }
-              color='Tags.colors.gradient_dark_blue'
+              label={item}
+              color={theme.body.tagColor}
               readOnly
-              size='small'
+              size={Tags.sizes?.SMALL}
               outlined
             />
           )

@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 
 import columnConfig from './columnConfig'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import Table from 'components/Table'
-import Add from '@l3-lib/ui-core/dist/icons/Add'
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
+import Heading from 'share-ui/components/Heading/Heading'
+import Typography from 'share-ui/components/typography/Typography'
 import { useNavigate } from 'react-router-dom'
 
 import useApiKeys from './useApiKeys'
@@ -41,7 +41,7 @@ const ApiKeys = () => {
               <StyledTypographyWrapper>
                 <ButtonTertiary
                   onClick={() => openLinkTab(import.meta.env.REACT_APP_API_KEYS_LINK)}
-                  size={Button.sizes.SMALL}
+                  size={Button.sizes?.SMALL}
                 >
                   <TypographyTertiary
                     value={t('learn-more')}
@@ -57,7 +57,7 @@ const ApiKeys = () => {
         <ButtonPrimary
           onClick={() => navigate('/api-key/create-api-key')}
           leftIcon={Add}
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
         >
           {t('create-api-key')}
         </ButtonPrimary>

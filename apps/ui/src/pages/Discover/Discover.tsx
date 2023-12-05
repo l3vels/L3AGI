@@ -1,16 +1,17 @@
 import styled from 'styled-components'
 import DiscoverTeamAgents from './components/DiscoverTeamAgents'
 
-import { StyledTab, StyledTabListSpan, StyledTabListWrapper } from 'styles/tabStyles.css'
+import { StyledTabListWrapper } from 'styles/tabStyles.css'
 
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
 import { t } from 'i18next'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DiscoverSystemAgents from './components/DiscoverSystemAgents'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 
 const Discover = () => {
   const navigate = useNavigate()
@@ -34,12 +35,8 @@ const Discover = () => {
     <StyledRoot>
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
-          <StyledTab onClick={() => handleTabClick(0, 'team')}>
-            <StyledTabListSpan>{`${t('team')}s`}</StyledTabListSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(1, 'agent')}>
-            <StyledTabListSpan>{`${t('agent')}s`}</StyledTabListSpan>
-          </StyledTab>
+          <Tab onClick={() => handleTabClick(0, 'team')}>{`${t('team')}s`}</Tab>
+          <Tab onClick={() => handleTabClick(1, 'agent')}>{`${t('agent')}s`}</Tab>
         </TabList>
       </StyledTabListWrapper>
 

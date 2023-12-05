@@ -9,7 +9,7 @@ import withRenderModal from 'hocs/withRenderModal'
 import CloseIconSvg from 'assets/svgComponents/CloseIconSvg'
 import useTeams from '../useTeams'
 import TeamForm from '../TeamForm'
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import BgWrapper from 'modals/components/BgWrapper'
 
 // import { StyledFormSection } from 'pages/ApiKeys/ApiKeysStyle'

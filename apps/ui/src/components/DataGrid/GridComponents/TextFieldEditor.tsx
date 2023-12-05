@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 
 const TextFieldEditor = forwardRef((props: any, ref) => {
@@ -36,7 +36,7 @@ const TextFieldEditor = forwardRef((props: any, ref) => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <StyledTextField
-        type={TextField.types.TEXT}
+        type={TextField.types?.TEXT}
         setRef={refInput}
         value={value}
         onChange={(event: any) => {

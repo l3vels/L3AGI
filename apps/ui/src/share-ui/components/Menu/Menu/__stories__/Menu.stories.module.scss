@@ -1,0 +1,18 @@
+@import "../../../../styles/theme-mixin";
+
+.component-rule {
+  &-search {
+    margin-bottom: var(--spacing-small);
+  }
+
+  &-large-dialog {
+    width: 348px;
+  }
+  &-large-menu {
+    width: 328px;
+  }
+}
+
+.menu-long-story-wrapper {
+  height: 500px;
+}

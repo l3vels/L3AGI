@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
-import Toast from '@l3-lib/ui-core/dist/Toast'
 
 import withRenderModal from 'hocs/withRenderModal'
 
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
-import ModalContent from '@l3-lib/ui-core/dist/ModalContent'
-import Icon from '@l3-lib/ui-core/dist/Icon'
-import Warning from '@l3-lib/ui-core/dist/icons/Warning'
-import Copy from '@l3-lib/ui-core/dist/icons/Copy'
-import Done from '@l3-lib/ui-core/dist/icons/Check'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
+
+import Warning from 'share-ui/components/Icon/Icons/components/Warning'
+import Copy from 'share-ui/components/Icon/Icons/components/Copy'
+import Done from 'share-ui/components/Icon/Icons/components/Check'
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
+import Toast from 'share-ui/components/Toast/Toast'
+import Icon from 'share-ui/components/Icon/Icon'
 
 type ShowApiKeyModalProps = {
   closeModal: () => void
@@ -69,7 +69,7 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
             )}
           </StyledTokenIcon>
         </StyledTokenContainer>
-        <StyledWarningToken
+        {/* <StyledWarningToken
           open
           autoHideDuration={5000}
           type={Toast.types.WARNING_LOW_INFORMATIONAL}
@@ -91,9 +91,9 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
           }
           hideIcon={false}
           closeable={false}
-        />
+        /> */}
         <StyledApiModalFooter>
-          <Button kind={Button.kinds.PRIMARY} size={Button.sizes.MEDIUM} onClick={closeModal}>
+          <Button kind={Button.kinds?.PRIMARY} size={Button.sizes?.MEDIUM} onClick={closeModal}>
             {t('done')}
           </Button>
         </StyledApiModalFooter>

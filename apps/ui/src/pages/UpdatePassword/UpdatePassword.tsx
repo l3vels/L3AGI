@@ -1,10 +1,7 @@
-// import TextField from 'bf-ui/dist/TextField'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
-// import Typography from 'bf-ui/dist/Typography'
-// import Button from 'bf-ui/dist/Button'
 import useUpdatePassword from './useUpdatePassword'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 
 import { ButtonPrimary } from 'components/Button/Button'
 

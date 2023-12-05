@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
-import Delete from '@l3-lib/ui-core/dist/icons/Delete'
+import Delete from 'share-ui/components/Icon/Icons/components/Delete'
 
 import FormikTextField from 'components/TextFieldFormik'
 import { FieldArray } from 'formik'
@@ -34,8 +34,8 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
               <StyledCustomFieldWrapper key={index}>
                 <FormikTextField name={`${formikField}.${index}`} />
 
-                <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes.SMALL}>
-                  <StyledDeleteIcon siz={50} />
+                <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes?.SMALL}>
+                  <StyledDeleteIcon size={32} />
                 </StyledButtonTertiary>
               </StyledCustomFieldWrapper>
             </>
@@ -44,7 +44,7 @@ const CustomField = ({ formik, formikField, placeholder }: CustomFieldProps) => 
           <StyledButtonWrapper>
             <ButtonSecondary
               onClick={() => insert(formik?.values[formikField].length, '')}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               + {t('add')}
             </ButtonSecondary>
@@ -61,11 +61,11 @@ const StyledFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 5px;
 `
 const StyledCustomFieldWrapper = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 
   gap: 5px;
 `
@@ -74,4 +74,5 @@ const StyledButtonWrapper = styled.div`
 `
 const StyledButtonTertiary = styled(ButtonTertiary)`
   padding: 0 4px;
+  margin-bottom: 6px;
 `

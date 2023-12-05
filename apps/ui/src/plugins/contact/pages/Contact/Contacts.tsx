@@ -4,15 +4,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 
-import Tab from '@l3-lib/ui-core/dist/Tab'
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
 import {
   StyledHeaderGroup,
@@ -30,7 +30,7 @@ import { useMemo, useState } from 'react'
 import Table from 'components/Table'
 import Groups, { StyledTableButtons } from '../Group/Groups'
 
-import Microphone from '@l3-lib/ui-core/dist/icons/Microphone'
+import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
 
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 
@@ -38,12 +38,7 @@ import { useAgents } from 'pages/Agents/useAgents'
 import AgentChatCard from 'components/ChatCards/AgentChatCard'
 import { useModal } from 'hooks'
 import { useContactForm } from './ContactForm/useContactForm'
-import {
-  StyledTab,
-  StyledTabListSpan,
-  StyledTabListWrapper,
-  StyledTabRootWrapper,
-} from 'styles/tabStyles.css'
+import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { t } from 'i18next'
 import { StyledButtonsWrapper } from 'styles/globalStyle.css'
 
@@ -115,8 +110,8 @@ const Contacts = () => {
                 <IconButton
                   onClick={handleEndCall}
                   icon={() => <StyledCloseIcon size={25} />}
-                  size={IconButton.sizes.SMALL}
-                  kind={IconButton.kinds.TERTIARY}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Hung up'
                 />
               </StyledTableButtons>
@@ -158,16 +153,16 @@ const Contacts = () => {
               <IconButton
                 onClick={() => deleteContactHandler(cell.value)}
                 icon={() => <StyledDeleteIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Delete'
               />
 
               <IconButton
                 onClick={() => navigate(`/contacts/${cell.value}/edit-contact`)}
                 icon={() => <StyledEditIcon />}
-                size={IconButton.sizes.SMALL}
-                kind={IconButton.kinds.TERTIARY}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
                 // ariaLabel='Edit'
               />
             </StyledTableButtons>
@@ -197,12 +192,8 @@ const Contacts = () => {
     <StyledTabRootWrapper>
       <StyledTabListWrapper>
         <TabList activeTabId={activeTab}>
-          <StyledTab onClick={() => handleTabClick(0, 'contact')}>
-            <StyledTabListSpan>{`${t('contacts')}`}</StyledTabListSpan>
-          </StyledTab>
-          <StyledTab onClick={() => handleTabClick(1, 'group')}>
-            <StyledTabListSpan>{`${t('groups')}`}</StyledTabListSpan>
-          </StyledTab>
+          <Tab onClick={() => handleTabClick(0, 'contact')}>{`${t('contacts')}`}</Tab>
+          <Tab onClick={() => handleTabClick(1, 'group')}>{`${t('groups')}`}</Tab>
         </TabList>
       </StyledTabListWrapper>
 

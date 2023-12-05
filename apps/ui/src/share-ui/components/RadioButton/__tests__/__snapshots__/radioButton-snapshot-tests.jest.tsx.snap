@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioButton renders correctly when checked 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        checked={true}
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        disabled={false}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly when default checked 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={true}
+        disabled={false}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly when disabled 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component disabled"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={false}
+        disabled={true}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly when unchecked 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        checked={false}
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        disabled={false}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly with componentClassName 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component test-classname"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={false}
+        disabled={false}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly with empty props 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={false}
+        disabled={false}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly with name 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={false}
+        disabled={false}
+        name="radiosName"
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly with text 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={false}
+        disabled={false}
+        name=""
+        type="radio"
+        value=""
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    <span
+      className="l3-style-radio-button-component__radio-label l3-style-radio-button-component__radio-label--kind-primary l3-style-radio-button-component__radio-label--size-large"
+    >
+      test text
+    </span>
+  </label>
+</div>
+`;
+
+exports[`RadioButton renders correctly with value 1`] = `
+<div
+  className="wrapper"
+>
+  <label
+    className="l3-style-radio-button-component"
+  >
+    <span
+      className="l3-style-radio-button-component__radio-input-container l3-style-radio-button-component__radio-input-container--kind-primary"
+    >
+      <input
+        className="l3-style-radio-button-component__radio-input-container__radio-input"
+        defaultChecked={false}
+        disabled={false}
+        name=""
+        type="radio"
+        value="optionValue"
+      />
+      <span
+        className="l3-style-radio-button-component__radio-input-container__radio-control l3-style-radio-button-component__radio-input-container__radio-control--size-large l3-style-radio-button-component__radio-input-container__radio-control--label-animation l3-style-radio-button-component__radio-input-container__radio-control--label-animation--size-large"
+      />
+    </span>
+    
+  </label>
+</div>
+`;

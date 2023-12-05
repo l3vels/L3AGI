@@ -1,10 +1,16 @@
 import styled from 'styled-components'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Add from 'share-ui/components/Icon/Icons/components/Add'
+
+import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 type ListHeaderProps = {
   title: string
@@ -16,8 +22,8 @@ const ListHeader = ({ title, onAddClick }: ListHeaderProps) => {
     <StyledListHeader>
       <TypographySecondary
         value={`${title}s`}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
+        type={TypographyTypes.LABEL}
+        size={TypographySizes.md}
       />
       {onAddClick && (
         <IconButton
@@ -27,8 +33,8 @@ const ListHeader = ({ title, onAddClick }: ListHeaderProps) => {
             </StyledIconWrapper>
           )}
           onClick={onAddClick}
-          size={IconButton.sizes.SMALL}
-          kind={IconButton.kinds.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
           ariaLabel={`Add ${title}`}
         />
       )}

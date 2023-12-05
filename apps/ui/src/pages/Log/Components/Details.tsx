@@ -6,9 +6,9 @@ import moment from 'moment'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from 'contexts'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tags from '@l3-lib/ui-core/dist/Tags'
+import Heading from 'share-ui/components/Heading/Heading'
+import Typography from 'share-ui/components/typography/Typography'
+import Tags from 'share-ui/components/Tags/Tags'
 
 import { tomorrowNightBlue } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -49,19 +49,27 @@ const Details = ({ log }: any) => {
     <StyledContainer>
       {filteredLogId[0]?.is_gql === true ? (
         <StyledTitle>
-          <HeadingPrimary type={Heading.types.h1} value={filteredLogId[0]?.gql_type} size='small' />
-          <HeadingPrimary type={Heading.types.h1} value='&ensp;/' size='small' />
           <HeadingPrimary
-            type={Heading.types.h1}
+            type={Heading.types?.h1}
+            value={filteredLogId[0]?.gql_type}
+            size='small'
+          />
+          <HeadingPrimary type={Heading.types?.h1} value='&ensp;/' size='small' />
+          <HeadingPrimary
+            type={Heading.types?.h1}
             value={filteredLogId[0]?.gql_source}
             size='small'
           />
         </StyledTitle>
       ) : (
         <StyledTitle>
-          <HeadingPrimary type={Heading.types.h1} value={filteredLogId[0]?.method} size='small' />
-          <HeadingPrimary type={Heading.types.h1} value='&ensp;' size='small' />
-          <HeadingPrimary type={Heading.types.h1} value={filteredLogId[0]?.endpoint} size='small' />
+          <HeadingPrimary type={Heading.types?.h1} value={filteredLogId[0]?.method} size='small' />
+          <HeadingPrimary type={Heading.types?.h1} value='&ensp;' size='small' />
+          <HeadingPrimary
+            type={Heading.types?.h1}
+            value={filteredLogId[0]?.endpoint}
+            size='small'
+          />
         </StyledTitle>
       )}
 

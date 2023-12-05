@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from 'share-ui/components/Button/Button'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Typography from 'share-ui/components/typography/Typography'
+
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 import { useEffect, useState } from 'react'
 import NotificationItem from './NotificationItem'
 import { game_default_image } from 'helpers/const_helper'
@@ -238,16 +239,16 @@ const NotificationsDateGroup = ({
         {isOpen && (
           <StyledHeaderButtonWrapper>
             <ButtonPrimary
-              size={IconButton.sizes.SMALL}
+              size={IconButton.sizes?.SMALL}
               onClick={() => updateNotifications(notifications)}
               disabled={activeNotificationCount === 0 || marked}
             >
               Mark as read
             </ButtonPrimary>
             <IconButton
-              kind={IconButton.kinds.TERTIARY}
+              kind={IconButton.kinds?.TERTIARY}
               leftIcon={() => <Close />}
-              size={IconButton.sizes.XS}
+              size={IconButton.sizes?.XS}
               onClick={() => onClose()}
             />
           </StyledHeaderButtonWrapper>

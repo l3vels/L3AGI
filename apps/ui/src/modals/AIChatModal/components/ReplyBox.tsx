@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import Typography from 'share-ui/components/typography/Typography'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 
 import { useHumanMessage } from './ChatMessageList/components/useHumanMessage'
 import HumanMessageText from './ChatMessageList/components/HumanMessageText'
@@ -67,9 +68,9 @@ const ReplyBox = ({ onClose, reply }: ReplyBoxProps) => {
         )}
       </StyledReplyText>
       <IconButton
-        size={IconButton.sizes.SMALL}
+        size={IconButton.sizes?.SMALL}
         icon={() => <StyledCloseIcon size='22' />}
-        kind={IconButton.kinds.TERTIARY}
+        kind={IconButton.kinds?.TERTIARY}
         onClick={onClose}
       />
     </StyledReplyBox>
