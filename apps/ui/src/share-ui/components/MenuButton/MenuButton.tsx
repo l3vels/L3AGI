@@ -22,6 +22,7 @@ import { HideShowEvent } from '../Dialog/consts/dialog-show-hide-event'
 import { NOOP } from '../../utils/function-utils'
 import { DialogSize } from '../DialogContentContainer/DialogContentContainerConstants'
 import { Menu } from '../Icon/Icons'
+import styled from 'styled-components'
 
 function bemClass(className: string) {
   return `menu-button--wrapper--${className}`
@@ -322,16 +323,16 @@ const MenuButton: L3Component<MenuButtonProps> & {
           isOpen={isOpen}
           hideWhenReferenceHidden={hideWhenReferenceHidden}
         >
-          <button
+          <StyledButton
             id={id}
             ref={mergedRef}
             type='button'
-            className={cx('menu-button--wrapper', overrideClassName, bemClass(`size-${size}`), {
-              [bemClass('open')]: isOpen,
-              [openDialogComponentClassName]: isOpen && openDialogComponentClassName,
-              [bemClass('disabled')]: disabled,
-              [bemClass('text')]: text,
-            })}
+            // className={cx('menu-button--wrapper', overrideClassName, bemClass(`size-${size}`), {
+            //   [bemClass('open')]: isOpen,
+            //   [openDialogComponentClassName]: isOpen && openDialogComponentClassName,
+            //   [bemClass('disabled')]: disabled,
+            //   [bemClass('text')]: text,
+            // })}
             aria-haspopup='true'
             aria-expanded={isOpen}
             aria-label={!text && ariaLabel}
@@ -341,7 +342,7 @@ const MenuButton: L3Component<MenuButtonProps> & {
             {componentPosition === MenuButton.componentPositions.START && icon}
             {text && <span className={bemClass('inner-text')}>{text}</span>}
             {componentPosition === MenuButton.componentPositions.END && icon}
-          </button>
+          </StyledButton>
         </Dialog>
       </Tooltip>
     )
@@ -357,3 +358,19 @@ Object.assign(MenuButton, {
 })
 
 export default MenuButton
+
+const StyledButton = styled.button`
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: ${({ theme }) => theme.body.humanMessageBgColor};
+  }
+  path {
+    stroke: ${({ theme }) => theme.body.iconColor};
+  }
+`

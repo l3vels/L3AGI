@@ -163,7 +163,9 @@ const Textarea: L3Component<TextareaProps, unknown> = forwardRef(
 
 export default Textarea
 
-const StyledTextareaWrapper = styled.div``
+const StyledTextareaWrapper = styled.div`
+  padding: 5px 0;
+`
 
 const StyledTextarea = styled.textarea`
   width: 100%;
