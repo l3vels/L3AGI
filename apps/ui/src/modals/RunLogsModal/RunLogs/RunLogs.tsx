@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import styled from 'styled-components'
 import { useRunLogsService } from 'services/run'
 import Loader from 'share-ui/components/Loader/Loader'
@@ -5,11 +7,11 @@ import Loader from 'share-ui/components/Loader/Loader'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
-import { useState } from 'react'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
 
 import RunLogMessages from './RunLogMessages'
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
-import { StyledFormTabList, StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
+import { StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
 
 type RunLogsProps = {
   runId: string
@@ -33,13 +35,13 @@ const RunLogs = ({ runId }: RunLogsProps) => {
   return (
     <StyledWrapper>
       <StyledFormTabsWrapper>
-        <StyledFormTabList size='small' activeTabId={activeTab}>
+        <TabList size='small' activeTabId={activeTab} isColumn>
           {data.map(({ name }, index) => (
             <Tab key={index} onClick={() => handleTabClick(index)}>
               {`${index + 1} ${name}`}
             </Tab>
           ))}
-        </StyledFormTabList>
+        </TabList>
       </StyledFormTabsWrapper>
 
       <StyledTabContextWrapper>
