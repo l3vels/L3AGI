@@ -3,7 +3,7 @@ import { useModal } from 'hooks'
 
 import { StyledCardsWrapper } from 'pages/Agents/Agents'
 import {
-  // StyledHeaderGroup,
+  StyledHeaderGroup,
   // StyledSectionDescription,
   // StyledSectionTitle,
   StyledSectionWrapper,
