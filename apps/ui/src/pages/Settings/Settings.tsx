@@ -10,8 +10,8 @@ import {
 } from 'pages/Home/homeStyle.css'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import BackButton from 'components/BackButton'
 
@@ -42,7 +42,7 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
               <ButtonPrimary
                 onClick={formik?.handleSubmit}
                 disabled={isLoading}
-                size={Button.sizes.SMALL}
+                size={Button.sizes?.SMALL}
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
               </ButtonPrimary>
@@ -66,7 +66,7 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
                 closeModal('settings-modal')
               }}
               disabled={isLoading}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               {isLoading ? <Loader size={32} /> : 'Save'}
             </ButtonPrimary>

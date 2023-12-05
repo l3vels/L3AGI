@@ -3,18 +3,19 @@ import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Typography from 'share-ui/components/typography/Typography'
+import Heading from 'share-ui/components/Heading/Heading'
 import useChangePassword from 'pages/ChangePassword/useChangePassword'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Close from '@l3-lib/ui-core/dist/icons/CloseOutline'
-import Button from '@l3-lib/ui-core/dist/Button'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import Close from 'share-ui/components/Icon/Icons/components/CloseOutline'
+import Button from 'share-ui/components/Button/Button'
 // import Button from 'oldComponents/atoms/Button'
 
 import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import TypographySecondary from 'components/Typography/Secondary'
 import HeadingPrimary from 'components/Heading/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
@@ -34,8 +35,8 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
           <IconButton
             onClick={closeModal}
             icon={Close}
-            kind={IconButton.kinds.TERTIARY}
-            size={IconButton.sizes.LARGE}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.LARGE}
           />
         </StyledCloseButton>
       </StyledHeaderGroup>
@@ -49,8 +50,8 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
                 customColor={'#FFFFFF'}
               /> */}
             <HeadingPrimary
-              type={Heading.types.h1}
-              size={Heading.sizes.lg}
+              type={Heading.types?.h1}
+              size={Heading.sizes?.MEDIUM}
               value={t('change-password')}
             />
           </StyledTextWrapper>
@@ -121,7 +122,7 @@ const ChangePassword = ({ closeModal }: CreateChangePasswordModalProps) => {
               />
 
               <StyledButtonWrapper>
-                <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes.MEDIUM}>
+                <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes?.MEDIUM}>
                   <TypographySecondary
                     value={t('update-password')}
                     type={Typography.types.LABEL}

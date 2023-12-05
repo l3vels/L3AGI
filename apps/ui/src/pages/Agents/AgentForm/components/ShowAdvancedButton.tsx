@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import NavigationChevronUp from '@l3-lib/ui-core/dist/icons/NavigationChevronUp'
-import NavigationChevronDown from '@l3-lib/ui-core/dist/icons/NavigationChevronDown'
+import NavigationChevronUp from 'share-ui/components/Icon/Icons/components/NavigationChevronUp'
+import NavigationChevronDown from 'share-ui/components/Icon/Icons/components/NavigationChevronDown'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const ShowAdvancedButton = ({ onClick, isShow }: { onClick: () => void; isShow: boolean }) => {

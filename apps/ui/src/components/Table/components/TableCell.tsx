@@ -1,6 +1,6 @@
 import TypographySecondary from 'components/Typography/Secondary'
 import { useEffect, useRef, useState } from 'react'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import styled, { css } from 'styled-components'
 

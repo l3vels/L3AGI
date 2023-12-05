@@ -7,7 +7,7 @@ import {
   StyledSmallAvatarWrapper,
 } from './HumanReply'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import AiMessageMarkdown from './AiMessageMarkdown'
 import { ChatMessageVersionEnum } from 'services'

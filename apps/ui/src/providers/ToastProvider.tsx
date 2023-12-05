@@ -1,10 +1,11 @@
 import React, { ReactNode, useState } from 'react'
-import Toast from '@l3-lib/ui-core/dist/Toast'
-import Button from '@l3-lib/ui-core/dist/Button'
+
+import Button from 'share-ui/components/Button/Button'
 
 import { ToastContext } from 'contexts'
 import styled from 'styled-components'
 import { ButtonPrimary } from 'components/Button/Button'
+import Toast from 'share-ui/components/Toast/Toast'
 
 export interface ToastProps {
   message?: string
@@ -32,15 +33,16 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
       <Toast
         label={toast.message}
         type={toast.type}
+        position={Toast.positions?.BOTTOM_RIGHT}
         autoHideDuration={toast.autoHideDuration || 5000}
         open={toast.open}
-        action={
-          toast.url && (
-            <ButtonPrimary onClick={() => window.open(toast.url, '_blank')}>
-              See Transaction
-            </ButtonPrimary>
-          )
-        }
+        // action={
+        //   toast.url && (
+        //     <ButtonPrimary onClick={() => window.open(toast.url, '_blank')}>
+        //       See Transaction
+        //     </ButtonPrimary>
+        //   )
+        // }
         onClose={() => setToast({ open: false })}
       />
     </ToastContext.Provider>

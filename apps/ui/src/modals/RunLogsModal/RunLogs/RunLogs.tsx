@@ -1,13 +1,15 @@
 import styled from 'styled-components'
 import { useRunLogsService } from 'services/run'
-import Loader from '@l3-lib/ui-core/dist/Loader'
-import { StyledTab } from 'styles/tabStyles.css'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Loader from 'share-ui/components/Loader/Loader'
+
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import { useState } from 'react'
-import { StyledFormTabList, StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
+
 import RunLogMessages from './RunLogMessages'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import { StyledFormTabList, StyledFormTabsWrapper } from 'pages/Agents/AgentForm/AgentForm'
 
 type RunLogsProps = {
   runId: string
@@ -33,11 +35,9 @@ const RunLogs = ({ runId }: RunLogsProps) => {
       <StyledFormTabsWrapper>
         <StyledFormTabList size='small' activeTabId={activeTab}>
           {data.map(({ name }, index) => (
-            <StyledTab key={index} onClick={() => handleTabClick(index)}>
-              <StyledSpan>
-                {index + 1}. {name}
-              </StyledSpan>
-            </StyledTab>
+            <Tab key={index} onClick={() => handleTabClick(index)}>
+              {`${index + 1} ${name}`}
+            </Tab>
           ))}
         </StyledFormTabList>
       </StyledFormTabsWrapper>

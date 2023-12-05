@@ -1,5 +1,5 @@
 import { Field } from 'formik'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import styled, { useTheme } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef } from 'react'

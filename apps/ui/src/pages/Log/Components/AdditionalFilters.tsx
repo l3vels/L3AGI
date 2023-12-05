@@ -1,12 +1,14 @@
 import styled from 'styled-components'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import Toggle from '@l3-lib/ui-core/dist/Toggle'
-import Checkbox from '@l3-lib/ui-core/dist/Checkbox'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import Close from 'share-ui/components/Icon/Icons/components/Close'
+
+import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
 import useFilter from './useFilter'
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 import TextFieldController from 'components/TextFieldController'
+import Toggle from 'share-ui/components/Toggle/Toggle'
 
 const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
   const { control } = useFilter()
@@ -15,9 +17,9 @@ const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
       <StyledHeaderContainer>
         <StyledCloseButtonContainer>
           <IconButton
-            size={IconButton.sizes.SMALL}
+            size={IconButton.sizes?.SMALL}
             icon={Close}
-            kind={IconButton.kinds.PRIMARY}
+            kind={IconButton.kinds?.PRIMARY}
             active
             onClick={onClose}
           />
@@ -88,7 +90,7 @@ const AdditionalFilters = ({ onClose }: { onClose: Function }) => {
         </StyledFormItem>
 
         <StyledFormItem columns='100px auto 120px'>
-          <Button kind={Button.kinds.TERTIARY} size='small'>
+          <Button kind={Button.kinds?.TERTIARY} size='small'>
             Clear
           </Button>
           <StyledLabel></StyledLabel>

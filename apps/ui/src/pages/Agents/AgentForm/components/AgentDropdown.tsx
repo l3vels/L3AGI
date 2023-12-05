@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Dropdown from 'share-ui/components/Dropdown/Dropdown'
+
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 import { Field } from 'formik'
 

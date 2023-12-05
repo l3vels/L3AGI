@@ -5,21 +5,20 @@ import { useModal } from 'hooks'
 
 import withRenderModal from 'hocs/withRenderModal'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Search from '@l3-lib/ui-core/dist/Search'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Tab from '@l3-lib/ui-core/dist/Tab'
-import TabList from '@l3-lib/ui-core/dist/TabList'
-import TabPanel from '@l3-lib/ui-core/dist/TabPanel'
-import TabPanels from '@l3-lib/ui-core/dist/TabPanels'
-import TabsContext from '@l3-lib/ui-core/dist/TabsContext'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import SearchOutline from '@l3-lib/ui-core/dist/icons/SearchOutline'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
+import SearchOutline from 'share-ui/components/Icon/Icons/components/SearchOutline'
 
 import NotificationsDateGroup from './NotificationsDateGroup'
 import { useNotificationsByDateService } from 'services/useNotificationService'
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import BgWrapper from 'modals/components/BgWrapper'
 
 type NotificationsModalProps = {
@@ -128,9 +127,9 @@ const NotificationsModal = ({ refetchCount }: NotificationsModalProps) => {
 
             <StyledCloseButton>
               <IconButton
-                kind={IconButton.kinds.TERTIARY}
+                kind={IconButton.kinds?.TERTIARY}
                 icon={() => <Close />}
-                size={IconButton.sizes.MEDIUM}
+                size={IconButton.sizes?.MEDIUM}
                 onClick={() => closeModal('notifications-modal')}
               />
             </StyledCloseButton>

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
 
 const HumanMessageText = ({ textArray }: { textArray: any }) => {

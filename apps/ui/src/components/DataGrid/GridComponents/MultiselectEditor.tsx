@@ -1,6 +1,7 @@
 import { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
-import Dropdown from '@l3-lib/ui-core/dist/Dropdown'
-// import Typography from '@l3-lib/ui-core/dist/Typography'
+import Dropdown from 'share-ui/components/Dropdown/Dropdown'
+
+// import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 // import TypographyPrimary from 'components/Typography/Primary'
 
@@ -84,8 +85,8 @@ const MultiselectEditor = forwardRef((props: any, ref) => {
 
   return (
     <StyledDiv>
-      <StyledDropDown
-        size={'small'}
+      <Dropdown
+        size={Dropdown.size.SMALL}
         ref={refInput}
         options={options}
         openMenuOnFocus={true}

@@ -3,8 +3,8 @@ import { ButtonPrimary } from 'components/Button/Button'
 import { FormikProvider } from 'formik'
 import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import {
@@ -43,7 +43,7 @@ const EditFineTuningForm = () => {
             <BackButton />
             <ButtonPrimary
               onClick={handleFormSubmit}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
               disabled={isLoading}
             >
               {isLoading ? <Loader size={32} /> : 'Save'}

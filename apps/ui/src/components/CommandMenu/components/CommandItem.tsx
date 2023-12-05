@@ -2,11 +2,11 @@ import styled from 'styled-components'
 
 import CommandItemName from './ItemName'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
 import { StyledCommandItem, StyleEnterGroup } from '../CommandMenuStyles'
 import { enterIcon } from 'assets/icons'
-import API from '@l3-lib/ui-core/dist/icons/API'
+import API from 'share-ui/components/Icon/Icons/components/API'
 import TypographyQuaternary from 'components/Typography/Quaternary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'

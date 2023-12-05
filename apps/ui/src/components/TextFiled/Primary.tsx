@@ -1,4 +1,4 @@
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import { useTheme } from 'styled-components'
 
 export default function PrimaryTextField(props: any) {

@@ -8,13 +8,13 @@ import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
 
-import Modal from '@l3-lib/ui-core/dist/Modal'
-import ModalFooter from '@l3-lib/ui-core/dist/ModalFooter'
+import Modal from 'share-ui/components/Modal/Modal'
+import ModalFooter from 'share-ui/components/ModalFooter/ModalFooter'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 
 import CreateApiKeysForm from './CreateApikeysForm'
 import { StyledRoot } from '../EditApiKey/EditApiModal'
@@ -38,8 +38,8 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
             show
             title={
               <StyledModalHeading
-                type={Heading.types.h1}
-                size={Heading.sizes.md}
+                type={Heading.types?.h1}
+                size={Heading.sizes?.MEDIUM}
                 value={t('create-new-secret-key')}
               />
             }
@@ -59,7 +59,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
             {/* <CreateApiKeysForm /> */}
             <StyledModalFooter>
               <StyledActionsContainer>
-                <ButtonTertiary onClick={closeModal} size={Button.sizes.LARGE}>
+                <ButtonTertiary onClick={closeModal} size={Button.sizes?.LARGE}>
                   <TypographyPrimary
                     value={t('cancel')}
                     type={Typography.types.LABEL}
@@ -67,7 +67,7 @@ const CreateApiModal = ({ closeModal }: CreateApiModalProps) => {
                   />
                 </ButtonTertiary>
 
-                <ButtonPrimary onClick={formik?.handleSubmit} size={Button.sizes.LARGE}>
+                <ButtonPrimary onClick={formik?.handleSubmit} size={Button.sizes?.LARGE}>
                   <StyledLabelTypography
                     value={t('create')}
                     type={Typography.types.LABEL}

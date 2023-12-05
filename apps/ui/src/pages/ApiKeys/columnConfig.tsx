@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next'
 import TableCell from '../../components/Table/components/TableCell'
 import useApiKeys from './useApiKeys'
 import moment from 'moment'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import MenuButton from '@l3-lib/ui-core/dist/MenuButton'
-import menuDots from '@l3-lib/ui-core/dist/icons/MenuDots'
+import Typography from 'share-ui/components/typography/Typography'
+import MenuButton from 'share-ui/components/MenuButton/MenuButton'
+import menuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 import { ButtonTertiary } from 'components/Button/Button'
 import { useNavigate } from 'react-router-dom'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
 import {
   StyledDeleteIcon,
   StyledEditIcon,
@@ -86,16 +87,16 @@ const columns = [
           <IconButton
             onClick={() => handleDeleteApiKey(data.id)}
             icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Delete'
           />
 
           <IconButton
             onClick={() => handleEditClick(data.id)}
             icon={() => <StyledEditIcon />}
-            size={IconButton.sizes.SMALL}
-            kind={IconButton.kinds.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
             ariaLabel='Edit'
           />
         </StyledActionWrapper>

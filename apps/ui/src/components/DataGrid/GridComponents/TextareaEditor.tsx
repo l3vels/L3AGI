@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from 'react'
-import Textarea from '@l3-lib/ui-core/dist/Textarea'
+import Textarea from 'share-ui/components/Textarea/Textarea'
+
 import styled from 'styled-components'
 
 const TextareaEditor = forwardRef((props: any, ref) => {

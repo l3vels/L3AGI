@@ -1,10 +1,10 @@
 import { FormikProvider } from 'formik'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Button from '@l3-lib/ui-core/dist/Button'
-import LogOut from '@l3-lib/ui-core/dist/icons/LogOut'
+import Typography from 'share-ui/components/typography/Typography'
+import Button from 'share-ui/components/Button/Button'
+import LogOut from 'share-ui/components/Icon/Icons/components/LogOut'
 // import useAccount from '../useAccount'
 import { useLogoutService } from 'services'
 import { logout as logOutCookies } from 'helpers/authHelper'
@@ -47,7 +47,7 @@ const AccountForm = () => {
               name='first_name'
               value={`${formik.values.first_name} ${formik.values.last_name}`}
               placeholder={t('value')}
-              size={TextField.sizes.SMALL}
+              size={TextField.sizes?.SMALL}
             />
           </StyledCustomTextField>
           <StyledCustomTextField>
@@ -62,7 +62,7 @@ const AccountForm = () => {
               name='name'
               value={`${formik.values.name}`}
               placeholder={t('value')}
-              size={TextField.sizes.SMALL}
+              size={TextField.sizes?.SMALL}
             />
           </StyledCustomTextField>
 
@@ -78,12 +78,12 @@ const AccountForm = () => {
               name='email'
               value={`${formik.values.email}`}
               placeholder={t('value')}
-              size={TextField.sizes.SMALL}
+              size={TextField.sizes?.SMALL}
             />
           </StyledCustomTextField>
 
           <StyledButton>
-            <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes.SMALL}>
+            <ButtonTertiary onClick={handleLogout} leftIcon={LogOut} size={Button.sizes?.SMALL}>
               <TypographySecondary
                 value={t('log-out')}
                 type={Typography.types.LABEL}

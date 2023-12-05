@@ -8,7 +8,7 @@ import { useChatState } from '../hooks/useChat'
 
 import { useCreateChatMessageService, useChatMessagesService } from 'services'
 
-import SendIcon from '@l3-lib/ui-core/dist/icons/Send'
+import SendIcon from 'share-ui/components/Icon/Icons/components/Send'
 
 import { StyledOption } from 'components/Spotlight/Spotlight'
 
@@ -27,8 +27,8 @@ import TypingUsers from './TypingUsers'
 import { v4 as uuid } from 'uuid'
 import useUpdateChatCache from '../hooks/useUpdateChatCache'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Button from 'share-ui/components/Button/Button'
+import Loader from 'share-ui/components/Loader/Loader'
 import ChatMessageListV2 from './ChatMessageList/ChatMessageListV2'
 import ReplyBox, { defaultReplyState, ReplyStateProps } from './ReplyBox'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
@@ -385,7 +385,7 @@ const ChatV2 = () => {
               <StyledStopGeneratingButton>
                 <ButtonSecondary
                   onClick={handleStopGenerating}
-                  size={Button.sizes.SMALL}
+                  size={Button.sizes?.SMALL}
                   disabled={stopChatLoading}
                 >
                   {t('stop-generating')}

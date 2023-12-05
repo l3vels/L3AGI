@@ -1,4 +1,4 @@
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import { useTheme } from 'styled-components'
 
 export default function HeadingSecondary(props: any) {

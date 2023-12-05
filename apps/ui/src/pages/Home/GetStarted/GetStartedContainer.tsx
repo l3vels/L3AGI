@@ -2,11 +2,11 @@ import { ReactNode, useState } from 'react'
 
 import styled, { css } from 'styled-components'
 
-import Heading from '@l3-lib/ui-core/dist/Heading'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Heading from 'share-ui/components/Heading/Heading'
+import Typography from 'share-ui/components/typography/Typography'
 
-import Close from '@l3-lib/ui-core/dist/icons/Close'
-import Connect from '@l3-lib/ui-core/dist/icons/Connect'
+import Close from 'share-ui/components/Icon/Icons/components/Close'
+import Connect from 'share-ui/components/Icon/Icons/components/Connect'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { SectionDivider } from 'styles/globalStyle.css'
 import TypographyTertiary from 'components/Typography/Tertiary'
@@ -32,7 +32,7 @@ const GetStartedContainer = ({
           <StyledCloseButton onClick={() => setShow(false)}>
             <StyledCloseIcon />
           </StyledCloseButton>
-          {!noText && <HeadingPrimary type={Heading.types.h1} value='Get Started' size='medium' />}
+          {!noText && <HeadingPrimary type={Heading.types?.h1} value='Get Started' size='xss' />}
         </StyledColumn>
         {!noText && (
           <StyledColumn>

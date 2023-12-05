@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { DATA_LOADER_IMAGES } from 'pages/Datasource/constants'
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 import { StyledWrapper } from './AgentToolkits'
 import TypographyPrimary from 'components/Typography/Primary'
 

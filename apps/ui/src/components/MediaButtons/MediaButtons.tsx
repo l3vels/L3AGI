@@ -6,9 +6,9 @@ import {
   StyledWrapper,
 } from 'components/TermsAndPrivacyButtons/TermsAndPrivacyButtons'
 
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import Typography from 'share-ui/components/typography/Typography'
 
-import Discord from '@l3-lib/ui-core/dist/icons/Discord'
+import Discord from 'share-ui/components/Icon/Icons/components/Discord'
 import TwitterLogo from 'assets/tools/twitter.png'
 import YoutubeLogo from 'assets/tools/youtube.svg'
 

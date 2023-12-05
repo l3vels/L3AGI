@@ -1,17 +1,18 @@
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@l3-lib/ui-core/dist/Button'
-import Typography from '@l3-lib/ui-core/dist/Typography'
-import Tooltip from '@l3-lib/ui-core/dist/Tooltip'
+import Button from 'share-ui/components/Button/Button'
+import Typography from 'share-ui/components/typography/Typography'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
+// import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 
-import Discord from '@l3-lib/ui-core/dist/icons/Discord'
+import Discord from 'share-ui/components/Icon/Icons/components/Discord'
 import githubIcon from 'assets/icons/githubIcon.png'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonTertiary } from 'components/Button/Button'
 
-import Hide from '@l3-lib/ui-core/dist/icons/Hide'
-import Show from '@l3-lib/ui-core/dist/icons/Show'
+import Hide from 'share-ui/components/Icon/Icons/components/Hide'
+import Show from 'share-ui/components/Icon/Icons/components/Show'
 import { useContext } from 'react'
 import { LayoutContext } from 'contexts'
 import { useLocation } from 'react-router-dom'
@@ -34,13 +35,13 @@ const HeaderButtons = () => {
     <StyledButtonsWrapper>
       {location.pathname.includes('/chat') && (
         <Tooltip
-          content={() => (
+          content={
             <span>
               {t('focus')} {isMacOS ? `${t('ctrl+f')}` : `${t('ctrl+shift+f')}`}
             </span>
-          )}
+          }
           position={Tooltip.positions.BOTTOM}
-          tooltipSize='small'
+          tooltipSize={Tooltip.tooltipSize.Small}
         >
           <ButtonTertiary size={'small'} onClick={() => onChangeLayout(!expand)}>
             {expand ? <Show size={26} /> : <Hide size={26} />}
@@ -49,12 +50,12 @@ const HeaderButtons = () => {
       )}
 
       <Tooltip
-        content={() => <span>{t('docs')}</span>}
+        content={<span>{t('docs')}</span>}
         position={Tooltip.positions.BOTTOM}
-        tooltipSize='small'
+        tooltipSize={Tooltip.tooltipSize.Small}
       >
         <ButtonTertiary
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
           onClick={() => openLinkTab(import.meta.env.REACT_APP_BASICS_LINK)}
         >
           <StyledInnerButtonWrapper>
@@ -73,7 +74,7 @@ const HeaderButtons = () => {
         tooltipSize='small'
       >
         <ButtonTertiary
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
           onClick={() => openLinkTab(import.meta.env.REACT_APP_TWITTER_LINK)}
         >
           <StyledInnerButtonWrapper>
@@ -91,7 +92,7 @@ const HeaderButtons = () => {
         tooltipSize='small'
       >
         <ButtonTertiary
-          size={Button.sizes.SMALL}
+          size={Button.sizes?.SMALL}
           onClick={() => openLinkTab(import.meta.env.REACT_APP_DISCORD_LINK)}
         >
           <StyledInnerButtonWrapper>
@@ -102,12 +103,12 @@ const HeaderButtons = () => {
 
       {isLinkModule && (
         <Tooltip
-          content={() => <span>{t('github')}</span>}
+          content={<span>{t('github')}</span>}
           position={Tooltip.positions.BOTTOM}
-          tooltipSize='small'
+          tooltipSize={Tooltip.tooltipSize.Small}
         >
           <ButtonTertiary
-            size={Button.sizes.SMALL}
+            size={Button.sizes?.SMALL}
             onClick={() => openLinkTab(import.meta.env.REACT_APP_GITHUB_LINK)}
           >
             <StyledInnerButtonWrapper>

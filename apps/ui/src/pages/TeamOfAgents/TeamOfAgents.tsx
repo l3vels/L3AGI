@@ -1,4 +1,4 @@
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
@@ -38,7 +38,7 @@ const TeamOfAgents = ({ isHome }: { isHome?: boolean }) => {
           {!isHome && (
             <ButtonPrimary
               onClick={() => navigate('/team-of-agents/create-team')}
-              size={Button.sizes.SMALL}
+              size={Button.sizes?.SMALL}
             >
               Add Team
             </ButtonPrimary>

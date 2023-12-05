@@ -1,0 +1,134 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs'
+import { ComponentName, Frame, Link, RelatedComponents } from '../../components'
+import { TextStyles } from './text-styles/text-styles'
+import { TextColors } from '../../components/text-colors/text-colors'
+import {
+  COLORS,
+  SHADOW,
+  SPACING,
+} from '../../components/related-components/component-description-map'
+import { typographyExample1, typographyExample2 } from './assets'
+
+import Typography from './Typography'
+
+import './typography.scss'
+
+<Meta title='Foundations/Typography' />
+
+<!--- Component documentation -->
+
+<ComponentName withFoundationBackground>Typography</ComponentName>
+
+- [Overview](#overview)
+- [Text styles](#text-styles)
+- [Text colors](#text-colors)
+- [Usage and examples](#usage-and-examples)
+- [Feedback](#feedback)
+
+## Overview
+
+Like in other ui in l3vels's interface, typography works by principle of accessibility before aesthetics.
+Therefore the text should be readable and help the user understand what’s important by well contrasted size and colors hierarchy.
+
+## Text styles
+
+<TextStyles />
+
+## Label
+
+<Canvas>
+  <Story name='Label'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <Typography
+        value='label large'
+        type={Typography.types.LABEL}
+        size={Typography.sizes.lg}
+        as={'label'}
+      />
+      <Typography
+        value='label medium'
+        type={Typography.types.LABEL}
+        size={Typography.sizes.md}
+        as={'label'}
+      />
+      <Typography
+        value='label small'
+        type={Typography.types.LABEL}
+        size={Typography.sizes.sm}
+        as={'label'}
+      />
+      <Typography
+        value='label xs-small'
+        type={Typography.types.LABEL}
+        size={Typography.sizes.xss}
+        as={'label'}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+## Paragraph
+
+<Canvas>
+  <Story name='Paragraph'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <Typography
+        value='paragraph large'
+        type={Typography.types.P}
+        size={Typography.sizes.lg}
+        as={'p'}
+      />
+      <Typography
+        value='paragraph medium'
+        type={Typography.types.P}
+        size={Typography.sizes.md}
+        as={'p'}
+      />
+      <Typography
+        value='paragraph small'
+        type={Typography.types.P}
+        size={Typography.sizes.sm}
+        as={'p'}
+      />
+      <Typography
+        value='paragraph xs-small'
+        type={Typography.types.P}
+        size={Typography.sizes.xss}
+        as={'p'}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+## Text colors
+
+<TextColors />
+
+## Usage and examples
+
+<UsageGuidelines
+  guidelines={[
+    'Use fonts bigger than 14 pixel only.',
+    <>Don’t underline words, use bold text.</>,
+    "Don't use two different sizes of text in the same line.",
+  ]}
+/>
+
+<Tip title='What font to use?'>
+  We are using Roboto from Google Fonts as default for our design system. Click{' '}
+  <Link size={Link.sizes.SMALL} href='https://fonts.google.com/specimen/Roboto' withoutSpacing>
+    here
+  </Link>{' '}
+  to download.
+</Tip>
+
+<Frame className='l3-storybook-typography_image-container l3-storybook-typography_image-container--first'>
+  <img src={typographyExample1} alt='' className='l3-storybook-typography_popup-example' />
+</Frame>
+<Frame className='l3-storybook-typography_image-container'>
+  <img src={typographyExample2} alt='' className='l3-storybook-typography_timeline-example' />
+</Frame>
+
+## Up next
+
+<RelatedComponents componentsNames={[COLORS, SPACING, SHADOW]} />

@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import Loader from '@l3-lib/ui-core/dist/Loader'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import styled from 'styled-components'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'

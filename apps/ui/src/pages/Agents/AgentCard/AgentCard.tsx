@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@l3-lib/ui-core/dist/Button'
+import Button from 'share-ui/components/Button/Button'
 
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Typography from '@l3-lib/ui-core/dist/Typography'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import MoveArrowRight from '@l3-lib/ui-core/dist/icons/MoveArrowRight'
+import Typography from 'share-ui/components/typography/Typography'
+
+import MoveArrowRight from 'share-ui/components/Icon/Icons/components/MoveArrowRight'
 
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import {
@@ -114,16 +115,16 @@ const AgentCard = ({
             <IconButton
               onClick={onDeleteClick}
               icon={() => <StyledDeleteIcon />}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={Button.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
             />
           )}
           {onEditClick && (
             <IconButton
               onClick={onEditClick}
               icon={() => <StyledEditIcon />}
-              size={IconButton.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={IconButton.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
             />
           )}
           {onViewClick && (
@@ -131,21 +132,21 @@ const AgentCard = ({
               onClick={onViewClick}
               icon={() => (
                 <StyledIconWrapper>
-                  <StyledEyeOpenIcon size={50} />
+                  <StyledEyeOpenIcon />
                 </StyledIconWrapper>
               )}
-              size={Button.sizes.SMALL}
-              kind={IconButton.kinds.TERTIARY}
+              size={Button.sizes?.SMALL}
+              kind={IconButton.kinds?.TERTIARY}
             />
           )}
           {onCreateClick && (
-            <ButtonPrimary size={Button.sizes.SMALL} onClick={onCreateClick}>
+            <ButtonPrimary size={Button.sizes?.SMALL} onClick={onCreateClick}>
               {t('create')}
             </ButtonPrimary>
           )}
           {onChatClick && (
             <StyledChatButtonWrapper>
-              <ButtonPrimary size={Button.sizes.SMALL} onClick={onChatClick}>
+              <ButtonPrimary size={Button.sizes?.SMALL} onClick={onChatClick}>
                 <StyledInnerButtonWrapper secondary>
                   {t('chat')}
                   <MoveArrowRight size={14} />

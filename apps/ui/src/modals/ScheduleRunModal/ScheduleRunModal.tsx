@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import withRenderModal from 'hocs/withRenderModal'
-import Modal from '@l3-lib/ui-core/dist/Modal'
+import Modal from 'share-ui/components/Modal/Modal'
 import { useModal } from 'hooks'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
-import Close from '@l3-lib/ui-core/dist/icons/Close'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+
+import Close from 'share-ui/components/Icon/Icons/components/Close'
 import CreateScheduleForm from 'pages/Schedule/ScheduleFrom/CreateScheduleForm'
 
 type ScheduleRunModalProps = {
@@ -34,9 +35,9 @@ const ScheduleRunModal = ({ data }: ScheduleRunModalProps) => {
 
       <StyledButtonWrapper>
         <IconButton
-          size={IconButton.sizes.XS}
+          size={IconButton.sizes?.XS}
           icon={() => <Close />}
-          kind={IconButton.kinds.TERTIARY}
+          kind={IconButton.kinds?.TERTIARY}
           onClick={() => closeModal('schedule-run-modal')}
         />
       </StyledButtonWrapper>

@@ -1,0 +1,17 @@
+// @import "../../styles/themes";
+
+.icon_component {
+  position: relative;
+
+  &:before {
+    text-decoration: none !important;
+  }
+  &--no-focus-style {
+    &:focus {
+      outline: none;
+    }
+  }
+  &--clickable {
+    cursor: pointer;
+  }
+}

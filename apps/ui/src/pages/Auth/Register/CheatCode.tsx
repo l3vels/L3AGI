@@ -1,9 +1,9 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
-import TextField from '@l3-lib/ui-core/dist/TextField'
+import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { StyledCenterFormContainer, StyledFormContainer } from 'styles/globalStyle.css'
-import Heading from '@l3-lib/ui-core/dist/Heading'
+import Heading from 'share-ui/components/Heading/Heading'
 import { useEffect } from 'react'
 import HeadingTertiary from 'components/Heading/Tertiary'
 import HeadingPrimary from 'components/Heading/Primary'
@@ -37,7 +37,7 @@ export const CheatCode = () => {
     <StyledCenterFormContainer>
       <HeadingTertiary
         value={t('cheat-code')}
-        type={Heading.types.h1}
+        type={Heading.types?.h1}
         style={{ fontSize: 52, lineHeight: 'normal' }}
       />
       <StyledFormContainer>
@@ -45,7 +45,7 @@ export const CheatCode = () => {
           <StyledInputContainer>
             <TextField
               placeholder='?'
-              size={TextField.sizes.LARGE}
+              size={TextField.sizes?.LARGE}
               className='cheat_code__input'
 
               // name='command_first'
@@ -57,13 +57,13 @@ export const CheatCode = () => {
           </StyledInputContainer>
           <HeadingPrimary
             value={'+'}
-            type={Heading.types.h1}
+            type={Heading.types?.h1}
             style={{ fontSize: 52, lineHeight: 'normal' }}
           />
           <StyledInputContainer>
             <TextField
               placeholder='?'
-              size={TextField.sizes.LARGE}
+              size={TextField.sizes?.LARGE}
               className='cheat_code__input'
               name='command_second'
 
