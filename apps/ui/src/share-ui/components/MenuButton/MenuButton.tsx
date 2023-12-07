@@ -159,7 +159,7 @@ const MenuButton: L3Component<MenuButtonProps> & {
       // Backward compatibility for props naming
       disabledReason,
       tooltipTriggers = [MenuButton.hideTriggers?.MOUSE_LEAVE],
-      tooltipPosition = MenuButton.dialogPositions?.RIGHT,
+      tooltipPosition = MenuButton.dialogPositions?.TOP,
       startingEdge = 'bottom',
       removeTabCloseTrigger = false,
       tooltipReferenceClassName,
@@ -296,7 +296,7 @@ const MenuButton: L3Component<MenuButtonProps> & {
 
     return (
       <Tooltip
-        content={overrideTooltipContent}
+        content={ariaLabel}
         position={tooltipPosition}
         showTrigger={TOOLTIP_SHOW_TRIGGER}
         hideTrigger={tooltipTriggers}
@@ -369,8 +369,5 @@ const StyledButton = styled.button`
 
   &:hover {
     background: ${({ theme }) => theme.body.humanMessageBgColor};
-  }
-  path {
-    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `

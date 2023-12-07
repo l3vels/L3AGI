@@ -10,6 +10,7 @@ class SendGridToolkit(BaseToolkit, ABC):
     description: str = "Toolkit containing tools for sending emails with SendGrid"
     slug: str = "sendgrid"
     toolkit_id = "52a88c82-df3c-4caa-84f3-5752ed61e36d"
+    is_voice = True
 
     def get_tools(self) -> List[BaseTool]:
         return [SendGridSendTool()]

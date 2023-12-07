@@ -20,3 +20,4 @@ class ModelOutput(BaseModel):
     value: Optional[str]
     fine_tuning: bool
     is_fine_tuned: Optional[bool]
+    is_voice: Optional[bool]

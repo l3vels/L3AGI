@@ -4,7 +4,7 @@ import secrets
 import uuid
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, String, or_
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session, relationship
 
 from exceptions import ApiKeyNotFoundException
 from models.base_model import BaseModel
@@ -51,6 +51,7 @@ class ApiKeyModel(BaseModel):
         index=True,
     )
     creator = relationship("UserModel", foreign_keys=[created_by], lazy="select")
+    account = relationship("AccountModel", foreign_keys=[account_id], lazy="select")
 
     def __repr__(self) -> str:
         return (
@@ -164,6 +165,21 @@ class ApiKeyModel(BaseModel):
             .first()
         )
         return api_keys
+
+    @classmethod
+    def get_api_key_by_token(cls, session: Session, token: str):
+        """
+        Get ApiKey by token
+        """
+        api_key = (
+            session.query(ApiKeyModel)
+            .filter(
+                ApiKeyModel.token == token,
+                ApiKeyModel.is_deleted.is_(False),
+            )
+            .first()
+        )
+        return api_key
 
     @classmethod
     def delete_by_id(cls, db, api_key_id, account):

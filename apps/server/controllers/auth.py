@@ -7,7 +7,8 @@ from config import Config
 from exceptions import UserException
 from typings.auth import (AuthHandlerInput, LoginInput, RegisterInput,
                           UserAccount)
-from utils.auth import authenticate, generate_token, get_user_data_from_github
+from utils.auth import (authenticate_by_token_or_api_key, generate_token,
+                        get_user_data_from_github)
 
 router = APIRouter()
 
@@ -126,7 +127,7 @@ def resend_verify_email(body: RegisterInput):
 
 @router.get("/account", response_model=UserAccount)
 def get_agents(
-    auth: UserAccount = Depends(authenticate),
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> UserAccount:
     """
     Get User and account.

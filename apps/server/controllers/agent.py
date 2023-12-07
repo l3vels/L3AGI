@@ -10,13 +10,15 @@ from models.agent import AgentModel
 from typings.agent import AgentConfigInput, AgentWithConfigsOutput
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
-from utils.auth import authenticate
+from utils.auth import authenticate, authenticate_by_token_or_api_key
 from utils.system_message import SystemMessageBuilder
 
 # Standard library imports
 
 
 router = APIRouter()
+
+agent_customer_router = APIRouter()
 
 
 @router.post("", status_code=201, response_model=AgentWithConfigsOutput)
@@ -34,6 +36,34 @@ def create_agent(
         AgentWithConfigsOutput: Created agent object.
     """
     # Consider adding try-except for error handling during creation if needed
+    db_agent = AgentModel.create_agent(
+        db,
+        agent=agent_with_configs.agent,
+        configs=agent_with_configs.configs,
+        user=auth.user,
+        account=auth.account,
+    )
+    return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
+
+
+@agent_customer_router.post(
+    "/voice", status_code=201, response_model=AgentWithConfigsOutput
+)
+def create_voice_agent(
+    agent_with_configs: AgentConfigInput,
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+) -> AgentWithConfigsOutput:
+    """
+    Create a new agent with configurations.
+
+    Args:
+        agent_with_configs (AgentConfigInput): Data for creating a new agent with configurations.
+        auth (UserAccount): Authenticated user account.
+
+    Returns:
+        AgentWithConfigsOutput: Created agent object.
+    """
+
     db_agent = AgentModel.create_agent(
         db,
         agent=agent_with_configs.agent,
@@ -199,7 +229,7 @@ def get_agent_by_parent_id(
 def get_agent_by_id(
     id: str,
     is_system_message: Optional[bool] = False,
-    auth: UserAccount = Depends(authenticate),
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> AgentWithConfigsOutput:
     """
     Get an agent by its ID.

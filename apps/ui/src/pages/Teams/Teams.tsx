@@ -5,6 +5,7 @@ import Heading from 'share-ui/components/Heading/Heading'
 
 import Button from 'share-ui/components/Button/Button'
 
+import columnConfig from './columnConfig'
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
 import useTeams from './useTeams'
@@ -102,18 +103,6 @@ const Teams = () => {
                 size={TypographySizes.md}
               />
             </Button>
-            {/* <MenuButton component={MenuDots}>
-            <StyledButtonsWrapper>
-              <StyledClickableDiv>
-                <Typography
-                  value={t('remove-selected')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-              </StyledClickableDiv>
-            </StyledButtonsWrapper>
-          </MenuButton> */}
           </StyledIconButtonWrapper>
         </StyledHeaderGroup>
       </div>

@@ -22,12 +22,26 @@ export const useAgentForm = (formik: any) => {
     label: `${name} (${provider})`,
   }))
 
+  const voiceModelOptions = models
+    ?.filter((model: any) => model.is_voice)
+    ?.map(({ id, name, provider }) => ({
+      value: id,
+      label: `${name} (${provider})`,
+    }))
+
   const datasourceOptions = dataSources?.map(({ id, name }) => {
     return { value: id, label: name }
   })
 
   const toolOptions = tools
     ?.filter((tool: any) => tool.is_active)
+    .map((tool: any) => {
+      return { value: tool.toolkit_id, label: tool.name }
+    })
+
+  const voiceToolOptions = tools
+    ?.filter((tool: any) => tool.is_active)
+    ?.filter((tool: any) => tool.is_voice)
     .map((tool: any) => {
       return { value: tool.toolkit_id, label: tool.name }
     })
@@ -93,10 +107,11 @@ export const useAgentForm = (formik: any) => {
     datasourceOptions,
     toolOptions,
     integrationOptions,
-
+    voiceToolOptions,
     handleUploadAvatar,
     avatarIsLoading,
     voiceSynthesizerOptions,
     voiceTranscriberOptions,
+    voiceModelOptions,
   }
 }

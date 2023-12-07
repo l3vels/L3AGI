@@ -6,5 +6,6 @@ query models @api(name: "ai") {
     value
     fine_tuning
     is_fine_tuned
+    is_voice
   }
 }

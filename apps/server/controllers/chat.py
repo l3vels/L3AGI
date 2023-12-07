@@ -20,7 +20,8 @@ from typings.chat import (ChatInput, ChatMessageInput, ChatMessageOutput,
                           ChatUserMessageInput, InsertChatMessagesInput,
                           NegotiateOutput, UpdateChatInput)
 from typings.config import ConfigOutput
-from utils.auth import authenticate, try_auth_user
+from utils.auth import (authenticate, authenticate_by_token_or_api_key,
+                        try_auth_user)
 from utils.chat import (convert_chats_to_chat_list, convert_model_to_response,
                         get_chat_session_id)
 from utils.configuration import \
@@ -31,7 +32,7 @@ router = APIRouter()
 
 @router.post("", status_code=201)
 def create_chat(
-    chat: ChatInput, auth: UserAccount = Depends(authenticate)
+    chat: ChatInput, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
 ) -> ChatOutput:
     if not chat.agent_id and not chat.team_id:
         ChatException("Agent or Team should be defined")
@@ -42,7 +43,9 @@ def create_chat(
 
 @router.patch("/{id}", status_code=200)
 def update_chat(
-    id: UUID, chat: UpdateChatInput, auth: UserAccount = Depends(authenticate)
+    id: UUID,
+    chat: UpdateChatInput,
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> ChatOutput:
     db_chat = ChatModel.update_chat(db, id, chat, auth.user)
     return convert_model_to_response(db_chat)
@@ -203,7 +206,8 @@ def negotiate(id: str):
 
 @router.post("/session/messages/insert", status_code=201)
 def insert_chat_messages(
-    body: InsertChatMessagesInput, auth: UserAccount = Depends(authenticate)
+    body: InsertChatMessagesInput,
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ):
     """
     Inserts chat messages

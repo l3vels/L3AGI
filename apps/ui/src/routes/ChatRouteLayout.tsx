@@ -207,8 +207,19 @@ const ChatRouteLayout = () => {
               <>
                 <ListHeader
                   title={t('agent')}
-                  onAddClick={
-                    agentModule.create ? () => navigate('/agents/create-agent-template') : undefined
+                  multiOption={
+                    agentModule.create
+                      ? [
+                          {
+                            function: () => navigate('/agents/create-agent-template?type=text'),
+                            label: 'Text Based',
+                          },
+                          {
+                            function: () => navigate('/agents/create-agent-template?type=voice'),
+                            label: 'Voice Based',
+                          },
+                        ]
+                      : undefined
                   }
                 />
 

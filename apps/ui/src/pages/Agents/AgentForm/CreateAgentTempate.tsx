@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import BackButton from 'components/BackButton'
 
 import AgentCard from '../AgentCard'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { StyledButtonWrapper } from './CreateAgentForm'
 import CreateAgentButtonCard from './components/CreateAgentButtonCard'
@@ -31,6 +31,13 @@ const CreateAgentTemplate = () => {
   const { openModal } = useModal()
 
   const navigate = useNavigate()
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const agentType = urlParams.get('type') || 'text'
+
+  const handleNavigate = () => {
+    navigate(`/agents/create-agent?type=${agentType}`)
+  }
 
   return (
     <StyledSectionWrapper>
@@ -54,7 +61,7 @@ const CreateAgentTemplate = () => {
       <ComponentsWrapper noPadding>
         <StyledTemplatesWrapper>
           <StyledTemplateHeader>
-            <CreateAgentButtonCard onClick={() => navigate('/agents/create-agent')} />
+            <CreateAgentButtonCard onClick={handleNavigate} />
 
             {agentsData?.length > 0 && (
               <TypographyPrimary

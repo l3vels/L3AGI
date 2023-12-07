@@ -21,6 +21,7 @@ MODELS = [
         "name": "GPT-3.5",
         "value": "gpt-3.5-turbo",
         "fine_tuning": False,
+        "is_voice": True,
     },
     {
         "id": "607d5c17-45ee-4629-94b5-33e6c7fac47a",
@@ -28,6 +29,7 @@ MODELS = [
         "name": "GPT-3.5 613",
         "value": "gpt-3.5-turbo-613",
         "fine_tuning": True,
+        "is_voice": True,
     },
     {
         "id": "f4fc991a-8ef8-4ae7-a395-a22057f33d4a",
@@ -35,6 +37,7 @@ MODELS = [
         "name": "GPT-3.5 16K",
         "value": "gpt-3.5-turbo-16k",
         "fine_tuning": False,
+        "is_voice": True,
     },
     {
         "id": "3162d548-6c0e-4b77-8cb1-bd5478fa5270",
@@ -42,6 +45,7 @@ MODELS = [
         "name": "GPT-4",
         "value": "gpt-4",
         "fine_tuning": False,
+        "is_voice": True,
     },
     {
         "id": "308346e9-80d1-44c9-b2e1-5c261a0c5931",

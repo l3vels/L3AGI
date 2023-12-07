@@ -1,6 +1,7 @@
 from abc import ABC
 from typing import List
-from tools.base import BaseToolkit, BaseTool, ToolEnvKey, ToolEnvKeyType
+
+from tools.base import BaseTool, BaseToolkit, ToolEnvKey, ToolEnvKeyType
 from tools.twilio.twilio_send import TwilioSendTool
 
 
@@ -9,6 +10,7 @@ class TwilioSearchToolkit(BaseToolkit, ABC):
     description: str = "Toolkit containing tools for searching Twilio"
     slug: str = "twilio"
     toolkit_id = "8dcb3215-a3ec-4da6-a673-60e4af61e86d"
+    is_voice = True
 
     def get_tools(self) -> List[BaseTool]:
         return [TwilioSendTool()]
