@@ -12,6 +12,7 @@ from fastapi_sqlalchemy import db
 
 from config import Config
 from models.account import AccountModel
+from models.api_key import ApiKeyModel
 from models.user import UserModel
 from typings.account import AccountOutput
 from typings.auth import UserAccount
@@ -46,6 +47,34 @@ def authenticate(
         )
     except gql.transport.exceptions.TransportQueryError:
         raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+def authenticate_by_token_or_api_key(
+    request: Request, response: Response
+) -> Tuple[UserOutput, AccountOutput]:
+    authorization = request.headers.get("Authorization", "")
+
+    if "l3_" in authorization:
+        return authenticate_by_api_key(request, response)
+    else:
+        return authenticate(request, response)
+
+
+def authenticate_by_api_key(
+    request: Request, response: Response
+) -> Tuple[UserOutput, AccountOutput]:
+    authorization = request.headers.get("Authorization", None)
+    _, token = get_authorization_scheme_param(authorization)
+
+    api_key_model = ApiKeyModel.get_api_key_by_token(db.session, token)
+
+    if not api_key_model:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
+    return UserAccount(
+        user=convert_model_to_response_user(api_key_model.creator),
+        account=convert_model_to_response_account(api_key_model.account),
+    )
 
 
 def authenticate_by_auth_token(
