@@ -46,6 +46,7 @@ export type AgentInput = {
   integrations?: IntegrationInput[]
 
   agent_type?: string
+  runners: string[]
 }
 
 export const useCreateAgentService = () => {
@@ -81,6 +82,7 @@ export const useCreateAgentService = () => {
       integrations,
 
       agent_type,
+      runners,
     } = input
 
     const {
@@ -118,6 +120,7 @@ export const useCreateAgentService = () => {
             input_mode,
 
             integrations,
+            runners,
           },
         },
       },

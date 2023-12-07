@@ -1,10 +1,10 @@
-from typing import List, Optional
+from enum import Enum
+from typing import Dict, List, Optional
 
 from pydantic import UUID4, BaseModel
 
 from typings.account import AccountOutput
 from typings.user import UserOutput
-from enum import Enum
 
 
 class ScheduleStatus(Enum):
@@ -80,3 +80,7 @@ class ScheduleOutput(BaseModel):
 class ScheduleWithConfigsOutput(BaseModel):
     schedule: ScheduleOutput
     configs: Optional[ConfigsOutput]
+
+
+class ScheduleRunInput(BaseModel):
+    system_message_params: Optional[Dict]

@@ -33,6 +33,7 @@ export const useUpdateAgentService = () => {
       input_mode,
 
       integrations,
+      runners,
     } = input
 
     const { data } = await mutation({
@@ -68,6 +69,7 @@ export const useUpdateAgentService = () => {
             input_mode,
 
             integrations,
+            runners,
           },
         },
       },

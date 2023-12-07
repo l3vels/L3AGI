@@ -10,6 +10,7 @@ from fastapi_sqlalchemy import DBSessionMiddleware
 from strawberry.fastapi import GraphQLRouter
 
 from config import Config
+from controllers.agent import agent_customer_router
 from controllers.agent import router as agent_router
 from controllers.api_key import router as api_key_router
 from controllers.auth import router as user_router
@@ -102,6 +103,7 @@ app.include_router(workspace_router, prefix="/workspace")
 app.include_router(team_router, prefix="/team")
 app.include_router(team_agent_router, prefix="/team-of-agents")
 app.include_router(agent_router, prefix="/agent")
+app.include_router(agent_customer_router, prefix="/v1/agent")
 app.include_router(config_router, prefix="/config")
 app.include_router(datasource_router, prefix="/datasource")
 app.include_router(run_router, prefix="/run")

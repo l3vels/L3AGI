@@ -46,32 +46,32 @@ def create_agent(
     return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
 
 
-@agent_customer_router.post(
-    "/voice", status_code=201, response_model=AgentWithConfigsOutput
-)
-def create_voice_agent(
-    agent_with_configs: AgentConfigInput,
-    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
-) -> AgentWithConfigsOutput:
-    """
-    Create a new agent with configurations.
+# @agent_customer_router.post(
+#     "/voice", status_code=201, response_model=AgentWithConfigsOutput
+# )
+# def create_voice_agent(
+#     agent_with_configs: AgentConfigInput,
+#     auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+# ) -> AgentWithConfigsOutput:
+#     """
+#     Create a new agent with configurations.
 
-    Args:
-        agent_with_configs (AgentConfigInput): Data for creating a new agent with configurations.
-        auth (UserAccount): Authenticated user account.
+#     Args:
+#         agent_with_configs (AgentConfigInput): Data for creating a new agent with configurations.
+#         auth (UserAccount): Authenticated user account.
 
-    Returns:
-        AgentWithConfigsOutput: Created agent object.
-    """
+#     Returns:
+#         AgentWithConfigsOutput: Created agent object.
+#     """
 
-    db_agent = AgentModel.create_agent(
-        db,
-        agent=agent_with_configs.agent,
-        configs=agent_with_configs.configs,
-        user=auth.user,
-        account=auth.account,
-    )
-    return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
+#     db_agent = AgentModel.create_agent(
+#         db,
+#         agent=agent_with_configs.agent,
+#         configs=agent_with_configs.configs,
+#         user=auth.user,
+#         account=auth.account,
+#     )
+#     return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
 
 
 @router.put(

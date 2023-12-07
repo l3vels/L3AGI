@@ -58,6 +58,7 @@ export const useEditAgent = () => {
     agent_integrations: agentById?.configs?.integrations || [],
 
     agent_type: agentById?.agent?.agent_type,
+    agent_runners: agentById?.configs?.runners || [],
   }
 
   const handleSubmit = async (values: any) => {
@@ -90,6 +91,7 @@ export const useEditAgent = () => {
       input_mode: values.agent_voice_input_mode,
 
       integrations: values.agent_integrations,
+      runners: values.agent_runners,
     }
 
     await updateAgent(agentId || '', {

@@ -35,6 +35,8 @@ export interface AgentWithConfigs {
     input_mode?: string[]
 
     integrations?: IntegrationInput[]
+
+    runners: Nullable<string[]>
   }
   system_message: Nullable<string>
 }

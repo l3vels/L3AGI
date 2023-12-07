@@ -39,7 +39,7 @@ call_configs = {
         "toolkit": True,  # True
         "datasource": True,
         "discovery": True,
-        "Session": True,
+        "session": True,
         "schedule": True,
         "contact": True,
         "group": True,

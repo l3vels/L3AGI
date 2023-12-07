@@ -55,6 +55,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_voice_response,
     agent_integrations,
     agent_type,
+    agent_runners,
   } = values
 
   const {
@@ -68,6 +69,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     integrationOptions,
     voiceToolOptions,
     voiceModelOptions,
+    scheduleOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {
@@ -134,6 +136,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <Tab onClick={() => handleTabClick(3)}>Onboarding</Tab>
           <Tab onClick={() => handleTabClick(4)} disabled={!isVoice || agentType === 'text'}>
             Voice Preferences
+          </Tab>
+          <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
+            Voice Flow
           </Tab>
         </TabList>
       </StyledFormTabsWrapper>
@@ -415,6 +420,19 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       />
                     </StyledCheckboxWrapper>
                   </StyledFormInputWrapper>
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
+
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <AgentDropdown
+                    isMulti
+                    label={t('Execute Runners After Call Ends')}
+                    fieldName={'agent_runners'}
+                    fieldValue={agent_runners}
+                    setFieldValue={setFieldValue}
+                    options={scheduleOptions}
+                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
               <TabPanel>

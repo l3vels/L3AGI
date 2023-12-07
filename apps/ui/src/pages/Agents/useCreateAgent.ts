@@ -54,6 +54,7 @@ export const useCreateAgent = () => {
     agent_integrations: [],
 
     agent_type: 'text',
+    agent_runners: [],
   }
 
   if (agentById) {
@@ -86,6 +87,7 @@ export const useCreateAgent = () => {
       agent_integrations: agentById.configs?.integrations || [],
 
       agent_type: agentById.agent?.agent_type,
+      agent_runners: agentById.configs.runners || [],
     }
   }
 
@@ -120,6 +122,7 @@ export const useCreateAgent = () => {
 
         integrations: values.agent_integrations,
         agent_type: values.agent_type,
+        runners: values.agent_runners,
       }
 
       const newAgent = await createAgentService(agentInput)
