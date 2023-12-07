@@ -6,8 +6,8 @@ import { StyledCardsWrapper } from 'pages/Agents/Agents'
 
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
-  StyledSectionTitle,
+  // StyledSectionDescription,
+  // StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 import { useNavigate } from 'react-router-dom'

@@ -2,7 +2,7 @@ import { FormikProvider } from 'formik'
 import { useTranslation } from 'react-i18next'
 import {
   StyledHeaderGroup,
-  StyledSectionDescription,
+  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
@@ -15,7 +15,7 @@ import AgentForm from './AgentForm'
 import BackButton from 'components/BackButton'
 import { ButtonPrimary } from 'components/Button/Button'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { t } from 'i18next'
+
 import { StyledFormWrapper } from 'styles/formStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'

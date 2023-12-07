@@ -17,7 +17,7 @@ const HumanReply = ({
   userId: string
   userName: string
 }) => {
-  const { wordArray, authorName } = useHumanMessage({
+  const { wordArray } = useHumanMessage({
     userId,
     messageText,
   })

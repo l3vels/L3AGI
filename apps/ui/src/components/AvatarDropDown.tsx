@@ -3,24 +3,22 @@ import {
   Content,
   DropdownMenuSubContent,
   Item,
-  Portal,
+  // Portal,
   Root,
-  Sub,
+  // Sub,
   SubTrigger,
   Trigger,
 } from '@radix-ui/react-dropdown-menu'
 
-import API from 'share-ui/components/Icon/Icons/components/API'
-import Typography from 'share-ui/components/typography/Typography'
+import API from '@l3-lib/ui-core/dist/icons/API'
+import Typography from '@l3-lib/ui-core/dist/Typography'
 
 import styled, { css, keyframes } from 'styled-components'
 
-import { logout as logOutCookies, setAccountId } from 'helpers/authHelper'
+import { logout as logOutCookies } from 'helpers/authHelper'
 import { useNavigate } from 'react-router-dom'
-import { useLogoutService, useUserAccountsService } from 'services'
+import { useLogoutService } from 'services'
 import { useTranslation } from 'react-i18next'
-
-import defaultAvatar from '../assets/images/defaultAvatar.png'
 
 import Settings from 'share-ui/components/Icon/Icons/components/Settings'
 import LogOut from 'share-ui/components/Icon/Icons/components/LogOut'
@@ -28,6 +26,10 @@ import AvatarGenerator from './AvatarGenerator/AvatarGenerator'
 import React from 'react'
 import { AuthContext } from 'contexts'
 import TypographyPrimary from './Typography/Primary'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const AvatarDropDown = () => {
   const { t } = useTranslation()
@@ -97,8 +99,8 @@ const AvatarDropDown = () => {
 
           <TypographyPrimary
             value={t('settings')}
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
           />
         </StyledDropDownMenuItem>
@@ -107,8 +109,8 @@ const AvatarDropDown = () => {
 
           <TypographyPrimary
             value='API Keys'
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
             style={{
               fontSize: '12px',
               fontStyle: 'normal',
@@ -121,8 +123,8 @@ const AvatarDropDown = () => {
           <StyledLogOutIcon size={20} />
           <TypographyPrimary
             value={t('logout')}
-            type={Typography.types.P}
-            size={Typography.sizes.xss}
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
           />
         </StyledDropDownMenuItem>
@@ -211,56 +213,56 @@ const StyledDropdownContent = styled(Content)`
   ,
   },
 `
-const DropdownMenuDropdownMenuSubContent = styled(DropdownMenuSubContent)`
-  min-width: 180px;
-  border-radius: 8px;
-  padding: 8px 0;
-  box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
-  z-index: 102030;
-  border-radius: 8px;
-  background: var(--color-gradient-blue);
+// const DropdownMenuDropdownMenuSubContent = styled(DropdownMenuSubContent)`
+//   min-width: 180px;
+//   border-radius: 8px;
+//   padding: 8px 0;
+//   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+//   z-index: 102030;
+//   border-radius: 8px;
+//   background: var(--color-gradient-blue);
 
-  @media (prefers-reduced-motion: no-preference) {
-    animation-duration: 400ms;
-    -moz-animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform, opacity;
+//   @media (prefers-reduced-motion: no-preference) {
+//     animation-duration: 400ms;
+//     -moz-animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+//     will-change: transform, opacity;
 
-    &[data-state="open"] {
-      &[data-side="top"] {
-        animation-name: ${slideDownAndFade}
-      },
-    '&[data-side="right"]': {
-      animation-name: ${slideLeftAndFade}
-    },
-    '&[data-side="bottom"]': {
-      animation-name: ${slideUpAndFade}
-    },
-    '&[data-side="left"]': {
-      animation-name: ${slideRightAndFade}
-    },
-    }
+//     &[data-state="open"] {
+//       &[data-side="top"] {
+//         animation-name: ${slideDownAndFade}
+//       },
+//     '&[data-side="right"]': {
+//       animation-name: ${slideLeftAndFade}
+//     },
+//     '&[data-side="bottom"]': {
+//       animation-name: ${slideUpAndFade}
+//     },
+//     '&[data-side="left"]': {
+//       animation-name: ${slideRightAndFade}
+//     },
+//     }
 
-  ,
-  },
-`
+//   ,
+//   },
+// `
 
 const StyledDropDownMenuRoot = styled(Root)``
 
-const DropdownMenuSubTrigger = styled(SubTrigger)`
-  all: unset;
-  font-size: 13px;
-  line-height: 1;
-  border-radius: 3px;
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 20px;
-  position: relative;
-  user-select: none;
-  cursor: pointer;
-  :hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-`
+// const DropdownMenuSubTrigger = styled(SubTrigger)`
+//   all: unset;
+//   font-size: 13px;
+//   line-height: 1;
+//   border-radius: 3px;
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 12px 20px;
+//   position: relative;
+//   user-select: none;
+//   cursor: pointer;
+//   :hover {
+//     background: rgba(255, 255, 255, 0.3);
+//   }
+// `
 const StyledDropDownMenuItem = styled(Item)`
   all: unset;
   font-size: 13px;
@@ -283,16 +285,16 @@ const StyledDropDownMenuItem = styled(Item)`
     background: ${({ theme }) => theme.body.humanMessageBgColor};
   }
 `
-const DropdownMenuSubTriggerGroup = styled.div`
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  color: var(--content-content-primary, #fff);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 16px;
-`
+// const DropdownMenuSubTriggerGroup = styled.div`
+//   display: flex;
+//   gap: 10px;
+//   width: 100%;
+//   color: var(--content-content-primary, #fff);
+//   font-size: 12px;
+//   font-style: normal;
+//   font-weight: 500;
+//   line-height: 16px;
+// `
 
 // const StyledAvatar = styled(AvatarRadix.Root)`
 //   display: flex;
@@ -326,14 +328,14 @@ const StyledDropDownMenuTrigger = styled(Trigger)`
     cursor: pointer;
   } */
 `
-const StyledPickedText = styled.span<{ picked: boolean }>`
-  ${p =>
-    p.picked &&
-    css`
-      pointer-events: none;
-      opacity: 0.6;
-    `};
-`
+// const StyledPickedText = styled.span<{ picked: boolean }>`
+//   ${p =>
+//     p.picked &&
+//     css`
+//       pointer-events: none;
+//       opacity: 0.6;
+//     `};
+// `
 
 const StyledLogOutIcon = styled(LogOut)`
   path {

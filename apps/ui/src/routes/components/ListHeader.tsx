@@ -7,9 +7,14 @@ import Add from 'share-ui/components/Icon/Icons/components/Add'
 import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
+
 import { StyledMenuButtonsWrapper } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import { ButtonTertiary } from 'components/Button/Button'
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 type ListHeaderProps = {
   title: string
@@ -22,8 +27,8 @@ const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
     <StyledListHeader>
       <TypographySecondary
         value={`${title}s`}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
+        type={TypographyTypes.LABEL}
+        size={TypographySizes.md}
       />
       {onAddClick && (
         <IconButton

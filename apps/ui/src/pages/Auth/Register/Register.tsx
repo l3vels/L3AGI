@@ -25,6 +25,10 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Register = () => {
   const { t } = useTranslation()
@@ -47,8 +51,8 @@ const Register = () => {
 
         <TypographyTertiary
           value={t('ai-agents-description')}
-          type={Typography.types.label}
-          size={Typography.sizes.sm}
+          type={TypographyTypes.LABEL}
+          size={TypographySizes.sm}
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
@@ -97,8 +101,8 @@ const Register = () => {
         <StyledLoginWrapper>
           <TypographyTertiary
             value={t('already-have-an-account')}
-            type={Typography.types.label}
-            size={Typography.sizes.md}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.md}
           />
           <button
             onClick={() => {
@@ -107,8 +111,8 @@ const Register = () => {
           >
             <TypographyPrimary
               value={t('login')}
-              type={Typography.types.label}
-              size={Typography.sizes.md}
+              type={TypographyTypes.LABEL}
+              size={TypographySizes.md}
               as={'a'}
               style={{
                 textDecorationLine: 'underline',

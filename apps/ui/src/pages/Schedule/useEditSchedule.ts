@@ -10,6 +10,25 @@ import { useUpdateScheduleService } from 'services/schedule/useUpdateScheduleSer
 import { scheduleValidationSchema } from 'utils/validationsSchema'
 import { getDateTime } from './Schedule.utils'
 
+interface ScheduleFormValues {
+  name: string
+  description: string
+  is_active: boolean
+  max_daily_budget: number
+  cron_expression: string
+  schedule_type: string
+  agent_id: string
+  agent_type: string
+  create_session_on_run: boolean
+  group_id?: string | null
+  end_date?: string | undefined
+  interval?: string | undefined
+  interval_unit?: string | undefined
+  is_recurring: boolean
+  start_date: string
+  tasks: string[]
+}
+
 export const useEditSchedule = () => {
   const { setToast } = useContext(ToastContext)
 
@@ -57,7 +76,8 @@ export const useEditSchedule = () => {
     interval_unit: schedule?.interval?.split(' ')[1],
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: ScheduleFormValues) => {
+    console.log('value', values)
     if (!scheduleId) return
 
     setIsLoading(true)
@@ -78,10 +98,10 @@ export const useEditSchedule = () => {
           max_daily_budget: values.max_daily_budget,
         },
         configs: {
-          agent_id: agent_type === 'agent' ? values.agent_id : null,
-          team_id: agent_type === 'team' ? values.agent_id : null,
-          chat_id: agent_type === 'chat' ? values.agent_id : null,
-          group_id: values.group_id,
+          agent_id: agent_type === 'agent' ? values.agent_id : undefined,
+          team_id: agent_type === 'team' ? values.agent_id : undefined,
+          chat_id: agent_type === 'chat' ? values.agent_id : undefined,
+          group_id: values.group_id || undefined,
           create_session_on_run: values.create_session_on_run,
           is_recurring: values.is_recurring,
           tasks: values.tasks,
@@ -106,7 +126,24 @@ export const useEditSchedule = () => {
     setIsLoading(false)
   }
   const formik = useFormik({
-    initialValues: defaultValues,
+    initialValues: {
+      name: schedule?.name || '',
+      description: schedule?.description || '',
+      is_active: schedule?.is_active || false,
+      max_daily_budget: schedule?.max_daily_budget || 0,
+      cron_expression: schedule?.cron_expression || '',
+      schedule_type: schedule?.schedule_type || '',
+      agent_id: configs?.agent_id || '',
+      group_id: configs?.group_id || '',
+      agent_type: getAgentType() || '',
+      tasks: configs?.tasks || [],
+      is_recurring: configs?.is_recurring || false,
+      create_session_on_run: configs?.create_session_on_run || false,
+      start_date: getDateTime(schedule?.start_date) || '',
+      end_date: getDateTime(schedule?.end_date) || '',
+      interval: (schedule?.interval || '').split(' ')[0] || '',
+      interval_unit: (schedule?.interval || '').split(' ')[1] || '',
+    },
     enableReinitialize: true,
     validationSchema: scheduleValidationSchema,
     onSubmit: async values => handleSubmit(values),

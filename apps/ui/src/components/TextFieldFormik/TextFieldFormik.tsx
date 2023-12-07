@@ -13,8 +13,8 @@ const FormikTextField = ({
   label,
   name,
   disabled,
-  onBlur,
-  onChange,
+  // onBlur,
+  // onChange,
   value,
   focus,
   ...props

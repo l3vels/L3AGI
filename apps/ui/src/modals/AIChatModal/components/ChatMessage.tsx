@@ -16,7 +16,7 @@ type ChatMessageProps = {
 }
 
 const ChatMessage = ({ message }: ChatMessageProps) => {
-  const { id, text, ai = false, type, loader_type } = message
+  const { id, text, ai = false, loader_type } = message
 
   const isVideoLoader = loader_type === 'video'
 
@@ -46,7 +46,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             children={text}
             remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
             components={{
-              code({ node, inline, className, children, ...props }) {
+              code({ inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || 'language-js')
 
                 return !inline && match ? (
@@ -73,13 +73,13 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
 
 export default memo(ChatMessage)
 
-const StyledSeparator = styled.div`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  height: 1px;
-  margin: 17px 0;
-`
+// const StyledSeparator = styled.div`
+//   width: 100%;
+//   background: rgba(255, 255, 255, 0.3);
+//   border-radius: 3px;
+//   height: 1px;
+//   margin: 17px 0;
+// `
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -98,7 +98,6 @@ const StyledMessageWrapper = styled.div`
   flex-direction: column;
   flex-grow: 1;
 `
-
 
 export const StyledReactMarkdown = styled(ReactMarkdown)<{ isMessageByAi: boolean }>`
   text-align: left;

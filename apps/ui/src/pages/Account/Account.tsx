@@ -1,14 +1,10 @@
-import useAccount from 'pages/Account/useAccount'
-import { FormikProvider } from 'formik'
-
-import TextField from 'share-ui/components/TextField/TextField'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Typography from 'share-ui/components/typography/Typography'
 import Heading from 'share-ui/components/Heading/Heading'
 import Button from 'share-ui/components/Button/Button'
 
-import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
 import profile from 'assets/images/large.png'
 
 import ChangePassword from 'pages/ChangePassword'
@@ -19,6 +15,10 @@ import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Account = () => {
   const { t } = useTranslation()
@@ -42,8 +42,8 @@ const Account = () => {
             >
               <TypographyPrimary
                 value={t('change-password')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.sm}
               />
             </StyledChangePasswordButton>
           </StyledButtonsContainer>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useTable, useResizeColumns, useFlexLayout, useBlockLayout } from 'react-table'
 
 import styled, { css } from 'styled-components'

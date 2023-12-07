@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import Toolkit from 'pages/Toolkit'
 import Voices from 'plugins/contact/pages/Voice'
-
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
 import TabList from 'share-ui/components/Tabs/TabList/TabList'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
@@ -12,6 +11,7 @@ import { t } from 'i18next'
 import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
@@ -39,6 +39,8 @@ const Integrations = () => {
     setActiveTab(tabId)
     navigate(`/integrations?tab=${tabName}`)
   }
+
+  const { t } = useTranslation()
 
   return (
     <StyledTabRootWrapper>

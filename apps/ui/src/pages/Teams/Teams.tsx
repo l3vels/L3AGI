@@ -1,74 +1,68 @@
-// import { FormikProvider, useField } from 'formik'
 import styled from 'styled-components'
 
-// import { CustomTable } from 'oldComponents/atoms/CustomTable'
-// import { StyledButton, StyledInputContainer, StyledTextField } from './teamsStyle'
 import Typography from 'share-ui/components/typography/Typography'
 import Heading from 'share-ui/components/Heading/Heading'
 
 import Button from 'share-ui/components/Button/Button'
 
-// import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
-
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
-// import { StyledHeaderGroup, StyledInnerWrapper } from 'styles/globalStyle.css'
-import { useRef, useState } from 'react'
 import useTeams from './useTeams'
-import { useTranslation } from 'react-i18next'
-import { useModal } from 'hooks'
+
 import { StyledGroupContainer } from 'components/Layout/LayoutStyle'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
-
-// import useTeams from './useTeams'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Teams = () => {
-  const { t } = useTranslation()
-  const { openCreateTeamsModal, assignedUserList, handleDeleteAccountAccess, refetch } = useTeams()
+  // const { t } = useTranslation()
+  const { openCreateTeamsModal, assignedUserList } = useTeams()
 
-  const gridRef = useRef({})
+  // const gridRef = useRef({})
 
-  const config = columnConfig()
-  const { openModal, closeModal } = useModal()
+  // const config = columnConfig()
+  // const { openModal, closeModal } = useModal()
 
-  const deleteRow = async (itemId: string) => {
-    await handleDeleteAccountAccess(itemId)
-    refetch()
-  }
+  // const deleteRow = async (itemId: string) => {
+  //   await handleDeleteAccountAccess(itemId)
+  //   refetch()
+  // }
 
-  const getContextMenuItems = (params: any) => {
-    const itemId = params.node.data?.id
+  // const getContextMenuItems = (params: any) => {
+  //   const itemId = params.node.data?.id
 
-    const result = [
-      ...params.defaultItems,
-      {
-        // custom item
-        name: 'Delete',
-        // disabled: true,
-        action: () => {
-          // console.log('params', params.node.data.id)
-          // console.log('params', params)
-          const deleteFunc = async () => {
-            await deleteRow(itemId)
-            closeModal('delete-confirmation-modal')
-          }
-          openModal({
-            name: 'delete-confirmation-modal',
-            data: {
-              deleteItem: deleteFunc,
-              closeModal: () => closeModal('delete-confirmation-modal'),
-              label: t('are-you-sure-you-want-to-delete-this-row?'),
-              title: t('delete-row'),
-            },
-          })
-        },
-      },
-    ]
+  //   const result = [
+  //     ...params.defaultItems,
+  //     {
+  //       // custom item
+  //       name: 'Delete',
+  //       // disabled: true,
+  //       action: () => {
+  //         // console.log('params', params.node.data.id)
+  //         // console.log('params', params)
+  //         const deleteFunc = async () => {
+  //           await deleteRow(itemId)
+  //           closeModal('delete-confirmation-modal')
+  //         }
+  //         openModal({
+  //           name: 'delete-confirmation-modal',
+  //           data: {
+  //             deleteItem: deleteFunc,
+  //             closeModal: () => closeModal('delete-confirmation-modal'),
+  //             label: t('are-you-sure-you-want-to-delete-this-row?'),
+  //             title: t('delete-row'),
+  //           },
+  //         })
+  //       },
+  //     },
+  //   ]
 
-    return result
-  }
+  //   return result
+  // }
 
   return (
     <StyledGroupContainer mt='20'>
@@ -105,8 +99,8 @@ const Teams = () => {
             >
               <TypographyPrimary
                 value='Add member'
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.md}
               />
             </Button>
           </StyledIconButtonWrapper>

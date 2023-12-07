@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useRegistrationService } from 'services/useAuthService'
-import { useNavigate } from 'react-router-dom'
 import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 

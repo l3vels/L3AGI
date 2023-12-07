@@ -1,4 +1,3 @@
-import React from 'react'
 import { FormikProvider } from 'formik'
 import BackButton from 'components/BackButton'
 import Button from 'share-ui/components/Button/Button'

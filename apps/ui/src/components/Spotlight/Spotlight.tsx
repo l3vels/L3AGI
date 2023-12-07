@@ -18,6 +18,10 @@ import { ToastContext } from 'contexts'
 import Mentions from 'components/Mentions'
 import CommandIcon from './CommandIcon'
 import Typewriter from 'components/ChatTypingEffect/Typewriter'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const Spotlight = () => {
   const { t } = useTranslation()
@@ -180,8 +184,8 @@ const Spotlight = () => {
               <ChatLoader />
               <TypographyQuaternary
                 value={t('thinking')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.sm}
                 style={{ color: 'red' }}
               />
             </>
@@ -200,8 +204,8 @@ const Spotlight = () => {
                 {!expanded && (
                   <TypographyQuaternary
                     value={t('search')}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
+                    type={TypographyTypes.LABEL}
+                    size={TypographySizes.sm}
                   />
                 )}
                 {
@@ -474,21 +478,6 @@ const StyledRow = styled.div`
   text-align: center;
 `
 
-const StyledPluginsContainer = styled.div<{ showPlugins: boolean }>`
-  display: none;
-
-  ${props =>
-    props.showPlugins &&
-    css`
-      display: block;
-      position: fixed;
-      left: 50%;
-      bottom: 70px;
-      transform: translateX(-50%);
-
-      z-index: 101;
-    `}
-`
 const StyledTypewriterWrapper = styled.div`
   width: 600px;
   padding-left: 2px;

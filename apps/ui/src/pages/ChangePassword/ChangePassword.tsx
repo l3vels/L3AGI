@@ -1,4 +1,3 @@
-import React from 'react'
 import withRenderModal from 'hocs/withRenderModal'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
@@ -12,7 +11,8 @@ import Close from 'share-ui/components/Icon/Icons/components/CloseOutline'
 import Button from 'share-ui/components/Button/Button'
 // import Button from 'oldComponents/atoms/Button'
 
-import { FLexSpaceBetween, StyledHeaderGroup } from 'styles/globalStyle.css'
+import { StyledHeaderGroup } from 'styles/globalStyle.css'
+
 import TextField from 'share-ui/components/TextField/TextField'
 import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import Modal from 'share-ui/components/Modal/Modal'

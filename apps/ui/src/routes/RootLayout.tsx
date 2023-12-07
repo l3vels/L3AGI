@@ -5,9 +5,9 @@ import { useOutlet } from 'react-router-dom'
 import useCheckRoute from 'hooks/useCheckRoute'
 
 import ChatSwitcher from 'components/ChatSwitcher'
-import Spotlight from 'components/Spotlight'
+// import Spotlight from 'components/Spotlight'
 
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import AvatarDropDown from 'components/AvatarDropDown'
 
 import MediaButtons from 'components/MediaButtons'
@@ -46,21 +46,21 @@ const RootLayout = () => {
 
 export default RootLayout
 
-const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
-  position: fixed;
-  /* left: 50%; */
-  z-index: 0;
-  bottom: 20px;
-  right: 30px;
-  /* transform: translateX(-50%); */
+// const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
+//   position: fixed;
+//   /* left: 50%; */
+//   z-index: 0;
+//   bottom: 20px;
+//   right: 30px;
+//   /* transform: translateX(-50%); */
 
-  ${p =>
-    p.isHidden &&
-    css`
-      opacity: 0;
-      pointer-events: none;
-    `};
-`
+//   ${p =>
+//     p.isHidden &&
+//     css`
+//       opacity: 0;
+//       pointer-events: none;
+//     `};
+// `
 const StyledFirstName = styled.span`
   color: ${({ theme }) => theme.body.textColorSecondary};
   @media (max-width: 1100px) {

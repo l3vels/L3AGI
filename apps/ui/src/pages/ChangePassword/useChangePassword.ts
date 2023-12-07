@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import { useChangePasswordService } from 'services'
 import * as Yup from 'yup'
-import useSnackbarAlert from 'hooks/useSnackbar'
+// import useSnackbarAlert from 'hooks/useSnackbar'
 import { useModal } from 'hooks'
 import { useTranslation } from 'react-i18next'
 import { useContext } from 'react'
@@ -29,7 +29,7 @@ const initialValues = {
 const useChangePassword = () => {
   const { t } = useTranslation()
   const [changePassword] = useChangePasswordService()
-  const { setSnackbar } = useSnackbarAlert()
+  // const { setSnackbar } = useSnackbarAlert()
   const { openModal, closeModal } = useModal()
   const { setToast } = useContext(ToastContext)
 
@@ -42,8 +42,8 @@ const useChangePassword = () => {
   const onHandleUpdatePassword = async ({
     current_password,
     new_password,
-    confirm_password,
-  }: any) => {
+  }: // confirm_password,
+  any) => {
     try {
       const result = await changePassword({ current_password, new_password })
       if (result.success) {

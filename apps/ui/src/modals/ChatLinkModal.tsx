@@ -12,7 +12,6 @@ import Loader from 'share-ui/components/Loader/Loader'
 import { useTranslation } from 'react-i18next'
 
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
-import TypographySecondary from 'components/Typography/Secondary'
 import { useModal } from 'hooks'
 import CopyButton from 'components/CopyButton'
 import { useCreateChatService } from 'services/chat/useCreateChat'
@@ -179,8 +178,4 @@ const StyledLinkWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-`
-
-const StyledDiv = styled.div`
-  color: ${({ theme }) => theme.body.textColorPrimary} !important;
 `

@@ -1,6 +1,6 @@
 import { AuthContext, ToastContext } from 'contexts'
 import { useFormik } from 'formik'
-import useSnackbarAlert from 'hooks/useSnackbar'
+// import useSnackbarAlert from 'hooks/useSnackbar'
 import { useContext } from 'react'
 import {
   useInviteUserService,
@@ -15,7 +15,7 @@ import { useModal } from 'hooks'
 const useAdministration = () => {
   const { setToast } = useContext(ToastContext)
   const { t } = useTranslation()
-  const { setSnackbar } = useSnackbarAlert()
+  // const { setSnackbar } = useSnackbarAlert()
   const { inviteUser } = useInviteUserService()
   const { data: assignedUserList, refetch } = useAssignedUserListService()
   const { deleteAccountAccess } = useDeleteAccountAccessService()

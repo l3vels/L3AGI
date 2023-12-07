@@ -1,13 +1,8 @@
-import React from 'react'
-// import TextField from 'bf-ui/dist/TextField'
 import { FormikProvider } from 'formik'
 import styled from 'styled-components'
-// import Typography from 'bf-ui/dist/Typography'
-// import Button from 'bf-ui/dist/Button'
 import useUpdatePassword from './useUpdatePassword'
 import TextField from 'share-ui/components/TextField/TextField'
 
-import Button from 'share-ui/components/Button/Button'
 import { ButtonPrimary } from 'components/Button/Button'
 
 const UpdatePassword = () => {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
 import About from 'share-ui/components/Icon/Icons/components/About'
 import Add from 'share-ui/components/Icon/Icons/components/Add'
 import ValueOutline from 'share-ui/components/Icon/Icons/components/ValueOutline'
@@ -9,7 +8,7 @@ import Team from 'share-ui/components/Icon/Icons/components/Team'
 import Launch from 'share-ui/components/Icon/Icons/components/Launch'
 import MyWeek from 'share-ui/components/Icon/Icons/components/MyWeek'
 import Mobile from 'share-ui/components/Icon/Icons/components/Mobile'
-import Group from 'share-ui/components/Icon/Icons/components/Group'
+
 import Session from 'share-ui/components/Icon/Icons/components/Teams'
 
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -26,36 +25,40 @@ import Typography from 'share-ui/components/typography/Typography'
 import TypographySecondary from 'components/Typography/Secondary'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { t } from 'i18next'
+import {
+  TypographySizes,
+  TypographyTypes,
+} from 'share-ui/components/typography/TypographyConstants'
 
 const MainNavigation = () => {
   const {
     getHomeModules,
     getChatModules,
     getModelModules,
-    getToolkitModules,
+    // getToolkitModules,
     getDiscoveryModules,
     getDatasourceModules,
     getScheduleModules,
     getContactModules,
-    getGroupModules,
+    // getGroupModules,
     getIntegrationModules,
     getSessionModules,
-    moduleNames,
+    // moduleNames,
   } = useGetAccountModule()
 
   const isHome = getHomeModules('active')
   const isChat = getChatModules('active')
   const isModel = getModelModules('active')
   const isIntegration = getIntegrationModules('active')
-  const isToolkit = getToolkitModules()
+  // const isToolkit = getToolkitModules()
   const isDiscover = getDiscoveryModules()
   const isDatasource = getDatasourceModules()
   const isSchedule = getScheduleModules()
   const isContact = getContactModules()
-  const isGroup = getGroupModules()
+  // const isGroup = getGroupModules()
   const isSession = getSessionModules()
 
-  const { chat, home, datasource, models, discovery, schedule, toolkits, sessions } = moduleNames
+  // const { chat, home, datasource, models, discovery, schedule, toolkits, sessions } = moduleNames
 
   const navigate = useNavigate()
 
@@ -81,8 +84,8 @@ const MainNavigation = () => {
           <StyledAboutIcon size={40} />
           <TypographySecondary
             value={t('home')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -92,8 +95,8 @@ const MainNavigation = () => {
           <StyledRobotIcon size={40} />
           <TypographySecondary
             value={t('chat')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -106,8 +109,8 @@ const MainNavigation = () => {
           <StyledMyWeekIcon size={30} />
           <TypographySecondary
             value={t('schedule')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -127,8 +130,8 @@ const MainNavigation = () => {
           <StyledMobileIcon size={30} />
           <TypographySecondary
             value={t('contacts')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -141,8 +144,8 @@ const MainNavigation = () => {
           <StyledValueOutlineIcon size={40} />
           <TypographySecondary
             value={t('datasources')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -155,8 +158,8 @@ const MainNavigation = () => {
           <StyledGamesIcon size={40} />
           <TypographySecondary
             value={t('toolkit')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )} */}
@@ -169,8 +172,8 @@ const MainNavigation = () => {
           <StyledGamesIcon size={40} />
           <TypographySecondary
             value={t('integrations')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -180,8 +183,8 @@ const MainNavigation = () => {
           <StyledBasicIcon size={30} />
           <TypographySecondary
             value={t('models')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -194,8 +197,8 @@ const MainNavigation = () => {
           <StyledSessionIcon size={30} />
           <TypographySecondary
             value={t('sessions')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -208,8 +211,8 @@ const MainNavigation = () => {
           <StyledSearchOutlineIcon size={40} />
           <TypographySecondary
             value={t('discovery')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
           />
         </StyledLi>
       )}
@@ -313,12 +316,6 @@ const StyledMyWeekIcon = styled(MyWeek)`
   }
 `
 const StyledMobileIcon = styled(Mobile)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
-
-const StyledGroupIcon = styled(Group)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }

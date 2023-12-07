@@ -1,22 +1,14 @@
 import { v4 as uuidv4 } from 'uuid'
-
 import About from 'share-ui/components/Icon/Icons/components/About'
-import Home from 'share-ui/components/Icon/Icons/components/Home'
-
-import API from 'share-ui/components/Icon/Icons/components/API'
-import Doc from 'share-ui/components/Icon/Icons/components/Doc'
-import Games from 'share-ui/components/Icon/Icons/components/Games'
 import Teams from 'share-ui/components/Icon/Icons/components/Teams'
-import Players from 'share-ui/components/Icon/Icons/components/Players'
-import Contracts from 'share-ui/components/Icon/Icons/components/Contracts'
 import Collection from 'share-ui/components/Icon/Icons/components/Collection'
 import Value from 'share-ui/components/Icon/Icons/components/Value'
 import Add from 'share-ui/components/Icon/Icons/components/Add'
 import Sun from 'share-ui/components/Icon/Icons/components/Sun'
 import HomeIconSvg from 'assets/svgComponents/HomeIconSvg'
-import StarVector from 'assets/svgComponents/StarVector'
-import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
+
 import styled from 'styled-components'
+import { StyledValueIcon } from 'pages/Navigation/MainNavigation'
 
 export const defaultData = (path_id?: any) => {
   return [
@@ -199,8 +191,8 @@ const StyledTeamsIcon = styled(Teams)`
   }
 `
 
-const StyledIcon = styled(Value)`
-  path {
-    fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
+// const StyledIcon = styled(Value)`
+//   path {
+//     fill: ${({ theme }) => theme.body.iconColor};
+//   }
+// `

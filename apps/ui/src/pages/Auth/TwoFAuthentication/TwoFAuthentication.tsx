@@ -1,4 +1,3 @@
-import React from 'react'
 import TextField from 'share-ui/components/TextField/TextField'
 
 // import useResetPassword from './useResetPassword'

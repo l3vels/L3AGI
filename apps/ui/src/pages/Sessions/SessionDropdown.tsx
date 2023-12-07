@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import Dropdown from 'share-ui/components/Dropdown/Dropdown'
 
@@ -14,7 +14,7 @@ type SessionDropdownProps = {
 }
 
 const SessionDropdown = ({
-  label,
+  // label,
   options,
   isMulti,
   placeholder,

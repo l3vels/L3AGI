@@ -8,7 +8,7 @@ import Calendar from 'share-ui/components/Icon/Icons/components/Calendar'
 import { ButtonSecondary } from 'components/Button/Button'
 
 const DatePickerField = ({ start_date, end_date, onChange, onApply, onClear }: any) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const [is_open, setIsOpen] = React.useState(false)
 
   const ref = useRef(null)
@@ -35,7 +35,6 @@ const DatePickerField = ({ start_date, end_date, onChange, onApply, onClear }: a
       {is_open && (
         <StyledPickerContainer>
           <DatePicker
-            kind='secondary'
             date={start_date}
             endDate={end_date}
             range
