@@ -6,7 +6,7 @@ import useApiKeys from './useApiKeys'
 import moment from 'moment'
 import Typography from 'share-ui/components/typography/Typography'
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import menuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
+
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 import { ButtonTertiary } from 'components/Button/Button'
@@ -106,17 +106,6 @@ const columns = [
 ]
 
 export default columns
-
-export const StyledMenuDots = styled.div`
-  .menu-button--wrapper.menu-button--wrapper--size-32 {
-    &:hover {
-      background: ${({ theme }) => theme.body.humanMessageBgColor};
-    }
-    path {
-      stroke: ${({ theme }) => theme.body.iconColor};
-    }
-  }
-`
 
 export const StyledMenuButtonsWrapper = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorSecondary};

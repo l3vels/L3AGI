@@ -22,11 +22,12 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
+
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useModelsService } from 'services'
 import { AgentWithConfigs } from 'types'
+import MenuDotsOutline from 'share-ui/components/Icon/Icons/components/MenuDotsOutline'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
@@ -98,7 +99,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             )}
 
             {agentModule?.delete && isCreator && (
-              <MenuButton component={MenuDots}>
+              <MenuButton component={() => <MenuDotsOutline size={20} />}>
                 <StyledMenuButtonsWrapper>
                   <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
                   <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>

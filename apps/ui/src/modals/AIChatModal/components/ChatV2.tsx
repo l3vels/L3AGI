@@ -99,6 +99,8 @@ const ChatV2 = () => {
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
+  const hasVoice = agentById?.agent?.agent_type === 'voice'
+
   const agentName =
     agentById?.agent?.name || teamOfAgents?.name || chatById?.agent?.agent?.name || ''
 
@@ -412,7 +414,7 @@ const ChatV2 = () => {
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
 
-              {!teamId && (
+              {hasVoice && !teamId && (
                 <AudioRecorder
                   setVoicePreview={setVoicePreview}
                   setStartedRecording={setStartedRecording}

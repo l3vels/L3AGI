@@ -7,16 +7,9 @@ import Typography from 'share-ui/components/typography/Typography'
 import Heading from 'share-ui/components/Heading/Heading'
 
 import Button from 'share-ui/components/Button/Button'
-import IconButton from 'share-ui/components/IconButton/IconButton'
-
-import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-import MenuDots from 'share-ui/components/Icon/Icons/components/MenuDots'
 
 // import DataGrid from 'components/DataGrid'
 import columnConfig from './columnConfig'
-
-import SearchIcon from 'share-ui/components/Icon/Icons/components/SearchOutline'
-import Description from 'share-ui/components/Icon/Icons/components/Description'
 
 import AddMemberModal from './CreateTeamModal/CreateTeamModal'
 
@@ -116,18 +109,6 @@ const Teams = () => {
                 size={Typography.sizes.md}
               />
             </Button>
-            {/* <MenuButton component={MenuDots}>
-            <StyledButtonsWrapper>
-              <StyledClickableDiv>
-                <Typography
-                  value={t('remove-selected')}
-                  type={Typography.types.LABEL}
-                  size={Typography.sizes.md}
-                  customColor={'rgba(250,250,250, 0.8)'}
-                />
-              </StyledClickableDiv>
-            </StyledButtonsWrapper>
-          </MenuButton> */}
           </StyledIconButtonWrapper>
         </StyledHeaderGroup>
       </div>

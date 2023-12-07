@@ -10,6 +10,7 @@ class ZapierSendToolkit(BaseToolkit, ABC):
     description: str = "Toolkit containing tools for using Zapier"
     slug: str = "zapier"
     toolkit_id = "01b85de6-8d42-4596-b232-858cf35c820d"
+    is_voice = True
 
     def get_tools(self) -> List[BaseTool]:
         return [ZapierSendTool()]
