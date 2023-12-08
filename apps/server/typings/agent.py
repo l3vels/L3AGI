@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import UUID4, BaseModel
 
@@ -41,7 +41,7 @@ class ConfigInput(BaseModel):
     transcriber: Optional[str]
     response_mode: Optional[List[str]]
     input_mode: Optional[List[str]]
-    runners: Optional[List[str]]
+    runners: Optional[List[Dict]]
 
 
 class AgentConfigInput(BaseModel):
@@ -105,7 +105,7 @@ class ConfigsOutput(BaseModel):
     transcriber: Optional[str]
     response_mode: Optional[List[str]]
     input_mode: Optional[List[str]]
-    runners: Optional[List[str]]
+    runners: Optional[List[Dict]]
 
 
 class AgentOutput(BaseModel):

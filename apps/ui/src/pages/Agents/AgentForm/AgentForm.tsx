@@ -26,6 +26,7 @@ import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 import TextareaFormik from 'components/TextareaFormik'
 import { useLocation, useNavigate } from 'react-router-dom'
 import RadioButton from 'share-ui/components/RadioButton/RadioButton'
+import AgentRunners from './components/AgentRunners'
 
 type AgentFormProps = {
   formik: any
@@ -138,7 +139,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
             Voice Preferences
           </Tab>
           <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
-            Voice Flow
+            Flow
           </Tab>
         </TabList>
       </StyledFormTabsWrapper>
@@ -425,13 +426,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <AgentDropdown
-                    isMulti
-                    label={t('Execute Runners After Call Ends')}
-                    fieldName={'agent_runners'}
-                    fieldValue={agent_runners}
-                    setFieldValue={setFieldValue}
-                    options={scheduleOptions}
+                  <AgentRunners
+                    formikField='agent_runners'
+                    placeholder='Execute Runners After Call End'
                   />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
