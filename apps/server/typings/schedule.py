@@ -80,7 +80,3 @@ class ScheduleOutput(BaseModel):
 class ScheduleWithConfigsOutput(BaseModel):
     schedule: ScheduleOutput
     configs: Optional[ConfigsOutput]
-
-
-class ScheduleRunInput(BaseModel):
-    system_message_params: Optional[Dict]

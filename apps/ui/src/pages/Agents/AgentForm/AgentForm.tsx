@@ -56,7 +56,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_voice_response,
     agent_integrations,
     agent_type,
-    agent_runners,
   } = values
 
   const {
@@ -70,7 +69,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     integrationOptions,
     voiceToolOptions,
     voiceModelOptions,
-    scheduleOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {

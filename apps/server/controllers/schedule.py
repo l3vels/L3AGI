@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi_sqlalchemy import db
@@ -8,8 +8,8 @@ from models.db import create_session
 from models.schedule import ScheduleModel
 from services.schedule import execute_scheduled_run
 from typings.auth import UserAccount
-from typings.schedule import (ScheduleConfigInput, ScheduleRunInput,
-                              ScheduleStatus, ScheduleWithConfigsOutput)
+from typings.schedule import (ScheduleConfigInput, ScheduleStatus,
+                              ScheduleWithConfigsOutput)
 from utils.auth import authenticate, authenticate_by_auth_token
 from utils.schedule import (convert_model_to_response,
                             convert_schedules_to_schedule_list)
@@ -22,7 +22,7 @@ router = APIRouter()
     status_code=200,
     dependencies=[Depends(authenticate_by_auth_token)],
 )
-def run_schedule(schedule_id: str, input: Optional[ScheduleRunInput] = None):
+def run_schedule(schedule_id: str):
     schedule = ScheduleModel.get_schedule_by_id(db, schedule_id, None)
 
     if not schedule:
@@ -32,7 +32,7 @@ def run_schedule(schedule_id: str, input: Optional[ScheduleRunInput] = None):
         return {"message": "Schedule is already running"}
 
     try:
-        execute_scheduled_run(db.session, schedule, input)
+        execute_scheduled_run(db.session, schedule)
         return {"message": "Schedule run successfully"}
     except Exception as err:
         raise HTTPException(status_code=500, detail=str(err))

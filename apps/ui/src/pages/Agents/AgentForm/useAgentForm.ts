@@ -5,7 +5,6 @@ import { useDatasourcesService } from 'services/datasource/useDatasourcesService
 import { useToolsService } from 'services/tool/useToolsService'
 import { useIntegrationsToolService } from 'services/integrations/useIntegrationsToolService'
 import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
-import { useSchedulesService } from 'services/schedule/useSchedulesService'
 
 export const useAgentForm = (formik: any) => {
   const [avatarIsLoading, setAvatarLoader] = useState(false)
@@ -17,7 +16,6 @@ export const useAgentForm = (formik: any) => {
   const { data: models } = useModelsService()
   const { data: voices } = useVoicesService()
   const { data: integrations } = useIntegrationsToolService()
-  const { data: schedules } = useSchedulesService()
 
   const modelOptions = models?.map(({ id, name, provider }) => ({
     value: id,
@@ -78,11 +76,6 @@ export const useAgentForm = (formik: any) => {
       }
     })
 
-  const scheduleOptions = schedules.map(({ schedule }) => ({
-    value: schedule.id,
-    label: schedule.name,
-  }))
-
   const handleUploadAvatar = async (event: any) => {
     setAvatarLoader(true)
     const { files } = event.target
@@ -115,7 +108,6 @@ export const useAgentForm = (formik: any) => {
     toolOptions,
     integrationOptions,
     voiceToolOptions,
-    scheduleOptions,
 
     handleUploadAvatar,
     avatarIsLoading,

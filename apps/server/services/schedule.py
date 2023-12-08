@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Dict, Optional
+from typing import Dict
 
 import arrow
 from fastapi_sqlalchemy import db
@@ -9,7 +9,7 @@ from models.schedule import ScheduleModel
 from services.chat import create_client_message, create_user_message
 from typings.auth import UserAccount
 from typings.chat import ChatInput, ChatMessageInput, ChatUserMessageInput
-from typings.schedule import ScheduleRunInput, ScheduleStatus
+from typings.schedule import ScheduleStatus
 from utils.schedule import convert_model_to_response
 
 
@@ -40,7 +40,6 @@ def parse_interval_to_seconds(interval: str) -> int:
 def execute_scheduled_run(
     session,
     schedule: ScheduleModel,
-    schedule_run_input: Optional[ScheduleRunInput] = None,
 ):
     schedule.status = ScheduleStatus.PROCESSING.value
     session.commit()
@@ -71,28 +70,6 @@ def execute_scheduled_run(
 
         for task in configs.tasks:
             prompt += f"- {task}\n"
-
-        if schedule_run_input:
-            prompt = replace_nested_templates(
-                prompt, schedule_run_input.system_message_params
-            )
-
-        #         prompt = prompt.replace(
-        #             "{{chat_history}}",
-        #             """
-        # L3 Agent: Hello, Mirian, how have you been, my friend?
-        # Mirian: Hello. I'm good. Can you a booking on cal dot com.
-        # L3 Agent: Sure, Mirian!
-        # L3 Agent: I've successfully booked a meeting for you on Cal.com
-        # L3 Agent: You'll receive a confirmation email shortly.
-        # L3 Agent: The meeting is scheduled for December 5th, from 2:00 PM to 3:00 PM, in Tbilisi time.
-        # L3 Agent: Is there anything else I can assist you with?
-        # Mirian: Yes please also send me an SMS and email after call.
-        #         """,
-        #         )
-
-        #         prompt = prompt.replace("{{contact.phone}}", "+995595056022")
-        #         prompt = prompt.replace("{{contact.email}}", "oqradzemirian@gmail.com")
 
         if chat:
             create_client_message(
