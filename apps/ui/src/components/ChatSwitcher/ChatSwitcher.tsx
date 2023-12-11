@@ -328,9 +328,9 @@ export const StyledValueOutlineIcon = styled(ValueOutline)`
 `
 
 export const StyledRobotIcon = styled(Robot)`
-  path {
+  /* path {
     fill: ${({ theme }) => theme.body.iconColor};
-  }
+  } */
 `
 
 export const StyledSearchOutlineIcon = styled(SearchOutline)`

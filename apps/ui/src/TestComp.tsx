@@ -1,11 +1,11 @@
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import ReactDOM from 'react-dom'
 
+import './TestComp.css'
+import ChatWidget from 'ChatWidget'
+
 const renderTestComp = () => {
-  ReactDOM.render(
-    <AvatarGenerator name={'Embedded from chat'} size={50} />,
-    document.getElementById('test'),
-  )
+  ReactDOM.render(<ChatWidget />, document.getElementById('test'))
 }
 
 renderTestComp()

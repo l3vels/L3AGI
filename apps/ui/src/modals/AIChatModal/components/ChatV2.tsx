@@ -49,7 +49,7 @@ import { textSlicer } from 'utils/textSlicer'
 import AudioRecorder from 'components/AudioRecorder'
 import AudioPlayer from 'components/AudioPlayer'
 
-const ChatV2 = () => {
+const ChatV2 = ({ chatSessionId = '' }: { chatSessionId?: string }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -79,7 +79,7 @@ const ChatV2 = () => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
-  const chatId = urlParams.get('chat')
+  const chatId = urlParams.get('chat') || chatSessionId
 
   const [createClientChatMessage] = useCreateClientChatMessageService()
 
