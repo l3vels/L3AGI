@@ -59,6 +59,7 @@ export const useEditAgent = () => {
 
     agent_type: agentById?.agent?.agent_type,
     agent_runners: agentById?.configs?.runners || [],
+    agent_sentiment_analyzer: agentById?.configs?.sentiment_analyzer || { task: '', runner: '' },
   }
 
   const handleSubmit = async (values: any) => {
@@ -92,6 +93,7 @@ export const useEditAgent = () => {
 
       integrations: values.agent_integrations,
       runners: values.agent_runners,
+      sentiment_analyzer: values.agent_sentiment_analyzer,
     }
 
     await updateAgent(agentId || '', {

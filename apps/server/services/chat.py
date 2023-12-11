@@ -115,7 +115,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
 
     voice_url = body.voice_url
 
-    process_chat_message(
+    return process_chat_message(
         session_id=session_id,
         sender_name=sender_name,
         sender_user_id=sender_user_id,
@@ -130,7 +130,6 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
         chat_id=chat_id,
         voice_url=voice_url,
     )
-    return ""
 
 
 def process_chat_message(
@@ -207,9 +206,11 @@ def process_chat_message(
         db.session, provider_account.id
     )
 
+    res: str = ""
+
     if len(agents) > 0:
         for agent_with_configs in agents:
-            run_conversational_agent(
+            res = run_conversational_agent(
                 agent_with_configs=agent_with_configs,
                 sender_name=sender_name,
                 sender_user_id=sender_user_id,
@@ -243,6 +244,8 @@ def process_chat_message(
             provider_user=provider_user,
             run_logs_manager=run_logs_manager,
         )
+
+    return res
 
 
 def append_agent_to_list(agent_id, account, agents):

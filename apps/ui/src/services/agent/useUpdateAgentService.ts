@@ -34,6 +34,7 @@ export const useUpdateAgentService = () => {
 
       integrations,
       runners,
+      sentiment_analyzer,
     } = input
 
     const { data } = await mutation({
@@ -70,6 +71,7 @@ export const useUpdateAgentService = () => {
 
             integrations,
             runners,
+            sentiment_analyzer,
           },
         },
       },

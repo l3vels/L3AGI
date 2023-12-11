@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 
 import createAgentGql from '../../gql/ai/agent/createAgent.gql'
+import { AgentRunner, Nullable } from 'types'
 
 type FieldInput = {
   key: string
@@ -46,7 +47,8 @@ export type AgentInput = {
   integrations?: IntegrationInput[]
 
   agent_type?: string
-  runners: string[]
+  runners: AgentRunner[]
+  sentiment_analyzer: Nullable<AgentRunner>
 }
 
 export const useCreateAgentService = () => {
@@ -83,6 +85,7 @@ export const useCreateAgentService = () => {
 
       agent_type,
       runners,
+      sentiment_analyzer,
     } = input
 
     const {
@@ -121,6 +124,7 @@ export const useCreateAgentService = () => {
 
             integrations,
             runners,
+            sentiment_analyzer,
           },
         },
       },

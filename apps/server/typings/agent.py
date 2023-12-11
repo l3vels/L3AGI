@@ -42,6 +42,7 @@ class ConfigInput(BaseModel):
     response_mode: Optional[List[str]]
     input_mode: Optional[List[str]]
     runners: Optional[List[Dict]]
+    sentiment_analyzer: Optional[Dict]
 
 
 class AgentConfigInput(BaseModel):
@@ -106,6 +107,7 @@ class ConfigsOutput(BaseModel):
     response_mode: Optional[List[str]]
     input_mode: Optional[List[str]]
     runners: Optional[List[Dict]]
+    sentiment_analyzer: Optional[Dict]
 
 
 class AgentOutput(BaseModel):

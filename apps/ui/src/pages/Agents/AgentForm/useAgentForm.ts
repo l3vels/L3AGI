@@ -5,6 +5,7 @@ import { useDatasourcesService } from 'services/datasource/useDatasourcesService
 import { useToolsService } from 'services/tool/useToolsService'
 import { useIntegrationsToolService } from 'services/integrations/useIntegrationsToolService'
 import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
+import { useAgentsService } from 'services/agent/useAgentsService'
 
 export const useAgentForm = (formik: any) => {
   const [avatarIsLoading, setAvatarLoader] = useState(false)
@@ -16,6 +17,12 @@ export const useAgentForm = (formik: any) => {
   const { data: models } = useModelsService()
   const { data: voices } = useVoicesService()
   const { data: integrations } = useIntegrationsToolService()
+  const { data: agents } = useAgentsService()
+
+  const agentOptions = agents?.map(({ agent: { id, name } }) => ({
+    value: id,
+    label: name,
+  }))
 
   const modelOptions = models?.map(({ id, name, provider }) => ({
     value: id,
@@ -108,6 +115,7 @@ export const useAgentForm = (formik: any) => {
     toolOptions,
     integrationOptions,
     voiceToolOptions,
+    agentOptions,
 
     handleUploadAvatar,
     avatarIsLoading,

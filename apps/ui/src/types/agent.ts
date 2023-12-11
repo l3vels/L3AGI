@@ -1,6 +1,11 @@
 import { IntegrationInput } from 'services/agent/useCreateAgentService'
 import { Nullable } from './utils'
 
+export interface AgentRunner {
+  task: string
+  runner: string
+}
+
 export interface AgentWithConfigs {
   agent: {
     id: string
@@ -36,7 +41,8 @@ export interface AgentWithConfigs {
 
     integrations?: IntegrationInput[]
 
-    runners: Nullable<string[]>
+    runners: Nullable<AgentRunner[]>
+    sentiment_analyzer: Nullable<AgentRunner>
   }
   system_message: Nullable<string>
 }

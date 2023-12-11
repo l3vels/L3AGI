@@ -28,7 +28,11 @@ def convert_model_to_response(agent_model: AgentModel) -> AgentWithConfigsOutput
             # Convert value to the type specified in ConfigsOutput
             target_type = ConfigsOutput.__annotations__.get(key)
 
-            if target_type:
+            if key == "sentiment_analyzer":
+                import ast
+
+                value = ast.literal_eval(value)
+            elif target_type:
                 value = convert_value_to_type(value, target_type)
 
             configs[key] = value

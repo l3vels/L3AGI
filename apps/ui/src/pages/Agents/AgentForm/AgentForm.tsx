@@ -56,6 +56,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_voice_response,
     agent_integrations,
     agent_type,
+    agent_sentiment_analyzer,
   } = values
 
   const {
@@ -67,6 +68,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     handleUploadAvatar,
     avatarIsLoading,
     integrationOptions,
+    agentOptions,
     voiceToolOptions,
     voiceModelOptions,
   } = useAgentForm(formik)
@@ -428,6 +430,30 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     formikField='agent_runners'
                     placeholder='Execute Runners After Call End'
                   />
+
+                  <StyledCombinedFields>
+                    <FormikTextField label='Task' name={`agent_sentiment_analyzer.task`} />
+
+                    <AgentDropdown
+                      label={t('Runner')}
+                      fieldName={`agent_sentiment_analyzer.runner`}
+                      fieldValue={agent_sentiment_analyzer?.runner}
+                      setFieldValue={setFieldValue}
+                      options={agentOptions}
+                    />
+                  </StyledCombinedFields>
+
+                  {/* <AgentDropdown
+                    label={'Call Sentiment Analyzer'}
+                    fieldName={'agent_sentiment_analyzer'}
+                    setFieldValue={setFieldValue}
+                    fieldValue={agent_sentiment_analyzer}
+                    options={agentOptions}
+                    onChange={() => {
+                      setFieldValue('agent_source_flow', '')
+                    }}
+                    optionSize={'small'}
+                  /> */}
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
               <TabPanel>

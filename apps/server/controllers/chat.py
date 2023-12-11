@@ -265,8 +265,7 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     """
     # authenticate
     auth: UserAccount = try_auth_user(request, response)
-    create_client_message(body, auth)
-    return ""
+    return create_client_message(body, auth)
 
 
 @router.post("/session/messages/draft", status_code=201)
