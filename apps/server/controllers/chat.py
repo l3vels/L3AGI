@@ -113,6 +113,7 @@ def get_chat_messages(
         raise HTTPException(status_code=401, detail="Unauthorized")
 
     session_id = None
+
     if auth:
         session_id = get_chat_session_id(
             auth.user.id, auth.account.id, agent_id, team_id, chat_id
@@ -120,9 +121,21 @@ def get_chat_messages(
     else:
         session_id = get_chat_session_id(None, None, None, None, chat_id)
 
+    session_ids = [session_id]
+
+    # Get child chat session ids to fetch messages from
+    if chat_id:
+        child_chats = (
+            db.session.query(ChatModel).filter(ChatModel.parent_id == chat_id).all()
+        )
+
+        session_ids.extend(
+            [get_chat_session_id(chat_id=child_chat.id) for child_chat in child_chats]
+        )
+
     chat_messages = (
         db.session.query(ChatMessageModel)
-        .filter(ChatMessageModel.session_id == session_id)
+        .filter(ChatMessageModel.session_id.in_(session_ids))
         .order_by(ChatMessageModel.created_on.desc())
         .limit(50)
         .options(

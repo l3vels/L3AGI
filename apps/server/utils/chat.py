@@ -1,15 +1,20 @@
-from typing import Tuple, List
-from uuid import UUID
 import json
 import re
 from enum import Enum
-from typings.chat import ChatOutput
-from utils.type import convert_value_to_type
+from typing import List, Tuple
+from uuid import UUID
+
 from models.chat import ChatModel
-from utils.user import convert_model_to_response as user_convert_model_to_response
-from utils.team import convert_model_to_response as team_convert_model_to_response
-from utils.agent import convert_model_to_response as agent_convert_model_to_response
-from utils.account import convert_model_to_response as account_convert_model_to_response
+from typings.chat import ChatOutput
+from utils.account import \
+    convert_model_to_response as account_convert_model_to_response
+from utils.agent import \
+    convert_model_to_response as agent_convert_model_to_response
+from utils.team import \
+    convert_model_to_response as team_convert_model_to_response
+from utils.type import convert_value_to_type
+from utils.user import \
+    convert_model_to_response as user_convert_model_to_response
 
 
 class MentionModule(Enum):
@@ -19,8 +24,8 @@ class MentionModule(Enum):
 
 
 def get_chat_session_id(
-    user_id: UUID,
-    account_id: UUID,
+    user_id: UUID = None,
+    account_id: UUID = None,
     agent_id: UUID = None,
     team_id: UUID = None,
     chat_id: UUID = None,

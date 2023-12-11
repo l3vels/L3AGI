@@ -49,6 +49,7 @@ class ChatInput(BaseModel):
     is_public: Optional[bool]
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
+    parent_id: Optional[UUID] = None
 
 
 class UpdateChatInput(BaseModel):

@@ -31,6 +31,8 @@ class ChatModel(BaseModel):
 
     voice_url = Column(String, nullable=True)
 
+    parent_id = Column(UUID, ForeignKey("chat.id", ondelete="CASCADE"), index=True)
+
     creator_user_id = Column(
         UUID,
         ForeignKey("user.id", name="fk_creator_user_id", ondelete="CASCADE"),
