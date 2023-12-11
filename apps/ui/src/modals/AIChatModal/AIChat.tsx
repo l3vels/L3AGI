@@ -21,11 +21,10 @@ const AIChat = () => {
         <Tab onClick={() => setActiveTab(0)}>Team</Tab>
         <Tab onClick={() => setActiveTab(1)}>Private</Tab>
       </StyledTabList> */}
+      <ChatV2 />
       <StyledTabContext activeTabId={activeTab}>
         <TabPanels noAnimation className='TabsContextClass'>
-          <TabPanel className='TabsContextClass'>
-            <ChatV2 />
-          </TabPanel>
+          <TabPanel className='TabsContextClass'></TabPanel>
 
           <TabPanel>
             <ChatV2 />

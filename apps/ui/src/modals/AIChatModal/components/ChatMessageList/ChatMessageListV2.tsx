@@ -320,8 +320,15 @@ const StyledLoaderWrapper = styled.div`
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
-  /* width: 100%; */
   opacity: 0;
-  height: 20px;
-  max-height: 20px;
+  /* width: 100%; */
+  /* height: 20px;
+  max-height: 20px; */
+
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `

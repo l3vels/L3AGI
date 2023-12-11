@@ -53,8 +53,8 @@ export const StyledReplyWrapper = styled.div`
   /* padding-left: 50px; */
   font-size: 14px;
 
-  width: calc(100vw - 100px);
-
+  min-width: 400px;
+  width: calc(100% - 100px);
   max-width: 800px;
 
   height: 20px;

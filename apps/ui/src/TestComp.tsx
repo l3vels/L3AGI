@@ -1,4 +1,3 @@
-import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import ReactDOM from 'react-dom'
 
 import './TestComp.css'

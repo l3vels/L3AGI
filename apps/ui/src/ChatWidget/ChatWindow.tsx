@@ -18,6 +18,8 @@ const StyledChatWindow = styled.div`
   width: calc(100vw - 30px);
   max-width: 450px;
 
+  height: calc(75vh);
+
   border-radius: 10px;
 
   background-color: #fff;
