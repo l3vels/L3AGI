@@ -11,6 +11,7 @@ type TextareaProps = {
   value: string
   fieldName: string
   triggerResize?: number
+  minHeight?: number
 }
 
 const TextareaFormik = ({
@@ -19,6 +20,7 @@ const TextareaFormik = ({
   value,
   fieldName,
   triggerResize,
+  minHeight,
   ...props
 }: TextareaProps) => {
   const textareaRef = useRef(null as any)
@@ -41,7 +43,7 @@ const TextareaFormik = ({
   }, [value, triggerResize])
 
   return (
-    <StyledTextareaWrapper>
+    <StyledTextareaWrapper minHeight={minHeight}>
       <TypographyPrimary value={label} type={Typography.types.LABEL} size={Typography.sizes.md} />
       <Textarea
         ref={textareaRef}
@@ -59,7 +61,7 @@ const TextareaFormik = ({
 
 export default TextareaFormik
 
-const StyledTextareaWrapper = styled.div`
+const StyledTextareaWrapper = styled.div<{ minHeight?: number }>`
   font: var(--font-general-label);
   line-height: 22px;
   font-size: 10px;
@@ -78,7 +80,7 @@ const StyledTextareaWrapper = styled.div`
     }
   }
   textarea {
-    min-height: 200px;
+    min-height: ${({ minHeight }) => (minHeight ? `${minHeight}px` : '200px')};
     max-height: calc(100vh - 400px);
   }
 `

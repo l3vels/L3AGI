@@ -105,7 +105,7 @@ export default AgentDropdown
 const StyledWrapper = styled.div<{ isValidationError: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   width: 100%;
   .css-xrcw8y-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
