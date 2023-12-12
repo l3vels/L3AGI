@@ -20,6 +20,7 @@ import { AgentWithConfigs, Nullable } from 'types'
 
 import { useAgentsService } from 'services/agent/useAgentsService'
 import AudioPlayer from 'components/AudioPlayer'
+import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
 
 type CellProps = {
   value: Nullable<string>
@@ -121,7 +122,11 @@ const columns = [
 
             <IconButton
               onClick={() => handleViewClick()}
-              icon={() => <StyledEyeOpenIcon />}
+              icon={() => (
+                <StyledIconWrapper>
+                  <StyledEyeOpenIcon />
+                </StyledIconWrapper>
+              )}
               size={IconButton.sizes?.SMALL}
               kind={IconButton.kinds?.TERTIARY}
               ariaLabel='View'
@@ -226,7 +231,11 @@ const columns = [
 
           <IconButton
             onClick={() => handleViewClick(data.id)}
-            icon={() => <StyledEyeOpenIcon />}
+            icon={() => (
+              <StyledIconWrapper>
+                <StyledEyeOpenIcon />
+              </StyledIconWrapper>
+            )}
             size={IconButton.sizes?.SMALL}
             kind={IconButton.kinds?.TERTIARY}
             ariaLabel='View'

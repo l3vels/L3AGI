@@ -107,22 +107,22 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
             )
           })}
         </StyledTbody>
-        {pagination && (
-          <PaginationWrapper>
-            <PageNumber onClick={handlePrevPage}>
-              <StyledNavigationChevronLeft size={16} />
-            </PageNumber>
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === currentPage}>
-                {i + 1}
-              </PageNumber>
-            ))}
-            <PageNumber onClick={handleNextPage}>
-              <StyledNavigationChevronRight size={16} />
-            </PageNumber>
-          </PaginationWrapper>
-        )}
       </StyledTable>
+      {pagination && (
+        <PaginationWrapper>
+          <PageNumber onClick={handlePrevPage}>
+            <StyledNavigationChevronLeft size={16} />
+          </PageNumber>
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === currentPage}>
+              {i + 1}
+            </PageNumber>
+          ))}
+          <PageNumber onClick={handleNextPage}>
+            <StyledNavigationChevronRight size={16} />
+          </PageNumber>
+        </PaginationWrapper>
+      )}
     </StyledRoot>
   )
 }
@@ -203,8 +203,8 @@ const StyledTh = styled.th`
 `
 
 const PaginationWrapper = styled.div`
-  position: fixed;
-  bottom: 200px;
+  position: sticky;
+  bottom: 0;
   left: 0;
   width: 100%;
   display: flex;
@@ -213,6 +213,8 @@ const PaginationWrapper = styled.div`
 
   padding: 10px;
   z-index: 100;
+
+  background-color: #fff;
 `
 
 const PageNumber = styled.div<{ active?: boolean }>`
