@@ -21,7 +21,7 @@ from typings.chat import (ChatInput, ChatMessageInput, ChatMessageOutput,
                           NegotiateOutput, UpdateChatInput)
 from typings.config import ConfigOutput
 from utils.auth import (authenticate, authenticate_by_token_or_api_key,
-                        try_auth_user)
+                        try_auth_user, try_auth_user_with_token_or_api_key)
 from utils.chat import (convert_chats_to_chat_list, convert_model_to_response,
                         get_chat_session_id)
 from utils.configuration import \
@@ -277,7 +277,7 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     Create new chat message
     """
     # authenticate
-    auth: UserAccount = try_auth_user(request, response)
+    auth: UserAccount = try_auth_user_with_token_or_api_key(request, response)
     return create_client_message(body, auth)
 
 

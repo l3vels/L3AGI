@@ -87,6 +87,16 @@ def authenticate_by_auth_token(
         raise HTTPException(status_code=401, detail="Invalid auth token")
 
 
+def try_auth_user_with_token_or_api_key(
+    request: Request, response: Response
+) -> Tuple[UserOutput, AccountOutput]:
+    try:
+        return authenticate_by_token_or_api_key(request, response)
+    except Exception:
+        return None
+
+
+# TODO: reuse from authenticate_by_token_or_api_key and then remove try_auth_user_with_token_or_api_key
 def try_auth_user(
     request: Request, response: Response
 ) -> Tuple[UserOutput, AccountOutput]:
