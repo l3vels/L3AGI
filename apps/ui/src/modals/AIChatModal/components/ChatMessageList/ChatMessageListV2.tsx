@@ -325,6 +325,7 @@ const StyledReplyMessageContainer = styled.div`
   /* height: 20px;
   max-height: 20px; */
 
+  min-height: 20px;
   width: 100%;
   height: fit-content;
   display: flex;
