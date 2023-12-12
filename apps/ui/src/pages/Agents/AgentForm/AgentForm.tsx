@@ -431,6 +431,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder='Execute Runners After Call End'
                   />
 
+                  <TypographyPrimary
+                    value={`Sentiment Analysis`}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                  />
+
                   <StyledCombinedFields>
                     <FormikTextField label='Task' name={`agent_sentiment_analyzer.task`} />
 
