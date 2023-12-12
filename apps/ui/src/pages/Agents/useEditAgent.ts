@@ -91,6 +91,7 @@ export const useEditAgent = () => {
       response_mode: values.agent_voice_response,
       input_mode: values.agent_voice_input_mode,
 
+      agent_type: values.agent_type,
       integrations: values.agent_integrations,
       runners: values.agent_runners,
       sentiment_analyzer: values.agent_sentiment_analyzer,

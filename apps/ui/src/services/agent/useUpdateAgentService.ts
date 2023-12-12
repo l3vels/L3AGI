@@ -32,6 +32,7 @@ export const useUpdateAgentService = () => {
       response_mode,
       input_mode,
 
+      agent_type,
       integrations,
       runners,
       sentiment_analyzer,
@@ -48,6 +49,7 @@ export const useUpdateAgentService = () => {
             is_template,
             is_memory,
             avatar,
+            agent_type,
           },
           configs: {
             goals,
