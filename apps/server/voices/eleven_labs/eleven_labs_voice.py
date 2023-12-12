@@ -11,7 +11,7 @@ class ElevenLabsVoice(BaseVoice, ABC):
     is_synthesizer: bool = True
     is_transcriber: bool = False
 
-    is_active: bool = False
+    is_active: bool = True
 
     id = "509fd791-578f-40be-971f-c6753957c307"
 

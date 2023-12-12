@@ -10,8 +10,8 @@ from voices.playht.play_ht_voice import PlayHTVoice
 VOICES: List[BaseVoice] = [
     DeepgramVoice(),
     PlayHTVoice(),
-    AzureVoice(),
     ElevenLabsVoice(),
+    AzureVoice(),
 ]
 
 
