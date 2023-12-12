@@ -1,8 +1,9 @@
-from sqlalchemy import Column, Text, String, UUID, ForeignKey, Index
+import uuid
+
+from sqlalchemy import UUID, Column, ForeignKey, Index, String, Text
 from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel
-import uuid
 from typings.agent import ConfigInput
 
 
@@ -120,6 +121,69 @@ class AgentConfigModel(BaseModel):
                 agent_id=agent_id,
                 created_by=user.id,
             )
+            changes.append(new_config)
+
+        db.session.add_all(changes)
+        db.session.commit()
+
+        return changes
+
+    @classmethod
+    def create_voice_configs_from_template(
+        cls, db, configs, user, account, agent_id, check_is_template
+    ):
+        """
+        Create or update agent configurations in the database.
+
+        Args:
+            db (Session): The database session.
+            configs (list): The list of configurations.
+            user (UserModel): The user object.
+            agent_id (UUID): The agent id.
+
+        Returns:
+            List[AgentConfigModel]: The list of created or updated configurations.
+        """
+        import ast
+
+        from models.agent import AgentModel
+
+        changes = []
+        for config in configs:
+            new_config = AgentConfigModel(
+                key=config.key,
+                value=config.value,
+                agent_id=agent_id,
+                created_by=user.id,
+            )
+
+            # Copy sentiment analyzer and runner agents from template
+            if new_config.key == "sentiment_analyzer":
+                runner = ast.literal_eval(new_config.value)
+                runner_id = runner.get("runner", None)
+
+                if runner_id:
+                    runner_model = AgentModel.create_agent_from_template(
+                        db, runner_id, user, account, check_is_template
+                    )
+
+                    runner["runner"] = str(runner_model.id)
+
+                new_config.value = str(runner)
+            elif new_config.key == "runners":
+                runners = ast.literal_eval(new_config.value)
+
+                for runner in runners:
+                    runner_id = runner.get("runner", None)
+
+                    if runner_id:
+                        runner_model = AgentModel.create_agent_from_template(
+                            db, runner_id, user, account, check_is_template
+                        )
+                        runner["runner"] = str(runner_model.id)
+
+                new_config.value = str(runners)
+
             changes.append(new_config)
 
         db.session.add_all(changes)

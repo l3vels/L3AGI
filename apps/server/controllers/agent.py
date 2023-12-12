@@ -7,7 +7,8 @@ from fastapi_sqlalchemy import db
 from exceptions import AgentNotFoundException
 # Local application imports
 from models.agent import AgentModel
-from typings.agent import AgentConfigInput, AgentWithConfigsOutput
+from typings.agent import (AgentConfigInput, AgentWithConfigsOutput,
+                           CreateVoiceAgentInput)
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
 from utils.auth import authenticate, authenticate_by_token_or_api_key
@@ -46,32 +47,34 @@ def create_agent(
     return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
 
 
-# @agent_customer_router.post(
-#     "/voice", status_code=201, response_model=AgentWithConfigsOutput
-# )
-# def create_voice_agent(
-#     agent_with_configs: AgentConfigInput,
-#     auth: UserAccount = Depends(authenticate_by_token_or_api_key),
-# ) -> AgentWithConfigsOutput:
-#     """
-#     Create a new agent with configurations.
+@agent_customer_router.post(
+    "/voice", status_code=201, response_model=AgentWithConfigsOutput
+)
+def create_voice_agent(
+    voice_agent_input: CreateVoiceAgentInput,
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+) -> AgentWithConfigsOutput:
+    """
+    Create a new agent with configurations.
 
-#     Args:
-#         agent_with_configs (AgentConfigInput): Data for creating a new agent with configurations.
-#         auth (UserAccount): Authenticated user account.
+    Args:
+        agent_with_configs (AgentConfigInput): Data for creating a new agent with configurations.
+        auth (UserAccount): Authenticated user account.
 
-#     Returns:
-#         AgentWithConfigsOutput: Created agent object.
-#     """
+    Returns:
+        AgentWithConfigsOutput: Created agent object.
+    """
 
-#     db_agent = AgentModel.create_agent(
-#         db,
-#         agent=agent_with_configs.agent,
-#         configs=agent_with_configs.configs,
-#         user=auth.user,
-#         account=auth.account,
-#     )
-#     return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
+    agent_template_id = voice_agent_input.template_id
+
+    try:
+        agent = AgentModel.create_voice_agent_from_template(
+            db, agent_template_id, auth.user, auth.account, True
+        )
+
+        return convert_model_to_response(agent)
+    except AgentNotFoundException:
+        raise HTTPException(status_code=404, detail="Template agent not found")
 
 
 @router.put(

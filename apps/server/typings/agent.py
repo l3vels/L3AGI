@@ -50,41 +50,8 @@ class AgentConfigInput(BaseModel):
     configs: ConfigInput
 
 
-class VoiceAgentInput(BaseModel):
-    name: str
-    description: Optional[str]
-    agent_type: Optional[str]
-    workspace_id: Optional[UUID4]
-    role: Optional[str]
-    is_memory: Optional[bool]
-    avatar: Optional[str]
-    is_template: bool
-
-
-class VoiceConfigInput(BaseModel):
-    goals: List[str]
-    constraints: List[str]
-    tools: List[str]
-    datasources: List[str]
-    model: Optional[str]
-    temperature: float
-    instructions: List[str]
-    suggestions: Optional[List[str]]
-    greeting: Optional[str]
-    text: Optional[str]
-    integrations: Optional[List[dict]]
-    source_flow: Optional[str]
-    synthesizer: Optional[str]
-    default_voice: Optional[str]
-    voice_id: Optional[str]
-    transcriber: Optional[str]
-    response_mode: Optional[List[str]]
-    input_mode: Optional[List[str]]
-
-
-class VoiceAgentConfigInput(BaseModel):
-    agent: AgentInput
-    configs: ConfigInput
+class CreateVoiceAgentInput(BaseModel):
+    template_id: UUID4
 
 
 class ConfigsOutput(BaseModel):
