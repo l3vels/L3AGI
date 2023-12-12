@@ -224,6 +224,7 @@ const StyledRightSideWrapper = styled.div`
   display: flex;
   gap: 30px;
   align-items: center;
+  flex-wrap: wrap;
 `
 
 const StyledDateWrapper = styled.div`
