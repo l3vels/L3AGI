@@ -443,7 +443,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       label={t('task')}
                       value={agent_sentiment_analyzer.task}
                       fieldName={'agent_sentiment_analyzer.task'}
-                      minHeight={75}
+                      minHeight={90}
                     />
 
                     <AgentDropdown

@@ -47,7 +47,7 @@ const AgentRunners = ({ formikField, placeholder }: AgentRunnersProps) => {
                   label={t('task')}
                   value={item.task}
                   fieldName={`${formikField}.${index}.task`}
-                  minHeight={80}
+                  minHeight={90}
                 />
 
                 <AgentDropdown
