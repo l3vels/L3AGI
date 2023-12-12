@@ -5,7 +5,6 @@ import Table from 'components/Table'
 import Heading from 'share-ui/components/Heading/Heading'
 import { useTranslation } from 'react-i18next'
 
-import TextField from 'share-ui/components/TextField/TextField'
 import {
   StyledHeaderGroup,
   StyledSectionTitle,
@@ -17,11 +16,10 @@ import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { useSession } from './useSession'
 import SessionDropdown from './SessionDropdown'
-import columnConfig from './columnConfig'
 
-import { SetStateAction, useState } from 'react'
 import DatePickerField from 'components/DatePicker/DatePicker'
-import { Moment } from 'moment'
+
+import { useColumn } from './columnConfig'
 
 const Sessions = () => {
   const { t } = useTranslation()
@@ -40,6 +38,8 @@ const Sessions = () => {
     handleDateChange,
     clearSelectedDays,
   } = useSession()
+
+  const columnConfig = useColumn()
 
   return (
     <StyledSectionWrapper>
