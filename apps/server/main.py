@@ -51,7 +51,7 @@ class Mutation(AccountMutation, UserMutation):
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 graphql_app = GraphQLRouter(schema, context_getter=get_context)
-app.include_router(graphql_app, prefix="/graphql")
+app.include_router(graphql_app, prefix="/graphql", include_in_schema=False)
 
 if Config.ENV != "local" and Config.SENTRY_DSN:
     sentry_sdk.init(
@@ -98,28 +98,28 @@ def jwt_exception_handler(request: Request, exc: AuthJWTException):
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
 
 
-app.include_router(user_router, prefix="/auth")
-app.include_router(workspace_router, prefix="/workspace")
-app.include_router(team_router, prefix="/team")
-app.include_router(team_agent_router, prefix="/team-of-agents")
-app.include_router(agent_router, prefix="/agent")
+app.include_router(user_router, prefix="/auth", include_in_schema=False)
+app.include_router(workspace_router, prefix="/workspace", include_in_schema=False)
+app.include_router(team_router, prefix="/team", include_in_schema=False)
+app.include_router(team_agent_router, prefix="/team-of-agents", include_in_schema=False)
+app.include_router(agent_router, prefix="/agent", include_in_schema=False)
 app.include_router(agent_customer_router, prefix="/v1/agent")
-app.include_router(config_router, prefix="/config")
-app.include_router(datasource_router, prefix="/datasource")
-app.include_router(run_router, prefix="/run")
-app.include_router(tool_router, prefix="/tool")
-app.include_router(llm_router, prefix="/llm")
-app.include_router(chat_router, prefix="/chat")
-app.include_router(file_router, prefix="/file")
-app.include_router(model_router, prefix="/model")
-app.include_router(schedule_router, prefix="/schedule")
-app.include_router(api_key_router, prefix="/api-key")
-app.include_router(integrations_router, prefix="/integrations")
-app.include_router(fine_tuning_router, prefix="/fine-tuning")
-app.include_router(voice_router, prefix="/voice")
+app.include_router(config_router, prefix="/config", include_in_schema=False)
+app.include_router(datasource_router, prefix="/datasource", include_in_schema=False)
+app.include_router(run_router, prefix="/run", include_in_schema=False)
+app.include_router(tool_router, prefix="/tool", include_in_schema=False)
+app.include_router(llm_router, prefix="/llm", include_in_schema=False)
+app.include_router(chat_router, prefix="/chat", include_in_schema=False)
+app.include_router(file_router, prefix="/file", include_in_schema=False)
+app.include_router(model_router, prefix="/model", include_in_schema=False)
+app.include_router(schedule_router, prefix="/schedule", include_in_schema=False)
+app.include_router(api_key_router, prefix="/api-key", include_in_schema=False)
+app.include_router(integrations_router, prefix="/integrations", include_in_schema=False)
+app.include_router(fine_tuning_router, prefix="/fine-tuning", include_in_schema=False)
+app.include_router(voice_router, prefix="/voice", include_in_schema=False)
 
 
-@app.get("/")
+@app.get("/", include_in_schema=False)
 def root():
     return f"Server is running on {Config.ENV} environment"
 
