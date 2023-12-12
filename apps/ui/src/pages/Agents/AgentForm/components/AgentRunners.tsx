@@ -12,6 +12,7 @@ import { ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
 import { StyledDeleteIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import AgentDropdown from './AgentDropdown'
 import { useAgentsService } from 'services/agent/useAgentsService'
+import TextareaFormik from 'components/TextareaFormik'
 
 type AgentRunnersProps = {
   formikField: string
@@ -36,12 +37,18 @@ const AgentRunners = ({ formikField, placeholder }: AgentRunnersProps) => {
           <TypographyPrimary
             value={`${placeholder}s`}
             type={Typography.types.LABEL}
-            size={Typography.sizes.md}
+            size={Typography.sizes.lg}
           />
           {values[formikField]?.map((item: any, index: number) => (
             <>
-              <StyledCustomFieldWrapper key={index}>
-                <FormikTextField label='Task' name={`${formikField}.${index}.task`} />
+              <StyledRunnerFieldsWrapper key={index}>
+                <TextareaFormik
+                  setFieldValue={setFieldValue}
+                  label={t('task')}
+                  value={item.task}
+                  fieldName={`${formikField}.${index}.task`}
+                  minHeight={80}
+                />
 
                 <AgentDropdown
                   label={t('Runner')}
@@ -50,11 +57,10 @@ const AgentRunners = ({ formikField, placeholder }: AgentRunnersProps) => {
                   setFieldValue={setFieldValue}
                   options={agentOptions}
                 />
-
                 <StyledButtonTertiary onClick={() => remove(index)} size={Button.sizes?.SMALL}>
                   <StyledDeleteIcon size={32} />
                 </StyledButtonTertiary>
-              </StyledCustomFieldWrapper>
+              </StyledRunnerFieldsWrapper>
             </>
           ))}
 
@@ -78,18 +84,24 @@ const StyledFieldsWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 5px;
+  gap: 20px;
 `
-const StyledCustomFieldWrapper = styled.div`
-  display: flex;
-  align-items: center;
 
-  gap: 5px;
-`
 const StyledButtonWrapper = styled.div`
   width: fit-content;
 `
 const StyledButtonTertiary = styled(ButtonTertiary)`
   padding: 0 4px;
   margin-bottom: 6px;
+
+  margin-top: 38px;
+  margin-left: -14px;
+  width: 40px;
+`
+export const StyledRunnerFieldsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 0.1fr;
+  gap: 15px;
+
+  width: 100%;
 `

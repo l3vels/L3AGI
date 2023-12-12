@@ -357,5 +357,6 @@
   "groups": "$t(group)s",
   "integrations": "$t(integration)s",
   "models": "$t(model)s",
-  "type": "Type"
+  "type": "Type",
+  "task": "Task"
 }

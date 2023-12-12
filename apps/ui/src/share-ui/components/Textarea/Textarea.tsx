@@ -185,7 +185,7 @@ const StyledTextarea = styled.textarea`
   color: ${({ theme }) => theme.textFiled.primary.color};
   outline: 4px solid ${({ theme }) => theme.textFiled.primary.borderColor};
 
-  border-radius: 6px;
+  border-radius: 4px;
 
   &::placeholder {
     /* @include theme-prop(color, text-field-placeholder-color); */

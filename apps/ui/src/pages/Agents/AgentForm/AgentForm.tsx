@@ -26,7 +26,7 @@ import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 import TextareaFormik from 'components/TextareaFormik'
 import { useLocation, useNavigate } from 'react-router-dom'
 import RadioButton from 'share-ui/components/RadioButton/RadioButton'
-import AgentRunners from './components/AgentRunners'
+import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunners'
 
 type AgentFormProps = {
   formik: any
@@ -434,11 +434,17 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   <TypographyPrimary
                     value={`Sentiment Analysis`}
                     type={Typography.types.LABEL}
-                    size={Typography.sizes.md}
+                    size={Typography.sizes.lg}
                   />
 
-                  <StyledCombinedFields>
-                    <FormikTextField label='Task' name={`agent_sentiment_analyzer.task`} />
+                  <StyledRunnerFieldsWrapper>
+                    <TextareaFormik
+                      setFieldValue={setFieldValue}
+                      label={t('task')}
+                      value={agent_sentiment_analyzer.task}
+                      fieldName={'agent_sentiment_analyzer.task'}
+                      minHeight={75}
+                    />
 
                     <AgentDropdown
                       label={t('Runner')}
@@ -447,7 +453,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       setFieldValue={setFieldValue}
                       options={agentOptions}
                     />
-                  </StyledCombinedFields>
+                  </StyledRunnerFieldsWrapper>
 
                   {/* <AgentDropdown
                     label={'Call Sentiment Analyzer'}
@@ -524,7 +530,7 @@ const StyledInputWrapper = styled.div`
 
   gap: 20px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
