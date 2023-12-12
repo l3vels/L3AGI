@@ -21,6 +21,7 @@ import { AgentWithConfigs, Nullable } from 'types'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import AudioPlayer from 'components/AudioPlayer'
 import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
+import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 
 type CellProps = {
   value: Nullable<string>
@@ -60,68 +61,193 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
   return content
 }
 
-const columns = [
-  {
-    Header: 'Name',
-    accessor: 'name',
-    minWidth: 343,
-    width: '24.8%',
-  },
-  // {
-  //   Header: 'Team Name',
-  //   accessor: 'team_name',
-  //   minWidth: 342,
-  //   width: 200,
-  // },
-  {
-    Header: 'Agent Name',
-    accessor: 'agent_name',
-    minWidth: 342,
-    width: '24.8%',
-    Cell: (props: { row: { original: any } }) => {
-      const { original: data } = props.row
-      const navigate = useNavigate()
-      const { openModal } = useModal()
+export const useColumn = () => {
+  const { data: calls } = useCallsService()
+  // console.log('calls', calls)
+  return [
+    {
+      Header: 'Name',
+      accessor: 'name',
+      minWidth: 343,
+      width: '24.8%',
+    },
 
-      const { data: agentsData } = useAgentsService()
+    // {
+    //   Header: 'Team Name',
+    //   accessor: 'team_name',
+    //   minWidth: 342,
+    //   width: 200,
+    // },
+    {
+      Header: 'Agent Name',
+      accessor: 'agent_name',
+      minWidth: 342,
+      width: '24.8%',
+      Cell: (props: { row: { original: any } }) => {
+        const { original: data } = props.row
+        const navigate = useNavigate()
+        const { openModal } = useModal()
 
-      const handleAgentEditClick = () => {
-        const agentIdToEdit = data.agent_id
+        const { data: agentsData } = useAgentsService()
 
-        const agentToEdit = agentsData.find(agent => agent.agent.id === agentIdToEdit)
+        const handleAgentEditClick = () => {
+          const agentIdToEdit = data.agent_id
 
-        if (agentToEdit) {
-          navigate(`/agents/${agentToEdit.agent.id}/edit-agent`)
+          const agentToEdit = agentsData.find(agent => agent.agent.id === agentIdToEdit)
+
+          if (agentToEdit) {
+            navigate(`/agents/${agentToEdit.agent.id}/edit-agent`)
+          }
         }
-      }
 
-      const handleViewClick = () => {
-        const selectedAgent = agentsData.find(agentObj => agentObj.agent.id === data.agent_id)
+        const handleViewClick = () => {
+          const selectedAgent = agentsData.find(agentObj => agentObj.agent.id === data.agent_id)
 
-        if (selectedAgent) {
-          openModal({ name: 'agent-view-modal', data: { agent: selectedAgent } })
+          if (selectedAgent) {
+            openModal({ name: 'agent-view-modal', data: { agent: selectedAgent } })
+          }
         }
-      }
 
-      return (
-        <StyledAgentNameCell>
-          <TypographySecondary
-            value={data.agent_name}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          />
-          <StyledAgentIconsWrapper>
+        return (
+          <StyledAgentNameCell>
+            <TypographySecondary
+              value={data.agent_name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
+            <StyledAgentIconsWrapper>
+              <IconButton
+                onClick={() => handleAgentEditClick()}
+                icon={() => <StyledEditIcon />}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
+                ariaLabel='Edit'
+                className='eye-icon'
+              />
+
+              <IconButton
+                onClick={() => handleViewClick()}
+                icon={() => (
+                  <StyledIconWrapper>
+                    <StyledEyeOpenIcon />
+                  </StyledIconWrapper>
+                )}
+                size={IconButton.sizes?.SMALL}
+                kind={IconButton.kinds?.TERTIARY}
+                ariaLabel='View'
+                className='search-icon'
+              />
+            </StyledAgentIconsWrapper>
+          </StyledAgentNameCell>
+        )
+      },
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+      minWidth: 343,
+      width: '24.8%',
+    },
+    {
+      Header: 'Sentiment',
+      accessor: 'id',
+      minWidth: 150,
+      width: '10.39%',
+      Cell: ({ value }: { value: string }) => {
+        const filedValue = calls?.find((item: any) => item.chat_id === value)
+
+        return filedValue?.sentiment
+      },
+    },
+    {
+      Header: 'Voice',
+      accessor: 'sender_name',
+      minWidth: 343,
+      width: '24.8%',
+      Cell: (props: { row: { original: any } }) => {
+        const { original: data } = props.row
+
+        if (data.voice_url !== null) {
+          const audioUrl = data.voice_url
+
+          return <AudioPlayer audioUrl={audioUrl} />
+        }
+
+        return null
+      },
+    },
+
+    // {
+    //   Header: 'Schedule Name',
+    //   accessor: 'schedule_name',
+    //   minWidth: 343,
+    //   width: 200,
+    // },
+    {
+      Header: 'Created Date',
+      accessor: 'added_at',
+      minWidth: 343,
+      width: '24.8%',
+      Cell: DateRenderer,
+    },
+    {
+      Header: 'Actions',
+      accessor: 'actions',
+      minWidth: 150,
+      width: '10.39%',
+
+      Cell: (props: { row: { original: any } }) => {
+        const { original: data } = props.row
+        const { refetch: refetchChat } = useChatsService()
+
+        const { deleteChat } = useDeleteChatService()
+        const { openModal, closeModal } = useModal()
+        const { setToast } = useContext(ToastContext)
+        const deleteChatHandler = async (id: string) => {
+          openModal({
+            name: 'delete-confirmation-modal',
+            data: {
+              deleteItem: async () => {
+                try {
+                  await deleteChat(id)
+                  await refetchChat()
+                  // navigate('/chat');
+                  setToast({
+                    message: 'Chat was deleted!',
+                    type: 'positive',
+                    open: true,
+                  })
+                } catch (e) {
+                  setToast({
+                    message: 'Failed to delete Chat!',
+                    type: 'negative',
+                    open: true,
+                  })
+                }
+                closeModal('delete-confirmation-modal')
+              },
+              label: 'Delete Session?',
+            },
+          })
+        }
+
+        const navigate = useNavigate()
+        const handleViewClick = (id: string) => {
+          navigate(`/chat/session?chat=${id}`)
+        }
+
+        return (
+          <StyledActionWrapper>
             <IconButton
-              onClick={() => handleAgentEditClick()}
-              icon={() => <StyledEditIcon />}
+              onClick={() => deleteChatHandler(data.id)}
+              icon={() => <StyledDeleteIcon />}
               size={IconButton.sizes?.SMALL}
               kind={IconButton.kinds?.TERTIARY}
-              ariaLabel='Edit'
-              className='eye-icon'
+              ariaLabel='Delete'
             />
 
             <IconButton
-              onClick={() => handleViewClick()}
+              onClick={() => handleViewClick(data.id)}
               icon={() => (
                 <StyledIconWrapper>
                   <StyledEyeOpenIcon />
@@ -130,123 +256,13 @@ const columns = [
               size={IconButton.sizes?.SMALL}
               kind={IconButton.kinds?.TERTIARY}
               ariaLabel='View'
-              className='search-icon'
             />
-          </StyledAgentIconsWrapper>
-        </StyledAgentNameCell>
-      )
+          </StyledActionWrapper>
+        )
+      },
     },
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    minWidth: 343,
-    width: '24.8%',
-  },
-  {
-    Header: 'Voice',
-    accessor: 'sender_name',
-    minWidth: 343,
-    width: '24.8%',
-    Cell: (props: { row: { original: any } }) => {
-      const { original: data } = props.row
-
-      if (data.voice_url !== null) {
-        const audioUrl = data.voice_url
-
-        return <AudioPlayer audioUrl={audioUrl} />
-      }
-
-      return null
-    },
-  },
-  // {
-  //   Header: 'Schedule Name',
-  //   accessor: 'schedule_name',
-  //   minWidth: 343,
-  //   width: 200,
-  // },
-  {
-    Header: 'Created Date',
-    accessor: 'added_at',
-    minWidth: 343,
-    width: '24.8%',
-    Cell: DateRenderer,
-  },
-  {
-    Header: 'Actions',
-    accessor: 'actions',
-    minWidth: 150,
-    width: '10.39%',
-
-    Cell: (props: { row: { original: any } }) => {
-      const { original: data } = props.row
-      const { refetch: refetchChat } = useChatsService()
-
-      const { deleteChat } = useDeleteChatService()
-      const { openModal, closeModal } = useModal()
-      const { setToast } = useContext(ToastContext)
-      const deleteChatHandler = async (id: string) => {
-        openModal({
-          name: 'delete-confirmation-modal',
-          data: {
-            deleteItem: async () => {
-              try {
-                await deleteChat(id)
-                await refetchChat()
-                // navigate('/chat');
-                setToast({
-                  message: 'Chat was deleted!',
-                  type: 'positive',
-                  open: true,
-                })
-              } catch (e) {
-                setToast({
-                  message: 'Failed to delete Chat!',
-                  type: 'negative',
-                  open: true,
-                })
-              }
-              closeModal('delete-confirmation-modal')
-            },
-            label: 'Delete Session?',
-          },
-        })
-      }
-
-      const navigate = useNavigate()
-      const handleViewClick = (id: string) => {
-        navigate(`/chat/session?chat=${id}`)
-      }
-
-      return (
-        <StyledActionWrapper>
-          <IconButton
-            onClick={() => deleteChatHandler(data.id)}
-            icon={() => <StyledDeleteIcon />}
-            size={IconButton.sizes?.SMALL}
-            kind={IconButton.kinds?.TERTIARY}
-            ariaLabel='Delete'
-          />
-
-          <IconButton
-            onClick={() => handleViewClick(data.id)}
-            icon={() => (
-              <StyledIconWrapper>
-                <StyledEyeOpenIcon />
-              </StyledIconWrapper>
-            )}
-            size={IconButton.sizes?.SMALL}
-            kind={IconButton.kinds?.TERTIARY}
-            ariaLabel='View'
-          />
-        </StyledActionWrapper>
-      )
-    },
-  },
-]
-
-export default columns
+  ]
+}
 
 export const StyledMenuButtonsWrapper = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorSecondary};

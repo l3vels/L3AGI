@@ -1,0 +1,8 @@
+query getCalls @api(name: "pro") {
+  getCalls @rest(type: "Contact", path: "/call", method: "GET", endpoint: "pro") {
+    id
+    contact_id
+    chat_id
+    sentiment
+  }
+}
