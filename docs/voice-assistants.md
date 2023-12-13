@@ -2,6 +2,48 @@
 
 We allow you to create voice assistant agents that can be used to automate your phone calls. You can use these agents to automate your customer support, sales, and marketing calls.
 
+## Create Voice Agent from Template
+
+Create a new voice agent from a template using our API.
+
+URL: https://api-pr-dev.l3agi.com/v1/voice
+
+Method: POST
+
+Authentication: API Key
+
+Description: This endpoint is used to create a new voice agent from a template.
+
+Request Body:
+
+```json
+{
+  "template_id": "<UUID of the template>",
+  "name": "<Name of the new agent>",
+  "description": "<Description of the new agent>"
+}
+```
+
+Response: AgentWithConfigsOutput
+
+Errors:
+
+- 400 Bad Request - If the OpenAI API key is not set or if there are issues with the Twilio credentials, Play.ht API key and user ID, or Deepgram API key.
+- 404 Not Found - If the template agent is not found.
+
+### Curl:
+
+```bash
+curl -X POST https://api-dev.l3vels.xyz/v1/agent/voice \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer YOUR_API_KEY' \
+-d '{
+  "template_id": "UUID of the template",
+  "name": "Name of the new agent",
+  "description": "Description of the new agent"
+}'
+```
+
 ## Outbound Call
 
 Make calls to your customers using our API
