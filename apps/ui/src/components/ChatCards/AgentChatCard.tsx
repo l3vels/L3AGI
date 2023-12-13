@@ -3,9 +3,6 @@ import MemberText from 'modals/AIChatModal/components/ChatMembers/components/Mem
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Edit from 'share-ui/components/Icon/Icons/components/Edit'
-import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
-
 import {
   StyledAgentWrapper,
   StyledIconButtonWrapper,
@@ -53,10 +50,15 @@ const AgentChatCard = ({
     }
   }
 
+  const agentType = agent?.agent_type === 'voice' ? 'Voice' : 'Text'
+  const agentRole = agent?.role?.length > 0 ? `· ${agent?.role}` : ''
+
+  const roleText = `${agentType} ${agentRole}`
+
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
-      <MemberText name={agent?.name} role={agent?.role} />
+      <MemberText name={agent?.name} role={roleText} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
         {onDeleteClick && (
