@@ -52,6 +52,8 @@ class AgentConfigInput(BaseModel):
 
 class CreateVoiceAgentInput(BaseModel):
     template_id: UUID4
+    name: Optional[str] = ""
+    description: Optional[str] = ""
 
 
 class ConfigsOutput(BaseModel):
