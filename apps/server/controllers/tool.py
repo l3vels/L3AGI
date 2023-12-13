@@ -1,8 +1,12 @@
 from typing import List
-from fastapi import APIRouter
 
-from typings.tool import ToolOutput
-from tools.get_tools import get_all_tools
+from fastapi import APIRouter, Depends
+from fastapi_sqlalchemy import db
+
+from tools.get_tools import get_all_tools, get_tool_by_slug
+from typings.auth import UserAccount
+from typings.tool import ToolOutput, ToolRunInput, ToolRunOutput
+from utils.auth import authenticate_by_token_or_api_key
 
 router = APIRouter()
 
@@ -23,3 +27,31 @@ def get_tools() -> List[ToolOutput]:
 
     return get_all_tools()
     # return convert_tools_to_tool_list(db_tools)
+
+
+@router.post("/run", response_model=ToolRunOutput)
+def run_tool(
+    input: ToolRunInput, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
+) -> ToolRunOutput:
+    """
+    Run a tool.
+
+    Args:
+        auth (UserAccount): Authenticated user account.
+        tool_id (int): ID of the tool to run.
+
+    Returns:
+        ToolRunOutput: Tool output.
+    """
+
+    agent_with_configs = None
+
+    tool = get_tool_by_slug(
+        input.toolkit_slug, input.tool_slug, db, auth.account, agent_with_configs
+    )
+
+    try:
+        response = tool._run(input.query)
+        return ToolRunOutput(response=response, is_success=True)
+    except Exception as e:
+        return ToolRunOutput(response=str(e), is_success=True)

@@ -34,3 +34,15 @@ class ToolOutput(BaseModel):
     slug: str
     fields: List[ToolFieldOutput]
     tools: List[SingleToolOutput]
+
+
+class ToolRunInput(BaseModel):
+    query: str
+    toolkit_slug: str
+    tool_slug: str
+    # agent_id: str
+
+
+class ToolRunOutput(BaseModel):
+    response: str
+    is_success: bool
