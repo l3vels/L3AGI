@@ -69,22 +69,26 @@ class CalBookingTool(BaseTool):
         )
         duration = action.get("duration")
 
+        event_type = None
+
         try:
             res = requests.get(
                 f"{base_url}/event-types", params={"apiKey": cal_api_key}
             )
+
             event_types = res.json().get("event_types", [])
+
             if not event_types:
                 raise ToolException(
                     "Booking an event is not available with your account. Please specify an Event Type in your Cal.com account."
                 )
 
             if not duration:
-                duration = event_types[0].get("id")
+                event_type = event_types[0]
             else:
-                for event_type in event_types:
-                    if event_type.get("slug") == duration:
-                        duration = event_type.get("id")
+                for event in event_types:
+                    if event.get("slug") == duration:
+                        event_type = event
                         break
                 else:
                     raise ToolException(
@@ -93,14 +97,24 @@ class CalBookingTool(BaseTool):
         except Exception as e:
             raise ToolException(str(e))
 
+        end = action.get("end")
+
+        if not end:
+            length_in_minutes = event_type.get("length")
+
+            end = (
+                datetime.strptime(start, "%Y-%m-%dT%H:%M:%S.000Z")
+                + timedelta(minutes=length_in_minutes)
+            ).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+
         try:
             response = requests.post(
                 f"{base_url}/bookings",
                 params={"apiKey": cal_api_key},
                 json={
-                    "eventTypeId": duration,
+                    "eventTypeId": event_type.get("id"),
                     "start": start,
-                    "end": action.get("end", ""),
+                    "end": end,
                     "metadata": {},  # TODO(low): research what we can pass here
                     "responses": {
                         "name": action.get("name", self.account.name),
