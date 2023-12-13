@@ -142,7 +142,7 @@ const StyledRoot = styled.div`
   }
 
   border-radius: 24px;
-  max-height: calc(100vh - 330px);
+  max-height: calc(100vh - 250px);
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
