@@ -18,7 +18,7 @@ class CalBookingSchema(BaseModel):
         description=(
             "Your task involves managing a JSON string representing an action query.\n"
             "Generate a JSON output including:\n"
-            "Time format entries for 'start' and 'end' fields, where 'end' can be left empty (Use format: 'YYYY-MM-DDTHH:MM:SS.000Z').\n"
+            "Time format entries for 'start' field (Use format: 'YYYY-MM-DDTHH:MM:SS.000Z').\n"
             "Optional fields such as 'name', 'email', 'location', 'timeZone', 'title', 'notes', 'description', and 'duration' (represented as '30min').\n"
             "If 'timeZone' is unspecified, default it to 'America/New York'.\n"
             "Format the time relative to the current time; if the specified time is in the past, automatically format provided time for tomorrow \n"
@@ -39,7 +39,7 @@ class CalBookingTool(BaseTool):
     description = (
         "Your task involves managing a JSON string representing an action query.\n"
         "Generate a JSON output including:\n"
-        "Time format entries for 'start' and 'end' fields, where 'end' can be left empty (Use format: 'YYYY-MM-DDTHH:MM:SS.000Z').\n"
+        "Time format entries for 'start' field (Use format: 'YYYY-MM-DDTHH:MM:SS.000Z').\n"
         "Optional fields such as 'name', 'email', 'location', 'timeZone', 'title', 'notes', 'description', and 'duration' (represented as '30min').\n"
         "If 'timeZone' is unspecified, default it to 'America/New York'.\n"
         "Format the time relative to the current time; if the specified time is in the past, automatically format provided time for tomorrow \n"
@@ -97,39 +97,38 @@ class CalBookingTool(BaseTool):
         except Exception as e:
             raise ToolException(str(e))
 
-        end = action.get("end")
+        length_in_minutes = event_type.get("length")
 
-        if not end:
-            length_in_minutes = event_type.get("length")
+        end = (
+            datetime.strptime(start, "%Y-%m-%dT%H:%M:%S.000Z")
+            + timedelta(minutes=length_in_minutes)
+        ).strftime("%Y-%m-%dT%H:%M:%S.000Z")
 
-            end = (
-                datetime.strptime(start, "%Y-%m-%dT%H:%M:%S.000Z")
-                + timedelta(minutes=length_in_minutes)
-            ).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+        data = {
+            "eventTypeId": event_type.get("id"),
+            "start": start,
+            "end": end,
+            "metadata": {},  # TODO(low): research what we can pass here
+            "responses": {
+                "name": action.get("name", self.account.name),
+                "email": action.get("email", ""),
+                "notes": action.get("notes", ""),
+                "phone": action.get("phone", ""),
+                "location": action.get("location", ""),
+            },
+            "timeZone": action.get("timeZone", "Asia/Tbilisi"),
+            "language": action.get("language", "en"),
+            "title": action.get("title", ""),
+            "description": action.get("description", ""),
+            "hasHashedBookingLink": False,
+            "hashedLink": None,
+        }
 
         try:
             response = requests.post(
                 f"{base_url}/bookings",
                 params={"apiKey": cal_api_key},
-                json={
-                    "eventTypeId": event_type.get("id"),
-                    "start": start,
-                    "end": end,
-                    "metadata": {},  # TODO(low): research what we can pass here
-                    "responses": {
-                        "name": action.get("name", self.account.name),
-                        "email": action.get("email", ""),
-                        "notes": action.get("notes", ""),
-                        "phone": action.get("phone", ""),
-                        "location": action.get("location", ""),
-                    },
-                    "timeZone": action.get("timeZone", "Asia/Tbilisi"),
-                    "language": action.get("language", "en"),
-                    "title": action.get("title", ""),
-                    "description": action.get("description", ""),
-                    "hasHashedBookingLink": False,
-                    "hashedLink": None,
-                },
+                json=data,
             )
         except Exception as e:
             raise ToolException(str(e))
