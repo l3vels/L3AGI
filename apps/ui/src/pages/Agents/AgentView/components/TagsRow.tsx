@@ -5,18 +5,29 @@ import Tags from 'share-ui/components/Tags/Tags'
 
 import TypographySecondary from 'components/Typography/Secondary'
 import { textSlicer } from 'utils/textSlicer'
+import CopyButton from 'components/CopyButton'
+import { ReactElement } from 'react'
 
 type TagsRowProps = {
   items: string[]
   title: string
+  customButton?: ReactElement
 }
 
-const TagsRow = ({ items, title }: TagsRowProps) => {
+const TagsRow = ({ items, title, customButton }: TagsRowProps) => {
   const theme = useTheme()
 
   return (
     <StyledRow>
-      <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
+      <StyledTitleWrapper>
+        <TypographySecondary
+          value={title}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.sm}
+        />
+
+        {customButton}
+      </StyledTitleWrapper>
 
       <StyledContainer>
         {items.map((item: string, index: number) => {
@@ -48,4 +59,8 @@ const StyledContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+`
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `

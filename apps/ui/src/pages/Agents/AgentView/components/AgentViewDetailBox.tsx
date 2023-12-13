@@ -28,6 +28,7 @@ import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useModelsService } from 'services'
 import { AgentWithConfigs } from 'types'
 import MenuDotsOutline from 'share-ui/components/Icon/Icons/components/MenuDotsOutline'
+import CopyButton from 'components/CopyButton'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
@@ -152,6 +153,16 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledDivider />
 
       <StyledWrapper>
+        {agent && (
+          <TagsRow
+            title={t('ID')}
+            items={[agent?.id]}
+            customButton={
+              <CopyButton onCopyClick={() => navigator.clipboard.writeText(agent?.id)} />
+            }
+          />
+        )}
+
         {role && <TagsRow title={t('role')} items={[role]} />}
 
         {agentModel?.length > 0 && <TagsRow title={t('model')} items={agentModel} />}
