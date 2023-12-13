@@ -4,5 +4,6 @@ query getCalls @api(name: "pro") {
     contact_id
     chat_id
     sentiment
+    status
   }
 }

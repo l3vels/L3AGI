@@ -146,7 +146,7 @@ const StyledRoot = styled.div`
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
-  ${({ expand }) => (expand ? 'height: calc(100vh - 335px);' : 'height: auto;')}
+  ${({ expand }) => (expand ? 'height: calc(100vh - 250px);' : 'height: auto;')}
   min-height: 400px;
   width: 100%;
 

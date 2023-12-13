@@ -1,5 +1,6 @@
 import { Moment } from 'moment'
 import { useSchedules } from 'pages/Schedule/useSchedules'
+import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 import { useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
@@ -29,6 +30,7 @@ export const useSession = () => {
   const [searchText, setSearchText] = useState('')
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
   const { data: chatsData } = useChatsService()
+  const { data: calls } = useCallsService()
 
   const { schedules } = useSchedules()
   const { data: agentsData } = useAgentsService()
@@ -43,6 +45,8 @@ export const useSession = () => {
     team_name: chat?.team?.team?.name,
     added_At: new Date().toISOString(),
     voice_url: chat?.voice_url,
+    sentiment: calls?.find((call: any) => call.chat_id === chat.id)?.sentiment,
+    status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
   }))
 
   const [startDate, setStartDate] = useState<Moment | null>(null)
