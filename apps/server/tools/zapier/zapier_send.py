@@ -79,11 +79,13 @@ class ZapierSendTool(BaseTool):
 
                 raise ToolException(error)
 
+            instructions = data.get("instructions")
+
             executionResponse = requests.post(
                 f"{base_url}/exposed/{action_id}/execute/",
                 params={"api_key": zapier_nla_api_key},
                 json={
-                    "instructions": data.get("instructions"),
+                    "instructions": str(instructions),
                     "preview_only": False,
                 },
             )
