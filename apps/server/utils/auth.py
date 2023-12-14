@@ -64,9 +64,8 @@ def authenticate_by_api_key(
     request: Request, response: Response
 ) -> Tuple[UserOutput, AccountOutput]:
     authorization = request.headers.get("Authorization", None)
-    _, token = get_authorization_scheme_param(authorization)
 
-    api_key_model = ApiKeyModel.get_api_key_by_token(db.session, token)
+    api_key_model = ApiKeyModel.get_api_key_by_token(db.session, authorization)
 
     if not api_key_model:
         raise HTTPException(status_code=401, detail="Invalid API key")
