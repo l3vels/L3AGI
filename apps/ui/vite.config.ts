@@ -49,70 +49,30 @@ export default defineConfig({
     target: 'esnext',
     // minify: false,
     // minify: 'terser',
-    cssCodeSplit: true,
+    cssCodeSplit: false,
+    // cssCodeSplit: true,
     sourcemap: true,
-    rollupOptions: {
-      input: {
-        main: './src/index.tsx', // Main app entry point
-        widget: './src/TestComp.tsx', // Widget entry point
-      },
-      external: ['react', 'react-dom'],
-      output: {
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        format: 'es', // or 'cjs' for CommonJS, or 'umd' for UMD
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-        },
-      },
-      // plugins: [
-      //   // Add a plugin to extract CSS into separate files for each entry point
-      //   {
-      //     name: 'extract-css',
-      //     async generateBundle(outputOptions, bundle) {
-      //       const cssFiles: Record<string, string> = {}
-      //       for (const fileName in bundle) {
-      //         const output = bundle[fileName]
-      //         if (output.type === 'asset') {
-      //           const entryPoint = fileName.includes('main') ? 'main' : 'widget'
-      //           const outputFileName = `assets/${entryPoint}.css`
-      //           if (!cssFiles[entryPoint]) {
-      //             cssFiles[entryPoint] = ''
-      //           }
-      //           if (typeof output.source === 'string') {
-      //             cssFiles[entryPoint] += output.source
-      //           } else {
-      //             cssFiles[entryPoint] += new TextDecoder().decode(output.source)
-      //           }
-      //           delete bundle[fileName]
-      //         }
-      //       }
-      //       Object.keys(cssFiles).forEach(entryPoint => {
-      //         this.emitFile({
-      //           type: 'asset',
-      //           fileName: `assets/${entryPoint}.css`,
-      //           source: cssFiles[entryPoint],
-      //         })
-      //       })
-      //     },
-      //   },
-      // ],
-    },
-    // lib: {
-    //   name: 'widget',
-    //   entry: './src/TestComp.tsx', // Widget entry point
-    //   formats: ['es'], // Output format, you can add more formats if needed
-    //   fileName: 'widget', // Output file name
-    // },
     // rollupOptions: {
+    //   input: {
+    //     main: './src/index.tsx', // Main app entry point
+    //     widget: './src/TestComp.tsx', // Widget entry point
+    //   },
     //   external: ['react', 'react-dom'],
     //   output: {
+    //     entryFileNames: 'assets/[name].js',
+    //     chunkFileNames: 'assets/[name].js',
+    //     format: 'es', // or 'cjs' for CommonJS, or 'umd' for UMD
     //     globals: {
     //       react: 'React',
     //       'react-dom': 'ReactDOM',
     //     },
     //   },
+    // },
+    // lib: {
+    //   name: 'widget',
+    //   entry: './src/TestComp.tsx', // Widget entry point
+    //   formats: ['es'], // Output format, you can add more formats if needed
+    //   fileName: 'widget', // Output file name
     // },
   },
 })
