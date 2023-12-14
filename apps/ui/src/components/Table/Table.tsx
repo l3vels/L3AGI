@@ -96,7 +96,7 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
           ))}
         </StyledThead>
         <StyledTbody {...getTableBodyProps()}>
-          {currentItems.map((row: any, index: number) => {
+          {rows?.map((row: any, index: number) => {
             prepareRow(row)
             return (
               <StyledTr {...row.getRowProps()} key={index} bodyRow>
@@ -108,7 +108,7 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
           })}
         </StyledTbody>
       </StyledTable>
-      {pagination && (
+      {/* {pagination && (
         <PaginationWrapper>
           <PageNumber onClick={handlePrevPage}>
             <StyledNavigationChevronLeft size={16} />
@@ -122,7 +122,7 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
             <StyledNavigationChevronRight size={16} />
           </PageNumber>
         </PaginationWrapper>
-      )}
+      )} */}
     </StyledRoot>
   )
 }
@@ -142,11 +142,11 @@ const StyledRoot = styled.div`
   }
 
   border-radius: 24px;
-  max-height: calc(100vh - 330px);
+  max-height: calc(100vh - 250px);
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
-  ${({ expand }) => (expand ? 'height: calc(100vh - 335px);' : 'height: auto;')}
+  ${({ expand }) => (expand ? 'height: calc(100vh - 250px);' : 'height: auto;')}
   min-height: 400px;
   width: 100%;
 

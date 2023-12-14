@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
 import TabList from 'share-ui/components/Tabs/TabList/TabList'
@@ -30,6 +30,8 @@ import TypographyPrimary from 'components/Typography/Primary'
 import Logs from 'share-ui/components/Icon/Icons/components/Logs'
 import Typography from 'share-ui/components/typography/Typography'
 
+import TypographySecondary from 'components/Typography/Secondary'
+
 const ChatMembers = ({
   agentById,
   teamOfAgents,
@@ -52,6 +54,8 @@ const ChatMembers = ({
 
   const { openModal } = useModal()
 
+  const theme = useTheme()
+
   if (agentById) {
     const isCreator = user?.id === agentById.agent?.created_by
 
@@ -73,12 +77,29 @@ const ChatMembers = ({
             <TabPanels noAnimation>
               <TabPanel>
                 <AgentViewDetailBox agentData={agentById} />
-                <div style={{ height: '200px', width: '100%' }}>
+                <StyledAudioContainer>
                   {voiceUrl && (
                     <>
-                      <StyledAudioPlayerWrapper>
+                      <>
                         <AudioPlayer audioUrl={voiceUrl} />
-                      </StyledAudioPlayerWrapper>
+                      </>
+
+                      <StyledStatusWrapper>
+                        {call?.status && (
+                          <>
+                            <TypographySecondary
+                              value={'Status: '}
+                              type={Typography.types.P}
+                              size={Typography.sizes.sm}
+                            />
+                            <TypographySecondary
+                              value={call?.status}
+                              type={Typography.types.P}
+                              size={Typography.sizes.sm}
+                            />
+                          </>
+                        )}
+                      </StyledStatusWrapper>
 
                       <StyledLogsButton
                         onClick={() =>
@@ -100,7 +121,7 @@ const ChatMembers = ({
                       </StyledLogsButton>
                     </>
                   )}
-                </div>
+                </StyledAudioContainer>
               </TabPanel>
 
               <TabPanel>
@@ -292,8 +313,20 @@ const StyledIconButtonWrapper = styled.div`
   align-items: center;
 `
 
-const StyledAudioPlayerWrapper = styled.div`
+const StyledAudioContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
   margin-top: 12px;
+  gap: 16px;
+`
+
+const StyledStatusWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
 `
 
 const StyledLogsIcon = styled(Logs)`
@@ -306,5 +339,6 @@ const StyledLogsButton = styled.button`
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-top: 12px;
+
+  margin-top: -10px;
 `

@@ -155,8 +155,8 @@ const IconButton: L3Component<IconButtonProps> & {
 
     return (
       <>
-        <StyledIconButtonWrapper>
-          <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
+        <Tooltip {...tooltipProps} content={calculatedTooltipContent}>
+          <StyledIconButtonWrapper>
             <Button
               onClick={onClick}
               disabled={disabled}
@@ -179,8 +179,8 @@ const IconButton: L3Component<IconButtonProps> & {
                 clickable={false}
               />
             </Button>
-          </Tooltip>
-        </StyledIconButtonWrapper>
+          </StyledIconButtonWrapper>
+        </Tooltip>
       </>
     )
   },

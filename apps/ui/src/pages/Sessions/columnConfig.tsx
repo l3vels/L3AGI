@@ -21,7 +21,6 @@ import { AgentWithConfigs, Nullable } from 'types'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import AudioPlayer from 'components/AudioPlayer'
 import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
-import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 
 type CellProps = {
   value: Nullable<string>
@@ -62,8 +61,6 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
 }
 
 export const useColumn = () => {
-  const { data: calls } = useCallsService()
-  // console.log('calls', calls)
   return [
     {
       Header: 'Name',
@@ -145,19 +142,14 @@ export const useColumn = () => {
     {
       Header: 'Status',
       accessor: 'status',
-      minWidth: 343,
-      width: '24.8%',
+      minWidth: 150,
+      width: '10.39%',
     },
     {
       Header: 'Sentiment',
-      accessor: 'id',
+      accessor: 'sentiment',
       minWidth: 150,
       width: '10.39%',
-      Cell: ({ value }: { value: string }) => {
-        const filedValue = calls?.find((item: any) => item.chat_id === value)
-
-        return filedValue?.sentiment
-      },
     },
     {
       Header: 'Voice',
@@ -263,25 +255,6 @@ export const useColumn = () => {
     },
   ]
 }
-
-export const StyledMenuButtonsWrapper = styled.div`
-  background: ${({ theme }) => theme.body.backgroundColorSecondary};
-  border: ${({ theme }) => theme.body.secondaryBorder};
-  backdrop-filter: blur(100px);
-  padding: 10px;
-  border-radius: 10px;
-  width: 200px;
-  min-width: fit-content;
-
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`
-
-export const StyledOutlineIcon = styled.div`
-  color: transparent;
-  /* width: 40px; */
-`
 
 const StyledActionWrapper = styled.div`
   display: flex;

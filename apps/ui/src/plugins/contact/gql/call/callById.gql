@@ -6,5 +6,6 @@ query callById($id: id!) @api(name: pro) {
     logs {
       content
     }
+    status
   }
 }
