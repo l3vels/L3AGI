@@ -19,31 +19,26 @@ const TagsRow = ({ items, title, customButton }: TagsRowProps) => {
 
   return (
     <StyledRow>
-      <StyledTitleWrapper>
-        <TypographySecondary
-          value={title}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
-        />
+      <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
 
+      <StyledWrapper>
+        <StyledContainer>
+          {items.map((item: string, index: number) => {
+            const { shortText: shortName } = textSlicer(item, 35)
+            return (
+              <Tags
+                key={index}
+                label={item}
+                color={theme.body.tagColor}
+                readOnly
+                size={Tags.sizes?.SMALL}
+                outlined
+              />
+            )
+          })}
+        </StyledContainer>
         {customButton}
-      </StyledTitleWrapper>
-
-      <StyledContainer>
-        {items.map((item: string, index: number) => {
-          const { shortText: shortName } = textSlicer(item, 35)
-          return (
-            <Tags
-              key={index}
-              label={item}
-              color={theme.body.tagColor}
-              readOnly
-              size={Tags.sizes?.SMALL}
-              outlined
-            />
-          )
-        })}
-      </StyledContainer>
+      </StyledWrapper>
     </StyledRow>
   )
 }
@@ -60,7 +55,7 @@ const StyledContainer = styled.div`
   flex-wrap: wrap;
   gap: 10px;
 `
-const StyledTitleWrapper = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
 `
