@@ -49,7 +49,7 @@ import { textSlicer } from 'utils/textSlicer'
 import AudioRecorder from 'components/AudioRecorder'
 import AudioPlayer from 'components/AudioPlayer'
 
-const ChatV2 = () => {
+const ChatV2 = ({ chatSessionId = '' }: { chatSessionId?: string }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -79,7 +79,7 @@ const ChatV2 = () => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
-  const chatId = urlParams.get('chat')
+  const chatId = urlParams.get('chat') || chatSessionId
 
   const [createClientChatMessage] = useCreateClientChatMessageService()
 
@@ -343,150 +343,143 @@ const ChatV2 = () => {
   return (
     <StyledWrapper>
       <StyledMessages>
-        <StyledChatWrapper>
-          <ChatMessageListV2
-            data={chatMessages}
-            thinking={thinking}
-            sessionId={sessionId}
-            // @ts-expect-error TODO: fix type
-            isNewMessage={socket?.isNewMessage}
-            // @ts-expect-error TODO: fix type
-            setIsNewMessage={socket?.setIsNewMessage}
-            setReply={setReply}
-            reply={reply}
-            agentName={agentName}
-            greeting={
-              !messagesLoading && chatMessages && chatMessages?.length === 0 && chatGreeting
-            }
-          />
-        </StyledChatWrapper>
+        <ChatMessageListV2
+          data={chatMessages}
+          thinking={thinking}
+          sessionId={sessionId}
+          // @ts-expect-error TODO: fix type
+          isNewMessage={socket?.isNewMessage}
+          // @ts-expect-error TODO: fix type
+          setIsNewMessage={socket?.setIsNewMessage}
+          setReply={setReply}
+          reply={reply}
+          agentName={agentName}
+          greeting={!messagesLoading && chatMessages && chatMessages?.length === 0 && chatGreeting}
+        />
       </StyledMessages>
+
       <StyledChatFooter>
-        <StyledChatInputWrapper>
-          <StyledButtonGroup>
-            {!canStopGenerating && (
-              <StyledSuggestionsContainer>
-                {chatSuggestions.map((chatSuggestion: string, index: number) => {
-                  const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
+        <StyledButtonGroup>
+          {!canStopGenerating && (
+            <StyledSuggestionsContainer>
+              {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
 
-                  return (
-                    <StyledOption
-                      key={index}
-                      onClick={() => {
-                        handlePickedSuggestion(chatSuggestion)
-                      }}
-                    >
-                      {shortSuggestion}
-                    </StyledOption>
-                  )
-                })}
-              </StyledSuggestionsContainer>
-            )}
+                return (
+                  <StyledOption
+                    key={index}
+                    onClick={() => {
+                      handlePickedSuggestion(chatSuggestion)
+                    }}
+                  >
+                    {shortSuggestion}
+                  </StyledOption>
+                )
+              })}
+            </StyledSuggestionsContainer>
+          )}
 
-            {canStopGenerating && (
-              <StyledStopGeneratingButton>
-                <ButtonSecondary
-                  onClick={handleStopGenerating}
-                  size={Button.sizes?.SMALL}
-                  disabled={stopChatLoading}
-                >
-                  {t('stop-generating')}
-                </ButtonSecondary>
-              </StyledStopGeneratingButton>
-            )}
-          </StyledButtonGroup>
+          {canStopGenerating && (
+            <StyledStopGeneratingButton>
+              <ButtonSecondary
+                onClick={handleStopGenerating}
+                size={Button.sizes?.SMALL}
+                disabled={stopChatLoading}
+              >
+                {t('stop-generating')}
+              </ButtonSecondary>
+            </StyledStopGeneratingButton>
+          )}
+        </StyledButtonGroup>
 
-          <StyledForm>
-            {reply.isReply && (
-              <ReplyBox onClose={() => setReply(defaultReplyState)} reply={reply} />
-            )}
-            {uploadedFileObject && (
-              <StyledFileWrapper>
-                <UploadedFile
-                  onClick={() => setUploadedFileObject(null)}
-                  name={uploadedFileObject.fileName}
-                />
-              </StyledFileWrapper>
-            )}
+        <StyledForm>
+          {reply.isReply && <ReplyBox onClose={() => setReply(defaultReplyState)} reply={reply} />}
+          {uploadedFileObject && (
+            <StyledFileWrapper>
+              <UploadedFile
+                onClick={() => setUploadedFileObject(null)}
+                name={uploadedFileObject.fileName}
+              />
+            </StyledFileWrapper>
+          )}
 
-            <StyledTextareaWrapper>
-              {/* {!isProduction && (
+          <StyledTextareaWrapper>
+            {/* {!isProduction && (
                 <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
               )} */}
 
-              {hasVoice && !teamId && (
-                <AudioRecorder
-                  setVoicePreview={setVoicePreview}
-                  setStartedRecording={setStartedRecording}
-                />
-              )}
+            {hasVoice && !teamId && (
+              <AudioRecorder
+                setVoicePreview={setVoicePreview}
+                setStartedRecording={setStartedRecording}
+              />
+            )}
 
-              {voicePreview && (
-                <AudioPlayer
-                  audioUrl={voicePreview || ''}
-                  onCloseClick={() => setVoicePreview(null)}
-                />
-              )}
-              {!startedRecording && !voicePreview && (
-                <>
-                  {typingEffectText ? (
-                    <StyledInputWrapper secondary>
-                      <Typewriter
-                        size='small'
-                        message={formValue}
-                        callFunction={() => {
-                          setTypingEffectText(false)
-                          setTimeout(() => {
-                            inputRef.current?.focus()
-                            inputRef.current?.setSelectionRange(formValue.length, formValue.length)
-                          }, 1)
-                        }}
-                      />
-                    </StyledInputWrapper>
-                  ) : (
-                    <StyledInputWrapper>
-                      <Mentions
-                        inputRef={inputRef}
-                        onChange={(e: any) => {
-                          setFormValue(e.target.value)
-                        }}
-                        value={formValue}
-                        onKeyDown={handleKeyDown}
-                        setValue={setFormValue}
-                        agentId={agentId}
-                        teamId={teamId}
-                      />
-                    </StyledInputWrapper>
-                  )}
-                </>
-              )}
-
-              <StyledChatInputRightSide>
-                {voiceLoading ? (
-                  <StyledLoaderWrapper>
-                    <Loader size={20} />
-                  </StyledLoaderWrapper>
+            {voicePreview && (
+              <AudioPlayer
+                audioUrl={voicePreview || ''}
+                onCloseClick={() => setVoicePreview(null)}
+              />
+            )}
+            {!startedRecording && !voicePreview && (
+              <>
+                {typingEffectText ? (
+                  <StyledInputWrapper secondary>
+                    <Typewriter
+                      size='small'
+                      message={formValue}
+                      callFunction={() => {
+                        setTypingEffectText(false)
+                        setTimeout(() => {
+                          inputRef.current?.focus()
+                          inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                        }, 1)
+                      }}
+                    />
+                  </StyledInputWrapper>
                 ) : (
-                  <StyledButton
-                    onClick={() => {
-                      if (formValue || uploadedFileObject || voicePreview) {
-                        createMessage()
-                      }
-                    }}
-                    disabled={(!formValue && !voicePreview) || thinking}
-                  >
-                    <StyledSenIcon />
-                  </StyledButton>
+                  <StyledInputWrapper>
+                    <Mentions
+                      inputRef={inputRef}
+                      onChange={(e: any) => {
+                        setFormValue(e.target.value)
+                      }}
+                      value={formValue}
+                      onKeyDown={handleKeyDown}
+                      setValue={setFormValue}
+                      agentId={agentId}
+                      teamId={teamId}
+                    />
+                  </StyledInputWrapper>
                 )}
+              </>
+            )}
 
-                {user && <CommandIcon />}
-              </StyledChatInputRightSide>
-            </StyledTextareaWrapper>
-          </StyledForm>
-          <StyledChatBottom>
-            <TypingUsers usersData={filteredTypingUsers} />
-          </StyledChatBottom>
-        </StyledChatInputWrapper>
+            <StyledChatInputRightSide>
+              {voiceLoading ? (
+                <StyledLoaderWrapper>
+                  <Loader size={20} />
+                </StyledLoaderWrapper>
+              ) : (
+                <StyledButton
+                  onClick={() => {
+                    if (formValue || uploadedFileObject || voicePreview) {
+                      createMessage()
+                    }
+                  }}
+                  disabled={(!formValue && !voicePreview) || thinking}
+                >
+                  <StyledSenIcon />
+                </StyledButton>
+              )}
+
+              {user && <CommandIcon />}
+            </StyledChatInputRightSide>
+          </StyledTextareaWrapper>
+        </StyledForm>
+        <StyledChatBottom>
+          <TypingUsers usersData={filteredTypingUsers} />
+        </StyledChatBottom>
       </StyledChatFooter>
     </StyledWrapper>
   )
@@ -495,14 +488,15 @@ const ChatV2 = () => {
 export default ChatV2
 
 const StyledWrapper = styled.div`
-  // display: flex;
-  // flex-direction: column;
+  display: flex;
+  flex-direction: column;
+
   height: 100%;
   width: 100%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   transition: background-color 300ms ease-in-out;
   position: relative;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   /* padding-bottom: 50px; */
   /* height: calc(100% - 80px); */
   /* margin-bottom: 100px; */
@@ -511,13 +505,10 @@ const StyledWrapper = styled.div`
 const StyledMessages = styled.main`
   // flex-grow: 1;
   width: 100%;
-  display: flex;
-  /* overflow-y: auto; */
-  flex-direction: column;
-  align-items: center;
+  height: 100%;
+
   /* margin-bottom: 80px; // To make space for input */
-  height: calc(100vh - 275px);
-  margin-top: 30px;
+  /* height: calc(100vh - 220px); */
 `
 
 const StyledForm = styled.form`
@@ -583,15 +574,10 @@ const StyledButton = styled.div<{ disabled: boolean }>`
 `
 
 const StyledChatFooter = styled.div`
-  /* position: fixed;
-  left: 50%;
-  z-index: 100001;
-  bottom: -135px;
-  transform: translateX(-50%); */
-
   display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 
   width: 100%;
 `
@@ -604,15 +590,6 @@ const StyledButtonGroup = styled.div`
   width: 100%;
 
   height: 70px;
-`
-
-const StyledChatWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  width: 100%;
-  height: 100%;
-  margin-top: 20px;
 `
 
 const StyledSuggestionsContainer = styled.div`
@@ -662,15 +639,7 @@ const StyledInputWrapper = styled.div<{ secondary?: boolean }>`
       padding-left: 2px;
     `};
 `
-const StyledChatInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-  width: 100%;
-
-  /* margin-top: 50px; */
-`
 const StyledChatBottom = styled.div`
   display: flex;
   flex-direction: row;
@@ -692,6 +661,8 @@ const StyledChatInputRightSide = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  justify-content: flex-end;
 
   min-width: 80px;
 `
