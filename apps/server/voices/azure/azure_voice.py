@@ -11,7 +11,7 @@ class AzureVoice(BaseVoice, ABC):
     is_synthesizer: bool = True
     is_transcriber: bool = True
 
-    is_active: bool = False
+    is_active: bool = True
 
     id = "dc872426-a95c-4c41-83a2-5e5ed43670cd"
 
