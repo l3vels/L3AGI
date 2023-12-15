@@ -100,36 +100,7 @@ class AgentConfigModel(BaseModel):
         return changes
 
     @classmethod
-    def create_configs_from_template(cls, db, configs, user, agent_id):
-        """
-        Create or update agent configurations in the database.
-
-        Args:
-            db (Session): The database session.
-            configs (list): The list of configurations.
-            user (UserModel): The user object.
-            agent_id (UUID): The agent id.
-
-        Returns:
-            List[AgentConfigModel]: The list of created or updated configurations.
-        """
-        changes = []
-        for template_config in configs:
-            new_config = AgentConfigModel(
-                key=template_config.key,
-                value=template_config.value,
-                agent_id=agent_id,
-                created_by=user.id,
-            )
-            changes.append(new_config)
-
-        db.session.add_all(changes)
-        db.session.commit()
-
-        return changes
-
-    @classmethod
-    def create_voice_configs_from_template(
+    def create_configs_from_template(
         cls, db, configs, user, account, agent_id, check_is_template
     ):
         """
@@ -144,20 +115,20 @@ class AgentConfigModel(BaseModel):
         Returns:
             List[AgentConfigModel]: The list of created or updated configurations.
         """
+
         import ast
 
         from models.agent import AgentModel
 
         changes = []
-        for config in configs:
+        for template_config in configs:
             new_config = AgentConfigModel(
-                key=config.key,
-                value=config.value,
+                key=template_config.key,
+                value=template_config.value,
                 agent_id=agent_id,
                 created_by=user.id,
             )
 
-            # Copy sentiment analyzer and runner agents from template
             if new_config.key == "sentiment_analyzer":
                 runner = ast.literal_eval(new_config.value)
                 runner_id = runner.get("runner", None)
@@ -184,7 +155,7 @@ class AgentConfigModel(BaseModel):
 
                 new_config.value = str(runners)
 
-            changes.append(new_config)
+        changes.append(new_config)
 
         db.session.add_all(changes)
         db.session.commit()

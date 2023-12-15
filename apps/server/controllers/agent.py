@@ -19,8 +19,6 @@ from utils.system_message import SystemMessageBuilder
 
 router = APIRouter()
 
-agent_customer_router = APIRouter()
-
 
 @router.post("", status_code=201, response_model=AgentWithConfigsOutput)
 def create_agent(
@@ -45,36 +43,6 @@ def create_agent(
         account=auth.account,
     )
     return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
-
-
-@agent_customer_router.post(
-    "/voice", status_code=201, response_model=AgentWithConfigsOutput
-)
-def create_voice_agent(
-    voice_agent_input: CreateVoiceAgentInput,
-    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
-) -> AgentWithConfigsOutput:
-    """
-    Create a new agent with configurations.
-
-    Args:
-        agent_with_configs (AgentConfigInput): Data for creating a new agent with configurations.
-        auth (UserAccount): Authenticated user account.
-
-    Returns:
-        AgentWithConfigsOutput: Created agent object.
-    """
-
-    agent_template_id = voice_agent_input.template_id
-
-    try:
-        agent = AgentModel.create_voice_agent_from_template(
-            db, agent_template_id, auth.user, auth.account, True
-        )
-
-        return convert_model_to_response(agent)
-    except AgentNotFoundException:
-        raise HTTPException(status_code=404, detail="Template agent not found")
 
 
 @router.put(
@@ -118,7 +86,7 @@ def update_agent(
     response_model=AgentWithConfigsOutput,
 )  # Changed status code to 200
 def create_agent_from_template(
-    template_id: str, auth: UserAccount = Depends(authenticate)
+    template_id: str, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
 ) -> AgentWithConfigsOutput:
     """
     Update an existing agent with configurations.
@@ -165,7 +133,11 @@ def get_agents(
 
 
 # todo need remove, is depricated
-@router.get("/discover", response_model=Dict[str, List[AgentWithConfigsOutput]])
+@router.get(
+    "/discover",
+    response_model=Dict[str, List[AgentWithConfigsOutput]],
+    include_in_schema=False,
+)
 def get_template_and_system_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
     template_agents = AgentModel.get_template_agents(
         session=db.session, account_id=None
@@ -183,14 +155,22 @@ def get_template_and_system_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
     return result
 
 
-@router.get("/discover/public", response_model=List[AgentWithConfigsOutput])
+@router.get(
+    "/discover/public",
+    response_model=List[AgentWithConfigsOutput],
+    include_in_schema=False,
+)
 def get_public_agents() -> Dict[str, List[AgentWithConfigsOutput]]:
     public_agents = AgentModel.get_public_agents(db=db)
 
     return convert_agents_to_agent_list(public_agents)
 
 
-@router.get("/discover/templates", response_model=List[AgentWithConfigsOutput])
+@router.get(
+    "/discover/templates",
+    response_model=List[AgentWithConfigsOutput],
+    include_in_schema=False,
+)
 def get_template_agents(
     auth: UserAccount = Depends(authenticate),
 ) -> Dict[str, List[AgentWithConfigsOutput]]:
@@ -201,7 +181,9 @@ def get_template_agents(
 
 
 @router.get(
-    "/from-template/is-created/{parent_id}", response_model=AgentWithConfigsOutput
+    "/from-template/is-created/{parent_id}",
+    response_model=AgentWithConfigsOutput,
+    include_in_schema=False,
 )
 def get_agent_by_parent_id(
     parent_id: str, auth: UserAccount = Depends(authenticate)
@@ -257,7 +239,9 @@ def get_agent_by_id(
     return agent_with_configs
 
 
-@router.get("/discover/{id}", response_model=AgentWithConfigsOutput)
+@router.get(
+    "/discover/{id}", response_model=AgentWithConfigsOutput, include_in_schema=False
+)
 def get_discover_agent_by_id(id: str) -> AgentWithConfigsOutput:
     """
     Get an agent by its ID.

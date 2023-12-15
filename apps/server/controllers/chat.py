@@ -30,7 +30,7 @@ from utils.configuration import \
 router = APIRouter()
 
 
-@router.post("", status_code=201)
+@router.post("", status_code=201, include_in_schema=False)
 def create_chat(
     chat: ChatInput, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
 ) -> ChatOutput:
@@ -41,7 +41,7 @@ def create_chat(
     return convert_model_to_response(db_chat)
 
 
-@router.patch("/{id}", status_code=200)
+@router.patch("/{id}", status_code=200, include_in_schema=False)
 def update_chat(
     id: UUID,
     chat: UpdateChatInput,
@@ -66,7 +66,7 @@ def get_chats(auth: UserAccount = Depends(authenticate)) -> List[ChatOutput]:
     return convert_chats_to_chat_list(db_chats)
 
 
-@router.post("/messages", status_code=201)
+@router.post("/messages", status_code=201, include_in_schema=False)
 def create_user_chat_message(
     body: ChatUserMessageInput, auth: UserAccount = Depends(authenticate)
 ):
@@ -78,7 +78,9 @@ def create_user_chat_message(
     return ""
 
 
-@router.post("/stop", status_code=201, response_model=ConfigOutput)
+@router.post(
+    "/stop", status_code=201, response_model=ConfigOutput, include_in_schema=False
+)
 def stop_run(body: ChatStopInput, auth: UserAccount = Depends(authenticate)):
     session_id = get_chat_session_id(
         auth.user.id, auth.account.id, body.agent_id, body.team_id
@@ -200,7 +202,7 @@ def get_history(agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None)
     return chat_messages
 
 
-@router.get("/negotiate", response_model=NegotiateOutput)
+@router.get("/negotiate", response_model=NegotiateOutput, include_in_schema=False)
 def negotiate(id: str):
     """
     Get Azure PubSub url with access token
@@ -217,7 +219,7 @@ def negotiate(id: str):
     return NegotiateOutput(url=token["url"])
 
 
-@router.post("/session/messages/insert", status_code=201)
+@router.post("/session/messages/insert", status_code=201, include_in_schema=False)
 def insert_chat_messages(
     body: InsertChatMessagesInput,
     auth: UserAccount = Depends(authenticate_by_token_or_api_key),
@@ -271,7 +273,7 @@ def insert_chat_messages(
     return ""
 
 
-@router.post("/session/messages", status_code=201)
+@router.post("/session/messages", status_code=201, include_in_schema=False)
 def create_chat_message(request: Request, response: Response, body: ChatMessageInput):
     """
     Create new chat message
@@ -281,7 +283,7 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     return create_client_message(body, auth)
 
 
-@router.post("/session/messages/draft", status_code=201)
+@router.post("/session/messages/draft", status_code=201, include_in_schema=False)
 def create_chat_message_draft(
     request: Request, response: Response, body: ChatMessageInput
 ):
