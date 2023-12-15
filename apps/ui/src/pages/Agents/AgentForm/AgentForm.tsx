@@ -441,7 +441,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     <TextareaFormik
                       setFieldValue={setFieldValue}
                       label={t('task')}
-                      value={agent_sentiment_analyzer.task}
+                      value={agent_sentiment_analyzer?.task}
                       fieldName={'agent_sentiment_analyzer.task'}
                       minHeight={90}
                     />
