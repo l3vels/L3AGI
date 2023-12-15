@@ -7,7 +7,7 @@ export const contactValidationSchema = yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Please enter name'),
-  contact_group_id: yup.string().required('Please pick Group'),
+  contact_group_id: yup.string().nullable(),
   contact_phone: yup
     .string()
     .matches(/^[0-9]+$/, 'Phone number must contain only digits')
