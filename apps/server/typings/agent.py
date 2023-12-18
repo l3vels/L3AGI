@@ -112,11 +112,7 @@ class ConfigInput(BaseModel):
     integrations: Optional[List[dict]] = Field(
         None, example=[{"integration1": "value1"}, {"integration2": "value2"}]
     )
-    source_flow: Optional[DataSourceFlow] = Field(
-        None,
-        example=DataSourceFlow.PRE_RETRIEVAL,
-        description="The flow of data source execution. Use `pre_execution` for pre-retrieval execution.",
-    )
+    source_flow: Optional[str]
     synthesizer: Optional[str] = Field(
         None,
         example="b44769b1-1a20-44d3-b0f1-8b4c96e6a02a",
@@ -129,10 +125,8 @@ class ConfigInput(BaseModel):
         example="transcriber",
         description="only on `voice-based` agents! <br/> Expects Voice Tool ID",
     )
-    response_mode: Optional[InputModeType] = Field(
-        None, example=InputModeType.text.value
-    )
-    input_mode: Optional[InputModeType] = Field(None, example=InputModeType.text.value)
+    response_mode: Optional[list[str]]
+    input_mode: Optional[list[str]]
     runners: Optional[List[Dict]] = Field(
         None, example=[{"runner1": "value1"}, {"runner2": "value2"}]
     )
