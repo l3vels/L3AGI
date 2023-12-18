@@ -29,7 +29,7 @@ def get_tools() -> List[ToolOutput]:
     # return convert_tools_to_tool_list(db_tools)
 
 
-@router.post("/run", response_model=ToolRunOutput)
+@router.post("/run", response_model=ToolRunOutput, include_in_schema=False)
 def run_tool(
     input: ToolRunInput, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
 ) -> ToolRunOutput:
