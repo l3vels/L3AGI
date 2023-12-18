@@ -189,58 +189,11 @@ class AgentModel(BaseModel):
         db.session.commit()
 
         AgentConfigModel.create_configs_from_template(
-            db=db, configs=template_agent.configs, user=user, agent_id=new_agent.id
-        )
-
-        return new_agent
-
-    @classmethod
-    def create_voice_agent_from_template(
-        cls, db, template_id, user, account, check_is_template: True
-    ):
-        """
-        Creates a new agent with the provided configuration.
-
-        Args:
-            db: The database object.
-            agent_with_config: The object containing the agent and configuration details.
-
-        Returns:
-            Agent: The crated agent.
-
-        """
-        template_agent = cls.get_agent_by_id(db=db, agent_id=template_id)
-        if check_is_template:
-            if template_agent is None or not (
-                template_agent.is_public or template_agent.is_template
-            ):
-                raise AgentNotFoundException("Agent not found")
-
-        new_agent = AgentModel(
-            name=template_agent.name,
-            role=template_agent.role,
-            agent_type=template_agent.agent_type,
-            description=template_agent.description,
-            is_memory=template_agent.is_memory,
-            is_public=False,
-            is_template=False,
-            created_by=user.id,
-            account_id=account.id,
-            modified_by=None,
-            parent_id=template_agent.id,
-            avatar=template_agent.avatar,
-        )
-
-        db.session.add(new_agent)
-        db.session.commit()
-        db.session.flush()
-
-        AgentConfigModel.create_voice_configs_from_template(
             db=db,
             configs=template_agent.configs,
             user=user,
-            agent_id=new_agent.id,
             account=account,
+            agent_id=new_agent.id,
             check_is_template=check_is_template,
         )
 

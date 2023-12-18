@@ -1,20 +1,31 @@
 from enum import Enum
 from typing import Dict, List, Optional
 
-from pydantic import UUID4, BaseModel
+from pydantic import UUID4, BaseModel, Field
 
 from typings.user import UserOutput
 
 
-class DataSourceFlow(Enum):
+class AgentType(str, Enum):
+    voice = "voice"
+    text = "text"
+
+
+class DataSourceFlow(str, Enum):
     PRE_RETRIEVAL = "pre_execution"
     SOURCE_DETECTION = "source_detection"
+
+
+class InputModeType(List[str], Enum):
+    text = ["Text"]
+    voice = ["Voice"]
+    text_voice = ["Text", "Voice"]
 
 
 class AgentInput(BaseModel):
     name: str
     description: Optional[str]
-    agent_type: Optional[str]
+    agent_type: Optional[AgentType]
     workspace_id: Optional[UUID4]
     role: Optional[str]
     is_memory: Optional[bool]
@@ -28,19 +39,19 @@ class ConfigInput(BaseModel):
     tools: List[str]
     datasources: List[str]
     model: Optional[str]
-    temperature: float
+    temperature: float = Field(..., gt=0, lt=1.0)
     instructions: List[str]
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
     integrations: Optional[List[dict]]
-    source_flow: Optional[str]
+    source_flow: Optional[DataSourceFlow]
     synthesizer: Optional[str]
     default_voice: Optional[str]
     voice_id: Optional[str]
     transcriber: Optional[str]
     response_mode: Optional[List[str]]
-    input_mode: Optional[List[str]]
+    input_mode: Optional[InputModeType]
     runners: Optional[List[Dict]]
     sentiment_analyzer: Optional[Dict]
 

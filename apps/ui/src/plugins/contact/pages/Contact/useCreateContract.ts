@@ -23,7 +23,7 @@ export const useCreateContact = () => {
   const initialValues = {
     contact_name: '',
     contact_description: '',
-    contact_group_id: '',
+    contact_group_id: null,
     contact_email: '',
     contact_phone: '',
   }

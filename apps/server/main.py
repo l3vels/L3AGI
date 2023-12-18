@@ -10,7 +10,6 @@ from fastapi_sqlalchemy import DBSessionMiddleware
 from strawberry.fastapi import GraphQLRouter
 
 from config import Config
-from controllers.agent import agent_customer_router
 from controllers.agent import router as agent_router
 from controllers.api_key import router as api_key_router
 from controllers.auth import router as user_router
@@ -102,14 +101,15 @@ app.include_router(user_router, prefix="/auth", include_in_schema=False)
 app.include_router(workspace_router, prefix="/workspace", include_in_schema=False)
 app.include_router(team_router, prefix="/team", include_in_schema=False)
 app.include_router(team_agent_router, prefix="/team-of-agents", include_in_schema=False)
-app.include_router(agent_router, prefix="/agent", include_in_schema=False)
-app.include_router(agent_customer_router, prefix="/v1/agent")
+app.include_router(agent_router, prefix="/agent", include_in_schema=True)
+# app.include_router(agent_customer_router, prefix="/v1/agent")
+# app.include_router(chat_customer_router, prefix="/v1/chat")
 app.include_router(config_router, prefix="/config", include_in_schema=False)
 app.include_router(datasource_router, prefix="/datasource", include_in_schema=False)
 app.include_router(run_router, prefix="/run", include_in_schema=False)
 app.include_router(tool_router, prefix="/tool", include_in_schema=False)
 app.include_router(llm_router, prefix="/llm", include_in_schema=False)
-app.include_router(chat_router, prefix="/chat", include_in_schema=False)
+app.include_router(chat_router, prefix="/chat", include_in_schema=True)
 app.include_router(file_router, prefix="/file", include_in_schema=False)
 app.include_router(model_router, prefix="/model", include_in_schema=False)
 app.include_router(schedule_router, prefix="/schedule", include_in_schema=False)
