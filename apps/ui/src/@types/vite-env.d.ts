@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly REACT_APP_DOMAIN_NAME: string
   readonly REACT_APP_ACCOUNT_SERVICES_URL: string
   readonly REACT_APP_PR_SERVICES_URL: string
+  readonly REACT_APP_PR_SERVICES_WS_URL: string
   readonly REACT_APP_SENTRY_DNS: string
   readonly REACT_APP_SENTRY_WEBPACK_AUTH_TOKEN: string
   readonly REACT_APP_DISCORD_LINK: string

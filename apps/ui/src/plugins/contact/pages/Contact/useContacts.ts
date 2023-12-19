@@ -11,8 +11,6 @@ import { useContactsService } from 'plugins/contact/services/contact/useContacts
 import { useDeleteContactByIdService } from 'plugins/contact/services/contact/useDeleteContactService'
 import { useConversation, SelfHostedConversationConfig } from 'vocode'
 
-const WS_URL = 'ws://localhost:7000/conversation'
-
 export const useContacts = () => {
   const { data: contacts, refetch: refetchContacts } = useContactsService()
 
@@ -27,7 +25,7 @@ export const useContacts = () => {
   const [conversationId, setConversationId] = useState<string>()
 
   const config: SelfHostedConversationConfig = {
-    backendUrl: WS_URL,
+    backendUrl: `${import.meta.env.REACT_APP_PR_SERVICES_WS_URL}/conversation`,
     audioDeviceConfig: {},
     conversationId,
   }
