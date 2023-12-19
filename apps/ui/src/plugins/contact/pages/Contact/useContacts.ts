@@ -38,6 +38,16 @@ export const useContacts = () => {
     start()
   }, [conversationId])
 
+  useEffect(() => {
+    if (!error) return
+
+    setToast({
+      message: error.message,
+      type: 'negative',
+      open: true,
+    })
+  }, [error, setToast])
+
   const deleteContactHandler = (id: string) => {
     openModal({
       name: 'delete-confirmation-modal',
@@ -92,16 +102,18 @@ export const useContacts = () => {
     } catch (e) {
       setConversationId(undefined)
 
+      let message = 'Something went wrong!'
+
       if (e instanceof ApolloError) {
         // @ts-expect-error result is not defined in networkError
-        const message = e.networkError?.result?.detail || 'Something went wrong!'
-
-        setToast({
-          message,
-          type: 'negative',
-          open: true,
-        })
+        message = e.networkError?.result?.detail || message
       }
+
+      setToast({
+        message,
+        type: 'negative',
+        open: true,
+      })
     }
   }
 
