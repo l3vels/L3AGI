@@ -170,7 +170,7 @@ const Contacts = () => {
         },
       },
     ],
-    [agentsData],
+    [agentsData, handleEndCall],
   )
 
   const location = useLocation()

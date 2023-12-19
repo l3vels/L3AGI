@@ -79,6 +79,7 @@
     "vite-plugin-static-copy": "^0.17.0",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
+    "vocode": "^1.0.37",
     "web-vitals": "^3.0.2",
     "yup": "^0.32.11"
   },
