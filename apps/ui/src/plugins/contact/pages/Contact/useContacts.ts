@@ -68,7 +68,7 @@ export const useContacts = () => {
 
   const handleCall = async (input: CreateCallInput) => {
     // TODO: choose call type from UI
-    const callType = 'browser' // or 'outbound'
+    const callType = 'outbound' // or 'outbound'
 
     setToast({
       message: 'Call Started!',
