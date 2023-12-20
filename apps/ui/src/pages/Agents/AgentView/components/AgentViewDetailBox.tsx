@@ -29,6 +29,7 @@ import { useModelsService } from 'services'
 import { AgentWithConfigs } from 'types'
 import MenuDotsOutline from 'share-ui/components/Icon/Icons/components/MenuDotsOutline'
 import CopyButton from 'components/CopyButton'
+import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
@@ -51,15 +52,26 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
   const { data: models } = useModelsService()
 
+  const { data: voiceTools } = useVoicesService()
+
   const { agent, configs } = agentData
 
-  const { name, description, role, creator, is_template } = agent
+  const { name, description, role, creator, is_template, agent_type } = agent
 
-  const { model, temperature } = configs
+  const {
+    model,
+    temperature,
+    transcriber: transcriberId,
+    synthesizer: synthesizerId,
+    voice_id,
+  } = configs
 
   const isCreator = user?.id === agent?.created_by
 
   const agentModel = models?.filter(modelData => modelData.id === model).map(model => model.name)
+
+  const agentTranscriber = voiceTools?.find((item: any) => item.id === transcriberId)?.name
+  const agentSynthesizer = voiceTools?.find((item: any) => item.id === synthesizerId)?.name
 
   const handleEdit = () => {
     closeModal('agent-view-modal')
@@ -170,6 +182,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
         {temperature && <TagsRow title={t('temperature')} items={[temperature.toString()]} />}
 
         <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
+
+        {agent_type === 'voice' && (
+          <>
+            {agentTranscriber && <TagsRow title={t('transcriber')} items={[agentTranscriber]} />}
+            {agentSynthesizer && <TagsRow title={t('synthesizer')} items={[agentSynthesizer]} />}
+            {voice_id && <TagsRow title={t('voice_id')} items={[voice_id]} />}
+          </>
+        )}
       </StyledWrapper>
     </StyledDetailsBox>
   )
