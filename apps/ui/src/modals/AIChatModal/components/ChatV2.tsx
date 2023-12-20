@@ -49,7 +49,7 @@ import { textSlicer } from 'utils/textSlicer'
 import AudioRecorder from 'components/AudioRecorder'
 import AudioPlayer from 'components/AudioPlayer'
 
-const ChatV2 = ({ chatSessionId = '' }: { chatSessionId?: string }) => {
+const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -124,7 +124,7 @@ const ChatV2 = ({ chatSessionId = '' }: { chatSessionId?: string }) => {
     account,
     agentId,
     teamId,
-    chatId,
+    chatId: chatId || '',
   })
 
   const chatStatusConfig = configs?.find((config: any) => config.session_id === sessionId)
