@@ -109,7 +109,7 @@ class ConfigInput(BaseModel):
         description="A greeting message displayed by the assistant to welcome users and provide an introduction to its capabilities.",
     )
     text: Optional[str] = Field(None, example="text")
-    integrations: Optional[List[dict]] = Field(None)
+    integrations: Optional[List[Dict]] = Field(None)
     source_flow: Optional[str]
     synthesizer: Optional[str] = Field(
         None,
@@ -163,7 +163,7 @@ class ConfigsOutput(BaseModel):
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
-    integrations: Optional[List[dict]]
+    integrations: Optional[List[Dict]]
     source_flow: Optional[str]
     synthesizer: Optional[str]
     default_voice: Optional[str]
