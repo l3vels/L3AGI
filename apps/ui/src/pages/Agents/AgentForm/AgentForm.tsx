@@ -287,11 +287,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <CustomField
-                    formik={formik}
-                    formikField={'agent_suggestions'}
-                    placeholder={t('suggestions')}
-                  />
+                  {agentType !== 'voice' && (
+                    <CustomField
+                      formik={formik}
+                      formikField={'agent_suggestions'}
+                      placeholder={t('suggestions')}
+                    />
+                  )}
 
                   <TextareaFormik
                     setFieldValue={setFieldValue}
