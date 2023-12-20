@@ -340,7 +340,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     optionSize={'small'}
                   />
 
-                  <StyledFormInputWrapper>
+                  {/* <StyledFormInputWrapper>
                     <TypographyPrimary
                       value={t('response-mode')}
                       type={Typography.types.LABEL}
@@ -370,9 +370,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       onSelect={() => setFieldValue('agent_voice_response', ['Text', 'Voice'])}
                       checked={agent_voice_response?.length === 2}
                     />
-                  </StyledFormInputWrapper>
+                  </StyledFormInputWrapper> */}
 
-                  <StyledFormInputWrapper>
+                  {/* <StyledFormInputWrapper>
                     <TypographyPrimary
                       value={t('input-mode')}
                       type={Typography.types.LABEL}
@@ -420,7 +420,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                         }}
                       />
                     </StyledCheckboxWrapper>
-                  </StyledFormInputWrapper>
+                  </StyledFormInputWrapper> */}
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
