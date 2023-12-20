@@ -31,7 +31,7 @@ class AgentInput(BaseModel):
         description="You have to choose between Text-based and Voice-based agents.",
     )
     workspace_id: Optional[UUID4] = Field(
-        None, example="123e4567-e89b-12d3-a456-426614174000"
+        None, example="550e8400-e29b-41d4-a716-446655440000"
     )
     role: Optional[str] = Field(
         None, example="Speaker", description="A role can be anything of your choosing."
@@ -109,29 +109,35 @@ class ConfigInput(BaseModel):
         description="A greeting message displayed by the assistant to welcome users and provide an introduction to its capabilities.",
     )
     text: Optional[str] = Field(None, example="text")
-    integrations: Optional[List[dict]] = Field(
-        None, example=[{"integration1": "value1"}, {"integration2": "value2"}]
-    )
+    integrations: Optional[List[Dict]] = Field(None)
     source_flow: Optional[str]
     synthesizer: Optional[str] = Field(
         None,
-        example="b44769b1-1a20-44d3-b0f1-8b4c96e6a02a",
-        description="only on `voice-based` agents! <br/> Expects Voice Tool ID",
+        example="142e60f5-2d46-4b1a-9054-0764e553eed6",
+        description="only on `voice-based` agents! <br/> Expects Voice Tool ID (Play.HT, ElevenLabs, Azure)",
     )
-    default_voice: Optional[str] = Field(None, example="default_voice")
-    voice_id: Optional[str] = Field(None, example="voice_id")
+    default_voice: Optional[str] = Field(
+        None, example="default_voice", description="only on `voice-based` agents!"
+    )
+    voice_id: Optional[str] = Field(
+        None, example="voice_id", description="only on `voice-based` agents!"
+    )
     transcriber: Optional[str] = Field(
         None,
-        example="transcriber",
-        description="only on `voice-based` agents! <br/> Expects Voice Tool ID",
+        example="b44769b1-1a20-44d3-b0f1-8b4c96e6a02a",
+        description="only on `voice-based` agents! <br/> Expects Voice Tool ID (Deepgram, Azure)",
     )
-    response_mode: Optional[list[str]]
-    input_mode: Optional[list[str]]
+    response_mode: Optional[list[str]] = Field(
+        None, example=["Voice"], description="only on `voice-based` agents!"
+    )
+    input_mode: Optional[list[str]] = Field(
+        None, example=["Voice"], description="only on `voice-based` agents!"
+    )
     runners: Optional[List[Dict]] = Field(
-        None, example=[{"runner1": "value1"}, {"runner2": "value2"}]
+        None, example=[{"task": "value1"}, {"task": "value2"}]
     )
-    sentiment_analyzer: Optional[Dict] = Field(
-        None, example={"analyzer1": "value1", "analyzer2": "value2"}
+    sentiment_analyzer: Optional[Dict[str, str]] = Field(
+        None, example={"task": "", "runner": ""}
     )
 
 
@@ -157,7 +163,7 @@ class ConfigsOutput(BaseModel):
     suggestions: Optional[List[str]]
     greeting: Optional[str]
     text: Optional[str]
-    integrations: Optional[List[dict]]
+    integrations: Optional[List[Dict]]
     source_flow: Optional[str]
     synthesizer: Optional[str]
     default_voice: Optional[str]
@@ -171,21 +177,32 @@ class ConfigsOutput(BaseModel):
 
 class AgentOutput(BaseModel):
     id: UUID4
-    name: str
-    description: str
-    agent_type: Optional[str]
-    workspace_id: Optional[UUID4]
-    parent_id: Optional[UUID4]
-    role: str
+    name: str = Field(..., example="Agent Smith")
+    description: str = Field(..., example="Description of the agent")
+    agent_type: Optional[str] = Field(None, example="voice")
+    workspace_id: Optional[UUID4] = Field(
+        None, example="550e8400-e29b-41d4-a716-446655440000"
+    )
+    parent_id: Optional[UUID4] = Field(
+        None, example="550e8400-e29b-41d4-a716-446655440000"
+    )
+    role: str = Field(..., example="Speaker")
     is_template: bool
     is_deleted: bool
     is_public: bool
-    account_id: UUID4
-    created_by: Optional[UUID4]
+    account_id: UUID4 = Field(..., example="550e8400-e29b-41d4-a716-446655440000")
+    created_by: Optional[UUID4] = Field(
+        None, example="550e8400-e29b-41d4-a716-446655440000"
+    )
     creator: Optional[UserOutput]
-    modified_by: Optional[UUID4]
+    modified_by: Optional[UUID4] = Field(
+        None, example="550e8400-e29b-41d4-a716-446655440000"
+    )
     is_memory: Optional[bool]
-    avatar: Optional[str]
+    avatar: Optional[str] = Field(
+        None,
+        example="https://raw.githubusercontent.com/l3vels/L3AGI/77d65c9ad74d4da140ef7a30590f063768333bd9/apps/ui/src/assets/tools/openweather.svg",
+    )
 
 
 class AgentWithConfigsOutput(BaseModel):

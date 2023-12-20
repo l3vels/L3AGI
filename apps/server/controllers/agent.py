@@ -22,7 +22,8 @@ router = APIRouter()
 
 @router.post("", status_code=201, response_model=AgentWithConfigsOutput)
 def create_agent(
-    agent_with_configs: AgentConfigInput, auth: UserAccount = Depends(authenticate)
+    agent_with_configs: AgentConfigInput,
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> AgentWithConfigsOutput:
     """
     Create a new agent with configurations.
@@ -51,7 +52,7 @@ def create_agent(
 def update_agent(
     id: str,
     agent_with_configs: AgentConfigInput,
-    auth: UserAccount = Depends(authenticate),
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> AgentWithConfigsOutput:
     """
     Update an existing agent with configurations.
@@ -117,7 +118,7 @@ def create_agent_from_template(
 
 @router.get("", response_model=List[AgentWithConfigsOutput])
 def get_agents(
-    auth: UserAccount = Depends(authenticate),
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> List[AgentWithConfigsOutput]:
     """
     Get all agents by account ID.
@@ -264,7 +265,9 @@ def get_discover_agent_by_id(id: str) -> AgentWithConfigsOutput:
 
 
 @router.delete("/{agent_id}", status_code=200)
-def delete_agent(agent_id: str, auth: UserAccount = Depends(authenticate)) -> dict:
+def delete_agent(
+    agent_id: str, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
+) -> dict:
     """
     Delete an agent by its ID. Performs a soft delete by updating the is_deleted flag.
 

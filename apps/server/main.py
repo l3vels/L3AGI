@@ -116,7 +116,7 @@ app.include_router(schedule_router, prefix="/schedule", include_in_schema=False)
 app.include_router(api_key_router, prefix="/api-key", include_in_schema=False)
 app.include_router(integrations_router, prefix="/integrations", include_in_schema=False)
 app.include_router(fine_tuning_router, prefix="/fine-tuning", include_in_schema=False)
-app.include_router(voice_router, prefix="/voice", include_in_schema=False)
+app.include_router(voice_router, prefix="/voice", include_in_schema=True)
 
 
 @app.get("/", include_in_schema=False)

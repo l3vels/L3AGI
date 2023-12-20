@@ -1,6 +1,7 @@
-from pydantic import BaseModel, UUID4
 from typing import Optional
+
 import strawberry
+from pydantic import UUID4, BaseModel, Field
 
 
 class UserInput(BaseModel):
@@ -11,9 +12,9 @@ class UserInput(BaseModel):
 
 
 class UserOutput(BaseModel):
-    id: UUID4
-    name: str
-    email: str
+    id: UUID4 = Field(..., example="550e8400-e29b-41d4-a716-446655440000")
+    name: str = Field(..., example="User name")
+    email: str = Field(..., example="test@gmail.com")
     avatar: Optional[str]
 
 

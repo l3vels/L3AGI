@@ -52,7 +52,9 @@ def update_chat(
 
 
 @router.get("", response_model=List[ChatOutput])
-def get_chats(auth: UserAccount = Depends(authenticate)) -> List[ChatOutput]:
+def get_chats(
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+) -> List[ChatOutput]:
     """
     Get all get_chats by account ID.
 
@@ -109,7 +111,7 @@ def get_chat_messages(
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
-    auth: UserAccount = try_auth_user(request, response)
+    auth: UserAccount = try_auth_user_with_token_or_api_key(request, response)
     # todo need validate is_public or not chat
     if not chat_id and not auth:
         raise HTTPException(status_code=401, detail="Unauthorized")
@@ -155,7 +157,12 @@ def get_chat_messages(
     return chat_messages
 
 
-@router.get("/history", status_code=200, response_model=List[ChatMessageOutput])
+@router.get(
+    "/history",
+    status_code=200,
+    response_model=List[ChatMessageOutput],
+    include_in_schema=False,
+)
 def get_history(agent_id: Optional[UUID] = None, team_id: Optional[UUID] = None):
     """
     Get chat messages
@@ -312,7 +319,9 @@ def get_chat(chat_id: UUID) -> ChatOutput:
 
 
 @router.delete("/{chat_id}", status_code=200)
-def delete_chat(chat_id: str, auth: UserAccount = Depends(authenticate)) -> dict:
+def delete_chat(
+    chat_id: str, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
+) -> dict:
     """
     Delete an chat by its ID. Performs a soft delete by updating the is_deleted flag.
 
