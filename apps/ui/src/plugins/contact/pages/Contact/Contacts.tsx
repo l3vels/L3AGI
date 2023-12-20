@@ -6,8 +6,6 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import MenuButton from 'share-ui/components/MenuButton/MenuButton'
-
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
 import TabList from 'share-ui/components/Tabs/TabList/TabList'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
@@ -32,15 +30,14 @@ import Groups, { StyledTableButtons } from '../Group/Groups'
 
 import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
 
-import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
-
 import { useAgents } from 'pages/Agents/useAgents'
-import AgentChatCard from 'components/ChatCards/AgentChatCard'
-import { useModal } from 'hooks'
+
 import { useContactForm } from './ContactForm/useContactForm'
 import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { t } from 'i18next'
 import { StyledButtonsWrapper } from 'styles/globalStyle.css'
+import { StyledMobileIcon } from 'pages/Navigation/MainNavigation'
+import ContactMenu from './contactComponents/ContactMenu'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -51,8 +48,6 @@ const Contacts = () => {
   const { agentsData } = useAgents()
 
   const voiceAgents = agentsData?.filter((agentData: any) => agentData.agent.agent_type === 'voice')
-
-  const { openModal } = useModal()
 
   const gridData =
     contacts?.map((contact: any) => ({
@@ -80,42 +75,30 @@ const Contacts = () => {
             <StyledPhoneCell>
               <StyledPhoneText>{cell.value}</StyledPhoneText>
               <StyledTableButtons>
-                <MenuButton component={StyledCallIcon} closeDialogOnContentClick={false} zIndex={1}>
-                  <StyledMenuList>
-                    {voiceAgents?.map((agentObj: any, index: number) => {
-                      const { agent } = agentObj
+                <ContactMenu
+                  ariaLabel={'Browser Call'}
+                  icon={StyledCallIcon}
+                  agentData={voiceAgents}
+                  handleCall={handleCall}
+                  contactId={cell?.row?.original?.id}
+                  callType={'browser'}
+                />
+                <ContactMenu
+                  ariaLabel={'Twilio Call'}
+                  icon={StyledMobileIcon}
+                  agentData={voiceAgents}
+                  handleCall={handleCall}
+                  contactId={cell?.row?.original?.id}
+                  callType={'outbound'}
+                />
 
-                      const handleView = () => {
-                        openModal({
-                          name: 'agent-view-modal',
-                          data: {
-                            agent: agentObj,
-                          },
-                        })
-                      }
-
-                      return (
-                        <AgentChatCard
-                          key={index}
-                          onClick={() => {
-                            handleCall({ agent_id: agent.id, contact_id: cell?.row?.original?.id })
-                          }}
-                          onViewClick={handleView}
-                          picked={false}
-                          agent={agent}
-                        />
-                      )
-                    })}
-                  </StyledMenuList>
-                </MenuButton>
-
-                <IconButton
+                {/* <IconButton
                   onClick={handleEndCall}
                   icon={() => <StyledCloseIcon size={25} />}
                   size={IconButton.sizes?.SMALL}
                   kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Hung up'
-                />
+                /> */}
               </StyledTableButtons>
             </StyledPhoneCell>
           )
@@ -256,23 +239,7 @@ export const StyledCallIcon = styled(Microphone)`
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledMenuList = styled.div`
-  /* width: 100px;
-  height: 100px; */
-  padding: 10px;
-  overflow: auto;
 
-  max-height: 300px;
-
-  background: ${({ theme }) => theme.body.backgroundColorSecondary};
-  border: ${({ theme }) => theme.body.secondaryBorder};
-  backdrop-filter: blur(100px);
-  border-radius: 10px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`
 const StyledPhoneText = styled.span`
   max-width: 60%;
   overflow: hidden;
