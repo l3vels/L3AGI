@@ -50,6 +50,8 @@ const Contacts = () => {
 
   const { agentsData } = useAgents()
 
+  const voiceAgents = agentsData?.filter((agentData: any) => agentData.agent.agent_type === 'voice')
+
   const { openModal } = useModal()
 
   const gridData =
@@ -80,7 +82,7 @@ const Contacts = () => {
               <StyledTableButtons>
                 <MenuButton component={StyledCallIcon} closeDialogOnContentClick={false} zIndex={1}>
                   <StyledMenuList>
-                    {agentsData?.map((agentObj: any, index: number) => {
+                    {voiceAgents?.map((agentObj: any, index: number) => {
                       const { agent } = agentObj
 
                       const handleView = () => {
