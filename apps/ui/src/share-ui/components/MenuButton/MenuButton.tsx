@@ -119,6 +119,8 @@ interface MenuButtonProps extends L3ComponentProps {
    * Specifies whether to render the component before or after the text
    */
   componentPosition?: (typeof MenuButtonComponentPosition)[keyof typeof MenuButtonComponentPosition]
+
+  customWidth?: number
 }
 
 const MenuButton: L3Component<MenuButtonProps> & {
@@ -165,6 +167,7 @@ const MenuButton: L3Component<MenuButtonProps> & {
       tooltipReferenceClassName,
       hideWhenReferenceHidden = false,
       dialogContainerSelector,
+      customWidth,
     },
     ref,
   ) => {
@@ -324,9 +327,11 @@ const MenuButton: L3Component<MenuButtonProps> & {
           hideWhenReferenceHidden={hideWhenReferenceHidden}
         >
           <StyledButton
+            className='menuButton'
             id={id}
             ref={mergedRef}
             type='button'
+            customWidth={customWidth}
             // className={cx('menu-button--wrapper', overrideClassName, bemClass(`size-${size}`), {
             //   [bemClass('open')]: isOpen,
             //   [openDialogComponentClassName]: isOpen && openDialogComponentClassName,
@@ -359,8 +364,8 @@ Object.assign(MenuButton, {
 
 export default MenuButton
 
-const StyledButton = styled.button`
-  width: 30px;
+const StyledButton = styled.button<{ customWidth?: number }>`
+  width: ${({ customWidth }) => (customWidth ? `${customWidth}px` : '30px')};
   height: 30px;
 
   display: flex;
