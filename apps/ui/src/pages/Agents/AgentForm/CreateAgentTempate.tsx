@@ -28,6 +28,13 @@ const CreateAgentTemplate = () => {
 
   const { data: agentsData } = useAgentTemplatesService()
 
+  const voiceAgentTemplates = agentsData?.filter(
+    (agentData: any) => agentData.agent.agent_type === 'voice',
+  )
+  const textAgentTemplates = agentsData?.filter(
+    (agentData: any) => agentData.agent.agent_type !== 'voice',
+  )
+
   const { openModal } = useModal()
 
   const navigate = useNavigate()
@@ -37,6 +44,12 @@ const CreateAgentTemplate = () => {
 
   const handleNavigate = () => {
     navigate(`/agents/create-agent?type=${agentType}`)
+  }
+
+  let displayedAgents = textAgentTemplates
+
+  if (agentType === 'voice') {
+    displayedAgents = voiceAgentTemplates
   }
 
   return (
@@ -63,7 +76,7 @@ const CreateAgentTemplate = () => {
           <StyledTemplateHeader>
             <CreateAgentButtonCard onClick={handleNavigate} />
 
-            {agentsData?.length > 0 && (
+            {displayedAgents?.length > 0 && (
               <TypographyPrimary
                 value={t('choose-template')}
                 type={Typography.types.LABEL}
@@ -72,7 +85,7 @@ const CreateAgentTemplate = () => {
             )}
           </StyledTemplateHeader>
           <StyledCardsWrapper>
-            {agentsData?.map((agentObj: any, index: number) => {
+            {displayedAgents?.map((agentObj: any, index: number) => {
               const { agent } = agentObj
 
               return (
