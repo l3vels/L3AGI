@@ -257,6 +257,14 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('base-system-message')}
+                    value={agent_text}
+                    fieldName={'agent_text'}
+                    triggerResize={activeTab}
+                  />
+
                   <CustomField
                     formik={formik}
                     formikField={'agent_instructions'}
@@ -273,14 +281,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     formik={formik}
                     formikField={'agent_constraints'}
                     placeholder={t('constraints')}
-                  />
-
-                  <TextareaFormik
-                    setFieldValue={setFieldValue}
-                    label={t('base-system-message')}
-                    value={agent_text}
-                    fieldName={'agent_text'}
-                    triggerResize={activeTab}
                   />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
