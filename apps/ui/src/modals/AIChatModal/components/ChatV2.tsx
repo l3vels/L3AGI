@@ -50,6 +50,7 @@ import AudioRecorder from 'components/AudioRecorder'
 import AudioPlayer from 'components/AudioPlayer'
 import Mobile from 'share-ui/components/Icon/Icons/components/Mobile'
 import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
+import { useModal } from 'hooks'
 
 const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
   const { t } = useTranslation()
@@ -73,6 +74,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
   // const { chatSuggestions } = useSuggestions()
 
   const { setToast } = useContext(ToastContext)
+  const { openModal } = useModal()
 
   const { upsertChatMessageInCache } = useUpdateChatCache()
 
@@ -362,7 +364,13 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
 
       {hasVoice ? (
         <StyledCallInputContainer>
-          <ButtonPrimary onClick={() => {}} size={Button.sizes?.MEDIUM} rightIcon={Microphone}>
+          <ButtonPrimary
+            onClick={() => {
+              openModal({ name: 'contact-list-modal' })
+            }}
+            size={Button.sizes?.MEDIUM}
+            rightIcon={Microphone}
+          >
             {t('call-browser')}
           </ButtonPrimary>
           <ButtonPrimary onClick={() => {}} size={Button.sizes?.MEDIUM} rightIcon={Mobile}>

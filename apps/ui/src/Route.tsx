@@ -94,6 +94,7 @@ import VoiceModal from 'modals/VoiceModal'
 import ImportContacts from 'plugins/contact/pages/Contact/ImportContacts'
 import CallLogsModal from 'modals/CallLogsModal'
 import VideoModal from 'modals/VideoModal'
+import ContactListModal from 'plugins/contact/pages/Modals/ContactListModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -381,6 +382,7 @@ const Route = () => {
       <RunLogsModal />
       <CallLogsModal />
       <VideoModal />
+      <ContactListModal />
 
       <CommandMenu
         open={cmdkOpen}

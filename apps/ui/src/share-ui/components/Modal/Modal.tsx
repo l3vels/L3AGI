@@ -78,6 +78,7 @@ interface ModalProps extends L3ComponentProps {
   isClean?: boolean
   isTransparent?: boolean
   zIndex?: number
+  noOverlay?: boolean
 }
 
 const Modal: FC<ModalProps> & {
@@ -104,6 +105,7 @@ const Modal: FC<ModalProps> & {
   isClean,
   isTransparent = false,
   zIndex = 10000,
+  noOverlay = false,
 }) => {
   const childrenArray: ReactElement[] = useMemo(
     () => (children ? (React.Children.toArray(children) as ReactElement[]) : []),
@@ -177,17 +179,21 @@ const Modal: FC<ModalProps> & {
         style={{ zIndex: zIndex }}
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <StyledOverlay onClick={closeDialogIfNeeded} data-testid='l3-modal-overlay' />
+
+        <StyledOverlay
+          noOverlay={noOverlay}
+          onClick={closeDialogIfNeeded}
+          data-testid='l3-modal-overlay'
+        />
+
         <StyledDialog
           backgroundColor={backgroundColor}
           fullscreen={fullscreen}
           isTransparent={isTransparent}
         >
-          <div className={className}>
-            {!isClean && header}
-            {content}
-            {!isClean && footer}
-          </div>
+          {!isClean && header}
+          <StyledContainer className={className}>{content}</StyledContainer>
+          {!isClean && footer}
         </StyledDialog>
       </StyledModalContainer>
     </div>,
@@ -214,7 +220,7 @@ const StyledModalContainer = styled.div`
   left: 0px;
   top: 0px;
 `
-const StyledOverlay = styled.div`
+const StyledOverlay = styled.div<{ noOverlay: boolean }>`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
@@ -237,7 +243,19 @@ const StyledOverlay = styled.div`
       opacity: 0;
     }
   }
+
+  ${props =>
+    props.noOverlay &&
+    css`
+      /* background: transparent; */
+      backdrop-filter: unset;
+    `}
 `
+
+const StyledContainer = styled.div`
+  padding: 16px;
+`
+
 const StyledDialog = styled.div<{
   backgroundColor: string
   fullscreen: boolean
@@ -248,7 +266,7 @@ const StyledDialog = styled.div<{
   position: relative;
   flex-direction: column;
 
-  padding: 16px;
+  padding: 2px;
   overflow: auto;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(50px);
