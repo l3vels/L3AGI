@@ -1,6 +1,6 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { CallContext } from '../contexts'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { ButtonPrimary } from 'components/Button/Button'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -21,6 +21,48 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
     setShowCall,
   }
 
+  const [isSpeaking, setIsSpeaking] = useState(false)
+
+  const initializeMicrophone = async () => {
+    let audioContext: any
+    let analyser: any
+    let microphoneStream: any
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      audioContext = new window.AudioContext()
+      analyser = audioContext.createAnalyser()
+      analyser.fftSize = 256
+
+      const microphone = audioContext.createMediaStreamSource(stream)
+      microphone.connect(analyser)
+
+      microphoneStream = stream
+
+      const dataArray = new Uint8Array(analyser.frequencyBinCount)
+
+      const updateMicrophoneStatus = () => {
+        analyser.getByteFrequencyData(dataArray)
+
+        const averageVolume = dataArray.reduce((acc, value) => acc + value, 0) / dataArray.length
+
+        setIsSpeaking(averageVolume > 10) // Adjust this threshold based on your requirements
+
+        requestAnimationFrame(updateMicrophoneStatus)
+      }
+
+      updateMicrophoneStatus()
+    } catch (error) {
+      console.error('Error accessing microphone:', error)
+    }
+  }
+
+  useEffect(() => {
+    if (!shoWCall) return
+
+    initializeMicrophone()
+  }, [shoWCall])
+
   return (
     <CallContext.Provider value={contextValue}>
       {children}
@@ -31,7 +73,9 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
           </StyledWindowHeader>
           <StyledWindowBody>
             <StyledAvatarWrapper>
-              <AvatarGenerator name={'Test Person'} size={50} />
+              <StyledSpeakIndicator isSpeaking={isSpeaking}>
+                <AvatarGenerator name={'Test Person'} size={50} />
+              </StyledSpeakIndicator>
               <TypographyQuaternary value={'Test Person'} size={'small'} />
             </StyledAvatarWrapper>
 
@@ -127,4 +171,16 @@ const StyledAvatarWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 5px;
+`
+const StyledSpeakIndicator = styled.div<{ isSpeaking: boolean }>`
+  width: fit-content;
+  height: fit-content;
+
+  border-radius: 100px;
+
+  ${props =>
+    props.isSpeaking &&
+    css`
+      outline: 4px solid #74faa1;
+    `};
 `
