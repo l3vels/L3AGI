@@ -2,6 +2,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import Table from 'components/Table'
 import { t } from 'i18next'
 import { useContacts } from 'plugins/contact/pages/Contact/useContacts'
+import { StyledTableButtons } from 'plugins/contact/pages/Group/Groups'
 import { useMemo, useState } from 'react'
 import TextField from 'share-ui/components/TextField/TextField'
 
@@ -48,14 +49,16 @@ const ContactListTable = () => {
 
         Cell: ({ cell }: any) => {
           return (
-            <ButtonPrimary
-              onClick={() =>
-                handleCall({ agent_id: agentId, contact_id: cell.value, type: 'browser' })
-              }
-              size={'small'}
-            >
-              {t('call')}
-            </ButtonPrimary>
+            <StyledTableButtons>
+              <ButtonPrimary
+                onClick={() =>
+                  handleCall({ agent_id: agentId, contact_id: cell.value, type: 'browser' })
+                }
+                size={'small'}
+              >
+                {t('call')}
+              </ButtonPrimary>
+            </StyledTableButtons>
           )
         },
       },

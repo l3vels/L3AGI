@@ -692,7 +692,7 @@ const StyledChatInputRightSide = styled.div`
 const StyledCallInputContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   gap: 10px;
 
   height: 70px;

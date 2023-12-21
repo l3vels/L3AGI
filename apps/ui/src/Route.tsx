@@ -95,6 +95,7 @@ import ImportContacts from 'plugins/contact/pages/Contact/ImportContacts'
 import CallLogsModal from 'modals/CallLogsModal'
 import VideoModal from 'modals/VideoModal'
 import ContactListModal from 'plugins/contact/pages/Modals/ContactListModal'
+import CallProvider from 'plugins/contact/providers/CallProvider'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -130,268 +131,286 @@ const Route = () => {
 
   return (
     <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
-      <Routes>
-        <>
-          <Router element={<RootLayout />}>
-            <Router element={<HomeRouteLayout />}>
-              <Router path='/' element={<Home />} key={document.location.href} />
-            </Router>
+      <CallProvider>
+        <Routes>
+          <>
+            <Router element={<RootLayout />}>
+              <Router element={<HomeRouteLayout />}>
+                <Router path='/' element={<Home />} key={document.location.href} />
+              </Router>
 
-            <Router element={<MainRouteLayout />}>
-              <Router path='/discover' element={<Discover />} key={document.location.href} />
+              <Router element={<MainRouteLayout />}>
+                <Router path='/discover' element={<Discover />} key={document.location.href} />
 
-              {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
-              {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
-              {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
+                {/* <Router path='agents' element={<Agents />} key={document.location.href} /> */}
+                {/* <Router path='datasources' element={<Datasource />} key={document.location.href} /> */}
+                {/* <Router path='tools' element={<Toolkit />} key={document.location.href} /> */}
 
-              <Router path='teams' element={<Teams />} key={document.location.href} />
+                <Router path='teams' element={<Teams />} key={document.location.href} />
 
-              {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
+                {/* <Router path='developers' element={<Navigate to={'api-keys'} />} /> */}
 
-              {/* // disabled routes  */}
-              <Router path='saved' element={<Saved />} key={document.location.href} />
-              <Router path='create' element={<Create />} key={document.location.href} />
-              <Router
-                path='change-password'
-                element={<ChangePassword />}
-                key={document.location.href}
-              />
-              <Router path='account' element={<Account />} key={document.location.href} />
-              <Router path='api-keys' element={<ApiKeys />} key={document.location.href} />
-              <Router path='settings' element={<Settings />} key={document.location.href} />
-              <Router path='about' element={<About />} key={document.location.href} />
-              <Router path='logs' element={<Log />} key={document.location.href} />
-              <Router path='log/:id' element={<Log />} key={document.location.href} />
-              <Router path='successful/:id' element={<Log />} key={document.location.href} />
-              <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
-              {/* <Router path='webhook' element={<Webhook />} key={document.location.href} /> */}
-            </Router>
+                {/* // disabled routes  */}
+                <Router path='saved' element={<Saved />} key={document.location.href} />
+                <Router path='create' element={<Create />} key={document.location.href} />
+                <Router
+                  path='change-password'
+                  element={<ChangePassword />}
+                  key={document.location.href}
+                />
+                <Router path='account' element={<Account />} key={document.location.href} />
+                <Router path='api-keys' element={<ApiKeys />} key={document.location.href} />
+                <Router path='settings' element={<Settings />} key={document.location.href} />
+                <Router path='about' element={<About />} key={document.location.href} />
+                <Router path='logs' element={<Log />} key={document.location.href} />
+                <Router path='log/:id' element={<Log />} key={document.location.href} />
+                <Router path='successful/:id' element={<Log />} key={document.location.href} />
+                <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
+                {/* <Router path='webhook' element={<Webhook />} key={document.location.href} /> */}
+              </Router>
 
-            <Router path={'chat'} element={<ChatRouteLayout />} key={document.location.href} />
-            {/* <Router index element={<AIChat />} key={document.location.href} />
+              <Router path={'chat'} element={<ChatRouteLayout />} key={document.location.href} />
+              {/* <Router index element={<AIChat />} key={document.location.href} />
             </Router> */}
 
-            <Router
-              path={'/chat/history'}
-              element={<ChatHistoryRouteLayout />}
-              key={document.location.href}
-            >
-              <Router index element={<ChatHistory />} key={document.location.href} />
-            </Router>
+              <Router
+                path={'/chat/history'}
+                element={<ChatHistoryRouteLayout />}
+                key={document.location.href}
+              >
+                <Router index element={<ChatHistory />} key={document.location.href} />
+              </Router>
 
-            <Router
-              path={'/chat/session'}
-              element={<ChatRouteLayout />}
-              key={document.location.href}
-            />
-            {/* <Router index element={<ClientChat />} key={document.location.href} />
+              <Router
+                path={'/chat/session'}
+                element={<ChatRouteLayout />}
+                key={document.location.href}
+              />
+              {/* <Router index element={<ClientChat />} key={document.location.href} />
             </Router> */}
 
-            <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
-              {/* <Router index element={<div />} key={document.location.href} /> */}
-              <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
-              <Router
-                path={'create-agent-template'}
-                element={<CreateAgentTemplate />}
-                key={document.location.href}
-              />
-              <Router
-                path={'create-agent'}
-                element={<CreateAgentForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={':agentId/edit-agent'}
-                element={<EditAgentForm />}
-                key={document.location.href}
-              />
-            </Router>
+              <Router path={'agents'} element={<ChatRouteLayout />} key={document.location.href}>
+                {/* <Router index element={<div />} key={document.location.href} /> */}
+                <Router path={':agentId'} element={<AgentView />} key={document.location.href} />
+                <Router
+                  path={'create-agent-template'}
+                  element={<CreateAgentTemplate />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'create-agent'}
+                  element={<CreateAgentForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':agentId/edit-agent'}
+                  element={<EditAgentForm />}
+                  key={document.location.href}
+                />
+              </Router>
 
-            <Router path={'datasources'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Datasource />} key={document.location.href} />
-              <Router path={':datasourceId'} element={<AgentView />} key={document.location.href} />
               <Router
-                path={'create-datasource'}
-                element={<CreateDatasourceForm />}
+                path={'datasources'}
+                element={<MainRouteLayout />}
                 key={document.location.href}
-              />
+              >
+                <Router index element={<Datasource />} key={document.location.href} />
+                <Router
+                  path={':datasourceId'}
+                  element={<AgentView />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'create-datasource'}
+                  element={<CreateDatasourceForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':datasourceId/edit-datasource'}
+                  element={<EditDatasourceForm />}
+                  key={document.location.href}
+                />
+              </Router>
               <Router
-                path={':datasourceId/edit-datasource'}
-                element={<EditDatasourceForm />}
+                path={'team-of-agents'}
+                element={<ChatRouteLayout />}
                 key={document.location.href}
-              />
-            </Router>
-            <Router
-              path={'team-of-agents'}
-              element={<ChatRouteLayout />}
-              key={document.location.href}
-            >
-              <Router index element={<TeamOfAgents />} key={document.location.href} />
-              <Router path={':teamId'} element={<TeamOfAgentView />} key={document.location.href} />
-              <Router
-                path={'create-team'}
-                element={<CreateTeamOfAgentsForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={':teamId/edit-team'}
-                element={<EditTeamOfAgentsForm />}
-                key={document.location.href}
-              />
-            </Router>
+              >
+                <Router index element={<TeamOfAgents />} key={document.location.href} />
+                <Router
+                  path={':teamId'}
+                  element={<TeamOfAgentView />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'create-team'}
+                  element={<CreateTeamOfAgentsForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':teamId/edit-team'}
+                  element={<EditTeamOfAgentsForm />}
+                  key={document.location.href}
+                />
+              </Router>
 
-            <Router
-              path={'integrations'}
-              element={<MainRouteLayout />}
-              key={document.location.href}
-            >
-              <Router index element={<Integrations />} key={document.location.href} />
-              <Router path={'toolkit/:slug'} element={<ToolView />} key={document.location.href} />
-              <Router path={'voice/:slug'} element={<VoiceView />} key={document.location.href} />
-            </Router>
+              <Router
+                path={'integrations'}
+                element={<MainRouteLayout />}
+                key={document.location.href}
+              >
+                <Router index element={<Integrations />} key={document.location.href} />
+                <Router
+                  path={'toolkit/:slug'}
+                  element={<ToolView />}
+                  key={document.location.href}
+                />
+                <Router path={'voice/:slug'} element={<VoiceView />} key={document.location.href} />
+              </Router>
 
-            {/* <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
+              {/* <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
               <Router path={':slug'} element={<ToolView />} key={document.location.href} />
             </Router> */}
 
-            <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Models />} key={document.location.href} />
-              <Router
-                path={'create-fine-tuning'}
-                element={<CreateFineTuningForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={':fineTuningId/edit-fine-tuning'}
-                element={<EditFineTuningForm />}
-                key={document.location.href}
-              />
-            </Router>
-
-            <Router
-              path={'sessions'}
-              element={<MainRouteLayout expand />}
-              key={document.location.href}
-            >
-              <Router index element={<Sessions />} key={document.location.href} />
+              <Router path={'models'} element={<MainRouteLayout />} key={document.location.href}>
+                <Router index element={<Models />} key={document.location.href} />
+                <Router
+                  path={'create-fine-tuning'}
+                  element={<CreateFineTuningForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':fineTuningId/edit-fine-tuning'}
+                  element={<EditFineTuningForm />}
+                  key={document.location.href}
+                />
+              </Router>
 
               <Router
-                path={':agentId/edit-agent'}
-                element={<EditAgentForm />}
+                path={'sessions'}
+                element={<MainRouteLayout expand />}
                 key={document.location.href}
-              />
-            </Router>
+              >
+                <Router index element={<Sessions />} key={document.location.href} />
 
-            <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Schedule />} key={document.location.href} />
-              <Router
-                path={'create-schedule'}
-                element={<CreateScheduleForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={':scheduleId/edit-schedule'}
-                element={<EditScheduleForm />}
-                key={document.location.href}
-              />
-            </Router>
+                <Router
+                  path={':agentId/edit-agent'}
+                  element={<EditAgentForm />}
+                  key={document.location.href}
+                />
+              </Router>
 
-            <Router path={'contacts'} element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<Contact />} key={document.location.href} />
-              <Router
-                path={'create-contact'}
-                element={<CreateContactForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={'import-contacts'}
-                element={<ImportContacts />}
-                key={document.location.href}
-              />
-              <Router
-                path={':contactId/edit-contact'}
-                element={<EditContactForm />}
-                key={document.location.href}
-              />
+              <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
+                <Router index element={<Schedule />} key={document.location.href} />
+                <Router
+                  path={'create-schedule'}
+                  element={<CreateScheduleForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':scheduleId/edit-schedule'}
+                  element={<EditScheduleForm />}
+                  key={document.location.href}
+                />
+              </Router>
 
-              <Router
-                path={'create-group'}
-                element={<CreateGroupForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={':groupId/edit-group'}
-                element={<EditGroupForm />}
-                key={document.location.href}
-              />
-            </Router>
+              <Router path={'contacts'} element={<MainRouteLayout />} key={document.location.href}>
+                <Router index element={<Contact />} key={document.location.href} />
+                <Router
+                  path={'create-contact'}
+                  element={<CreateContactForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'import-contacts'}
+                  element={<ImportContacts />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':contactId/edit-contact'}
+                  element={<EditContactForm />}
+                  key={document.location.href}
+                />
 
-            <Router path='api-key' element={<MainRouteLayout />} key={document.location.href}>
-              <Router index element={<ApiKeys />} key={document.location.href} />
-              <Router
-                path={'create-api-key'}
-                element={<CreateApiKeyForm />}
-                key={document.location.href}
-              />
-              <Router
-                path={':apiKeyId/edit-api-key'}
-                element={<EditApiKeyForm />}
-                key={document.location.href}
-              />
-            </Router>
-            {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
+                <Router
+                  path={'create-group'}
+                  element={<CreateGroupForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':groupId/edit-group'}
+                  element={<EditGroupForm />}
+                  key={document.location.href}
+                />
+              </Router>
+
+              <Router path='api-key' element={<MainRouteLayout />} key={document.location.href}>
+                <Router index element={<ApiKeys />} key={document.location.href} />
+                <Router
+                  path={'create-api-key'}
+                  element={<CreateApiKeyForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':apiKeyId/edit-api-key'}
+                  element={<EditApiKeyForm />}
+                  key={document.location.href}
+                />
+              </Router>
+              {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Group />} key={document.location.href} />
             </Router> */}
 
-            <Router path={'developers'} element={<DevelopersRouteLayout />}>
-              <Router index element={<ApiKeys />} key={document.location.href} />
-              <Router path={'logs'} element={<Log />} key={document.location.href} />
-              <Router path={'log/:id'} element={<Log />} key={document.location.href} />
-              <Router path={'successful/:id'} element={<Log />} key={document.location.href} />
-              <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
-              {/* <Router path={'docs'} element={<Doc />} /> */}
+              <Router path={'developers'} element={<DevelopersRouteLayout />}>
+                <Router index element={<ApiKeys />} key={document.location.href} />
+                <Router path={'logs'} element={<Log />} key={document.location.href} />
+                <Router path={'log/:id'} element={<Log />} key={document.location.href} />
+                <Router path={'successful/:id'} element={<Log />} key={document.location.href} />
+                <Router path={'failed/:id'} element={<Log />} key={document.location.href} />
+                {/* <Router path={'docs'} element={<Doc />} /> */}
+              </Router>
+
+              <Router path='*' element={<MainComponent value={'page not found'} />} />
             </Router>
-
-            <Router path='*' element={<MainComponent value={'page not found'} />} />
+          </>
+          <Router element={<PublicRoute />}>
+            {/* <Router path='/login' element={<Login />} /> */}
+            <Router path='/github-login' element={<GithubLogin />} />
+            {/* <Router path='/register' element={<Register />} /> */}
+            <Router path='/forgot-password' element={<ForgotPassword />} />
+            <Router path='/login/:id' element={<Login />} />
+            <Router path='/reset-password/:id' element={<ResetPassword />} />
+            <Router path='/authentication/:id' element={<TwoFAuthentication />} />
+            <Router path='/login/update-password' element={<UpdatePassword />} />
+            <Router path='/cheat-code' element={<CheatCode />} />
+            {/* <Router path='/chat/history' element={<AIChat isHistory />} /> */}
           </Router>
-        </>
-        <Router element={<PublicRoute />}>
-          {/* <Router path='/login' element={<Login />} /> */}
-          <Router path='/github-login' element={<GithubLogin />} />
-          {/* <Router path='/register' element={<Register />} /> */}
-          <Router path='/forgot-password' element={<ForgotPassword />} />
-          <Router path='/login/:id' element={<Login />} />
-          <Router path='/reset-password/:id' element={<ResetPassword />} />
-          <Router path='/authentication/:id' element={<TwoFAuthentication />} />
-          <Router path='/login/update-password' element={<UpdatePassword />} />
-          <Router path='/cheat-code' element={<CheatCode />} />
-          {/* <Router path='/chat/history' element={<AIChat isHistory />} /> */}
-        </Router>
-      </Routes>
+        </Routes>
 
-      <DeleteConfirmationModal />
-      <LoginModal />
-      <AgentViewModal />
-      <TeamOfAgentViewModal />
-      <SettingsModal />
-      <ToolkitModal />
-      <VoiceModal />
-      <ChatLinkModal />
-      <ScheduleRunModal />
-      <RunLogsModal />
-      <CallLogsModal />
-      <VideoModal />
-      <ContactListModal />
+        <DeleteConfirmationModal />
+        <LoginModal />
+        <AgentViewModal />
+        <TeamOfAgentViewModal />
+        <SettingsModal />
+        <ToolkitModal />
+        <VoiceModal />
+        <ChatLinkModal />
+        <ScheduleRunModal />
+        <RunLogsModal />
+        <CallLogsModal />
+        <VideoModal />
+        <ContactListModal />
 
-      <CommandMenu
-        open={cmdkOpen}
-        setCmdkOpen={setCmdkOpen}
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
+        <CommandMenu
+          open={cmdkOpen}
+          setCmdkOpen={setCmdkOpen}
+          theme={theme}
+          toggleTheme={toggleTheme}
+        />
 
-      {/* <NotificationsModal /> */}
+        {/* <NotificationsModal /> */}
+      </CallProvider>
     </ThemeProvider>
   )
 }
