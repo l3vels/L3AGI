@@ -84,7 +84,7 @@ const Contacts = () => {
                   callType={'browser'}
                 />
                 <ContactMenu
-                  ariaLabel={'Twilio Call'}
+                  ariaLabel={'Phone Call'}
                   icon={StyledMobileIcon}
                   agentData={voiceAgents}
                   handleCall={handleCall}
