@@ -257,6 +257,14 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('base-system-message')}
+                    value={agent_text}
+                    fieldName={'agent_text'}
+                    triggerResize={activeTab}
+                  />
+
                   <CustomField
                     formik={formik}
                     formikField={'agent_instructions'}
@@ -274,24 +282,18 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     formikField={'agent_constraints'}
                     placeholder={t('constraints')}
                   />
-
-                  <TextareaFormik
-                    setFieldValue={setFieldValue}
-                    label={t('base-system-message')}
-                    value={agent_text}
-                    fieldName={'agent_text'}
-                    triggerResize={activeTab}
-                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <CustomField
-                    formik={formik}
-                    formikField={'agent_suggestions'}
-                    placeholder={t('suggestions')}
-                  />
+                  {agentType !== 'voice' && (
+                    <CustomField
+                      formik={formik}
+                      formikField={'agent_suggestions'}
+                      placeholder={t('suggestions')}
+                    />
+                  )}
 
                   <TextareaFormik
                     setFieldValue={setFieldValue}
@@ -340,7 +342,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     optionSize={'small'}
                   />
 
-                  <StyledFormInputWrapper>
+                  {/* <StyledFormInputWrapper>
                     <TypographyPrimary
                       value={t('response-mode')}
                       type={Typography.types.LABEL}
@@ -370,9 +372,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       onSelect={() => setFieldValue('agent_voice_response', ['Text', 'Voice'])}
                       checked={agent_voice_response?.length === 2}
                     />
-                  </StyledFormInputWrapper>
+                  </StyledFormInputWrapper> */}
 
-                  <StyledFormInputWrapper>
+                  {/* <StyledFormInputWrapper>
                     <TypographyPrimary
                       value={t('input-mode')}
                       type={Typography.types.LABEL}
@@ -420,7 +422,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                         }}
                       />
                     </StyledCheckboxWrapper>
-                  </StyledFormInputWrapper>
+                  </StyledFormInputWrapper> */}
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 

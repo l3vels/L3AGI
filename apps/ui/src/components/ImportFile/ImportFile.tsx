@@ -80,7 +80,7 @@ const ImportFile = ({
     <>
       <StyledFormSection>
         <StyledButtonContainer>
-          <StyledMenuButton
+          <MenuButton
             component={() => (
               <TypographySecondary
                 value={t('download-template')}
@@ -90,6 +90,8 @@ const ImportFile = ({
             )}
             closeDialogOnContentClick={false}
             zIndex={2}
+            customWidth={140}
+            ariaLabel='Download'
           >
             <StyledMenuButtonsWrapper>
               <ButtonTertiary onClick={handleDownloadTemplate} size={Button.sizes?.SMALL}>
@@ -99,7 +101,7 @@ const ImportFile = ({
                 {t('download-csv')}
               </ButtonTertiary>
             </StyledMenuButtonsWrapper>
-          </StyledMenuButton>
+          </MenuButton>
 
           {parsedData?.length === 0 && (
             <UploadButton
@@ -142,7 +144,4 @@ const StyledButtonContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-`
-const StyledMenuButton = styled(MenuButton)`
-  width: 140px;
 `

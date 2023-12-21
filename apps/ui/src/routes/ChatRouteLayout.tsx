@@ -260,7 +260,7 @@ const ChatRouteLayout = () => {
               </>
             )}
 
-            {sessionModule?.list && chatsData?.length > 0 && (
+            {/* {sessionModule?.list && chatsData?.length > 0 && (
               <>
                 <ListHeader title={t('session')} />
 
@@ -307,7 +307,7 @@ const ChatRouteLayout = () => {
                   )
                 })}
               </>
-            )}
+            )} */}
           </StyledLeftColumn>
         )}
 

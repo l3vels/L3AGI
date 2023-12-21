@@ -315,7 +315,7 @@ const StyledMyWeekIcon = styled(MyWeek)`
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledMobileIcon = styled(Mobile)`
+export const StyledMobileIcon = styled(Mobile)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
