@@ -40,7 +40,7 @@ import { ChatStatus, TeamOfAgentsType } from 'types'
 import useStopChatService from 'services/chat/useStopChatService'
 import { useConfigsService } from 'services/config/useConfigsService'
 import getSessionId from '../utils/getSessionId'
-import { ButtonSecondary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonSecondary } from 'components/Button/Button'
 
 import { useClientChatMessagesService } from 'services/chat/useChatMessagesService'
 import { useCreateClientChatMessageService } from 'services/chat/useCreateClientChatMessage'
@@ -48,6 +48,8 @@ import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { textSlicer } from 'utils/textSlicer'
 import AudioRecorder from 'components/AudioRecorder'
 import AudioPlayer from 'components/AudioPlayer'
+import Mobile from 'share-ui/components/Icon/Icons/components/Mobile'
+import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
 
 const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
   const { t } = useTranslation()
@@ -358,129 +360,142 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
         />
       </StyledMessages>
 
-      <StyledChatFooter>
-        <StyledButtonGroup>
-          {!canStopGenerating && (
-            <StyledSuggestionsContainer>
-              {chatSuggestions.map((chatSuggestion: string, index: number) => {
-                const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
+      {hasVoice ? (
+        <StyledCallInputContainer>
+          <ButtonPrimary onClick={() => {}} size={Button.sizes?.MEDIUM} rightIcon={Microphone}>
+            {t('call-browser')}
+          </ButtonPrimary>
+          <ButtonPrimary onClick={() => {}} size={Button.sizes?.MEDIUM} rightIcon={Mobile}>
+            {t('call-phone')}
+          </ButtonPrimary>
+        </StyledCallInputContainer>
+      ) : (
+        <StyledChatFooter>
+          <StyledButtonGroup>
+            {!canStopGenerating && (
+              <StyledSuggestionsContainer>
+                {chatSuggestions.map((chatSuggestion: string, index: number) => {
+                  const { shortText: shortSuggestion } = textSlicer(chatSuggestion, 110)
 
-                return (
-                  <StyledOption
-                    key={index}
-                    onClick={() => {
-                      handlePickedSuggestion(chatSuggestion)
-                    }}
-                  >
-                    {shortSuggestion}
-                  </StyledOption>
-                )
-              })}
-            </StyledSuggestionsContainer>
-          )}
-
-          {canStopGenerating && (
-            <StyledStopGeneratingButton>
-              <ButtonSecondary
-                onClick={handleStopGenerating}
-                size={Button.sizes?.SMALL}
-                disabled={stopChatLoading}
-              >
-                {t('stop-generating')}
-              </ButtonSecondary>
-            </StyledStopGeneratingButton>
-          )}
-        </StyledButtonGroup>
-
-        <StyledForm>
-          {reply.isReply && <ReplyBox onClose={() => setReply(defaultReplyState)} reply={reply} />}
-          {uploadedFileObject && (
-            <StyledFileWrapper>
-              <UploadedFile
-                onClick={() => setUploadedFileObject(null)}
-                name={uploadedFileObject.fileName}
-              />
-            </StyledFileWrapper>
-          )}
-
-          <StyledTextareaWrapper>
-            {/* {!isProduction && (
-                <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
-              )} */}
-
-            {hasVoice && !teamId && (
-              <AudioRecorder
-                setVoicePreview={setVoicePreview}
-                setStartedRecording={setStartedRecording}
-              />
-            )}
-
-            {voicePreview && (
-              <AudioPlayer
-                audioUrl={voicePreview || ''}
-                onCloseClick={() => setVoicePreview(null)}
-              />
-            )}
-            {!startedRecording && !voicePreview && (
-              <>
-                {typingEffectText ? (
-                  <StyledInputWrapper secondary>
-                    <Typewriter
-                      size='small'
-                      message={formValue}
-                      callFunction={() => {
-                        setTypingEffectText(false)
-                        setTimeout(() => {
-                          inputRef.current?.focus()
-                          inputRef.current?.setSelectionRange(formValue.length, formValue.length)
-                        }, 1)
+                  return (
+                    <StyledOption
+                      key={index}
+                      onClick={() => {
+                        handlePickedSuggestion(chatSuggestion)
                       }}
-                    />
-                  </StyledInputWrapper>
-                ) : (
-                  <StyledInputWrapper>
-                    <Mentions
-                      inputRef={inputRef}
-                      onChange={(e: any) => {
-                        setFormValue(e.target.value)
-                      }}
-                      value={formValue}
-                      onKeyDown={handleKeyDown}
-                      setValue={setFormValue}
-                      agentId={agentId}
-                      teamId={teamId}
-                    />
-                  </StyledInputWrapper>
-                )}
-              </>
+                    >
+                      {shortSuggestion}
+                    </StyledOption>
+                  )
+                })}
+              </StyledSuggestionsContainer>
             )}
 
-            <StyledChatInputRightSide>
-              {voiceLoading ? (
-                <StyledLoaderWrapper>
-                  <Loader size={20} />
-                </StyledLoaderWrapper>
-              ) : (
-                <StyledButton
-                  onClick={() => {
-                    if (formValue || uploadedFileObject || voicePreview) {
-                      createMessage()
-                    }
-                  }}
-                  disabled={(!formValue && !voicePreview) || thinking}
+            {canStopGenerating && (
+              <StyledStopGeneratingButton>
+                <ButtonSecondary
+                  onClick={handleStopGenerating}
+                  size={Button.sizes?.SMALL}
+                  disabled={stopChatLoading}
                 >
-                  <StyledSenIcon />
-                </StyledButton>
+                  {t('stop-generating')}
+                </ButtonSecondary>
+              </StyledStopGeneratingButton>
+            )}
+          </StyledButtonGroup>
+
+          <StyledForm>
+            {reply.isReply && (
+              <ReplyBox onClose={() => setReply(defaultReplyState)} reply={reply} />
+            )}
+            {uploadedFileObject && (
+              <StyledFileWrapper>
+                <UploadedFile
+                  onClick={() => setUploadedFileObject(null)}
+                  name={uploadedFileObject.fileName}
+                />
+              </StyledFileWrapper>
+            )}
+
+            <StyledTextareaWrapper>
+              {/* {!isProduction && (
+          <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
+        )} */}
+
+              {hasVoice && !teamId && (
+                <AudioRecorder
+                  setVoicePreview={setVoicePreview}
+                  setStartedRecording={setStartedRecording}
+                />
               )}
 
-              {user && <CommandIcon />}
-            </StyledChatInputRightSide>
-          </StyledTextareaWrapper>
-        </StyledForm>
-        <StyledChatBottom>
-          <TypingUsers usersData={filteredTypingUsers} />
-        </StyledChatBottom>
-      </StyledChatFooter>
+              {voicePreview && (
+                <AudioPlayer
+                  audioUrl={voicePreview || ''}
+                  onCloseClick={() => setVoicePreview(null)}
+                />
+              )}
+              {!startedRecording && !voicePreview && (
+                <>
+                  {typingEffectText ? (
+                    <StyledInputWrapper secondary>
+                      <Typewriter
+                        size='small'
+                        message={formValue}
+                        callFunction={() => {
+                          setTypingEffectText(false)
+                          setTimeout(() => {
+                            inputRef.current?.focus()
+                            inputRef.current?.setSelectionRange(formValue.length, formValue.length)
+                          }, 1)
+                        }}
+                      />
+                    </StyledInputWrapper>
+                  ) : (
+                    <StyledInputWrapper>
+                      <Mentions
+                        inputRef={inputRef}
+                        onChange={(e: any) => {
+                          setFormValue(e.target.value)
+                        }}
+                        value={formValue}
+                        onKeyDown={handleKeyDown}
+                        setValue={setFormValue}
+                        agentId={agentId}
+                        teamId={teamId}
+                      />
+                    </StyledInputWrapper>
+                  )}
+                </>
+              )}
+
+              <StyledChatInputRightSide>
+                {voiceLoading ? (
+                  <StyledLoaderWrapper>
+                    <Loader size={20} />
+                  </StyledLoaderWrapper>
+                ) : (
+                  <StyledButton
+                    onClick={() => {
+                      if (formValue || uploadedFileObject || voicePreview) {
+                        createMessage()
+                      }
+                    }}
+                    disabled={(!formValue && !voicePreview) || thinking}
+                  >
+                    <StyledSenIcon />
+                  </StyledButton>
+                )}
+
+                {user && <CommandIcon />}
+              </StyledChatInputRightSide>
+            </StyledTextareaWrapper>
+          </StyledForm>
+          <StyledChatBottom>
+            <TypingUsers usersData={filteredTypingUsers} />
+          </StyledChatBottom>
+        </StyledChatFooter>
+      )}
     </StyledWrapper>
   )
 }
@@ -665,4 +680,12 @@ const StyledChatInputRightSide = styled.div`
   justify-content: flex-end;
 
   min-width: 80px;
+`
+const StyledCallInputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  height: 70px;
 `
