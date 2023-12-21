@@ -187,7 +187,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
           <>
             {agentTranscriber && <TagsRow title={t('transcriber')} items={[agentTranscriber]} />}
             {agentSynthesizer && <TagsRow title={t('synthesizer')} items={[agentSynthesizer]} />}
-            {voice_id && <TagsRow title={t('voice_id')} items={[voice_id]} />}
+            {voice_id && <TagsRow title={t('voice-id')} items={[voice_id]} />}
           </>
         )}
       </StyledWrapper>
