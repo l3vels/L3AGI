@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { CallContext } from '../contexts'
 import styled, { css } from 'styled-components'
 import { ButtonPrimary } from 'components/Button/Button'
@@ -28,11 +28,12 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
   const [isSpeaking, setIsSpeaking] = useState(false)
 
+  const microphoneStreamRef = useRef<any>(null)
+
   const initializeMicrophone = async () => {
     let audioContext: any
     let analyser: any
-    let microphoneStream: any
-
+    // let microphoneStream: any
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       audioContext = new window.AudioContext()
@@ -42,7 +43,9 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
       const microphone = audioContext.createMediaStreamSource(stream)
       microphone.connect(analyser)
 
-      microphoneStream = stream
+      stream.getAudioTracks()[0].enabled = !isMuted
+
+      microphoneStreamRef.current = stream
 
       const dataArray = new Uint8Array(analyser.frequencyBinCount)
 
@@ -51,7 +54,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
         const averageVolume = dataArray.reduce((acc, value) => acc + value, 0) / dataArray.length
 
-        setIsSpeaking(averageVolume > 45) // Adjust this threshold based on your requirements
+        setIsSpeaking(averageVolume > 40) // Adjust this threshold based on your requirements
 
         requestAnimationFrame(updateMicrophoneStatus)
       }
@@ -71,6 +74,22 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
   }, [callIds])
 
   const callTitle = 'Connecting...'
+
+  //todo fix mute
+  const muteMicrophone = () => {
+    if (callIds) {
+      const stream = microphoneStreamRef.current
+      if (stream) {
+        const audioTracks = stream.getAudioTracks()
+        // console.log('audioTracks', audioTracks)
+        if (audioTracks.length > 0) {
+          // Toggle the enabled property to mute/unmute the microphone
+          audioTracks[0].enabled = isMuted
+          setIsMuted(!isMuted)
+        }
+      }
+    }
+  }
 
   return (
     <CallContext.Provider value={contextValue}>
@@ -100,7 +119,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
           <StyledWindowFooter>
             <IconButton
-              onClick={() => setIsMuted(!isMuted)}
+              onClick={muteMicrophone}
               size={'small'}
               ariaLabel={isMuted ? 'Unmute' : 'Mute'}
               icon={() => {
