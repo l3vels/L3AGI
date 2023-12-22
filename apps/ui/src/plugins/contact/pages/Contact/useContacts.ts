@@ -10,13 +10,12 @@ import { useEndCallService } from 'plugins/contact/services/call/useEndCallServi
 import { useContactsService } from 'plugins/contact/services/contact/useContactsService'
 import { useDeleteContactByIdService } from 'plugins/contact/services/contact/useDeleteContactService'
 import { useConversation, SelfHostedConversationConfig } from 'vocode'
-import { CallContext } from 'plugins/contact/contexts'
 
 export const useContacts = () => {
   const { data: contacts, refetch: refetchContacts } = useContactsService()
 
   const { setToast } = useContext(ToastContext)
-  const { setShowCall } = useContext(CallContext)
+
   const { openModal, closeModal } = useModal()
 
   const { deleteContactById } = useDeleteContactByIdService()
@@ -140,6 +139,5 @@ export const useContacts = () => {
     handleCall,
     handleEndCall,
     status,
-    stop,
   }
 }

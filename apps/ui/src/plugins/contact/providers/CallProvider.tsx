@@ -17,7 +17,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
   const [isMuted, setIsMuted] = useState(false)
 
-  const { handleCall, status, stop } = useContacts()
+  const { handleCall, status, handleEndCall } = useContacts()
 
   const contextValue = {
     shoWCall,
@@ -111,7 +111,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
               onClick={() => {
                 setShowCall(false)
                 setCallIds(null)
-                stop()
+                handleEndCall()
               }}
               size={'small'}
             >
