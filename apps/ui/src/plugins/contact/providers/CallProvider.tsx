@@ -3,15 +3,12 @@ import { CallContext } from '../contexts'
 import styled, { css } from 'styled-components'
 import { ButtonPrimary } from 'components/Button/Button'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
-import TypographySecondary from 'components/Typography/Secondary'
-import {
-  TypographySizes,
-  TypographyTypes,
-} from 'share-ui/components/typography/TypographyConstants'
+
 import TypographyQuaternary from 'components/Typography/Quaternary'
 import { Mute, Sound } from 'share-ui/components/Icon/Icons'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { useContacts } from '../pages/Contact/useContacts'
+import Timer from './providerComponents/Timer'
 
 const CallProvider = ({ children }: { children: ReactNode }) => {
   const [shoWCall, setShowCall] = useState(false)
@@ -64,12 +61,6 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // useEffect(() => {
-  //   if (!shoWCall) return
-
-  //   initializeMicrophone()
-  // }, [shoWCall])
-
   useEffect(() => {
     if (!callIds) return
 
@@ -78,9 +69,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
     setShowCall(true)
   }, [callIds])
 
-  let callTitle = 'Wait for agent'
-
-  if (status === 'connected') callTitle = 'Connected'
+  const callTitle = 'Connecting...'
 
   return (
     <CallContext.Provider value={contextValue}>
@@ -88,7 +77,11 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
       {shoWCall && (
         <StyledCallWindow>
           <StyledWindowHeader>
-            <TypographyQuaternary value={callTitle} size={'large'} />
+            {status === 'connected' ? (
+              <Timer />
+            ) : (
+              <TypographyQuaternary value={callTitle} size={'large'} />
+            )}
           </StyledWindowHeader>
           <StyledWindowBody>
             <StyledAvatarWrapper isConnected>
@@ -165,6 +158,7 @@ const StyledWindowHeader = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
 `
 
 const StyledWindowBody = styled.div`
