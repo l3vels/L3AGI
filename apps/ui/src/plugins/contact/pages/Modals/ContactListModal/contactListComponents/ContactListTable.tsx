@@ -5,10 +5,11 @@ import { t } from 'i18next'
 import { CallContext } from 'plugins/contact/contexts'
 import { useContacts } from 'plugins/contact/pages/Contact/useContacts'
 import { StyledTableButtons } from 'plugins/contact/pages/Group/Groups'
+import { CreateCallInput } from 'plugins/contact/services/call/useCreateCallService'
 import { useContext, useMemo, useState } from 'react'
 import TextField from 'share-ui/components/TextField/TextField'
 
-const ContactListTable = () => {
+const ContactListTable = ({ callType }: { callType: CreateCallInput['type'] }) => {
   const { setCallIds } = useContext(CallContext)
   const { contacts, handleCall } = useContacts()
   const [searchText, setSearchText] = useState('')
@@ -57,7 +58,11 @@ const ContactListTable = () => {
               <ButtonPrimary
                 onClick={() => {
                   // handleCall({ agent_id: agentId, contact_id: cell.value, type: 'browser' })
-                  setCallIds({ agentId: agentId, contactId: cell.value })
+                  if (callType === 'browser') {
+                    setCallIds({ agentId: agentId, contactId: cell.value })
+                  } else if (callType === 'outbound') {
+                    handleCall({ agent_id: agentId, contact_id: cell.value, type: callType })
+                  }
                   closeModal('contact-list-modal')
                 }}
                 size={'small'}

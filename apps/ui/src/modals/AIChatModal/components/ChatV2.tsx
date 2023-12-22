@@ -366,14 +366,20 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
         <StyledCallInputContainer>
           <ButtonPrimary
             onClick={() => {
-              openModal({ name: 'contact-list-modal' })
+              openModal({ name: 'contact-list-modal', data: { callType: 'browser' } })
             }}
             size={Button.sizes?.MEDIUM}
             rightIcon={Microphone}
           >
             {t('call-browser')}
           </ButtonPrimary>
-          <ButtonPrimary onClick={() => {}} size={Button.sizes?.MEDIUM} rightIcon={Mobile}>
+          <ButtonPrimary
+            onClick={() => {
+              openModal({ name: 'contact-list-modal', data: { callType: 'outbound' } })
+            }}
+            size={Button.sizes?.MEDIUM}
+            rightIcon={Mobile}
+          >
             {t('call-phone')}
           </ButtonPrimary>
         </StyledCallInputContainer>

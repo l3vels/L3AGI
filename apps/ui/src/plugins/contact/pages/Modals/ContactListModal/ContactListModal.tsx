@@ -5,15 +5,18 @@ import Modal from 'share-ui/components/Modal/Modal'
 import { useModal } from 'hooks'
 import styled from 'styled-components'
 import ContactListTable from './contactListComponents/ContactListTable'
+import { CreateCallInput } from 'plugins/contact/services/call/useCreateCallService'
 
 type ContactListModalProps = {
-  //   data: {
-  //     isRegister?: boolean
-  //   }
+  data: {
+    callType: CreateCallInput['type']
+  }
 }
 
-const ContactListModal = () => {
+const ContactListModal = ({ data }: ContactListModalProps) => {
   const { closeModal } = useModal()
+
+  const { callType } = data
 
   return (
     <Modal
@@ -25,7 +28,7 @@ const ContactListModal = () => {
       //   hideCloseButton={true}
     >
       <StyledModalBody>
-        <ContactListTable />
+        <ContactListTable callType={callType} />
       </StyledModalBody>
     </Modal>
   )
