@@ -3,6 +3,7 @@ import { useModal } from 'hooks'
 import { CreateCallInput } from 'plugins/contact/services/call/useCreateCallService'
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 import styled from 'styled-components'
+import { AgentWithConfigs } from 'types'
 
 const ContactMenu = ({
   ariaLabel,
@@ -14,7 +15,7 @@ const ContactMenu = ({
 }: {
   ariaLabel: string
   icon: any
-  agentData: any
+  agentData: AgentWithConfigs[]
   handleCall: (input: CreateCallInput) => void
   contactId: string
   callType: CreateCallInput['type']
@@ -24,7 +25,7 @@ const ContactMenu = ({
   return (
     <MenuButton ariaLabel={ariaLabel} component={icon} closeDialogOnContentClick={false} zIndex={1}>
       <StyledMenuList>
-        {agentData?.map((agentObj: any, index: number) => {
+        {agentData?.map((agentObj: AgentWithConfigs, index: number) => {
           const { agent } = agentObj
 
           const handleView = () => {
