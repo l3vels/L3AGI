@@ -76,7 +76,7 @@ const Contacts = () => {
               <StyledPhoneText>{cell.value}</StyledPhoneText>
               <StyledTableButtons>
                 <ContactMenu
-                  ariaLabel={'Browser Call'}
+                  ariaLabel={t('call-browser')}
                   icon={StyledCallIcon}
                   agentData={voiceAgents}
                   handleCall={handleCall}
@@ -84,7 +84,7 @@ const Contacts = () => {
                   callType={'browser'}
                 />
                 <ContactMenu
-                  ariaLabel={'Phone Call'}
+                  ariaLabel={t('call-phone')}
                   icon={StyledMobileIcon}
                   agentData={voiceAgents}
                   handleCall={handleCall}

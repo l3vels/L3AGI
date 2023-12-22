@@ -15,6 +15,7 @@ export const useContacts = () => {
   const { data: contacts, refetch: refetchContacts } = useContactsService()
 
   const { setToast } = useContext(ToastContext)
+
   const { openModal, closeModal } = useModal()
 
   const { deleteContactById } = useDeleteContactByIdService()
@@ -79,12 +80,6 @@ export const useContacts = () => {
   const handleCall = async (input: CreateCallInput) => {
     const callType = input.type
 
-    setToast({
-      message: 'Call Started!',
-      type: 'positive',
-      open: true,
-    })
-
     try {
       const data = await createCallService({
         ...input,
@@ -93,6 +88,12 @@ export const useContacts = () => {
 
       if (!data) {
         throw new Error('Failed to create call!')
+      } else {
+        // setToast({
+        //   message: 'Call Started!',
+        //   type: 'positive',
+        //   open: true,
+        // })
       }
 
       if (callType === 'browser') {
@@ -137,5 +138,6 @@ export const useContacts = () => {
     deleteContactHandler,
     handleCall,
     handleEndCall,
+    status,
   }
 }

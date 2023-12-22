@@ -5,6 +5,7 @@ import Close from '../../components/Icon/Icons/components/Close'
 import Icon, { IconSubComponentProps } from '../../components/Icon/Icon'
 import L3ComponentProps from '../../types/L3ComponentProps'
 import { NOOP } from '../../utils/function-utils'
+import styled from 'styled-components'
 
 export interface ModalHeaderProps extends L3ComponentProps {
   /**
@@ -72,7 +73,7 @@ const ModalHeader: FC<ModalHeaderProps> = ({
   id,
 }) => {
   return (
-    <div>
+    <StyledModalHeader>
       <p role='heading' aria-level={1} id={id}>
         {icon && (
           <span>
@@ -91,7 +92,7 @@ const ModalHeader: FC<ModalHeaderProps> = ({
       {description && <div>{description}</div>}
 
       {!hideCloseButton && (
-        <div>
+        <StyledCloseButtonWrapper>
           <IconButton
             key='xxs'
             onClick={closeModal}
@@ -100,9 +101,9 @@ const ModalHeader: FC<ModalHeaderProps> = ({
             kind={IconButton.kinds?.TERTIARY}
             size={IconButton.sizes?.SMALL}
           />
-        </div>
+        </StyledCloseButtonWrapper>
       )}
-    </div>
+    </StyledModalHeader>
   )
 }
 
@@ -111,3 +112,15 @@ Object.assign(ModalHeader, {
 })
 
 export default ModalHeader
+
+const StyledModalHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+`
+const StyledCloseButtonWrapper = styled.div`
+  margin-left: auto;
+  path {
+    stroke: #000;
+  }
+`
