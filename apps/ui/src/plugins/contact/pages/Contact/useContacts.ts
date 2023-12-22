@@ -80,7 +80,7 @@ export const useContacts = () => {
 
   const handleCall = async (input: CreateCallInput) => {
     const callType = input.type
-    setShowCall(true)
+
     try {
       const data = await createCallService({
         ...input,
@@ -90,11 +90,11 @@ export const useContacts = () => {
       if (!data) {
         throw new Error('Failed to create call!')
       } else {
-        setToast({
-          message: 'Call Started!',
-          type: 'positive',
-          open: true,
-        })
+        // setToast({
+        //   message: 'Call Started!',
+        //   type: 'positive',
+        //   open: true,
+        // })
       }
 
       if (callType === 'browser') {
@@ -116,7 +116,6 @@ export const useContacts = () => {
         open: true,
       })
     }
-    setShowCall(false)
   }
 
   const handleEndCall = useCallback(async () => {
@@ -140,5 +139,7 @@ export const useContacts = () => {
     deleteContactHandler,
     handleCall,
     handleEndCall,
+    status,
+    stop,
   }
 }

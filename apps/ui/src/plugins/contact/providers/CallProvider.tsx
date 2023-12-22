@@ -11,14 +11,21 @@ import {
 import TypographyQuaternary from 'components/Typography/Quaternary'
 import { Mute, Sound } from 'share-ui/components/Icon/Icons'
 import IconButton from 'share-ui/components/IconButton/IconButton'
+import { useContacts } from '../pages/Contact/useContacts'
 
 const CallProvider = ({ children }: { children: ReactNode }) => {
-  const [shoWCall, setShowCall] = useState(true)
-  const [mute, setMute] = useState(true)
+  const [shoWCall, setShowCall] = useState(false)
+
+  const [callIds, setCallIds] = useState<{ agentId: string; contactId: string } | null>(null)
+
+  const [isMuted, setIsMuted] = useState(false)
+
+  const { handleCall, status, stop } = useContacts()
 
   const contextValue = {
     shoWCall,
     setShowCall,
+    setCallIds,
   }
 
   const [isSpeaking, setIsSpeaking] = useState(false)
@@ -46,7 +53,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
         const averageVolume = dataArray.reduce((acc, value) => acc + value, 0) / dataArray.length
 
-        setIsSpeaking(averageVolume > 10) // Adjust this threshold based on your requirements
+        setIsSpeaking(averageVolume > 45) // Adjust this threshold based on your requirements
 
         requestAnimationFrame(updateMicrophoneStatus)
       }
@@ -57,11 +64,23 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  // useEffect(() => {
+  //   if (!shoWCall) return
+
+  //   initializeMicrophone()
+  // }, [shoWCall])
+
   useEffect(() => {
-    if (!shoWCall) return
+    if (!callIds) return
 
     initializeMicrophone()
-  }, [shoWCall])
+    handleCall({ agent_id: callIds.agentId, contact_id: callIds.contactId, type: 'browser' })
+    setShowCall(true)
+  }, [callIds])
+
+  let callTitle = 'Wait for agent'
+
+  if (status === 'connected') callTitle = 'Connected'
 
   return (
     <CallContext.Provider value={contextValue}>
@@ -69,17 +88,17 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
       {shoWCall && (
         <StyledCallWindow>
           <StyledWindowHeader>
-            <TypographyQuaternary value={'title placeholder'} size={'large'} />
+            <TypographyQuaternary value={callTitle} size={'large'} />
           </StyledWindowHeader>
           <StyledWindowBody>
-            <StyledAvatarWrapper>
+            <StyledAvatarWrapper isConnected>
               <StyledSpeakIndicator isSpeaking={isSpeaking}>
                 <AvatarGenerator name={'Test Person'} size={50} />
               </StyledSpeakIndicator>
               <TypographyQuaternary value={'Test Person'} size={'small'} />
             </StyledAvatarWrapper>
 
-            <StyledAvatarWrapper>
+            <StyledAvatarWrapper isConnected={status === 'connected'}>
               <AvatarGenerator name={'Test Agent'} size={50} />
               <TypographyQuaternary value={'Test Agent'} size={'small'} />
             </StyledAvatarWrapper>
@@ -87,15 +106,22 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
           <StyledWindowFooter>
             <IconButton
-              onClick={() => setMute(!mute)}
+              onClick={() => setIsMuted(!isMuted)}
               size={'small'}
-              ariaLabel={mute ? 'Unmute' : 'Mute'}
+              ariaLabel={isMuted ? 'Unmute' : 'Mute'}
               icon={() => {
-                return <>{mute ? <Mute /> : <Sound />}</>
+                return <>{isMuted ? <Mute /> : <Sound />}</>
               }}
             />
 
-            <ButtonPrimary onClick={() => setShowCall(false)} size={'small'}>
+            <ButtonPrimary
+              onClick={() => {
+                setShowCall(false)
+                setCallIds(null)
+                stop()
+              }}
+              size={'small'}
+            >
               Hung up
             </ButtonPrimary>
           </StyledWindowFooter>
@@ -166,11 +192,17 @@ const StyledWindowFooter = styled.div`
 
   border-radius: 0 0 10px 10px;
 `
-const StyledAvatarWrapper = styled.div`
+const StyledAvatarWrapper = styled.div<{ isConnected?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
+
+  ${props =>
+    !props.isConnected &&
+    css`
+      opacity: 0.6;
+    `};
 `
 const StyledSpeakIndicator = styled.div<{ isSpeaking: boolean }>`
   width: fit-content;

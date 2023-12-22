@@ -1,14 +1,18 @@
 import { ButtonPrimary } from 'components/Button/Button'
 import Table from 'components/Table'
+import { useModal } from 'hooks'
 import { t } from 'i18next'
+import { CallContext } from 'plugins/contact/contexts'
 import { useContacts } from 'plugins/contact/pages/Contact/useContacts'
 import { StyledTableButtons } from 'plugins/contact/pages/Group/Groups'
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import TextField from 'share-ui/components/TextField/TextField'
 
 const ContactListTable = () => {
+  const { setCallIds } = useContext(CallContext)
   const { contacts, handleCall } = useContacts()
   const [searchText, setSearchText] = useState('')
+  const { closeModal } = useModal()
 
   const urlParams = new URLSearchParams(location.search)
 
@@ -51,9 +55,11 @@ const ContactListTable = () => {
           return (
             <StyledTableButtons>
               <ButtonPrimary
-                onClick={() =>
-                  handleCall({ agent_id: agentId, contact_id: cell.value, type: 'browser' })
-                }
+                onClick={() => {
+                  // handleCall({ agent_id: agentId, contact_id: cell.value, type: 'browser' })
+                  setCallIds({ agentId: agentId, contactId: cell.value })
+                  closeModal('contact-list-modal')
+                }}
                 size={'small'}
               >
                 {t('call')}
