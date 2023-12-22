@@ -9,15 +9,16 @@ import { Mute, Sound } from 'share-ui/components/Icon/Icons'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { useContacts } from '../pages/Contact/useContacts'
 import Timer from './providerComponents/Timer'
+import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 const CallProvider = ({ children }: { children: ReactNode }) => {
   const [shoWCall, setShowCall] = useState(false)
-
   const [callIds, setCallIds] = useState<{ agentId: string; contactId: string } | null>(null)
-
   const [isMuted, setIsMuted] = useState(false)
 
   const { handleCall, status, handleEndCall } = useContacts()
+
+  const { data: callAgent } = useAgentByIdService({ id: callIds?.agentId || '' })
 
   const contextValue = {
     shoWCall,
@@ -92,8 +93,8 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
             </StyledAvatarWrapper>
 
             <StyledAvatarWrapper isConnected={status === 'connected'}>
-              <AvatarGenerator name={'Test Agent'} size={50} />
-              <TypographyQuaternary value={'Test Agent'} size={'small'} />
+              <AvatarGenerator name={callAgent?.agent?.name || ''} size={50} />
+              <TypographyQuaternary value={callAgent?.agent?.name} size={'small'} />
             </StyledAvatarWrapper>
           </StyledWindowBody>
 
