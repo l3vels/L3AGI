@@ -135,7 +135,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <Tab onClick={() => handleTabClick(1)}>Configuration</Tab>
           <Tab onClick={() => handleTabClick(2)}>Training Details</Tab>
           <Tab onClick={() => handleTabClick(3)}>Onboarding</Tab>
-          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice || agentType === 'text'}>
+          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice}>
             Voice Preferences
           </Tab>
           <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
