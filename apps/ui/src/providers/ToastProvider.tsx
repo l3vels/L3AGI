@@ -12,6 +12,7 @@ export interface ToastProps {
   type?: 'positive' | 'negative' | 'warning'
   open?: boolean
   url?: string
+  linkLabel?: string
   autoHideDuration?: number
 }
 
@@ -43,6 +44,8 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
         //     </ButtonPrimary>
         //   )
         // }
+        link={toast.url}
+        linkLabel={toast.linkLabel}
         onClose={() => setToast({ open: false })}
       />
     </ToastContext.Provider>

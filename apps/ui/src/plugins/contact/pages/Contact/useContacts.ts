@@ -118,6 +118,7 @@ export const useContacts = () => {
   }
 
   const handleEndCall = useCallback(async () => {
+    const sessionId = conversationId
     setConversationId(undefined)
 
     if (status !== 'idle') {
@@ -127,7 +128,9 @@ export const useContacts = () => {
     }
 
     setToast({
-      message: 'Call Ended!',
+      message: `Call Ended!`,
+      url: `/sessions?chat=${sessionId}`,
+      linkLabel: 'Go to Thread',
       type: 'positive',
       open: true,
     })
