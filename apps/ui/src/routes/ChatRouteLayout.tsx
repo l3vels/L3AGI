@@ -212,11 +212,11 @@ const ChatRouteLayout = () => {
                       ? [
                           {
                             function: () => navigate('/agents/create-agent-template?type=text'),
-                            label: 'Text Based',
+                            label: 'Chat Based',
                           },
                           {
                             function: () => navigate('/agents/create-agent-template?type=voice'),
-                            label: 'Voice Based',
+                            label: 'Call Based',
                           },
                         ]
                       : undefined
