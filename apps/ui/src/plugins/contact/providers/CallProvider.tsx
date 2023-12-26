@@ -16,7 +16,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
   const [callIds, setCallIds] = useState<{ agentId: string; contactId: string } | null>(null)
   const [isMuted, setIsMuted] = useState(false)
 
-  const { handleCall, status, handleEndCall, currentSpeaker } = useContacts()
+  const { handleCall, status, handleEndCall, currentSpeaker, error } = useContacts()
 
   const { data: callAgent } = useAgentByIdService({ id: callIds?.agentId || '' })
 
@@ -115,6 +115,12 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   }
+
+  useEffect(() => {
+    if (!error) return
+    setCallIds(null)
+    setShowCall(false)
+  }, [error])
 
   const callTitle = 'Connecting...'
 

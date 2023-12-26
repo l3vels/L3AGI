@@ -31,12 +31,17 @@ export const useContacts = () => {
     conversationId,
   }
 
-  const { status, start, stop, error, analyserNode, transcripts, currentSpeaker } =
-    useConversation(config)
-
-  // console.log('analyserNode', analyserNode)
-  // console.log('transcripts', transcripts)
-  console.log('currentSpeaker', currentSpeaker)
+  const {
+    status,
+    start,
+    stop,
+    error,
+    analyserNode,
+    transcripts,
+    currentSpeaker,
+    toggleActive,
+    active,
+  } = useConversation(config)
 
   useEffect(() => {
     if (!conversationId) return
@@ -97,6 +102,8 @@ export const useContacts = () => {
         setToast({
           message: 'Call Started!',
           type: 'positive',
+          url: `/sessions?chat=${data.chat_id}`,
+          linkLabel: 'Go to Thread',
           open: true,
         })
       }
@@ -126,19 +133,24 @@ export const useContacts = () => {
     const sessionId = conversationId
     setConversationId(undefined)
 
-    if (status !== 'idle') {
-      stop()
-    } else {
-      await endCallService()
-    }
+    await stop()
+    await endCallService()
 
-    setToast({
-      message: `Call Ended!`,
-      url: `/sessions?chat=${sessionId}`,
-      linkLabel: 'Go to Thread',
-      type: 'positive',
-      open: true,
-    })
+    if (sessionId === undefined) {
+      setToast({
+        message: `Call cancelled!`,
+        type: 'positive',
+        open: true,
+      })
+    } else {
+      setToast({
+        message: `Call Ended!`,
+        url: `/sessions?chat=${sessionId}`,
+        linkLabel: 'Go to Thread',
+        type: 'positive',
+        open: true,
+      })
+    }
   }, [status, setToast])
 
   return {
@@ -148,5 +160,8 @@ export const useContacts = () => {
     handleEndCall,
     status,
     currentSpeaker,
+    toggleActive,
+    active,
+    error,
   }
 }
