@@ -1,5 +1,6 @@
-query getChats @api(name: "ai") {
-  getChats @rest(type: "ChatMessage", path: "/chat", method: "GET", endpoint: "ai") {
+query getChats($restPath: String!) @api(name: "ai") {
+  getChats(restPath: $restPath)
+    @rest(type: "ChatMessage", path: "{args.restPath}", method: "GET", endpoint: "ai") {
     id
     name
     agent_id

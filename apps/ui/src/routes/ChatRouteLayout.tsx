@@ -52,7 +52,7 @@ const ChatRouteLayout = () => {
     deleteTeamOfAgentsHandler,
     teamsLoading,
   } = useTeamOfAgents()
-  const { data: chatsData, refetch: refetchChat } = useChatsService()
+  // const { data: chatsData, refetch: refetchChat } = useChatsService()
 
   const navigate = useNavigate()
 

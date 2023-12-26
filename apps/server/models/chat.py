@@ -211,8 +211,18 @@ class ChatModel(BaseModel):
                 setattr(chat_model, field, getattr(chat_input, field))
 
     @classmethod
-    def get_chats(cls, db, account):
-        agents = (
+    def get_chats(cls, db, account, filter_list, page=1, per_page=10):
+        offset = (page - 1) * per_page
+        filter_conditions = []
+        for filter_string in filter_list:
+            filter_conditions.append(
+                or_(
+                    ChatModel.name.ilike(f"%{filter_string}%"),
+                    AgentModel.name.ilike(f"%{filter_string}%"),
+                )
+            )
+
+        chats = (
             db.session.query(ChatModel)
             .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)
             .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)
@@ -225,14 +235,17 @@ class ChatModel(BaseModel):
                     or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
                     ChatModel.is_deleted is None,
                 ),
+                or_(*filter_conditions),
             )
             .options(joinedload(ChatModel.team))
             .options(joinedload(ChatModel.agent))
             .options(joinedload(ChatModel.creator_user))
             .options(joinedload(ChatModel.creator_account))
+            .offset(offset)
+            .limit(per_page)
             .all()
         )
-        return agents
+        return chats
 
     @classmethod
     def delete_by_id(cls, db, chat_id, account):

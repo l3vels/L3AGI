@@ -39,6 +39,8 @@ const Sessions = () => {
     filterByDateRange,
     handleDateChange,
     clearSelectedDays,
+    setPage,
+    page,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -104,7 +106,7 @@ const Sessions = () => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <Table expand columns={columnConfig} data={filteredData} pagination />
+        <Table expand columns={columnConfig} data={filteredData} setPage={setPage} page={page} />
         {sessionId && (
           <StyledSessionCHatWrapper>
             <StyledButtonWrapper>

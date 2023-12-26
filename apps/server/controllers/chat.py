@@ -1,7 +1,7 @@
 from typing import List, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
 from fastapi_sqlalchemy import db
 from sqlalchemy.orm import joinedload
 
@@ -53,18 +53,24 @@ def update_chat(
 
 @router.get("", response_model=List[ChatOutput])
 def get_chats(
+    filter: Optional[List[str]] = Query([""]),
+    page: Optional[float] = 1,
+    per_page: Optional[float] = 1,
     auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> List[ChatOutput]:
     """
-    Get all get_chats by account ID.
+    Get all chats by account ID.
 
     Args:
+        filter (Optional[List[str]]): List of strings to filter chats.
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[ChatOutput]: List of agents associated with the account.
+        List[ChatOutput]: List of chats associated with the account.
     """
-    db_chats = ChatModel.get_chats(db=db, account=auth.account)
+    db_chats = ChatModel.get_chats(
+        db=db, account=auth.account, filter_list=filter, page=page, per_page=per_page
+    )
     return convert_chats_to_chat_list(db_chats)
 
 
