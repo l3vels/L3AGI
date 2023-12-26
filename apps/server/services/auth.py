@@ -1,18 +1,22 @@
 from typing import Optional
-from fastapi import Depends
-from fastapi_sqlalchemy import db
+
+from fastapi import Depends, HTTPException
 from fastapi_jwt_auth import AuthJWT
-from models.user import UserModel
+from fastapi_jwt_auth.exceptions import InvalidHeaderError
+from fastapi_sqlalchemy import db
+
+from exceptions import UserException
 from models.account import AccountModel
+from models.user import UserModel
 from models.user_account import UserAccountModel
+from typings.account import AccountInput
+from typings.auth import LoginInput, RegisterInput, UserAccount
 from typings.user import UserInput
 from typings.user_account import UserAccountInput
-from typings.auth import LoginInput, RegisterInput
-from typings.account import AccountInput
-from exceptions import UserException
-from typings.auth import UserAccount
-from utils.account import convert_model_to_response as convert_model_to_response_account
-from utils.user import convert_model_to_response as convert_model_to_response_user
+from utils.account import \
+    convert_model_to_response as convert_model_to_response_account
+from utils.user import \
+    convert_model_to_response as convert_model_to_response_user
 
 
 def register(input: RegisterInput):
@@ -95,15 +99,18 @@ def login_with_github(name: str, email: str, account_name: str, avatar: Optional
 
 
 def authorize(account_id: str, Authorize: AuthJWT = Depends()) -> UserAccount:
-    email = Authorize.get_jwt_subject()
-    db_user = UserModel.get_user_by_email(db, email)
-    if account_id == "undefined" or not account_id:
-        db_account = AccountModel.get_account_created_by(db, db_user.id)
-    else:
-        db_account = AccountModel.get_account_by_access(
-            db, user_id=db_user.id, account_id=account_id
+    try:
+        email = Authorize.get_jwt_subject()
+        db_user = UserModel.get_user_by_email(db, email)
+        if account_id == "undefined" or not account_id:
+            db_account = AccountModel.get_account_created_by(db, db_user.id)
+        else:
+            db_account = AccountModel.get_account_by_access(
+                db, user_id=db_user.id, account_id=account_id
+            )
+        return UserAccount(
+            user=convert_model_to_response_user(db_user),
+            account=convert_model_to_response_account(db_account),
         )
-    return UserAccount(
-        user=convert_model_to_response_user(db_user),
-        account=convert_model_to_response_account(db_account),
-    )
+    except InvalidHeaderError:
+        raise HTTPException(status_code=401, detail="Invalid auth token")

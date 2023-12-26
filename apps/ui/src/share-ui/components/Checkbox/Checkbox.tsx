@@ -74,7 +74,6 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
         })
       })
     }, [inputRef])
-    console.log('checked', checked)
     const checkboxClassNames = [
       `${BASE_CLASS_NAME}__checkbox`,
       `${BASE_CLASS_NAME}__prevent-animation`,

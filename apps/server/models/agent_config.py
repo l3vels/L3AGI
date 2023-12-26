@@ -155,7 +155,7 @@ class AgentConfigModel(BaseModel):
 
                 new_config.value = str(runners)
 
-        changes.append(new_config)
+            changes.append(new_config)
 
         db.session.add_all(changes)
         db.session.commit()
