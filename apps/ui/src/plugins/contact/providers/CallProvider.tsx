@@ -16,7 +16,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
   const [callIds, setCallIds] = useState<{ agentId: string; contactId: string } | null>(null)
   const [isMuted, setIsMuted] = useState(false)
 
-  const { handleCall, status, handleEndCall } = useContacts()
+  const { handleCall, status, handleEndCall, currentSpeaker } = useContacts()
 
   const { data: callAgent } = useAgentByIdService({ id: callIds?.agentId || '' })
 
@@ -27,6 +27,7 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const [isSpeaking, setIsSpeaking] = useState(false)
+  const [isAgentSpeaking, setAgentIsSpeaking] = useState(false)
 
   const microphoneStreamRef = useRef<any>(null)
 
@@ -66,14 +67,38 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
+    let agentTimeOutId: any
+
+    if (currentSpeaker === 'agent') {
+      setAgentIsSpeaking(true)
+      clearTimeout(agentTimeOutId) // Clear existing timeout
+
+      agentTimeOutId = setTimeout(() => {
+        setAgentIsSpeaking(false)
+      }, 1000) // Set new timeout
+    }
+  }, [currentSpeaker])
+
+  // useEffect(() => {
+  //   let userTimeOutId: any
+
+  //   if (currentSpeaker === 'user') {
+  //     setIsSpeaking(true)
+  //     clearTimeout(userTimeOutId) // Clear existing timeout
+
+  //     userTimeOutId = setTimeout(() => {
+  //       setIsSpeaking(false)
+  //     }, 1000) // Set new timeout
+  //   }
+  // }, [currentSpeaker])
+
+  useEffect(() => {
     if (!callIds) return
 
     initializeMicrophone()
     handleCall({ agent_id: callIds.agentId, contact_id: callIds.contactId, type: 'browser' })
     setShowCall(true)
   }, [callIds])
-
-  const callTitle = 'Connecting...'
 
   //todo fix mute
   const muteMicrophone = () => {
@@ -90,6 +115,8 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   }
+
+  const callTitle = 'Connecting...'
 
   return (
     <CallContext.Provider value={contextValue}>
@@ -112,14 +139,16 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
             </StyledAvatarWrapper>
 
             <StyledAvatarWrapper isConnected={status === 'connected'}>
-              <AvatarGenerator name={callAgent?.agent?.name || ''} size={50} />
+              <StyledSpeakIndicator isSpeaking={isAgentSpeaking}>
+                <AvatarGenerator name={callAgent?.agent?.name || ''} size={50} />
+              </StyledSpeakIndicator>
               <TypographyQuaternary value={callAgent?.agent?.name} size={'small'} />
             </StyledAvatarWrapper>
           </StyledWindowBody>
 
           <StyledWindowFooter>
             <IconButton
-              onClick={muteMicrophone}
+              onClick={() => setIsMuted(!isMuted)}
               size={'small'}
               ariaLabel={isMuted ? 'Unmute' : 'Mute'}
               icon={() => {

@@ -31,7 +31,12 @@ export const useContacts = () => {
     conversationId,
   }
 
-  const { status, start, stop, error } = useConversation(config)
+  const { status, start, stop, error, analyserNode, transcripts, currentSpeaker } =
+    useConversation(config)
+
+  // console.log('analyserNode', analyserNode)
+  // console.log('transcripts', transcripts)
+  console.log('currentSpeaker', currentSpeaker)
 
   useEffect(() => {
     if (!conversationId) return
@@ -88,12 +93,12 @@ export const useContacts = () => {
 
       if (!data) {
         throw new Error('Failed to create call!')
-      } else {
-        // setToast({
-        //   message: 'Call Started!',
-        //   type: 'positive',
-        //   open: true,
-        // })
+      } else if (data && callType === 'outbound') {
+        setToast({
+          message: 'Call Started!',
+          type: 'positive',
+          open: true,
+        })
       }
 
       if (callType === 'browser') {
@@ -142,5 +147,6 @@ export const useContacts = () => {
     handleCall,
     handleEndCall,
     status,
+    currentSpeaker,
   }
 }
