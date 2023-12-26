@@ -245,7 +245,20 @@ class ChatModel(BaseModel):
             .limit(per_page)
             .all()
         )
-        return chats
+
+        total_count = (
+            db.session.query(ChatModel)
+            .filter(
+                ChatModel.creator_account_id == account.id,
+                or_(
+                    or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
+                    ChatModel.is_deleted is None,
+                ),
+            )
+            .count()
+        )
+
+        return chats, total_count
 
     @classmethod
     def delete_by_id(cls, db, chat_id, account):

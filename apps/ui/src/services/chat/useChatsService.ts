@@ -21,7 +21,8 @@ export const useChatsService = ({
   })
 
   return {
-    data: data?.getChats || [],
+    data: data?.getChats?.chats || [],
+    count: data?.getChats?.count || 0,
     error,
     loading,
     refetch,

@@ -31,11 +31,13 @@ export const useSession = () => {
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
   const [page, setPage] = useState(1)
 
-  const { data: chatsData } = useChatsService({
+  const { data: chatsData, count: chatsCount } = useChatsService({
     filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
     itemsCount: 20,
     page,
   })
+
+  const totalPages = Math.ceil(chatsCount / 20)
 
   const { data: calls } = useCallsService()
 
@@ -107,5 +109,6 @@ export const useSession = () => {
     clearSelectedDays,
     setPage,
     page,
+    totalPages,
   }
 }

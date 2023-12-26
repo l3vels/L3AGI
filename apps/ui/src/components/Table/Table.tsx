@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTable, useResizeColumns, useFlexLayout, useBlockLayout } from 'react-table'
 
 import styled, { css } from 'styled-components'
@@ -27,11 +27,18 @@ type TableProps = {
   pagination?: boolean
   page?: number
   setPage?: (value: number) => void
+
+  totalPages?: number
 }
 
-const Table = ({ columns, data, expand, page = 1, setPage }: TableProps) => {
-  // const [currentPage, setCurrentPage] = useState(page)
-  const itemsPerPage = 20
+const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TableProps) => {
+  const [totalPageState, setTotalPageState] = useState(totalPages || null)
+
+  useEffect(() => {
+    if (totalPageState === totalPages) return
+
+    if (totalPages && totalPages > 0) setTotalPageState(totalPages)
+  }, [totalPages])
 
   const defaultColumn = useMemo(
     () => ({
@@ -51,17 +58,12 @@ const Table = ({ columns, data, expand, page = 1, setPage }: TableProps) => {
     useResizeColumns,
   )
 
-  // const indexOfLastItem = currentPage * itemsPerPage
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  // const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem)
-  const totalPages = 3
-
   const paginate = (pageNumber: number) => {
     if (setPage) setPage(pageNumber)
   }
 
   const handleNextPage = () => {
-    if (setPage && page < totalPages) {
+    if (totalPages && setPage && page < totalPages) {
       setPage(page + 1)
     }
   }
@@ -110,12 +112,12 @@ const Table = ({ columns, data, expand, page = 1, setPage }: TableProps) => {
           })}
         </StyledTbody>
       </StyledTable>
-      {setPage && (
+      {totalPageState && (
         <PaginationWrapper>
           <PageNumber onClick={handlePrevPage}>
             <StyledNavigationChevronLeft size={16} />
           </PageNumber>
-          {Array.from({ length: totalPages }).map((_, i) => (
+          {Array.from({ length: totalPageState }).map((_, i) => (
             <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === page}>
               {i + 1}
             </PageNumber>
