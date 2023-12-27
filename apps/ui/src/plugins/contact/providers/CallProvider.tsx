@@ -14,7 +14,7 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 import TypographySecondary from 'components/Typography/Secondary'
 
 const CallProvider = ({ children }: { children: ReactNode }) => {
-  const [shoWCall, setShowCall] = useState(true)
+  const [shoWCall, setShowCall] = useState(false)
   const [callIds, setCallIds] = useState<{ agentId: string; contactId: string } | null>(null)
   const [isMuted, setIsMuted] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
