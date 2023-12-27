@@ -39,19 +39,17 @@ const ContactListTable = ({ callType }: { callType: CreateCallInput['type'] }) =
       {
         Header: 'Name',
         accessor: 'name',
-        width: '40%',
       },
       {
         Header: 'Phone',
         accessor: 'phone',
-        width: '40%',
       },
 
       {
         Header: 'Actions',
         accessor: 'id',
-        width: '20%',
-
+        minWidth: 50,
+        width: 50,
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>

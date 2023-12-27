@@ -48,7 +48,7 @@ const Schedules = () => {
       {
         Header: 'Runner',
         accessor: 'runner',
-        width: 290,
+        width: 200,
       },
       {
         Header: 'Recurring Interval',

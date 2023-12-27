@@ -140,6 +140,8 @@ const StyledTd = styled.div<{ isEditing: boolean; cursorPointer: boolean }>`
 const StyledWrapper = styled.div`
   border: 1px solid #000;
   border-radius: 5px;
+
+  width: 100%;
 `
 
 const StyledTypographyWrapper = styled.div`
