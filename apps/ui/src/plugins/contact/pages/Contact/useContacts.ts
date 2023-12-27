@@ -163,5 +163,6 @@ export const useContacts = () => {
     toggleActive,
     active,
     error,
+    transcripts,
   }
 }
