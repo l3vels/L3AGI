@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+
 import { useTable, useResizeColumns, useFlexLayout, useBlockLayout } from 'react-table'
 
 import styled, { css } from 'styled-components'
@@ -42,7 +43,7 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
 
   const defaultColumn = useMemo(
     () => ({
-      width: 300,
+      // width: 300,
     }),
     [],
   )
@@ -53,9 +54,9 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
       columns,
       data,
     },
-    useFlexLayout,
-    useBlockLayout,
+    // useBlockLayout,
     useResizeColumns,
+    useFlexLayout,
   )
 
   const paginate = (pageNumber: number) => {
@@ -80,22 +81,34 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
         <StyledThead>
           {headerGroups.map((headerGroup: any, index: number) => (
             <StyledTr key={index} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column: any, index: number) => (
-                <StyledTh
-                  key={index}
-                  {...column.getHeaderProps()}
-                  {...column.getResizerProps()}
-                  minWidth={column.minWidth}
-                  maxWidth={column.maxWidth}
-                  width={column.width}
-                >
-                  <TypographyPrimary
-                    value={column.render('Header')}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
-                  />
-                </StyledTh>
-              ))}
+              {headerGroup.headers.map((column: any, index: number) => {
+                return (
+                  <StyledTh
+                    key={index}
+                    {...column.getHeaderProps()}
+                    minWidth={column.minWidth}
+                    maxWidth={column.maxWidth}
+                    width={column.width}
+                  >
+                    <TypographyPrimary
+                      value={column.render('Header')}
+                      type={Typography.types.LABEL}
+                      size={Typography.sizes.sm}
+                    />
+                    <div
+                      {...column.getResizerProps()}
+                      style={{
+                        width: '10px',
+                        height: '100%',
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        cursor: 'col-resize',
+                      }}
+                    />
+                  </StyledTh>
+                )
+              })}
             </StyledTr>
           ))}
         </StyledThead>
@@ -117,11 +130,31 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
           <PageNumber onClick={handlePrevPage}>
             <StyledNavigationChevronLeft size={16} />
           </PageNumber>
-          {Array.from({ length: totalPageState }).map((_, i) => (
-            <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === page}>
-              {i + 1}
+          <PageNumber onClick={() => paginate(1)} active={1 === page}>
+            1
+          </PageNumber>
+          {page > 3 && (
+            <>
+              <PageNumber>...</PageNumber>
+              <PageNumber onClick={() => paginate(page - 1)}>{page - 1}</PageNumber>
+            </>
+          )}
+          {page !== 1 && (
+            <PageNumber onClick={() => paginate(page)} active={true}>
+              {page}
             </PageNumber>
-          ))}
+          )}
+          {page < totalPageState - 2 && (
+            <>
+              <PageNumber onClick={() => paginate(page + 1)}>{page + 1}</PageNumber>
+              <PageNumber>...</PageNumber>
+            </>
+          )}
+          {totalPageState > 1 && page !== totalPageState && (
+            <PageNumber onClick={() => paginate(totalPageState)} active={totalPageState === page}>
+              {totalPageState}
+            </PageNumber>
+          )}
           <PageNumber onClick={handleNextPage}>
             <StyledNavigationChevronRight size={16} />
           </PageNumber>
@@ -204,6 +237,7 @@ const StyledTh = styled.th`
   }
 
   user-select: none;
+  position: relative;
 `
 
 const PaginationWrapper = styled.div`

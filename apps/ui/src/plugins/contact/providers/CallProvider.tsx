@@ -5,18 +5,21 @@ import { ButtonPrimary } from 'components/Button/Button'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import TypographyQuaternary from 'components/Typography/Quaternary'
-import { Mute, Sound } from 'share-ui/components/Icon/Icons'
+import { Fullscreen, FullscreenClose, Mute, Sound } from 'share-ui/components/Icon/Icons'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { useContacts } from '../pages/Contact/useContacts'
 import Timer from './providerComponents/Timer'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
+import TypographySecondary from 'components/Typography/Secondary'
+
 const CallProvider = ({ children }: { children: ReactNode }) => {
   const [shoWCall, setShowCall] = useState(false)
   const [callIds, setCallIds] = useState<{ agentId: string; contactId: string } | null>(null)
   const [isMuted, setIsMuted] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
 
-  const { handleCall, status, handleEndCall, currentSpeaker, error } = useContacts()
+  const { handleCall, status, handleEndCall, currentSpeaker, error, transcripts } = useContacts()
 
   const { data: callAgent } = useAgentByIdService({ id: callIds?.agentId || '' })
 
@@ -128,52 +131,74 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
     <CallContext.Provider value={contextValue}>
       {children}
       {shoWCall && (
-        <StyledCallWindow>
-          <StyledWindowHeader>
-            {status === 'connected' ? (
-              <Timer />
-            ) : (
-              <TypographyQuaternary value={callTitle} size={'large'} />
+        <StyledRoot>
+          <StyledCallWindow isShowDialog={showDialog}>
+            <StyledWindowHeader>
+              {status === 'connected' ? (
+                <Timer />
+              ) : (
+                <TypographyQuaternary value={callTitle} size={'large'} />
+              )}
+            </StyledWindowHeader>
+            <StyledWindowBody>
+              <StyledAvatarWrapper isConnected>
+                <StyledSpeakIndicator isSpeaking={isSpeaking}>
+                  <AvatarGenerator name={'Test Person'} size={50} />
+                </StyledSpeakIndicator>
+                <TypographyQuaternary value={'Test Person'} size={'small'} />
+              </StyledAvatarWrapper>
+
+              <StyledAvatarWrapper isConnected={status === 'connected'}>
+                <StyledSpeakIndicator isSpeaking={isAgentSpeaking}>
+                  <AvatarGenerator name={callAgent?.agent?.name || ''} size={50} />
+                </StyledSpeakIndicator>
+                <TypographyQuaternary value={callAgent?.agent?.name} size={'small'} />
+              </StyledAvatarWrapper>
+            </StyledWindowBody>
+
+            {showDialog && (
+              <StyledDialogWindow>
+                {transcripts?.map((transcript: any, index: number) => {
+                  return (
+                    <StyledDialogItem isBot={transcript.sender === 'bot'} key={index}>
+                      <TypographySecondary value={transcript.text} size={'small'} />
+                    </StyledDialogItem>
+                  )
+                })}
+              </StyledDialogWindow>
             )}
-          </StyledWindowHeader>
-          <StyledWindowBody>
-            <StyledAvatarWrapper isConnected>
-              <StyledSpeakIndicator isSpeaking={isSpeaking}>
-                <AvatarGenerator name={'Test Person'} size={50} />
-              </StyledSpeakIndicator>
-              <TypographyQuaternary value={'Test Person'} size={'small'} />
-            </StyledAvatarWrapper>
 
-            <StyledAvatarWrapper isConnected={status === 'connected'}>
-              <StyledSpeakIndicator isSpeaking={isAgentSpeaking}>
-                <AvatarGenerator name={callAgent?.agent?.name || ''} size={50} />
-              </StyledSpeakIndicator>
-              <TypographyQuaternary value={callAgent?.agent?.name} size={'small'} />
-            </StyledAvatarWrapper>
-          </StyledWindowBody>
+            <StyledWindowFooter>
+              <IconButton
+                onClick={() => setShowDialog(!showDialog)}
+                size={'small'}
+                ariaLabel={!showDialog ? 'Show Dialog' : 'Hide Dialog'}
+                icon={() => {
+                  return <>{!showDialog ? <Fullscreen /> : <FullscreenClose />}</>
+                }}
+              />
+              <IconButton
+                onClick={() => setIsMuted(!isMuted)}
+                size={'small'}
+                ariaLabel={isMuted ? 'Unmute' : 'Mute'}
+                icon={() => {
+                  return <>{isMuted ? <Mute /> : <Sound />}</>
+                }}
+              />
 
-          <StyledWindowFooter>
-            <IconButton
-              onClick={() => setIsMuted(!isMuted)}
-              size={'small'}
-              ariaLabel={isMuted ? 'Unmute' : 'Mute'}
-              icon={() => {
-                return <>{isMuted ? <Mute /> : <Sound />}</>
-              }}
-            />
-
-            <ButtonPrimary
-              onClick={() => {
-                setShowCall(false)
-                setCallIds(null)
-                handleEndCall()
-              }}
-              size={'small'}
-            >
-              Hung up
-            </ButtonPrimary>
-          </StyledWindowFooter>
-        </StyledCallWindow>
+              <ButtonPrimary
+                onClick={() => {
+                  setShowCall(false)
+                  setCallIds(null)
+                  handleEndCall()
+                }}
+                size={'small'}
+              >
+                Hung up
+              </ButtonPrimary>
+            </StyledWindowFooter>
+          </StyledCallWindow>
+        </StyledRoot>
       )}
     </CallContext.Provider>
   )
@@ -181,11 +206,18 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
 
 export default CallProvider
 
-const StyledCallWindow = styled.div`
+const StyledRoot = styled.div`
   position: fixed;
   bottom: 20px;
   right: 20px;
 
+  z-index: 10000000;
+
+  display: flex;
+  flex-direction: column;
+`
+
+const StyledCallWindow = styled.div<{ isShowDialog: boolean }>`
   width: 350px;
   height: 200px;
 
@@ -193,10 +225,29 @@ const StyledCallWindow = styled.div`
 
   background-color: #000;
 
-  z-index: 10000000;
-
   display: flex;
   flex-direction: column;
+
+  ${props =>
+    props.isShowDialog &&
+    css`
+      height: 600px;
+    `};
+`
+
+const StyledDialogWindow = styled.div`
+  width: 350px;
+  height: 100%;
+
+  /* background-color: red; */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 12px 24px;
+
+  overflow: auto;
 `
 
 const StyledWindowHeader = styled.div`
@@ -209,8 +260,6 @@ const StyledWindowHeader = styled.div`
 
   padding: 12px 16px;
 
-  border-radius: 10px 10px 0 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -219,7 +268,7 @@ const StyledWindowHeader = styled.div`
 const StyledWindowBody = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 200px;
 
   justify-content: space-around;
   align-items: center;
@@ -228,7 +277,9 @@ const StyledWindowBody = styled.div`
 `
 
 const StyledWindowFooter = styled.div`
-  height: 100px;
+  max-height: 50px;
+  min-height: 50px;
+
   width: 100%;
 
   background-color: rgba(255, 255, 255, 0.1);
@@ -263,5 +314,21 @@ const StyledSpeakIndicator = styled.div<{ isSpeaking: boolean }>`
     props.isSpeaking &&
     css`
       outline: 4px solid #74faa1;
+    `};
+`
+const StyledDialogItem = styled.div<{ isBot: boolean }>`
+  width: fit-content;
+  max-width: 80%;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 10px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+
+  ${props =>
+    props.isBot &&
+    css`
+      margin-left: auto;
     `};
 `

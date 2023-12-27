@@ -108,7 +108,7 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td<{ isEditing: boolean; cursorPointer: boolean }>`
+const StyledTd = styled.div<{ isEditing: boolean; cursorPointer: boolean }>`
   padding: 5px 10px;
   position: relative;
 
@@ -140,10 +140,14 @@ const StyledTd = styled.td<{ isEditing: boolean; cursorPointer: boolean }>`
 const StyledWrapper = styled.div`
   border: 1px solid #000;
   border-radius: 5px;
+
+  width: 100%;
 `
 
 const StyledTypographyWrapper = styled.div`
   display: inline;
   justify-content: space-between;
   align-items: center;
+
+  width: 100%;
 `
