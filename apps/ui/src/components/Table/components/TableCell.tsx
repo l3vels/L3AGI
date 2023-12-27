@@ -148,4 +148,6 @@ const StyledTypographyWrapper = styled.div`
   display: inline;
   justify-content: space-between;
   align-items: center;
+
+  width: 100%;
 `
