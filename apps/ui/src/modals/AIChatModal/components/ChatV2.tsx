@@ -103,7 +103,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
-  const hasVoice = agentById?.agent?.agent_type === 'voice'
+  const isCallBased = agentById?.agent?.agent_type === 'voice'
 
   const agentName =
     agentById?.agent?.name || teamOfAgents?.name || chatById?.agent?.agent?.name || ''
@@ -362,7 +362,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
         />
       </StyledMessages>
 
-      {hasVoice ? (
+      {isCallBased ? (
         <StyledCallInputContainer>
           <ButtonPrimary
             onClick={() => {
@@ -436,7 +436,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
           <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
         )} */}
 
-              {hasVoice && !teamId && (
+              {!teamId && (
                 <AudioRecorder
                   setVoicePreview={setVoicePreview}
                   setStartedRecording={setStartedRecording}

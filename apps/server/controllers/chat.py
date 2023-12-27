@@ -1,7 +1,7 @@
 from typing import List, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
 from fastapi_sqlalchemy import db
 from sqlalchemy.orm import joinedload
 
@@ -15,10 +15,11 @@ from postgres import PostgresChatMessageHistory
 from services.chat import create_client_message, create_user_message
 from services.pubsub import AzurePubSubService
 from typings.auth import UserAccount
-from typings.chat import (ChatInput, ChatMessageInput, ChatMessageOutput,
-                          ChatOutput, ChatStatus, ChatStopInput,
-                          ChatUserMessageInput, InsertChatMessagesInput,
-                          NegotiateOutput, UpdateChatInput)
+from typings.chat import (ChatInput, ChatListOutput, ChatMessageInput,
+                          ChatMessageOutput, ChatOutput, ChatStatus,
+                          ChatStopInput, ChatUserMessageInput,
+                          InsertChatMessagesInput, NegotiateOutput,
+                          UpdateChatInput)
 from typings.config import ConfigOutput
 from utils.auth import (authenticate, authenticate_by_token_or_api_key,
                         try_auth_user, try_auth_user_with_token_or_api_key)
@@ -51,21 +52,30 @@ def update_chat(
     return convert_model_to_response(db_chat)
 
 
-@router.get("", response_model=List[ChatOutput])
+@router.get("", response_model=ChatListOutput)
 def get_chats(
+    filter: Optional[List[str]] = Query([""]),
+    page: Optional[int] = 1,
+    per_page: Optional[int] = 1,
     auth: UserAccount = Depends(authenticate_by_token_or_api_key),
-) -> List[ChatOutput]:
+) -> ChatListOutput:
     """
-    Get all get_chats by account ID.
+    Get all chats by account ID.
 
     Args:
+        filter (Optional[List[str]]): List of strings to filter chats.
         auth (UserAccount): Authenticated user account.
 
     Returns:
-        List[ChatOutput]: List of agents associated with the account.
+        List[ChatOutput]: List of chats associated with the account.
     """
-    db_chats = ChatModel.get_chats(db=db, account=auth.account)
-    return convert_chats_to_chat_list(db_chats)
+    db_chats, count = ChatModel.get_chats(
+        db=db, account=auth.account, filter_list=filter, page=page, per_page=per_page
+    )
+    print("count", count)
+    chats = convert_chats_to_chat_list(db_chats)
+
+    return ChatListOutput(chats=chats, count=count)
 
 
 @router.post("/messages", status_code=201, include_in_schema=False)

@@ -18,6 +18,10 @@ import SessionDropdown from './SessionDropdown'
 import DatePickerField from 'components/DatePicker/DatePicker'
 
 import { useColumn } from './columnConfig'
+import ChatV2 from 'modals/AIChatModal/components/ChatV2'
+import { useLocation, useNavigate } from 'react-router-dom'
+import IconButton from 'share-ui/components/IconButton/IconButton'
+import { Close } from 'share-ui/components/Icon/Icons'
 
 const Sessions = () => {
   const { t } = useTranslation()
@@ -35,9 +39,17 @@ const Sessions = () => {
     filterByDateRange,
     handleDateChange,
     clearSelectedDays,
+    setPage,
+    page,
+    totalPages,
   } = useSession()
 
   const columnConfig = useColumn()
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const sessionId = urlParams.get('chat')
 
   return (
     <StyledSectionWrapper>
@@ -95,7 +107,28 @@ const Sessions = () => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <Table expand columns={columnConfig} data={filteredData} pagination />
+        <Table
+          expand
+          columns={columnConfig}
+          data={filteredData}
+          setPage={setPage}
+          page={page}
+          totalPages={totalPages}
+        />
+        {sessionId && (
+          <StyledSessionCHatWrapper>
+            <StyledButtonWrapper>
+              <IconButton
+                icon={() => <Close />}
+                size={IconButton.sizes?.XS}
+                kind={IconButton.kinds?.SECONDARY}
+                onClick={() => navigate('/sessions')}
+              />
+            </StyledButtonWrapper>
+
+            <ChatV2 chatSessionId={sessionId} />
+          </StyledSessionCHatWrapper>
+        )}
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
@@ -159,4 +192,15 @@ const StyledSearchIcon = styled(SearchOutline)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledSessionCHatWrapper = styled.div`
+  height: calc(100vh - 250px);
+  width: 100%;
+`
+const StyledButtonWrapper = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+  z-index: 1;
 `

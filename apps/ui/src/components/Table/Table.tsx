@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTable, useResizeColumns, useFlexLayout, useBlockLayout } from 'react-table'
 
 import styled, { css } from 'styled-components'
@@ -25,11 +25,20 @@ type TableProps = {
   data: any
   expand?: boolean
   pagination?: boolean
+  page?: number
+  setPage?: (value: number) => void
+
+  totalPages?: number
 }
 
-const Table = ({ columns, data, expand, pagination }: TableProps) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 20
+const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TableProps) => {
+  const [totalPageState, setTotalPageState] = useState(totalPages || null)
+
+  useEffect(() => {
+    if (totalPageState === totalPages) return
+
+    if (totalPages && totalPages > 0) setTotalPageState(totalPages)
+  }, [totalPages])
 
   const defaultColumn = useMemo(
     () => ({
@@ -49,24 +58,19 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
     useResizeColumns,
   )
 
-  const indexOfLastItem = currentPage * itemsPerPage
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem)
-  const totalPages = Math.ceil(rows.length / itemsPerPage)
-
   const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
+    if (setPage) setPage(pageNumber)
   }
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
+    if (totalPages && setPage && page < totalPages) {
+      setPage(page + 1)
     }
   }
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
+    if (setPage && page > 1) {
+      setPage(page - 1)
     }
   }
 
@@ -108,13 +112,13 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
           })}
         </StyledTbody>
       </StyledTable>
-      {/* {pagination && (
+      {totalPageState && (
         <PaginationWrapper>
           <PageNumber onClick={handlePrevPage}>
             <StyledNavigationChevronLeft size={16} />
           </PageNumber>
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === currentPage}>
+          {Array.from({ length: totalPageState }).map((_, i) => (
+            <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === page}>
               {i + 1}
             </PageNumber>
           ))}
@@ -122,7 +126,7 @@ const Table = ({ columns, data, expand, pagination }: TableProps) => {
             <StyledNavigationChevronRight size={16} />
           </PageNumber>
         </PaginationWrapper>
-      )} */}
+      )}
     </StyledRoot>
   )
 }

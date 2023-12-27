@@ -2,11 +2,27 @@ import { useQuery } from '@apollo/client'
 
 import CHATS_GQL from '../../gql/chat/chats.gql'
 
-export const useChatsService = () => {
-  const { data, error, loading, refetch } = useQuery(CHATS_GQL)
+function joinFilters(filters: string[]) {
+  return filters.map(filter => `filter=${encodeURIComponent(filter)}`).join('&')
+}
+
+export const useChatsService = ({
+  filter = [''],
+  page = 1,
+  itemsCount = 10,
+}: {
+  filter?: string[]
+  page?: number
+  itemsCount?: number
+}) => {
+  const restPath = `/chat?${joinFilters(filter)}&page=${page}&per_page=${itemsCount}`
+  const { data, error, loading, refetch } = useQuery(CHATS_GQL, {
+    variables: { restPath },
+  })
 
   return {
-    data: data?.getChats || [],
+    data: data?.getChats?.chats || [],
+    count: data?.getChats?.count || 0,
     error,
     loading,
     refetch,

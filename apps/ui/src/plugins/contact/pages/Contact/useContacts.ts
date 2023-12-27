@@ -31,7 +31,17 @@ export const useContacts = () => {
     conversationId,
   }
 
-  const { status, start, stop, error } = useConversation(config)
+  const {
+    status,
+    start,
+    stop,
+    error,
+    analyserNode,
+    transcripts,
+    currentSpeaker,
+    toggleActive,
+    active,
+  } = useConversation(config)
 
   useEffect(() => {
     if (!conversationId) return
@@ -88,12 +98,14 @@ export const useContacts = () => {
 
       if (!data) {
         throw new Error('Failed to create call!')
-      } else {
-        // setToast({
-        //   message: 'Call Started!',
-        //   type: 'positive',
-        //   open: true,
-        // })
+      } else if (data && callType === 'outbound') {
+        setToast({
+          message: 'Call Started!',
+          type: 'positive',
+          url: `/sessions?chat=${data.chat_id}`,
+          linkLabel: 'Go to Thread',
+          open: true,
+        })
       }
 
       if (callType === 'browser') {
@@ -118,19 +130,27 @@ export const useContacts = () => {
   }
 
   const handleEndCall = useCallback(async () => {
+    const sessionId = conversationId
     setConversationId(undefined)
 
-    if (status !== 'idle') {
-      stop()
-    } else {
-      await endCallService()
-    }
+    await stop()
+    await endCallService()
 
-    setToast({
-      message: 'Call Ended!',
-      type: 'positive',
-      open: true,
-    })
+    if (sessionId === undefined) {
+      setToast({
+        message: `Call cancelled!`,
+        type: 'positive',
+        open: true,
+      })
+    } else {
+      setToast({
+        message: `Call Ended!`,
+        url: `/sessions?chat=${sessionId}`,
+        linkLabel: 'Go to Thread',
+        type: 'positive',
+        open: true,
+      })
+    }
   }, [status, setToast])
 
   return {
@@ -139,5 +159,9 @@ export const useContacts = () => {
     handleCall,
     handleEndCall,
     status,
+    currentSpeaker,
+    toggleActive,
+    active,
+    error,
   }
 }

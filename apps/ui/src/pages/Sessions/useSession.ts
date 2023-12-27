@@ -29,7 +29,16 @@ type Chat = {
 export const useSession = () => {
   const [searchText, setSearchText] = useState('')
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
-  const { data: chatsData } = useChatsService()
+  const [page, setPage] = useState(1)
+
+  const { data: chatsData, count: chatsCount } = useChatsService({
+    filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
+    itemsCount: 20,
+    page,
+  })
+
+  const totalPages = Math.ceil(chatsCount / 20)
+
   const { data: calls } = useCallsService()
 
   const { schedules } = useSchedules()
@@ -85,26 +94,10 @@ export const useSession = () => {
     return { value: agent.agent.name, label: agent.agent.name }
   })
 
-  const filteredData = mappedData?.filter(
-    (row: { name: string; agent_name: string; team_name: string; added_At: string }) => {
-      const includesSearchText =
-        row.name.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.agent_name.toLowerCase().includes(searchText.toLowerCase())
-
-      const includesSelectedAgents =
-        selectedAgentNames.length === 0 ||
-        selectedAgentNames.some(agent => row.agent_name.toLowerCase().includes(agent.toLowerCase()))
-
-      const isInDateRange = filterByDateRange(row)
-
-      return includesSearchText && includesSelectedAgents && isInDateRange
-    },
-  )
-
   return {
     scheduleOptions,
     agentOptions,
-    filteredData,
+    filteredData: mappedData,
     searchText,
     setSearchText,
     selectedAgentNames,
@@ -114,5 +107,8 @@ export const useSession = () => {
     endDate,
     filterByDateRange,
     clearSelectedDays,
+    setPage,
+    page,
+    totalPages,
   }
 }

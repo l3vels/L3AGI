@@ -103,3 +103,8 @@ class NegotiateOutput(BaseModel):
 class ChatStopInput(BaseModel):
     agent_id: Optional[UUID] = None
     team_id: Optional[UUID] = None
+
+
+class ChatListOutput(BaseModel):
+    chats: List[ChatOutput]
+    count: int

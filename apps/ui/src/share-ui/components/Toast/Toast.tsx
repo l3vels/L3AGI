@@ -19,6 +19,7 @@ import { NOOP } from '../../utils/function-utils'
 import { ArtWork } from './ToastArtWork/ToastArtWork'
 import Loader from '../Loader/Loader'
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 interface ToastProps extends L3ComponentProps {
   actions?: ToastAction[]
@@ -49,6 +50,8 @@ interface ToastProps extends L3ComponentProps {
   artWorkType?: 'img' | 'icon'
   avatarSrc?: string
   loader?: boolean
+  link?: string
+  linkLabel?: string
 }
 
 const Toast: FC<ToastProps> & {
@@ -76,6 +79,8 @@ const Toast: FC<ToastProps> & {
   closeIcon,
   iconClassName,
   loader = false,
+  link,
+  linkLabel,
 }) => {
   const toastButtons: JSX.Element[] | null = useMemo(() => {
     return actions
@@ -156,7 +161,7 @@ const Toast: FC<ToastProps> & {
               <ArtWork type={ArtWork.types?.IMG} src={artWork} ariaLabel='label' />
             </div>
           )}
-          <div
+          <StyledTextWrapper
             className={cx('l3-style-toast-content', {
               'l3-style-toast-content-no-icon': !iconElement,
             })}
@@ -165,7 +170,8 @@ const Toast: FC<ToastProps> & {
               {label && <div className='l3-style-toast-label'>{label || children}</div>}
               {paragraph && <div className='l3-style-toast-paragraph'>{paragraph}</div>}
             </>
-          </div>
+            {link && <Link to={link}>{linkLabel}</Link>}
+          </StyledTextWrapper>
           {(toastButtons || deprecatedAction) && (
             <div className='l3-style-toast-action'>{toastButtons || deprecatedAction}</div>
           )}
@@ -249,4 +255,8 @@ const StyledToast = styled.div<{ position: string; type: string; isOpen: boolean
       color: #000;
       background: linear-gradient(180deg, #fdfe53 0%, #eb9b3a 100%);
     `}
+`
+const StyledTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `

@@ -190,7 +190,7 @@ export const useColumn = () => {
 
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
-        const { refetch: refetchChat } = useChatsService()
+        const { refetch: refetchChat } = useChatsService({})
 
         const { deleteChat } = useDeleteChatService()
         const { openModal, closeModal } = useModal()
@@ -225,7 +225,7 @@ export const useColumn = () => {
 
         const navigate = useNavigate()
         const handleViewClick = (id: string) => {
-          navigate(`/chat/session?chat=${id}`)
+          navigate(`/sessions?chat=${id}`)
         }
 
         return (

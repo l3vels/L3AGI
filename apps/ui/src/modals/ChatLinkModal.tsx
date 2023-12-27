@@ -36,7 +36,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
 
   const [chatLink, setChatLink] = useState<string | null>(null)
 
-  const { refetch: refetchChat } = useChatsService()
+  const { refetch: refetchChat } = useChatsService({})
 
   const { closeModal } = useModal()
 
