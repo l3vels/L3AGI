@@ -108,7 +108,7 @@ const TableCell = ({ cell }: TableCellProps) => {
 
 export default TableCell
 
-const StyledTd = styled.td<{ isEditing: boolean; cursorPointer: boolean }>`
+const StyledTd = styled.div<{ isEditing: boolean; cursorPointer: boolean }>`
   padding: 5px 10px;
   position: relative;
 

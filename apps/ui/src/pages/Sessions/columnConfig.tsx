@@ -65,8 +65,9 @@ export const useColumn = () => {
     {
       Header: 'Name',
       accessor: 'name',
-      minWidth: 343,
-      width: '24.8%',
+      width: 300,
+      minWidth: 300,
+     
     },
 
     // {
@@ -78,8 +79,11 @@ export const useColumn = () => {
     {
       Header: 'Agent Name',
       accessor: 'agent_name',
-      minWidth: 342,
-      width: '24.8%',
+      width: 300,
+      minWidth: 300,
+      
+
+      // minWidth: 342,
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
         const navigate = useNavigate()
@@ -142,20 +146,20 @@ export const useColumn = () => {
     {
       Header: 'Status',
       accessor: 'status',
-      minWidth: 150,
-      width: '10.39%',
+      minWidth: 100,
+      width: 100,
     },
     {
       Header: 'Sentiment',
       accessor: 'sentiment',
-      minWidth: 150,
-      width: '10.39%',
+      minWidth: 100,
+      width: 100,
     },
     {
       Header: 'Voice',
       accessor: 'sender_name',
-      minWidth: 343,
-      width: '24.8%',
+      minWidth: 180,
+      width: 180,
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
 
@@ -178,15 +182,16 @@ export const useColumn = () => {
     {
       Header: 'Created Date',
       accessor: 'added_at',
-      minWidth: 343,
-      width: '24.8%',
+      minWidth: 200,
+      width: 200,
       Cell: DateRenderer,
     },
     {
       Header: 'Actions',
       accessor: 'actions',
-      minWidth: 150,
-      width: '10.39%',
+      minWidth: 100,
+      width: 100,
+      maxWidth: 100,
 
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
