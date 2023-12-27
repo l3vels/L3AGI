@@ -117,11 +117,31 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
           <PageNumber onClick={handlePrevPage}>
             <StyledNavigationChevronLeft size={16} />
           </PageNumber>
-          {Array.from({ length: totalPageState }).map((_, i) => (
-            <PageNumber key={i} onClick={() => paginate(i + 1)} active={i + 1 === page}>
-              {i + 1}
+          <PageNumber onClick={() => paginate(1)} active={1 === page}>
+            1
+          </PageNumber>
+          {page > 3 && (
+            <>
+              <PageNumber>...</PageNumber>
+              <PageNumber onClick={() => paginate(page - 1)}>{page - 1}</PageNumber>
+            </>
+          )}
+          {page !== 1 && (
+            <PageNumber onClick={() => paginate(page)} active={true}>
+              {page}
             </PageNumber>
-          ))}
+          )}
+          {page < totalPageState - 2 && (
+            <>
+              <PageNumber onClick={() => paginate(page + 1)}>{page + 1}</PageNumber>
+              <PageNumber>...</PageNumber>
+            </>
+          )}
+          {totalPageState > 1 && page !== totalPageState && (
+            <PageNumber onClick={() => paginate(totalPageState)} active={totalPageState === page}>
+              {totalPageState}
+            </PageNumber>
+          )}
           <PageNumber onClick={handleNextPage}>
             <StyledNavigationChevronRight size={16} />
           </PageNumber>
