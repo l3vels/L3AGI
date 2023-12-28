@@ -6,11 +6,6 @@ query getDomainConfig @api(name: "pro") {
     content
     logo
     welcome_message
-    login_page {
-      email_password
-      github
-      popup
-      discovery
-    }
+    login_page
   }
 }

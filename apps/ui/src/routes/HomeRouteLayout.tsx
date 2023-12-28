@@ -1,5 +1,5 @@
 import React from 'react'
-import { useOutlet } from 'react-router-dom'
+import { Navigate, useOutlet } from 'react-router-dom'
 
 import styled from 'styled-components'
 
@@ -14,35 +14,50 @@ import Button from 'share-ui/components/Button/Button'
 import { useModal } from 'hooks'
 import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
 import { ButtonPrimary } from 'components/Button/Button'
+import { useDomainConfig } from 'utils/useDomainConfig'
+import { Login } from 'pages/Auth'
 
 const HomeRouteLayout = () => {
+  const { getDomainConfig } = useDomainConfig()
+
+  const loginConfig = getDomainConfig('login_page')
+
   const { user } = React.useContext(AuthContext)
 
   const { openModal } = useModal()
 
   const outlet = useOutlet()
+  console.log('loginConfig', loginConfig)
 
   return (
     <StyledAppContainer className='app_container'>
       <Header isPublicRoute={!user} />
       {/* {user && (
-        <StyledNavigationWrapper>
-          <MainNavigation />
-        </StyledNavigationWrapper>
-      )} */}
-      <StyledMainContainer>{outlet}</StyledMainContainer>
+            <StyledNavigationWrapper>
+            <MainNavigation />
+            </StyledNavigationWrapper>
+          )} */}
+      {((loginConfig?.popup && !user) || user) && (
+        <StyledMainContainer>{outlet}</StyledMainContainer>
+      )}
       {user && <Footer />}
 
-      {!user && (
-        <StyledLoginWrapper>
-          <ButtonPrimary onClick={() => openModal({ name: 'login-modal' })}>
-            Login / Sign Up
-          </ButtonPrimary>
+      {!user && !loginConfig?.popup ? (
+        <Login />
+      ) : (
+        <>
+          {!user && (
+            <StyledLoginWrapper>
+              <ButtonPrimary onClick={() => openModal({ name: 'login-modal' })}>
+                Login / Sign Up
+              </ButtonPrimary>
 
-          <TermsAndPrivacyButtons />
-        </StyledLoginWrapper>
+              <TermsAndPrivacyButtons />
+            </StyledLoginWrapper>
+          )}
+          {!user && <StyledSpace />}
+        </>
       )}
-      {!user && <StyledSpace />}
     </StyledAppContainer>
   )
 }
