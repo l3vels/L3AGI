@@ -61,7 +61,7 @@ const figureSecondAnimation = keyframes`
 `
 
 const figureThirdAnimation = keyframes`
-0% {translate(100%, 30%)}
+/* 0% {transform:translate(100%, 30%)} */
 18% {transform: translate(70%, 20%) }
 25% {transform: translate(40%, 10%) }
 33% {transform: translate(10%, 0%) }

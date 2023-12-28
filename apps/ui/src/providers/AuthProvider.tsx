@@ -6,6 +6,8 @@ import { AuthContext } from 'contexts'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useTranslation } from 'react-i18next'
+
+import { useDomainConfig } from 'utils/useDomainConfig'
 // import { useLocation } from 'react-router-dom'
 
 // type AuthProviderProps = {
@@ -14,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 const AuthProvider = ({ children }: any) => {
   const { t, i18n } = useTranslation()
+  const { domainLoading, getDomainConfig, domainConfig } = useDomainConfig()
   const { moduleNames } = useGetAccountModule()
 
   const { data: user, loading } = useUserService({})
@@ -43,13 +46,18 @@ const AuthProvider = ({ children }: any) => {
     integration,
   } = moduleNames
 
+  const domainTitle = getDomainConfig('title')
+  const domainWelcomeMessage = getDomainConfig('welcome_message')
+
   const handleTranslation = (value: string, newName: string) => {
     i18n.addResource('en', 'translation', value, newName)
   }
 
   useEffect(() => {
     // Update the translation dynamically
-    if (welcome) handleTranslation('welcome-message', welcome)
+    if (domainWelcomeMessage) {
+      handleTranslation('welcome-message', domainWelcomeMessage)
+    } else if (welcome) handleTranslation('welcome-message', welcome)
     if (home) handleTranslation('home', home)
     if (chat) handleTranslation('chat', chat)
     if (agent) handleTranslation('agent', agent)
@@ -60,10 +68,11 @@ const AuthProvider = ({ children }: any) => {
     if (discovery) handleTranslation('discovery', discovery)
     if (schedule) handleTranslation('schedule', schedule)
     if (integration) handleTranslation('integration', integration)
-  }, [moduleNames])
+    if (domainTitle) handleTranslation('l3agi', domainTitle)
+  }, [moduleNames, domainConfig])
 
   if (loading) {
-    return <WelcomeLoader />
+    return <>{domainConfig && <WelcomeLoader />}</>
   }
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
