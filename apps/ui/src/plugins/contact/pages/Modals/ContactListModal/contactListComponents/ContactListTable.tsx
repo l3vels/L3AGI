@@ -1,4 +1,4 @@
-import { ButtonPrimary } from 'components/Button/Button'
+import { ButtonTertiary } from 'components/Button/Button'
 import Table from 'components/Table'
 import { useModal } from 'hooks'
 import { t } from 'i18next'
@@ -53,7 +53,7 @@ const ContactListTable = ({ callType }: { callType: CreateCallInput['type'] }) =
         Cell: ({ cell }: any) => {
           return (
             <StyledTableButtons>
-              <ButtonPrimary
+              <ButtonTertiary
                 onClick={() => {
                   // handleCall({ agent_id: agentId, contact_id: cell.value, type: 'browser' })
                   if (callType === 'browser') {
@@ -66,7 +66,7 @@ const ContactListTable = ({ callType }: { callType: CreateCallInput['type'] }) =
                 size={'small'}
               >
                 {t('call')}
-              </ButtonPrimary>
+              </ButtonTertiary>
             </StyledTableButtons>
           )
         },

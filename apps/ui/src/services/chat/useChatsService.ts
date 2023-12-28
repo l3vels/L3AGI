@@ -18,6 +18,7 @@ export const useChatsService = ({
   const restPath = `/chat?${joinFilters(filter)}&page=${page}&per_page=${itemsCount}`
   const { data, error, loading, refetch } = useQuery(CHATS_GQL, {
     variables: { restPath },
+    fetchPolicy: 'cache-first',
   })
 
   return {

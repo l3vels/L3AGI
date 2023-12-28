@@ -42,6 +42,7 @@ const Sessions = () => {
     setPage,
     page,
     totalPages,
+    chatsLoading,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -68,7 +69,7 @@ const Sessions = () => {
               onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
             />
           </StyledSessionDropdownWrapper>
-          <StyledDateWrapper>
+          {/* <StyledDateWrapper>
             <DatePickerField
               start_date={startDate}
               end_date={endDate}
@@ -76,7 +77,7 @@ const Sessions = () => {
               onClear={clearSelectedDays}
               onApply={filterByDateRange}
             />
-          </StyledDateWrapper>
+          </StyledDateWrapper> */}
 
           <StyledSessionDropdownWrapper>
             <SessionDropdown isMulti placeholder='Schedule' label={''} options={scheduleOptions} />
@@ -114,6 +115,8 @@ const Sessions = () => {
           setPage={setPage}
           page={page}
           totalPages={totalPages}
+          isLoading={chatsLoading}
+          selectedRow={sessionId}
         />
         {sessionId && (
           <StyledSessionCHatWrapper>
