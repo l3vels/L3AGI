@@ -1,4 +1,4 @@
-import { ButtonPrimary, ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
+import { ButtonTertiary } from 'components/Button/Button'
 import Table from 'components/Table'
 import { useModal } from 'hooks'
 import { t } from 'i18next'
