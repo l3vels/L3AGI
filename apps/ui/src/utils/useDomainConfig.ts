@@ -1,16 +1,33 @@
 import { useDomainConfigService } from 'plugins/contact/services/domainConfig/domainConfigService'
+import logo from 'assets/images/l3_logo.png'
 
 export const useDomainConfig = () => {
   const { data: domainConfig, loading: domainLoading } = useDomainConfigService()
 
   const loginPage = domainConfig?.login_page
-  console.log('loginPage', loginPage)
+
   const getDomainConfig = (
     value: 'title' | 'content' | 'logo' | 'welcome_message' | 'login_page',
   ) => {
+    if (!domainConfig) {
+      if (value === 'title') return false
+      if (value === 'content') return false
+      if (value === 'logo') return logo
+      if (value === 'welcome_message') return false
+      if (value === 'login_page') {
+        return {
+          email_password: true,
+          github: true,
+          popup: true,
+          discovery: true,
+        }
+      }
+    }
+
     if (value === 'title') return domainConfig?.title
     if (value === 'content') return domainConfig?.content
-    if (value === 'logo') return domainConfig?.logo
+    if (value === 'logo')
+      return domainConfig?.logo && domainConfig?.logo.length > 0 ? domainConfig?.logo : logo
     if (value === 'welcome_message') return domainConfig?.welcome_message
     if (value === 'login_page') {
       if (typeof loginPage !== 'object') {

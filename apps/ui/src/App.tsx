@@ -18,7 +18,6 @@ import './App.css'
 
 // import '@l3-lib/ui-core/dist/main.css'
 import { LayoutProvider } from 'providers/LayoutProvider'
-import { useDomainConfig } from 'utils/useDomainConfig'
 
 function App() {
   useDetectMobile()

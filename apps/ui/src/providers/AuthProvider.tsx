@@ -54,10 +54,15 @@ const AuthProvider = ({ children }: any) => {
   }
 
   useEffect(() => {
+    document.title = domainTitle || 'L3AGI'
+  }, [domainConfig])
+
+  console.log('domainWelcomeMessage', domainWelcomeMessage)
+  useEffect(() => {
     // Update the translation dynamically
-    if (domainWelcomeMessage) {
-      handleTranslation('welcome-message', domainWelcomeMessage)
-    } else if (welcome) handleTranslation('welcome-message', welcome)
+    if (domainTitle) handleTranslation('l3agi', domainTitle)
+    if (domainWelcomeMessage) handleTranslation('welcome-l3agi', domainWelcomeMessage)
+    if (welcome) handleTranslation('welcome-message', welcome)
     if (home) handleTranslation('home', home)
     if (chat) handleTranslation('chat', chat)
     if (agent) handleTranslation('agent', agent)
@@ -68,7 +73,6 @@ const AuthProvider = ({ children }: any) => {
     if (discovery) handleTranslation('discovery', discovery)
     if (schedule) handleTranslation('schedule', schedule)
     if (integration) handleTranslation('integration', integration)
-    if (domainTitle) handleTranslation('l3agi', domainTitle)
   }, [moduleNames, domainConfig])
 
   if (loading) {

@@ -4,9 +4,13 @@ import Heading from 'share-ui/components/Heading/Heading'
 
 import logo from 'assets/images/l3_logo.png'
 import { useEffect } from 'react'
+import { useDomainConfig } from 'utils/useDomainConfig'
 
 export const WelcomeLoader = () => {
   const { t } = useTranslation()
+  const { getDomainConfig } = useDomainConfig()
+  const domainLogo = getDomainConfig('logo')
+
   // useEffect(() => {
   //   setTimeout(() => {
   //     window.location.href = '/'
@@ -19,7 +23,7 @@ export const WelcomeLoader = () => {
       <StyledSecondFigure />
       <StyledThirdFigure />
       <StyledCenterContainer>
-        <img src={logo} alt='' />
+        <img src={domainLogo} alt='' />
         <Heading
           value={t('welcome-l3agi')}
           type={Heading.types?.h1}
