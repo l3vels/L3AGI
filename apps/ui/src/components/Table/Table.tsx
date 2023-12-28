@@ -133,9 +133,10 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
           <PageNumber onClick={() => paginate(1)} active={1 === page}>
             1
           </PageNumber>
-          {page > 3 && (
+          {page > 2 && (
             <>
-              <PageNumber>...</PageNumber>
+              {page > 4 && <PageNumber readOnly>...</PageNumber>}
+              {page !== 3 && <PageNumber onClick={() => paginate(page - 2)}>{page - 2}</PageNumber>}
               <PageNumber onClick={() => paginate(page - 1)}>{page - 1}</PageNumber>
             </>
           )}
@@ -144,10 +145,13 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
               {page}
             </PageNumber>
           )}
-          {page < totalPageState - 2 && (
+          {page < totalPageState - 1 && (
             <>
               <PageNumber onClick={() => paginate(page + 1)}>{page + 1}</PageNumber>
-              <PageNumber>...</PageNumber>
+              {page < totalPageState - 2 && (
+                <PageNumber onClick={() => paginate(page + 2)}>{page + 2}</PageNumber>
+              )}
+              {page < totalPageState - 3 && <PageNumber readOnly>...</PageNumber>}
             </>
           )}
           {totalPageState > 1 && page !== totalPageState && (
@@ -255,7 +259,7 @@ const PaginationWrapper = styled.div`
   background-color: #fff;
 `
 
-const PageNumber = styled.div<{ active?: boolean }>`
+const PageNumber = styled.div<{ active?: boolean; readOnly?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -279,6 +283,14 @@ const PageNumber = styled.div<{ active?: boolean }>`
       width: 30px;
       height: 30px;
       border-radius: 5px;
+    `}
+  ${({ readOnly }) =>
+    readOnly &&
+    css`
+      :hover {
+        background-color: unset;
+        cursor: auto;
+      }
     `}
 `
 
