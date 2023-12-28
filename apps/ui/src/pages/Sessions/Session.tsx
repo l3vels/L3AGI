@@ -116,6 +116,7 @@ const Sessions = () => {
           page={page}
           totalPages={totalPages}
           isLoading={chatsLoading}
+          selectedRow={sessionId}
         />
         {sessionId && (
           <StyledSessionCHatWrapper>

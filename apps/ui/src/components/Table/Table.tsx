@@ -31,10 +31,26 @@ type TableProps = {
   setPage?: (value: number) => void
   isLoading?: boolean
   totalPages?: number
+  selectedRow?: string | null
 }
 
-const Table = ({ columns, data, expand, page = 1, setPage, totalPages, isLoading }: TableProps) => {
+const Table = ({
+  columns,
+  data,
+  expand,
+  page = 1,
+  setPage,
+  totalPages,
+  isLoading,
+  selectedRow,
+}: TableProps) => {
   const [totalPageState, setTotalPageState] = useState(totalPages || null)
+  const [selectedRowState, setSelectedRowState] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (selectedRow) return setSelectedRowState(selectedRow)
+    else return setSelectedRowState(null)
+  }, [selectedRow])
 
   useEffect(() => {
     if (totalPageState === totalPages) return
@@ -122,7 +138,12 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages, isLoading
           {rows?.map((row: any, index: number) => {
             prepareRow(row)
             return (
-              <StyledTr {...row.getRowProps()} key={index} bodyRow>
+              <StyledTr
+                {...row.getRowProps()}
+                key={index}
+                bodyRow
+                isSelected={row.original.id === selectedRowState}
+              >
                 {row.cells.map((cell: any, index: number) => {
                   return <TableCell key={index} cell={cell} />
                 })}
@@ -221,7 +242,7 @@ const StyledTbody = styled.tbody`
   flex-direction: column;
 `
 
-const StyledTr = styled.tr<{ bodyRow?: boolean }>`
+const StyledTr = styled.tr<{ bodyRow?: boolean; isSelected?: boolean }>`
   height: 35px;
 
   display: flex;
@@ -229,9 +250,18 @@ const StyledTr = styled.tr<{ bodyRow?: boolean }>`
     ${p =>
       p.bodyRow &&
       css`
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(0, 0, 0, 0.1);
       `};
   }
+
+  ${p =>
+    p.isSelected &&
+    css`
+      background-color: rgba(0, 0, 0, 0.2);
+      :hover {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    `};
 `
 const StyledTh = styled.th`
   display: flex;
