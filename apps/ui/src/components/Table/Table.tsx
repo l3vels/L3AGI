@@ -7,9 +7,10 @@ import TableCell from './components/TableCell'
 
 import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
 import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
 import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
+import Loader from 'share-ui/components/Loader/Loader'
 
 type ColumnProps = {
   Header: any
@@ -28,11 +29,11 @@ type TableProps = {
   pagination?: boolean
   page?: number
   setPage?: (value: number) => void
-
+  isLoading?: boolean
   totalPages?: number
 }
 
-const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TableProps) => {
+const Table = ({ columns, data, expand, page = 1, setPage, totalPages, isLoading }: TableProps) => {
   const [totalPageState, setTotalPageState] = useState(totalPages || null)
 
   useEffect(() => {
@@ -77,6 +78,11 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
 
   return (
     <StyledRoot>
+      {isLoading && (
+        <StyledLoaderWrapper>
+          <Loader size={50} />
+        </StyledLoaderWrapper>
+      )}
       <StyledTable {...getTableProps()} expand={expand}>
         <StyledThead>
           {headerGroups.map((headerGroup: any, index: number) => (
@@ -184,6 +190,8 @@ const StyledRoot = styled.div`
 
   border-radius: 24px;
   max-height: calc(100vh - 250px);
+
+  position: relative;
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
@@ -304,4 +312,12 @@ const StyledNavigationChevronRight = styled(NavigationChevronRight)`
   path {
     color: ${({ theme }) => theme.body.iconColor};
   }
+`
+
+const StyledLoaderWrapper = styled.div`
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `

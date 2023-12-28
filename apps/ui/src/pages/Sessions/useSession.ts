@@ -31,7 +31,11 @@ export const useSession = () => {
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
   const [page, setPage] = useState(1)
 
-  const { data: chatsData, count: chatsCount } = useChatsService({
+  const {
+    data: chatsData,
+    count: chatsCount,
+    loading: chatsLoading,
+  } = useChatsService({
     filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
     itemsCount: 20,
     page,
@@ -110,5 +114,6 @@ export const useSession = () => {
     setPage,
     page,
     totalPages,
+    chatsLoading,
   }
 }

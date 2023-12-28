@@ -42,6 +42,7 @@ const Sessions = () => {
     setPage,
     page,
     totalPages,
+    chatsLoading,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -114,6 +115,7 @@ const Sessions = () => {
           setPage={setPage}
           page={page}
           totalPages={totalPages}
+          isLoading={chatsLoading}
         />
         {sessionId && (
           <StyledSessionCHatWrapper>
