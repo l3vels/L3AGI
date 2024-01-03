@@ -17,6 +17,7 @@ import { ADD_AUTO_HEIGHT_COMPONENTS, defaultCustomStyles, DROPDOWN_ID } from './
 import generateBaseStyles, { customTheme } from './Dropdown.styles'
 import Control from './components/Control/Control'
 import { DROPDOWN_TAG_COLORS, MENU_WRAPPER_CLASS_NAME, DROPDOWN_KINDS } from './dropdown-constants'
+import styled from 'styled-components'
 
 const Dropdown = ({
   className,
@@ -295,60 +296,62 @@ const Dropdown = ({
       : ''
 
   return (
-    <DropDownComponent
-      className={cx('dropdown-wrapper', className, kind_wrapper_className)}
-      selectProps={customProps}
-      components={{
-        DropdownIndicator,
-        Menu,
-        ClearIndicator,
-        Input,
-        Option,
-        Control,
-        SingleValue,
-        ...(multi && {
-          MultiValue: NOOP, // We need it for react-select to behave nice with "multi"
-          ValueContainer: MultiValueContainer,
-        }),
-        ...(isVirtualized && { MenuList: WindowedMenuList }),
-      }}
-      // When inside scroll we set the menu position by js and we can't follow the drop down location while use scrolling
-      closeMenuOnScroll={closeMenuOnScroll}
-      size={size}
-      noOptionsMessage={noOptionsMessage}
-      placeholder={placeholder}
-      isDisabled={disabled}
-      isClearable={clearable}
-      isSearchable={searchable}
-      defaultValue={defaultValue}
-      value={value}
-      onMenuOpen={onMenuOpen}
-      onMenuClose={onMenuClose}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onChange={onChange}
-      onInputChange={onInputChange}
-      openMenuOnFocus={openMenuOnFocus}
-      openMenuOnClick={openMenuOnClick}
-      isRtl={rtl}
-      styles={styles}
-      theme={customTheme}
-      maxMenuHeight={maxMenuHeight}
-      menuPortalTarget={menuPortalTarget}
-      menuPlacement={menuPlacement}
-      menuIsOpen={menuIsOpen}
-      tabIndex={tabIndex}
-      id={id}
-      // eslint-disable-next-line jsx-a11y/no-autofocus
-      autoFocus={autoFocus}
-      closeMenuOnSelect={closeMenuOnSelect}
-      ref={ref}
-      withMandatoryDefaultOptions={withMandatoryDefaultOptions}
-      isOptionSelected={isOptionSelected}
-      aria-details={tooltipContent}
-      {...asyncAdditions}
-      {...additions}
-    />
+    <StyledWrapper>
+      <DropDownComponent
+        className={cx('dropdown-wrapper', className, kind_wrapper_className)}
+        selectProps={customProps}
+        components={{
+          DropdownIndicator,
+          Menu,
+          ClearIndicator,
+          Input,
+          Option,
+          Control,
+          SingleValue,
+          ...(multi && {
+            MultiValue: NOOP, // We need it for react-select to behave nice with "multi"
+            ValueContainer: MultiValueContainer,
+          }),
+          ...(isVirtualized && { MenuList: WindowedMenuList }),
+        }}
+        // When inside scroll we set the menu position by js and we can't follow the drop down location while use scrolling
+        closeMenuOnScroll={closeMenuOnScroll}
+        size={size}
+        noOptionsMessage={noOptionsMessage}
+        placeholder={placeholder}
+        isDisabled={disabled}
+        isClearable={clearable}
+        isSearchable={searchable}
+        defaultValue={defaultValue}
+        value={value}
+        onMenuOpen={onMenuOpen}
+        onMenuClose={onMenuClose}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChange={onChange}
+        onInputChange={onInputChange}
+        openMenuOnFocus={openMenuOnFocus}
+        openMenuOnClick={openMenuOnClick}
+        isRtl={rtl}
+        styles={styles}
+        theme={customTheme}
+        maxMenuHeight={maxMenuHeight}
+        menuPortalTarget={menuPortalTarget}
+        menuPlacement={menuPlacement}
+        menuIsOpen={menuIsOpen}
+        tabIndex={tabIndex}
+        id={id}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus={autoFocus}
+        closeMenuOnSelect={closeMenuOnSelect}
+        ref={ref}
+        withMandatoryDefaultOptions={withMandatoryDefaultOptions}
+        isOptionSelected={isOptionSelected}
+        aria-details={tooltipContent}
+        {...asyncAdditions}
+        {...additions}
+      />
+    </StyledWrapper>
   )
 }
 
@@ -599,3 +602,70 @@ Dropdown.propTypes = {
 }
 
 export default Dropdown
+
+const StyledWrapper = styled.div`
+  .css-xrcw8y-container {
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+  }
+
+  .css-ugu73m-placeholder {
+    color: ${({ theme }) => theme.body.placeHolderColor};
+  }
+  .menu {
+    z-index: 10;
+  }
+
+  .menu.dropdown-menu-wrapper.css-19zapvn-menu {
+    background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
+    color: ${({ theme }) => theme.body.textColorPrimary};
+    border: ${({ theme }) => theme.body.border};
+  }
+
+  .dropdown-wrapper__option--reset {
+    &:hover {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+      background: ${({ theme }) => theme.body.placeHolderColor};
+    }
+  }
+  .clear-indicator.css-1rycjgo {
+    path {
+      fill: ${({ theme }) => theme.body.iconColor};
+    }
+  }
+
+  .dropdown-indicator.css-12prnvf-indicatorContainer {
+    path {
+      fill: ${({ theme }) => theme.body.iconColor};
+    }
+  }
+
+  .components-Tags-Tags-module__tags--qonKr {
+    background: ${({ theme }) => theme.body.textColorPrimary}!important;
+    path {
+      fill: ${({ theme }) => theme.body.toolkitCardBgColorTertiary};
+    }
+  }
+
+  .components-Tags-Tags-module__tags--qonKr .components-Tags-Tags-module__label--gC1wk {
+    color: ${({ theme }) => theme.body.textColorTertiary}!important;
+  }
+
+  .l3-dropdown_scrollable-wrapper {
+    &::placeholder {
+      color: ${({ theme }) => theme.body.placeHolderColor};
+    }
+  }
+
+  .css-wxpx7r-menu {
+    background-color: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
+  }
+
+  .dropdown-wrapper.primary__wrapper.css-7xl64p-container {
+    border: 3px solid ${({ theme }) => theme.body.textareaBorder};
+    height: auto;
+  }
+
+  .css-ugu73m-placeholder {
+    color: ${({ theme }) => theme.body.textColorPrimary};
+  }
+`
