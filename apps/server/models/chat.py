@@ -213,16 +213,15 @@ class ChatModel(BaseModel):
     @classmethod
     def get_chats(cls, db, account, filter_list, page=1, per_page=10):
         offset = (page - 1) * per_page
-        filter_conditions = []
-        for filter_string in filter_list:
-            filter_conditions.append(
-                or_(
-                    ChatModel.name.ilike(f"%{filter_string}%"),
-                    AgentModel.name.ilike(f"%{filter_string}%"),
-                )
+        filter_conditions = [
+            or_(
+                ChatModel.name.ilike(f"%{filter_string}%"),
+                AgentModel.name.ilike(f"%{filter_string}%"),
             )
+            for filter_string in filter_list
+        ]
 
-        chats = (
+        query = (
             db.session.query(ChatModel)
             .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)
             .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)
@@ -232,36 +231,23 @@ class ChatModel(BaseModel):
             .filter(
                 ChatModel.creator_account_id == account.id,
                 or_(
-                    or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
-                    ChatModel.is_deleted is None,
+                    or_(
+                        ChatModel.is_deleted.is_(False), ChatModel.is_deleted.is_(None)
+                    ),
+                    ChatModel.is_deleted.is_(None),
                 ),
                 or_(*filter_conditions),
             )
-            .options(joinedload(ChatModel.team))
-            .options(joinedload(ChatModel.agent))
-            .options(joinedload(ChatModel.creator_user))
-            .options(joinedload(ChatModel.creator_account))
-            .offset(offset)
-            .limit(per_page)
-            .all()
+            .options(
+                joinedload(ChatModel.team),
+                joinedload(ChatModel.agent),
+                joinedload(ChatModel.creator_user),
+                joinedload(ChatModel.creator_account),
+            )
         )
 
-        total_count = (
-            db.session.query(ChatModel)
-            .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)
-            .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)
-            .outerjoin(TeamModel, ChatModel.team_id == TeamModel.id)
-            .outerjoin(AgentModel, ChatModel.agent_id == AgentModel.id)
-            .filter(
-                ChatModel.creator_account_id == account.id,
-                or_(
-                    or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
-                    ChatModel.is_deleted is None,
-                ),
-                or_(*filter_conditions),
-            )
-            .count()
-        )
+        chats = query.offset(offset).limit(per_page).all()
+        total_count = query.count()
 
         return chats, total_count
 
