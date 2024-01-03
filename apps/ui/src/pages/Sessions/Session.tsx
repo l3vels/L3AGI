@@ -119,7 +119,7 @@ const Sessions = () => {
           selectedRow={sessionId}
         />
         {sessionId && (
-          <StyledSessionCHatWrapper>
+          <StyledSessionChatWrapper>
             <StyledButtonWrapper>
               <IconButton
                 icon={() => <Close />}
@@ -130,7 +130,7 @@ const Sessions = () => {
             </StyledButtonWrapper>
 
             <ChatV2 chatSessionId={sessionId} />
-          </StyledSessionCHatWrapper>
+          </StyledSessionChatWrapper>
         )}
       </ComponentsWrapper>
     </StyledSectionWrapper>
@@ -196,9 +196,11 @@ const StyledSearchIcon = styled(SearchOutline)`
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledSessionCHatWrapper = styled.div`
+const StyledSessionChatWrapper = styled.div`
   height: calc(100vh - 250px);
   width: 100%;
+
+  padding: 0 10px;
 `
 const StyledButtonWrapper = styled.div`
   position: absolute;
