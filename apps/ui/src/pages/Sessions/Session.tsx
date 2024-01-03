@@ -21,9 +21,14 @@ import { useColumn } from './columnConfig'
 import ChatV2 from 'modals/AIChatModal/components/ChatV2'
 import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
-import { Close, Filter } from 'share-ui/components/Icon/Icons'
-import { StyledIconButton } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import { Close } from 'share-ui/components/Icon/Icons'
+
 import { useState } from 'react'
+import { ButtonTertiary } from 'components/Button/Button'
+import {
+  StyledNavigationChevronDown,
+  StyledNavigationChevronUp,
+} from 'pages/Agents/AgentForm/components/ShowAdvancedButton'
 
 const Sessions = () => {
   const { t } = useTranslation()
@@ -69,13 +74,14 @@ const Sessions = () => {
         <StyledTitleWrapper>
           <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
 
-          <IconButton
-            icon={() => <Filter />}
-            ariaLabel='Filter'
-            size={IconButton.sizes?.SMALL}
-            kind={IconButton.kinds?.TERTIARY}
-            onClick={() => setShowFilter(!showFilter)}
-          />
+          <ButtonTertiary onClick={() => setShowFilter(!showFilter)} size={'xs'}>
+            Filter
+            {showFilter ? (
+              <StyledNavigationChevronUp size={14} />
+            ) : (
+              <StyledNavigationChevronDown size={14} />
+            )}
+          </ButtonTertiary>
         </StyledTitleWrapper>
       </StyledHeaderGroup>
 
@@ -135,7 +141,6 @@ const Sessions = () => {
           </StyledSearchContainer>
         </StyledRightSideWrapper>
       )}
-
       <ComponentsWrapper noPadding>
         <Table
           expand
@@ -241,4 +246,5 @@ const StyledButtonWrapper = styled.div`
 const StyledTitleWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 2px;
 `
