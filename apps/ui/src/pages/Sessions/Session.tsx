@@ -48,6 +48,7 @@ const Sessions = () => {
     page,
     totalPages,
     chatsLoading,
+    setSelectedAgentType,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -56,6 +57,11 @@ const Sessions = () => {
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
   const sessionId = urlParams.get('chat')
+
+  const agentTypeOption = [
+    { label: 'Chat based', value: 'text' },
+    { label: 'Call based', value: 'voice' },
+  ]
 
   return (
     <StyledSectionWrapper>
@@ -96,6 +102,14 @@ const Sessions = () => {
 
           <StyledSessionDropdownWrapper>
             <SessionDropdown isMulti placeholder='Schedule' label={''} options={scheduleOptions} />
+          </StyledSessionDropdownWrapper>
+          <StyledSessionDropdownWrapper>
+            <SessionDropdown
+              placeholder='Agent Type'
+              label={''}
+              options={agentTypeOption}
+              onChange={(value: any) => setSelectedAgentType(value)}
+            />
           </StyledSessionDropdownWrapper>
 
           {/* <StyledSessionDropdownWrapper>

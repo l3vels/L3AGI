@@ -10,7 +10,7 @@ type SessionDropdownProps = {
   options: any
   isMulti?: boolean
   placeholder: string
-  onChange?: (selectedValues: string[]) => any
+  onChange?: any
 }
 
 const SessionDropdown = ({
@@ -60,7 +60,9 @@ const SessionDropdown = ({
         multiline
         size={Dropdown.size.SMALL}
         value={selectedValue}
-        placeholder={placeholder}
+        placeholder={
+          options?.find((item: any) => item.value === selectedValue)?.label || placeholder
+        }
         options={options}
         onChange={onChangeFunction}
         onOptionRemove={onOptionRemove}

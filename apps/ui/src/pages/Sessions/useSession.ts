@@ -28,6 +28,7 @@ type Chat = {
 
 export const useSession = () => {
   const [searchText, setSearchText] = useState('')
+  const [selectedAgentType, setSelectedAgentType] = useState<'voice' | 'text' | null>(null)
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
   const [page, setPage] = useState(1)
 
@@ -37,6 +38,7 @@ export const useSession = () => {
     loading: chatsLoading,
   } = useChatsService({
     filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
+    agentType: selectedAgentType,
     itemsCount: 20,
     page,
   })
@@ -115,5 +117,6 @@ export const useSession = () => {
     page,
     totalPages,
     chatsLoading,
+    setSelectedAgentType,
   }
 }

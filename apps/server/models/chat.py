@@ -211,7 +211,7 @@ class ChatModel(BaseModel):
                 setattr(chat_model, field, getattr(chat_input, field))
 
     @classmethod
-    def get_chats(cls, db, account, filter_list, page=1, per_page=10):
+    def get_chats(cls, db, account, filter_list, agent_type, page=1, per_page=10):
         offset = (page - 1) * per_page
         filter_conditions = [
             or_(
@@ -245,6 +245,9 @@ class ChatModel(BaseModel):
                 joinedload(ChatModel.creator_account),
             )
         )
+
+        if agent_type is not None:
+            query = query.filter(AgentModel.agent_type == agent_type)
 
         chats = query.offset(offset).limit(per_page).all()
         total_count = query.count()
