@@ -21,10 +21,15 @@ import { useColumn } from './columnConfig'
 import ChatV2 from 'modals/AIChatModal/components/ChatV2'
 import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
-import { Close } from 'share-ui/components/Icon/Icons'
+import { Close, Filter } from 'share-ui/components/Icon/Icons'
+import { StyledIconButton } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import { useState } from 'react'
 
 const Sessions = () => {
   const { t } = useTranslation()
+
+  const [showFilter, setShowFilter] = useState(false)
+
   const {
     scheduleOptions,
     agentOptions,
@@ -55,10 +60,20 @@ const Sessions = () => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
+        <StyledTitleWrapper>
           <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
-        </div>
 
+          <IconButton
+            icon={() => <Filter />}
+            ariaLabel='Filter'
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            onClick={() => setShowFilter(!showFilter)}
+          />
+        </StyledTitleWrapper>
+      </StyledHeaderGroup>
+
+      {showFilter && (
         <StyledRightSideWrapper>
           <StyledSessionDropdownWrapper>
             <SessionDropdown
@@ -105,7 +120,7 @@ const Sessions = () => {
             <StyledSearchIcon />
           </StyledSearchContainer>
         </StyledRightSideWrapper>
-      </StyledHeaderGroup>
+      )}
 
       <ComponentsWrapper noPadding>
         <Table
@@ -208,4 +223,8 @@ const StyledButtonWrapper = styled.div`
   top: 20px;
 
   z-index: 1;
+`
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `
