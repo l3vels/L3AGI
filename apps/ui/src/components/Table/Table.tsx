@@ -93,7 +93,7 @@ const Table = ({
   }
 
   return (
-    <StyledRoot>
+    <StyledRoot expand={expand}>
       {isLoading && (
         <StyledLoaderWrapper>
           <Loader size={50} />
@@ -197,7 +197,7 @@ const Table = ({
 
 export default Table
 
-const StyledRoot = styled.div`
+const StyledRoot = styled.div<{ expand?: boolean }>`
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -210,13 +210,15 @@ const StyledRoot = styled.div`
   }
 
   border-radius: 24px;
-  max-height: calc(100vh - 250px);
+  max-height: calc(100vh - 350px);
+  ${({ expand }) =>
+    expand ? 'max-height: calc(100vh - 250px);' : 'max-height: calc(100vh - 350px);'};
 
   position: relative;
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
-  ${({ expand }) => (expand ? 'height: calc(100vh - 300px);' : 'height: auto;')}
+  ${({ expand }) => (expand ? 'height: calc(100vh - 300px);' : 'height: 100%;')};
   min-height: 400px;
   width: 100%;
 
