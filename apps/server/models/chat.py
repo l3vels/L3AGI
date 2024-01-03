@@ -248,12 +248,17 @@ class ChatModel(BaseModel):
 
         total_count = (
             db.session.query(ChatModel)
+            .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)
+            .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)
+            .outerjoin(TeamModel, ChatModel.team_id == TeamModel.id)
+            .outerjoin(AgentModel, ChatModel.agent_id == AgentModel.id)
             .filter(
                 ChatModel.creator_account_id == account.id,
                 or_(
                     or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
                     ChatModel.is_deleted is None,
                 ),
+                or_(*filter_conditions),
             )
             .count()
         )
