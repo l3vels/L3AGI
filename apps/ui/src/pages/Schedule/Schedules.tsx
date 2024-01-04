@@ -7,15 +7,23 @@ import {
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
 
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useSchedules } from './useSchedules'
 import { StyledTableWrapper } from 'plugins/contact/pages/Contact/Contacts'
 import TableActionButtons from 'components/Table/components/TableActionButtons'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import Table from 'components/Table'
 import { useScheduleForm } from './ScheduleFrom/useScheduleForm'
 import Campaigns from 'plugins/contact/pages/Campaign/Campaigns'
+
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
+import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
+import { t } from 'i18next'
 
 const Schedules = () => {
   const navigate = useNavigate()
@@ -84,27 +92,61 @@ const Schedules = () => {
     [],
   )
 
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const tabQuery = urlParams.get('tab')
+
+  const defaultActiveTab = () => {
+    if (tabQuery === 'campaign') return 0
+    if (tabQuery === 'schedule') return 1
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    navigate(`/schedules?tab=${tabName}`)
+  }
+
   return (
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <div>
-          <StyledSectionTitle>Schedules</StyledSectionTitle>
-        </div>
-        <div>
-          <ButtonPrimary onClick={() => navigate('/schedules/create-schedule')} size={'small'}>
-            Add Schedule
-          </ButtonPrimary>
-        </div>
-      </StyledHeaderGroup>
+    <StyledTabRootWrapper>
+      <StyledTabListWrapper>
+        <TabList activeTabId={activeTab}>
+          <Tab onClick={() => handleTabClick(0, 'campaign')}>{`${t('campaigns')}`}</Tab>
+          <Tab onClick={() => handleTabClick(1, 'schedule')}>{`${t('schedules')}`}</Tab>
+        </TabList>
+      </StyledTabListWrapper>
 
-      <ComponentsWrapper noPadding>
-        <StyledTableWrapper>
-          <Table columns={columns} data={tableData} />
+      <TabsContext activeTabId={activeTab}>
+        <TabPanels noAnimation>
+          <TabPanel>
+            <Campaigns />
+          </TabPanel>
+          <TabPanel>
+            <StyledSectionWrapper>
+              <StyledHeaderGroup className='header_group'>
+                <div>
+                  <StyledSectionTitle>Schedules</StyledSectionTitle>
+                </div>
+                <div>
+                  <ButtonPrimary
+                    onClick={() => navigate('/schedules/create-schedule')}
+                    size={'small'}
+                  >
+                    Add Schedule
+                  </ButtonPrimary>
+                </div>
+              </StyledHeaderGroup>
 
-          <Campaigns />
-        </StyledTableWrapper>
-      </ComponentsWrapper>
-    </StyledSectionWrapper>
+              <ComponentsWrapper noPadding>
+                <StyledTableWrapper>
+                  <Table columns={columns} data={tableData} />
+                </StyledTableWrapper>
+              </ComponentsWrapper>
+            </StyledSectionWrapper>
+          </TabPanel>
+        </TabPanels>
+      </TabsContext>
+    </StyledTabRootWrapper>
   )
 }
 

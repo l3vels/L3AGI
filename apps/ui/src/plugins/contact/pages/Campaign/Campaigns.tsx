@@ -1,27 +1,68 @@
+import { ButtonPrimary } from 'components/Button/Button'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import {
+  StyledHeaderGroup,
+  StyledSectionTitle,
+  StyledSectionWrapper,
+} from 'pages/Home/homeStyle.css'
 import { useCampaignsService } from 'plugins/contact/services/campaign/useCampaignsService'
-import { useCreateCampaignService } from 'plugins/contact/services/campaign/useCreateCampaignService'
+
+import { StyledTableWrapper } from '../Contact/Contacts'
+import Table from 'components/Table'
+import TableActionButtons from 'components/Table/components/TableActionButtons'
+import { useMemo } from 'react'
 
 const Campaigns = () => {
-  const [createCampaign] = useCreateCampaignService()
-
   const { data: campaignsData } = useCampaignsService()
 
-  console.log('campaignsData', campaignsData)
+  const tableData =
+    campaignsData?.map((campaign: any) => ({
+      id: campaign.id,
+      name: campaign.name,
+      agentId: campaign.agent_id,
+      groupId: campaign.group_id,
+      type: campaign.type,
+    })) || []
 
-  const handleCreate = () => {
-    createCampaign({
-      name: 'test',
-      agent_id: 'a0111379-637a-4136-89e2-d58ff144c49f',
-      group_id: '26989bef-3420-4bb4-af8b-dd0e598f5bd5',
-      type: 'outbound',
-      start_date: '2023-12-19 13:31:21.160022+00',
-    })
-  }
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Name',
+        accessor: 'name',
+        width: 290,
+      },
+
+      {
+        Header: 'Actions',
+        accessor: 'id',
+        width: 100,
+        Cell: ({ cell }: any) => {
+          return <TableActionButtons onDeleteClick={() => {}} onEditClick={() => {}} />
+        },
+      },
+    ],
+    [],
+  )
 
   return (
-    <span style={{ color: 'red' }}>
-      <button onClick={handleCreate}>Create</button>
-    </span>
+    <StyledSectionWrapper>
+      <StyledHeaderGroup className='header_group'>
+        <div>
+          <StyledSectionTitle>Campaigns</StyledSectionTitle>
+        </div>
+        <div>
+          <ButtonPrimary onClick={() => {}} size={'small'}>
+            Add Campaign
+          </ButtonPrimary>
+        </div>
+      </StyledHeaderGroup>
+
+      <ComponentsWrapper noPadding>
+        <StyledTableWrapper>
+          <Table columns={columns} data={tableData} />
+        </StyledTableWrapper>
+      </ComponentsWrapper>
+    </StyledSectionWrapper>
   )
 }
 
