@@ -1,0 +1,11 @@
+query campaignById($id: id!) @api(name: "pro") {
+  campaignById(id: $id)
+    @rest(type: "Campaign", path: "/v1/campaign/{args.id}", method: "GET", endpoint: "pro") {
+    id
+    name
+    group_id
+    agent_id
+    type
+    start_date
+  }
+}
