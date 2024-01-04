@@ -52,7 +52,7 @@ const Campaigns = () => {
           return (
             <TableActionButtons
               onDeleteClick={() => deleteCampaignHandler(cell.value)}
-              onEditClick={() => navigate(`/schedule/${cell.value}/edit-campaign`)}
+              onEditClick={() => navigate(`/schedules/${cell.value}/edit-campaign`)}
             />
           )
         },
