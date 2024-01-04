@@ -106,9 +106,10 @@ const Sessions = () => {
             />
           </StyledDateWrapper> */}
 
-          <StyledSessionDropdownWrapper>
+          {/* <StyledSessionDropdownWrapper>
             <SessionDropdown isMulti placeholder='Schedule' label={''} options={scheduleOptions} />
-          </StyledSessionDropdownWrapper>
+          </StyledSessionDropdownWrapper> */}
+
           <StyledSessionDropdownWrapper>
             <SessionDropdown
               placeholder='Agent Type'
