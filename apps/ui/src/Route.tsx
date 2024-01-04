@@ -96,6 +96,8 @@ import CallLogsModal from 'modals/CallLogsModal'
 import VideoModal from 'modals/VideoModal'
 import ContactListModal from 'plugins/contact/pages/Modals/ContactListModal'
 import CallProvider from 'plugins/contact/providers/CallProvider'
+import CreateCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/CreateCampaignForm'
+import EditCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/EditCampaignForm'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -309,8 +311,18 @@ const Route = () => {
                   key={document.location.href}
                 />
                 <Router
+                  path={'create-campaign'}
+                  element={<CreateCampaignForm />}
+                  key={document.location.href}
+                />
+                <Router
                   path={':scheduleId/edit-schedule'}
                   element={<EditScheduleForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':campaignId/edit-campaign'}
+                  element={<EditCampaignForm />}
                   key={document.location.href}
                 />
               </Router>
