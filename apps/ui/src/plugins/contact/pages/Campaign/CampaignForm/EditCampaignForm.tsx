@@ -17,6 +17,7 @@ import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 import { useEditCampaign } from '../useEditCampaign'
 import CampaignForm from './CampaignForm'
+import { t } from 'i18next'
 
 const EditCampaignForm = () => {
   const { isLoading, formik } = useEditCampaign()
@@ -26,7 +27,7 @@ const EditCampaignForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Edit Campaign</StyledSectionTitle>
+            <StyledSectionTitle>{`${t('edit-campaign')}`}</StyledSectionTitle>
           </div>
 
           <StyledButtonWrapper>

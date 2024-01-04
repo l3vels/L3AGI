@@ -17,6 +17,7 @@ import { FormikProvider } from 'formik'
 
 import GroupForm from './GroupFrom'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { t } from 'i18next'
 
 const CreateGroupForm = () => {
   const { formik, isLoading } = useCreateGroup()
@@ -26,7 +27,7 @@ const CreateGroupForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Add Group</StyledSectionTitle>
+            <StyledSectionTitle>{`${t('add-group')}`}</StyledSectionTitle>
             {/* <StyledSectionDescription>
             Here is your datasource, a collection of databases, APIs, files, and more.
           </StyledSectionDescription> */}

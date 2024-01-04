@@ -129,6 +129,8 @@
   "download-csv": "CSV",
   "default-voice": "Default Voice",
   "edit-agent": "Edit $t(agent)",
+  "edit-campaign": "Edit $t(campaign)",
+  "edit-group": "Edit $t(group)",
   "edit-api-keys": "Edit API keys",
   "edit-team": "Edit $t(team)",
   "edit-datasource": "Edit $t(datasource)",
