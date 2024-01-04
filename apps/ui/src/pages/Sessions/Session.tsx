@@ -23,8 +23,18 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { Close } from 'share-ui/components/Icon/Icons'
 
+import { useState } from 'react'
+import { ButtonTertiary } from 'components/Button/Button'
+import {
+  StyledNavigationChevronDown,
+  StyledNavigationChevronUp,
+} from 'pages/Agents/AgentForm/components/ShowAdvancedButton'
+
 const Sessions = () => {
   const { t } = useTranslation()
+
+  const [showFilter, setShowFilter] = useState(false)
+
   const {
     scheduleOptions,
     agentOptions,
@@ -43,6 +53,7 @@ const Sessions = () => {
     page,
     totalPages,
     chatsLoading,
+    setSelectedAgentType,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -52,13 +63,29 @@ const Sessions = () => {
   const urlParams = new URLSearchParams(location.search)
   const sessionId = urlParams.get('chat')
 
+  const agentTypeOption = [
+    { label: 'Chat based', value: 'text' },
+    { label: 'Call based', value: 'voice' },
+  ]
+
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
+        <StyledTitleWrapper>
           <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
-        </div>
 
+          <ButtonTertiary onClick={() => setShowFilter(!showFilter)} size={'xs'}>
+            Filter
+            {showFilter ? (
+              <StyledNavigationChevronUp size={14} />
+            ) : (
+              <StyledNavigationChevronDown size={14} />
+            )}
+          </ButtonTertiary>
+        </StyledTitleWrapper>
+      </StyledHeaderGroup>
+
+      {showFilter && (
         <StyledRightSideWrapper>
           <StyledSessionDropdownWrapper>
             <SessionDropdown
@@ -79,8 +106,17 @@ const Sessions = () => {
             />
           </StyledDateWrapper> */}
 
-          <StyledSessionDropdownWrapper>
+          {/* <StyledSessionDropdownWrapper>
             <SessionDropdown isMulti placeholder='Schedule' label={''} options={scheduleOptions} />
+          </StyledSessionDropdownWrapper> */}
+
+          <StyledSessionDropdownWrapper>
+            <SessionDropdown
+              placeholder='Agent Type'
+              label={''}
+              options={agentTypeOption}
+              onChange={(value: any) => setSelectedAgentType(value)}
+            />
           </StyledSessionDropdownWrapper>
 
           {/* <StyledSessionDropdownWrapper>
@@ -105,8 +141,7 @@ const Sessions = () => {
             <StyledSearchIcon />
           </StyledSearchContainer>
         </StyledRightSideWrapper>
-      </StyledHeaderGroup>
-
+      )}
       <ComponentsWrapper noPadding>
         <Table
           expand
@@ -119,7 +154,7 @@ const Sessions = () => {
           selectedRow={sessionId}
         />
         {sessionId && (
-          <StyledSessionCHatWrapper>
+          <StyledSessionChatWrapper>
             <StyledButtonWrapper>
               <IconButton
                 icon={() => <Close />}
@@ -130,7 +165,7 @@ const Sessions = () => {
             </StyledButtonWrapper>
 
             <ChatV2 chatSessionId={sessionId} />
-          </StyledSessionCHatWrapper>
+          </StyledSessionChatWrapper>
         )}
       </ComponentsWrapper>
     </StyledSectionWrapper>
@@ -196,9 +231,11 @@ const StyledSearchIcon = styled(SearchOutline)`
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledSessionCHatWrapper = styled.div`
+const StyledSessionChatWrapper = styled.div`
   height: calc(100vh - 250px);
   width: 100%;
+
+  padding: 0 10px;
 `
 const StyledButtonWrapper = styled.div`
   position: absolute;
@@ -206,4 +243,9 @@ const StyledButtonWrapper = styled.div`
   top: 20px;
 
   z-index: 1;
+`
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `

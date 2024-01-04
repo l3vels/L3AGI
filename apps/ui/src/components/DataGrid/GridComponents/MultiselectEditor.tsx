@@ -110,28 +110,3 @@ const StyledDiv = styled.div`
 
   background: #585858;
 `
-
-const StyledDropDown = styled(Dropdown)`
-  /* background: #5d6a7d !important; */
-  /* backdrop-filter: blur(5px) !important; */
-  width: 100%;
-  .menu.dropdown-menu-wrapper.css-wxpx7r-menu {
-    background: ${({ theme }) => theme.body.dropdownSecondaryBgColor} !important;
-  }
-  .dropdown-wrapper__option--reset.css-146p8mp-option {
-    color: ${({ theme }) => theme.body.textColorPrimary} !important;
-  }
-  .dropdown-wrapper__option--reset {
-    &:hover {
-      background: ${({ theme }) => theme.body.placeHolderColor} !important;
-    }
-  }
-  .css-dyamw3-option {
-    background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
-    color: ${({ theme }) => theme.body.textColorSecondary};
-  }
-
-  .components-Dropdown-components-ChildrenContent-ChildrenContent-module__valueContainer--Tblnq {
-    color: ${({ theme }) => theme.body.textColorTertiary} !important;
-  }
-`

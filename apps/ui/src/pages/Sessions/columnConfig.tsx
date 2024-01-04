@@ -110,11 +110,13 @@ export const useColumn = () => {
 
         return (
           <StyledAgentNameCell>
-            <TypographySecondary
-              value={data.name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-            />
+            <StyledTextWrapper>
+              <TypographySecondary
+                value={data.name}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            </StyledTextWrapper>
             <StyledButtonsContainer>
               <StyledHiddenIconsWrapper>
                 <IconButton
@@ -397,4 +399,9 @@ const StyledOpenIcon = styled(Open)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledTextWrapper = styled.div`
+  width: 100%;
+  overflow: hidden;
+  max-height: 18px;
 `
