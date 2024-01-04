@@ -1,0 +1,12 @@
+mutation deleteCampaign($id: id!) @api(name: pro) {
+  deleteCampaign(id: $id)
+    @rest(
+      type: "Campaign"
+      path: "/v1/campaign/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "pro"
+    ) {
+    message
+  }
+}

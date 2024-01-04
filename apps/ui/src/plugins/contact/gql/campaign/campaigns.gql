@@ -1,0 +1,10 @@
+query getCampaigns @api(name: "pro") {
+  getCampaigns @rest(type: "Campaign", path: "/v1/campaign", method: "GET", endpoint: "pro") {
+    id
+    name
+    group_id
+    agent_id
+    type
+    start_date
+  }
+}

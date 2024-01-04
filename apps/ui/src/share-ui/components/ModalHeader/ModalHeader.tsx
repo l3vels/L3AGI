@@ -117,6 +117,8 @@ const StyledModalHeader = styled.div`
   display: flex;
   align-items: center;
   padding-left: 5px;
+
+  font-size: 24px;
 `
 const StyledCloseButtonWrapper = styled.div`
   margin-left: auto;

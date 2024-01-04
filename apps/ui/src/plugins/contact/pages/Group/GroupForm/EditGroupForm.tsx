@@ -16,6 +16,7 @@ import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import { useEditGroup } from '../useEditGroup'
 import GroupForm from './GroupFrom'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { t } from 'i18next'
 
 const EditGroupForm = () => {
   const { isLoading, formik } = useEditGroup()
@@ -25,7 +26,7 @@ const EditGroupForm = () => {
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>Edit Group</StyledSectionTitle>
+            <StyledSectionTitle>{`${t('edit-group')}`}</StyledSectionTitle>
             {/* <StyledSectionDescription>
             Here are all your agents, managing tasks and operations.
           </StyledSectionDescription> */}
