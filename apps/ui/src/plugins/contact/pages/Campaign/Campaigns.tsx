@@ -5,7 +5,6 @@ import {
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-import { useCampaignsService } from 'plugins/contact/services/campaign/useCampaignsService'
 
 import { StyledTableWrapper } from '../Contact/Contacts'
 import Table from 'components/Table'
@@ -13,14 +12,10 @@ import TableActionButtons from 'components/Table/components/TableActionButtons'
 import { useMemo } from 'react'
 import { t } from 'i18next'
 import { useCreateCampaignService } from 'plugins/contact/services/campaign/useCreateCampaignService'
-import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
-import { useAgentsService } from 'services/agent/useAgentsService'
+import { useCampaigns } from './useCampaigns'
 
 const Campaigns = () => {
-  const { data: campaignsData } = useCampaignsService()
-
-  const { data: groupsData } = useGroupsService()
-  const { data: agentData } = useAgentsService()
+  const { tableData, deleteCampaignHandler } = useCampaigns()
 
   const [createCampaign] = useCreateCampaignService()
 
@@ -33,15 +28,6 @@ const Campaigns = () => {
       start_date: '2023-12-19 13:31:21.160022+00',
     })
   }
-
-  const tableData =
-    campaignsData?.map((campaign: any) => ({
-      id: campaign.id,
-      name: campaign.name,
-      agentId: agentData?.find(({ agent }) => agent.id === campaign.agent_id)?.agent.name,
-      groupId: groupsData?.find(({ id }: { id: string }) => id === campaign.group_id)?.name,
-      type: campaign.type,
-    })) || []
 
   const columns = useMemo(
     () => [
@@ -70,7 +56,12 @@ const Campaigns = () => {
         accessor: 'id',
         width: 50,
         Cell: ({ cell }: any) => {
-          return <TableActionButtons onDeleteClick={() => {}} onEditClick={() => {}} />
+          return (
+            <TableActionButtons
+              onDeleteClick={() => deleteCampaignHandler(cell.value)}
+              onEditClick={() => {}}
+            />
+          )
         },
       },
     ],
