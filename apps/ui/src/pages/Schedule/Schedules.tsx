@@ -15,6 +15,7 @@ import TableActionButtons from 'components/Table/components/TableActionButtons'
 import { useMemo } from 'react'
 import Table from 'components/Table'
 import { useScheduleForm } from './ScheduleFrom/useScheduleForm'
+import Campaigns from 'plugins/contact/pages/Campaign/Campaigns'
 
 const Schedules = () => {
   const navigate = useNavigate()
@@ -99,6 +100,8 @@ const Schedules = () => {
       <ComponentsWrapper noPadding>
         <StyledTableWrapper>
           <Table columns={columns} data={tableData} />
+
+          <Campaigns />
         </StyledTableWrapper>
       </ComponentsWrapper>
     </StyledSectionWrapper>
