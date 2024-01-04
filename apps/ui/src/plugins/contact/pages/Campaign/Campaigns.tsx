@@ -11,6 +11,7 @@ import { StyledTableWrapper } from '../Contact/Contacts'
 import Table from 'components/Table'
 import TableActionButtons from 'components/Table/components/TableActionButtons'
 import { useMemo } from 'react'
+import { t } from 'i18next'
 
 const Campaigns = () => {
   const { data: campaignsData } = useCampaignsService()
@@ -48,11 +49,11 @@ const Campaigns = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <div>
-          <StyledSectionTitle>Campaigns</StyledSectionTitle>
+          <StyledSectionTitle>{`${t('campaigns')}`}</StyledSectionTitle>
         </div>
         <div>
           <ButtonPrimary onClick={() => {}} size={'small'}>
-            Add Campaign
+            {`${t('add-campaign')}`}
           </ButtonPrimary>
         </div>
       </StyledHeaderGroup>

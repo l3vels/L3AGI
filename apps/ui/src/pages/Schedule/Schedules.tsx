@@ -125,14 +125,14 @@ const Schedules = () => {
             <StyledSectionWrapper>
               <StyledHeaderGroup className='header_group'>
                 <div>
-                  <StyledSectionTitle>Schedules</StyledSectionTitle>
+                  <StyledSectionTitle>{`${t('schedules')}`}</StyledSectionTitle>
                 </div>
                 <div>
                   <ButtonPrimary
                     onClick={() => navigate('/schedules/create-schedule')}
                     size={'small'}
                   >
-                    Add Schedule
+                    {`${t('add-schedule')}`}
                   </ButtonPrimary>
                 </div>
               </StyledHeaderGroup>
