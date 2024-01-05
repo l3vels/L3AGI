@@ -1,7 +1,7 @@
 import { Moment } from 'moment'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
 import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
@@ -10,14 +10,8 @@ type Chat = {
   id: string
   name: string
   voice_url: string
-  agent?: {
-    agent?: {
-      name: string
-      id: string
-      role: string
-      description: string
-    }
-  }
+  agent?: AgentWithConfigs
+  created_on: Date
   team?: {
     team?: {
       name: string
@@ -36,6 +30,7 @@ export const useSession = () => {
     data: chatsData,
     count: chatsCount,
     loading: chatsLoading,
+    refetch: refetchChats,
   } = useChatsService({
     filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
     agentType: selectedAgentType,
@@ -53,12 +48,14 @@ export const useSession = () => {
   const mappedData = chatsData?.map((chat: Chat) => ({
     id: chat?.id,
     name: chat?.name,
-    agent_name: chat?.agent?.agent?.name,
+    agent_name: `${chat?.agent?.agent?.name} · ${
+      chat?.agent?.agent?.agent_type === 'voice' ? 'Call' : 'Chat'
+    }`,
     gent_role: chat?.agent?.agent?.role,
     gent_description: chat?.agent?.agent?.description,
     agent_id: chat?.agent?.agent?.id,
     team_name: chat?.team?.team?.name,
-    added_At: new Date().toISOString(),
+    added_At: chat?.created_on,
     voice_url: chat?.voice_url,
     sentiment: calls?.find((call: any) => call.chat_id === chat.id)?.sentiment,
     status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
@@ -96,9 +93,16 @@ export const useSession = () => {
     label: schedule.schedule.name,
   }))
 
-  const agentOptions = agentsData?.map((agent: AgentWithConfigs) => {
-    return { value: agent.agent.name, label: agent.agent.name }
+  const agentOptions = agentsData?.map(({ agent }) => {
+    return {
+      value: agent.name,
+      label: `${agent.name} · ${agent.agent_type === 'voice' ? 'Call' : 'Chat'}`,
+    }
   })
+
+  useEffect(() => {
+    refetchChats()
+  }, [])
 
   return {
     scheduleOptions,

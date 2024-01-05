@@ -225,8 +225,6 @@ const StyledTable = styled.table<{ expand?: boolean }>`
   color: ${({ theme }) => theme.typography.contentPrimary};
 
   background: #fff;
-
-  overflow: hidden;
 `
 const StyledThead = styled.thead`
   background: #fff;

@@ -14,6 +14,7 @@ query getChats($restPath: String!) @api(name: "ai") {
       creator_user
       creator_account
       voice_url
+      created_on
     }
     count
   }
