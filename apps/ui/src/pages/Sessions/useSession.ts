@@ -96,8 +96,11 @@ export const useSession = () => {
     label: schedule.schedule.name,
   }))
 
-  const agentOptions = agentsData?.map((agent: AgentWithConfigs) => {
-    return { value: agent.agent.name, label: agent.agent.name }
+  const agentOptions = agentsData?.map(({ agent }) => {
+    return {
+      value: agent.name,
+      label: `${agent.name} · ${agent.agent_type === 'voice' ? 'Call' : 'Chat'}`,
+    }
   })
 
   return {
