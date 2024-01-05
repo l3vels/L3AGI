@@ -1,7 +1,7 @@
 import { Moment } from 'moment'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
 import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
@@ -30,6 +30,7 @@ export const useSession = () => {
     data: chatsData,
     count: chatsCount,
     loading: chatsLoading,
+    refetch: refetchChats,
   } = useChatsService({
     filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
     agentType: selectedAgentType,
@@ -98,6 +99,10 @@ export const useSession = () => {
       label: `${agent.name} · ${agent.agent_type === 'voice' ? 'Call' : 'Chat'}`,
     }
   })
+
+  useEffect(() => {
+    refetchChats()
+  }, [])
 
   return {
     scheduleOptions,
