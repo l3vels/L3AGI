@@ -19,9 +19,12 @@ export const useCampaignForm = () => {
   const { data: agentsData } = useAgentsService()
   const { data: groupsData } = useGroupsService()
 
-  const agentOptions = agentsData?.map(({ agent }) => {
-    return { value: agent.id, label: agent.name }
-  })
+  const agentOptions = agentsData
+    ?.filter(({ agent }) => agent.agent_type === 'voice')
+    ?.map(({ agent }) => {
+      return { value: agent.id, label: agent.name }
+    })
+
   const groupOptions = groupsData?.map(({ id, name }: { id: string; name: string }) => {
     return { value: id, label: name }
   })
