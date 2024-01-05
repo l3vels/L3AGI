@@ -1,3 +1,4 @@
+import time
 from datetime import timedelta
 
 import requests
@@ -19,6 +20,10 @@ CELERY_BEAT_SCHEDULE = {
     },
     "register-fine-tuning-tasks": {
         "task": "register-fine-tuning-tasks",
+        "schedule": timedelta(minutes=2),
+    },
+    "register-campaign-phone-call-tasks": {
+        "task": "register-campaign-phone-call-tasks",
         "schedule": timedelta(minutes=2),
     },
 }
@@ -96,6 +101,70 @@ def check_single_fine_tuning_task(fine_tuning_id: str):
     )
 
     return res.json()
+
+
+@app.task(
+    name="register-campaign-phone-call-tasks",
+    autoretry_for=(Exception,),
+    retry_backoff=2,
+    max_retries=5,
+)
+def register_campaign_phone_call_tasks():
+    res = requests.get(
+        f"{Config.PR_DEV_SERVER_URL}/campaign/due",
+        headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
+    )
+
+    campaigns = res.json()
+    campaign_ids = [campaign["id"] for campaign in campaigns]
+
+    for campaign in campaigns:
+        res = requests.post(
+            f"{Config.PR_DEV_SERVER_URL}/campaign/{campaign['id']}/start",
+            headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
+        )
+
+        contact_ids = res.json()
+
+        for contact_id in contact_ids:
+            make_phone_call.apply_async(args=[campaign["id"], contact_id])
+
+    return campaign_ids
+
+
+@app.task(
+    name="make-phone-call",
+    autoretry_for=(Exception,),
+    retry_backoff=2,
+    max_retries=5,
+)
+def make_phone_call(campaign_id: str, contact_id: str):
+    res = requests.post(
+        f"{Config.PR_DEV_SERVER_URL}/call/campaign",
+        headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
+        data={
+            "campaign_id": campaign_id,
+            "contact_id": contact_id,
+        },
+    )
+
+    call_id = res.json().get("call_id")
+
+    # Checks for the status of the phone call to make sure phone call is finished
+    while True:
+        status_res = requests.get(
+            f"{Config.PR_DEV_SERVER_URL}/call/{call_id}",
+            headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
+        )
+
+        status = status_res.json().get("status")
+
+        if status is not None:
+            break
+
+        time.sleep(15)
+
+    return "Phone call finished"
 
 
 if __name__ == "__main__":

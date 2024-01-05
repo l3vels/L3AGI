@@ -29,6 +29,8 @@ class ChatModel(BaseModel):
     agent_id = Column(UUID, ForeignKey("agent.id", ondelete="CASCADE"), index=True)
     team_id = Column(UUID, ForeignKey("team.id", ondelete="CASCADE"), index=True)
 
+    campaign_id = Column(UUID, nullable=True, index=True)
+
     voice_url = Column(String, nullable=True)
 
     parent_id = Column(UUID, ForeignKey("chat.id", ondelete="CASCADE"), index=True)

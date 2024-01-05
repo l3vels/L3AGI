@@ -12,4 +12,6 @@ class Config:
 
     SERVER_URL = os.environ.get("SERVER_URL")
 
+    PR_DEV_SERVER_URL = os.environ.get("PR_DEV_SERVER_URL")
+
     SERVER_AUTH_TOKEN = os.environ.get("SERVER_AUTH_TOKEN")
