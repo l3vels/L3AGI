@@ -221,20 +221,20 @@ export const useColumn = () => {
     {
       Header: 'Status',
       accessor: 'status',
-      minWidth: 100,
-      width: 100,
+      minWidth: 150,
+      width: 150,
     },
     {
       Header: 'Sentiment',
       accessor: 'sentiment',
-      minWidth: 100,
-      width: 100,
+      minWidth: 150,
+      width: 150,
     },
     {
       Header: 'Voice',
       accessor: 'sender_name',
-      minWidth: 180,
-      width: 180,
+      minWidth: 170,
+      width: 170,
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
 
@@ -257,8 +257,9 @@ export const useColumn = () => {
     {
       Header: 'Created Date',
       accessor: 'added_At',
-      minWidth: 105,
-      width: 105,
+      minWidth: 150,
+      width: 150,
+
       Cell: DateRenderer,
     },
     // {
