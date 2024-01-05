@@ -2,7 +2,6 @@ from typing import Optional
 
 from fastapi import Depends, HTTPException
 from fastapi_jwt_auth import AuthJWT
-from fastapi_jwt_auth.exceptions import InvalidHeaderError
 from fastapi_sqlalchemy import db
 
 from exceptions import UserException
@@ -112,5 +111,5 @@ def authorize(account_id: str, Authorize: AuthJWT = Depends()) -> UserAccount:
             user=convert_model_to_response_user(db_user),
             account=convert_model_to_response_account(db_account),
         )
-    except InvalidHeaderError:
+    except Exception:
         raise HTTPException(status_code=401, detail="Invalid auth token")
