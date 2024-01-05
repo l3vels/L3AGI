@@ -41,7 +41,7 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
     )
   } else {
     const formattedDate = moment(value).format('MMM DD, YYYY')
-    const formattedTime = moment(value).format('h:mm A')
+    const formattedTime = moment(value).format('HH:mm')
     content = (
       <StyledDateWrapper>
         <TypographySecondary
@@ -256,9 +256,9 @@ export const useColumn = () => {
     // },
     {
       Header: 'Created Date',
-      accessor: 'added_at',
-      minWidth: 200,
-      width: 200,
+      accessor: 'added_At',
+      minWidth: 105,
+      width: 105,
       Cell: DateRenderer,
     },
     // {

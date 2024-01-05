@@ -11,7 +11,7 @@ type Chat = {
   name: string
   voice_url: string
   agent?: AgentWithConfigs
-
+  created_on: Date
   team?: {
     team?: {
       name: string
@@ -55,7 +55,7 @@ export const useSession = () => {
     gent_description: chat?.agent?.agent?.description,
     agent_id: chat?.agent?.agent?.id,
     team_name: chat?.team?.team?.name,
-    added_At: new Date().toISOString(),
+    added_At: chat?.created_on,
     voice_url: chat?.voice_url,
     sentiment: calls?.find((call: any) => call.chat_id === chat.id)?.sentiment,
     status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
