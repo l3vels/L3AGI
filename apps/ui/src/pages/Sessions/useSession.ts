@@ -10,14 +10,8 @@ type Chat = {
   id: string
   name: string
   voice_url: string
-  agent?: {
-    agent?: {
-      name: string
-      id: string
-      role: string
-      description: string
-    }
-  }
+  agent?: AgentWithConfigs
+
   team?: {
     team?: {
       name: string
@@ -53,7 +47,9 @@ export const useSession = () => {
   const mappedData = chatsData?.map((chat: Chat) => ({
     id: chat?.id,
     name: chat?.name,
-    agent_name: chat?.agent?.agent?.name,
+    agent_name: `${chat?.agent?.agent?.name} · ${
+      chat?.agent?.agent?.agent_type === 'voice' ? 'Call' : 'Chat'
+    }`,
     gent_role: chat?.agent?.agent?.role,
     gent_description: chat?.agent?.agent?.description,
     agent_id: chat?.agent?.agent?.id,
