@@ -21,7 +21,7 @@ export const useCreateCampaign = () => {
     campaign_agent_id: null,
     campaign_group_id: null,
     campaign_type: 'Outbound',
-    campaign_start_date: getDateTimeFromDate(new Date()),
+    campaign_start_date: getDateTimeFromDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)),
   }
 
   const handleSubmit = async (values: any) => {

@@ -29,6 +29,7 @@ import {
   StyledNavigationChevronDown,
   StyledNavigationChevronUp,
 } from 'pages/Agents/AgentForm/components/ShowAdvancedButton'
+import TextField from 'share-ui/components/TextField/TextField'
 
 const Sessions = () => {
   const { t } = useTranslation()
@@ -85,9 +86,19 @@ const Sessions = () => {
         </StyledTitleWrapper>
       </StyledHeaderGroup>
 
-      {showFilter && (
-        <StyledRightSideWrapper>
-          <StyledSessionDropdownWrapper>
+      <ComponentsWrapper noPadding>
+        {showFilter && (
+          <StyledFilterContainer>
+            <StyledSearchContainer>
+              <TextField
+                id='searchInput'
+                value={searchText}
+                onChange={(value: string) => setSearchText(value || '')}
+                placeholder='Search...'
+              />
+              <StyledSearchIcon />
+            </StyledSearchContainer>
+
             <SessionDropdown
               isMulti
               placeholder='Agent'
@@ -95,8 +106,8 @@ const Sessions = () => {
               options={agentOptions}
               onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
             />
-          </StyledSessionDropdownWrapper>
-          {/* <StyledDateWrapper>
+
+            {/* <StyledDateWrapper>
             <DatePickerField
               start_date={startDate}
               end_date={endDate}
@@ -106,20 +117,18 @@ const Sessions = () => {
             />
           </StyledDateWrapper> */}
 
-          {/* <StyledSessionDropdownWrapper>
+            {/* <StyledSessionDropdownWrapper>
             <SessionDropdown isMulti placeholder='Schedule' label={''} options={scheduleOptions} />
           </StyledSessionDropdownWrapper> */}
 
-          <StyledSessionDropdownWrapper>
             <SessionDropdown
               placeholder='Agent Type'
               label={''}
               options={agentTypeOption}
               onChange={(value: any) => setSelectedAgentType(value)}
             />
-          </StyledSessionDropdownWrapper>
 
-          {/* <StyledSessionDropdownWrapper>
+            {/* <StyledSessionDropdownWrapper>
             <StyledSessionDropdown
               isMulti
               kind={Dropdown.kind.PRIMARY}
@@ -127,22 +136,8 @@ const Sessions = () => {
               size={Dropdown.size.SMALL}
             />
           </StyledSessionDropdownWrapper> */}
-
-          <StyledSearchContainer>
-            <StyledSearchInput
-              type='text'
-              id='searchInput'
-              value={searchText}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSearchText(e.target?.value || '')
-              }
-              placeholder='Search...'
-            />
-            <StyledSearchIcon />
-          </StyledSearchContainer>
-        </StyledRightSideWrapper>
-      )}
-      <ComponentsWrapper noPadding>
+          </StyledFilterContainer>
+        )}
         <Table
           expand
           columns={columnConfig}
@@ -173,16 +168,20 @@ const Sessions = () => {
 }
 export default Sessions
 
-const StyledSessionDropdownWrapper = styled.div`
-  min-width: 300px !important;
-  max-width: 800px;
-`
-
-const StyledRightSideWrapper = styled.div`
+const StyledFilterContainer = styled.div`
   display: flex;
-  gap: 30px;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 15px;
+  /* align-items: center; */
+  /* flex-wrap: wrap; */
+
+  padding: 10px;
+  margin-right: 10px;
+
+  width: 100%;
+  max-width: 300px;
+
+  overflow: auto;
 `
 
 const StyledDateWrapper = styled.div`
@@ -208,24 +207,13 @@ const StyledDateWrapper = styled.div`
 
 const StyledSearchContainer = styled.div`
   position: relative;
-`
-
-const StyledSearchInput = styled.input`
-  color: ${({ theme }) => theme.body.textColorSecondary} !important;
-  background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
-  border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
-  min-width: 300px;
-  height: 48px;
-  border-radius: 8px;
-  padding-left: 15px;
-  padding-right: 40px;
-  font-size: 14px;
+  width: 100%;
 `
 
 const StyledSearchIcon = styled(SearchOutline)`
   position: absolute;
-  top: 50%;
-  right: 10px;
+  top: 20px;
+  right: 5px;
   transform: translateY(-50%);
   path {
     fill: ${({ theme }) => theme.body.iconColor};

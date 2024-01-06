@@ -41,7 +41,7 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
     )
   } else {
     const formattedDate = moment(value).format('MMM DD, YYYY')
-    const formattedTime = moment(value).format('h:mm A')
+    const formattedTime = moment(value).format('HH:mm')
     content = (
       <StyledDateWrapper>
         <TypographySecondary
@@ -221,20 +221,20 @@ export const useColumn = () => {
     {
       Header: 'Status',
       accessor: 'status',
-      minWidth: 100,
-      width: 100,
+      minWidth: 150,
+      width: 150,
     },
     {
       Header: 'Sentiment',
       accessor: 'sentiment',
-      minWidth: 100,
-      width: 100,
+      minWidth: 150,
+      width: 150,
     },
     {
       Header: 'Voice',
       accessor: 'sender_name',
-      minWidth: 180,
-      width: 180,
+      minWidth: 170,
+      width: 170,
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
 
@@ -256,9 +256,10 @@ export const useColumn = () => {
     // },
     {
       Header: 'Created Date',
-      accessor: 'added_at',
-      minWidth: 200,
-      width: 200,
+      accessor: 'added_At',
+      minWidth: 150,
+      width: 150,
+
       Cell: DateRenderer,
     },
     // {

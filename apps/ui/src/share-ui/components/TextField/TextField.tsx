@@ -331,7 +331,7 @@ const StyledInputWrapper = styled.div`
 
 const StyledInput = styled.input<{ isError: boolean; size: string }>`
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
 
   width: 100%;

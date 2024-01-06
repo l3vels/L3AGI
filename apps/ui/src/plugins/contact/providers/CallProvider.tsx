@@ -5,7 +5,7 @@ import { ButtonPrimary } from 'components/Button/Button'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import TypographyQuaternary from 'components/Typography/Quaternary'
-import { Fullscreen, FullscreenClose, Mute, Sound } from 'share-ui/components/Icon/Icons'
+import { Fullscreen, FullscreenClose, Microphone } from 'share-ui/components/Icon/Icons'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { useContacts } from '../pages/Contact/useContacts'
 import Timer from './providerComponents/Timer'
@@ -182,7 +182,17 @@ const CallProvider = ({ children }: { children: ReactNode }) => {
                 size={'small'}
                 ariaLabel={isMuted ? 'Unmute' : 'Mute'}
                 icon={() => {
-                  return <>{isMuted ? <Mute /> : <Sound />}</>
+                  return (
+                    <>
+                      {isMuted ? (
+                        <DiagonalLine>
+                          <Microphone />
+                        </DiagonalLine>
+                      ) : (
+                        <Microphone />
+                      )}
+                    </>
+                  )
                 }}
               />
 
@@ -331,4 +341,22 @@ const StyledDialogItem = styled.div<{ isBot: boolean }>`
     css`
       margin-left: auto;
     `};
+`
+const DiagonalLine = styled.div`
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transform: translateY(-50%) rotate(-45deg);
+  }
 `

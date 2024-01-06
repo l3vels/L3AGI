@@ -158,7 +158,7 @@ const ChatRouteLayout = () => {
             isSmallScreen={isSmallScreen && location.pathname.includes('/chat')}
             isHidden={expand && !showChats && location.pathname.includes('/chat')}
           >
-            {teamModule?.list && (
+            {teamOfAgentsArray?.length > 0 && teamModule?.list && (
               <>
                 <ListHeader
                   title={t('team')}
@@ -211,13 +211,21 @@ const ChatRouteLayout = () => {
                     agentModule.create
                       ? [
                           {
+                            label: 'Add Chat Agent',
                             function: () => navigate('/agents/create-agent-template?type=text'),
-                            label: 'Chat Based',
                           },
                           {
+                            label: 'Add Call Agent',
                             function: () => navigate('/agents/create-agent-template?type=voice'),
-                            label: 'Call Based',
                           },
+                          ...(teamOfAgentsArray?.length === 0
+                            ? [
+                                {
+                                  label: `${t('add-team')}`,
+                                  function: () => navigate('/team-of-agents/create-team'),
+                                },
+                              ]
+                            : []),
                         ]
                       : undefined
                   }
