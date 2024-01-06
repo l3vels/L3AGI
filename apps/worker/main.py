@@ -116,20 +116,22 @@ def register_campaign_phone_call_tasks():
     )
 
     campaigns = res.json()
-    campaign_ids = [campaign["id"] for campaign in campaigns]
+    print(campaigns)
+    return campaigns
+    # campaign_ids = [campaign["id"] for campaign in campaigns]
 
-    for campaign in campaigns:
-        res = requests.post(
-            f"{Config.PR_DEV_SERVER_URL}/campaign/{campaign['id']}/start",
-            headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
-        )
+    # for campaign in campaigns:
+    #     res = requests.post(
+    #         f"{Config.PR_DEV_SERVER_URL}/campaign/{campaign['id']}/start",
+    #         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
+    #     )
 
-        contact_ids = res.json()
+    #     contact_ids = res.json()
 
-        for contact_id in contact_ids:
-            make_phone_call.apply_async(args=[campaign["id"], contact_id])
+    #     for contact_id in contact_ids:
+    #         make_phone_call.apply_async(args=[campaign["id"], contact_id])
 
-    return campaign_ids
+    # return campaign_ids
 
 
 @app.task(
