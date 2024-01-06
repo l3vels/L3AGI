@@ -111,27 +111,26 @@ def check_single_fine_tuning_task(fine_tuning_id: str):
 )
 def register_campaign_phone_call_tasks():
     res = requests.get(
-        f"{Config.PR_DEV_SERVER_URL}/campaign/due",
+        f"{Config.PR_DEV_SERVER_URL}/v1/campaign/due",
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
     )
 
     campaigns = res.json()
-    print(campaigns)
-    return campaigns
-    # campaign_ids = [campaign["id"] for campaign in campaigns]
 
-    # for campaign in campaigns:
-    #     res = requests.post(
-    #         f"{Config.PR_DEV_SERVER_URL}/campaign/{campaign['id']}/start",
-    #         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
-    #     )
+    campaign_ids = [campaign["id"] for campaign in campaigns]
 
-    #     contact_ids = res.json()
+    for campaign in campaigns:
+        res = requests.post(
+            f"{Config.PR_DEV_SERVER_URL}/v1/campaign/{campaign['id']}/start",
+            headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
+        )
 
-    #     for contact_id in contact_ids:
-    #         make_phone_call.apply_async(args=[campaign["id"], contact_id])
+        contact_ids = res.json()
 
-    # return campaign_ids
+        for contact_id in contact_ids:
+            make_phone_call.apply_async(args=[campaign["id"], contact_id])
+
+    return campaign_ids
 
 
 @app.task(
@@ -142,7 +141,7 @@ def register_campaign_phone_call_tasks():
 )
 def make_phone_call(campaign_id: str, contact_id: str):
     res = requests.post(
-        f"{Config.PR_DEV_SERVER_URL}/call/campaign",
+        f"{Config.PR_DEV_SERVER_URL}/v1/call/campaign",
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
         data={
             "campaign_id": campaign_id,
@@ -155,7 +154,7 @@ def make_phone_call(campaign_id: str, contact_id: str):
     # Checks for the status of the phone call to make sure phone call is finished
     while True:
         status_res = requests.get(
-            f"{Config.PR_DEV_SERVER_URL}/call/{call_id}",
+            f"{Config.PR_DEV_SERVER_URL}/v1/call/{call_id}",
             headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
         )
 
