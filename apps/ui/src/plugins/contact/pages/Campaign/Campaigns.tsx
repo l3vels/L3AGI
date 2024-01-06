@@ -37,12 +37,12 @@ const Campaigns = () => {
       {
         Header: 'Agent',
         accessor: 'agentId',
-        width: 150,
+        width: 120,
       },
       {
         Header: 'Group',
         accessor: 'groupId',
-        width: 150,
+        width: 120,
       },
       {
         Header: 'Type',
