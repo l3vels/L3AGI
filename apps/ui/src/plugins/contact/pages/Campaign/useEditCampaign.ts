@@ -39,7 +39,7 @@ export const useEditCampaign = () => {
         agent_id: values.campaign_agent_id,
         group_id: values.campaign_group_id,
         type: values.campaign_type,
-        start_date: values.campaign_start_date,
+        start_date: new Date(values.campaign_start_date).toISOString(),
       }
 
       await updateCampaign(campaignId || '', updatedValues)
