@@ -27,8 +27,8 @@ export const useCampaignForm = () => {
   })
 
   const campaignTypeOption = [
-    { value: 'outbound', label: 'Outbound' },
-    { value: 'inbound', label: 'Inbound' },
+    { value: 'Outbound', label: 'Outbound' },
+    { value: 'Inbound', label: 'Inbound' },
   ]
 
   return {

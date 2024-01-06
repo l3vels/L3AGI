@@ -24,6 +24,7 @@ export const useCampaigns = () => {
       agentId: agentData?.find(({ agent }) => agent.id === campaign.agent_id)?.agent.name,
       groupId: groupsData?.find(({ id }: { id: string }) => id === campaign.group_id)?.name,
       type: campaign.type,
+      status: campaign.status,
     })) || []
 
   const deleteCampaignHandler = (id: string) => {

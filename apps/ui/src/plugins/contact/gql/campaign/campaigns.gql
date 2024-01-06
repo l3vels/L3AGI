@@ -6,5 +6,6 @@ query getCampaigns @api(name: "pro") {
     agent_id
     type
     start_date
+    status
   }
 }

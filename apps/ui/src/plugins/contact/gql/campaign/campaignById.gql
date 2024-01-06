@@ -7,5 +7,6 @@ query campaignById($id: id!) @api(name: "pro") {
     agent_id
     type
     start_date
+    status
   }
 }

@@ -30,6 +30,11 @@ const Campaigns = () => {
         width: 150,
       },
       {
+        Header: 'Status',
+        accessor: 'status',
+        width: 100,
+      },
+      {
         Header: 'Agent',
         accessor: 'agentId',
         width: 150,

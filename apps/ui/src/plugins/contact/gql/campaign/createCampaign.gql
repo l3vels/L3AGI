@@ -12,5 +12,6 @@ mutation createCampaign($input: input!) @api(name: pro) {
     group_id
     start_date
     type
+    status
   }
 }

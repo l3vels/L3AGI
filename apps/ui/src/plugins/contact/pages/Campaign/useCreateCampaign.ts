@@ -20,7 +20,7 @@ export const useCreateCampaign = () => {
     campaign_name: null,
     campaign_agent_id: null,
     campaign_group_id: null,
-    campaign_type: 'outbound',
+    campaign_type: 'Outbound',
     campaign_start_date: getDateTimeFromDate(new Date()),
   }
 
