@@ -80,17 +80,42 @@ def authenticate_by_auth_token(
     request: Request, response: Response
 ) -> Tuple[UserOutput, AccountOutput]:
     authorization = request.headers.get("Authorization", None)
-    _, token = get_authorization_scheme_param(authorization)
 
-    if token != Config.AUTH_TOKEN:
+    if authorization != Config.AUTH_TOKEN:
         raise HTTPException(status_code=401, detail="Invalid auth token")
 
+    account_id = request.headers.get("account_id", None)
 
-def try_auth_user_with_token_or_api_key(
+    db_account = AccountModel.get_account_by_access(
+        db=db, user_id=None, account_id=account_id
+    )
+
+    db_user = UserModel.get_user_by_id(db, db_account.created_by)
+
+    return UserAccount(
+        user=convert_model_to_response_user(db_user),
+        account=convert_model_to_response_account(db_account),
+    )
+
+
+def authenticate_by_any(
+    request: Request, response: Response
+) -> Tuple[UserOutput, AccountOutput]:
+    authorization = request.headers.get("Authorization", "")
+
+    if "l3_" in authorization:
+        return authenticate_by_api_key(request, response)
+    elif "Bearer" in authorization:
+        return authenticate(request, response)
+    else:
+        return authenticate_by_auth_token(request, response)
+
+
+def try_auth_user_with_any(
     request: Request, response: Response
 ) -> Tuple[UserOutput, AccountOutput]:
     try:
-        return authenticate_by_token_or_api_key(request, response)
+        return authenticate_by_any(request, response)
     except Exception:
         return None
 

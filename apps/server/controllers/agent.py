@@ -7,11 +7,11 @@ from fastapi_sqlalchemy import db
 from exceptions import AgentNotFoundException
 # Local application imports
 from models.agent import AgentModel
-from typings.agent import (AgentConfigInput, AgentWithConfigsOutput,
-                           CreateVoiceAgentInput)
+from typings.agent import AgentConfigInput, AgentWithConfigsOutput
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
-from utils.auth import authenticate, authenticate_by_token_or_api_key
+from utils.auth import (authenticate, authenticate_by_any,
+                        authenticate_by_token_or_api_key)
 from utils.system_message import SystemMessageBuilder
 
 # Standard library imports
@@ -215,7 +215,7 @@ def get_agent_by_parent_id(
 def get_agent_by_id(
     id: str,
     is_system_message: Optional[bool] = False,
-    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+    auth: UserAccount = Depends(authenticate_by_any),
 ) -> AgentWithConfigsOutput:
     """
     Get an agent by its ID.

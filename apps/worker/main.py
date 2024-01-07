@@ -141,7 +141,7 @@ def register_campaign_phone_call_tasks():
 )
 def make_phone_call(campaign_id: str, contact_id: str):
     res = requests.post(
-        f"{Config.PR_DEV_SERVER_URL}/v1/call/campaign",
+        f"{Config.PR_DEV_SERVER_URL}/call/campaign",
         headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
         data={
             "campaign_id": campaign_id,
@@ -154,7 +154,7 @@ def make_phone_call(campaign_id: str, contact_id: str):
     # Checks for the status of the phone call to make sure phone call is finished
     while True:
         status_res = requests.get(
-            f"{Config.PR_DEV_SERVER_URL}/v1/call/{call_id}",
+            f"{Config.PR_DEV_SERVER_URL}/call/{call_id}",
             headers={"Authorization": f"Bearer {Config.SERVER_AUTH_TOKEN}"},
         )
 

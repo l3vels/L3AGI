@@ -15,7 +15,7 @@ from typings.account import AccountOutput
 from typings.auth import UserAccount
 from typings.config import ConfigInput, ConfigOutput, ConfigQueryParams
 from typings.datasource import DatasourceStatus
-from utils.auth import authenticate, authenticate_by_token_or_api_key
+from utils.auth import authenticate, authenticate_by_any
 from utils.configuration import (convert_configs_to_config_list,
                                  convert_model_to_response)
 
@@ -141,7 +141,7 @@ def update_config(
 
 @router.get("", response_model=List[ConfigOutput])
 def get_configs(
-    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+    auth: UserAccount = Depends(authenticate_by_any),
     params: ConfigQueryParams = Depends(),
 ) -> List[ConfigOutput]:
     """
