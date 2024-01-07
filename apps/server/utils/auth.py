@@ -86,16 +86,17 @@ def authenticate_by_auth_token(
 
     account_id = request.headers.get("account_id", None)
 
-    db_account = AccountModel.get_account_by_access(
-        db=db, user_id=None, account_id=account_id
-    )
+    if account_id:
+        db_account = AccountModel.get_account_by_access(
+            db=db, user_id=None, account_id=account_id
+        )
 
-    db_user = UserModel.get_user_by_id(db, db_account.created_by)
+        db_user = UserModel.get_user_by_id(db, db_account.created_by)
 
-    return UserAccount(
-        user=convert_model_to_response_user(db_user),
-        account=convert_model_to_response_account(db_account),
-    )
+        return UserAccount(
+            user=convert_model_to_response_user(db_user),
+            account=convert_model_to_response_account(db_account),
+        )
 
 
 def authenticate_by_any(
