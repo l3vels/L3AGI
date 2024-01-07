@@ -22,6 +22,7 @@ import { useAgentsService } from 'services/agent/useAgentsService'
 import AudioPlayer from 'components/AudioPlayer'
 import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
 import { Open } from 'share-ui/components/Icon/Icons'
+import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 
 type CellProps = {
   value: Nullable<string>
@@ -62,6 +63,7 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
 }
 
 export const useColumn = () => {
+  const { data: calls } = useCallsService()
   return [
     {
       Header: 'Name',
@@ -223,6 +225,12 @@ export const useColumn = () => {
       accessor: 'status',
       minWidth: 150,
       width: 150,
+      Cell: (props: { row: { original: any } }) => {
+        const { original: data } = props.row
+        const call = calls.find((call: any) => call.chat_id === data.id)
+        if (!data.status) return call?.type
+        return call ? `${call.type} - ${data.status}` : data.status
+      },
     },
     {
       Header: 'Sentiment',
