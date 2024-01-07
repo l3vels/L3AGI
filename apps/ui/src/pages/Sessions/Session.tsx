@@ -55,6 +55,7 @@ const Sessions = () => {
     totalPages,
     chatsLoading,
     setSelectedAgentType,
+    campaignOptions,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -127,6 +128,14 @@ const Sessions = () => {
               options={agentTypeOption}
               onChange={(value: any) => setSelectedAgentType(value)}
             />
+            {/* 
+            <SessionDropdown
+              isMulti
+              placeholder='Campaign'
+              label={''}
+              options={campaignOptions}
+              // onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+            /> */}
 
             {/* <StyledSessionDropdownWrapper>
             <StyledSessionDropdown

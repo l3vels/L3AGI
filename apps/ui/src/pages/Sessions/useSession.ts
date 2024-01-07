@@ -1,6 +1,7 @@
 import { Moment } from 'moment'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
+import { useCampaignsService } from 'plugins/contact/services/campaign/useCampaignsService'
 import { useEffect, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
@@ -24,6 +25,7 @@ export const useSession = () => {
   const [searchText, setSearchText] = useState('')
   const [selectedAgentType, setSelectedAgentType] = useState<'voice' | 'text' | null>(null)
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
+  // const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null)
   const [page, setPage] = useState(1)
 
   const {
@@ -41,6 +43,7 @@ export const useSession = () => {
   const totalPages = Math.ceil(chatsCount / 20)
 
   const { data: calls } = useCallsService()
+  const { data: campaigns } = useCampaignsService()
 
   const { schedules } = useSchedules()
   const { data: agentsData } = useAgentsService()
@@ -100,6 +103,15 @@ export const useSession = () => {
     }
   })
 
+  console.log(campaigns)
+
+  const campaignOptions = campaigns?.map((campaign: any) => {
+    return {
+      value: campaign.name,
+      label: `${campaign.name}`,
+    }
+  })
+
   useEffect(() => {
     refetchChats()
   }, [])
@@ -122,5 +134,6 @@ export const useSession = () => {
     totalPages,
     chatsLoading,
     setSelectedAgentType,
+    campaignOptions,
   }
 }
