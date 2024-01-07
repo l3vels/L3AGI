@@ -84,7 +84,7 @@ def authenticate_by_auth_token(
     if authorization != Config.AUTH_TOKEN:
         raise HTTPException(status_code=401, detail="Invalid auth token")
 
-    account_id = request.headers.get("account_id", None)
+    account_id = request.headers.get("Account-ID", None)
 
     if account_id:
         db_account = AccountModel.get_account_by_access(
