@@ -142,8 +142,11 @@ def register_campaign_phone_call_tasks():
 def make_phone_call(campaign_id: str, contact_id: str):
     res = requests.post(
         f"{Config.PR_DEV_SERVER_URL}/call/campaign",
-        headers={"Authorization": Config.SERVER_AUTH_TOKEN},
-        data={
+        headers={
+            "Authorization": Config.SERVER_AUTH_TOKEN,
+            "Content-Type": "application/json",
+        },
+        json={
             "campaign_id": campaign_id,
             "contact_id": contact_id,
         },
@@ -151,8 +154,13 @@ def make_phone_call(campaign_id: str, contact_id: str):
 
     call_id = res.json().get("call_id")
 
+    start_time = time.time()
+
     # Checks for the status of the phone call to make sure phone call is finished
     while True:
+        if time.time() - start_time > 1800:  # 30 minutes
+            break
+
         status_res = requests.get(
             f"{Config.PR_DEV_SERVER_URL}/call/{call_id}",
             headers={"Authorization": Config.SERVER_AUTH_TOKEN},
