@@ -77,7 +77,7 @@ const Sessions = () => {
           <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
 
           <ButtonTertiary onClick={() => setShowFilter(!showFilter)} size={'xs'}>
-            Filter
+            {t('filter')}
             {showFilter ? (
               <StyledNavigationChevronUp size={14} />
             ) : (
@@ -128,13 +128,13 @@ const Sessions = () => {
               options={agentTypeOption}
               onChange={(value: any) => setSelectedAgentType(value)}
             />
-            {/* 
-            <SessionDropdown
+
+            {/* <SessionDropdown
               isMulti
               placeholder='Campaign'
               label={''}
               options={campaignOptions}
-              // onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+              onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
             /> */}
 
             {/* <StyledSessionDropdownWrapper>
