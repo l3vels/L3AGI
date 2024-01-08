@@ -100,9 +100,7 @@ const Campaigns = () => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <StyledTableWrapper>
-          <Table columns={columns} data={tableData} />
-        </StyledTableWrapper>
+        <Table columns={columns} data={tableData} expand />
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )

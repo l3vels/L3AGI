@@ -212,13 +212,13 @@ const StyledRoot = styled.div<{ expand?: boolean }>`
   border-radius: 24px;
   max-height: calc(100vh - 350px);
   ${({ expand }) =>
-    expand ? 'max-height: calc(100vh - 250px);' : 'max-height: calc(100vh - 350px);'};
+    expand ? 'max-height: calc(100vh - 280px);' : 'max-height: calc(100vh - 350px);'};
 
   position: relative;
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
-  ${({ expand }) => (expand ? 'height: calc(100vh - 300px);' : 'height: 100%;')};
+  ${({ expand }) => (expand ? 'height: calc(100vh - 330px);' : 'height: 100%;')};
   min-height: 400px;
   width: 100%;
 

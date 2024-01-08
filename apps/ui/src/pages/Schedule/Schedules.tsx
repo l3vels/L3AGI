@@ -24,6 +24,7 @@ import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { t } from 'i18next'
+import styled from 'styled-components'
 
 const Schedules = () => {
   const navigate = useNavigate()
@@ -109,12 +110,14 @@ const Schedules = () => {
 
   return (
     <StyledTabRootWrapper>
-      <StyledTabListWrapper>
-        <TabList activeTabId={activeTab}>
-          <Tab onClick={() => handleTabClick(0, 'campaign')}>{`${t('campaigns')}`}</Tab>
-          <Tab onClick={() => handleTabClick(1, 'schedule')}>{`${t('schedules')}`}</Tab>
-        </TabList>
-      </StyledTabListWrapper>
+      <StyledPositionDiv>
+        <StyledTabListWrapper>
+          <TabList activeTabId={activeTab}>
+            <Tab onClick={() => handleTabClick(0, 'campaign')}>{`${t('campaigns')}`}</Tab>
+            <Tab onClick={() => handleTabClick(1, 'schedule')}>{`${t('schedules')}`}</Tab>
+          </TabList>
+        </StyledTabListWrapper>
+      </StyledPositionDiv>
 
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
@@ -139,7 +142,7 @@ const Schedules = () => {
 
               <ComponentsWrapper noPadding>
                 <StyledTableWrapper>
-                  <Table columns={columns} data={tableData} />
+                  <Table columns={columns} data={tableData} expand />
                 </StyledTableWrapper>
               </ComponentsWrapper>
             </StyledSectionWrapper>
@@ -151,3 +154,7 @@ const Schedules = () => {
 }
 
 export default Schedules
+
+const StyledPositionDiv = styled.div`
+  margin-right: 100px;
+`

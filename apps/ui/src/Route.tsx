@@ -303,7 +303,11 @@ const Route = () => {
                 />
               </Router>
 
-              <Router path={'schedules'} element={<MainRouteLayout />} key={document.location.href}>
+              <Router
+                path={'schedules'}
+                element={<MainRouteLayout expand />}
+                key={document.location.href}
+              >
                 <Router index element={<Schedule />} key={document.location.href} />
                 <Router
                   path={'create-schedule'}
