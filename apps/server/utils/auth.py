@@ -91,6 +91,9 @@ def authenticate_by_auth_token(
             db=db, user_id=None, account_id=account_id
         )
 
+        if not db_account:
+            raise HTTPException(status_code=401, detail="Invalid auth token")
+
         db_user = UserModel.get_user_by_id(db, db_account.created_by)
 
         return UserAccount(
