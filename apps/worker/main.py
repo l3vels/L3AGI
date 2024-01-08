@@ -152,7 +152,7 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
         },
     )
 
-    call_id = res.json().get("call_id")
+    chat_id = res.json().get("chat_id")
 
     start_time = time.time()
 
@@ -162,7 +162,7 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
             break
 
         status_res = requests.get(
-            f"{Config.PR_DEV_SERVER_URL}/call/{call_id}",
+            f"{Config.PR_DEV_SERVER_URL}/call/{chat_id}",
             headers={
                 "Authorization": Config.SERVER_AUTH_TOKEN,
                 "Account-ID": account_id,
@@ -174,9 +174,9 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
         if status is not None:
             break
 
-        time.sleep(15)
+        time.sleep(10)
 
-    return "Phone call finished"
+    return f"Phone call finished with status {status}"
 
 
 if __name__ == "__main__":
