@@ -23,7 +23,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { Close } from 'share-ui/components/Icon/Icons'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ButtonTertiary } from 'components/Button/Button'
 import {
   StyledNavigationChevronDown,
@@ -65,11 +65,16 @@ const Sessions = () => {
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
   const sessionId = urlParams.get('chat')
+  const campaignId = urlParams.get('campaign')
 
   const agentTypeOption = [
     { label: 'Chat based', value: 'text' },
     { label: 'Call based', value: 'voice' },
   ]
+
+  useEffect(() => {
+    if (campaignId && campaignId?.length > 0) setSelectedCampaign([campaignId])
+  }, [campaignId])
 
   return (
     <StyledSectionWrapper>

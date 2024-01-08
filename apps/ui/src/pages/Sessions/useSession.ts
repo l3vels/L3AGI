@@ -108,8 +108,6 @@ export const useSession = () => {
     }
   })
 
-  console.log(campaigns)
-
   const campaignOptions = campaigns?.map((campaign: any) => {
     return {
       value: campaign.id,
@@ -118,6 +116,8 @@ export const useSession = () => {
   })
 
   useEffect(() => {
+    if (selectedCampaign) return
+
     refetchChats()
   }, [])
 
