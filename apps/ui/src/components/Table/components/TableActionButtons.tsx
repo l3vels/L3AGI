@@ -9,9 +9,14 @@ import {
 type TableActionButtonsProp = {
   onDeleteClick?: () => void
   onEditClick?: () => void
+  customActions?: any
 }
 
-const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsProp) => {
+const TableActionButtons = ({
+  onDeleteClick,
+  onEditClick,
+  customActions,
+}: TableActionButtonsProp) => {
   return (
     <StyledTableButtons>
       {onDeleteClick && (
@@ -33,6 +38,8 @@ const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsPr
           ariaLabel='Edit'
         />
       )}
+
+      {customActions && customActions}
     </StyledTableButtons>
   )
 }

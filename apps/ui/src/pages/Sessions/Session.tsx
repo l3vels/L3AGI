@@ -23,7 +23,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { Close } from 'share-ui/components/Icon/Icons'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ButtonTertiary } from 'components/Button/Button'
 import {
   StyledNavigationChevronDown,
@@ -45,6 +45,8 @@ const Sessions = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     selectedAgentNames,
     setSelectedAgentNames,
+    setSelectedCampaign,
+    selectedCampaign,
     startDate,
     endDate,
     filterByDateRange,
@@ -55,6 +57,7 @@ const Sessions = () => {
     totalPages,
     chatsLoading,
     setSelectedAgentType,
+    selectedAgentType,
     campaignOptions,
   } = useSession()
 
@@ -64,11 +67,19 @@ const Sessions = () => {
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
   const sessionId = urlParams.get('chat')
+  const campaignId = urlParams.get('campaign')
 
   const agentTypeOption = [
     { label: 'Chat based', value: 'text' },
     { label: 'Call based', value: 'voice' },
   ]
+
+  useEffect(() => {
+    if (campaignId && campaignOptions?.length > 0) {
+      const value = campaignOptions?.find((option: any) => option.value === campaignId)
+      if (value) setSelectedCampaign([value])
+    }
+  }, [campaignId, campaignOptions])
 
   return (
     <StyledSectionWrapper>
@@ -77,7 +88,7 @@ const Sessions = () => {
           <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
 
           <ButtonTertiary onClick={() => setShowFilter(!showFilter)} size={'xs'}>
-            Filter
+            {t('filter')}
             {showFilter ? (
               <StyledNavigationChevronUp size={14} />
             ) : (
@@ -105,7 +116,8 @@ const Sessions = () => {
               placeholder='Agent'
               label={''}
               options={agentOptions}
-              onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+              onChange={setSelectedAgentNames}
+              value={selectedAgentNames}
             />
 
             {/* <StyledDateWrapper>
@@ -126,16 +138,18 @@ const Sessions = () => {
               placeholder='Agent Type'
               label={''}
               options={agentTypeOption}
-              onChange={(value: any) => setSelectedAgentType(value)}
+              onChange={setSelectedAgentType}
+              value={selectedAgentType}
             />
-            {/* 
+
             <SessionDropdown
               isMulti
               placeholder='Campaign'
               label={''}
               options={campaignOptions}
-              // onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
-            /> */}
+              onChange={setSelectedCampaign}
+              value={selectedCampaign}
+            />
 
             {/* <StyledSessionDropdownWrapper>
             <StyledSessionDropdown

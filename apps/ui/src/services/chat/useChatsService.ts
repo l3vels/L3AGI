@@ -9,7 +9,6 @@ function joinFilters(filters: string[]) {
 export const useChatsService = ({
   filter = [''],
   page = 1,
-  agentType = null,
   itemsCount = 10,
 }: {
   filter?: string[]
@@ -17,9 +16,7 @@ export const useChatsService = ({
   itemsCount?: number
   agentType?: 'voice' | 'text' | null
 }) => {
-  const restPath = `/chat?${joinFilters(filter)}&page=${page}&per_page=${itemsCount}${
-    agentType ? `&agent_type=${agentType}` : ''
-  }`
+  const restPath = `/chat?${joinFilters(filter)}&page=${page}&per_page=${itemsCount}`
   const { data, error, loading, refetch } = useQuery(CHATS_GQL, {
     variables: { restPath },
     fetchPolicy: 'cache-first',

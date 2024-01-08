@@ -23,8 +23,9 @@ type Chat = {
 
 export const useSession = () => {
   const [searchText, setSearchText] = useState('')
-  const [selectedAgentType, setSelectedAgentType] = useState<'voice' | 'text' | null>(null)
-  const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
+  const [selectedAgentType, setSelectedAgentType] = useState<any>(null)
+  const [selectedAgentNames, setSelectedAgentNames] = useState<any>([])
+  const [selectedCampaign, setSelectedCampaign] = useState<any>([])
   // const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null)
   const [page, setPage] = useState(1)
 
@@ -34,8 +35,14 @@ export const useSession = () => {
     loading: chatsLoading,
     refetch: refetchChats,
   } = useChatsService({
-    filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
-    agentType: selectedAgentType,
+    filter: [
+      ...(selectedAgentNames?.map((agent: any) => agent.value) || []),
+      ...(searchText.length > 0 ? [searchText] : []),
+      ...(selectedAgentType?.value === 'voice' || selectedAgentType?.value === 'text'
+        ? [selectedAgentType?.value]
+        : []),
+      ...(selectedCampaign?.map((campaign: any) => campaign.value) || []),
+    ],
     itemsCount: 20,
     page,
   })
@@ -105,7 +112,7 @@ export const useSession = () => {
 
   const campaignOptions = campaigns?.map((campaign: any) => {
     return {
-      value: campaign.name,
+      value: campaign.id,
       label: `${campaign.name}`,
     }
   })
@@ -132,6 +139,9 @@ export const useSession = () => {
     totalPages,
     chatsLoading,
     setSelectedAgentType,
+    selectedAgentType,
+    setSelectedCampaign,
+    selectedCampaign,
     campaignOptions,
   }
 }
