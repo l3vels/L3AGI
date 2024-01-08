@@ -27,7 +27,7 @@ const Campaigns = () => {
       {
         Header: 'Name',
         accessor: 'name',
-        width: 150,
+        width: 120,
       },
       {
         Header: 'Status',
@@ -37,16 +37,21 @@ const Campaigns = () => {
       {
         Header: 'Agent',
         accessor: 'agentId',
-        width: 120,
+        width: 100,
       },
       {
         Header: 'Group',
         accessor: 'groupId',
-        width: 120,
+        width: 100,
       },
       {
         Header: 'Type',
         accessor: 'type',
+        width: 100,
+      },
+      {
+        Header: 'Start Date',
+        accessor: 'startDate',
         width: 100,
       },
       {

@@ -5,6 +5,7 @@ import { useDeleteCampaignByIdService } from 'plugins/contact/services/campaign/
 import { ToastContext } from 'contexts'
 import { useContext } from 'react'
 import { useModal } from 'hooks'
+import moment from 'moment'
 
 export const useCampaigns = () => {
   const { setToast } = useContext(ToastContext)
@@ -25,6 +26,7 @@ export const useCampaigns = () => {
       groupId: groupsData?.find(({ id }: { id: string }) => id === campaign.group_id)?.name,
       type: campaign.type,
       status: campaign.status,
+      startDate: moment(campaign.start_date).format('MMM DD, YYYY, HH:mm'),
     })) || []
 
   const deleteCampaignHandler = (id: string) => {
