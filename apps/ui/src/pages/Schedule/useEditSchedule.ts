@@ -77,7 +77,6 @@ export const useEditSchedule = () => {
   }
 
   const handleSubmit = async (values: ScheduleFormValues) => {
-    console.log('value', values)
     if (!scheduleId) return
 
     setIsLoading(true)

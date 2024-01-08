@@ -103,8 +103,6 @@ export const useSession = () => {
     }
   })
 
-  console.log(campaigns)
-
   const campaignOptions = campaigns?.map((campaign: any) => {
     return {
       value: campaign.name,
