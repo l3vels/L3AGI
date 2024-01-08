@@ -22,7 +22,10 @@ export const useCampaignForm = () => {
   const agentOptions = agentsData
     ?.filter(({ agent }) => agent.agent_type === 'voice')
     ?.map(({ agent }) => {
-      return { value: agent.id, label: agent.name }
+      return {
+        value: agent.id,
+        label: `${agent.name}${agent.role?.length > 0 ? ` - ${agent.role}` : ''}`,
+      }
     })
 
   const groupOptions = groupsData?.map(({ id, name }: { id: string; name: string }) => {
