@@ -138,6 +138,7 @@ def register_campaign_phone_call_tasks():
     autoretry_for=(Exception,),
     retry_backoff=2,
     max_retries=5,
+    queue="phone_call_queue",
 )
 def make_phone_call(campaign_id: str, contact_id: str):
     res = requests.post(
