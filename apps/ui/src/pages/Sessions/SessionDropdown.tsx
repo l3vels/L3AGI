@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import Dropdown from 'share-ui/components/Dropdown/Dropdown'
 
 import Typography from 'share-ui/components/typography/Typography'
@@ -11,6 +11,7 @@ type SessionDropdownProps = {
   isMulti?: boolean
   placeholder: string
   onChange?: any
+  value: any
 }
 
 const SessionDropdown = ({
@@ -19,37 +20,24 @@ const SessionDropdown = ({
   isMulti,
   placeholder,
   onChange,
+  value,
 }: SessionDropdownProps) => {
-  const [selectedValue, setSelectedValue] = useState<string | string[] | null>(null)
+  const theme = useTheme()
 
-  const onChangeFunction = (option: any) => {
-    if (isMulti) {
-      setSelectedValue(option || []) // Ensure option is always an array
-    } else {
-      setSelectedValue(option?.value || null)
-    }
-
-    // Call the onChange prop
-    if (onChange) {
-      onChange(isMulti ? (option || []).map((opt: any) => opt.value) : option?.value)
-    }
-  }
-
-  const onOptionRemove = (removedValue: any) => {
-    if (isMulti && Array.isArray(selectedValue)) {
-      const newValues = selectedValue.filter(oldValue => oldValue !== removedValue)
-
-      setSelectedValue([...newValues])
-
-      // Call the onChange prop
-      if (onChange) {
-        onChange(newValues.map((value: any) => value.value))
-      }
-    }
+  const optionRemoveHandler = (item: any) => {
+    const newValues = value.filter((oldValues: any) => oldValues !== item)
+    onChange(newValues)
   }
 
   const OptionRenderer = ({ label }: { label: string }) => {
-    return <TypographyPrimary value={label} type={Typography.types.LABEL} size='medium' />
+    return (
+      <TypographyPrimary
+        value={label}
+        type={Typography.types.LABEL}
+        size='medium'
+        customColor={theme.typography.contentPrimary}
+      />
+    )
   }
 
   return (
@@ -59,13 +47,11 @@ const SessionDropdown = ({
         insideOverflow
         multiline
         size={Dropdown.size.MEDIUM}
-        value={selectedValue}
-        placeholder={
-          options?.find((item: any) => item.value === selectedValue)?.label || placeholder
-        }
+        value={value}
+        placeholder={value?.label || placeholder}
         options={options}
-        onChange={onChangeFunction}
-        onOptionRemove={onOptionRemove}
+        onChange={onChange}
+        onOptionRemove={optionRemoveHandler}
         OptionRenderer={OptionRenderer}
       />
     </StyledWrapper>

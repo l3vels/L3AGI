@@ -46,6 +46,7 @@ const Sessions = () => {
     selectedAgentNames,
     setSelectedAgentNames,
     setSelectedCampaign,
+    selectedCampaign,
     startDate,
     endDate,
     filterByDateRange,
@@ -56,6 +57,7 @@ const Sessions = () => {
     totalPages,
     chatsLoading,
     setSelectedAgentType,
+    selectedAgentType,
     campaignOptions,
   } = useSession()
 
@@ -73,8 +75,11 @@ const Sessions = () => {
   ]
 
   useEffect(() => {
-    if (campaignId && campaignId?.length > 0) setSelectedCampaign([campaignId])
-  }, [campaignId])
+    if (campaignId && campaignOptions?.length > 0) {
+      const value = campaignOptions?.find((option: any) => option.value === campaignId)
+      if (value) setSelectedCampaign([value])
+    }
+  }, [campaignId, campaignOptions])
 
   return (
     <StyledSectionWrapper>
@@ -111,7 +116,8 @@ const Sessions = () => {
               placeholder='Agent'
               label={''}
               options={agentOptions}
-              onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+              onChange={setSelectedAgentNames}
+              value={selectedAgentNames}
             />
 
             {/* <StyledDateWrapper>
@@ -132,7 +138,8 @@ const Sessions = () => {
               placeholder='Agent Type'
               label={''}
               options={agentTypeOption}
-              onChange={(value: any) => setSelectedAgentType(value)}
+              onChange={setSelectedAgentType}
+              value={selectedAgentType}
             />
 
             <SessionDropdown
@@ -140,7 +147,8 @@ const Sessions = () => {
               placeholder='Campaign'
               label={''}
               options={campaignOptions}
-              onChange={(selectedValues: string[]) => setSelectedCampaign(selectedValues)}
+              onChange={setSelectedCampaign}
+              value={selectedCampaign}
             />
 
             {/* <StyledSessionDropdownWrapper>
