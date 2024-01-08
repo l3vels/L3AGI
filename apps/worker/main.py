@@ -145,7 +145,6 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
         headers={
             "Authorization": Config.SERVER_AUTH_TOKEN,
             "Content-Type": "application/json",
-            "Account-ID": account_id,
         },
         json={
             "campaign_id": campaign_id,
@@ -164,7 +163,10 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
 
         status_res = requests.get(
             f"{Config.PR_DEV_SERVER_URL}/call/{call_id}",
-            headers={"Authorization": Config.SERVER_AUTH_TOKEN},
+            headers={
+                "Authorization": Config.SERVER_AUTH_TOKEN,
+                "Account-ID": account_id,
+            },
         )
 
         status = status_res.json().get("status")
