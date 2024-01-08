@@ -25,6 +25,7 @@ export const useSession = () => {
   const [searchText, setSearchText] = useState('')
   const [selectedAgentType, setSelectedAgentType] = useState<'voice' | 'text' | null>(null)
   const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
+  const [selectedCampaign, setSelectedCampaign] = useState<string[]>([])
   // const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null)
   const [page, setPage] = useState(1)
 
@@ -38,6 +39,7 @@ export const useSession = () => {
       ...selectedAgentNames,
       ...(searchText.length > 0 ? [searchText] : []),
       ...(selectedAgentType === 'voice' || selectedAgentType === 'text' ? [selectedAgentType] : []),
+      ...(selectedCampaign?.length > 0 ? selectedCampaign : []),
     ],
     itemsCount: 20,
     page,
@@ -137,6 +139,8 @@ export const useSession = () => {
     totalPages,
     chatsLoading,
     setSelectedAgentType,
+    setSelectedCampaign,
+    selectedCampaign,
     campaignOptions,
   }
 }

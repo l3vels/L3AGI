@@ -45,6 +45,7 @@ const Sessions = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     selectedAgentNames,
     setSelectedAgentNames,
+    setSelectedCampaign,
     startDate,
     endDate,
     filterByDateRange,
@@ -134,7 +135,7 @@ const Sessions = () => {
               placeholder='Campaign'
               label={''}
               options={campaignOptions}
-              onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+              onChange={(selectedValues: string[]) => setSelectedCampaign(selectedValues)}
             />
 
             {/* <StyledSessionDropdownWrapper>

@@ -1,6 +1,7 @@
 import uuid
 
-from sqlalchemy import UUID, Boolean, Column, ForeignKey, Integer, String, or_
+from sqlalchemy import (UUID, Boolean, Column, ForeignKey, Integer, String,
+                        func, or_)
 from sqlalchemy.orm import Session, joinedload, relationship
 
 from exceptions import ChatNotFoundException
@@ -215,12 +216,13 @@ class ChatModel(BaseModel):
     @classmethod
     def get_chats(cls, db, account, filter_list, page=1, per_page=10):
         offset = (page - 1) * per_page
+
         filter_conditions = [
             or_(
                 ChatModel.name.ilike(f"%{filter_string}%"),
-                ChatModel.campaign_id == filter_string
-                if isinstance(filter_string, UUID)
-                else None,
+                func.cast(ChatModel.campaign_id, String) == filter_string
+                if (filter_string.strip() and uuid.UUID(filter_string.strip()))
+                else False,
                 AgentModel.name.ilike(f"%{filter_string}%"),
                 AgentModel.agent_type.ilike(f"%{filter_string}%"),
             )
