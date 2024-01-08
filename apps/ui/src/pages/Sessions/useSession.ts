@@ -116,8 +116,6 @@ export const useSession = () => {
   })
 
   useEffect(() => {
-    if (selectedCampaign) return
-
     refetchChats()
   }, [])
 

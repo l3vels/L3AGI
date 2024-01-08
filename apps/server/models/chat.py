@@ -1,7 +1,7 @@
 import uuid
 
 from sqlalchemy import (UUID, Boolean, Column, ForeignKey, Integer, String,
-                        func, or_)
+                        and_, func, or_)
 from sqlalchemy.orm import Session, joinedload, relationship
 
 from exceptions import ChatNotFoundException
@@ -12,6 +12,14 @@ from models.team import TeamModel
 from models.user import UserModel
 from typings.account import AccountOutput
 from typings.chat import ChatInput, UpdateChatInput
+
+
+def is_valid_uuid(string):
+    try:
+        uuid_obj = uuid.UUID(string)
+        return str(uuid_obj) == string
+    except ValueError:
+        return False
 
 
 class ChatModel(BaseModel):
@@ -220,11 +228,11 @@ class ChatModel(BaseModel):
         filter_conditions = [
             or_(
                 ChatModel.name.ilike(f"%{filter_string}%"),
-                func.cast(ChatModel.campaign_id, String) == filter_string
-                if (filter_string.strip() and uuid.UUID(filter_string.strip()))
-                else False,
                 AgentModel.name.ilike(f"%{filter_string}%"),
                 AgentModel.agent_type.ilike(f"%{filter_string}%"),
+                ChatModel.campaign_id == filter_string
+                if is_valid_uuid(filter_string)
+                else None,
             )
             for filter_string in filter_list
         ]
