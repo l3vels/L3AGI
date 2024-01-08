@@ -129,13 +129,13 @@ const Sessions = () => {
               onChange={(value: any) => setSelectedAgentType(value)}
             />
 
-            {/* <SessionDropdown
+            <SessionDropdown
               isMulti
               placeholder='Campaign'
               label={''}
               options={campaignOptions}
               onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
-            /> */}
+            />
 
             {/* <StyledSessionDropdownWrapper>
             <StyledSessionDropdown

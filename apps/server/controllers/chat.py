@@ -59,7 +59,6 @@ def get_chats(
     filter: Optional[List[str]] = Query([""]),
     page: Optional[int] = 1,
     per_page: Optional[int] = 1,
-    agent_type: Optional[AgentType] = None,
     auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ) -> ChatListOutput:
     """
@@ -76,7 +75,6 @@ def get_chats(
         db=db,
         account=auth.account,
         filter_list=filter,
-        agent_type=agent_type,
         page=page,
         per_page=per_page,
     )

@@ -34,8 +34,11 @@ export const useSession = () => {
     loading: chatsLoading,
     refetch: refetchChats,
   } = useChatsService({
-    filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
-    agentType: selectedAgentType,
+    filter: [
+      ...selectedAgentNames,
+      ...(searchText.length > 0 ? [searchText] : []),
+      ...(selectedAgentType === 'voice' || selectedAgentType === 'text' ? [selectedAgentType] : []),
+    ],
     itemsCount: 20,
     page,
   })
@@ -107,7 +110,7 @@ export const useSession = () => {
 
   const campaignOptions = campaigns?.map((campaign: any) => {
     return {
-      value: campaign.name,
+      value: campaign.id,
       label: `${campaign.name}`,
     }
   })
