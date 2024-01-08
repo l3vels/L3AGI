@@ -128,7 +128,9 @@ def register_campaign_phone_call_tasks():
         contact_ids = res.json()
 
         for contact_id in contact_ids:
-            make_phone_call.apply_async(args=[campaign["id"], contact_id])
+            make_phone_call.apply_async(
+                args=[campaign["id"], contact_id, campaign["account_id"]]
+            )
 
     return campaign_ids
 
@@ -140,12 +142,13 @@ def register_campaign_phone_call_tasks():
     max_retries=5,
     queue="phone_call_queue",
 )
-def make_phone_call(campaign_id: str, contact_id: str):
+def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
     res = requests.post(
         f"{Config.PR_DEV_SERVER_URL}/call/campaign",
         headers={
             "Authorization": Config.SERVER_AUTH_TOKEN,
             "Content-Type": "application/json",
+            "Account-ID": account_id,
         },
         json={
             "campaign_id": campaign_id,
