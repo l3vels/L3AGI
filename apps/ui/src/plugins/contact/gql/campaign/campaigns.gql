@@ -7,5 +7,7 @@ query getCampaigns @api(name: "pro") {
     type
     start_date
     status
+    total_calls
+    call_statuses
   }
 }
