@@ -138,8 +138,9 @@ def register_campaign_phone_call_tasks():
 @app.task(
     name="make-phone-call",
     queue="phone_call_queue",
+    bind=True,
 )
-def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
+def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
     res = requests.post(
         f"{Config.PR_DEV_SERVER_URL}/call/campaign",
         headers={
@@ -156,9 +157,11 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
 
     start_time = time.time()
 
+    FORTY_FIVE_MINUTES_IN_SECONDS = 2700
+
     # Checks for the status of the phone call to make sure phone call is finished
     while True:
-        if time.time() - start_time > 1800:  # 30 minutes
+        if time.time() - start_time > FORTY_FIVE_MINUTES_IN_SECONDS:
             break
 
         status_res = requests.get(
@@ -171,8 +174,13 @@ def make_phone_call(campaign_id: str, contact_id: str, account_id: str):
 
         status = status_res.json().get("status")
 
+        FIFTEEN_MINUTES_IN_SECONDS = 900
+
         if status is not None:
-            break
+            if status == "Busy":
+                self.retry(countdown=FIFTEEN_MINUTES_IN_SECONDS)
+            else:
+                break
 
         time.sleep(10)
 
