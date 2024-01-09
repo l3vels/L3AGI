@@ -40,7 +40,7 @@ const Campaigns = () => {
       {
         Header: 'Agent',
         accessor: 'agentId',
-        width: 100,
+        width: 80,
       },
       {
         Header: 'Group',
@@ -50,12 +50,27 @@ const Campaigns = () => {
       {
         Header: 'Type',
         accessor: 'type',
-        width: 100,
+        width: 70,
       },
       {
         Header: 'Start Date',
         accessor: 'startDate',
         width: 100,
+      },
+      {
+        Header: 'Total Calls',
+        accessor: 'totalCalls',
+        width: 50,
+      },
+      {
+        Header: 'Busy',
+        accessor: 'busyCalls',
+        width: 50,
+      },
+      {
+        Header: 'Completed',
+        accessor: 'completedCalls',
+        width: 50,
       },
       {
         Header: 'Actions',
@@ -101,9 +116,7 @@ const Campaigns = () => {
       </StyledHeaderGroup>
 
       <ComponentsWrapper noPadding>
-        <StyledTableWrapper>
-          <Table columns={columns} data={tableData} />
-        </StyledTableWrapper>
+        <Table columns={columns} data={tableData} expand />
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )

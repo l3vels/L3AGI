@@ -13,5 +13,7 @@ mutation createCampaign($input: input!) @api(name: pro) {
     start_date
     type
     status
+    total_calls
+    call_statuses
   }
 }

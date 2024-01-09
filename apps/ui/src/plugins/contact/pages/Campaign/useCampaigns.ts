@@ -27,6 +27,9 @@ export const useCampaigns = () => {
       type: campaign.type,
       status: campaign.status,
       startDate: moment(campaign.start_date).format('MMM DD, YYYY, HH:mm'),
+      totalCalls: campaign.total_calls,
+      busyCalls: campaign.call_statuses?.Busy,
+      completedCalls: campaign.call_statuses?.Completed,
     })) || []
 
   const deleteCampaignHandler = (id: string) => {
