@@ -17,5 +17,7 @@ mutation createCampaign($input: input!) @api(name: pro) {
     call_statuses
     retry_attempts
     retry_interval
+    working_hours_start
+    working_hours_end
   }
 }

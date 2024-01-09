@@ -24,6 +24,8 @@ export const useCreateCampaign = () => {
     campaign_start_date: getDateTimeFromDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)),
     campaign_retry_attempts: 2,
     campaign_retry_interval: 15,
+    campaign_working_hours_start: '10:00',
+    campaign_working_hours_end: '18:00',
   }
 
   const handleSubmit = async (values: any) => {
@@ -37,6 +39,8 @@ export const useCreateCampaign = () => {
         start_date: new Date(values.campaign_start_date).toISOString(),
         retry_attempts: values.campaign_retry_attempts,
         retry_interval: values.campaign_retry_interval,
+        working_hours_start: values.campaign_working_hours_start,
+        working_hours_end: values.campaign_working_hours_end,
       }
 
       await createCampaign(campaignInput)

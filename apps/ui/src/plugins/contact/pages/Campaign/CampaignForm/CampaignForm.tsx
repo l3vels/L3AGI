@@ -66,6 +66,26 @@ const CampaignForm = ({ formik }: { formik: any }) => {
               size='small'
             />
           </StyledCombinedFields>
+
+          <StyledCombinedFields>
+            <FormikTextField
+              name='campaign_working_hours_start'
+              field_name='campaign_working_hours_start'
+              placeholder='Run Date'
+              label='Working Hours Start'
+              size={'small'}
+              type='time'
+            />
+
+            <FormikTextField
+              name='campaign_working_hours_end'
+              field_name='campaign_working_hours_end'
+              placeholder=''
+              label='Working Hours End'
+              size={'small'}
+              type='time'
+            />
+          </StyledCombinedFields>
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>

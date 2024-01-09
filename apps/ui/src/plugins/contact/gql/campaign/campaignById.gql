@@ -10,5 +10,7 @@ query campaignById($id: id!) @api(name: "pro") {
     status
     retry_attempts
     retry_interval
+    working_hours_start
+    working_hours_end
   }
 }

@@ -6,7 +6,17 @@ import { CampaignInput } from './useCreateCampaignService'
 export const useUpdateCampaignService = () => {
   const [mutation] = useMutation(UPDATE_CAMPAIGN_GQL)
   const updateCampaign = async (id: string, input: CampaignInput) => {
-    const { name, agent_id, group_id, type, start_date, retry_attempts, retry_interval } = input
+    const {
+      name,
+      agent_id,
+      group_id,
+      type,
+      start_date,
+      retry_attempts,
+      retry_interval,
+      working_hours_start,
+      working_hours_end,
+    } = input
 
     const { data } = await mutation({
       variables: {
@@ -19,6 +29,8 @@ export const useUpdateCampaignService = () => {
           start_date,
           retry_attempts,
           retry_interval,
+          working_hours_start,
+          working_hours_end,
         },
       },
     })

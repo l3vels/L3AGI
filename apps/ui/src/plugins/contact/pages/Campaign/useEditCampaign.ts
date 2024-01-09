@@ -31,6 +31,8 @@ export const useEditCampaign = () => {
     campaign_start_date: getDateTime(campaignById?.start_date),
     campaign_retry_attempts: campaignById?.retry_attempts,
     campaign_retry_interval: campaignById?.retry_interval,
+    campaign_working_hours_start: campaignById?.campaign_working_hours_start,
+    campaign_working_hours_end: campaignById?.campaign_working_hours_end,
   }
 
   const handleSubmit = async (values: any) => {
@@ -44,6 +46,8 @@ export const useEditCampaign = () => {
         start_date: new Date(values.campaign_start_date).toISOString(),
         retry_attempts: values.campaign_retry_attempts,
         retry_interval: values.campaign_retry_interval,
+        working_hours_start: values.campaign_working_hours_start,
+        working_hours_end: values.campaign_working_hours_end,
       }
 
       await updateCampaign(campaignId || '', updatedValues)
