@@ -157,16 +157,28 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
     message = call_json.get("message")
 
     if "Call limit exceeded" in message:
-        return "Already 2 calls are made. Skipping this contact."
+        return "Call attempts limit reached. Skipping this contact."
 
     chat_id = call_json.get("chat_id")
 
     start_time = time.time()
 
-    FORTY_FIVE_MINUTES_IN_SECONDS = 2700
+    campaign_res = requests.get(
+        f"{Config.PR_DEV_SERVER_URL}/v1/campaign/{campaign_id}",
+        headers={
+            "Authorization": Config.SERVER_AUTH_TOKEN,
+            "Account-ID": account_id,
+        },
+    )
+
+    campaign = campaign_res.json()
+    retry_interval = campaign.get("retry_interval", 15)
 
     # Checks for the status of the phone call to make sure phone call is finished
+    FORTY_FIVE_MINUTES_IN_SECONDS = 2700
+
     while True:
+        # Just in case loop stuck for some reason
         if time.time() - start_time > FORTY_FIVE_MINUTES_IN_SECONDS:
             break
 
@@ -180,11 +192,9 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
 
         status = status_res.json().get("status")
 
-        FIFTEEN_MINUTES_IN_SECONDS = 900
-
         if status is not None:
-            if status == "Busy":
-                self.retry(countdown=FIFTEEN_MINUTES_IN_SECONDS)
+            if status in ["Busy", "No Answer", "Failed"]:
+                self.retry(countdown=retry_interval)
             else:
                 break
 
