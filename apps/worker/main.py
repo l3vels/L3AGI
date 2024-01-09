@@ -161,12 +161,12 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
     ).time()
 
     # Get current time in US timezone
-    # us_tz = pytz.timezone("US/Eastern")  # replace with the appropriate US timezone
+    us_tz = pytz.timezone("US/Eastern")  # replace with the appropriate US timezone
 
-    current_time_us = datetime.now().time()
+    current_time_us = datetime.now(us_tz).time()
 
     # Check if current day is between Monday and Friday
-    current_day_us = datetime.now().weekday()
+    current_day_us = datetime.now(us_tz).weekday()
 
     if current_day_us >= 0 and current_day_us <= 4:  # 0 is Monday, 4 is Friday
         # Check if current time is within working hours
