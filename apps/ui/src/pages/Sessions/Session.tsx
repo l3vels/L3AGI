@@ -23,7 +23,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { Close } from 'share-ui/components/Icon/Icons'
 
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { ButtonTertiary } from 'components/Button/Button'
 import {
   StyledNavigationChevronDown,
@@ -147,7 +147,10 @@ const Sessions = () => {
               placeholder='Campaign'
               label={''}
               options={campaignOptions}
-              onChange={setSelectedCampaign}
+              onChange={(value: any) => {
+                setSelectedCampaign(value)
+                navigate('/sessions')
+              }}
               value={selectedCampaign}
             />
 
@@ -189,7 +192,7 @@ const Sessions = () => {
     </StyledSectionWrapper>
   )
 }
-export default Sessions
+export default memo(Sessions)
 
 const StyledFilterContainer = styled.div`
   display: flex;
