@@ -404,7 +404,7 @@ const StyledDateWrapper = styled.div`
   align-items: center;
   gap: 12px;
 `
-const StyledOpenIcon = styled(Open)`
+export const StyledOpenIcon = styled(Open)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }

@@ -141,6 +141,7 @@
   "enter-email": "Enter email...",
   "enter-password": "Enter password...",
   "expiration": "Expiration",
+  "filter": "Filter",
   "failed-to-create-new-asset": "Failed to create new asset",
   "failed-to-create-new-collection": "Failed to create new collection",
   "failed-to-add-new-api-key": "Failed to Add new API key",
