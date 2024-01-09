@@ -14,6 +14,7 @@ from models.team import TeamModel
 from postgres import PostgresChatMessageHistory
 from services.chat import create_client_message, create_user_message
 from services.pubsub import AzurePubSubService
+from typings.agent import AgentType
 from typings.auth import UserAccount
 from typings.chat import (ChatInput, ChatListOutput, ChatMessageInput,
                           ChatMessageOutput, ChatOutput, ChatStatus,
@@ -21,8 +22,9 @@ from typings.chat import (ChatInput, ChatListOutput, ChatMessageInput,
                           InsertChatMessagesInput, NegotiateOutput,
                           UpdateChatInput)
 from typings.config import ConfigOutput
-from utils.auth import (authenticate, authenticate_by_token_or_api_key,
-                        try_auth_user, try_auth_user_with_token_or_api_key)
+from utils.auth import (authenticate, authenticate_by_any,
+                        authenticate_by_token_or_api_key, try_auth_user,
+                        try_auth_user_with_any)
 from utils.chat import (convert_chats_to_chat_list, convert_model_to_response,
                         get_chat_session_id)
 from utils.configuration import \
@@ -33,7 +35,7 @@ router = APIRouter()
 
 @router.post("", status_code=201, include_in_schema=False)
 def create_chat(
-    chat: ChatInput, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
+    chat: ChatInput, auth: UserAccount = Depends(authenticate_by_any)
 ) -> ChatOutput:
     if not chat.agent_id and not chat.team_id:
         ChatException("Agent or Team should be defined")
@@ -46,7 +48,7 @@ def create_chat(
 def update_chat(
     id: UUID,
     chat: UpdateChatInput,
-    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+    auth: UserAccount = Depends(authenticate_by_any),
 ) -> ChatOutput:
     db_chat = ChatModel.update_chat(db, id, chat, auth.user)
     return convert_model_to_response(db_chat)
@@ -70,9 +72,13 @@ def get_chats(
         List[ChatOutput]: List of chats associated with the account.
     """
     db_chats, count = ChatModel.get_chats(
-        db=db, account=auth.account, filter_list=filter, page=page, per_page=per_page
+        db=db,
+        account=auth.account,
+        filter_list=filter,
+        page=page,
+        per_page=per_page,
     )
-    print("count", count)
+
     chats = convert_chats_to_chat_list(db_chats)
 
     return ChatListOutput(chats=chats, count=count)
@@ -121,7 +127,7 @@ def get_chat_messages(
         agent_id (Optional[UUID]): Agent id
         team_id (Optional[UUID]): Team of agents id
     """
-    auth: UserAccount = try_auth_user_with_token_or_api_key(request, response)
+    auth: UserAccount = try_auth_user_with_any(request, response)
     # todo need validate is_public or not chat
     if not chat_id and not auth:
         raise HTTPException(status_code=401, detail="Unauthorized")
@@ -239,7 +245,7 @@ def negotiate(id: str):
 @router.post("/session/messages/insert", status_code=201, include_in_schema=False)
 def insert_chat_messages(
     body: InsertChatMessagesInput,
-    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
+    auth: UserAccount = Depends(authenticate_by_any),
 ):
     """
     Inserts chat messages
@@ -296,7 +302,7 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     Create new chat message
     """
     # authenticate
-    auth: UserAccount = try_auth_user_with_token_or_api_key(request, response)
+    auth: UserAccount = try_auth_user_with_any(request, response)
     return create_client_message(body, auth)
 
 

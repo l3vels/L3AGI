@@ -7,9 +7,10 @@ import TableCell from './components/TableCell'
 
 import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
-import IconButton from '@l3-lib/ui-core/dist/IconButton'
+
 import NavigationChevronLeft from '@l3-lib/ui-core/dist/icons/NavigationChevronLeft'
 import NavigationChevronRight from '@l3-lib/ui-core/dist/icons/NavigationChevronRight'
+import Loader from 'share-ui/components/Loader/Loader'
 
 type ColumnProps = {
   Header: any
@@ -28,12 +29,28 @@ type TableProps = {
   pagination?: boolean
   page?: number
   setPage?: (value: number) => void
-
+  isLoading?: boolean
   totalPages?: number
+  selectedRow?: string | null
 }
 
-const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TableProps) => {
+const Table = ({
+  columns,
+  data,
+  expand,
+  page = 1,
+  setPage,
+  totalPages,
+  isLoading,
+  selectedRow,
+}: TableProps) => {
   const [totalPageState, setTotalPageState] = useState(totalPages || null)
+  const [selectedRowState, setSelectedRowState] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (selectedRow) return setSelectedRowState(selectedRow)
+    else return setSelectedRowState(null)
+  }, [selectedRow])
 
   useEffect(() => {
     if (totalPageState === totalPages) return
@@ -76,7 +93,12 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
   }
 
   return (
-    <StyledRoot>
+    <StyledRoot expand={expand}>
+      {isLoading && (
+        <StyledLoaderWrapper>
+          <Loader size={50} />
+        </StyledLoaderWrapper>
+      )}
       <StyledTable {...getTableProps()} expand={expand}>
         <StyledThead>
           {headerGroups.map((headerGroup: any, index: number) => (
@@ -116,7 +138,12 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
           {rows?.map((row: any, index: number) => {
             prepareRow(row)
             return (
-              <StyledTr {...row.getRowProps()} key={index} bodyRow>
+              <StyledTr
+                {...row.getRowProps()}
+                key={index}
+                bodyRow
+                isSelected={row.original.id === selectedRowState}
+              >
                 {row.cells.map((cell: any, index: number) => {
                   return <TableCell key={index} cell={cell} />
                 })}
@@ -133,9 +160,10 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
           <PageNumber onClick={() => paginate(1)} active={1 === page}>
             1
           </PageNumber>
-          {page > 3 && (
+          {page > 2 && (
             <>
-              <PageNumber>...</PageNumber>
+              {page > 4 && <PageNumber readOnly>...</PageNumber>}
+              {page !== 3 && <PageNumber onClick={() => paginate(page - 2)}>{page - 2}</PageNumber>}
               <PageNumber onClick={() => paginate(page - 1)}>{page - 1}</PageNumber>
             </>
           )}
@@ -144,10 +172,13 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
               {page}
             </PageNumber>
           )}
-          {page < totalPageState - 2 && (
+          {page < totalPageState - 1 && (
             <>
               <PageNumber onClick={() => paginate(page + 1)}>{page + 1}</PageNumber>
-              <PageNumber>...</PageNumber>
+              {page < totalPageState - 2 && (
+                <PageNumber onClick={() => paginate(page + 2)}>{page + 2}</PageNumber>
+              )}
+              {page < totalPageState - 3 && <PageNumber readOnly>...</PageNumber>}
             </>
           )}
           {totalPageState > 1 && page !== totalPageState && (
@@ -166,7 +197,7 @@ const Table = ({ columns, data, expand, page = 1, setPage, totalPages }: TablePr
 
 export default Table
 
-const StyledRoot = styled.div`
+const StyledRoot = styled.div<{ expand?: boolean }>`
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -179,19 +210,21 @@ const StyledRoot = styled.div`
   }
 
   border-radius: 24px;
-  max-height: calc(100vh - 250px);
+  max-height: calc(100vh - 350px);
+  ${({ expand }) =>
+    expand ? 'max-height: calc(100vh - 250px);' : 'max-height: calc(100vh - 350px);'};
+
+  position: relative;
 `
 
 const StyledTable = styled.table<{ expand?: boolean }>`
-  ${({ expand }) => (expand ? 'height: calc(100vh - 250px);' : 'height: auto;')}
+  ${({ expand }) => (expand ? 'height: calc(100vh - 300px);' : 'height: 100%;')};
   min-height: 400px;
   width: 100%;
 
   color: ${({ theme }) => theme.typography.contentPrimary};
 
   background: #fff;
-
-  overflow: hidden;
 `
 const StyledThead = styled.thead`
   background: #fff;
@@ -209,7 +242,7 @@ const StyledTbody = styled.tbody`
   flex-direction: column;
 `
 
-const StyledTr = styled.tr<{ bodyRow?: boolean }>`
+const StyledTr = styled.tr<{ bodyRow?: boolean; isSelected?: boolean }>`
   height: 35px;
 
   display: flex;
@@ -217,9 +250,18 @@ const StyledTr = styled.tr<{ bodyRow?: boolean }>`
     ${p =>
       p.bodyRow &&
       css`
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(0, 0, 0, 0.1);
       `};
   }
+
+  ${p =>
+    p.isSelected &&
+    css`
+      background-color: rgba(0, 0, 0, 0.2);
+      :hover {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    `};
 `
 const StyledTh = styled.th`
   display: flex;
@@ -255,7 +297,7 @@ const PaginationWrapper = styled.div`
   background-color: #fff;
 `
 
-const PageNumber = styled.div<{ active?: boolean }>`
+const PageNumber = styled.div<{ active?: boolean; readOnly?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -280,6 +322,14 @@ const PageNumber = styled.div<{ active?: boolean }>`
       height: 30px;
       border-radius: 5px;
     `}
+  ${({ readOnly }) =>
+    readOnly &&
+    css`
+      :hover {
+        background-color: unset;
+        cursor: auto;
+      }
+    `}
 `
 
 const StyledNavigationChevronLeft = styled(NavigationChevronLeft)`
@@ -292,4 +342,12 @@ const StyledNavigationChevronRight = styled(NavigationChevronRight)`
   path {
     color: ${({ theme }) => theme.body.iconColor};
   }
+`
+
+const StyledLoaderWrapper = styled.div`
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `

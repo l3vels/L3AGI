@@ -68,6 +68,7 @@ class ChatOutput(BaseModel):
     creator_user: Optional[Dict] = None
     creator_account: Optional[Dict] = None
     voice_url: Optional[str] = None
+    created_on: datetime
     # provider_user: Optional[Dict] = None
     # provider_account: Optional[Dict] = None
     # creator_user_id: Optional[UUID]

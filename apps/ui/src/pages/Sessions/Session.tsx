@@ -23,8 +23,19 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { Close } from 'share-ui/components/Icon/Icons'
 
+import { memo, useEffect, useState } from 'react'
+import { ButtonTertiary } from 'components/Button/Button'
+import {
+  StyledNavigationChevronDown,
+  StyledNavigationChevronUp,
+} from 'pages/Agents/AgentForm/components/ShowAdvancedButton'
+import TextField from 'share-ui/components/TextField/TextField'
+
 const Sessions = () => {
   const { t } = useTranslation()
+
+  const [showFilter, setShowFilter] = useState(false)
+
   const {
     scheduleOptions,
     agentOptions,
@@ -34,6 +45,8 @@ const Sessions = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     selectedAgentNames,
     setSelectedAgentNames,
+    setSelectedCampaign,
+    selectedCampaign,
     startDate,
     endDate,
     filterByDateRange,
@@ -42,6 +55,10 @@ const Sessions = () => {
     setPage,
     page,
     totalPages,
+    chatsLoading,
+    setSelectedAgentType,
+    selectedAgentType,
+    campaignOptions,
   } = useSession()
 
   const columnConfig = useColumn()
@@ -50,25 +67,60 @@ const Sessions = () => {
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
   const sessionId = urlParams.get('chat')
+  const campaignId = urlParams.get('campaign')
+
+  const agentTypeOption = [
+    { label: 'Chat based', value: 'text' },
+    { label: 'Call based', value: 'voice' },
+  ]
+
+  useEffect(() => {
+    if (campaignId && campaignOptions?.length > 0) {
+      const value = campaignOptions?.find((option: any) => option.value === campaignId)
+      if (value) setSelectedCampaign([value])
+    }
+  }, [campaignId, campaignOptions])
 
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
+        <StyledTitleWrapper>
           <StyledSectionTitle>{t('sessions')}</StyledSectionTitle>
-        </div>
 
-        <StyledRightSideWrapper>
-          <StyledSessionDropdownWrapper>
+          <ButtonTertiary onClick={() => setShowFilter(!showFilter)} size={'xs'}>
+            {t('filter')}
+            {showFilter ? (
+              <StyledNavigationChevronUp size={14} />
+            ) : (
+              <StyledNavigationChevronDown size={14} />
+            )}
+          </ButtonTertiary>
+        </StyledTitleWrapper>
+      </StyledHeaderGroup>
+
+      <ComponentsWrapper noPadding>
+        {showFilter && (
+          <StyledFilterContainer>
+            <StyledSearchContainer>
+              <TextField
+                id='searchInput'
+                value={searchText}
+                onChange={(value: string) => setSearchText(value || '')}
+                placeholder='Search...'
+              />
+              <StyledSearchIcon />
+            </StyledSearchContainer>
+
             <SessionDropdown
               isMulti
               placeholder='Agent'
               label={''}
               options={agentOptions}
-              onChange={(selectedValues: string[]) => setSelectedAgentNames(selectedValues)}
+              onChange={setSelectedAgentNames}
+              value={selectedAgentNames}
             />
-          </StyledSessionDropdownWrapper>
-          <StyledDateWrapper>
+
+            {/* <StyledDateWrapper>
             <DatePickerField
               start_date={startDate}
               end_date={endDate}
@@ -76,13 +128,33 @@ const Sessions = () => {
               onClear={clearSelectedDays}
               onApply={filterByDateRange}
             />
-          </StyledDateWrapper>
+          </StyledDateWrapper> */}
 
-          <StyledSessionDropdownWrapper>
+            {/* <StyledSessionDropdownWrapper>
             <SessionDropdown isMulti placeholder='Schedule' label={''} options={scheduleOptions} />
-          </StyledSessionDropdownWrapper>
+          </StyledSessionDropdownWrapper> */}
 
-          {/* <StyledSessionDropdownWrapper>
+            <SessionDropdown
+              placeholder='Agent Type'
+              label={''}
+              options={agentTypeOption}
+              onChange={setSelectedAgentType}
+              value={selectedAgentType}
+            />
+
+            <SessionDropdown
+              isMulti
+              placeholder='Campaign'
+              label={''}
+              options={campaignOptions}
+              onChange={(value: any) => {
+                setSelectedCampaign(value)
+                navigate('/sessions')
+              }}
+              value={selectedCampaign}
+            />
+
+            {/* <StyledSessionDropdownWrapper>
             <StyledSessionDropdown
               isMulti
               kind={Dropdown.kind.PRIMARY}
@@ -90,23 +162,8 @@ const Sessions = () => {
               size={Dropdown.size.SMALL}
             />
           </StyledSessionDropdownWrapper> */}
-
-          <StyledSearchContainer>
-            <StyledSearchInput
-              type='text'
-              id='searchInput'
-              value={searchText}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSearchText(e.target?.value || '')
-              }
-              placeholder='Search...'
-            />
-            <StyledSearchIcon />
-          </StyledSearchContainer>
-        </StyledRightSideWrapper>
-      </StyledHeaderGroup>
-
-      <ComponentsWrapper noPadding>
+          </StyledFilterContainer>
+        )}
         <Table
           expand
           columns={columnConfig}
@@ -114,9 +171,11 @@ const Sessions = () => {
           setPage={setPage}
           page={page}
           totalPages={totalPages}
+          isLoading={chatsLoading}
+          selectedRow={sessionId}
         />
         {sessionId && (
-          <StyledSessionCHatWrapper>
+          <StyledSessionChatWrapper>
             <StyledButtonWrapper>
               <IconButton
                 icon={() => <Close />}
@@ -127,24 +186,28 @@ const Sessions = () => {
             </StyledButtonWrapper>
 
             <ChatV2 chatSessionId={sessionId} />
-          </StyledSessionCHatWrapper>
+          </StyledSessionChatWrapper>
         )}
       </ComponentsWrapper>
     </StyledSectionWrapper>
   )
 }
-export default Sessions
+export default memo(Sessions)
 
-const StyledSessionDropdownWrapper = styled.div`
-  min-width: 300px !important;
-  max-width: 800px;
-`
-
-const StyledRightSideWrapper = styled.div`
+const StyledFilterContainer = styled.div`
   display: flex;
-  gap: 30px;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 15px;
+  /* align-items: center; */
+  /* flex-wrap: wrap; */
+
+  padding: 10px;
+  margin-right: 10px;
+
+  width: 100%;
+  max-width: 300px;
+
+  overflow: auto;
 `
 
 const StyledDateWrapper = styled.div`
@@ -170,32 +233,23 @@ const StyledDateWrapper = styled.div`
 
 const StyledSearchContainer = styled.div`
   position: relative;
-`
-
-const StyledSearchInput = styled.input`
-  color: ${({ theme }) => theme.body.textColorSecondary} !important;
-  background: ${({ theme }) => theme.body.toolkitCardBgColorSecondary};
-  border: ${({ theme }) => theme.body.sessionDropdownBorder} !important;
-  min-width: 300px;
-  height: 48px;
-  border-radius: 8px;
-  padding-left: 15px;
-  padding-right: 40px;
-  font-size: 14px;
+  width: 100%;
 `
 
 const StyledSearchIcon = styled(SearchOutline)`
   position: absolute;
-  top: 50%;
-  right: 10px;
+  top: 20px;
+  right: 5px;
   transform: translateY(-50%);
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledSessionCHatWrapper = styled.div`
+const StyledSessionChatWrapper = styled.div`
   height: calc(100vh - 250px);
   width: 100%;
+
+  padding: 0 10px;
 `
 const StyledButtonWrapper = styled.div`
   position: absolute;
@@ -203,4 +257,9 @@ const StyledButtonWrapper = styled.div`
   top: 20px;
 
   z-index: 1;
+`
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `

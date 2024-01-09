@@ -1,6 +1,7 @@
 import uuid
 
-from sqlalchemy import UUID, Boolean, Column, ForeignKey, Integer, String, or_
+from sqlalchemy import (UUID, Boolean, Column, ForeignKey, Integer, String,
+                        and_, func, or_)
 from sqlalchemy.orm import Session, joinedload, relationship
 
 from exceptions import ChatNotFoundException
@@ -11,6 +12,14 @@ from models.team import TeamModel
 from models.user import UserModel
 from typings.account import AccountOutput
 from typings.chat import ChatInput, UpdateChatInput
+
+
+def is_valid_uuid(string):
+    try:
+        uuid_obj = uuid.UUID(string)
+        return str(uuid_obj) == string
+    except ValueError:
+        return False
 
 
 class ChatModel(BaseModel):
@@ -28,6 +37,8 @@ class ChatModel(BaseModel):
     name = Column(String, nullable=True)
     agent_id = Column(UUID, ForeignKey("agent.id", ondelete="CASCADE"), index=True)
     team_id = Column(UUID, ForeignKey("team.id", ondelete="CASCADE"), index=True)
+
+    campaign_id = Column(UUID, nullable=True, index=True)
 
     voice_url = Column(String, nullable=True)
 
@@ -213,16 +224,20 @@ class ChatModel(BaseModel):
     @classmethod
     def get_chats(cls, db, account, filter_list, page=1, per_page=10):
         offset = (page - 1) * per_page
-        filter_conditions = []
-        for filter_string in filter_list:
-            filter_conditions.append(
-                or_(
-                    ChatModel.name.ilike(f"%{filter_string}%"),
-                    AgentModel.name.ilike(f"%{filter_string}%"),
-                )
-            )
 
-        chats = (
+        filter_conditions = [
+            or_(
+                ChatModel.name.ilike(f"%{filter_string}%"),
+                AgentModel.name.ilike(f"%{filter_string}%"),
+                AgentModel.agent_type.ilike(f"%{filter_string}%"),
+                ChatModel.campaign_id == filter_string
+                if is_valid_uuid(filter_string)
+                else None,
+            )
+            for filter_string in filter_list
+        ]
+
+        query = (
             db.session.query(ChatModel)
             .outerjoin(UserModel, ChatModel.creator_user_id == UserModel.id)
             .outerjoin(AccountModel, ChatModel.creator_account_id == AccountModel.id)
@@ -232,31 +247,23 @@ class ChatModel(BaseModel):
             .filter(
                 ChatModel.creator_account_id == account.id,
                 or_(
-                    or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
-                    ChatModel.is_deleted is None,
+                    or_(
+                        ChatModel.is_deleted.is_(False), ChatModel.is_deleted.is_(None)
+                    ),
+                    ChatModel.is_deleted.is_(None),
                 ),
                 or_(*filter_conditions),
             )
-            .options(joinedload(ChatModel.team))
-            .options(joinedload(ChatModel.agent))
-            .options(joinedload(ChatModel.creator_user))
-            .options(joinedload(ChatModel.creator_account))
-            .offset(offset)
-            .limit(per_page)
-            .all()
+            .options(
+                joinedload(ChatModel.team),
+                joinedload(ChatModel.agent),
+                joinedload(ChatModel.creator_user),
+                joinedload(ChatModel.creator_account),
+            )
         )
 
-        total_count = (
-            db.session.query(ChatModel)
-            .filter(
-                ChatModel.creator_account_id == account.id,
-                or_(
-                    or_(ChatModel.is_deleted.is_(False), ChatModel.is_deleted is None),
-                    ChatModel.is_deleted is None,
-                ),
-            )
-            .count()
-        )
+        chats = query.offset(offset).limit(per_page).all()
+        total_count = query.count()
 
         return chats, total_count
 

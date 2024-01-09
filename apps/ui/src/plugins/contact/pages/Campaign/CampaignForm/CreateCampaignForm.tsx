@@ -1,36 +1,29 @@
-import BackButton from 'components/BackButton'
-import { ButtonPrimary } from 'components/Button/Button'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import { FormikProvider } from 'formik'
+import { useCreateCampaign } from '../useCreateCampaign'
 import {
   StyledHeaderGroup,
-  // StyledSectionDescription,
   StyledSectionTitle,
   StyledSectionWrapper,
 } from 'pages/Home/homeStyle.css'
-
+import { t } from 'i18next'
+import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+import BackButton from 'components/BackButton'
+import { ButtonPrimary } from 'components/Button/Button'
 import Button from 'share-ui/components/Button/Button'
 import Loader from 'share-ui/components/Loader/Loader'
-
-import { useCreateGroup } from '../useCreateGroup'
-import { FormikProvider } from 'formik'
-
-import GroupForm from './GroupFrom'
+import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledFormWrapper } from 'styles/formStyles.css'
-import { t } from 'i18next'
+import CampaignForm from './CampaignForm'
 
-const CreateGroupForm = () => {
-  const { formik, isLoading } = useCreateGroup()
+const CreateCampaignForm = () => {
+  const { formik, isLoading } = useCreateCampaign()
 
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
           <div>
-            <StyledSectionTitle>{`${t('add-group')}`}</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-            Here is your datasource, a collection of databases, APIs, files, and more.
-          </StyledSectionDescription> */}
+            <StyledSectionTitle>{`${t('add-campaign')}`}</StyledSectionTitle>
           </div>
 
           <StyledButtonWrapper>
@@ -47,7 +40,7 @@ const CreateGroupForm = () => {
 
         <ComponentsWrapper noPadding>
           <StyledFormWrapper>
-            <GroupForm formik={formik} />
+            <CampaignForm formik={formik} />
           </StyledFormWrapper>
         </ComponentsWrapper>
       </StyledSectionWrapper>
@@ -55,4 +48,4 @@ const CreateGroupForm = () => {
   )
 }
 
-export default CreateGroupForm
+export default CreateCampaignForm

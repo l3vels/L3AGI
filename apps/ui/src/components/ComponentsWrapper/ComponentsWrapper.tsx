@@ -39,7 +39,7 @@ const StyledMainWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
     p.noPadding &&
     css`
       padding: 15px 0;
-    `};
+    `}
   ${p =>
     p.hideBox &&
     css`

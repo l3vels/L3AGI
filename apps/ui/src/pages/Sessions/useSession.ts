@@ -1,7 +1,8 @@
 import { Moment } from 'moment'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
-import { useState } from 'react'
+import { useCampaignsService } from 'plugins/contact/services/campaign/useCampaignsService'
+import { useEffect, useMemo, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
 import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
@@ -10,14 +11,8 @@ type Chat = {
   id: string
   name: string
   voice_url: string
-  agent?: {
-    agent?: {
-      name: string
-      id: string
-      role: string
-      description: string
-    }
-  }
+  agent?: AgentWithConfigs
+  created_on: Date
   team?: {
     team?: {
       name: string
@@ -28,11 +23,26 @@ type Chat = {
 
 export const useSession = () => {
   const [searchText, setSearchText] = useState('')
-  const [selectedAgentNames, setSelectedAgentNames] = useState<string[]>([])
+  const [selectedAgentType, setSelectedAgentType] = useState<any>(null)
+  const [selectedAgentNames, setSelectedAgentNames] = useState<any>([])
+  const [selectedCampaign, setSelectedCampaign] = useState<any>([])
+  // const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null)
   const [page, setPage] = useState(1)
 
-  const { data: chatsData, count: chatsCount } = useChatsService({
-    filter: [...selectedAgentNames, ...(searchText.length > 0 ? [searchText] : [])],
+  const {
+    data: chatsData,
+    count: chatsCount,
+    loading: chatsLoading,
+    refetch: refetchChats,
+  } = useChatsService({
+    filter: [
+      ...(selectedAgentNames?.map((agent: any) => agent.value) || []),
+      ...(searchText.length > 0 ? [searchText] : []),
+      ...(selectedAgentType?.value === 'voice' || selectedAgentType?.value === 'text'
+        ? [selectedAgentType?.value]
+        : []),
+      ...(selectedCampaign?.map((campaign: any) => campaign.value) || []),
+    ],
     itemsCount: 20,
     page,
   })
@@ -40,6 +50,7 @@ export const useSession = () => {
   const totalPages = Math.ceil(chatsCount / 20)
 
   const { data: calls } = useCallsService()
+  const { data: campaigns } = useCampaignsService()
 
   const { schedules } = useSchedules()
   const { data: agentsData } = useAgentsService()
@@ -47,12 +58,14 @@ export const useSession = () => {
   const mappedData = chatsData?.map((chat: Chat) => ({
     id: chat?.id,
     name: chat?.name,
-    agent_name: chat?.agent?.agent?.name,
+    agent_name: `${chat?.agent?.agent?.name} · ${
+      chat?.agent?.agent?.agent_type === 'voice' ? 'Call' : 'Chat'
+    }`,
     gent_role: chat?.agent?.agent?.role,
     gent_description: chat?.agent?.agent?.description,
     agent_id: chat?.agent?.agent?.id,
     team_name: chat?.team?.team?.name,
-    added_At: new Date().toISOString(),
+    added_At: chat?.created_on,
     voice_url: chat?.voice_url,
     sentiment: calls?.find((call: any) => call.chat_id === chat.id)?.sentiment,
     status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
@@ -90,9 +103,27 @@ export const useSession = () => {
     label: schedule.schedule.name,
   }))
 
-  const agentOptions = agentsData?.map((agent: AgentWithConfigs) => {
-    return { value: agent.agent.name, label: agent.agent.name }
+  const agentOptions = agentsData?.map(({ agent }) => {
+    return {
+      value: agent.name,
+      label: `${agent.name} · ${agent.agent_type === 'voice' ? 'Call' : 'Chat'}`,
+    }
   })
+
+  const campaignOptions = useMemo(() => {
+    return campaigns?.map((campaign: any) => {
+      return {
+        value: campaign.id,
+        label: `${campaign.name}`,
+      }
+    })
+  }, [campaigns])
+
+  useEffect(() => {
+    if (selectedCampaign || selectedAgentNames || selectedAgentType || searchText) return
+
+    refetchChats()
+  }, [])
 
   return {
     scheduleOptions,
@@ -110,5 +141,11 @@ export const useSession = () => {
     setPage,
     page,
     totalPages,
+    chatsLoading,
+    setSelectedAgentType,
+    selectedAgentType,
+    setSelectedCampaign,
+    selectedCampaign,
+    campaignOptions,
   }
 }

@@ -57,7 +57,7 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
             <Button
               onClick={handleClose}
               kind={Button.kinds?.TERTIARY}
-              size={Button.sizes?.LARGE}
+              size={Button.sizes?.MEDIUM}
               disabled={isLoading}
             >
               <Typography
@@ -70,7 +70,7 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
             <Button
               onClick={handleConfirm}
               kind={Button.kinds?.PRIMARY}
-              size={Button.sizes?.LARGE}
+              size={Button.sizes?.MEDIUM}
               disabled={isLoading}
             >
               <StyledLabelTypography

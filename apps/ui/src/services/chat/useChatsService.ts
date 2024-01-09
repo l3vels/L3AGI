@@ -14,10 +14,12 @@ export const useChatsService = ({
   filter?: string[]
   page?: number
   itemsCount?: number
+  agentType?: 'voice' | 'text' | null
 }) => {
   const restPath = `/chat?${joinFilters(filter)}&page=${page}&per_page=${itemsCount}`
   const { data, error, loading, refetch } = useQuery(CHATS_GQL, {
     variables: { restPath },
+    fetchPolicy: 'cache-first',
   })
 
   return {

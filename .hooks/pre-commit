@@ -19,7 +19,9 @@ handle_failure() {
 # cd ../..
 
 # FastAPI formatting with black and linting with ruff
-if cd apps/server; then
+root_dir=$(git rev-parse --show-toplevel)
+
+if cd "$root_dir/apps/server"; then
     staged_files=$(git diff --cached --name-only --diff-filter=ACM)
     if [ $? -ne 0 ]; then
         handle_failure "Failed to get staged files. Aborting commit."
@@ -29,8 +31,8 @@ if cd apps/server; then
     # Accumulate staged python files
     for file in $staged_files; do
         if [[ $file == *.py ]]; then
-            # Adjust the file path since we changed directory
-            python_files="$python_files ../../$file"
+            # Adjust the file path relative to the root directory
+            python_files="$python_files $root_dir/$file"
         fi
     done
 

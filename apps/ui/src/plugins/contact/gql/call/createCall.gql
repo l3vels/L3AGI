@@ -3,5 +3,6 @@ mutation createCall($input: input!) @api(name: pro) {
     @rest(type: "Call", path: "/call", method: "POST", bodyKey: "input", endpoint: "pro") {
     chat_id
     message
+    type
   }
 }

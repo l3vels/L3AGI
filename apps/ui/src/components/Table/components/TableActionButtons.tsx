@@ -9,9 +9,14 @@ import {
 type TableActionButtonsProp = {
   onDeleteClick?: () => void
   onEditClick?: () => void
+  customActions?: any
 }
 
-const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsProp) => {
+const TableActionButtons = ({
+  onDeleteClick,
+  onEditClick,
+  customActions,
+}: TableActionButtonsProp) => {
   return (
     <StyledTableButtons>
       {onDeleteClick && (
@@ -20,7 +25,7 @@ const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsPr
           icon={() => <StyledDeleteIcon />}
           size={IconButton.sizes?.SMALL}
           kind={IconButton.kinds?.TERTIARY}
-          // ariaLabel='Delete'
+          ariaLabel='Delete'
         />
       )}
 
@@ -30,9 +35,11 @@ const TableActionButtons = ({ onDeleteClick, onEditClick }: TableActionButtonsPr
           icon={() => <StyledEditIcon />}
           size={IconButton.sizes?.SMALL}
           kind={IconButton.kinds?.TERTIARY}
-          // ariaLabel='Edit'
+          ariaLabel='Edit'
         />
       )}
+
+      {customActions && customActions}
     </StyledTableButtons>
   )
 }
