@@ -153,7 +153,13 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
         },
     )
 
-    chat_id = res.json().get("chat_id")
+    call_json = res.json()
+    message = call_json.get("message")
+
+    if "Call limit exceeded" in message:
+        return "Already 2 calls are made. Skipping this contact."
+
+    chat_id = call_json.get("chat_id")
 
     start_time = time.time()
 
