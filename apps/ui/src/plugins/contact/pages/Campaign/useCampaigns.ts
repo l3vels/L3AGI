@@ -19,18 +19,22 @@ export const useCampaigns = () => {
   const { data: agentData } = useAgentsService()
 
   const tableData =
-    campaignsData?.map((campaign: any) => ({
-      id: campaign.id,
-      name: campaign.name,
-      agentId: agentData?.find(({ agent }) => agent.id === campaign.agent_id)?.agent.name,
-      groupId: groupsData?.find(({ id }: { id: string }) => id === campaign.group_id)?.name,
-      type: campaign.type,
-      status: campaign.status,
-      startDate: moment(campaign.start_date).format('MMM DD, YYYY, HH:mm'),
-      totalCalls: campaign.total_calls,
-      busyCalls: campaign.call_statuses?.Busy,
-      completedCalls: campaign.call_statuses?.Completed,
-    })) || []
+    campaignsData?.map((campaign: any) => {
+      const callStatuses = campaign.call_statuses || {}
+
+      return {
+        id: campaign.id,
+        name: campaign.name,
+        agentId: agentData?.find(({ agent }) => agent.id === campaign.agent_id)?.agent.name,
+        groupId: groupsData?.find(({ id }: { id: string }) => id === campaign.group_id)?.name,
+        type: campaign.type,
+        status: campaign.status,
+        startDate: moment(campaign.start_date).format('MMM DD, YYYY, HH:mm'),
+        totalCalls: campaign.total_calls,
+        busyCalls: (callStatuses.Busy || 0) + (callStatuses['No Answer'] || 0),
+        completedCalls: callStatuses.Completed || 0,
+      }
+    }) || []
 
   const deleteCampaignHandler = (id: string) => {
     openModal({
