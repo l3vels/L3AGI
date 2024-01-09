@@ -2,7 +2,7 @@ import { Moment } from 'moment'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 import { useCampaignsService } from 'plugins/contact/services/campaign/useCampaignsService'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
 import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
@@ -110,14 +110,18 @@ export const useSession = () => {
     }
   })
 
-  const campaignOptions = campaigns?.map((campaign: any) => {
-    return {
-      value: campaign.id,
-      label: `${campaign.name}`,
-    }
-  })
+  const campaignOptions = useMemo(() => {
+    return campaigns?.map((campaign: any) => {
+      return {
+        value: campaign.id,
+        label: `${campaign.name}`,
+      }
+    })
+  }, [campaigns])
 
   useEffect(() => {
+    if (selectedCampaign || selectedAgentNames || selectedAgentType || searchText) return
+
     refetchChats()
   }, [])
 

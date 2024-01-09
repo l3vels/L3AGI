@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import Dropdown from 'share-ui/components/Dropdown/Dropdown'
 
@@ -58,7 +58,7 @@ const SessionDropdown = ({
   )
 }
 
-export default SessionDropdown
+export default memo(SessionDropdown)
 
 const StyledWrapper = styled.div`
   display: flex;
