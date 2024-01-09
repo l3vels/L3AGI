@@ -155,8 +155,10 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
 
     working_hours_start = datetime.strptime(
         campaign.get("working_hours_start"), "%H:%M"
-    )
-    working_hours_end = datetime.strptime(campaign.get("working_hours_end"), "%H:%M")
+    ).time()
+    working_hours_end = datetime.strptime(
+        campaign.get("working_hours_end"), "%H:%M"
+    ).time()
 
     # Get current time in US timezone
     # us_tz = pytz.timezone("US/Eastern")  # replace with the appropriate US timezone
