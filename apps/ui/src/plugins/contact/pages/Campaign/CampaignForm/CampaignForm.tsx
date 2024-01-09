@@ -2,6 +2,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import { StyledForm, StyledInputWrapper, StyledRoot } from '../../Contact/ContactForm/ContactForm'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import { useCampaignForm } from './useCampaignForm'
+import { StyledCombinedFields } from 'pages/Agents/AgentForm/AgentForm'
 
 const CampaignForm = ({ formik }: { formik: any }) => {
   const { setFieldValue, values } = formik
@@ -49,6 +50,22 @@ const CampaignForm = ({ formik }: { formik: any }) => {
             size={'small'}
             type='datetime-local'
           />
+
+          <StyledCombinedFields>
+            <FormikTextField
+              name='campaign_retry_attempts'
+              placeholder='2'
+              label='Retry Attempts'
+              size='small'
+            />
+
+            <FormikTextField
+              name='campaign_retry_interval'
+              placeholder='15'
+              label='Retry Interval In Minutes'
+              size='small'
+            />
+          </StyledCombinedFields>
         </StyledInputWrapper>
       </StyledForm>
     </StyledRoot>

@@ -8,13 +8,15 @@ export interface CampaignInput {
   group_id: string
   start_date: any
   type: string
+  retry_attempts: number
+  retry_interval: number
 }
 
 export const useCreateCampaignService = () => {
   const [mutation] = useMutation(CREATE_CAMPAIGN_GQL)
 
   const createCampaignService = async (input: CampaignInput) => {
-    const { name, agent_id, group_id, start_date, type } = input
+    const { name, agent_id, group_id, start_date, type, retry_attempts, retry_interval } = input
 
     const {
       data: { createCampaign },
@@ -26,6 +28,8 @@ export const useCreateCampaignService = () => {
           group_id,
           start_date,
           type,
+          retry_attempts,
+          retry_interval,
         },
       },
     })

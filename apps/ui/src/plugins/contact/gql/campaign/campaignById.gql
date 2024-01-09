@@ -8,5 +8,7 @@ query campaignById($id: id!) @api(name: "pro") {
     type
     start_date
     status
+    retry_attempts
+    retry_interval
   }
 }

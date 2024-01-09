@@ -22,6 +22,8 @@ export const useCreateCampaign = () => {
     campaign_group_id: null,
     campaign_type: 'Outbound',
     campaign_start_date: getDateTimeFromDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)),
+    campaign_retry_attempts: 2,
+    campaign_retry_interval: 15,
   }
 
   const handleSubmit = async (values: any) => {
@@ -33,6 +35,8 @@ export const useCreateCampaign = () => {
         group_id: values.campaign_group_id,
         type: values.campaign_type,
         start_date: new Date(values.campaign_start_date).toISOString(),
+        retry_attempts: values.campaign_retry_attempts,
+        retry_interval: values.campaign_retry_interval,
       }
 
       await createCampaign(campaignInput)

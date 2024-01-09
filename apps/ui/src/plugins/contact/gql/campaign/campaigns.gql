@@ -9,5 +9,7 @@ query getCampaigns @api(name: "pro") {
     status
     total_calls
     call_statuses
+    retry_attempts
+    retry_interval
   }
 }
