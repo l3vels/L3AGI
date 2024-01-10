@@ -160,28 +160,26 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
         campaign.get("working_hours_end"), "%H:%M"
     ).time()
 
-    # Get current time in US timezone
-    us_tz = pytz.timezone("US/Eastern")  # replace with the appropriate US timezone
-
-    current_time_us = datetime.now(us_tz).time()
+    tz = pytz.timezone(campaign.get("timezone"))
+    current_time = datetime.now(tz).time()
 
     # Check if current day is between Monday and Friday
-    current_day_us = datetime.now(us_tz).weekday()
+    current_day = datetime.now(tz).weekday()
 
-    if current_day_us >= 0 and current_day_us <= 4:  # 0 is Monday, 4 is Friday
+    if current_day >= 0 and current_day <= 4:  # 0 is Monday, 4 is Friday
         # Check if current time is within working hours
-        if not working_hours_start <= current_time_us <= working_hours_end:
+        if not working_hours_start <= current_time <= working_hours_end:
             # Retry the task when the working hours start
-            current_datetime_us = datetime.combine(date.today(), current_time_us)
+            current_datetime = datetime.combine(date.today(), current_time)
             working_hours_start_datetime = datetime.combine(
                 date.today(), working_hours_start
             )
-            countdown = (working_hours_start_datetime - current_datetime_us).seconds
+            countdown = (working_hours_start_datetime - current_datetime).seconds
             self.retry(countdown=countdown)
             return "Retrying in working hours"
     else:
         # Retry the task on next Monday
-        seconds_until_next_monday = (7 - current_day_us) * 24 * 60 * 60
+        seconds_until_next_monday = (7 - current_day) * 24 * 60 * 60
         self.retry(countdown=seconds_until_next_monday)
         return "Retrying on next Monday"
 
