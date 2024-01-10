@@ -13,5 +13,6 @@ query getCampaigns @api(name: "pro") {
     retry_interval
     working_hours_start
     working_hours_end
+    timezone
   }
 }
