@@ -33,7 +33,7 @@ export const useEditCampaign = () => {
     campaign_retry_interval: campaignById?.retry_interval,
     campaign_working_hours_start: campaignById?.working_hours_start,
     campaign_working_hours_end: campaignById?.working_hours_end,
-    timezone: campaignById?.timezone,
+    campaign_timezone: campaignById?.timezone,
   }
 
   const handleSubmit = async (values: any) => {
