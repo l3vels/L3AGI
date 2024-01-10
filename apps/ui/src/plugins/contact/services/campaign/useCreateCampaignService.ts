@@ -12,6 +12,7 @@ export interface CampaignInput {
   retry_interval: number
   working_hours_start: string
   working_hours_end: string
+  timezone: string
 }
 
 export const useCreateCampaignService = () => {
@@ -28,6 +29,7 @@ export const useCreateCampaignService = () => {
       retry_interval,
       working_hours_start,
       working_hours_end,
+      timezone,
     } = input
 
     const {
@@ -44,6 +46,7 @@ export const useCreateCampaignService = () => {
           retry_interval,
           working_hours_start,
           working_hours_end,
+          timezone,
         },
       },
     })

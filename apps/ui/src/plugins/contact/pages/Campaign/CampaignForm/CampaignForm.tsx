@@ -7,9 +7,9 @@ import { StyledCombinedFields } from 'pages/Agents/AgentForm/AgentForm'
 const CampaignForm = ({ formik }: { formik: any }) => {
   const { setFieldValue, values } = formik
 
-  const { campaign_group_id, campaign_agent_id, campaign_type } = values
+  const { campaign_group_id, campaign_agent_id, campaign_type, campaign_timezone } = values
 
-  const { agentOptions, groupOptions, campaignTypeOption } = useCampaignForm()
+  const { agentOptions, groupOptions, campaignTypeOption, timezoneOptions } = useCampaignForm()
 
   return (
     <StyledRoot>
@@ -41,6 +41,14 @@ const CampaignForm = ({ formik }: { formik: any }) => {
             options={campaignTypeOption}
             optionSize={'small'}
           />
+          <AgentDropdown
+            label={'Timezone'}
+            fieldName={'campaign_timezone'}
+            setFieldValue={setFieldValue}
+            fieldValue={campaign_timezone}
+            options={timezoneOptions}
+            optionSize={'small'}
+          />
 
           <FormikTextField
             name='campaign_start_date'
@@ -50,22 +58,6 @@ const CampaignForm = ({ formik }: { formik: any }) => {
             size={'small'}
             type='datetime-local'
           />
-
-          <StyledCombinedFields>
-            <FormikTextField
-              name='campaign_retry_attempts'
-              placeholder='2'
-              label='Retry Attempts'
-              size='small'
-            />
-
-            <FormikTextField
-              name='campaign_retry_interval'
-              placeholder='15'
-              label='Retry Interval In Minutes'
-              size='small'
-            />
-          </StyledCombinedFields>
 
           <StyledCombinedFields>
             <FormikTextField
@@ -84,6 +76,22 @@ const CampaignForm = ({ formik }: { formik: any }) => {
               label='Working Hours End'
               size={'small'}
               type='time'
+            />
+          </StyledCombinedFields>
+
+          <StyledCombinedFields>
+            <FormikTextField
+              name='campaign_retry_attempts'
+              placeholder='2'
+              label='Retry Attempts'
+              size='small'
+            />
+
+            <FormikTextField
+              name='campaign_retry_interval'
+              placeholder='15'
+              label='Retry Interval In Minutes'
+              size='small'
             />
           </StyledCombinedFields>
         </StyledInputWrapper>

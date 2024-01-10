@@ -1,5 +1,6 @@
 import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
 import { useAgentsService } from 'services/agent/useAgentsService'
+import { TIMEZONES } from 'utils/timezones'
 
 import * as yup from 'yup'
 
@@ -37,9 +38,15 @@ export const useCampaignForm = () => {
     { value: 'Inbound', label: 'Inbound' },
   ]
 
+  const timezoneOptions = TIMEZONES.map(({ zone, gmt, name }) => ({
+    value: zone,
+    label: `${name} ${gmt}`,
+  }))
+
   return {
     agentOptions,
     groupOptions,
     campaignTypeOption,
+    timezoneOptions,
   }
 }

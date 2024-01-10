@@ -26,6 +26,7 @@ export const useCreateCampaign = () => {
     campaign_retry_interval: 15,
     campaign_working_hours_start: '10:00',
     campaign_working_hours_end: '18:00',
+    campaign_timezone: 'US/Central',
   }
 
   const handleSubmit = async (values: any) => {
@@ -41,6 +42,7 @@ export const useCreateCampaign = () => {
         retry_interval: values.campaign_retry_interval,
         working_hours_start: values.campaign_working_hours_start,
         working_hours_end: values.campaign_working_hours_end,
+        timezone: values.campaign_timezone,
       }
 
       await createCampaign(campaignInput)
