@@ -5,7 +5,7 @@ import { useCreateCampaignService } from 'plugins/contact/services/campaign/useC
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { campaignValidationSchema } from './CampaignForm/useCampaignForm'
-import { getDateTimeFromDate } from 'pages/Schedule/Schedule.utils'
+import { getDateTimeFromDate } from './Campaign.utils'
 
 export const useCreateCampaign = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -16,12 +16,14 @@ export const useCreateCampaign = () => {
   const { refetch: refetchCampaigns } = useCampaignsService()
   const [createCampaign] = useCreateCampaignService()
 
+  const initialStartDate = getDateTimeFromDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000))
+
   const initialValues = {
     campaign_name: null,
     campaign_agent_id: null,
     campaign_group_id: null,
     campaign_type: 'Outbound',
-    campaign_start_date: getDateTimeFromDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)),
+    campaign_start_date: initialStartDate,
     campaign_retry_attempts: 2,
     campaign_retry_interval: 15,
     campaign_working_hours_start: '10:00',
@@ -31,13 +33,14 @@ export const useCreateCampaign = () => {
 
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
+
     try {
       const campaignInput = {
         name: values.campaign_name,
         agent_id: values.campaign_agent_id,
         group_id: values.campaign_group_id,
         type: values.campaign_type,
-        start_date: new Date(values.campaign_start_date).toISOString(),
+        start_date: values.campaign_start_date,
         retry_attempts: values.campaign_retry_attempts,
         retry_interval: values.campaign_retry_interval,
         working_hours_start: values.campaign_working_hours_start,
