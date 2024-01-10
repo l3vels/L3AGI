@@ -153,6 +153,8 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
     campaign = campaign_res.json()
     retry_interval = campaign.get("retry_interval", 15)
 
+    retry_interval_in_seconds = retry_interval * 60
+
     working_hours_start = datetime.strptime(
         campaign.get("working_hours_start"), "%H:%M"
     ).time()
@@ -226,7 +228,7 @@ def make_phone_call(self, campaign_id: str, contact_id: str, account_id: str):
 
         if status is not None:
             if status in ["Busy", "No Answer", "Failed"]:
-                self.retry(countdown=retry_interval)
+                self.retry(countdown=retry_interval_in_seconds)
             else:
                 break
 
