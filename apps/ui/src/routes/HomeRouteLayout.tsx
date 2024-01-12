@@ -27,7 +27,6 @@ const HomeRouteLayout = () => {
   const { openModal } = useModal()
 
   const outlet = useOutlet()
-  console.log('loginConfig', loginConfig)
 
   return (
     <StyledAppContainer className='app_container'>

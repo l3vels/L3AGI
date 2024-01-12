@@ -85,9 +85,11 @@
   },
   "scripts": {
     "start:local": "NODE_ENV=local vite --open",
+    "start:domain": "vite --mode domain --open",
     "start:dev": "vite --mode develop --open",
     "build": "NODE_OPTIONS=--max_old_space_size=8192 tsc && vite build",
     "build:dev": "NODE_OPTIONS=--max_old_space_size=8192 vite build --mode develop",
+    "build:domain": "NODE_OPTIONS=--max_old_space_size=8192 vite build --mode domain",
     "build:staging": "NODE_OPTIONS=--max_old_space_size=8192 vite build --mode staging",
     "build:prod": "NODE_OPTIONS=--max_old_space_size=8192 vite build --mode production",
     "test": "vite test",

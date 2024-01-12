@@ -16,7 +16,7 @@ import { useDomainConfig } from 'utils/useDomainConfig'
 
 const AuthProvider = ({ children }: any) => {
   const { t, i18n } = useTranslation()
-  const { domainLoading, getDomainConfig, domainConfig } = useDomainConfig()
+  const { getDomainConfig } = useDomainConfig()
   const { moduleNames } = useGetAccountModule()
 
   const { data: user, loading } = useUserService({})
@@ -52,16 +52,11 @@ const AuthProvider = ({ children }: any) => {
   const handleTranslation = (value: string, newName: string) => {
     i18n.addResource('en', 'translation', value, newName)
   }
+  if (domainTitle) handleTranslation('l3agi', domainTitle)
+  if (domainWelcomeMessage) handleTranslation('welcome-l3agi', domainWelcomeMessage)
 
-  useEffect(() => {
-    document.title = domainTitle || 'L3AGI'
-  }, [domainConfig])
-
-  console.log('domainWelcomeMessage', domainWelcomeMessage)
   useEffect(() => {
     // Update the translation dynamically
-    if (domainTitle) handleTranslation('l3agi', domainTitle)
-    if (domainWelcomeMessage) handleTranslation('welcome-l3agi', domainWelcomeMessage)
     if (welcome) handleTranslation('welcome-message', welcome)
     if (home) handleTranslation('home', home)
     if (chat) handleTranslation('chat', chat)
@@ -73,10 +68,10 @@ const AuthProvider = ({ children }: any) => {
     if (discovery) handleTranslation('discovery', discovery)
     if (schedule) handleTranslation('schedule', schedule)
     if (integration) handleTranslation('integration', integration)
-  }, [moduleNames, domainConfig])
+  }, [moduleNames])
 
   if (loading) {
-    return <>{domainConfig && <WelcomeLoader />}</>
+    return <WelcomeLoader />
   }
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
