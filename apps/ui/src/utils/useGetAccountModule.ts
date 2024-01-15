@@ -1,7 +1,11 @@
 import { useAccountService } from 'services'
+import { useEnvModuleConfig } from './useEnvModuleConfig'
 
 export const useGetAccountModule = () => {
   const { data: account } = useAccountService()
+  const { config: envConfig } = useEnvModuleConfig()
+
+  console.log('envModuleConfig', envConfig)
 
   const domainEnv = import.meta.env
 
