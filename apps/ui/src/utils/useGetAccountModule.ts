@@ -10,7 +10,7 @@ export const useGetAccountModule = () => {
   const domainEnv = import.meta.env
 
   const modules = account?.configs?.modules
-  const naming = account?.configs?.naming
+  const naming = envConfig.naming || account?.configs?.naming
   const welcomeMessage = modules?.home?.welcome_message
 
   const getMainModule = (moduleName: string) => {
@@ -149,16 +149,16 @@ export const useGetAccountModule = () => {
 
   const moduleNames = {
     welcome: welcomeMessage,
-    chat: domainEnv.REACT_APP_CHAT_NAMING || naming?.chat,
-    home: domainEnv.REACT_APP_HOME_NAMING || naming?.home,
-    agent: domainEnv.REACT_APP_AGENT_NAMING || naming?.agent,
-    team: domainEnv.REACT_APP_TEAM_NAMING || naming?.team,
-    datasource: domainEnv.REACT_APP_DATASOURCE_NAMING || naming?.datasource,
-    discovery: domainEnv.REACT_APP_DISCOVERY_NAMING || naming?.discovery,
-    models: domainEnv.REACT_APP_MODEL_NAMING || naming?.models,
-    schedule: domainEnv.REACT_APP_SCHEDULES_NAMING || naming?.schedules,
-    toolkits: domainEnv.REACT_APP_TOOLKIT_NAMING || naming?.toolkits,
-    integration: domainEnv.REACT_APP_INTEGRATION_NAMING || naming?.integrations,
+    chat: naming?.chat,
+    home: naming?.home,
+    agent: naming?.agent,
+    team: naming?.team,
+    datasource: naming?.datasource,
+    discovery: naming?.discovery,
+    models: naming?.models,
+    schedule: naming?.schedules,
+    toolkits: naming?.toolkits,
+    integration: naming?.integrations,
   }
 
   return {

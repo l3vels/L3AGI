@@ -9,10 +9,10 @@ export const useEnvModuleConfig = () => {
       team: domainEnv.REACT_APP_TEAM_NAMING,
       datasource: domainEnv.REACT_APP_DATASOURCE_NAMING,
       discovery: domainEnv.REACT_APP_DISCOVERY_NAMING,
-      model: domainEnv.REACT_APP_MODEL_NAMING,
+      models: domainEnv.REACT_APP_MODEL_NAMING,
       schedules: domainEnv.REACT_APP_SCHEDULES_NAMING,
-      toolkit: domainEnv.REACT_APP_TOOLKIT_NAMING,
-      integration: domainEnv.REACT_APP_INTEGRATION_NAMING,
+      toolkits: domainEnv.REACT_APP_TOOLKIT_NAMING,
+      integrations: domainEnv.REACT_APP_INTEGRATION_NAMING,
     },
   }
 
