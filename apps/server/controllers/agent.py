@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 # Third-party imports
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,15 +7,13 @@ from fastapi_sqlalchemy import db
 from exceptions import AgentNotFoundException
 # Local application imports
 from models.agent import AgentModel
+from services.twilio import update_phone_number_webhook
 from typings.agent import AgentConfigInput, AgentWithConfigsOutput
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
 from utils.auth import (authenticate, authenticate_by_any,
                         authenticate_by_token_or_api_key)
 from utils.system_message import SystemMessageBuilder
-
-# Standard library imports
-
 
 router = APIRouter()
 
@@ -43,7 +41,13 @@ def create_agent(
         user=auth.user,
         account=auth.account,
     )
-    return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
+
+    agent_with_configs = convert_model_to_response(
+        AgentModel.get_agent_by_id(db, db_agent.id)
+    )
+    update_phone_number_webhook(auth, agent_with_configs)
+
+    return agent_with_configs
 
 
 @router.put(
@@ -75,8 +79,13 @@ def update_agent(
             account=auth.account,
         )
         db.session.commit()
-        return convert_model_to_response(AgentModel.get_agent_by_id(db, db_agent.id))
 
+        agent_with_configs = convert_model_to_response(
+            AgentModel.get_agent_by_id(db, db_agent.id)
+        )
+        update_phone_number_webhook(auth, agent_with_configs)
+
+        return agent_with_configs
     except AgentNotFoundException:
         raise HTTPException(status_code=404, detail="Agent not found")
 

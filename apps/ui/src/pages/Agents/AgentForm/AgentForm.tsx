@@ -342,6 +342,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     optionSize={'small'}
                   />
 
+                  <FormikTextField
+                    name='agent_twilio_phone_number_sid'
+                    placeholder={'Please enter value'}
+                    label='Twilio Phone Number SID'
+                  />
+
                   {/* <StyledFormInputWrapper>
                     <TypographyPrimary
                       value={t('response-mode')}

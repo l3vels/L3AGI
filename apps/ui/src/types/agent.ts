@@ -43,6 +43,8 @@ export interface AgentWithConfigs {
 
     runners: Nullable<AgentRunner[]>
     sentiment_analyzer: Nullable<AgentRunner>
+
+    twilio_phone_number_sid: Nullable<string>
   }
   system_message: Nullable<string>
 }

@@ -49,6 +49,8 @@ export type AgentInput = {
   agent_type?: string
   runners: AgentRunner[]
   sentiment_analyzer: Nullable<AgentRunner>
+
+  twilio_phone_number_sid: Nullable<string>
 }
 
 export const useCreateAgentService = () => {
@@ -86,6 +88,8 @@ export const useCreateAgentService = () => {
       agent_type,
       runners,
       sentiment_analyzer,
+
+      twilio_phone_number_sid,
     } = input
 
     const {
@@ -125,6 +129,8 @@ export const useCreateAgentService = () => {
             integrations,
             runners,
             sentiment_analyzer,
+
+            twilio_phone_number_sid,
           },
         },
       },

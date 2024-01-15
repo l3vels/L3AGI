@@ -60,6 +60,7 @@ export const useEditAgent = () => {
     agent_type: agentById?.agent?.agent_type,
     agent_runners: agentById?.configs?.runners || [],
     agent_sentiment_analyzer: agentById?.configs?.sentiment_analyzer || { task: '', runner: '' },
+    agent_twilio_phone_number_sid: agentById?.configs?.twilio_phone_number_sid || '',
   }
 
   const handleSubmit = async (values: any) => {
@@ -95,6 +96,7 @@ export const useEditAgent = () => {
       integrations: values.agent_integrations,
       runners: values.agent_runners,
       sentiment_analyzer: values.agent_sentiment_analyzer,
+      twilio_phone_number_sid: values.agent_twilio_phone_number_sid,
     }
 
     await updateAgent(agentId || '', {

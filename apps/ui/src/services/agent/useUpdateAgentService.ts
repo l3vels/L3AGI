@@ -36,6 +36,7 @@ export const useUpdateAgentService = () => {
       integrations,
       runners,
       sentiment_analyzer,
+      twilio_phone_number_sid,
     } = input
 
     const { data } = await mutation({
@@ -74,6 +75,8 @@ export const useUpdateAgentService = () => {
             integrations,
             runners,
             sentiment_analyzer,
+
+            twilio_phone_number_sid,
           },
         },
       },

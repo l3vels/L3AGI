@@ -139,6 +139,11 @@ class ConfigInput(BaseModel):
     sentiment_analyzer: Optional[Dict[str, str]] = Field(
         None, example={"task": "", "runner": ""}
     )
+    twilio_phone_number_sid: Optional[str] = Field(
+        None,
+        example="+1234567890",
+        description="Inbound Twilio phone number sid to update webhook url. only on `voice-based` agents!",
+    )
 
 
 class AgentConfigInput(BaseModel):
@@ -173,6 +178,7 @@ class ConfigsOutput(BaseModel):
     input_mode: Optional[List[str]]
     runners: Optional[List[Dict]]
     sentiment_analyzer: Optional[Dict]
+    twilio_phone_number_sid: Optional[str]
 
 
 class AgentOutput(BaseModel):
