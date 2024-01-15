@@ -17,6 +17,7 @@ const Home = () => {
   const { agentsData } = useAgents()
 
   const { getHomeModules } = useGetAccountModule()
+
   const teamModules = getHomeModules('team')
   const agentModules = getHomeModules('agent')
 

@@ -29,10 +29,14 @@ import {
   TypographySizes,
   TypographyTypes,
 } from 'share-ui/components/typography/TypographyConstants'
+import { useDomainConfig } from 'utils/useDomainConfig'
 
 const Register = () => {
+  const { getDomainConfig } = useDomainConfig()
+  const loginConfig = getDomainConfig('login_page')
+
   const { t } = useTranslation()
-  const { formik, alertMessage } = useRegister()
+  const { formik, alertMessage } = useRegister({ noPopup: !loginConfig?.popup })
   const { openModal } = useModal()
 
   const { githubLogin } = useGithubLogin()
@@ -56,74 +60,80 @@ const Register = () => {
         />
       </StyledHeaderWrapper>
       <StyledFormContainer>
-        <ButtonPrimary
-          onClick={async () => {
-            const res = await githubLogin()
-            window.location.href = res.auth_url
-          }}
-        >
-          <StyledInnerButtonWrapper>
-            <StyledImageWrapper secondary>
-              <StyledImg src={githubIcon} />
-            </StyledImageWrapper>
-            {t('sign-up-with-github')}
-          </StyledInnerButtonWrapper>
-        </ButtonPrimary>
+        {loginConfig?.github && (
+          <ButtonPrimary
+            onClick={async () => {
+              const res = await githubLogin()
+              window.location.href = res.auth_url
+            }}
+          >
+            <StyledInnerButtonWrapper>
+              <StyledImageWrapper secondary>
+                <StyledImg src={githubIcon} />
+              </StyledImageWrapper>
+              {t('sign-up-with-github')}
+            </StyledInnerButtonWrapper>
+          </ButtonPrimary>
+        )}
 
-        <OrDivider />
+        {loginConfig?.github && loginConfig?.email_password && <OrDivider />}
 
-        <FormikProvider value={formik}>
-          <StyledInputWrapper>
-            <TextFieldFormik name='name' placeholder='Full name' label={t('first-name')} />
-            <TextFieldFormik
-              name='account_name'
-              placeholder='Company name'
-              label={t('company-name')}
-            />
-            <TextFieldFormik name='email' placeholder='Email' label={t('email')} />
-            <TextFieldFormik
-              name='password'
-              placeholder={t('password')}
-              label={t('password')}
-              type='password'
-            />
-            {/* <TextFieldFormik
+        {loginConfig?.email_password && (
+          <FormikProvider value={formik}>
+            <StyledInputWrapper>
+              <TextFieldFormik name='name' placeholder='Full name' label={t('first-name')} />
+              <TextFieldFormik
+                name='account_name'
+                placeholder='Company name'
+                label={t('company-name')}
+              />
+              <TextFieldFormik name='email' placeholder='Email' label={t('email')} />
+              <TextFieldFormik
+                name='password'
+                placeholder={t('password')}
+                label={t('password')}
+                type='password'
+              />
+              {/* <TextFieldFormik
             name='confirm_password'
             placeholder='Confirm password'
             label='Confirm password'
             type="password"
           /> */}
-          </StyledInputWrapper>
-        </FormikProvider>
+            </StyledInputWrapper>
+          </FormikProvider>
+        )}
 
         <ButtonPrimary onClick={formik.handleSubmit}>{t('sign-up')}</ButtonPrimary>
 
-        <StyledLoginWrapper>
-          <TypographyTertiary
-            value={t('already-have-an-account')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.md}
-          />
-          <button
-            onClick={() => {
-              openModal({ name: 'login-modal', data: { isRegister: false } })
-            }}
-          >
-            <TypographyPrimary
-              value={t('login')}
+        {loginConfig?.popup && (
+          <StyledLoginWrapper>
+            <TypographyTertiary
+              value={t('already-have-an-account')}
               type={TypographyTypes.LABEL}
               size={TypographySizes.md}
-              as={'a'}
-              style={{
-                textDecorationLine: 'underline',
-                cursor: 'pointer',
-                textAlign: 'center',
-                textUnderlineOffset: 5,
-                marginTop: 18,
-              }}
             />
-          </button>
-        </StyledLoginWrapper>
+            <button
+              onClick={() => {
+                openModal({ name: 'login-modal', data: { isRegister: false } })
+              }}
+            >
+              <TypographyPrimary
+                value={t('login')}
+                type={TypographyTypes.LABEL}
+                size={TypographySizes.md}
+                as={'a'}
+                style={{
+                  textDecorationLine: 'underline',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  textUnderlineOffset: 5,
+                  marginTop: 18,
+                }}
+              />
+            </button>
+          </StyledLoginWrapper>
+        )}
       </StyledFormContainer>
 
       {/* <StyledFormContainer>

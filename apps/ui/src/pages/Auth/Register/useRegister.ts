@@ -35,11 +35,11 @@ const initialValues = {
   account_name: '',
 }
 
-const useRegister = () => {
+const useRegister = ({ noPopup }: { noPopup: boolean }) => {
   const [alertMessage, setAlertMessage] = React.useState({ type: '', message: '' })
   const [registrationComplete] = useRegistrationService()
 
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { setToast } = useContext(ToastContext)
   const handleSubmit = async (values: any) => {
@@ -69,7 +69,11 @@ const useRegister = () => {
       type: 'positive',
       open: true,
     })
-    openModal({ name: 'login-modal', data: { isRegister: false } })
+    {
+      noPopup
+        ? closeModal('login-modal')
+        : openModal({ name: 'login-modal', data: { isRegister: false } })
+    }
   }
 
   const formik = useFormik({

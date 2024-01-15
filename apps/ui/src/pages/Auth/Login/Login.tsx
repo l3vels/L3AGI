@@ -26,6 +26,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingSecondary from 'components/Heading/Secondary'
 import { ButtonPrimary } from 'components/Button/Button'
+import { useDomainConfig } from 'utils/useDomainConfig'
 
 const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
   <p className='mb-0'>
@@ -37,6 +38,9 @@ const ErrorResendVerification = ({ resendVerifyEmail }: any) => (
 )
 
 const Login = () => {
+  const { getDomainConfig } = useDomainConfig()
+  const loginConfig = getDomainConfig('login_page')
+
   const { t } = useTranslation()
   const { formik, alertMessage, showResendAlert, resendVerifyEmailHandle } = useLogin()
   const { githubLogin } = useGithubLogin()
@@ -84,39 +88,43 @@ const Login = () => {
             marginTop: 18,
           }}
         /> */}
-        <ButtonPrimary
-          onClick={async () => {
-            const res = await githubLogin()
-            window.location.href = res.auth_url
-          }}
-        >
-          <StyledInnerButtonWrapper>
-            <StyledImageWrapper secondary>
-              <StyledImg src={githubIcon} />
-            </StyledImageWrapper>
-            {t('log-in-with-github')}
-          </StyledInnerButtonWrapper>
-        </ButtonPrimary>
+        {loginConfig?.github && (
+          <ButtonPrimary
+            onClick={async () => {
+              const res = await githubLogin()
+              window.location.href = res.auth_url
+            }}
+          >
+            <StyledInnerButtonWrapper>
+              <StyledImageWrapper secondary>
+                <StyledImg src={githubIcon} />
+              </StyledImageWrapper>
+              {t('log-in-with-github')}
+            </StyledInnerButtonWrapper>
+          </ButtonPrimary>
+        )}
 
-        <OrDivider />
+        {loginConfig?.github && loginConfig?.email_password && <OrDivider />}
 
-        <FormikProvider value={formik}>
-          <StyledInputWrapper>
-            <TextFieldFormik
-              label='Email'
-              field_name='email'
-              placeholder={t('enter-email')}
-              size='small'
-            />
-            <TextFieldFormik
-              label='Password'
-              field_name='password'
-              placeholder={t('enter-password')}
-              type='password'
-              size='small'
-            />
-          </StyledInputWrapper>
-        </FormikProvider>
+        {loginConfig?.email_password && (
+          <FormikProvider value={formik}>
+            <StyledInputWrapper>
+              <TextFieldFormik
+                label='Email'
+                field_name='email'
+                placeholder={t('enter-email')}
+                size='small'
+              />
+              <TextFieldFormik
+                label='Password'
+                field_name='password'
+                placeholder={t('enter-password')}
+                type='password'
+                size='small'
+              />
+            </StyledInputWrapper>
+          </FormikProvider>
+        )}
 
         <ButtonPrimary onClick={() => formik.handleSubmit()} size={Button.sizes?.MEDIUM}>
           {t('start')}

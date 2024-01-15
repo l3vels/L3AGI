@@ -1,0 +1,11 @@
+query getDomainConfig @api(name: "pro") {
+  getDomainConfig
+    @rest(type: "domainConfig", path: "/domainConfig", method: "GET", endpoint: "pro") {
+    title
+    favicon
+    content
+    logo
+    welcome_message
+    login_page
+  }
+}

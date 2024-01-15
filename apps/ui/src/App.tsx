@@ -21,6 +21,7 @@ import { LayoutProvider } from 'providers/LayoutProvider'
 
 function App() {
   useDetectMobile()
+
   const client = useApollo()
 
   return (

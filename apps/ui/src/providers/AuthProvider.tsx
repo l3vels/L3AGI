@@ -6,6 +6,8 @@ import { AuthContext } from 'contexts'
 import WelcomeLoader from 'components/Loader/WelcomeLoader'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useTranslation } from 'react-i18next'
+
+import { useDomainConfig } from 'utils/useDomainConfig'
 // import { useLocation } from 'react-router-dom'
 
 // type AuthProviderProps = {
@@ -14,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 const AuthProvider = ({ children }: any) => {
   const { t, i18n } = useTranslation()
+  const { getDomainConfig } = useDomainConfig()
   const { moduleNames } = useGetAccountModule()
 
   const { data: user, loading } = useUserService({})
@@ -43,9 +46,14 @@ const AuthProvider = ({ children }: any) => {
     integration,
   } = moduleNames
 
+  const domainTitle = getDomainConfig('title')
+  const domainWelcomeMessage = getDomainConfig('welcome_message')
+
   const handleTranslation = (value: string, newName: string) => {
     i18n.addResource('en', 'translation', value, newName)
   }
+  if (domainTitle) handleTranslation('l3agi', domainTitle)
+  if (domainWelcomeMessage) handleTranslation('welcome-l3agi', domainWelcomeMessage)
 
   useEffect(() => {
     // Update the translation dynamically

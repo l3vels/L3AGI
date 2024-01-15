@@ -13,12 +13,37 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 
+const htmlPlugin = () => {
+  return {
+    name: 'html-transform',
+    transformIndexHtml(html) {
+      html = html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>${process.env.REACT_APP_TITLE || 'L3AGI'}</title>`,
+      )
+      html = html.replace(
+        /<link rel="icon" href="" \/>/,
+        `<link rel="icon" href="${process.env.REACT_APP_FAVICON || '/favicon.ico'}" />`,
+      )
+      html = html.replace(
+        /<meta name="description" content="(.*?)" \/>/,
+        `<meta name="description" content="${
+          process.env.REACT_APP_CONTENT ||
+          `Open-source framework to make AI agents' team collaboration as effective as human collaboration.`
+        }" />`,
+      )
+      return html
+    },
+  }
+}
+
 export default defineConfig({
   envPrefix: 'REACT_APP_',
   plugins: [
     graphql() as any,
     eslint(),
     react(),
+    htmlPlugin(),
     envCompatible(),
     viteTsconfigPaths(),
     svgrPlugin({
