@@ -14,7 +14,9 @@ export const useGetAccountModule = () => {
   const getMainModule = (moduleName: string) => {
     let values
 
-    if (modules?.[moduleName] === undefined) return true
+    if (modules?.[moduleName] === undefined) {
+      values = envModules?.[moduleName]
+    }
 
     if (typeof modules?.[moduleName] === 'object') {
       values = modules?.[moduleName]?.active === undefined ? true : modules?.[moduleName]?.active
