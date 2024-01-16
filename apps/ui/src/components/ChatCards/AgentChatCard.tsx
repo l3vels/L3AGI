@@ -13,6 +13,7 @@ import {
   StyledEditIcon,
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import { getAgentTypeText } from 'utils/agentUtils'
 
 type AgentChatCardProps = {
   onClick: () => void
@@ -50,7 +51,8 @@ const AgentChatCard = ({
     }
   }
 
-  const agentType = agent?.agent_type === 'voice' ? 'Voice' : 'Text'
+  const agentType = getAgentTypeText(agent?.agent_type)
+
   const agentRole = agent?.role?.length > 0 ? `· ${agent?.role}` : ''
 
   const roleText = `${agentType} ${agentRole}`

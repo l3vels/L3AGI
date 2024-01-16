@@ -215,8 +215,12 @@ const ChatRouteLayout = () => {
                             function: () => navigate('/agents/create-agent-template?type=text'),
                           },
                           {
-                            label: `Add call ${t('agent')}`,
-                            function: () => navigate('/agents/create-agent-template?type=voice'),
+                            label: `Add Outbound Call ${t('agent')}`,
+                            function: () => navigate('/agents/create-agent-template?type=outbound'),
+                          },
+                          {
+                            label: `Add Inbound Call${t('agent')}`,
+                            function: () => navigate('/agents/create-agent-template?type=inbound'),
                           },
                           ...(teamOfAgentsArray?.length === 0
                             ? [

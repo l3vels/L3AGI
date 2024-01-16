@@ -6,7 +6,7 @@ from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
 from models.config import ConfigModel
-from typings.agent import AgentWithConfigsOutput
+from typings.agent import AgentType, AgentWithConfigsOutput
 from typings.auth import UserAccount
 from typings.config import ConfigQueryParams
 
@@ -25,11 +25,10 @@ def update_phone_number_webhook(
 ):
     phone_number_sid = agent_with_configs.configs.twilio_phone_number_sid
 
-    # TODO check inbound type
     if (
         phone_number_sid is None
         or phone_number_sid == ""
-        or agent_with_configs.agent.agent_type != "voice"
+        or agent_with_configs.agent.agent_type != AgentType.INBOUND.value
     ):
         return
 

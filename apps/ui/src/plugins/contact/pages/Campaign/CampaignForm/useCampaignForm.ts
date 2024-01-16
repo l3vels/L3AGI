@@ -1,5 +1,6 @@
 import { useGroupsService } from 'plugins/contact/services/group/useGroupsService'
 import { useAgentsService } from 'services/agent/useAgentsService'
+import { isVoiceAgent } from 'utils/agentUtils'
 import { TIMEZONES } from 'utils/timezones'
 
 import * as yup from 'yup'
@@ -21,7 +22,7 @@ export const useCampaignForm = () => {
   const { data: groupsData } = useGroupsService()
 
   const agentOptions = agentsData
-    ?.filter(({ agent }) => agent.agent_type === 'voice')
+    ?.filter(({ agent }) => isVoiceAgent(agent.agent_type))
     ?.map(({ agent }) => {
       return {
         value: agent.id,

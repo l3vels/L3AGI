@@ -7,8 +7,9 @@ from typings.user import UserOutput
 
 
 class AgentType(str, Enum):
-    voice = "voice"
-    text = "text"
+    INBOUND = "inbound"
+    OUTBOUND = "outbound"
+    TEXT = "text"
 
 
 class DataSourceFlow(str, Enum):
@@ -27,7 +28,7 @@ class AgentInput(BaseModel):
     description: Optional[str] = Field(None, example="Description of the agent")
     agent_type: Optional[AgentType] = Field(
         None,
-        example=AgentType.voice,
+        example=AgentType.OUTBOUND,
         description="You have to choose between Text-based and Voice-based agents.",
     )
     workspace_id: Optional[UUID4] = Field(
@@ -185,7 +186,7 @@ class AgentOutput(BaseModel):
     id: UUID4
     name: str = Field(..., example="Agent Smith")
     description: str = Field(..., example="Description of the agent")
-    agent_type: Optional[str] = Field(None, example="voice")
+    agent_type: Optional[str] = Field(None, example="outbound")
     workspace_id: Optional[UUID4] = Field(
         None, example="550e8400-e29b-41d4-a716-446655440000"
     )

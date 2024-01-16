@@ -27,6 +27,7 @@ import TextareaFormik from 'components/TextareaFormik'
 import { useLocation, useNavigate } from 'react-router-dom'
 import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunners'
+import { isVoiceAgent } from 'utils/agentUtils'
 
 type AgentFormProps = {
   formik: any
@@ -196,7 +197,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     fieldName={'agent_tools'}
                     fieldValue={agent_tools}
                     setFieldValue={setFieldValue}
-                    options={agentType === 'voice' ? voiceToolOptions : toolOptions}
+                    options={isVoiceAgent(agentType) ? voiceToolOptions : toolOptions}
                   />
 
                   {agentType === 'text' && (
@@ -230,7 +231,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       fieldName={'agent_model'}
                       setFieldValue={setFieldValue}
                       fieldValue={agent_model}
-                      options={agentType === 'voice' ? voiceModelOptions : modelOptions}
+                      options={agentType !== 'text' ? voiceModelOptions : modelOptions}
                       onChange={() => {
                         setFieldValue('agent_model', '')
                       }}
@@ -287,7 +288,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  {agentType !== 'voice' && (
+                  {!isVoiceAgent(agentType) && (
                     <CustomField
                       formik={formik}
                       formikField={'agent_suggestions'}
@@ -342,11 +343,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     optionSize={'small'}
                   />
 
-                  <FormikTextField
-                    name='agent_twilio_phone_number_sid'
-                    placeholder={'Please enter value'}
-                    label='Twilio Phone Number SID'
-                  />
+                  {agentType === 'inbound' && (
+                    <FormikTextField
+                      name='agent_twilio_phone_number_sid'
+                      placeholder={'Please enter value'}
+                      label='Twilio Phone Number SID'
+                    />
+                  )}
 
                   {/* <StyledFormInputWrapper>
                     <TypographyPrimary

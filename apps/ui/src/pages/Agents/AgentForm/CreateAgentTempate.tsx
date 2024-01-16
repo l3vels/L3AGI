@@ -23,17 +23,19 @@ import { t } from 'i18next'
 import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
 import AgentDemoButton from './components/AgentDemoButton'
 import { AgentWithConfigs } from 'types'
+import { isVoiceAgent } from 'utils/agentUtils'
 
 const CreateAgentTemplate = () => {
   const { refetchAgent } = useCreateAgent()
 
   const { data: agentsData } = useAgentTemplatesService()
 
-  const voiceAgentTemplates = agentsData?.filter(
-    (agentData: AgentWithConfigs) => agentData.agent.agent_type === 'voice',
+  const voiceAgentTemplates = agentsData?.filter((agentData: AgentWithConfigs) =>
+    isVoiceAgent(agentData.agent.agent_type),
   )
+
   const textAgentTemplates = agentsData?.filter(
-    (agentData: AgentWithConfigs) => agentData.agent.agent_type !== 'voice',
+    (agentData: AgentWithConfigs) => !isVoiceAgent(agentData.agent.agent_type),
   )
 
   const { openModal } = useModal()
@@ -49,7 +51,7 @@ const CreateAgentTemplate = () => {
 
   let displayedAgents = textAgentTemplates
 
-  if (agentType === 'voice') displayedAgents = voiceAgentTemplates
+  if (isVoiceAgent(agentType)) displayedAgents = voiceAgentTemplates
 
   return (
     <StyledSectionWrapper>
