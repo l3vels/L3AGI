@@ -5,12 +5,10 @@ export const useGetAccountModule = () => {
   const { data: account } = useAccountService()
   const { config: envConfig } = useEnvModuleConfig()
 
-  console.log('envModuleConfig', envConfig)
-
-  const domainEnv = import.meta.env
-
   const modules = account?.configs?.modules
-  const naming = envConfig.naming || account?.configs?.naming
+  const envModules: any = envConfig.modules
+  const naming = account?.configs?.naming
+  const envNaming = envConfig.naming
   const welcomeMessage = modules?.home?.welcome_message
 
   const getMainModule = (moduleName: string) => {
@@ -46,6 +44,7 @@ export const useGetAccountModule = () => {
     const mainModule = modules?.[mainModuleName]
 
     const module = modules?.[mainModuleName]?.submodules?.[moduleName]
+    const envModule = envModules?.[mainModuleName]?.submodules?.[moduleName]
 
     if (mainModule === undefined) return trueValues
 
@@ -57,10 +56,22 @@ export const useGetAccountModule = () => {
       values = falseValues
     } else if (typeof module?.operations === 'object') {
       values = {
-        create: module?.operations?.create === undefined ? true : module?.operations?.create,
-        list: module?.operations?.list === undefined ? true : module?.operations?.list,
-        edit: module?.operations?.edit === undefined ? true : module?.operations?.edit,
-        delete: module?.operations?.delete === undefined ? true : module?.operations?.delete,
+        create:
+          module?.operations?.create === undefined
+            ? envModule?.operations?.create
+            : module?.operations?.create,
+        list:
+          module?.operations?.list === undefined
+            ? envModule?.operations?.list
+            : module?.operations?.list,
+        edit:
+          module?.operations?.edit === undefined
+            ? envModule?.operations?.edit
+            : module?.operations?.edit,
+        delete:
+          module?.operations?.delete === undefined
+            ? envModule?.operations?.delete
+            : module?.operations?.delete,
       }
     } else if (
       (typeof module === 'boolean' && module) ||
@@ -149,16 +160,16 @@ export const useGetAccountModule = () => {
 
   const moduleNames = {
     welcome: welcomeMessage,
-    chat: naming?.chat,
-    home: naming?.home,
-    agent: naming?.agent,
-    team: naming?.team,
-    datasource: naming?.datasource,
-    discovery: naming?.discovery,
-    models: naming?.models,
-    schedule: naming?.schedules,
-    toolkits: naming?.toolkits,
-    integration: naming?.integrations,
+    chat: naming?.chat || envNaming.chat,
+    home: naming?.home || envNaming.home,
+    agent: naming?.agent || envNaming.agent,
+    team: naming?.team || envNaming.team,
+    datasource: naming?.datasource || envNaming.datasource,
+    discovery: naming?.discovery || envNaming.discovery,
+    models: naming?.models || envNaming.models,
+    schedule: naming?.schedules || envNaming.schedules,
+    toolkits: naming?.toolkits || envNaming.toolkits,
+    integration: naming?.integrations || envNaming.integrations,
   }
 
   return {
