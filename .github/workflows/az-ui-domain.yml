@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+        - "apps/ui/**"
   # pull_request:
   #   types: [opened, synchronize, reopened, closed]
   #   branches:
