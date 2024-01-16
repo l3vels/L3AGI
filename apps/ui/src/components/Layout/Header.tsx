@@ -9,6 +9,7 @@ import Tags from 'share-ui/components/Tags/Tags'
 
 import styled from 'styled-components'
 import { useDomainConfig } from 'utils/useDomainConfig'
+import { useGetAccountModule } from 'utils/useGetAccountModule'
 
 interface HeaderTypes {
   expandMode?: boolean
@@ -19,7 +20,9 @@ interface HeaderTypes {
 const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes) => {
   const { t } = useTranslation()
   const { getDomainConfig } = useDomainConfig()
+  const { getExternalLinksModule } = useGetAccountModule()
   const domainLogo = getDomainConfig('logo')
+  const showLinks = getExternalLinksModule()
 
   return (
     <StyledHeader id='main_header'>
@@ -34,16 +37,16 @@ const Header = ({ expandMode = false, isPublicRoute, hideButtons }: HeaderTypes)
 
       <StyledLogoWrapper to='/'>
         <StyledLogo src={domainLogo} alt='Logo' />
-        <Tags
+        {/* <Tags
           label={t('beta')}
           readOnly
           color={'gradient_yellow'}
           size={Tags.sizes?.XS}
           noAnimation
-        />
+        /> */}
       </StyledLogoWrapper>
 
-      {!hideButtons && (
+      {showLinks && !hideButtons && (
         <>
           <StyledHeaderButtonWrapper>
             <HeaderButtons />

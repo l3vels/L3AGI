@@ -72,6 +72,6 @@ default_configs = {
         },
         "contact": False,
         "group": False,
-        "external-links": True,
+        # "external-links": True,
     },
 }

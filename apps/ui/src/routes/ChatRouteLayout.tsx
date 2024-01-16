@@ -211,15 +211,15 @@ const ChatRouteLayout = () => {
                     agentModule.create
                       ? [
                           {
-                            label: 'Add Chat Agent',
+                            label: `Add chat ${t('agent')}`,
                             function: () => navigate('/agents/create-agent-template?type=text'),
                           },
                           {
-                            label: 'Add Outbound Call Agent',
+                            label: `Add Outbound Call ${t('agent')}`,
                             function: () => navigate('/agents/create-agent-template?type=outbound'),
                           },
                           {
-                            label: 'Add Inbound Call Agent',
+                            label: `Add Inbound Call${t('agent')}`,
                             function: () => navigate('/agents/create-agent-template?type=inbound'),
                           },
                           ...(teamOfAgentsArray?.length === 0
