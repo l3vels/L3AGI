@@ -38,7 +38,7 @@ def update_phone_number_webhook(
     try:
         client = Client(twilio_account_sid, twilio_auth_token)
 
-        # TODO base url
+        # TODO base url from env
         client.incoming_phone_numbers(phone_number_sid).update(
             voice_url=f"https://api-pr-dev.l3agi.com/inbound/{str(auth.account.id)}/{str(agent_with_configs.agent.id)}",
         )
