@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<p align="center"><i>Open-source tool that enables AI agents to collaborate together as effectively as human teams.</i></p>
+<p align="center"><i>Open-source tool that enables AI Assistants to collaborate together as effectively as human teams.</i></p>
     
 <h3 align="center">
 	<a href="https://l3agi.com?utm_medium=community&utm_source=github">Try Our Cloud</a>
@@ -66,16 +66,16 @@ Of course! Here's the revised "Features" section with the requested emojis and i
     <img src="docs/assets/playYTFeatures.png" alt="Watch the video">
 </a>
 
-L3AGI offers a robust set of functionalities that empower you to design, supervise, and execute both autonomous AI agents and Teams of Agents. Here's what sets us apart:
+L3AGI offers a robust set of functionalities that empower you to design, supervise, and execute both autonomous AI Assistants and Teams of Assistants. Here's what sets us apart:
 
-- **🤖 Team Of Agents**: L3AGI pioneers in facilitating the creation and management of Teams of AI Agents. These are groups of individual AI agents that collaborate seamlessly for more complex tasks and simulations.
+- **🤖 Team Of Assistants**: L3AGI pioneers in facilitating the creation and management of Teams of AI Assistants. These are groups of individual AI Assistants that collaborate seamlessly for more complex tasks and simulations.
 
-- **🔧 Autonomous AI Agents**: Design and oversee standalone AI agents that act autonomously based on their configuration.
+- **🔧 Autonomous AI Assistants**: Design and oversee standalone AI Assistants that act autonomously based on their configuration.
 
-- **🧠 Agent Memory**: Equip your AI agents with the ability to retain and recall information, enabling them to make more informed decisions.
+- **🧠 Assistant Memory**: Equip your AI Assistants with the ability to retain and recall information, enabling them to make more informed decisions.
 
 - **🔗 Data Sources & Integration**:
-  - Connect your AI agents to an array of data sources for efficient information retrieval and processing.
+  - Connect your AI Assistants to an array of data sources for efficient information retrieval and processing.
   - Integrate VectorDBs for enhanced data management and querying capabilities.
   - Employ the LlamaIndex (GPT Index) to boost the data framework for your LLM application.
 
@@ -91,7 +91,7 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
   </tr>
 </table>
 
-- **🛠 Toolkits**: Empower your AI agents with our curated sets of tools, tailor-made for specific tasks.
+- **🛠 Toolkits**: Empower your AI Assistants with our curated sets of tools, tailor-made for specific tasks.
 
 <table align="center" border="0">
   <tr>
@@ -118,9 +118,9 @@ L3AGI offers a robust set of functionalities that empower you to design, supervi
 
 - **📄 Report Generator**: Streamline report creation with our user-friendly report generator tool.
 
-- **🌐 Community Building**: Engage with a dynamic community to collectively enhance and refine your AI agents.
+- **🌐 Community Building**: Engage with a dynamic community to collectively enhance and refine your AI Assistants.
 
-- **🖥 User Interface (UI)**: Utilize our sleek, user-friendly interface for building and managing your AI agents and their teams.
+- **🖥 User Interface (UI)**: Utilize our sleek, user-friendly interface for building and managing your AI Assistants and their teams.
 
 - **📡 APIs**: Robust APIs ensure smooth integration of L3AGI with other systems and support advanced customizations for your specific needs.
 
