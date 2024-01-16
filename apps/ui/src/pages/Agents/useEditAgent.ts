@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client'
 import { ToastContext } from 'contexts'
 import { useFormik } from 'formik'
 
@@ -99,18 +100,33 @@ export const useEditAgent = () => {
       twilio_phone_number_sid: values.agent_twilio_phone_number_sid,
     }
 
-    await updateAgent(agentId || '', {
-      ...updatedValues,
-    })
-    await refetchAgents()
+    try {
+      await updateAgent(agentId || '', {
+        ...updatedValues,
+      })
+      await refetchAgents()
 
-    handleNavigation()
+      handleNavigation()
 
-    setToast({
-      message: 'Agent was updated!',
-      type: 'positive',
-      open: true,
-    })
+      setToast({
+        message: 'Agent was updated!',
+        type: 'positive',
+        open: true,
+      })
+    } catch (err) {
+      let message = 'Could not update agent!'
+
+      if (err instanceof ApolloError) {
+        // @ts-expect-error result is not defined in networkError
+        message = err.networkError?.result?.detail || message
+      }
+
+      setToast({
+        message: message,
+        type: 'negative',
+        open: true,
+      })
+    }
 
     setIsLoading(false)
   }

@@ -1,6 +1,8 @@
 from typing import Any, List, Optional
 
+from fastapi import HTTPException
 from fastapi_sqlalchemy import db
+from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
 from models.config import ConfigModel
@@ -23,6 +25,7 @@ def update_phone_number_webhook(
 ):
     phone_number_sid = agent_with_configs.configs.twilio_phone_number_sid
 
+    # TODO check inbound type
     if (
         phone_number_sid is None
         or phone_number_sid == ""
@@ -42,5 +45,10 @@ def update_phone_number_webhook(
         client.incoming_phone_numbers(phone_number_sid).update(
             voice_url=f"https://api-pr-dev.l3agi.com/inbound/{str(auth.account.id)}/{str(agent_with_configs.agent.id)}",
         )
-    except Exception as e:
-        print(e)
+    except TwilioRestException as e:
+        message = e.msg
+
+        if "Unable to update record" in e.msg:
+            message = "Twilio Phone number SID Is Invalid"
+
+        raise HTTPException(status_code=400, detail=message)

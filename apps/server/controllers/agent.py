@@ -45,6 +45,7 @@ def create_agent(
     agent_with_configs = convert_model_to_response(
         AgentModel.get_agent_by_id(db, db_agent.id)
     )
+
     update_phone_number_webhook(auth, agent_with_configs)
 
     return agent_with_configs
@@ -69,6 +70,9 @@ def update_agent(
     Returns:
         AgentWithConfigsOutput: Updated agent object.
     """
+
+    db_agent: AgentModel = None
+
     try:
         db_agent = AgentModel.update_agent(
             db,
@@ -79,15 +83,16 @@ def update_agent(
             account=auth.account,
         )
         db.session.commit()
-
-        agent_with_configs = convert_model_to_response(
-            AgentModel.get_agent_by_id(db, db_agent.id)
-        )
-        update_phone_number_webhook(auth, agent_with_configs)
-
-        return agent_with_configs
     except AgentNotFoundException:
         raise HTTPException(status_code=404, detail="Agent not found")
+
+    agent_with_configs = convert_model_to_response(
+        AgentModel.get_agent_by_id(db, db_agent.id)
+    )
+
+    update_phone_number_webhook(auth, agent_with_configs)
+
+    return agent_with_configs
 
 
 @router.post(
