@@ -35,6 +35,7 @@ interface ImportMetaEnv {
   readonly REACT_APP_INDEX_TYPES_LINK: string
   readonly REACT_APP_RESPONSE_MODES_LINK: string
   readonly REACT_APP_VECTOR_STORES_LINK: string
+  readonly REACT_APP_TWILIO_PHONE_NUMBER_SID_LINK: string
   readonly REACT_APP_STATIC_URL: string
   readonly REACT_APP_DATA_TEST_MODE: boolean
 }
