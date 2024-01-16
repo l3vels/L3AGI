@@ -1,20 +1,20 @@
 olga_configs = {
-    "info": {"logo": "", "welcomeMessage": "Welcome to L3AGI"},
+    "info": {"logo": "", "welcomeMessage": ""},
     "naming": {
-        "home": "Home",
-        "agent": "Agent",
-        "team": "Team",
-        "datasource": "Knowledge",
-        "model": "Model",
-        "discovery": "Discovery",
-        "chat": "Agents",
-        "toolkit": "Toolkit",
-        "schedules": "Schedules",
-        "integration": "Integration",
+        "home": "",
+        "agent": "",
+        "team": "",
+        "datasource": "",
+        "model": "",
+        "discovery": "",
+        "chat": "",
+        "toolkit": "",
+        "schedules": "",
+        "integration": "",
     },
     "modules": {
         "home": {
-            "welcome_message": "Build Your Support AI Agents",
+            "welcome_message": "",
             "submodules": {
                 "team": False,
                 "agent": True,
@@ -23,7 +23,7 @@ olga_configs = {
         },
         "chat": {
             "active": True,
-            "label": "Multi-Agent",
+            "label": "",
             "submodules": {
                 "team": False,
                 "agent": True,
@@ -32,7 +32,7 @@ olga_configs = {
         },
         "model": {
             "active": True,
-            "label": "Fine-tunings",
+            "label": "",
             "submodules": {
                 "models": True,
                 "fine-tuning": True,

@@ -1,15 +1,15 @@
 scrapper_configs = {
-    "info": {"logo": "", "welcomeMessage": "Welcome to L3AGI"},
+    "info": {"logo": "", "welcomeMessage": ""},
     "naming": {
-        "home": "Home",
-        "agent": "Scrappers",
-        "team": "Team",
-        "datasource": "Data sources",
-        "models": "Models",
-        "discovery": "Discovery",
-        "chat": "Scrappers",
-        "toolkits": "Toolkits",
-        "schedules": "Schedules",
+        "home": "",
+        "agent": "",
+        "team": "",
+        "datasource": "",
+        "models": "",
+        "discovery": "",
+        "chat": "",
+        "toolkits": "",
+        "schedules": "",
     },
     "modules": {
         "home": {
@@ -28,7 +28,7 @@ scrapper_configs = {
         },
         "chat": {
             "active": True,
-            "label": "Scrappers",
+            "label": "",
             "submodules": {
                 "team": {"operations": {"create": True, "list": True, "edit": True}},
                 "agent": True,

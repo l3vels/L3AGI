@@ -1,20 +1,20 @@
 levanion_configs = {
-    "info": {"logo": "", "welcomeMessage": "Welcome to L3AGI"},
+    "info": {"logo": "", "welcomeMessage": ""},
     "naming": {
-        "home": "Home",
-        "agent": "Agent",
-        "team": "Team",
-        "datasource": "Data source",
-        "models": "Model",
-        "discovery": "Discovery",
-        "chat": "Multi-Agent",
-        "toolkits": "Toolkit",
-        "schedules": "Schedule",
-        "integrations": "Integration",
+        "home": "",
+        "agent": "",
+        "team": "",
+        "datasource": "",
+        "models": "",
+        "discovery": "",
+        "chat": "",
+        "toolkits": "",
+        "schedules": "",
+        "integrations": "",
     },
     "modules": {
         "home": {
-            "welcome_message": "Build your ",
+            "welcome_message": "",
             "submodules": {
                 "team": {
                     "operations": {
@@ -30,7 +30,7 @@ levanion_configs = {
         },
         "chat": {
             "active": True,
-            "label": "Multi-Agent",
+            "label": "",
             "submodules": {
                 "team": {"operations": {"create": True, "list": True, "edit": True}},
                 "agent": True,
@@ -39,7 +39,7 @@ levanion_configs = {
         },
         "model": {
             "active": True,
-            "label": "Models",
+            "label": "",
             "submodules": {
                 "models": True,
                 "fine-tuning": True,
@@ -47,7 +47,7 @@ levanion_configs = {
         },
         "integration": {
             "active": True,
-            "label": "Integrations",
+            "label": "",
             "submodules": {
                 "toolkit": {
                     "operations": {

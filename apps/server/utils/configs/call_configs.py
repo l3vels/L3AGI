@@ -1,18 +1,18 @@
 call_configs = {
-    "info": {"logo": "", "welcomeMessage": "Welcome to L3AGI"},
+    "info": {"logo": "", "welcomeMessage": ""},
     "naming": {
-        "home": "Home",
-        "agent": "Agent",
-        "team": "Team",
-        "datasource": "Data source",
-        "models": "Model",
-        "discovery": "Discovery",
-        "chat": "Agents",
-        "toolkits": "Toolkit",
+        "home": "",
+        "agent": "",
+        "team": "",
+        "datasource": "",
+        "models": "",
+        "discovery": "",
+        "chat": "",
+        "toolkits": "",
     },
     "modules": {
         "home": {
-            "welcome_message": "Build Your Conversational Agents",
+            "welcome_message": "",
             "submodules": {
                 "team": True,
                 "agent": True,
@@ -21,7 +21,7 @@ call_configs = {
         },
         "chat": {
             "active": True,
-            "label": "Multi-Agent",
+            "label": "",
             "submodules": {
                 "team": True,
                 "agent": True,
@@ -30,7 +30,7 @@ call_configs = {
         },
         "model": {
             "active": True,
-            "label": "Fine-tunings",
+            "label": "",
             "submodules": {
                 "models": True,
                 "fine-tuning": True,
