@@ -14,7 +14,6 @@ from models.team import TeamModel
 from postgres import PostgresChatMessageHistory
 from services.chat import create_client_message, create_user_message
 from services.pubsub import AzurePubSubService
-from typings.agent import AgentType
 from typings.auth import UserAccount
 from typings.chat import (ChatInput, ChatListOutput, ChatMessageInput,
                           ChatMessageOutput, ChatOutput, ChatStatus,

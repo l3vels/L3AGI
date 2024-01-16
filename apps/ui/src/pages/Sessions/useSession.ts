@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useAgentsService } from 'services/agent/useAgentsService'
 import { useChatsService } from 'services/chat/useChatsService'
 import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
+import { getAgentTypeText } from 'utils/agentUtils'
 
 type Chat = {
   id: string
@@ -38,7 +39,9 @@ export const useSession = () => {
     filter: [
       ...(selectedAgentNames?.map((agent: any) => agent.value) || []),
       ...(searchText.length > 0 ? [searchText] : []),
-      ...(selectedAgentType?.value === 'voice' || selectedAgentType?.value === 'text'
+      ...(selectedAgentType?.value === 'inbound' ||
+      selectedAgentType?.value === 'outbound' ||
+      selectedAgentType?.value === 'text'
         ? [selectedAgentType?.value]
         : []),
       ...(selectedCampaign?.map((campaign: any) => campaign.value) || []),
@@ -58,9 +61,7 @@ export const useSession = () => {
   const mappedData = chatsData?.map((chat: Chat) => ({
     id: chat?.id,
     name: chat?.name,
-    agent_name: `${chat?.agent?.agent?.name} · ${
-      chat?.agent?.agent?.agent_type === 'voice' ? 'Call' : 'Chat'
-    }`,
+    agent_name: `${chat?.agent?.agent?.name} · ${getAgentTypeText(chat?.agent?.agent?.agent_type)}`,
     gent_role: chat?.agent?.agent?.role,
     gent_description: chat?.agent?.agent?.description,
     agent_id: chat?.agent?.agent?.id,
@@ -106,7 +107,7 @@ export const useSession = () => {
   const agentOptions = agentsData?.map(({ agent }) => {
     return {
       value: agent.name,
-      label: `${agent.name} · ${agent.agent_type === 'voice' ? 'Call' : 'Chat'}`,
+      label: `${agent.name} · ${getAgentTypeText(agent.agent_type)}`,
     }
   })
 

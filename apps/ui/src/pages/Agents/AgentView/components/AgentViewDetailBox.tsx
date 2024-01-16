@@ -30,6 +30,7 @@ import { AgentWithConfigs } from 'types'
 import MenuDotsOutline from 'share-ui/components/Icon/Icons/components/MenuDotsOutline'
 import CopyButton from 'components/CopyButton'
 import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
+import { isVoiceAgent } from 'utils/agentUtils'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
@@ -183,7 +184,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
         <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
 
-        {agent_type === 'voice' && (
+        {isVoiceAgent(agent_type) && (
           <>
             {agentTranscriber && <TagsRow title={t('transcriber')} items={[agentTranscriber]} />}
             {agentSynthesizer && <TagsRow title={t('synthesizer')} items={[agentSynthesizer]} />}

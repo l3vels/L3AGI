@@ -51,6 +51,7 @@ import AudioPlayer from 'components/AudioPlayer'
 import Mobile from 'share-ui/components/Icon/Icons/components/Mobile'
 import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
 import { useModal } from 'hooks'
+import { isVoiceAgent } from 'utils/agentUtils'
 
 const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
   const { t } = useTranslation()
@@ -103,7 +104,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
-  const isCallBased = agentById?.agent?.agent_type === 'voice'
+  const isCallBased = isVoiceAgent(agentById?.agent?.agent_type)
 
   const agentName =
     agentById?.agent?.name || teamOfAgents?.name || chatById?.agent?.agent?.name || ''

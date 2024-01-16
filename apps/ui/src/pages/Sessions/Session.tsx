@@ -71,7 +71,8 @@ const Sessions = () => {
 
   const agentTypeOption = [
     { label: 'Chat based', value: 'text' },
-    { label: 'Call based', value: 'voice' },
+    { label: 'Outbound based', value: 'outbound' },
+    { label: 'Inbound based', value: 'inbound' },
   ]
 
   useEffect(() => {
