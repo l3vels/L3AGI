@@ -1,12 +1,21 @@
 import ChatV2 from 'modals/AIChatModal/components/ChatV2'
 import { ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
+
+import { useState } from 'react'
+
 import styled from 'styled-components'
 
-const ChatWindow = () => {
+import ChatWindowHeader from './chatWidgetComponents/ChatWindowHeader'
+
+const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
+  const [chatStarted, setChatStarted] = useState(false)
+
   return (
     <StyledChatWindow>
+      <ChatWindowHeader closeWindow={closeWindow} />
+
       <ChatContextProvider>
-        <ChatV2 chatSessionId='11af2cae-3423-42f6-a5d5-29a555dac424' />
+        {chatStarted && <ChatV2 chatSessionId='11af2cae-3423-42f6-a5d5-29a555dac424' />}
       </ChatContextProvider>
     </StyledChatWindow>
   )
@@ -27,5 +36,5 @@ const StyledChatWindow = styled.div`
 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 
-  padding: 0 10px;
+  /* padding: 0 10px; */
 `

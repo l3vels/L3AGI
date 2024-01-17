@@ -22,13 +22,13 @@ const ChatWidget = () => {
           <BrowserRouter>
             {showChat && (
               <Routes>
-                <Router element={<ChatWindow />} path='/' />
+                <Router element={<ChatWindow closeWindow={() => setShowChat(false)} />} path='/' />
               </Routes>
             )}
           </BrowserRouter>
 
           <StyledChatWidget onClick={() => setShowChat(!showChat)}>
-            {showChat ? <Close size={40} /> : <Robot size={40} />}
+            <Robot size={40} />
           </StyledChatWidget>
         </StyledRoot>
       </ThemeProvider>
