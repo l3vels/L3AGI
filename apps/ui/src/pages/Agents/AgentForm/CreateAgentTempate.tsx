@@ -30,8 +30,12 @@ const CreateAgentTemplate = () => {
 
   const { data: agentsData } = useAgentTemplatesService()
 
-  const voiceAgentTemplates = agentsData?.filter((agentData: AgentWithConfigs) =>
-    isVoiceAgent(agentData.agent.agent_type),
+  const inboundAgentTemplates = agentsData?.filter(
+    (agentData: AgentWithConfigs) => agentData.agent.agent_type === 'inbound',
+  )
+
+  const outboundAgentTemplates = agentsData?.filter(
+    (agentData: AgentWithConfigs) => agentData.agent.agent_type === 'outbound',
   )
 
   const textAgentTemplates = agentsData?.filter(
@@ -51,7 +55,8 @@ const CreateAgentTemplate = () => {
 
   let displayedAgents = textAgentTemplates
 
-  if (isVoiceAgent(agentType)) displayedAgents = voiceAgentTemplates
+  if (agentType === 'inbound') displayedAgents = inboundAgentTemplates
+  if (agentType === 'outbound') displayedAgents = outboundAgentTemplates
 
   return (
     <StyledSectionWrapper>

@@ -38,7 +38,6 @@ import { t } from 'i18next'
 import { StyledButtonsWrapper } from 'styles/globalStyle.css'
 import { StyledMobileIcon } from 'pages/Navigation/MainNavigation'
 import ContactMenu from './contactComponents/ContactMenu'
-import { isVoiceAgent } from 'utils/agentUtils'
 
 const Contacts = () => {
   const navigate = useNavigate()
@@ -48,7 +47,7 @@ const Contacts = () => {
 
   const { agentsData } = useAgents()
 
-  const voiceAgents = agentsData?.filter(agentData => isVoiceAgent(agentData.agent.agent_type))
+  const voiceAgents = agentsData?.filter(agentData => agentData.agent.agent_type === 'outbound')
 
   const gridData =
     contacts?.map((contact: any) => ({
