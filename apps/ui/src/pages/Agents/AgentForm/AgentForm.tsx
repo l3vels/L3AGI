@@ -28,6 +28,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunners'
 import { isVoiceAgent } from 'utils/agentUtils'
+import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 
 type AgentFormProps = {
   formik: any
@@ -345,6 +346,9 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
                   {agentType === 'inbound' && (
                     <FormikTextField
+                      onHelpClick={() =>
+                        openLinkTab(import.meta.env.REACT_APP_TWILIO_PHONE_NUMBER_SID_LINK)
+                      }
                       name='agent_twilio_phone_number_sid'
                       placeholder={'Please enter value'}
                       label='Twilio Phone Number SID'
