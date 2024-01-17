@@ -60,7 +60,7 @@ const Campaigns = () => {
       {
         Header: 'Total Calls',
         accessor: 'totalCalls',
-        width: 50,
+        width: 60,
       },
       {
         Header: 'Busy',

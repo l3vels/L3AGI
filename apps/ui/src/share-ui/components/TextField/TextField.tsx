@@ -22,6 +22,8 @@ import { ComponentDefaultTestId } from '../../tests/constants'
 import { L3ComponentProps, L3Component } from '../../types'
 import styled, { css } from 'styled-components'
 import { isError } from 'lodash'
+import IconButton from '../IconButton/IconButton'
+import Help from '../Icon/Icons/components/Help'
 
 const EMPTY_OBJECT = { primary: '', secondary: '', layout: '' }
 
@@ -75,6 +77,7 @@ interface TextFieldProps extends L3ComponentProps {
   tabIndex?: number
   name?: string
   defaultIsOpen?: boolean
+  onHelpClick?: () => void
 }
 
 const TextField: L3Component<TextFieldProps, unknown> & {
@@ -124,6 +127,7 @@ const TextField: L3Component<TextFieldProps, unknown> & {
       tabIndex,
       name,
       defaultIsOpen = false,
+      onHelpClick,
     },
     ref,
   ) => {
@@ -192,12 +196,23 @@ const TextField: L3Component<TextFieldProps, unknown> & {
 
     return (
       <StyledInputWrapper>
-        <FieldLabel
-          labelText={title}
-          icon={labelIconName}
-          iconLabel={iconsNames.layout}
-          labelFor={id}
-        />
+        <StyledLabelWrapper>
+          <FieldLabel
+            labelText={title}
+            icon={labelIconName}
+            iconLabel={iconsNames.layout}
+            labelFor={id}
+          />
+          {onHelpClick && (
+            <IconButton
+              onClick={onHelpClick}
+              icon={() => <Help />}
+              kind={IconButton.kinds?.SECONDARY}
+              ariaLabel='Help'
+              size={IconButton.sizes?.XXS}
+            />
+          )}
+        </StyledLabelWrapper>
         <>
           {/*Programatical input (tabIndex={-1}) is working fine with aria-activedescendant attribute despite the rule*/}
           {/*eslint-disable-next-line jsx-a11y/aria-activedescendant-has-tabindex*/}
@@ -380,4 +395,8 @@ const StyledInput = styled.input<{ isError: boolean; size: string }>`
 `
 const StyledValidationText = styled.span`
   color: ${({ theme }) => theme.textFiled.primary.errorColor};
+`
+const StyledLabelWrapper = styled.div`
+  display: flex;
+  gap: 4px;
 `

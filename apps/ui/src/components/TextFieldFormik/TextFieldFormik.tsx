@@ -17,6 +17,7 @@ const FormikTextField = ({
   // onChange,
   value,
   focus,
+  onHelpClick,
   ...props
 }: {
   value?: string
@@ -33,6 +34,7 @@ const FormikTextField = ({
   focus?: boolean
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
   onChange?: (event: React.FocusEvent<HTMLInputElement>) => void
+  onHelpClick?: () => void
 }) => {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -71,6 +73,7 @@ const FormikTextField = ({
               text: meta.error,
               status: meta.error && 'error',
             }}
+            onHelpClick={onHelpClick}
             type={type}
             {...props}
           />
