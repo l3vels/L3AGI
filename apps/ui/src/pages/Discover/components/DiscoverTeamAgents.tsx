@@ -51,12 +51,9 @@ const DiscoverTeamAgents = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'></StyledHeaderGroup>
       <StyledHeadingWrapper>
-        <StyledHeadingPrimary
-          type={Heading.types?.h1}
-          value={`Discover Team of AI ${t('agent')}s`}
-        />
+        <StyledHeadingPrimary type={Heading.types?.h1} value={t('discovery-description')} />
         <TypographySecondary
-          value={`Create and manage your team of AI ${t('agent')}s for interactive experiences`}
+          value={t('create-team-description')}
           type={Typography.types.LABEL}
           size={Typography.sizes.lg}
         />
