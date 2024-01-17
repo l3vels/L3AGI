@@ -223,8 +223,8 @@ export const useColumn = () => {
     {
       Header: 'Status',
       accessor: 'status',
-      minWidth: 150,
-      width: 150,
+      minWidth: 170,
+      width: 170,
       Cell: (props: { row: { original: any } }) => {
         const { original: data } = props.row
         const call = calls.find((call: any) => call.chat_id === data.id)
