@@ -6,16 +6,42 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import ChatWindowHeader from './chatWidgetComponents/ChatWindowHeader'
+import { ButtonPrimary } from 'components/Button/Button'
+
+import SessionForm from './chatWidgetComponents/SessionForm'
 
 const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
-  const [chatStarted, setChatStarted] = useState(false)
+  const [ShowForm, setShowForm] = useState(false)
+  const [sessionId, setSessionId] = useState<string | null>(null)
+
+  const handleShowSessionForm = () => {
+    setShowForm(true)
+  }
+
+  const handleHideForm = () => {
+    setShowForm(false)
+  }
 
   return (
     <StyledChatWindow>
-      <ChatWindowHeader closeWindow={closeWindow} />
+      <ChatWindowHeader
+        closeWindow={closeWindow}
+        onBackClick={ShowForm ? handleHideForm : undefined}
+      />
 
       <ChatContextProvider>
-        {chatStarted && <ChatV2 chatSessionId='11af2cae-3423-42f6-a5d5-29a555dac424' />}
+        {sessionId ? (
+          <StyledChatWrapper>
+            <ChatV2 chatSessionId={sessionId} />
+          </StyledChatWrapper>
+        ) : (
+          <StyledChatBody>
+            {!ShowForm && (
+              <ButtonPrimary onClick={handleShowSessionForm}>Start Conversation</ButtonPrimary>
+            )}
+            {ShowForm && <SessionForm setSessionId={setSessionId} />}
+          </StyledChatBody>
+        )}
       </ChatContextProvider>
     </StyledChatWindow>
   )
@@ -37,4 +63,17 @@ const StyledChatWindow = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 
   /* padding: 0 10px; */
+`
+const StyledChatBody = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const StyledChatWrapper = styled.div`
+  height: calc(100% - 60px);
+
+  padding: 0 10px;
 `

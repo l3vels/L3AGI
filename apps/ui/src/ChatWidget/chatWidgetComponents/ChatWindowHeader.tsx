@@ -4,20 +4,28 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 import styled from 'styled-components'
 import { useDomainConfig } from 'utils/useDomainConfig'
 
-const ChatWindowHeader = ({ closeWindow }: { closeWindow: () => void }) => {
+const ChatWindowHeader = ({
+  closeWindow,
+  onBackClick,
+}: {
+  closeWindow: () => void
+  onBackClick?: () => void
+}) => {
   const { getDomainConfig } = useDomainConfig()
   const domainLogo = getDomainConfig('logo')
 
   return (
     <StyledChatWindowHeader>
-      <IconButton
-        onClick={() => {}}
-        icon={() => <NavigationChevronLeft />}
-        size={IconButton.sizes?.SMALL}
-        kind={IconButton.kinds?.TERTIARY}
-        // ariaLabel='Delete'
-      />
-
+      <StyledButtonWrapper>
+        <IconButton
+          onClick={onBackClick}
+          icon={() => <NavigationChevronLeft />}
+          size={IconButton.sizes?.SMALL}
+          kind={IconButton.kinds?.TERTIARY}
+          // ariaLabel='Delete'
+          disabled={!onBackClick}
+        />
+      </StyledButtonWrapper>
       <StyledLogoWrapper>
         <StyledLogo src={domainLogo} alt='Logo' />
       </StyledLogoWrapper>
@@ -54,3 +62,4 @@ const StyledLogo = styled.img`
   width: 48px;
   height: 48px;
 `
+const StyledButtonWrapper = styled.div``
