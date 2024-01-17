@@ -17,6 +17,7 @@ import Heading from 'share-ui/components/Heading/Heading'
 import HeadingPrimary from 'components/Heading/Primary'
 import styled from 'styled-components'
 import { AgentWithConfigs } from 'types'
+import { t } from 'i18next'
 // import { AuthContext } from 'contexts'
 type Agent = {
   id: string
@@ -50,9 +51,12 @@ const DiscoverTeamAgents = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'></StyledHeaderGroup>
       <StyledHeadingWrapper>
-        <StyledHeadingPrimary type={Heading.types?.h1} value={'Discover Team of AI Agents '} />
+        <StyledHeadingPrimary
+          type={Heading.types?.h1}
+          value={`Discover Team of AI ${t('agent')}s`}
+        />
         <TypographySecondary
-          value={'Create and manage your team of AI agents for interactive experiences'}
+          value={`Create and manage your team of AI ${t('agent')}s for interactive experiences`}
           type={Typography.types.LABEL}
           size={Typography.sizes.lg}
         />
