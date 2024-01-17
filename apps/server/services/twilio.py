@@ -5,6 +5,7 @@ from fastapi_sqlalchemy import db
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
+from models.agent_config import AgentConfigModel
 from models.config import ConfigModel
 from typings.agent import AgentType, AgentWithConfigsOutput
 from typings.auth import UserAccount
@@ -36,6 +37,27 @@ def update_phone_number_webhook(
 
     twilio_account_sid = find_config(configs, "TWILIO_ACCOUNT_SID")
     twilio_auth_token = find_config(configs, "TWILIO_AUTH_TOKEN")
+
+    if (
+        twilio_account_sid is None
+        or twilio_account_sid == ""
+        or twilio_auth_token is None
+        or twilio_auth_token == ""
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Fill Twilio credentials to update phone number webhook",
+        )
+
+    phone_number_sid_exists = AgentConfigModel.get_config_by_key(
+        db.session, "twilio_phone_number_sid", auth.account.id
+    )
+
+    if phone_number_sid_exists:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Phone number SID is already used by {phone_number_sid_exists.agent.name}",
+        )
 
     try:
         client = Client(twilio_account_sid, twilio_auth_token)
