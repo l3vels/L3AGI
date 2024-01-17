@@ -161,25 +161,3 @@ class AgentConfigModel(BaseModel):
         db.session.commit()
 
         return changes
-
-    @classmethod
-    def get_config_by_key(cls, session: Session, key: str, account_id: UUID):
-        """
-        Get agent configuration by key.
-
-        Args:
-            session (Session): The database session.
-            key (str): The key of the configuration setting.
-            account_id (UUID): The account id.
-
-        Returns:
-            AgentConfigModel: The agent configuration object.
-        """
-        from models.agent import AgentModel
-
-        return (
-            session.query(AgentConfigModel)
-            .filter(AgentConfigModel.key == key)
-            .filter(AgentConfigModel.agent.has(AgentModel.account_id == account_id))
-            .first()
-        )

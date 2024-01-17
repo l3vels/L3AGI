@@ -5,6 +5,7 @@ from fastapi_sqlalchemy import db
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
+from models.agent import AgentModel
 from models.agent_config import AgentConfigModel
 from models.config import ConfigModel
 from typings.agent import AgentType, AgentWithConfigsOutput
@@ -49,8 +50,15 @@ def update_phone_number_webhook(
             detail="Fill Twilio credentials to update phone number webhook",
         )
 
-    phone_number_sid_exists = AgentConfigModel.get_config_by_key(
-        db.session, "twilio_phone_number_sid", auth.account.id
+    phone_number_sid_exists = (
+        db.session.query(AgentConfigModel)
+        .filter(
+            AgentConfigModel.key == "twilio_phone_number_sid",
+            AgentConfigModel.value == phone_number_sid,
+            AgentConfigModel.agent_id != agent_with_configs.agent.id,
+        )
+        .filter(AgentConfigModel.agent.has(AgentModel.account_id == auth.account.id))
+        .first()
     )
 
     if phone_number_sid_exists:
