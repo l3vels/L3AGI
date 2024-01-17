@@ -35,7 +35,9 @@ def check_if_phone_number_sid_exists_in_agent(
     query = query.filter(
         AgentConfigModel.key == "twilio_phone_number_sid",
         AgentConfigModel.value == twilio_phone_number_sid,
-        AgentConfigModel.agent.has(AgentModel.account_id == auth.account.id),
+        AgentConfigModel.agent.has(
+            AgentModel.account_id == auth.account.id, AgentModel.is_deleted.is_(False)
+        ),
     )
 
     if agent_id:

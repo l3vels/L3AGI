@@ -7,6 +7,7 @@ import { useAgentsService } from 'services/agent/useAgentsService'
 import { useCreateAgentService } from 'services/agent/useCreateAgentService'
 
 import { agentValidationSchema } from 'utils/validationsSchema'
+import { useCheckTwilioPhoneNumberSid } from './useCheckTwilioPhoneNumberSid'
 
 export const useCreateAgent = () => {
   const { setToast } = useContext(ToastContext)
@@ -18,6 +19,10 @@ export const useCreateAgent = () => {
   const [createAgentService] = useCreateAgentService()
 
   const [isLoading, setIsLoading] = useState(false)
+
+  const { checkTwilioPhoneNumberSid } = useCheckTwilioPhoneNumberSid({
+    setIsLoading,
+  })
 
   const urlParams = new URLSearchParams(window.location.search)
 
@@ -95,43 +100,9 @@ export const useCreateAgent = () => {
     }
   }
 
-  const handleSubmit = async (values: any) => {
-    setIsLoading(true)
+  const handleCreate = async (input: any) => {
     try {
-      const agentInput = {
-        name: values.agent_name,
-        role: values.agent_role,
-        description: values.agent_description,
-        temperature: values.agent_temperature,
-        goals: values.agent_goals,
-        is_template: values.agent_is_template,
-        constraints: values.agent_constraints,
-        tools: values.agent_tools,
-        datasources: values.agent_datasources,
-        source_flow: values.agent_source_flow,
-        instructions: values.agent_instructions,
-        model: values.agent_model,
-        is_memory: values.agent_is_memory,
-        suggestions: values.agent_suggestions,
-        greeting: values.agent_greeting,
-        text: values.agent_text,
-        avatar: values.agent_avatar,
-
-        synthesizer: values.agent_voice_synthesizer,
-        default_voice: values.agent_default_voice,
-        voice_id: values.agent_voice_id,
-        transcriber: values.agent_voice_transcriber,
-        response_mode: values.agent_voice_response,
-        input_mode: values.agent_voice_input_mode,
-
-        integrations: values.agent_integrations,
-        agent_type: values.agent_type,
-        runners: values.agent_runners,
-        sentiment_analyzer: values.agent_sentiment_analyzer,
-        twilio_phone_number_sid: values.agent_twilio_phone_number_sid,
-      }
-
-      const newAgent = await createAgentService(agentInput)
+      const newAgent = await createAgentService(input)
 
       await refetchAgents()
       setToast({
@@ -151,6 +122,50 @@ export const useCreateAgent = () => {
       })
     }
     setIsLoading(false)
+  }
+
+  const handleSubmit = async (values: any) => {
+    setIsLoading(true)
+    const agentInput = {
+      name: values.agent_name,
+      role: values.agent_role,
+      description: values.agent_description,
+      temperature: values.agent_temperature,
+      goals: values.agent_goals,
+      is_template: values.agent_is_template,
+      constraints: values.agent_constraints,
+      tools: values.agent_tools,
+      datasources: values.agent_datasources,
+      source_flow: values.agent_source_flow,
+      instructions: values.agent_instructions,
+      model: values.agent_model,
+      is_memory: values.agent_is_memory,
+      suggestions: values.agent_suggestions,
+      greeting: values.agent_greeting,
+      text: values.agent_text,
+      avatar: values.agent_avatar,
+
+      synthesizer: values.agent_voice_synthesizer,
+      default_voice: values.agent_default_voice,
+      voice_id: values.agent_voice_id,
+      transcriber: values.agent_voice_transcriber,
+      response_mode: values.agent_voice_response,
+      input_mode: values.agent_voice_input_mode,
+
+      integrations: values.agent_integrations,
+      agent_type: values.agent_type,
+      runners: values.agent_runners,
+      sentiment_analyzer: values.agent_sentiment_analyzer,
+      twilio_phone_number_sid: values.agent_twilio_phone_number_sid,
+    }
+
+    if (agentInput.agent_type === 'inbound') {
+      await checkTwilioPhoneNumberSid(agentInput.twilio_phone_number_sid, undefined, () =>
+        handleCreate(agentInput),
+      )
+    } else {
+      await handleCreate(agentInput)
+    }
   }
 
   const formik = useFormik({

@@ -66,6 +66,8 @@ export const useCheckTwilioPhoneNumberSid = ({
         `This Twilio phone number SID is already being used by ${data.agent_name}! Would you like to save and overwrite?`,
         onConfirmation,
       )
+    } else {
+      await onConfirmation()
     }
   }
 
