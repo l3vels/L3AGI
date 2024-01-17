@@ -1,4 +1,5 @@
 from typing import Any, List, Optional
+from uuid import UUID
 
 from fastapi import HTTPException
 from fastapi_sqlalchemy import db
@@ -19,6 +20,35 @@ def find_config(configs: List[ConfigModel], key: str, default: Optional[Any] = N
             return config.value
 
     return default
+
+
+def check_if_phone_number_sid_exists_in_agent(
+    auth: UserAccount,
+    twilio_phone_number_sid: str,
+    agent_id: Optional[UUID] = None,
+):
+    if twilio_phone_number_sid is None or twilio_phone_number_sid == "":
+        return {"agent_name": None}
+
+    query = db.session.query(AgentConfigModel)
+
+    query = query.filter(
+        AgentConfigModel.key == "twilio_phone_number_sid",
+        AgentConfigModel.value == twilio_phone_number_sid,
+        AgentConfigModel.agent.has(AgentModel.account_id == auth.account.id),
+    )
+
+    if agent_id:
+        query = query.filter(AgentConfigModel.agent_id != agent_id)
+
+    phone_number_sid_exists = query.first()
+
+    if phone_number_sid_exists:
+        return {
+            "agent_name": phone_number_sid_exists.agent.name,
+        }
+
+    return {"agent_name": None}
 
 
 def update_phone_number_webhook(
@@ -48,23 +78,6 @@ def update_phone_number_webhook(
         raise HTTPException(
             status_code=400,
             detail="Fill Twilio credentials to update phone number webhook",
-        )
-
-    phone_number_sid_exists = (
-        db.session.query(AgentConfigModel)
-        .filter(
-            AgentConfigModel.key == "twilio_phone_number_sid",
-            AgentConfigModel.value == phone_number_sid,
-            AgentConfigModel.agent_id != agent_with_configs.agent.id,
-        )
-        .filter(AgentConfigModel.agent.has(AgentModel.account_id == auth.account.id))
-        .first()
-    )
-
-    if phone_number_sid_exists:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Phone number SID is already used by {phone_number_sid_exists.agent.name}",
         )
 
     try:

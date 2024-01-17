@@ -216,3 +216,8 @@ class AgentWithConfigsOutput(BaseModel):
     agent: AgentOutput
     configs: Optional[ConfigsOutput]
     system_message: Optional[str]
+
+
+class CheckTwilioPhoneNumberSIDInput(BaseModel):
+    sid: str
+    agent_id: Optional[UUID4]

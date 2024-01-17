@@ -9,6 +9,7 @@ import { useAgentsService } from 'services/agent/useAgentsService'
 import { useUpdateAgentService } from 'services/agent/useUpdateAgentService'
 
 import { agentValidationSchema } from 'utils/validationsSchema'
+import { useCheckTwilioPhoneNumberSid } from './useCheckTwilioPhoneNumberSid'
 
 export const useEditAgent = () => {
   const navigate = useNavigate()
@@ -25,6 +26,7 @@ export const useEditAgent = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [updateAgent] = useUpdateAgentService()
+  const { checkTwilioPhoneNumberSid } = useCheckTwilioPhoneNumberSid({ setIsLoading })
 
   const handleNavigation = () => {
     navigate(`/chat?agent=${agentId}`)
@@ -64,6 +66,38 @@ export const useEditAgent = () => {
     agent_twilio_phone_number_sid: agentById?.configs?.twilio_phone_number_sid || '',
   }
 
+  const handleUpdate = async (updatedValues: any) => {
+    try {
+      await updateAgent(agentId || '', {
+        ...updatedValues,
+      })
+      await refetchAgents()
+
+      handleNavigation()
+
+      setToast({
+        message: 'Agent was updated!',
+        type: 'positive',
+        open: true,
+      })
+    } catch (err) {
+      let message = 'Could not update agent!'
+
+      if (err instanceof ApolloError) {
+        // @ts-expect-error result is not defined in networkError
+        message = err.networkError?.result?.detail || message
+      }
+
+      setToast({
+        message: message,
+        type: 'negative',
+        open: true,
+      })
+    }
+
+    setIsLoading(false)
+  }
+
   const handleSubmit = async (values: any) => {
     setIsLoading(true)
 
@@ -100,35 +134,13 @@ export const useEditAgent = () => {
       twilio_phone_number_sid: values.agent_twilio_phone_number_sid,
     }
 
-    try {
-      await updateAgent(agentId || '', {
-        ...updatedValues,
-      })
-      await refetchAgents()
-
-      handleNavigation()
-
-      setToast({
-        message: 'Agent was updated!',
-        type: 'positive',
-        open: true,
-      })
-    } catch (err) {
-      let message = 'Could not update agent!'
-
-      if (err instanceof ApolloError) {
-        // @ts-expect-error result is not defined in networkError
-        message = err.networkError?.result?.detail || message
-      }
-
-      setToast({
-        message: message,
-        type: 'negative',
-        open: true,
-      })
+    if (updatedValues.agent_type === 'inbound ') {
+      await checkTwilioPhoneNumberSid(updatedValues.twilio_phone_number_sid, agentId, () =>
+        handleUpdate(updatedValues),
+      )
+    } else {
+      await handleUpdate(updatedValues)
     }
-
-    setIsLoading(false)
   }
 
   const formik = useFormik({

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 # Third-party imports
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,8 +7,10 @@ from fastapi_sqlalchemy import db
 from exceptions import AgentNotFoundException
 # Local application imports
 from models.agent import AgentModel
-from services.twilio import update_phone_number_webhook
-from typings.agent import AgentConfigInput, AgentWithConfigsOutput
+from services.twilio import (check_if_phone_number_sid_exists_in_agent,
+                             update_phone_number_webhook)
+from typings.agent import (AgentConfigInput, AgentWithConfigsOutput,
+                           CheckTwilioPhoneNumberSIDInput)
 from typings.auth import UserAccount
 from utils.agent import convert_agents_to_agent_list, convert_model_to_response
 from utils.auth import (authenticate, authenticate_by_any,
@@ -252,6 +254,18 @@ def get_agent_by_id(
     system_message = SystemMessageBuilder(agent_with_configs).build()
     agent_with_configs.system_message = system_message
     return agent_with_configs
+
+
+@router.post("/check-twilio-phone-number-sid")
+def check_twilio_phone_number_sid(
+    body: CheckTwilioPhoneNumberSIDInput,
+    auth: UserAccount = Depends(authenticate_by_any),
+):
+    return check_if_phone_number_sid_exists_in_agent(
+        auth=auth,
+        agent_id=body.agent_id,
+        twilio_phone_number_sid=body.sid,
+    )
 
 
 @router.get(
