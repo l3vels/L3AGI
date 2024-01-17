@@ -101,6 +101,20 @@ const MainNavigation = () => {
         </StyledLi>
       )}
 
+      {isSession && (
+        <StyledLi
+          isActive={includes(active, 'sessions')}
+          onClick={() => onHandleClick('/sessions')}
+        >
+          <StyledSessionIcon size={30} />
+          <TypographySecondary
+            value={t('sessions')}
+            type={TypographyTypes.LABEL}
+            size={TypographySizes.sm}
+          />
+        </StyledLi>
+      )}
+
       {isSchedule && (
         <StyledLi
           isActive={includes(active, 'schedules')}
@@ -183,20 +197,6 @@ const MainNavigation = () => {
           <StyledBasicIcon size={30} />
           <TypographySecondary
             value={t('models')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
-        </StyledLi>
-      )}
-
-      {isSession && (
-        <StyledLi
-          isActive={includes(active, 'sessions')}
-          onClick={() => onHandleClick('/sessions')}
-        >
-          <StyledSessionIcon size={30} />
-          <TypographySecondary
-            value={t('sessions')}
             type={TypographyTypes.LABEL}
             size={TypographySizes.sm}
           />

@@ -1,16 +1,16 @@
 heyyou_configs = {
     "naming": {
-        "home": "Home",
-        "agent": "Influencers",
-        "team": "Team",
-        "datasource": "Knowledges",
-        "models": "Models",
-        "discovery": "Discovery",
-        "chat": "Influencers",
-        "toolkits": "Toolkits",
-        "schedules": "Schedules",
-        "welcome_message": "BUILD AI BOT FOR INFLUENCERS",
-        "description": "Open-source tool that enables AI agents to collaborate as effectively as human teams",
+        "home": "",
+        "agent": "",
+        "team": "",
+        "datasource": "",
+        "models": "",
+        "discovery": "",
+        "chat": "",
+        "toolkits": "",
+        "schedules": "",
+        "welcome_message": "",
+        "description": "",
     },
     "modules": {
         "home": {
@@ -21,7 +21,7 @@ heyyou_configs = {
             }
         },
         "chat": {
-            "name": "Influencers",
+            "name": "",
             "active": True,
             "submodules": {
                 "agent": True,
