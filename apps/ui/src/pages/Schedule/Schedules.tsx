@@ -141,9 +141,7 @@ const Schedules = () => {
               </StyledHeaderGroup>
 
               <ComponentsWrapper noPadding>
-                <StyledTableWrapper>
-                  <Table columns={columns} data={tableData} expand />
-                </StyledTableWrapper>
+                <Table columns={columns} data={tableData} expand />
               </ComponentsWrapper>
             </StyledSectionWrapper>
           </TabPanel>
