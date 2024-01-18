@@ -134,7 +134,7 @@ export const useEditAgent = () => {
       twilio_phone_number_sid: values.agent_twilio_phone_number_sid,
     }
 
-    if (updatedValues.agent_type === 'inbound ') {
+    if (updatedValues.agent_type === 'inbound') {
       await checkTwilioPhoneNumberSid(updatedValues.twilio_phone_number_sid, agentId, () =>
         handleUpdate(updatedValues),
       )

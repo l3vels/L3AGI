@@ -160,7 +160,7 @@ export const useCreateAgent = () => {
     }
 
     if (agentInput.agent_type === 'inbound') {
-      await checkTwilioPhoneNumberSid(agentInput.twilio_phone_number_sid, undefined, () =>
+      await checkTwilioPhoneNumberSid(agentInput.twilio_phone_number_sid, null, () =>
         handleCreate(agentInput),
       )
     } else {

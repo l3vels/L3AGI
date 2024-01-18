@@ -2,6 +2,7 @@ import { ToastContext } from 'contexts'
 import { useModal } from 'hooks'
 import { Dispatch, SetStateAction, useContext } from 'react'
 import { useCheckTwilioPhoneNumberSidService } from 'services/agent/useCheckTwilioPhoneNumberSidService'
+import { Nullable } from 'types'
 
 export const useCheckTwilioPhoneNumberSid = ({
   setIsLoading,
@@ -42,7 +43,7 @@ export const useCheckTwilioPhoneNumberSid = ({
 
   const checkTwilioPhoneNumberSid = async (
     sid: string,
-    agentId: string | undefined,
+    agentId: Nullable<string | undefined>,
     onConfirmation: () => Promise<void>,
   ) => {
     const data = await checkTwilioPhoneNumberSidService({
