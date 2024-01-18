@@ -84,6 +84,23 @@ def update_phone_number_webhook(
             detail="Fill Twilio credentials to update phone number webhook",
         )
 
+    models = (
+        db.session.query(AgentConfigModel)
+        .join(AgentModel)
+        .filter(
+            AgentConfigModel.key == "twilio_phone_number_sid",
+            AgentConfigModel.agent_id != agent_with_configs.agent.id,
+            AgentModel.account_id == auth.account.id,
+        )
+        .all()
+    )
+
+    for model in models:
+        model.value = ""
+        db.session.add(model)
+
+    db.session.commit()
+
     try:
         client = Client(twilio_account_sid, twilio_auth_token)
 
