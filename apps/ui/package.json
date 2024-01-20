@@ -126,7 +126,7 @@
     "lint-staged": "^14.0.1",
     "prettier": "^2.8.0",
     "source-map-explorer": "^2.5.3",
-    "vite": "^4.3.9",
+    "vite": "^4.5.2",
     "vite-plugin-eslint": "^1.8.1"
   }
 }
