@@ -95,7 +95,7 @@ jobs:
           TF_WORKSPACE: ${{ inputs.gh_environment }}
           GIT_CONFIG_GLOBAL: ${{ github.workspace }}/.gitconfig
         run: |
-          git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
           terraform init
 
       - name: Terraform Validate
