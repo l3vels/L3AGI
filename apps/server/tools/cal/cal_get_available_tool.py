@@ -1,10 +1,8 @@
 import json
-import os
 from datetime import datetime, timedelta
 from typing import Optional, Type
 
 import requests
-from dotenv import load_dotenv
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from pydantic import BaseModel, Field
 

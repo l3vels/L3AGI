@@ -3,7 +3,6 @@ from typing import List, Optional
 
 from fastapi_sqlalchemy import db
 
-from exceptions import ToolException
 from models.account import AccountModel
 from models.agent import AgentModel
 from tools.get_tools import get_tool_by_slug
