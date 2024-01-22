@@ -1,4 +1,3 @@
-import re
 from typing import Callable, Dict, List
 
 import tenacity
