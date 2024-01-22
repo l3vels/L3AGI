@@ -4,62 +4,61 @@ on:
   workflow_call:
     inputs:
       path:
-        description: 'Specifies the path of the root terraform module.'
+        description: "Specifies the path of the root terraform module."
         required: true
         type: string
       tf_version:
-        description: 'Specifies version of Terraform to use. e.g: 1.1.0 Default=latest.'
+        description: "Specifies version of Terraform to use. e.g: 1.1.0 Default=latest."
         required: false
         type: string
         default: latest
       gh_environment:
-        description: 'Specifies the GitHub deployment environment.'
+        description: "Specifies the GitHub deployment environment."
         required: false
         type: string
         default: null
       tf_vars_file:
-        description: 'Specifies the Terraform TFVARS file.'
+        description: "Specifies the Terraform TFVARS file."
         required: true
         type: string
       task_container_version:
-        description: 'Specifies the version of the container to deploy.'
+        description: "Specifies the version of the container to deploy."
         required: true
         type: string
       task_container_registry:
-          description: 'Task Container Registry'
-          required: true
-          type: string
+        description: "Task Container Registry"
+        required: true
+        type: string
       task_container_name:
-          description: 'Task Container Name'
-          required: true
-          type: string
+        description: "Task Container Name"
+        required: true
+        type: string
     secrets:
       cli_config_credentials_token:
-        description: 'CLI configuration credentials token'
+        description: "CLI configuration credentials token"
         required: true
       azure_acr_username:
-        description: 'Azure ACR (Azure Container Registry) username'
+        description: "Azure ACR (Azure Container Registry) username"
         required: true
       azure_acr_password:
-        description: 'Azure ACR (Azure Container Registry) password'
+        description: "Azure ACR (Azure Container Registry) password"
         required: true
       azure_tenant_id:
-        description: 'Azure Tenant ID for the subscription'
+        description: "Azure Tenant ID for the subscription"
         required: true
       azure_subscription_id:
-        description: 'Azure subscription ID'
+        description: "Azure subscription ID"
         required: true
       azure_client_id:
-        description: 'Azure Client ID'
+        description: "Azure Client ID"
         required: true
       azure_client_secret:
-        description: 'Azure Client Secret'
+        description: "Azure Client Secret"
         required: true
       github_personal_access_token:
-        description: 'GitHub Personal Access Token'
+        description: "GitHub Personal Access Token"
         required: true
 
-  
 jobs:
   build-plan:
     runs-on: ubuntu-latest
@@ -69,11 +68,11 @@ jobs:
       run:
         shell: bash
         working-directory: ${{ inputs.path }}
-        
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
-        
+
       - name: Download file
         uses: actions/download-artifact@v2
         with:
@@ -89,22 +88,21 @@ jobs:
         with:
           terraform_version: ${{ inputs.tf_version }}
           cli_config_credentials_token: ${{ secrets.cli_config_credentials_token }}
-      
+
       - name: Terraform Init
         env:
-          GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
         run: |
           git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
           terraform init
-        
-      
+
       # - name: Terraform Workspace Creation
       #   run: terraform workspace new ${{ inputs.task_container_name }}-${{ inputs.gh_environment }} || true
-      
+
       # - name: Terraform Workspace Selection
       #   run: terraform workspace select ${{ inputs.task_container_name }}-${{ inputs.gh_environment }}
-        
+
       - name: Terraform Validate
         id: validate
         run: terraform validate
@@ -112,7 +110,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         env:
-          TF_VAR_region: 'us-west-1' #replace with your variable and value
+          TF_VAR_region: "us-west-1" #replace with your variable and value
           TF_VAR_azure_client_id: ${{ secrets.azure_client_id }}
           TF_VAR_azure_client_secret: ${{ secrets.azure_client_secret }}
           TF_VAR_subscription_id: ${{ secrets.azure_subscription_id }}
@@ -136,7 +134,7 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
         env:
-          TF_VAR_region: 'us-west-1' #replace with your variable and value
+          TF_VAR_region: "us-west-1" #replace with your variable and value
           TF_VAR_azure_client_id: ${{ secrets.azure_client_id }}
           TF_VAR_azure_client_secret: ${{ secrets.azure_client_secret }}
           TF_VAR_subscription_id: ${{ secrets.azure_subscription_id }}
