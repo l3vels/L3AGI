@@ -6,7 +6,6 @@ import requests
 from fastapi import Depends, HTTPException, Request, Response
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
-from fastapi.security.utils import get_authorization_scheme_param
 from fastapi_jwt_auth import AuthJWT
 from fastapi_sqlalchemy import db
 
