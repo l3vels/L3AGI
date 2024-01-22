@@ -3,7 +3,6 @@ from typing import Callable, Dict, List
 
 import tenacity
 from langchain.chat_models import ChatOpenAI
-from langchain.output_parsers import RegexParser
 from langchain.prompts import PromptTemplate
 from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
                               SystemMessage)
