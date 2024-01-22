@@ -1,7 +1,7 @@
-from typing import List, Optional
+from typing import Optional
 from uuid import UUID
 
-from pydantic import UUID4, BaseModel
+from pydantic import BaseModel
 
 
 class VoiceInput(BaseModel):
