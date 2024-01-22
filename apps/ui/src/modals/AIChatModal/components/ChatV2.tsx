@@ -374,15 +374,17 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
           >
             {t('call-browser')}
           </ButtonPrimary>
-          <ButtonPrimary
-            onClick={() => {
-              openModal({ name: 'contact-list-modal', data: { callType: 'outbound' } })
-            }}
-            size={Button.sizes?.MEDIUM}
-            rightIcon={Mobile}
-          >
-            {t('call-phone')}
-          </ButtonPrimary>
+          {agentById?.agent?.agent_type === 'outbound' && (
+            <ButtonPrimary
+              onClick={() => {
+                openModal({ name: 'contact-list-modal', data: { callType: 'outbound' } })
+              }}
+              size={Button.sizes?.MEDIUM}
+              rightIcon={Mobile}
+            >
+              {t('call-phone')}
+            </ButtonPrimary>
+          )}
         </StyledCallInputContainer>
       ) : (
         <StyledChatFooter>

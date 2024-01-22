@@ -2,7 +2,6 @@ from typing import List, Optional
 
 from langchain.agents import AgentType, initialize_agent
 from langchain.chat_models import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
 from langchain.schema import AIMessage, SystemMessage
 
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent
