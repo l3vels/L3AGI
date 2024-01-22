@@ -1,6 +1,5 @@
 from typing import List
 
-from models.account import AccountModel
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.base import BaseTool, BaseToolkit
 from tools.bing.bing_search_toolkit import BingSearchToolkit
