@@ -13,8 +13,6 @@ from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import \
     DialogueAgentWithTools
-from agents.agent_simulations.authoritarian.director_dialogue_agent_with_tools import \
-    DirectorDialogueAgentWithTools
 from agents.agent_simulations.decentralized.bidding_dialogue_agent import \
     BiddingDialogueAgent
 from agents.agent_simulations.decentralized.output_parser import bid_parser
