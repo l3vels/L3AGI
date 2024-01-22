@@ -1,7 +1,5 @@
 from typing import List
 
-from fastapi_sqlalchemy import db
-
 from models.account import AccountModel
 from tools.arxiv.arxiv_search_toolkit import ArxivSearchToolkit
 from tools.base import BaseTool, BaseToolkit
