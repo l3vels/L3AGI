@@ -8,8 +8,7 @@ resource "azurerm_resource_group" "l3_resource_group" {
 
 
 module "backend" {
-  # source = "git::https://github.com/l3vels/l3-infra.git//service/azure"
-  source = "git::https://x-access-token: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@github.com/l3vels/l3-infra.git//service/azure"
+  source = "git::https://github.com/l3vels/l3-infra.git//service/azure"
 
   unique_id          = local.subdomain
    // azure_location     = var.azure_location
