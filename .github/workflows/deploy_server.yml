@@ -147,7 +147,7 @@ jobs:
   #     github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Init_Prod:
-    needs: [Deploy_dev]
+    # needs: [Deploy_dev]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: prod

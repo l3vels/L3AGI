@@ -2,7 +2,7 @@ import uuid
 
 from sqlalchemy import (UUID, Boolean, Column, ForeignKey, Integer, String,
                         and_, func, or_)
-from sqlalchemy.orm import Session, joinedload, relationship
+from sqlalchemy.orm import joinedload, relationship
 
 from exceptions import ChatNotFoundException
 from models.account import AccountModel
