@@ -1,7 +1,7 @@
 import uuid
 
 from sqlalchemy import UUID, Column, ForeignKey, Index, String, Text
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel
 from typings.agent import ConfigInput
