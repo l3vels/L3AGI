@@ -89,16 +89,6 @@ jobs:
           terraform_version: ${{ inputs.tf_version }}
           cli_config_credentials_token: ${{ secrets.cli_config_credentials_token }}
 
-      - name: Check GITHUB_TOKEN
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_personal_access_token
-        run: |
-          if [[ -z "${GITHUB_TOKEN}" ]]; then
-            echo "GITHUB_TOKEN is not set."
-          else
-            echo "GITHUB_TOKEN is set."
-          fi
-
       - name: Terraform Init
         env:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
