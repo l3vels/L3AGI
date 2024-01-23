@@ -34,117 +34,117 @@ jobs:
           docker push ${{ vars.ACR_REGISTRY }}/${{ env.ACR_REPOSITORY }}:${{ github.sha }}
           echo "TAG_NAME=${{ github.sha }}" >> $GITHUB_ENV
 
-  # Init_dev:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 15
-  #   environment: dev
-  #   env:
-  #     ENVIRONMENT: dev
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3.1.0
+  Init_dev:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: dev
+    env:
+      ENVIRONMENT: dev
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
 
-  #     - name: Change file name
-  #       run: |
-  #         mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+      - name: Change file name
+        run: |
+          mv ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/varfiles/${{ env.ENVIRONMENT  }}.tfvars  ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
 
-  #     - name: Update task_container_version
-  #       run: |
-  #         TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
-  #         echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
-  #         echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
-  #         echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
-  #         echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
-  #         echo -e "task_container_registry = \"${{ vars.ACR_REGISTRY }}\"\n" >> $TFVARS
-  #         echo -e "task_container_name = \"${{ env.ACR_REPOSITORY  }}\"\n" >> $TFVARS
-  #         echo -e "task_container_version = \"${{ github.sha }}\"\n" >> $TFVARS
-  #         echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
-  #         echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
-  #         echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
-  #         echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
-  #         echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
-  #         echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
-  #         echo -e "DB_HOST = \"${{ secrets.DB_HOST }}\"\n" >> $TFVARS
-  #         echo -e "DB_PORT = \"${{ vars.DB_PORT }}\"\n" >> $TFVARS
-  #         echo -e "DB_USER = \"${{ secrets.DB_USER }}\"\n" >> $TFVARS
-  #         echo -e "DB_PASS = \"${{ secrets.DB_PASS }}\"\n" >> $TFVARS
-  #         echo -e "SENTRY_DSN = \"${{ secrets.SENTRY_DSN }}\"\n" >> $TFVARS
-  #         echo -e "AZURE_PUBSUB_CONNECTION_STRING = \"${{ secrets.AZURE_PUBSUB_CONNECTION_STRING }}\"\n" >> $TFVARS
-  #         echo -e "AZURE_PUBSUB_HUB_NAME = \"${{ secrets.AZURE_PUBSUB_HUB_NAME }}\"\n" >> $TFVARS
-  #         echo -e "ZEP_API_URL = \"${{ vars.ZEP_API_URL }}\"\n" >> $TFVARS
-  #         echo -e "ZEP_API_KEY = \"${{ secrets.ZEP_API_KEY }}\"\n" >> $TFVARS
-  #         echo -e "SERPAPI_API_KEY = \"${{ secrets.SERPAPI_API_KEY }}\"\n" >> $TFVARS
-  #         echo -e "LANGCHAIN_TRACING_V2 = \"${{ vars.LANGCHAIN_TRACING_V2 }}\"\n" >> $TFVARS
-  #         echo -e "LANGCHAIN_ENDPOINT = \"${{ vars.LANGCHAIN_ENDPOINT }}\"\n" >> $TFVARS
-  #         echo -e "LANGCHAIN_API_KEY = \"${{ secrets.LANGCHAIN_API_KEY }}\"\n" >> $TFVARS
-  #         echo -e "LANGCHAIN_PROJECT = \"${{ secrets.LANGCHAIN_PROJECT }}\"\n" >> $TFVARS
-  #         echo -e "JWT_EXPIRY = \"${{ vars.JWT_EXPIRY }}\"\n" >> $TFVARS
-  #         echo -e "JWT_SECRET_KEY = \"${{ secrets.JWT_SECRET_KEY }}\"\n" >> $TFVARS
-  #         echo -e "GITHUB_CLIENT_ID = \"${{ secrets.LOGIN_GITHUB_CLIENT_ID }}\"\n" >> $TFVARS
-  #         echo -e "GITHUB_CLIENT_SECRET = \"${{ secrets.LOGIN_GITHUB_CLIENT_SECRET }}\"\n" >> $TFVARS
-  #         echo -e "FRONTEND_URL = \"${{ vars.FRONTEND_URL }}\"\n" >> $TFVARS
-  #         echo -e "GOOGLE_API_KEY = \"${{ secrets.GOOGLE_API_KEY }}\"\n" >> $TFVARS
-  #         echo -e "AWS_ACCESS_KEY_ID = \"${{ secrets.AWS_ACCESS_KEY_ID }}\"\n" >> $TFVARS
-  #         echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
-  #         echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
-  #         echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
-  #         echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
+      - name: Update task_container_version
+        run: |
+          TFVARS="${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars"
+          echo -e "client_id = \"${{ secrets.azure_client_id }}\"\n" >> $TFVARS
+          echo -e "client_secret = \"${{ secrets.azure_client_secret }}\"\n" >> $TFVARS
+          echo -e "subscription_id = \"${{ secrets.azure_subscription_id }}\"\n" >> $TFVARS
+          echo -e "tenant_id = \"${{ secrets.azure_tenant_id }}\"\n" >> $TFVARS
+          echo -e "task_container_registry = \"${{ vars.ACR_REGISTRY }}\"\n" >> $TFVARS
+          echo -e "task_container_name = \"${{ env.ACR_REPOSITORY  }}\"\n" >> $TFVARS
+          echo -e "task_container_version = \"${{ github.sha }}\"\n" >> $TFVARS
+          echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
+          echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
+          echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
+          echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
+          echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
+          echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
+          echo -e "DB_HOST = \"${{ secrets.DB_HOST }}\"\n" >> $TFVARS
+          echo -e "DB_PORT = \"${{ vars.DB_PORT }}\"\n" >> $TFVARS
+          echo -e "DB_USER = \"${{ secrets.DB_USER }}\"\n" >> $TFVARS
+          echo -e "DB_PASS = \"${{ secrets.DB_PASS }}\"\n" >> $TFVARS
+          echo -e "SENTRY_DSN = \"${{ secrets.SENTRY_DSN }}\"\n" >> $TFVARS
+          echo -e "AZURE_PUBSUB_CONNECTION_STRING = \"${{ secrets.AZURE_PUBSUB_CONNECTION_STRING }}\"\n" >> $TFVARS
+          echo -e "AZURE_PUBSUB_HUB_NAME = \"${{ secrets.AZURE_PUBSUB_HUB_NAME }}\"\n" >> $TFVARS
+          echo -e "ZEP_API_URL = \"${{ vars.ZEP_API_URL }}\"\n" >> $TFVARS
+          echo -e "ZEP_API_KEY = \"${{ secrets.ZEP_API_KEY }}\"\n" >> $TFVARS
+          echo -e "SERPAPI_API_KEY = \"${{ secrets.SERPAPI_API_KEY }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_TRACING_V2 = \"${{ vars.LANGCHAIN_TRACING_V2 }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_ENDPOINT = \"${{ vars.LANGCHAIN_ENDPOINT }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_API_KEY = \"${{ secrets.LANGCHAIN_API_KEY }}\"\n" >> $TFVARS
+          echo -e "LANGCHAIN_PROJECT = \"${{ secrets.LANGCHAIN_PROJECT }}\"\n" >> $TFVARS
+          echo -e "JWT_EXPIRY = \"${{ vars.JWT_EXPIRY }}\"\n" >> $TFVARS
+          echo -e "JWT_SECRET_KEY = \"${{ secrets.JWT_SECRET_KEY }}\"\n" >> $TFVARS
+          echo -e "GITHUB_CLIENT_ID = \"${{ secrets.LOGIN_GITHUB_CLIENT_ID }}\"\n" >> $TFVARS
+          echo -e "GITHUB_CLIENT_SECRET = \"${{ secrets.LOGIN_GITHUB_CLIENT_SECRET }}\"\n" >> $TFVARS
+          echo -e "FRONTEND_URL = \"${{ vars.FRONTEND_URL }}\"\n" >> $TFVARS
+          echo -e "GOOGLE_API_KEY = \"${{ secrets.GOOGLE_API_KEY }}\"\n" >> $TFVARS
+          echo -e "AWS_ACCESS_KEY_ID = \"${{ secrets.AWS_ACCESS_KEY_ID }}\"\n" >> $TFVARS
+          echo -e "AWS_SECRET_ACCESS_KEY = \"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"\n" >> $TFVARS
+          echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
+          echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
+          echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
 
-  #     - name: Display .auto.tfvars file content
-  #       run: |
-  #         cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+      - name: Display .auto.tfvars file content
+        run: |
+          cat ${{ github.workspace }}/${{ env.TR_DIRECTORY }}/${{ env.ENVIRONMENT  }}.auto.tfvars
 
-  #     - name: Upload file
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: my-artifact
-  #         path: ${{ github.workspace }}/${{ env.TR_DIRECTORY  }}/${{ env.ENVIRONMENT  }}.auto.tfvars
+      - name: Upload file
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ${{ github.workspace }}/${{ env.TR_DIRECTORY  }}/${{ env.ENVIRONMENT  }}.auto.tfvars
 
-  # Plan_dev:
-  #   needs: [Build, Init_dev]
-  #   if: github.ref == 'refs/heads/main'
-  #   uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@main
+  Plan_dev:
+    needs: [Build, Init_dev]
+    if: github.ref == 'refs/heads/main'
+    uses: l3vels/L3AGI/.github/workflows/tf_plan_server.yml@main
 
-  #   with:
-  #     path: apps/server/terraform
-  #     tf_vars_file: varfiles/dev.tfvars
-  #     gh_environment: dev
-  #     task_container_name: "l3-api"
-  #     task_container_version: #${{ github.sha }} temp
-  #     # task_container_version: "1fe3d215f1ac2e6be5d43b4e1522b9dc43aefd36"
-  #     task_container_registry: ${{ vars.ACR_REGISTRY }}
-  #   secrets:
-  #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-  #     azure_acr_username: ${{ secrets.AZURE_USERNAME }}
-  #     azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
-  #     azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-  #     azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
-  #     azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    with:
+      path: apps/server/terraform
+      tf_vars_file: varfiles/dev.tfvars
+      gh_environment: dev
+      task_container_name: "l3-api"
+      task_container_version: #${{ github.sha }} temp
+      # task_container_version: "1fe3d215f1ac2e6be5d43b4e1522b9dc43aefd36"
+      task_container_registry: ${{ vars.ACR_REGISTRY }}
+    secrets:
+      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      azure_acr_username: ${{ secrets.AZURE_USERNAME }}
+      azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
+      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
+      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-  # Deploy_dev:
-  #   needs: [Build, Plan_dev]
-  #   uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@main
-  #   with:
-  #     path: apps/server/terraform
-  #     tf_vars_file: varfiles/dev.tfvars
-  #     gh_environment: dev
-  #     task_container_name: "l3-api"
-  #     task_container_version: ${{ github.sha }}
-  #     task_container_registry: ${{ vars.ACR_REGISTRY }}
-  #   secrets:
-  #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-  #     azure_acr_username: ${{ secrets.AZURE_USERNAME }}
-  #     azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
-  #     azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
-  #     azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
-  #     azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  Deploy_dev:
+    needs: [Build, Plan_dev]
+    uses: l3vels/L3AGI/.github/workflows/tf_apply_server.yml@main
+    with:
+      path: apps/server/terraform
+      tf_vars_file: varfiles/dev.tfvars
+      gh_environment: dev
+      task_container_name: "l3-api"
+      task_container_version: ${{ github.sha }}
+      task_container_registry: ${{ vars.ACR_REGISTRY }}
+    secrets:
+      cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      azure_acr_username: ${{ secrets.AZURE_USERNAME }}
+      azure_acr_password: ${{ secrets.AZURE_PASSWORD }}
+      azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
   Init_Prod:
     needs: [Deploy_dev]

@@ -4,8 +4,7 @@ import uuid
 from datetime import datetime
 from typing import Dict
 
-from sqlalchemy import (UUID, Boolean, Column, DateTime, ForeignKey, Integer,
-                        String)
+from sqlalchemy import UUID, Boolean, Column, DateTime, ForeignKey, String
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.sql import or_
