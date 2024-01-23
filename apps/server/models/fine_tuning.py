@@ -5,7 +5,6 @@ from typing import Optional
 
 from sqlalchemy import UUID, Boolean, Column, ForeignKey, String
 from sqlalchemy.orm import Session, relationship
-from sqlalchemy.sql import or_
 
 from exceptions import FineTuningNotFoundException
 from models.base_model import BaseModel
