@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from typings.auth import UserAccount
 from typings.model import ModelOutput
-from utils.auth import authenticate, authenticate_by_token_or_api_key
+from utils.auth import authenticate_by_token_or_api_key
 from utils.model import get_models_with_fine_tunings
 
 router = APIRouter()
