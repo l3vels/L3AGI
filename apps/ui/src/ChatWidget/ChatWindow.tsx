@@ -9,6 +9,7 @@ import ChatWindowHeader from './chatWidgetComponents/ChatWindowHeader'
 import { ButtonPrimary } from 'components/Button/Button'
 
 import SessionForm from './chatWidgetComponents/SessionForm'
+import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
   const [ShowForm, setShowForm] = useState(false)
@@ -21,12 +22,23 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
   const handleHideForm = () => {
     setShowForm(false)
   }
+  const scriptElement = document.getElementById('myWidgetScript') as HTMLScriptElement
+  const scriptURL = new URL(scriptElement.src)
+  const widgetId = scriptURL.searchParams.get('widgetId') || '66c9972f-7e36-41b2-a202-a64d760b6092'
+  const accountKey = scriptURL.searchParams.get('accountKey')
+
+  // const widgetId = (window as any)?.widgetData?.widgetId || '66c9972f-7e36-41b2-a202-a64d760b6092'
+  // const accountKey = (window as any)?.widgetData?.accountKey
+
+  const { data: agentById } = useAgentByIdService({ id: widgetId })
 
   return (
     <StyledChatWindow>
       <ChatWindowHeader
         closeWindow={closeWindow}
         onBackClick={ShowForm ? handleHideForm : undefined}
+        name={agentById?.agent.name}
+        avatar={agentById?.agent.avatar}
       />
 
       <ChatContextProvider>

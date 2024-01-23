@@ -7,6 +7,10 @@ import { useCreateChatService } from 'services/chat/useCreateChat'
 import styled from 'styled-components'
 
 const SessionForm = ({ setSessionId }: { setSessionId: (value: string) => void }) => {
+  const scriptElement = document.getElementById('myWidgetScript') as HTMLScriptElement
+  const scriptURL = new URL(scriptElement.src)
+  const widgetId = scriptURL.searchParams.get('widgetId') || '66c9972f-7e36-41b2-a202-a64d760b6092'
+
   const [isLoading, setIsLoading] = useState(false)
 
   const [createChat] = useCreateChatService()
@@ -20,7 +24,7 @@ const SessionForm = ({ setSessionId }: { setSessionId: (value: string) => void }
     const { chat_name } = formik.values
     try {
       const res = await createChat({
-        agent_id: '66c9972f-7e36-41b2-a202-a64d760b6092',
+        agent_id: widgetId,
         name: chat_name,
       })
 
