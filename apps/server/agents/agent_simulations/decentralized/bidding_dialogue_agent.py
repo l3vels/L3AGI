@@ -1,4 +1,4 @@
-from typing import Callable, Dict, List
+from typing import List
 
 import tenacity
 from langchain.chat_models import ChatOpenAI
