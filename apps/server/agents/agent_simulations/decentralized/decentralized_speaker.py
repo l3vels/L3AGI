@@ -5,7 +5,6 @@ import numpy as np
 import tenacity
 from fastapi_sqlalchemy import db
 from langchain.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
 from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
                               SystemMessage)
 
