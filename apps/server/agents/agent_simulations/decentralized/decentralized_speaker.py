@@ -1,5 +1,5 @@
 import re
-from typing import Callable, Dict, List, Optional
+from typing import Dict, List, Optional
 
 import numpy as np
 import tenacity
