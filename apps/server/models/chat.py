@@ -1,7 +1,7 @@
 import uuid
 
 from sqlalchemy import (UUID, Boolean, Column, ForeignKey, Integer, String,
-                        and_, func, or_)
+                        and_, or_)
 from sqlalchemy.orm import joinedload, relationship
 
 from exceptions import ChatNotFoundException
