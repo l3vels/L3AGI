@@ -94,11 +94,12 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
           cat <<- SSHKEY > ~/.ssh/id_ed25519
           ${{ secrets.github_ssh_private_key }}
           SSHKEY
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Terraform Init
         env:
