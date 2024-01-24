@@ -96,7 +96,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
           GIT_SSH_COMMAND:
-            "echo '${{ secrets.github_personal_access_token }}' > ed25519
+            "echo '${{ secrets.github_ssh_private_key }}' > ed25519
             && ssh-keyscan github.com > known_hosts
             && chmod 600 ed25519 known_hosts
             && ssh -i ./ed25519 -o UserKnownHostsFile=./known_hosts"
