@@ -1,6 +1,5 @@
 from typing import List
 
-import tenacity
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
