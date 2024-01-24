@@ -94,7 +94,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
         run: |
-          git config --global url."https://okradze:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://oauth2:${secrets.github_personal_access_token}@github.com".insteadOf "git@github.com"
           terraform init
 
       # - name: Terraform Workspace Creation
