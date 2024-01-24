@@ -83,8 +83,3 @@ variable "github_personal_access_token" {
 }
 
 
-variable "github_ssh_private_key" {
-  description = "Github ssh key"
-  type        = string
-  sensitive   = true
-}

@@ -125,7 +125,6 @@ jobs:
           TF_VAR_azure_acr_username: ${{ secrets.azure_acr_username }}
           TF_VAR_azure_acr_password: ${{ secrets.azure_acr_password }}
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
-          TF_VAR_github_ssh_private_key: ${{ secrets.github_ssh_private_key }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
 

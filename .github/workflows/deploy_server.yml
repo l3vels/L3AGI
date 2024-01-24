@@ -65,7 +65,6 @@ jobs:
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
-          echo -e "github_ssh_private_key = \"${{ secrets.SSH_PRIVATE_KEY  }}\"\n" >> $TFVARS
           echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
           echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
           echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
@@ -181,7 +180,6 @@ jobs:
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
-          echo -e "github_ssh_private_key = \"${{ secrets.SSH_PRIVATE_KEY  }}\"\n" >> $TFVARS
           echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
           echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
           echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
