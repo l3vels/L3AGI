@@ -91,28 +91,17 @@ jobs:
           terraform_version: ${{ inputs.tf_version }}
           cli_config_credentials_token: ${{ secrets.cli_config_credentials_token }}
 
-      # - name: Set up SSH
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.github_ssh_private_key }}" > ~/.ssh/id_ed25519
-      #     chmod 600 ~/.ssh/id_ed25519
-      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
-
       - name: Terraform Init
         env:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
         run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
+          git config --global url."https://okradze:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
           terraform init
 
       - name: Terraform Validate
         id: validate
-        run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
-          terraform validate
+        run: terraform validate
 
       - name: Terraform Plan
         id: plan
@@ -130,10 +119,7 @@ jobs:
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
-        run: |
-          eval `ssh-agent -s`
-          ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
-          terraform plan
+        run: terraform plan
         continue-on-error: true
 
       - name: Terraform Plan Status
