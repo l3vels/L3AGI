@@ -93,9 +93,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
-        run: |
-          git config --global url."https://oauth2:${{ secrets.github_personal_access_token }}@github.com".insteadOf "git@github.com"
-          terraform init
+          GIT_SSH_COMMAND:
+            "echo '${{ secrets.github_personal_access_token }}' > ed25519
+            && ssh-keyscan github.com > known_hosts
+            && chmod 600 ed25519 known_hosts
+            && ssh -i ./ed25519 -o UserKnownHostsFile=./known_hosts"
+        run: terraform init
 
       # - name: Terraform Workspace Creation
       #   run: terraform workspace new ${{ inputs.task_container_name }}-${{ inputs.gh_environment }} || true
