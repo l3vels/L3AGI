@@ -95,11 +95,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
-          GIT_SSH_COMMAND:
-            "echo '${{ secrets.github_ssh_private_key }}' > ed25519
-            && ssh-keyscan github.com > known_hosts
-            && chmod 600 ed25519 known_hosts
-            && ssh -i ./ed25519 -o UserKnownHostsFile=./known_hosts"
         run: terraform init
 
       - name: Terraform Validate
@@ -122,12 +117,6 @@ jobs:
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
-          GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
-          GIT_SSH_COMMAND:
-            "echo '${{ secrets.github_ssh_private_key }}' > ed25519
-            && ssh-keyscan github.com > known_hosts
-            && chmod 600 ed25519 known_hosts
-            && ssh -i ./ed25519 -o UserKnownHostsFile=./known_hosts"
         run: terraform plan
         continue-on-error: true
 
