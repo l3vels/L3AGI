@@ -58,6 +58,9 @@ on:
       github_personal_access_token:
         description: "GitHub Personal Access Token"
         required: true
+      github_ssh_private_key:
+        description: "GitHub SSH Key"
+        required: true
 
 jobs:
   build-plan:
@@ -91,14 +94,12 @@ jobs:
 
       - name: Terraform Init
         env:
-          GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
+          # GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
-          GIT_SSH_COMMAND:
-            "echo '${{ secrets.github_ssh_private_key }}' > ed25519
-            && ssh-keyscan github.com > known_hosts
-            && chmod 600 ed25519 known_hosts
-            && ssh -i ./ed25519 -o UserKnownHostsFile=./known_hosts"
-        run: terraform init
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
+          terraform init
 
       # - name: Terraform Workspace Creation
       #   run: terraform workspace new ${{ inputs.task_container_name }}-${{ inputs.gh_environment }} || true

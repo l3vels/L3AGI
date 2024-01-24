@@ -93,7 +93,6 @@ jobs:
 
       - name: Terraform Init
         env:
-          # GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
         run: |
           eval `ssh-agent -s`
