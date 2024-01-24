@@ -1,24 +1,25 @@
 import CopyButton from 'components/CopyButton'
 import TypographyPrimary from 'components/Typography/Primary'
 import ReactMarkdown from 'react-markdown'
+import { useParams } from 'react-router-dom'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 
 const CopyScript = () => {
+  const params = useParams()
+  const { agentId } = params
+
+  const appDomainName = import.meta.env.REACT_APP_DOMAIN_NAME
+
   const script = `
-            <script type="module">
-            window.widgetData = {
-                widgetId: "66c9972f-7e36-41b2-a202-a64d760b6092",
-                accountKey: "l3_$cn5NTQwvlmfO8GqUnFD_pluLe-JJuhBVpa6a-P1FGhA",
-            };
-            </script>
-            <script
+          <script
             type="module"
-            src="http://localhost:3000/dist/assets/widget.js"
+            id="myWidgetScript"
+            src="${appDomainName}/dist/assets/widget.js?widgetId=${agentId}"
             defer
-            ></script>`
+          ></script>`
 
   return (
     <>

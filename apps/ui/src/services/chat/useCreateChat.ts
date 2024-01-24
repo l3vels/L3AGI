@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 import { Nullable } from 'types'
 import CREATE_CHAT_GQL from '../../gql/chat/createChat.gql'
 
-interface CreateChatInput {
+export interface CreateChatInput {
   name?: string
   agent_id?: string
   team_id?: string

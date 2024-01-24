@@ -1,0 +1,15 @@
+mutation createChatWidget($input: input!) @api(name: ai) {
+  createChatWidget: publish(input: $input)
+    @rest(
+      type: "ChatMessage"
+      path: "/chat/widget"
+      method: "POST"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    id
+    agent_id
+    team_id
+    name
+  }
+}

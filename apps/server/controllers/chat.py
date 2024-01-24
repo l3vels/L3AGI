@@ -34,12 +34,27 @@ router = APIRouter()
 
 @router.post("", status_code=201, include_in_schema=False)
 def create_chat(
-    chat: ChatInput, auth: UserAccount = Depends(authenticate_by_any)
+    chat: ChatInput, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
 ) -> ChatOutput:
     if not chat.agent_id and not chat.team_id:
         ChatException("Agent or Team should be defined")
 
     db_chat = ChatModel.create_chat(db, chat=chat, user=auth.user, account=auth.account)
+    return convert_model_to_response(db_chat)
+
+
+@router.post("/widget", status_code=201, include_in_schema=False)
+def create_chat(chat: ChatInput) -> ChatOutput:
+    if not chat.agent_id and not chat.team_id:
+        raise ChatException("Agent or Team should be defined")
+
+    agent = AgentModel.get_agent_by_id_with_account(db, chat.agent_id)
+    print("agent", agent)
+    if agent:
+        user = agent.creator
+        account = agent.account
+
+    db_chat = ChatModel.create_chat(db, chat=chat, user=user, account=account)
     return convert_model_to_response(db_chat)
 
 

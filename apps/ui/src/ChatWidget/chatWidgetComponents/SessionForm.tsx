@@ -3,7 +3,8 @@ import FormikTextField from 'components/TextFieldFormik/TextFieldFormik'
 import { FormikProvider, useFormik } from 'formik'
 import { t } from 'i18next'
 import { useState } from 'react'
-import { useCreateChatService } from 'services/chat/useCreateChat'
+import { useCreateChatWidgetService } from 'services/chat/useCreateChatWidgetService'
+
 import styled from 'styled-components'
 
 const SessionForm = ({ setSessionId }: { setSessionId: (value: string) => void }) => {
@@ -13,7 +14,7 @@ const SessionForm = ({ setSessionId }: { setSessionId: (value: string) => void }
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const [createChat] = useCreateChatService()
+  const [createChatWidget] = useCreateChatWidgetService()
 
   const initialValues = {
     chat_name: '',
@@ -23,7 +24,7 @@ const SessionForm = ({ setSessionId }: { setSessionId: (value: string) => void }
     setIsLoading(true)
     const { chat_name } = formik.values
     try {
-      const res = await createChat({
+      const res = await createChatWidget({
         agent_id: widgetId,
         name: chat_name,
       })
