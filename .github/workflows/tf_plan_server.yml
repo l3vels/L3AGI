@@ -58,7 +58,9 @@ on:
       github_personal_access_token:
         description: "GitHub Personal Access Token"
         required: true
-
+      github_ssh_private_key:
+        description: "GitHub SSH Key"
+        required: true
 jobs:
   build-plan:
     runs-on: ubuntu-latest
@@ -92,7 +94,7 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          echo "${{ secrets.github_ssh_private_key }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
@@ -121,6 +123,7 @@ jobs:
           TF_VAR_azure_acr_username: ${{ secrets.azure_acr_username }}
           TF_VAR_azure_acr_password: ${{ secrets.azure_acr_password }}
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
+          TF_VAR_github_ssh_private_key: ${{ secrets.github_ssh_private_key }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
 

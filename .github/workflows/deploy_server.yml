@@ -65,6 +65,7 @@ jobs:
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
+          echo -e "github_ssh_private_key = \"${{ secrets.SSH_PRIVATE_KEY  }}\"\n" >> $TFVARS
           echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
           echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
           echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
@@ -126,7 +127,7 @@ jobs:
       azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      github_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
   Deploy_dev:
     needs: [Build, Plan_dev]
@@ -147,6 +148,7 @@ jobs:
       azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      github_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
   Init_Prod:
     needs: [Deploy_dev]
@@ -179,6 +181,7 @@ jobs:
           echo -e "azure_acr_username = \"${{ secrets.AZURE_USERNAME }}\"\n" >> $TFVARS
           echo -e "azure_acr_password = \"${{ secrets.AZURE_PASSWORD }}\"\n" >> $TFVARS
           echo -e "github_personal_access_token = \"${{ secrets.PERSONAL_ACCESS_TOKEN  }}\"\n" >> $TFVARS
+          echo -e "github_ssh_private_key = \"${{ secrets.SSH_PRIVATE_KEY  }}\"\n" >> $TFVARS
           echo -e "environment = \"${{ env.ENVIRONMENT }}\"\n" >> $TFVARS
           echo -e "OPENAI_API_KEY = \"${{ secrets.OPENAI_API_KEY }}\"\n" >> $TFVARS
           echo -e "DB_NAME = \"${{ secrets.DB_NAME }}\"\n" >> $TFVARS
@@ -238,7 +241,7 @@ jobs:
       azure_client_id: "${{ secrets.AZURE_CLIENT_ID }}"
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      github_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
   Deploy_prod:
     needs: [Build, Plan_prod]
@@ -259,3 +262,4 @@ jobs:
       azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
       azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
       github_personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      github_ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
