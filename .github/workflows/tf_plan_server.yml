@@ -94,8 +94,8 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.github_ssh_private_key }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.github_ssh_private_key }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Terraform Init
@@ -125,6 +125,7 @@ jobs:
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_ed25519"
 
         run: terraform plan
         continue-on-error: true
