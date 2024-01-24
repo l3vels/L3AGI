@@ -103,11 +103,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github_personal_access_token }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
         run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
           terraform init
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
+          terraform validate
 
       - name: Terraform Plan
         id: plan
@@ -125,8 +130,6 @@ jobs:
           TF_VAR_github_personal_access_token: ${{ secrets.github_personal_access_token }}
           TF_VAR_environment: ${{ inputs.gh_environment }}
           TF_WORKSPACE: ${{ inputs.gh_environment }}
-          GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_ed25519"
-
         run: |
           eval `ssh-agent -s`
           ssh-add - <<< '${{ secrets.github_ssh_private_key }}'
