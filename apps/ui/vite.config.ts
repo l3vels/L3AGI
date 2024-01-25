@@ -81,6 +81,7 @@ export default defineConfig({
       input: {
         main: './src/index.tsx', // Main app entry point
         widget: './src/TestComp.tsx', // Widget entry point
+        index: 'index.html',
       },
       external: ['react', 'react-dom'],
       output: {
@@ -91,6 +92,7 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
         },
+        dir: 'dist',
       },
     },
     // lib: {
