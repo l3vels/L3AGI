@@ -9,6 +9,7 @@ import Close from 'share-ui/components/Icon/Icons/components/Close'
 import Robot from 'share-ui/components/Icon/Icons/components/Robot'
 import useApollo from 'hooks/useApollo'
 import { ApolloProvider } from '@apollo/client'
+import { ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
 
 const ChatWidget = () => {
   const client = useApollo()
@@ -22,7 +23,14 @@ const ChatWidget = () => {
           <BrowserRouter>
             <StyledHiddenChat hidden={!showChat}>
               <Routes>
-                <Router element={<ChatWindow closeWindow={() => setShowChat(false)} />} path='/' />
+                <Router
+                  element={
+                    <ChatContextProvider>
+                      <ChatWindow closeWindow={() => setShowChat(false)} />
+                    </ChatContextProvider>
+                  }
+                  path='/'
+                />
               </Routes>
             </StyledHiddenChat>
           </BrowserRouter>

@@ -5,7 +5,12 @@ import getSessionId from '../utils/getSessionId'
 import useUpdateChatCache from './useUpdateChatCache'
 import { useLocation } from 'react-router-dom'
 
-const useChatSocket = () => {
+type ChatSocketProps = {
+  userId?: string | null
+  createdChatId?: string | null
+}
+
+const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
@@ -18,7 +23,7 @@ const useChatSocket = () => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
-  const chatId = urlParams.get('chat')
+  const chatId = urlParams.get('chat') || createdChatId || ''
 
   const groupId = getSessionId({
     user,
@@ -34,13 +39,10 @@ const useChatSocket = () => {
   const { upsertChatMessageInCache, upsertChatStatusConfig } = useUpdateChatCache()
 
   const getClientAccessUrl = useCallback(async () => {
-    let url = ''
+    let url = `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/chat/negotiate?id=${userId}`
+
     if (user) {
       url = `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/chat/negotiate?id=${user.id}`
-    }
-
-    if (chatId) {
-      url = `${import.meta.env.REACT_APP_ACCOUNT_SERVICES_URL}/chat/negotiate?id=${chatId}`
     }
 
     const response = await fetch(url)

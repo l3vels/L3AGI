@@ -1,7 +1,7 @@
 import ChatV2 from 'modals/AIChatModal/components/ChatV2'
-import { ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
+import { ChatContext, ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
 
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -31,12 +31,19 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
   }
   const scriptElement = document.getElementById('myWidgetScript') as HTMLScriptElement
   const scriptURL = new URL(scriptElement.src)
-  const widgetId = scriptURL.searchParams.get('widgetId') || '66c9972f-7e36-41b2-a202-a64d760b6092'
+  const widgetId = scriptURL.searchParams.get('widgetId') || ''
 
   // const widgetId = (window as any)?.widgetData?.widgetId || '66c9972f-7e36-41b2-a202-a64d760b6092'
   // const accountKey = (window as any)?.widgetData?.accountKey
 
   const { data: agentById } = useAgentByIdService({ id: widgetId })
+
+  const { setChatId, setUserId } = useContext(ChatContext)
+
+  useEffect(() => {
+    if (sessionId) setChatId(sessionId)
+    if (agentById?.agent.created_by) setUserId(agentById?.agent.created_by)
+  }, [sessionId, agentById])
 
   return (
     <StyledChatWindow>
@@ -47,20 +54,18 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
         avatar={agentById?.agent.avatar}
       />
 
-      <ChatContextProvider>
-        {sessionId ? (
-          <StyledChatWrapper>
-            <ChatV2 chatSessionId={sessionId} />
-          </StyledChatWrapper>
-        ) : (
-          <StyledChatBody>
-            {!ShowForm && (
-              <ButtonPrimary onClick={handleShowSessionForm}>Start Conversation</ButtonPrimary>
-            )}
-            {ShowForm && <SessionForm setSessionId={handleSetSessionId} />}
-          </StyledChatBody>
-        )}
-      </ChatContextProvider>
+      {sessionId ? (
+        <StyledChatWrapper>
+          <ChatV2 chatSessionId={sessionId} />
+        </StyledChatWrapper>
+      ) : (
+        <StyledChatBody>
+          {!ShowForm && (
+            <ButtonPrimary onClick={handleShowSessionForm}>Start Conversation</ButtonPrimary>
+          )}
+          {ShowForm && <SessionForm setSessionId={handleSetSessionId} />}
+        </StyledChatBody>
+      )}
     </StyledChatWindow>
   )
 }
