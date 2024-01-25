@@ -29,6 +29,7 @@ import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunners'
 import { isVoiceAgent } from 'utils/agentUtils'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
+import CopyScript from './components/CopyScript'
 
 type AgentFormProps = {
   formik: any
@@ -143,6 +144,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
             Flow
           </Tab>
+          <Tab onClick={() => handleTabClick(6)}>Embed Chat</Tab>
         </TabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -483,6 +485,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   /> */}
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
+
+              <TabPanel>
+                <StyledTabPanelInnerWrapper>
+                  <CopyScript />
+                </StyledTabPanelInnerWrapper>
+              </TabPanel>
+
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
                   {integrationOptions?.map((integration: any, index: number) => {

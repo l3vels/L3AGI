@@ -4,7 +4,12 @@ import { ChatContext } from '../context/ChatContext'
 import { useChatSocket } from './useChatSocket'
 
 const useChat = () => {
-  const socket = useChatSocket()
+  const [userId, setUserId] = useState<string | null>(null)
+  const [chatId, setChatId] = useState<string | null>(null)
+  const socket = useChatSocket({
+    userId: userId || null,
+    createdChatId: chatId || null,
+  })
 
   const [thinking, setThinking] = useState(false)
 
@@ -12,6 +17,8 @@ const useChat = () => {
     thinking,
     setThinking,
     socket,
+    setUserId,
+    setChatId,
   }
 }
 

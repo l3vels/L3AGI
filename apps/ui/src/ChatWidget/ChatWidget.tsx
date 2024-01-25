@@ -1,6 +1,6 @@
 import { Route as Router, Routes, BrowserRouter } from 'react-router-dom'
 
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider, css } from 'styled-components'
 import { lightTheme } from 'styles/theme'
 import ChatWindow from './ChatWindow'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ import Close from 'share-ui/components/Icon/Icons/components/Close'
 import Robot from 'share-ui/components/Icon/Icons/components/Robot'
 import useApollo from 'hooks/useApollo'
 import { ApolloProvider } from '@apollo/client'
+import { ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
 
 const ChatWidget = () => {
   const client = useApollo()
@@ -20,15 +21,22 @@ const ChatWidget = () => {
       <ThemeProvider theme={lightTheme}>
         <StyledRoot>
           <BrowserRouter>
-            {showChat && (
+            <StyledHiddenChat hidden={!showChat}>
               <Routes>
-                <Router element={<ChatWindow />} path='/' />
+                <Router
+                  element={
+                    <ChatContextProvider>
+                      <ChatWindow closeWindow={() => setShowChat(false)} />
+                    </ChatContextProvider>
+                  }
+                  path='/'
+                />
               </Routes>
-            )}
+            </StyledHiddenChat>
           </BrowserRouter>
 
           <StyledChatWidget onClick={() => setShowChat(!showChat)}>
-            {showChat ? <Close size={40} /> : <Robot size={40} />}
+            <Robot size={40} />
           </StyledChatWidget>
         </StyledRoot>
       </ThemeProvider>
@@ -61,4 +69,11 @@ const StyledChatWidget = styled.div`
     width: 60px;
     height: 60px;
   } */
+`
+const StyledHiddenChat = styled.div<{ hidden: boolean }>`
+  ${props =>
+    props.hidden &&
+    css`
+      display: none;
+    `}
 `

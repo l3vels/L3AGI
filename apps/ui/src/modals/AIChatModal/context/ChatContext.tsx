@@ -12,20 +12,16 @@ export const ChatContext = createContext({
     sendUserStopTyping: (chat_id: string) => {},
     typingUsersData: [],
   },
+  setChatId: (value: string) => {},
+  setUserId: (value: string) => {},
 })
 
 type ChatContextProviderProps = {
-  children: ReactNode,
+  children: ReactNode
 }
 
-export const ChatContextProvider = ({
-  children,
-}: ChatContextProviderProps) => {
-  const {
-    thinking,
-    setThinking,
-    socket,
-  } = useChat()
+export const ChatContextProvider = ({ children }: ChatContextProviderProps) => {
+  const { thinking, setThinking, socket, setChatId, setUserId } = useChat()
 
   return (
     <ChatContext.Provider
@@ -33,6 +29,8 @@ export const ChatContextProvider = ({
         thinking,
         setThinking,
         socket,
+        setChatId,
+        setUserId,
       }}
     >
       {children}

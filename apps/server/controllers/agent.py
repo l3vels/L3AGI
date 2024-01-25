@@ -231,7 +231,7 @@ def get_agent_by_parent_id(
 def get_agent_by_id(
     id: str,
     is_system_message: Optional[bool] = False,
-    auth: UserAccount = Depends(authenticate_by_any),
+    # auth: UserAccount = Depends(authenticate_by_any),
 ) -> AgentWithConfigsOutput:
     """
     Get an agent by its ID.
