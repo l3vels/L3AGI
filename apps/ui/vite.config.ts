@@ -88,10 +88,10 @@ export default defineConfig({
         entryFileNames: 'assets/[name].js',
         chunkFileNames: 'assets/[name].js',
         format: 'es', // or 'cjs' for CommonJS, or 'umd' for UMD
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-        },
+        // globals: {
+        //   react: 'React',
+        //   'react-dom': 'ReactDOM',
+        // },
         dir: 'dist',
       },
     },
