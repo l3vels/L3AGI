@@ -13,7 +13,14 @@ import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
 const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
   const [ShowForm, setShowForm] = useState(false)
-  const [sessionId, setSessionId] = useState<string | null>(null)
+  const [sessionId, setSessionId] = useState<string | null>(
+    localStorage.getItem('storedSessionId') || null,
+  )
+
+  const handleSetSessionId = (id: string) => {
+    setSessionId(id)
+    localStorage.setItem('storedSessionId', id)
+  }
 
   const handleShowSessionForm = () => {
     setShowForm(true)
@@ -50,7 +57,7 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
             {!ShowForm && (
               <ButtonPrimary onClick={handleShowSessionForm}>Start Conversation</ButtonPrimary>
             )}
-            {ShowForm && <SessionForm setSessionId={setSessionId} />}
+            {ShowForm && <SessionForm setSessionId={handleSetSessionId} />}
           </StyledChatBody>
         )}
       </ChatContextProvider>

@@ -3,7 +3,6 @@ import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 import NavigationChevronLeft from 'share-ui/components/Icon/Icons/components/NavigationChevronLeft'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import styled from 'styled-components'
-import { useDomainConfig } from 'utils/useDomainConfig'
 
 const ChatWindowHeader = ({
   closeWindow,
@@ -16,9 +15,6 @@ const ChatWindowHeader = ({
   name?: string
   avatar?: string
 }) => {
-  const { getDomainConfig } = useDomainConfig()
-  const domainLogo = getDomainConfig('logo')
-
   return (
     <StyledChatWindowHeader>
       <StyledButtonWrapper>
@@ -32,11 +28,7 @@ const ChatWindowHeader = ({
         />
       </StyledButtonWrapper>
       <StyledLogoWrapper>
-        {name ? (
-          <AvatarGenerator name={name} avatar={avatar} size={50} />
-        ) : (
-          <StyledLogo src={domainLogo} alt='Logo' />
-        )}
+        {name && <AvatarGenerator name={name} avatar={avatar} size={50} />}
       </StyledLogoWrapper>
 
       <IconButton

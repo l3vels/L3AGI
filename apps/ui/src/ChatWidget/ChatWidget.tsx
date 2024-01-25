@@ -1,6 +1,6 @@
 import { Route as Router, Routes, BrowserRouter } from 'react-router-dom'
 
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider, css } from 'styled-components'
 import { lightTheme } from 'styles/theme'
 import ChatWindow from './ChatWindow'
 import { useState } from 'react'
@@ -20,11 +20,11 @@ const ChatWidget = () => {
       <ThemeProvider theme={lightTheme}>
         <StyledRoot>
           <BrowserRouter>
-            {showChat && (
+            <StyledHiddenChat hidden={!showChat}>
               <Routes>
                 <Router element={<ChatWindow closeWindow={() => setShowChat(false)} />} path='/' />
               </Routes>
-            )}
+            </StyledHiddenChat>
           </BrowserRouter>
 
           <StyledChatWidget onClick={() => setShowChat(!showChat)}>
@@ -61,4 +61,11 @@ const StyledChatWidget = styled.div`
     width: 60px;
     height: 60px;
   } */
+`
+const StyledHiddenChat = styled.div<{ hidden: boolean }>`
+  ${props =>
+    props.hidden &&
+    css`
+      display: none;
+    `}
 `
