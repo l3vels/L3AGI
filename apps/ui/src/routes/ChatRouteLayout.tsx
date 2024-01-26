@@ -333,9 +333,7 @@ const ChatRouteLayout = () => {
         </StyledMainWrapper>
 
         {user && (
-          <StyledRightColumn
-            isHidden={(!showInfo && expand) || !location.pathname.includes('/chat')}
-          >
+          <StyledRightColumn isHidden={!showInfo && expand}>
             <ChatMembers
               agentById={agentById || chatById?.agent}
               teamOfAgents={teamOfAgents}
@@ -441,10 +439,10 @@ const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
     `}
 `
 const StyledOutletWrapper = styled.div`
-  width: calc(100% - 500px);
+  width: 100%;
   padding: 0 30px;
-  margin-left: 450px;
-  max-width: 1500px;
+
+  /* max-width: 1500px; */
 `
 const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean }>`
   height: 100vh;
