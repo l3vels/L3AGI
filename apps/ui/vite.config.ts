@@ -77,6 +77,7 @@ export default defineConfig({
     // cssCodeSplit: false,
     cssCodeSplit: false,
     sourcemap: true,
+    manifest: true,
     rollupOptions: {
       input: {
         main: './src/index.tsx', // Main app entry point
