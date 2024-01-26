@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi_sqlalchemy import DBSessionMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from strawberry.fastapi import GraphQLRouter
 
 from config import Config
@@ -76,14 +77,28 @@ app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 #     "https://l3agi.com",
 # ]
 
+
+class CustomCORSMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        if "origin" in request.headers:
+            response = await call_next(request)
+            response.headers["Access-Control-Allow-Origin"] = request.headers["origin"]
+            return response
+        else:
+            return await call_next(request)
+
+
 app.add_middleware(
     CORSMiddleware,
     # allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+",
-    allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+|https://.*\.azurestaticapps\.net|https://.*\.scalesync\.ai",
+    # allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+|https://.*\.azurestaticapps\.net|https://.*\.scalesync\.ai",
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.add_middleware(CustomCORSMiddleware)
 
 
 @AuthJWT.load_config
