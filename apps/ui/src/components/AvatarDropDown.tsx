@@ -186,7 +186,7 @@ const StyledDropdownContent = styled(Content)`
   box-shadow: 0 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
   z-index: 10203000;
   border-radius: 8px;
-  background: ${({ theme }) => theme.body.avatarDropDownColor}
+  background: ${({ theme }) => theme.body.avatarDropDownColor};
   /* background-color: white; */
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(100px);

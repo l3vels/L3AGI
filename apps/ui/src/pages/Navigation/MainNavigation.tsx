@@ -301,6 +301,8 @@ const StyledAvatarWrapper = styled.div`
   flex-direction: column;
   gap: 0px;
 
+  z-index: 100000000;
+
   @media (max-width: 900px) {
     display: none;
   }

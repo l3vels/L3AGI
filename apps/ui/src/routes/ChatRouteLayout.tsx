@@ -369,10 +369,6 @@ const StyledLeftColumn = styled.div<{
     location.pathname.includes('/chat') ? theme.body.secondaryBorder : 'none'};
   /* border-radius: 10px; */
 
-  position: absolute;
-  left: 0;
-  z-index: 10000;
-
   backdrop-filter: blur(100px);
 
   overflow-y: auto;
@@ -382,12 +378,10 @@ const StyledLeftColumn = styled.div<{
 
   padding: 20px 10px;
   padding-top: 0px;
-  padding-left: 120px;
+  padding-left: 100px;
 
   height: 100%;
   min-width: 475px;
-
-  max-height: calc(100vh - 185px);
 
   transition: margin-left 0.3s ease-in-out;
 
@@ -408,10 +402,6 @@ const StyledLeftColumn = styled.div<{
     `}
 `
 const StyledRightColumn = styled.div<{ isHidden: boolean }>`
-  position: absolute;
-  right: 0;
-  z-index: 10000;
-
   backdrop-filter: blur(100px);
 
   overflow-y: auto;
@@ -422,10 +412,6 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
   height: 100%;
   min-width: 320px;
 
-  max-height: calc(100vh - 230px);
-
-  margin-top: 30px;
-  padding-right: 10px;
   transition: margin-right 0.3s ease-in-out;
 
   ${props =>
