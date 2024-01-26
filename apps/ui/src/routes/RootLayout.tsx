@@ -24,7 +24,7 @@ const RootLayout = () => {
     <>
       <>{outlet}</>
 
-      {user && (
+      {/* {user && (
         <StyledAvatarContainer>
           <StyledInnerWrapper>
             <AvatarDropDown />
@@ -33,13 +33,13 @@ const RootLayout = () => {
 
           <MediaButtons />
         </StyledAvatarContainer>
-      )}
+      )} */}
 
       {/* <StyledChatInputWrapper isHidden={isCheckedRoute}>
         {user && <Spotlight />}
       </StyledChatInputWrapper> */}
 
-      {user && <ChatSwitcher isChatOpen={isCheckedRoute} />}
+      {user && <ChatSwitcher isChatOpen={isCheckedRoute} user={user} />}
     </>
   )
 }

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { AuthContext } from 'contexts'
 
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
-import { Footer, Header } from 'components/Layout'
+import { Footer } from 'components/Layout'
 
 import { useModal } from 'hooks'
 import TermsAndPrivacyButtons from 'components/TermsAndPrivacyButtons'
@@ -27,8 +27,6 @@ const HomeRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header isPublicRoute={!user} />
-
       {((loginConfig?.popup && !user) || user) && (
         <StyledMainContainer>{outlet}</StyledMainContainer>
       )}

@@ -29,8 +29,9 @@ import {
   TypographySizes,
   TypographyTypes,
 } from 'share-ui/components/typography/TypographyConstants'
+import AvatarDropDown from 'components/AvatarDropDown'
 
-const MainNavigation = () => {
+const MainNavigation = ({ user }: { user: any }) => {
   const {
     getHomeModules,
     getChatModules,
@@ -82,22 +83,12 @@ const MainNavigation = () => {
       {isHome && (
         <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
           <StyledAboutIcon size={40} />
-          <TypographySecondary
-            value={t('home')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
       {isChat && (
         <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
           <StyledRobotIcon size={40} />
-          <TypographySecondary
-            value={t('chat')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
@@ -107,11 +98,6 @@ const MainNavigation = () => {
           onClick={() => onHandleClick('/sessions')}
         >
           <StyledSessionIcon size={30} />
-          <TypographySecondary
-            value={t('sessions')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
@@ -121,11 +107,6 @@ const MainNavigation = () => {
           onClick={() => onHandleClick('/schedules')}
         >
           <StyledMyWeekIcon size={30} />
-          <TypographySecondary
-            value={t('schedule')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
@@ -142,11 +123,6 @@ const MainNavigation = () => {
           onClick={() => onHandleClick('/contacts')}
         >
           <StyledMobileIcon size={30} />
-          <TypographySecondary
-            value={t('contacts')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
@@ -156,11 +132,6 @@ const MainNavigation = () => {
           onClick={() => onHandleClick('/datasources')}
         >
           <StyledValueOutlineIcon size={40} />
-          <TypographySecondary
-            value={t('datasources')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
@@ -184,22 +155,12 @@ const MainNavigation = () => {
           onClick={() => onHandleClick('/integrations')}
         >
           <StyledGamesIcon size={40} />
-          <TypographySecondary
-            value={t('integrations')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
       {isModel && (
         <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
           <StyledBasicIcon size={30} />
-          <TypographySecondary
-            value={t('models')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
 
@@ -209,13 +170,16 @@ const MainNavigation = () => {
           onClick={() => onHandleClick('/discover')}
         >
           <StyledSearchOutlineIcon size={40} />
-          <TypographySecondary
-            value={t('discovery')}
-            type={TypographyTypes.LABEL}
-            size={TypographySizes.sm}
-          />
         </StyledLi>
       )}
+
+      <StyledAvatarWrapper>
+        <StyledInnerWrapper>
+          <AvatarDropDown />
+        </StyledInnerWrapper>
+
+        {/* <MediaButtons /> */}
+      </StyledAvatarWrapper>
     </StyledUl>
   )
 }
@@ -225,38 +189,38 @@ export default MainNavigation
 const StyledUl = styled.ul`
   backdrop-filter: blur(100px);
 
+  height: 100%;
+
   list-style: none;
-  margin: 0;
-  padding: 0;
+
+  overflow-y: auto;
+
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
-  /* margin-bottom: 25px; */
-  padding-bottom: 10px;
+
+  /* background-color: red; */
+  padding: 24px 16px;
 `
 const StyledLi = styled.li<{ isActive?: boolean }>`
   color: transparent;
+
   display: flex;
-  padding: 4px 2px;
-  flex-direction: column;
+  width: 48px;
+  height: 48px;
   justify-content: center;
   align-items: center;
-  gap: 5px;
 
   cursor: pointer;
-  span {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 16px;
-    color: ${({ theme }) => theme.body.mainNavColor};
-  }
+
   opacity: 0.8;
   ${({ isActive, theme }) =>
     isActive &&
     `
     opacity: 1;
     
-    border-radius: 8px;
+    border-radius: 100px;
     background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.10));
     span{
       color: ${theme.body.mainNavColorActive};
@@ -265,7 +229,7 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
         fill-opacity: 1
       }
     }
-`}/* background: red; */
+`}
 `
 export const StyledAboutIcon = styled(About)`
   path {
@@ -325,4 +289,32 @@ const StyledSessionIcon = styled(Session)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
+`
+const StyledAvatarWrapper = styled.div`
+  margin-top: auto;
+
+  position: sticky;
+  bottom: 0;
+
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  gap: 0px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+
+  span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* color: rgba(255, 255, 255, 0.2); */
+  }
+`
+const StyledInnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `

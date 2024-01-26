@@ -3,7 +3,6 @@ import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-
 
 import { AuthContext, LayoutContext, ToastContext } from 'contexts'
 
-import { Header } from 'components/Layout'
 import { StyledAppContainer } from '../components/Layout/LayoutStyle'
 
 import styled, { css } from 'styled-components'
@@ -127,7 +126,7 @@ const ChatRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header isPublicRoute={!user} hideButtons={!user && chatId ? true : false} />
+      {/* <Header isPublicRoute={!user} hideButtons={!user && chatId ? true : false} /> */}
       <StyledContainer>
         {expand && !showChats && location.pathname.includes('/chat') && (
           <StyledShowButton
