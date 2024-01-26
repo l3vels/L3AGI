@@ -11,7 +11,8 @@ const renderTestComp = () => {
   const linkElement = document.createElement('link')
   linkElement.rel = 'stylesheet'
   linkElement.type = 'text/css'
-  linkElement.href = 'http://localhost:3000/dist/assets/style-cc379c0c.css'
+  linkElement.href = 'https://dev.l3agi.com/assets/style-cc379c0c.css'
+
   document.head.appendChild(linkElement)
 
   ReactDOM.render(<ChatWidget />, document.getElementById('test'))

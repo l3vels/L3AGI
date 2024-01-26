@@ -83,23 +83,14 @@ export default defineConfig({
         widget: './src/TestComp.tsx', // Widget entry point
         index: 'index.html',
       },
-      // external: ['react', 'react-dom'],
+
       output: {
         entryFileNames: 'assets/[name].js',
         chunkFileNames: 'assets/[name].js',
         format: 'es', // or 'cjs' for CommonJS, or 'umd' for UMD
-        // globals: {
-        //   react: 'React',
-        //   'react-dom': 'ReactDOM',
-        // },
+
         dir: 'dist',
       },
     },
-    // lib: {
-    //   name: 'widget',
-    //   entry: './src/TestComp.tsx', // Widget entry point
-    //   formats: ['es'], // Output format, you can add more formats if needed
-    //   fileName: 'widget', // Output file name
-    // },
   },
 })
