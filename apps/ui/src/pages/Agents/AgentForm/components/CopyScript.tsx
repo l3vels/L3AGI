@@ -17,7 +17,7 @@ const CopyScript = () => {
           <script
             type="module"
             id="myWidgetScript"
-            src="${appDomainName}/dist/assets/widget.js?widgetId=${agentId}"
+            src="${appDomainName}/assets/widget.js?widgetId=${agentId}"
             defer
           ></script>`
 
