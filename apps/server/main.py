@@ -79,8 +79,7 @@ app.add_middleware(DBSessionMiddleware, db_url=Config.DB_URI)
 app.add_middleware(
     CORSMiddleware,
     # allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+",
-    # allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+|https://.*\.azurestaticapps\.net|https://.*\.scalesync\.ai",
-    allow_origins=["*"],
+    allow_origin_regex="https://l3vels\.xyz|https://.*\.l3vels\.xyz|https://l3agi\.com|https://.*\.l3agi\.com|http://localhost:[0-9]+|https://.*\.azurestaticapps\.net|https://.*\.scalesync\.ai",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
