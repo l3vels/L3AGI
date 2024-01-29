@@ -150,6 +150,14 @@ const ChatRouteLayout = () => {
     navigate(`/chat?${queryParams}`)
   }
 
+  useEffect(() => {
+    if (!tabQuery) return setActiveTab(0)
+
+    if (tabQuery === 'playground') return setActiveTab(0)
+    if (tabQuery === 'sessions') return setActiveTab(1)
+    if (tabQuery === 'settings') return setActiveTab(2)
+  }, [tabQuery])
+
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
@@ -193,6 +201,7 @@ const ChatRouteLayout = () => {
                       teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
                     }
                   />
+                  <StyledHorizontalDivider />
 
                   {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
                     const { team_agents } = teamOfAgents
@@ -207,7 +216,7 @@ const ChatRouteLayout = () => {
                     }
 
                     const handleEdit = () => {
-                      navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
+                      navigate(`/chat?tab=settings&team=${teamOfAgents.id}`)
                     }
 
                     const handleDelete = () => {
@@ -217,10 +226,12 @@ const ChatRouteLayout = () => {
                     return (
                       <TeamChatCard
                         key={index}
-                        onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
-                        onViewClick={handleView}
+                        onClick={() => {
+                          navigate(`/chat?tab=playground&team=${teamOfAgents.id}`)
+                        }}
+                        // onViewClick={handleView}
+                        // onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                         onEditClick={teamModule?.edit && isCreator && handleEdit}
-                        onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                         picked={teamId === teamOfAgents.id}
                         team={teamOfAgents}
                         agents={team_agents}
@@ -270,7 +281,7 @@ const ChatRouteLayout = () => {
                     const isCreator = user?.id === agent?.created_by
 
                     const handleEdit = () => {
-                      navigate(`/agents/${agent?.id}/edit-agent`)
+                      navigate(`/chat?tab=settings&agent=${agent.id}`)
                     }
 
                     const handleView = () => {
@@ -289,10 +300,10 @@ const ChatRouteLayout = () => {
                     return (
                       <AgentChatCard
                         key={index}
-                        onClick={() => navigate(`/chat?agent=${agent.id}`)}
-                        onViewClick={handleView}
+                        onClick={() => navigate(`/chat?tab=playground&agent=${agent.id}`)}
+                        // onViewClick={handleView}
+                        // onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                         onEditClick={agentModule?.edit && isCreator && handleEdit}
-                        onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                         picked={agentId === agent.id}
                         agent={agent}
                       />
@@ -357,12 +368,14 @@ const ChatRouteLayout = () => {
           {location.pathname.includes('/chat') ? (
             <StyledChatWrapper isHidden={false}>
               <StyledTabHeader>
-                <TabList size='small' activeTabId={activeTab}>
+                <TabList size='small' activeTabId={activeTab} noBorder>
                   <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
                   <Tab onClick={() => handleTabClick(1, 'sessions')}>{t('sessions')}</Tab>
                   <Tab onClick={() => handleTabClick(2, 'settings')}>{t('settings')}</Tab>
                 </TabList>
               </StyledTabHeader>
+
+              <StyledHorizontalDivider />
 
               <TabsContext activeTabId={activeTab}>
                 <TabPanels noAnimation>
@@ -530,4 +543,10 @@ const StyledDivider = styled.div`
   border-right: ${({ theme }) => theme.body.secondaryBorder};
 
   margin: 0 16px;
+`
+const StyledHorizontalDivider = styled.div`
+  border-bottom: ${({ theme }) => theme.body.secondaryBorder};
+
+  width: 100%;
+  /* margin: 8px 0; */
 `
