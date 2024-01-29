@@ -45,6 +45,15 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
     if (agentById?.agent.created_by) setUserId(agentById?.agent.created_by)
   }, [sessionId, agentById])
 
+  const handleNewConversation = () => {
+    setSessionId(null)
+    localStorage.removeItem('storedSessionId')
+  }
+
+  useEffect(() => {
+    if (sessionId && ShowForm) setShowForm(false)
+  }, [sessionId])
+
   return (
     <StyledChatWindow>
       <ChatWindowHeader
@@ -52,6 +61,7 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
         onBackClick={ShowForm ? handleHideForm : undefined}
         name={agentById?.agent.name}
         avatar={agentById?.agent.avatar}
+        restart={sessionId ? handleNewConversation : undefined}
       />
 
       {sessionId ? (

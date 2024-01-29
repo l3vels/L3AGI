@@ -1,5 +1,6 @@
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
+import { Retry } from 'share-ui/components/Icon/Icons'
 import NavigationChevronLeft from 'share-ui/components/Icon/Icons/components/NavigationChevronLeft'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import styled from 'styled-components'
@@ -7,25 +8,37 @@ import styled from 'styled-components'
 const ChatWindowHeader = ({
   closeWindow,
   onBackClick,
+  restart,
   name,
   avatar,
 }: {
   closeWindow: () => void
   onBackClick?: () => void
+  restart?: () => void
   name?: string
   avatar?: string
 }) => {
   return (
     <StyledChatWindowHeader>
       <StyledButtonWrapper>
-        <IconButton
-          onClick={onBackClick}
-          icon={() => <NavigationChevronLeft />}
-          size={IconButton.sizes?.SMALL}
-          kind={IconButton.kinds?.TERTIARY}
-          // ariaLabel='Delete'
-          disabled={!onBackClick}
-        />
+        {onBackClick && (
+          <IconButton
+            onClick={onBackClick}
+            icon={() => <NavigationChevronLeft />}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            // ariaLabel='Delete'
+          />
+        )}
+        {restart && (
+          <IconButton
+            onClick={restart}
+            icon={() => <Retry />}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            ariaLabel='New conversation'
+          />
+        )}
       </StyledButtonWrapper>
       <StyledLogoWrapper>
         {name && <AvatarGenerator name={name} avatar={avatar} size={50} />}
@@ -63,4 +76,6 @@ const StyledLogo = styled.img`
   width: 48px;
   height: 48px;
 `
-const StyledButtonWrapper = styled.div``
+const StyledButtonWrapper = styled.div`
+  width: 40px;
+`
