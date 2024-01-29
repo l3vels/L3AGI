@@ -11,6 +11,7 @@ import cx from 'classnames'
 import useMergeRefs from '../../../hooks/useMergeRefs'
 import usePrevious from '../../../hooks/usePrevious'
 import L3ComponentProps from '../../../types/L3ComponentProps'
+import styled from 'styled-components'
 
 export interface TabsContextProps extends L3ComponentProps {
   activeTabId?: number
@@ -50,7 +51,7 @@ const TabsContext: FC<TabsContextProps> = forwardRef(
     )
 
     return (
-      <div ref={mergedRef} className={cx('tabs-context--wrapper', className)} id={id}>
+      <StyledRoot ref={mergedRef} className={cx('tabs-context--wrapper', className)} id={id}>
         {React.Children.map(children, child => {
           if (child?.type.isTabList) {
             return React.cloneElement(child, {
@@ -65,9 +66,14 @@ const TabsContext: FC<TabsContextProps> = forwardRef(
           }
           return child
         })}
-      </div>
+      </StyledRoot>
     )
   },
 )
 
 export default TabsContext
+
+const StyledRoot = styled.div`
+  height: 100%;
+  width: 100%;
+`

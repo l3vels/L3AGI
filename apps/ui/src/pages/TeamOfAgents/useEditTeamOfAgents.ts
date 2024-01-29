@@ -12,7 +12,9 @@ import { useTeamOfAgents } from './useTeamOfAgents'
 export const useEditTeamOfAgents = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { teamId } = params
+  const urlParams = new URLSearchParams(location.search)
+
+  const teamId = urlParams.get('team') || params.teamId
 
   const { refetchTeamOfAgents } = useTeamOfAgents()
 
@@ -117,8 +119,6 @@ export const useEditTeamOfAgents = () => {
 
     await Promise.all(promises)
     await Promise.all([refetchTeamOfAgents(), refetchConfigs()])
-
-    handleNavigation()
 
     setToast({
       message: 'Team was updated!',

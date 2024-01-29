@@ -84,17 +84,15 @@ export default ChatSwitcher
 
 // for different version
 const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100000;
+  /* position: absolute; */
+
   /* transform: translateY(-50%); */
   /* overflow: auto;
   display: flex; */
   /* flex-direction: column; */
   /* justify-content: center; */
-  /* background-color: red; */
-  height: 100%;
+
+  height: 100vh;
 
   @keyframes slideAnimation {
     from {

@@ -19,7 +19,9 @@ export const useEditAgent = () => {
 
   const { setToast } = useContext(ToastContext)
 
-  const { agentId } = params
+  const urlParams = new URLSearchParams(location.search)
+
+  const agentId = urlParams.get('agent') || params.agentId
 
   const { data: agentById } = useAgentByIdService({ id: agentId || '' })
 
@@ -72,8 +74,6 @@ export const useEditAgent = () => {
         ...updatedValues,
       })
       await refetchAgents()
-
-      handleNavigation()
 
       setToast({
         message: 'Agent was updated!',

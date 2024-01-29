@@ -72,5 +72,7 @@ export default CreateAgentForm
 export const StyledButtonWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
   gap: 5px;
 `

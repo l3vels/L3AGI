@@ -71,6 +71,9 @@ Object.assign(TabPanels, {
 export default TabPanels
 
 const StyledTabPanelsWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+
   .tab-panel {
     display: none;
 

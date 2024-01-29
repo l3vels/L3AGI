@@ -187,8 +187,6 @@ const MainNavigation = ({ user }: { user: any }) => {
 export default MainNavigation
 
 const StyledUl = styled.ul`
-  backdrop-filter: blur(100px);
-
   height: 100%;
 
   list-style: none;
@@ -200,7 +198,6 @@ const StyledUl = styled.ul`
   align-items: center;
   gap: 16px;
 
-  /* background-color: red; */
   padding: 24px 16px;
 `
 const StyledLi = styled.li<{ isActive?: boolean }>`
@@ -302,10 +299,6 @@ const StyledAvatarWrapper = styled.div`
   gap: 0px;
 
   z-index: 100000000;
-
-  @media (max-width: 900px) {
-    display: none;
-  }
 
   span {
     font-style: normal;

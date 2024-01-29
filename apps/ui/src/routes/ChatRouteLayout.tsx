@@ -26,6 +26,13 @@ import { useChatByIdService } from 'services/chat/useChatByIdService'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { t } from 'i18next'
 import { useCallByIdService } from 'plugins/contact/services/call/useCallByIdService'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
+import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -122,6 +129,27 @@ const ChatRouteLayout = () => {
     }
   }, [])
 
+  const tabQuery = urlParams.get('tab')
+
+  const defaultActiveTab = () => {
+    // if (!isFineTuning) return 1
+    // if (!tabQuery) return 0
+
+    if (tabQuery === 'playground') return 0
+    if (tabQuery === 'sessions') return 1
+    if (tabQuery === 'settings') return 2
+  }
+
+  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+    let queryParams = `tab=${tabName}`
+    if (agentId) queryParams += `&agent=${agentId}`
+    if (teamId) queryParams += `&team=${teamId}`
+    if (chatId) queryParams += `&chat=${chatId}`
+    navigate(`/chat?${queryParams}`)
+  }
+
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
@@ -151,127 +179,129 @@ const ChatRouteLayout = () => {
             }}
           />
         )}
+        <StyledMainWrapper>
+          {user && (
+            <StyledLeftColumn
+              isSmallScreen={isSmallScreen && location.pathname.includes('/chat')}
+              isHidden={expand && !showChats && location.pathname.includes('/chat')}
+            >
+              {teamOfAgentsArray?.length > 0 && teamModule?.list && (
+                <>
+                  <ListHeader
+                    title={t('team')}
+                    onAddClick={
+                      teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
+                    }
+                  />
 
-        {user && (
-          <StyledLeftColumn
-            isSmallScreen={isSmallScreen && location.pathname.includes('/chat')}
-            isHidden={expand && !showChats && location.pathname.includes('/chat')}
-          >
-            {teamOfAgentsArray?.length > 0 && teamModule?.list && (
-              <>
-                <ListHeader
-                  title={t('team')}
-                  onAddClick={
-                    teamModule?.create ? () => navigate('/team-of-agents/create-team') : undefined
-                  }
-                />
+                  {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
+                    const { team_agents } = teamOfAgents
 
-                {teamOfAgentsArray?.map((teamOfAgents: any, index: number) => {
-                  const { team_agents } = teamOfAgents
+                    const isCreator = user?.id === teamOfAgents?.created_by
 
-                  const isCreator = user?.id === teamOfAgents?.created_by
+                    const handleView = () => {
+                      openModal({
+                        name: 'team-of-agent-view-modal',
+                        data: { teamOfAgents: teamOfAgents },
+                      })
+                    }
 
-                  const handleView = () => {
-                    openModal({
-                      name: 'team-of-agent-view-modal',
-                      data: { teamOfAgents: teamOfAgents },
-                    })
-                  }
+                    const handleEdit = () => {
+                      navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
+                    }
 
-                  const handleEdit = () => {
-                    navigate(`/team-of-agents/${teamOfAgents.id}/edit-team`)
-                  }
+                    const handleDelete = () => {
+                      deleteTeamOfAgentsHandler(teamOfAgents.id)
+                    }
 
-                  const handleDelete = () => {
-                    deleteTeamOfAgentsHandler(teamOfAgents.id)
-                  }
+                    return (
+                      <TeamChatCard
+                        key={index}
+                        onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
+                        onViewClick={handleView}
+                        onEditClick={teamModule?.edit && isCreator && handleEdit}
+                        onDeleteClick={teamModule?.delete && isCreator && handleDelete}
+                        picked={teamId === teamOfAgents.id}
+                        team={teamOfAgents}
+                        agents={team_agents}
+                      />
+                    )
+                  })}
+                </>
+              )}
 
-                  return (
-                    <TeamChatCard
-                      key={index}
-                      onClick={() => navigate(`/chat?team=${teamOfAgents.id}`)}
-                      onViewClick={handleView}
-                      onEditClick={teamModule?.edit && isCreator && handleEdit}
-                      onDeleteClick={teamModule?.delete && isCreator && handleDelete}
-                      picked={teamId === teamOfAgents.id}
-                      team={teamOfAgents}
-                      agents={team_agents}
-                    />
-                  )
-                })}
-              </>
-            )}
+              {agentModule.list && (
+                <>
+                  <ListHeader
+                    title={t('agent')}
+                    multiOption={
+                      agentModule.create
+                        ? [
+                            {
+                              label: `Add Chat ${t('agent')}`,
+                              function: () => navigate('/agents/create-agent-template?type=text'),
+                            },
+                            {
+                              label: `Add Outbound Call ${t('agent')}`,
+                              function: () =>
+                                navigate('/agents/create-agent-template?type=outbound'),
+                            },
+                            {
+                              label: `Add Inbound Call ${t('agent')}`,
+                              function: () =>
+                                navigate('/agents/create-agent-template?type=inbound'),
+                            },
+                            ...(teamOfAgentsArray?.length === 0
+                              ? [
+                                  {
+                                    label: `${t('add-team')}`,
+                                    function: () => navigate('/team-of-agents/create-team'),
+                                  },
+                                ]
+                              : []),
+                          ]
+                        : undefined
+                    }
+                  />
 
-            {agentModule.list && (
-              <>
-                <ListHeader
-                  title={t('agent')}
-                  multiOption={
-                    agentModule.create
-                      ? [
-                          {
-                            label: `Add Chat ${t('agent')}`,
-                            function: () => navigate('/agents/create-agent-template?type=text'),
-                          },
-                          {
-                            label: `Add Outbound Call ${t('agent')}`,
-                            function: () => navigate('/agents/create-agent-template?type=outbound'),
-                          },
-                          {
-                            label: `Add Inbound Call ${t('agent')}`,
-                            function: () => navigate('/agents/create-agent-template?type=inbound'),
-                          },
-                          ...(teamOfAgentsArray?.length === 0
-                            ? [
-                                {
-                                  label: `${t('add-team')}`,
-                                  function: () => navigate('/team-of-agents/create-team'),
-                                },
-                              ]
-                            : []),
-                        ]
-                      : undefined
-                  }
-                />
+                  {agentsData?.map((agentObj: any, index: number) => {
+                    const { agent } = agentObj
 
-                {agentsData?.map((agentObj: any, index: number) => {
-                  const { agent } = agentObj
+                    const isCreator = user?.id === agent?.created_by
 
-                  const isCreator = user?.id === agent?.created_by
+                    const handleEdit = () => {
+                      navigate(`/agents/${agent?.id}/edit-agent`)
+                    }
 
-                  const handleEdit = () => {
-                    navigate(`/agents/${agent?.id}/edit-agent`)
-                  }
+                    const handleView = () => {
+                      openModal({
+                        name: 'agent-view-modal',
+                        data: {
+                          agent: agentObj,
+                        },
+                      })
+                    }
 
-                  const handleView = () => {
-                    openModal({
-                      name: 'agent-view-modal',
-                      data: {
-                        agent: agentObj,
-                      },
-                    })
-                  }
+                    const handleDelete = () => {
+                      deleteAgentHandler(agent.id)
+                    }
 
-                  const handleDelete = () => {
-                    deleteAgentHandler(agent.id)
-                  }
+                    return (
+                      <AgentChatCard
+                        key={index}
+                        onClick={() => navigate(`/chat?agent=${agent.id}`)}
+                        onViewClick={handleView}
+                        onEditClick={agentModule?.edit && isCreator && handleEdit}
+                        onDeleteClick={agentModule?.delete && isCreator && handleDelete}
+                        picked={agentId === agent.id}
+                        agent={agent}
+                      />
+                    )
+                  })}
+                </>
+              )}
 
-                  return (
-                    <AgentChatCard
-                      key={index}
-                      onClick={() => navigate(`/chat?agent=${agent.id}`)}
-                      onViewClick={handleView}
-                      onEditClick={agentModule?.edit && isCreator && handleEdit}
-                      onDeleteClick={agentModule?.delete && isCreator && handleDelete}
-                      picked={agentId === agent.id}
-                      agent={agent}
-                    />
-                  )
-                })}
-              </>
-            )}
-
-            {/* {sessionModule?.list && chatsData?.length > 0 && (
+              {/* {sessionModule?.list && chatsData?.length > 0 && (
               <>
                 <ListHeader title={t('session')} />
 
@@ -319,13 +349,33 @@ const ChatRouteLayout = () => {
                 })}
               </>
             )} */}
-          </StyledLeftColumn>
-        )}
+            </StyledLeftColumn>
+          )}
 
-        <StyledMainWrapper>
+          <StyledDivider />
+
           {location.pathname.includes('/chat') ? (
             <StyledChatWrapper isHidden={false}>
-              <AIChat />
+              <StyledTabHeader>
+                <TabList size='small' activeTabId={activeTab}>
+                  <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
+                  <Tab onClick={() => handleTabClick(1, 'sessions')}>{t('sessions')}</Tab>
+                  <Tab onClick={() => handleTabClick(2, 'settings')}>{t('settings')}</Tab>
+                </TabList>
+              </StyledTabHeader>
+
+              <TabsContext activeTabId={activeTab}>
+                <TabPanels noAnimation>
+                  <TabPanel>
+                    <AIChat />
+                  </TabPanel>
+                  <TabPanel>{/* <AIChat /> */}</TabPanel>
+                  <TabPanel>
+                    {agentId && <EditAgentForm />}
+                    {teamId && <EditTeamOfAgentsForm />}
+                  </TabPanel>
+                </TabPanels>
+              </TabsContext>
             </StyledChatWrapper>
           ) : (
             <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
@@ -362,24 +412,15 @@ const StyledLeftColumn = styled.div<{
   isHidden?: boolean
   isSmallScreen: boolean
 }>`
-  /* background: ${({ theme }) => theme.body.cardBgColor}; */
-  border-right: ${({ theme }) =>
-    location.pathname.includes('/chat') ? theme.body.secondaryBorder : 'none'};
-  /* border-radius: 10px; */
-
-  backdrop-filter: blur(100px);
-
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 5px;
 
-  padding: 20px 10px;
   padding-top: 0px;
-  padding-left: 100px;
 
   height: 100%;
-  min-width: 475px;
+  min-width: 260px;
 
   transition: margin-left 0.3s ease-in-out;
 
@@ -423,6 +464,10 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
 
 const StyledMainWrapper = styled.div`
   /* margin-top: 30px; */
+  padding: 16px;
+  border-radius: 16px;
+  /* background: var(--background-background-tertiary, #f5f5f7); */
+  background: ${({ theme }) => theme.body.componentsWrapperBg};
 
   display: flex;
   justify-content: center;
@@ -431,6 +476,9 @@ const StyledMainWrapper = styled.div`
 const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
   height: 100%;
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
 
   ${props =>
     props.isHidden &&
@@ -475,4 +523,11 @@ const StyledMiddleArea = styled.div`
   position: absolute;
   z-index: 10000;
   /* left: 0; */
+`
+const StyledTabHeader = styled.div``
+
+const StyledDivider = styled.div`
+  border-right: ${({ theme }) => theme.body.secondaryBorder};
+
+  margin: 0 16px;
 `
