@@ -311,7 +311,10 @@ const StyledLoaderWrapper = styled.div`
   display: flex;
   margin-top: 30px;
 
-  width: calc(100% - 50px);
+  align-items: flex-start;
+  padding-right: 10px;
+  min-width: 400px;
+  width: calc(100% - 100px);
   max-width: 800px;
 
   @media only screen and (max-width: 1750px) {
