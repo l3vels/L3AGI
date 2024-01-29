@@ -5,16 +5,20 @@ import { lightTheme } from 'styles/theme'
 import ChatWindow from './ChatWindow'
 import { useState } from 'react'
 
-import Close from 'share-ui/components/Icon/Icons/components/Close'
-import Robot from 'share-ui/components/Icon/Icons/components/Robot'
 import useApollo from 'hooks/useApollo'
 import { ApolloProvider } from '@apollo/client'
 import { ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
+import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 const ChatWidget = () => {
   const client = useApollo()
 
   const [showChat, setShowChat] = useState(false)
+  const [chatDetails, setChatDetails] = useState<any>(null)
+
+  const getChatDetails = (name: string, avatar: string) => {
+    setChatDetails({ name: name, avatar: avatar })
+  }
 
   return (
     <ApolloProvider client={client}>
@@ -25,9 +29,14 @@ const ChatWidget = () => {
               <Routes>
                 <Router
                   element={
-                    <ChatContextProvider>
-                      <ChatWindow closeWindow={() => setShowChat(false)} />
-                    </ChatContextProvider>
+                    <>
+                      <ChatContextProvider>
+                        <ChatWindow
+                          closeWindow={() => setShowChat(false)}
+                          getChatDetails={getChatDetails}
+                        />
+                      </ChatContextProvider>
+                    </>
                   }
                   path='/'
                 />
@@ -36,7 +45,9 @@ const ChatWidget = () => {
           </BrowserRouter>
 
           <StyledChatWidget onClick={() => setShowChat(!showChat)}>
-            <Robot size={40} />
+            {chatDetails && (
+              <AvatarGenerator name={chatDetails.name} avatar={chatDetails.avatar} size={50} />
+            )}
           </StyledChatWidget>
         </StyledRoot>
       </ThemeProvider>
