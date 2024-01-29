@@ -21,10 +21,10 @@ const MemberText = ({ name, role }: MemberTextProps) => {
 
   return (
     <StyledNameWrapper>
-      <TypographyPrimary
+      <TypographySecondary
         value={shortName}
         type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
+        size={Typography.sizes.md}
       />
 
       <TypographySecondary

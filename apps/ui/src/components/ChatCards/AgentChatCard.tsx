@@ -17,7 +17,7 @@ import { getAgentTypeText } from 'utils/agentUtils'
 
 type AgentChatCardProps = {
   onClick: () => void
-  onViewClick: () => void
+  onViewClick?: () => void
   onEditClick?: () => void
   onDeleteClick?: () => void
   picked: boolean
@@ -41,7 +41,7 @@ const AgentChatCard = ({
 
   const handleView = (event: any) => {
     event.stopPropagation()
-    onViewClick()
+    if (onViewClick) onViewClick()
   }
 
   const handleDelete = (event: any) => {
@@ -60,7 +60,7 @@ const AgentChatCard = ({
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
-      <MemberText name={agent?.name} role={roleText} />
+      <MemberText name={agent?.name} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
         {onDeleteClick && (
@@ -73,17 +73,19 @@ const AgentChatCard = ({
           />
         )}
 
-        <IconButton
-          onClick={handleView}
-          icon={() => (
-            <StyledIconWrapper>
-              <StyledEyeOpenIcon />
-            </StyledIconWrapper>
-          )}
-          size={IconButton.sizes?.SMALL}
-          kind={IconButton.kinds?.TERTIARY}
-          // ariaLabel='View'
-        />
+        {onViewClick && (
+          <IconButton
+            onClick={handleView}
+            icon={() => (
+              <StyledIconWrapper>
+                <StyledEyeOpenIcon />
+              </StyledIconWrapper>
+            )}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            // ariaLabel='View'
+          />
+        )}
 
         {onEditClick && (
           <IconButton

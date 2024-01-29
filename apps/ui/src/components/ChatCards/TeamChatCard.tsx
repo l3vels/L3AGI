@@ -14,7 +14,7 @@ import {
 
 type TeamChatCardProps = {
   onClick: () => void
-  onViewClick: () => void
+  onViewClick?: () => void
   onEditClick?: () => void
   onDeleteClick?: () => void
   picked: boolean
@@ -40,7 +40,7 @@ const TeamChatCard = ({
 
   const handleView = (event: any) => {
     event.stopPropagation()
-    onViewClick()
+    if (onViewClick) onViewClick()
   }
 
   const handleDelete = (event: any) => {
@@ -53,7 +53,7 @@ const TeamChatCard = ({
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <AvatarGenerator name={team?.name} size={30} avatar={team.avatar} />
-      <MemberText name={team?.name} role={team.team_type} />
+      <MemberText name={team?.name} />
 
       {/* <StyledTeamAgents>
         {agents?.map((agent: any, index: number) => {
@@ -76,17 +76,19 @@ const TeamChatCard = ({
           />
         )}
 
-        <IconButton
-          onClick={handleView}
-          icon={() => (
-            <StyledIconWrapper>
-              <StyledEyeOpenIcon />
-            </StyledIconWrapper>
-          )}
-          size={IconButton.sizes?.SMALL}
-          kind={IconButton.kinds?.TERTIARY}
-          // ariaLabel='View'
-        />
+        {onViewClick && (
+          <IconButton
+            onClick={handleView}
+            icon={() => (
+              <StyledIconWrapper>
+                <StyledEyeOpenIcon />
+              </StyledIconWrapper>
+            )}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            // ariaLabel='View'
+          />
+        )}
 
         {onEditClick && (
           <IconButton
@@ -107,18 +109,15 @@ export default TeamChatCard
 export const StyledAgentWrapper = styled.div<{ picked: boolean }>`
   cursor: pointer;
 
+  width: 260px;
+
+  border-radius: 4px;
+
   display: flex;
+  padding: 2px;
   align-items: center;
-  gap: 5px;
-
-  padding: 10px;
-  width: 100%;
-  max-width: 350px;
-
-  /* background: rgba(255, 255, 255, 0.1); */
-
-  padding-left: 15px;
-  border-radius: 10px;
+  gap: 4px;
+  align-self: stretch;
 
   :hover {
     background: rgba(0, 0, 0, 0.1);
