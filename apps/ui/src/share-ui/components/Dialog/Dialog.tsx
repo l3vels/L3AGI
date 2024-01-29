@@ -582,6 +582,8 @@ const StyledTooltipArrow = styled(TooltipArrow)`
   position: absolute;
   border-radius: 2px;
 
+  z-index: 100001;
+
   svg {
     position: absolute;
   }
