@@ -696,7 +696,8 @@ const StyledChatInputRightSide = styled.div`
 
   justify-content: flex-end;
 
-  min-width: 80px;
+  width: fit-content;
+  min-width: 30px;
 `
 const StyledCallInputContainer = styled.div`
   display: flex;

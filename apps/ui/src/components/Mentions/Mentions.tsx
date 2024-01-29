@@ -169,6 +169,8 @@ export default Mentions
 
 const StyledMentionsInput = styled(MentionsInput)`
   width: 100%;
+
+  min-height: 26px;
 `
 const StepWrapper = styled.div`
   .direction-input-wrapper {

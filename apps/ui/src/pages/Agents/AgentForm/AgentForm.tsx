@@ -144,7 +144,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
           <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
             Flow
           </Tab>
-          <Tab onClick={() => handleTabClick(6)}>Embed Chat</Tab>
+          <Tab onClick={() => handleTabClick(6)}>{t('embeddable-chat')}</Tab>
         </TabList>
       </StyledFormTabsWrapper>
       <StyledForm>

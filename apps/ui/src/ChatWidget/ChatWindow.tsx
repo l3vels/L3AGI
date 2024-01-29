@@ -11,7 +11,13 @@ import { ButtonPrimary } from 'components/Button/Button'
 import SessionForm from './chatWidgetComponents/SessionForm'
 import { useAgentByIdService } from 'services/agent/useAgentByIdService'
 
-const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
+const ChatWindow = ({
+  closeWindow,
+  getChatDetails,
+}: {
+  closeWindow: () => void
+  getChatDetails: (name: string, avatar: string) => void
+}) => {
   const [ShowForm, setShowForm] = useState(false)
   const [sessionId, setSessionId] = useState<string | null>(
     localStorage.getItem('storedSessionId') || null,
@@ -45,6 +51,20 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
     if (agentById?.agent.created_by) setUserId(agentById?.agent.created_by)
   }, [sessionId, agentById])
 
+  const handleNewConversation = () => {
+    setSessionId(null)
+    localStorage.removeItem('storedSessionId')
+  }
+
+  useEffect(() => {
+    if (sessionId && ShowForm) setShowForm(false)
+  }, [sessionId])
+
+  useEffect(() => {
+    if (agentById?.agent.name && agentById?.agent.avatar)
+      getChatDetails(agentById?.agent.name, agentById?.agent.avatar)
+  }, [agentById])
+
   return (
     <StyledChatWindow>
       <ChatWindowHeader
@@ -52,6 +72,7 @@ const ChatWindow = ({ closeWindow }: { closeWindow: () => void }) => {
         onBackClick={ShowForm ? handleHideForm : undefined}
         name={agentById?.agent.name}
         avatar={agentById?.agent.avatar}
+        restart={sessionId ? handleNewConversation : undefined}
       />
 
       {sessionId ? (

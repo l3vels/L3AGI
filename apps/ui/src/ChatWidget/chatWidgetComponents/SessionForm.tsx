@@ -4,6 +4,7 @@ import { FormikProvider, useFormik } from 'formik'
 import { t } from 'i18next'
 import { useState } from 'react'
 import { useCreateChatWidgetService } from 'services/chat/useCreateChatWidgetService'
+import Loader from 'share-ui/components/Loader/Loader'
 
 import styled from 'styled-components'
 
@@ -48,7 +49,7 @@ const SessionForm = ({ setSessionId }: { setSessionId: (value: string) => void }
         <FormikTextField focus name='chat_name' placeholder={t('name')} label={t('name')} />
 
         <ButtonPrimary onClick={handleSubmit} disabled={isLoading}>
-          {isLoading ? 'starting...' : 'Start'}
+          {isLoading ? <Loader size={30} /> : 'Start'}
         </ButtonPrimary>
       </FormikProvider>
     </StyledFormRoot>
