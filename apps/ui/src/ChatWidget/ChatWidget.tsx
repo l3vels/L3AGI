@@ -44,11 +44,11 @@ const ChatWidget = () => {
             </StyledHiddenChat>
           </BrowserRouter>
 
-          <StyledChatWidget onClick={() => setShowChat(!showChat)}>
-            {chatDetails && (
+          {chatDetails && (
+            <StyledChatWidget onClick={() => setShowChat(!showChat)}>
               <AvatarGenerator name={chatDetails.name} avatar={chatDetails.avatar} size={50} />
-            )}
-          </StyledChatWidget>
+            </StyledChatWidget>
+          )}
         </StyledRoot>
       </ThemeProvider>
     </ApolloProvider>
@@ -70,7 +70,7 @@ const StyledChatWidget = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 100px;
-  background: #ca7af7;
+
   cursor: pointer;
   width: 50px;
   height: 50px;
