@@ -128,7 +128,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
-        <TabList isColumn noBorder size='small' customWidth={200}>
+        <TabList noBorder size='small' customWidth={200}>
           <Tab
             onClick={() => handleTabClick(0)}
             isError={validationError?.agent_name && activeTab !== 0}
@@ -136,15 +136,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
             General
           </Tab>
           <Tab onClick={() => handleTabClick(1)}>Configuration</Tab>
-          <Tab onClick={() => handleTabClick(2)}>Training Details</Tab>
-          <Tab onClick={() => handleTabClick(3)}>Onboarding</Tab>
-          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice}>
+
+          <Tab onClick={() => handleTabClick(2)} disabled={!isVoice}>
             Voice Preferences
           </Tab>
-          <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
+          <Tab onClick={() => handleTabClick(3)} disabled={!isVoice}>
             Flow
           </Tab>
-          <Tab onClick={() => handleTabClick(6)}>{t('embeddable-chat')}</Tab>
         </TabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -189,6 +187,22 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       name={agent_name}
                     />
                   </StyledAvatarWrapper>
+
+                  {!isVoiceAgent(agentType) && (
+                    <CustomField
+                      formik={formik}
+                      formikField={'agent_suggestions'}
+                      placeholder={t('suggestions')}
+                    />
+                  )}
+
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('greeting')}
+                    value={agent_greeting}
+                    fieldName={'agent_greeting'}
+                    triggerResize={activeTab}
+                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -256,11 +270,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
                     />
                   </StyledCheckboxWrapper>
-                </StyledTabPanelInnerWrapper>
-              </TabPanel>
 
-              <TabPanel>
-                <StyledTabPanelInnerWrapper>
                   <TextareaFormik
                     setFieldValue={setFieldValue}
                     label={t('base-system-message')}
@@ -286,26 +296,8 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     formikField={'agent_constraints'}
                     placeholder={t('constraints')}
                   />
-                </StyledTabPanelInnerWrapper>
-              </TabPanel>
 
-              <TabPanel>
-                <StyledTabPanelInnerWrapper>
-                  {!isVoiceAgent(agentType) && (
-                    <CustomField
-                      formik={formik}
-                      formikField={'agent_suggestions'}
-                      placeholder={t('suggestions')}
-                    />
-                  )}
-
-                  <TextareaFormik
-                    setFieldValue={setFieldValue}
-                    label={t('greeting')}
-                    value={agent_greeting}
-                    fieldName={'agent_greeting'}
-                    triggerResize={activeTab}
-                  />
+                  <CopyScript />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -488,12 +480,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <CopyScript />
-                </StyledTabPanelInnerWrapper>
-              </TabPanel>
-
-              <TabPanel>
-                <StyledTabPanelInnerWrapper>
                   {integrationOptions?.map((integration: any, index: number) => {
                     return (
                       <StyledFormInputWrapper key={integration.value}>
@@ -539,7 +525,7 @@ const StyledForm = styled.div`
   /* max-width: 600px; */
   height: 100%;
   max-height: 100%;
-  /* overflow: scroll; */
+  overflow-y: auto;
 
   /* margin-top: 40px; */
   display: flex;
@@ -587,6 +573,8 @@ export const StyledCombinedFields = styled.div`
 export const StyledFormTabsWrapper = styled.div`
   position: sticky;
   top: 0;
+
+  margin-bottom: 20px;
 `
 
 export const StyledFormTabList = styled(TabList)`

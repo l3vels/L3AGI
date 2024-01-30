@@ -14,6 +14,7 @@ export const StyledFormRoot = styled.div`
   overflow-y: scroll;
 
   display: flex;
+  flex-direction: column;
 `
 export const StyledFormInputWrapper = styled.div`
   display: flex;
