@@ -30,8 +30,12 @@ import {
   TypographyTypes,
 } from 'share-ui/components/typography/TypographyConstants'
 import AvatarDropDown from 'components/AvatarDropDown'
+import { useDomainConfig } from 'utils/useDomainConfig'
 
 const MainNavigation = ({ user }: { user: any }) => {
+  const { getDomainConfig } = useDomainConfig()
+  const domainLogo = getDomainConfig('logo')
+
   const {
     getHomeModules,
     getChatModules,
@@ -82,7 +86,7 @@ const MainNavigation = ({ user }: { user: any }) => {
     <StyledUl>
       {isHome && (
         <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-          <StyledAboutIcon size={40} />
+          <StyledLogo src={domainLogo} />
         </StyledLi>
       )}
 
@@ -312,4 +316,8 @@ const StyledInnerWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+`
+const StyledLogo = styled.img`
+  width: 40px;
+  height: 40px;
 `
