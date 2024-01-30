@@ -24,6 +24,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import { useModal } from 'hooks'
 import { RUN_LOGS_MODAL_NAME } from 'modals/RunLogsModal'
 import AudioPlayer from 'components/AudioPlayer'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type AiMessageProps = {
   agentName?: string
@@ -70,7 +71,7 @@ const AiMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={name} size={50} avatar={avatarImg} />
+          <AvatarGenerator name={name} size={36} avatar={avatarImg} />
         </StyledAvatarWrapper>
         <StyledMainContent>
           <StyledMessageTop>
@@ -78,10 +79,10 @@ const AiMessage = ({
               <TypographyPrimary
                 value={agentName && teamName ? agentName : name}
                 type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                size={Typography.sizes.xss}
               />
 
-              <TypographyTertiary
+              <TypographySecondary
                 value={messageDate}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}

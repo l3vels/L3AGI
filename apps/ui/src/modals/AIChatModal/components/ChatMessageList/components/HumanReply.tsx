@@ -5,6 +5,8 @@ import Typography from 'share-ui/components/typography/Typography'
 import { useHumanMessage } from './useHumanMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
+import AiMessageMarkdown from './AiMessageMarkdown'
 
 const HumanReply = ({
   messageText,
@@ -17,11 +19,6 @@ const HumanReply = ({
   userId: string
   userName: string
 }) => {
-  const { wordArray } = useHumanMessage({
-    userId,
-    messageText,
-  })
-
   return (
     <StyledReplyWrapper>
       <StyledReplyLineWrapper>
@@ -32,14 +29,18 @@ const HumanReply = ({
           <AvatarGenerator name={userName} size={16} textSizeRatio={1.5} avatar={avatarImg} />
         </StyledSmallAvatarWrapper>
 
-        <TypographyPrimary
+        <TypographySecondary
           value={`@${userName}`}
           type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
+          size={Typography.sizes.xss}
         />
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
-        <HumanMessageText textArray={wordArray} />
+        <AiMessageMarkdown
+          isReply
+          // eslint-disable-next-line react/no-children-prop
+          children={messageText}
+        />
       </StyledReplyTextWrapper>
     </StyledReplyWrapper>
   )
@@ -81,13 +82,13 @@ export const StyledReplyLine = styled.div`
   width: 24px;
   height: 15px;
 
-  border-top: 2px solid var(--primitives-gray-500, #a8bee2);
-  border-left: 2px solid var(--primitives-gray-500, #a8bee2);
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
 
   border-top-left-radius: 10px;
 
   margin-top: 10px;
-  margin-left: 24px;
+  margin-left: 16px;
 `
 export const StyledReplyLineWrapper = styled.div`
   display: flex;

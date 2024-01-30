@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const HumanMessageText = ({ textArray }: { textArray: any }) => {
   const mentionRegex = /@\[(.*?)\]\((.*?)__(.*?)\)__mention__/
@@ -16,10 +17,10 @@ const HumanMessageText = ({ textArray }: { textArray: any }) => {
             return (
               <React.Fragment key={index}>
                 <StyledMentionText>
-                  <TypographyPrimary
+                  <TypographySecondary
                     value={`@${mention}`}
                     type={Typography.types.LABEL}
-                    size={Typography.sizes.sm}
+                    size={Typography.sizes.xss}
                   />
                 </StyledMentionText>
               </React.Fragment>
@@ -28,10 +29,10 @@ const HumanMessageText = ({ textArray }: { textArray: any }) => {
         }
         return (
           <React.Fragment key={index}>
-            <TypographyPrimary
+            <TypographySecondary
               value={`${word} `}
               type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
+              size={Typography.sizes.xss}
             />
           </React.Fragment>
         )

@@ -491,6 +491,8 @@ const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
   height: 100%;
   width: 100%;
 
+  padding: 0 24px;
+
   display: flex;
   flex-direction: column;
 

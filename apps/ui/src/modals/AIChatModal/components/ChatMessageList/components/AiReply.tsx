@@ -14,6 +14,7 @@ import { ChatMessageVersionEnum } from 'services'
 // import { useAiMessage } from './useAiMessage'
 import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 import TypographyPrimary from 'components/Typography/Primary'
+import TypographySecondary from 'components/Typography/Secondary'
 
 const AiReply = ({
   // avatarImg,
@@ -39,14 +40,15 @@ const AiReply = ({
         <StyledSmallAvatarWrapper>
           <AvatarGenerator name={author} size={16} textSizeRatio={1.5} />
         </StyledSmallAvatarWrapper>
-        <TypographyPrimary
+        <TypographySecondary
           value={`@${author}`}
           type={Typography.types.LABEL}
-          size={Typography.sizes.sm}
+          size={Typography.sizes.xss}
         />
       </StyledReplyInfoWrapper>
       <StyledReplyTextWrapper>
         <AiMessageMarkdown
+          isReply
           // eslint-disable-next-line react/no-children-prop
           children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
         />

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -13,11 +13,12 @@ const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
 const VOICE_REGEX = /\/integrations\/voice\/[^/]+/
 // const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
 
-const AiMessageMarkdown = ({ children }: { children: any }) => {
+const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; children: any }) => {
   const { openModal } = useModal()
 
   return (
     <StyledReactMarkdown
+      isReply={isReply}
       children={children}
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
@@ -114,18 +115,25 @@ const AiMessageMarkdown = ({ children }: { children: any }) => {
 
 export default memo(AiMessageMarkdown)
 
-const StyledReactMarkdown = styled(ReactMarkdown)`
+const StyledReactMarkdown = styled(ReactMarkdown)<{ isReply: boolean }>`
   color: ${({ theme }) => theme.body.textColorPrimary};
   display: flex;
   flex-direction: column;
   gap: 10px;
   font-family: 'Circular', 'Roboto';
-  font-weight: 500;
+  font-weight: 400;
 
   font-style: normal;
   font-size: 14px;
 
   white-space: pre-line;
+
+  ${props =>
+    props.isReply &&
+    css`
+      color: ${({ theme }) => theme.body.textColorSecondary};
+      font-size: 12px;
+    `};
 `
 
 const StyledTable = styled.table`
