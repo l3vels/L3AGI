@@ -14,6 +14,8 @@ import {
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { getAgentTypeText } from 'utils/agentUtils'
+import styled from 'styled-components'
+import Badge from './chatCardComponents/Badge'
 
 type AgentChatCardProps = {
   onClick: () => void
@@ -53,13 +55,18 @@ const AgentChatCard = ({
 
   const agentType = getAgentTypeText(agent?.agent_type)
 
-  const agentRole = agent?.role?.length > 0 ? `· ${agent?.role}` : ''
+  // const agentRole = agent?.role?.length > 0 ? `· ${agent?.role}` : ''
 
-  const roleText = `${agentType} ${agentRole}`
+  // const roleText = `${agentType} ${agentRole}`
 
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
-      <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
+      <StyledAvatarWrapper>
+        <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
+        <StyledBadgeWrapper>
+          <Badge type={agentType} />
+        </StyledBadgeWrapper>
+      </StyledAvatarWrapper>
       <MemberText name={agent?.name} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
@@ -102,3 +109,13 @@ const AgentChatCard = ({
 }
 
 export default AgentChatCard
+
+const StyledAvatarWrapper = styled.div`
+  position: relative;
+`
+const StyledBadgeWrapper = styled.div`
+  position: absolute;
+
+  bottom: 0;
+  right: -5%;
+`
