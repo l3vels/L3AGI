@@ -547,7 +547,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  position: relative;
   /* align-items: center; */
   padding: 10px 30px;
   /* gap: 12px; */
