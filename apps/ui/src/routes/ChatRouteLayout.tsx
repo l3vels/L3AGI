@@ -33,6 +33,7 @@ import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
+import AgentSessionsTable from 'pages/Agents/AgentSessions'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -382,7 +383,7 @@ const ChatRouteLayout = () => {
                   <TabPanel>
                     <AIChat />
                   </TabPanel>
-                  <TabPanel>{/* <AIChat /> */}</TabPanel>
+                  <TabPanel>{agentId && <AgentSessionsTable agentId={agentId} />}</TabPanel>
                   <TabPanel>
                     {agentId && <EditAgentForm />}
                     {teamId && <EditTeamOfAgentsForm />}

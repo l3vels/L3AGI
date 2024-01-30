@@ -61,7 +61,7 @@ const Sessions = () => {
     campaignOptions,
   } = useSession()
 
-  const columnConfig = useColumn()
+  const columnConfig = useColumn({})
 
   const navigate = useNavigate()
   const location = useLocation()

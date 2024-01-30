@@ -62,9 +62,10 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
   return content
 }
 
-export const useColumn = () => {
+export const useColumn = ({ noAgent = false }: { noAgent?: boolean }) => {
   const { data: calls } = useCallsService()
-  return [
+
+  const columns = [
     {
       Header: 'Name',
       accessor: 'name',
@@ -152,74 +153,7 @@ export const useColumn = () => {
     //   minWidth: 342,
     //   width: 200,
     // },
-    {
-      Header: 'Agent Name',
-      accessor: 'agent_name',
-      width: 300,
-      minWidth: 300,
 
-      // minWidth: 342,
-      Cell: (props: { row: { original: any } }) => {
-        const { original: data } = props.row
-        const navigate = useNavigate()
-        const { openModal } = useModal()
-
-        const { data: agentsData } = useAgentsService()
-
-        const handleAgentEditClick = () => {
-          const agentIdToEdit = data.agent_id
-
-          const agentToEdit = agentsData.find(agent => agent.agent.id === agentIdToEdit)
-
-          if (agentToEdit) {
-            navigate(`/agents/${agentToEdit.agent.id}/edit-agent`)
-          }
-        }
-
-        const handleViewClick = () => {
-          const selectedAgent = agentsData.find(agentObj => agentObj.agent.id === data.agent_id)
-
-          if (selectedAgent) {
-            openModal({ name: 'agent-view-modal', data: { agent: selectedAgent } })
-          }
-        }
-
-        return (
-          <StyledAgentNameCell>
-            <TypographySecondary
-              value={data.agent_name}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
-            />
-            <StyledButtonsContainer>
-              <StyledHiddenIconsWrapper>
-                <IconButton
-                  onClick={() => handleAgentEditClick()}
-                  icon={() => <StyledEditIcon />}
-                  size={IconButton.sizes?.SMALL}
-                  kind={IconButton.kinds?.TERTIARY}
-                  ariaLabel='Edit'
-                  className='eye-icon'
-                />
-
-                <IconButton
-                  onClick={() => handleViewClick()}
-                  icon={() => (
-                    <StyledIconWrapper>
-                      <StyledEyeOpenIcon />
-                    </StyledIconWrapper>
-                  )}
-                  size={IconButton.sizes?.SMALL}
-                  kind={IconButton.kinds?.TERTIARY}
-                  ariaLabel='View'
-                  className='search-icon'
-                />
-              </StyledHiddenIconsWrapper>
-            </StyledButtonsContainer>
-          </StyledAgentNameCell>
-        )
-      },
-    },
     {
       Header: 'Status',
       accessor: 'status',
@@ -343,6 +277,79 @@ export const useColumn = () => {
     //   },
     // },
   ]
+
+  if (!noAgent) {
+    columns.push({
+      Header: 'Agent Name',
+      accessor: 'agent_name',
+      width: 300,
+      minWidth: 300,
+
+      // minWidth: 342,
+      Cell: (props: { row: { original: any } }) => {
+        const { original: data } = props.row
+        const navigate = useNavigate()
+        const { openModal } = useModal()
+
+        const { data: agentsData } = useAgentsService()
+
+        const handleAgentEditClick = () => {
+          const agentIdToEdit = data.agent_id
+
+          const agentToEdit = agentsData.find(agent => agent.agent.id === agentIdToEdit)
+
+          if (agentToEdit) {
+            navigate(`/agents/${agentToEdit.agent.id}/edit-agent`)
+          }
+        }
+
+        const handleViewClick = () => {
+          const selectedAgent = agentsData.find(agentObj => agentObj.agent.id === data.agent_id)
+
+          if (selectedAgent) {
+            openModal({ name: 'agent-view-modal', data: { agent: selectedAgent } })
+          }
+        }
+
+        return (
+          <StyledAgentNameCell>
+            <TypographySecondary
+              value={data.agent_name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
+            <StyledButtonsContainer>
+              <StyledHiddenIconsWrapper>
+                <IconButton
+                  onClick={() => handleAgentEditClick()}
+                  icon={() => <StyledEditIcon />}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
+                  ariaLabel='Edit'
+                  className='eye-icon'
+                />
+
+                <IconButton
+                  onClick={() => handleViewClick()}
+                  icon={() => (
+                    <StyledIconWrapper>
+                      <StyledEyeOpenIcon />
+                    </StyledIconWrapper>
+                  )}
+                  size={IconButton.sizes?.SMALL}
+                  kind={IconButton.kinds?.TERTIARY}
+                  ariaLabel='View'
+                  className='search-icon'
+                />
+              </StyledHiddenIconsWrapper>
+            </StyledButtonsContainer>
+          </StyledAgentNameCell>
+        )
+      },
+    })
+  }
+
+  return columns
 }
 
 // const StyledActionWrapper = styled.div`
