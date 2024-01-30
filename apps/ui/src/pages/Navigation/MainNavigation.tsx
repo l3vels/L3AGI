@@ -31,6 +31,7 @@ import {
 } from 'share-ui/components/typography/TypographyConstants'
 import AvatarDropDown from 'components/AvatarDropDown'
 import { useDomainConfig } from 'utils/useDomainConfig'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const { getDomainConfig } = useDomainConfig()
@@ -85,33 +86,41 @@ const MainNavigation = ({ user }: { user: any }) => {
   return (
     <StyledUl>
       {isHome && (
-        <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-          <StyledLogo src={domainLogo} />
-        </StyledLi>
+        <Tooltip content={t('home')} position={Tooltip.positions.LEFT}>
+          <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
+            <StyledLogo src={domainLogo} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {isChat && (
-        <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-          <StyledRobotIcon size={40} />
-        </StyledLi>
+        <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
+          <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
+            <StyledRobotIcon size={40} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {isSession && (
-        <StyledLi
-          isActive={includes(active, 'sessions')}
-          onClick={() => onHandleClick('/sessions')}
-        >
-          <StyledSessionIcon size={30} />
-        </StyledLi>
+        <Tooltip content={t('session')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'sessions')}
+            onClick={() => onHandleClick('/sessions')}
+          >
+            <StyledSessionIcon size={30} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {isSchedule && (
-        <StyledLi
-          isActive={includes(active, 'schedules')}
-          onClick={() => onHandleClick('/schedules')}
-        >
-          <StyledMyWeekIcon size={30} />
-        </StyledLi>
+        <Tooltip content={t('schedule')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'schedules')}
+            onClick={() => onHandleClick('/schedules')}
+          >
+            <StyledMyWeekIcon size={30} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
@@ -122,21 +131,25 @@ const MainNavigation = ({ user }: { user: any }) => {
       </StyledLi> */}
 
       {isContact && (
-        <StyledLi
-          isActive={includes(active, 'contacts')}
-          onClick={() => onHandleClick('/contacts')}
-        >
-          <StyledMobileIcon size={30} />
-        </StyledLi>
+        <Tooltip content={t('contact')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'contacts')}
+            onClick={() => onHandleClick('/contacts')}
+          >
+            <StyledMobileIcon size={30} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {isDatasource && (
-        <StyledLi
-          isActive={includes(active, 'datasources')}
-          onClick={() => onHandleClick('/datasources')}
-        >
-          <StyledValueOutlineIcon size={40} />
-        </StyledLi>
+        <Tooltip content={t('datasource')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'datasources')}
+            onClick={() => onHandleClick('/datasources')}
+          >
+            <StyledValueOutlineIcon size={40} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {/* {isToolkit && (
@@ -154,27 +167,33 @@ const MainNavigation = ({ user }: { user: any }) => {
       )} */}
 
       {isIntegration && (
-        <StyledLi
-          isActive={includes(active, 'integrations')}
-          onClick={() => onHandleClick('/integrations')}
-        >
-          <StyledGamesIcon size={40} />
-        </StyledLi>
+        <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'integrations')}
+            onClick={() => onHandleClick('/integrations')}
+          >
+            <StyledGamesIcon size={40} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {isModel && (
-        <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
-          <StyledBasicIcon size={30} />
-        </StyledLi>
+        <Tooltip content={t('model')} position={Tooltip.positions.LEFT}>
+          <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
+            <StyledBasicIcon size={30} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       {isDiscover && (
-        <StyledLi
-          isActive={includes(active, 'discover')}
-          onClick={() => onHandleClick('/discover')}
-        >
-          <StyledSearchOutlineIcon size={40} />
-        </StyledLi>
+        <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'discover')}
+            onClick={() => onHandleClick('/discover')}
+          >
+            <StyledSearchOutlineIcon size={40} />
+          </StyledLi>
+        </Tooltip>
       )}
 
       <StyledAvatarWrapper>
