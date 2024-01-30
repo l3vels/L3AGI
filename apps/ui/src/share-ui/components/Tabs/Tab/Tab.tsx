@@ -101,8 +101,8 @@ const StyledLi = styled.li<{ focus: boolean; disabled: boolean }>`
   padding-right: 1px;
 
   text-align: center;
-  height: 100%;
-  width: 100%;
+  height: 32px;
+  width: fit-content;
   min-width: 130px;
 
   &:after {
