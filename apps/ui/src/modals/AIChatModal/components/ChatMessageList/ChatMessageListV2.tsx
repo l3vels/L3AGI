@@ -173,7 +173,7 @@ const ChatMessageListV2 = ({
           <>
             {chat?.type === 'human' && (
               <StyledWrapper isReplying={chat.id === reply.messageId}>
-                <StyledReplyMessageContainer className='visible-reply'>
+                <StyledReplyMessageContainer className='reply'>
                   {chat?.parent &&
                     (chat.parent.message.type === 'human' ? (
                       <HumanReply
