@@ -202,8 +202,8 @@ export const StyledDetailsBox = styled.div`
   background: ${({ theme }) => theme.body.cardBgColor};
   border: ${({ theme }) => theme.body.secondaryBorder};
   width: 100%;
-  max-width: 300px;
-  min-width: 300px;
+  max-width: 250px;
+  min-width: 250px;
   height: fit-content;
   /* min-height: 400px; */
 

@@ -34,6 +34,7 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import AgentSessionsTable from 'pages/Agents/AgentSessions'
+import CopyScript from 'pages/Agents/AgentForm/components/CopyScript'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -404,6 +405,7 @@ const ChatRouteLayout = () => {
               voiceUrl={chatById?.voice_url}
               call={call}
             />
+            {/* {agentId && <CopyScript />} */}
           </StyledRightColumn>
         )}
       </StyledContainer>
@@ -458,12 +460,15 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
   backdrop-filter: blur(100px);
 
   overflow-y: auto;
+
   display: flex;
+  width: 315px;
+  padding: 16px 16px 32px 16px;
   flex-direction: column;
-  align-items: flex-end;
+  /* align-items: flex-start; */
+  gap: 5px;
 
   height: 100%;
-  min-width: 320px;
 
   transition: margin-right 0.3s ease-in-out;
 
@@ -486,6 +491,7 @@ const StyledMainWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 1200px;
 `
 const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
   height: 100%;

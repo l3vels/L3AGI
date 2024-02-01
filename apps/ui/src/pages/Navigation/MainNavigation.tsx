@@ -32,6 +32,7 @@ import {
 import AvatarDropDown from 'components/AvatarDropDown'
 import { useDomainConfig } from 'utils/useDomainConfig'
 import Tooltip from 'share-ui/components/Tooltip/Tooltip'
+import Chats from 'share-ui/components/Icon/Icons/components/Chats'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const { getDomainConfig } = useDomainConfig()
@@ -96,7 +97,7 @@ const MainNavigation = ({ user }: { user: any }) => {
       {isChat && (
         <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
           <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-            <StyledRobotIcon size={40} />
+            <Chats size={40} />
           </StyledLi>
         </Tooltip>
       )}
@@ -234,20 +235,20 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
 
   cursor: pointer;
 
-  opacity: 0.8;
   ${({ isActive, theme }) =>
     isActive &&
     `
     opacity: 1;
     
     border-radius: 100px;
-    background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.10));
+    background: #000;
+  
     span{
-      color: ${theme.body.mainNavColorActive};
-    svg{
-      path{
-        fill-opacity: 1
-      }
+      color: #FFF;
+    }
+
+    path {
+    stroke: #FFF;
     }
 `}
 `
