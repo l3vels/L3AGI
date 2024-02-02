@@ -411,7 +411,8 @@ const ChatRouteLayout = () => {
               voiceUrl={chatById?.voice_url}
               call={call}
             />
-            {/* {agentId && <CopyScript />} */}
+
+            <CopyScript />
           </StyledRightColumn>
         )}
       </StyledContainer>
@@ -471,9 +472,9 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
 
   display: flex;
   width: 315px;
-  padding: 16px 16px 32px 16px;
+  /* padding: 16px 16px 32px 16px; */
   flex-direction: column;
-  /* align-items: flex-start; */
+  align-items: center;
   gap: 5px;
 
   height: 100%;

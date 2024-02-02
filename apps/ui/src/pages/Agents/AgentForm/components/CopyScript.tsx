@@ -1,7 +1,8 @@
 import CopyButton from 'components/CopyButton'
 import TypographyPrimary from 'components/Typography/Primary'
+import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import ReactMarkdown from 'react-markdown'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import Typography from 'share-ui/components/typography/Typography'
@@ -9,25 +10,31 @@ import styled from 'styled-components'
 
 const CopyScript = () => {
   const params = useParams()
-  const { agentId } = params
+
+  const location = useLocation()
+
+  const urlParams = new URLSearchParams(location.search)
+  const agentId = urlParams.get('agent') || params.agentId
 
   const appDomainName = import.meta.env.REACT_APP_DOMAIN_NAME
 
   const script = `
-          <script
-            type="module"
-            id="myWidgetScript"
-            src="${appDomainName}/assets/widget.js?widgetId=${agentId}"
-            defer
-          ></script>`
+    <script
+      type="module"
+      id="myWidgetScript"
+      src="${appDomainName}/assets/widget.js?widgetId=${agentId}"
+      defer
+    ></script>`
+
+  if (!agentId) return <div />
 
   return (
-    <>
+    <StyledDetailsBox>
       <StyledTitleWrapper>
         <TypographyPrimary
-          value={`Widget script`}
+          value={`Embed`}
           type={Typography.types.LABEL}
-          size={Typography.sizes.lg}
+          size={Typography.sizes.md}
         />
         <CopyButton onCopyClick={() => navigator.clipboard.writeText(script)} />
       </StyledTitleWrapper>
@@ -54,7 +61,7 @@ const CopyScript = () => {
       >
         {script}
       </StyledReactMarkdown>
-    </>
+    </StyledDetailsBox>
   )
 }
 

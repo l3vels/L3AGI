@@ -74,13 +74,13 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
       <StyledWrapper>
         <StyledNameWrapper>
           <TypographyPrimary
-            value={name}
+            value={'Details'}
             type={Typography.types.Heading}
             size={Typography.sizes.md}
           />
 
           <StyledButtonsWrapper>
-            {teamModule?.edit && isCreator && (
+            {/* {teamModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
                   onClick={handleEdit}
@@ -90,7 +90,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
                   ariaLabel='Edit'
                 />
               </StyledIconButton>
-            )}
+            )} */}
 
             {teamModule?.delete && isCreator && (
               <MenuButton component={() => <MenuDotsOutline size={20} />}>
@@ -106,7 +106,7 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
           </StyledButtonsWrapper>
         </StyledNameWrapper>
 
-        {!isCreator && (
+        {/* {!isCreator && (
           <div>
             <ButtonPrimary
               size={Button.sizes?.SMALL}
@@ -118,13 +118,11 @@ const TeamOfAgentsDetailsBox = ({ teamData }: TeamOfAgentsDetailsBoxProps) => {
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
-        )}
+        )} */}
       </StyledWrapper>
 
       {description && (
         <>
-          <StyledDivider />
-
           <StyledWrapper>
             <TypographyTertiary
               value={description}

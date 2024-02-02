@@ -94,13 +94,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
       <StyledWrapper>
         <StyledNameWrapper>
           <TypographyPrimary
-            value={name}
+            value={'Details'}
             type={Typography.types.Heading}
             size={Typography.sizes.md}
           />
 
           <StyledButtonsWrapper>
-            {agentModule?.edit && isCreator && (
+            {/* {agentModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
                   onClick={handleEdit}
@@ -110,7 +110,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
                   ariaLabel='Edit'
                 />
               </StyledIconButton>
-            )}
+            )} */}
 
             {agentModule?.delete && isCreator && (
               <MenuButton component={() => <MenuDotsOutline size={20} />}>
@@ -125,14 +125,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             )}
           </StyledButtonsWrapper>
         </StyledNameWrapper>
-        {creator && (
+        {/* {creator && (
           <TypographySecondary
             value={`By ${creator.name}`}
             type={Typography.types.LABEL}
             size={Typography.sizes.xss}
           />
-        )}
-        {!isCreator && (
+        )} */}
+        {/* {!isCreator && (
           <div>
             <ButtonPrimary
               size={Button.sizes?.SMALL}
@@ -147,12 +147,11 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
-        )}
+        )} */}
       </StyledWrapper>
 
       {description && (
         <>
-          <StyledDivider />
           <StyledWrapper>
             <TypographyTertiary
               value={description}
@@ -199,7 +198,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 export default AgentVIewDetailBox
 
 export const StyledDetailsBox = styled.div`
-  background: ${({ theme }) => theme.body.cardBgColor};
+  background: ${({ theme }) => theme.body.componentsWrapperBg};
   border: ${({ theme }) => theme.body.secondaryBorder};
   width: 100%;
   max-width: 250px;
@@ -219,7 +218,6 @@ export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px 0;
 
   white-space: pre-line;
 `

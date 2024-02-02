@@ -296,8 +296,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
                     />
                   </StyledCheckboxWrapper>
-
-                  <CopyScript />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
