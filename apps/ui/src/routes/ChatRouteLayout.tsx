@@ -368,7 +368,7 @@ const ChatRouteLayout = () => {
           <StyledDivider />
 
           {location.pathname.includes('/chat') ? (
-            <StyledChatWrapper isHidden={false}>
+            <StyledChatWrapper>
               <StyledTabHeader>
                 <TabList size='small' activeTabId={activeTab} noBorder>
                   <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
@@ -384,7 +384,13 @@ const ChatRouteLayout = () => {
                   <TabPanel>
                     <AIChat />
                   </TabPanel>
-                  <TabPanel>{agentId && <AgentSessionsTable agentId={agentId} />}</TabPanel>
+                  <TabPanel>
+                    {agentId && (
+                      <StyledTableWrapper>
+                        <AgentSessionsTable agentId={agentId} />
+                      </StyledTableWrapper>
+                    )}
+                  </TabPanel>
                   <TabPanel>
                     {agentId && <EditAgentForm />}
                     {teamId && <EditTeamOfAgentsForm />}
@@ -491,22 +497,17 @@ const StyledMainWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 1200px;
 `
-const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
+const StyledChatWrapper = styled.div`
   height: 100%;
   width: 100%;
-  /* max-width: 900px; */
+  max-width: 900px;
 
   padding: 0 24px;
 
   display: flex;
   flex-direction: column;
-
-  ${props =>
-    props.isHidden &&
-    css`
-      display: none;
-    `}
 `
 const StyledOutletWrapper = styled.div`
   width: 100%;
@@ -558,4 +559,7 @@ const StyledHorizontalDivider = styled.div`
 
   width: 100%;
   /* margin: 8px 0; */
+`
+const StyledTableWrapper = styled.div`
+  max-width: 800px;
 `
