@@ -20,7 +20,7 @@ const BackButton = ({ customOnClick }: BackButtonProps) => {
   }
 
   return (
-    <ButtonTertiary onClick={ClickHandler} size={Button.sizes?.SMALL}>
+    <ButtonTertiary onClick={ClickHandler} size={Button.sizes?.MEDIUM}>
       {t('back')}
     </ButtonTertiary>
   )

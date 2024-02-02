@@ -37,17 +37,16 @@ const EditAgentForm = () => {
         <StyledFormWrapper>
           <AgentForm formik={formik} isVoice={isVoiceEdit} />
         </StyledFormWrapper>
+        <StyledButtonWrapper>
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            disabled={isLoading}
+            size={Button.sizes?.MEDIUM}
+          >
+            {isLoading ? <Loader size={32} /> : t('save')}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
-      <StyledButtonWrapper>
-        {/* <BackButton customOnClick={handleNavigation} /> */}
-        <ButtonPrimary
-          onClick={formik?.handleSubmit}
-          disabled={isLoading}
-          size={Button.sizes?.MEDIUM}
-        >
-          {isLoading ? <Loader size={32} /> : t('save')}
-        </ButtonPrimary>
-      </StyledButtonWrapper>
     </FormikProvider>
   )
 }

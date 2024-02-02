@@ -452,6 +452,8 @@ const StyledLeftColumn = styled.div<{
       margin-left: -475px;
       overflow: hidden;
       cursor: pointer;
+
+      opacity: 0;
     `}
   ${props =>
     props.isSmallScreen &&
@@ -484,6 +486,7 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
       margin-right: -320px;
       overflow: hidden;
       cursor: pointer;
+      opacity: 0;
     `}
 `
 

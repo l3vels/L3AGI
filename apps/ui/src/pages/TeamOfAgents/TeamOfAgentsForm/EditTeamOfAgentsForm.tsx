@@ -34,17 +34,16 @@ const EditTeamOfAgentsForm = () => {
           <StyledFormWrapper>
             <TeamOfAgentsForm formik={formik} isLoading={isLoading} />
           </StyledFormWrapper>
+          <StyledButtonWrapper>
+            <ButtonPrimary
+              onClick={() => handleSubmit(formik?.values)}
+              size={Button.sizes?.MEDIUM}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader size={32} /> : t('save')}
+            </ButtonPrimary>
+          </StyledButtonWrapper>
         </StyledSectionWrapper>
-        <StyledButtonWrapper>
-          {/* <BackButton customOnClick={handleNavigation} /> */}
-          <ButtonPrimary
-            onClick={() => handleSubmit(formik?.values)}
-            size={Button.sizes?.MEDIUM}
-            disabled={isLoading}
-          >
-            {isLoading ? <Loader size={32} /> : t('save')}
-          </ButtonPrimary>
-        </StyledButtonWrapper>
       </FormikProvider>
     </>
   )
