@@ -231,8 +231,8 @@ const ChatRouteLayout = () => {
                         onClick={() => {
                           navigate(`/chat?tab=playground&team=${teamOfAgents.id}`)
                         }}
-                        // onViewClick={handleView}
-                        // onDeleteClick={teamModule?.delete && isCreator && handleDelete}
+                        onViewClick={handleView}
+                        onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                         onEditClick={teamModule?.edit && isCreator && handleEdit}
                         picked={teamId === teamOfAgents.id}
                         team={teamOfAgents}
@@ -303,8 +303,8 @@ const ChatRouteLayout = () => {
                       <AgentChatCard
                         key={index}
                         onClick={() => navigate(`/chat?tab=playground&agent=${agent.id}`)}
-                        // onViewClick={handleView}
-                        // onDeleteClick={agentModule?.delete && isCreator && handleDelete}
+                        onViewClick={handleView}
+                        onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                         onEditClick={agentModule?.edit && isCreator && handleEdit}
                         picked={agentId === agent.id}
                         agent={agent}
@@ -491,11 +491,11 @@ const StyledMainWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1200px;
 `
 const StyledChatWrapper = styled.div<{ isHidden: boolean }>`
   height: 100%;
   width: 100%;
+  /* max-width: 900px; */
 
   padding: 0 24px;
 
