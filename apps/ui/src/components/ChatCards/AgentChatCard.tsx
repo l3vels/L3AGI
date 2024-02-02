@@ -62,7 +62,7 @@ const AgentChatCard = ({
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
       <StyledAvatarWrapper>
-        <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
+        <AvatarGenerator name={agent?.name} size={50} avatar={agent.avatar} />
         <StyledBadgeWrapper>
           <Badge type={agentType} />
         </StyledBadgeWrapper>
@@ -117,5 +117,5 @@ const StyledBadgeWrapper = styled.div`
   position: absolute;
 
   bottom: 0;
-  right: -5%;
+  right: -4px;
 `

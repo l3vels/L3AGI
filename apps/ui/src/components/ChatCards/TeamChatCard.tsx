@@ -52,7 +52,7 @@ const TeamChatCard = ({
 
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
-      <AvatarGenerator name={team?.name} size={30} avatar={team.avatar} />
+      <AvatarGenerator name={team?.name} size={50} avatar={team.avatar} />
       <MemberText name={team?.name} />
 
       {/* <StyledTeamAgents>
@@ -115,8 +115,9 @@ export const StyledAgentWrapper = styled.div<{ picked: boolean }>`
 
   display: flex;
   padding: 2px;
+  padding-left: 4px;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   align-self: stretch;
 
   :hover {

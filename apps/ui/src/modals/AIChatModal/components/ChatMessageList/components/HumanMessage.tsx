@@ -45,7 +45,7 @@ const HumanMessage = ({
     <>
       <StyledMessageWrapper>
         <StyledAvatarWrapper>
-          <AvatarGenerator name={userName} size={36} avatar={avatarImg} />
+          <AvatarGenerator name={userName} size={50} avatar={avatarImg} />
         </StyledAvatarWrapper>
 
         <StyledMainContent>

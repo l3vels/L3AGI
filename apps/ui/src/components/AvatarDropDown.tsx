@@ -58,7 +58,7 @@ const AvatarDropDown = () => {
     <StyledDropDownMenuRoot>
       <StyledDropDownMenuTrigger>
         {/* <Avatar size={Avatar.sizes.SMALL} src={defaultAvatar} type={Avatar.types.IMG} rectangle /> */}
-        <AvatarGenerator name={user.name} size={40} avatar={user.avatar} />
+        <AvatarGenerator name={user.name} size={60} arcShape avatar={user.avatar} />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
         {/* <StyledDropDownMenuItem onClick={() => navigate('/account')}>
