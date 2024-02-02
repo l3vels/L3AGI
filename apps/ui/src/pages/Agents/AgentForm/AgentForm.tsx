@@ -208,6 +208,32 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('base-system-message')}
+                    value={agent_text}
+                    fieldName={'agent_text'}
+                    triggerResize={activeTab}
+                  />
+
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_instructions'}
+                    placeholder={t('instructions')}
+                  />
+
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_goals'}
+                    placeholder={t('goals')}
+                  />
+
+                  <CustomField
+                    formik={formik}
+                    formikField={'agent_constraints'}
+                    placeholder={t('constraints')}
+                  />
+
                   <AgentDropdown
                     isMulti
                     label={t('tools')}
@@ -270,32 +296,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
                     />
                   </StyledCheckboxWrapper>
-
-                  <TextareaFormik
-                    setFieldValue={setFieldValue}
-                    label={t('base-system-message')}
-                    value={agent_text}
-                    fieldName={'agent_text'}
-                    triggerResize={activeTab}
-                  />
-
-                  <CustomField
-                    formik={formik}
-                    formikField={'agent_instructions'}
-                    placeholder={t('instructions')}
-                  />
-
-                  <CustomField
-                    formik={formik}
-                    formikField={'agent_goals'}
-                    placeholder={t('goals')}
-                  />
-
-                  <CustomField
-                    formik={formik}
-                    formikField={'agent_constraints'}
-                    placeholder={t('constraints')}
-                  />
 
                   <CopyScript />
                 </StyledTabPanelInnerWrapper>
