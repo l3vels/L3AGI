@@ -183,13 +183,13 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
         <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
 
-        {isVoiceAgent(agent_type) && (
+        {/* {isVoiceAgent(agent_type) && (
           <>
             {agentTranscriber && <TagsRow title={t('transcriber')} items={[agentTranscriber]} />}
             {agentSynthesizer && <TagsRow title={t('synthesizer')} items={[agentSynthesizer]} />}
             {voice_id && <TagsRow title={t('voice-id')} items={[voice_id]} />}
           </>
-        )}
+        )} */}
       </StyledWrapper>
     </StyledDetailsBox>
   )

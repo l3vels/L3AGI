@@ -35,6 +35,14 @@ import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
 import AgentSessionsTable from 'pages/Agents/AgentSessions'
 import CopyScript from 'pages/Agents/AgentForm/components/CopyScript'
+import AgentVIewDetailBox, {
+  StyledDetailsBox,
+} from 'pages/Agents/AgentView/components/AgentViewDetailBox'
+import TypographyPrimary from 'components/Typography/Primary'
+import Typography from 'share-ui/components/typography/Typography'
+import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDetailsBox'
+import Integrations from 'pages/Integrations'
+import IntegrationDetails from './components/IntegrationsDetails'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -405,14 +413,26 @@ const ChatRouteLayout = () => {
 
         {user && (
           <StyledRightColumn isHidden={!showInfo && expand}>
-            <ChatMembers
+            {/* <ChatMembers
               agentById={agentById || chatById?.agent}
               teamOfAgents={teamOfAgents}
               voiceUrl={chatById?.voice_url}
               call={call}
-            />
+            /> */}
+            {agentById && <AgentVIewDetailBox agentData={agentById} />}
+            {teamOfAgents && <TeamOfAgentsDetailsBox teamData={teamOfAgents} />}
 
             <CopyScript />
+
+            {agentById && <IntegrationDetails agentData={agentById} />}
+
+            {/* <StyledDetailsBox>
+              <TypographyPrimary
+                value={t('datasources')}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+            </StyledDetailsBox> */}
           </StyledRightColumn>
         )}
       </StyledContainer>
@@ -475,7 +495,7 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
   /* padding: 16px 16px 32px 16px; */
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 16px;
 
   height: 100%;
 
