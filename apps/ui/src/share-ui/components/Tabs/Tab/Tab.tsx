@@ -196,11 +196,13 @@ const StyledA = styled.a<{ active: boolean; disabled: boolean; size: string; isE
     css`
       color: ${({ theme }) => theme?.tabs.activeColor};
       background-color: ${({ theme }) => theme?.tabs.activeBgColor};
-
+      border: 2px solid ${({ theme }) => theme?.tabs.borderColor};
       border-radius: 60px;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        /* background-color: rgba(0, 0, 0, 0.); */
+        background-color: ${({ theme }) => theme?.tabs.activeBgColor};
+
         cursor: auto;
       }
     `}

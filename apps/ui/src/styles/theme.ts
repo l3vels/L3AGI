@@ -199,11 +199,11 @@ const lightTheme: DefaultTheme = {
     },
   },
   tabs: {
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: '#0000004D',
     hoverBgColor: 'rgba(0, 0, 0, 0.2)',
-    activeColor: '#fff',
-    activeBgColor: 'rgba(0, 0, 0, 0.5)',
-    borderColor: 'lightGray',
+    activeColor: '#000',
+    activeBgColor: '#fff',
+    borderColor: '#000',
   },
 }
 
