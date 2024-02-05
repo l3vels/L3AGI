@@ -11,7 +11,7 @@ type AvatarGeneratorProps = {
   arcShape?: boolean
 }
 
-const AVATAR_COLORS = ['#A822F3', '#000000CC', '#EF5533']
+const AVATAR_COLORS = ['#A822F3', '#F0A300', '#EF5533']
 
 const AvatarGenerator = ({
   name,
@@ -60,8 +60,8 @@ const StyledAvatarWrapper = styled.div<{ size: number; arcShape: boolean }>`
     props.arcShape &&
     css`
       border-radius: 100px 100px 40px 40px;
-      height: calc(${props.size}px - 10px);
-      width: calc(${props.size}px - 14px);
+      height: calc(${props.size}px - 14px);
+      width: calc(${props.size}px - 16px);
 
       border: 2px solid #000;
     `}
