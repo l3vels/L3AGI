@@ -60,7 +60,9 @@ const StyledAvatarWrapper = styled.div<{ size: number; arcShape: boolean }>`
     props.arcShape &&
     css`
       border-radius: 100px 100px 40px 40px;
-      height: calc(${props.size}px - 16px);
+      height: calc(${props.size}px - 10px);
+      width: calc(${props.size}px - 14px);
+
       border: 2px solid #000;
     `}
 `

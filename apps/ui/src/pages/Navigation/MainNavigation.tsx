@@ -33,6 +33,7 @@ import AvatarDropDown from 'components/AvatarDropDown'
 import { useDomainConfig } from 'utils/useDomainConfig'
 import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import Chats from 'share-ui/components/Icon/Icons/components/Chats'
+import Integrations from 'share-ui/components/Icon/Icons/components/integrations'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const { getDomainConfig } = useDomainConfig()
@@ -85,75 +86,76 @@ const MainNavigation = ({ user }: { user: any }) => {
   }, [pathname])
 
   return (
-    <StyledUl>
-      {isHome && (
-        <Tooltip content={t('home')} position={Tooltip.positions.LEFT}>
-          <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
-            <StyledLogo src={domainLogo} />
-          </StyledLi>
-        </Tooltip>
-      )}
+    <StyledRoot>
+      <StyledUl>
+        {isHome && (
+          <Tooltip content={t('home')} position={Tooltip.positions.LEFT}>
+            <StyledLi isActive={active[1] === ''} onClick={() => onHandleClick('/')}>
+              <StyledLogo src={domainLogo} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {isChat && (
-        <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
-          <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-            <Chats size={40} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isChat && (
+          <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
+            <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
+              <Chats size={40} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {isSession && (
-        <Tooltip content={t('session')} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'sessions')}
-            onClick={() => onHandleClick('/sessions')}
-          >
-            <StyledSessionIcon size={30} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isSession && (
+          <Tooltip content={t('session')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'sessions')}
+              onClick={() => onHandleClick('/sessions')}
+            >
+              <StyledSessionIcon size={30} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {isSchedule && (
-        <Tooltip content={t('schedule')} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'schedules')}
-            onClick={() => onHandleClick('/schedules')}
-          >
-            <StyledMyWeekIcon size={30} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isSchedule && (
+          <Tooltip content={t('schedule')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'schedules')}
+              onClick={() => onHandleClick('/schedules')}
+            >
+              <StyledMyWeekIcon size={30} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
+        {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
         <StyledValueIcon>
           <StyledValueOutLineIcon size={38} />
         </StyledValueIcon>
         <span>Agents</span>
       </StyledLi> */}
 
-      {isContact && (
-        <Tooltip content={t('contact')} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'contacts')}
-            onClick={() => onHandleClick('/contacts')}
-          >
-            <StyledMobileIcon size={30} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isContact && (
+          <Tooltip content={t('contact')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'contacts')}
+              onClick={() => onHandleClick('/contacts')}
+            >
+              <StyledMobileIcon size={30} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {isDatasource && (
-        <Tooltip content={t('datasource')} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'datasources')}
-            onClick={() => onHandleClick('/datasources')}
-          >
-            <StyledValueOutlineIcon size={40} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isDatasource && (
+          <Tooltip content={t('datasource')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'datasources')}
+              onClick={() => onHandleClick('/datasources')}
+            >
+              <StyledValueOutlineIcon size={40} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {/* {isToolkit && (
+        {/* {isToolkit && (
         <StyledLi
           isActive={includes(active, 'toolkits')}
           onClick={() => onHandleClick('/toolkits')}
@@ -167,48 +169,61 @@ const MainNavigation = ({ user }: { user: any }) => {
         </StyledLi>
       )} */}
 
-      {isIntegration && (
-        <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'integrations')}
-            onClick={() => onHandleClick('/integrations')}
-          >
-            <StyledGamesIcon size={40} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isModel && (
+          <Tooltip content={t('model')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'models')}
+              onClick={() => onHandleClick('/models')}
+            >
+              <StyledBasicIcon size={30} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {isModel && (
-        <Tooltip content={t('model')} position={Tooltip.positions.LEFT}>
-          <StyledLi isActive={includes(active, 'models')} onClick={() => onHandleClick('/models')}>
-            <StyledBasicIcon size={30} />
-          </StyledLi>
-        </Tooltip>
-      )}
+        {isDiscover && (
+          <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'discover')}
+              onClick={() => onHandleClick('/discover')}
+            >
+              <StyledSearchOutlineIcon size={40} />
+            </StyledLi>
+          </Tooltip>
+        )}
 
-      {isDiscover && (
-        <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'discover')}
-            onClick={() => onHandleClick('/discover')}
-          >
-            <StyledSearchOutlineIcon size={40} />
-          </StyledLi>
-        </Tooltip>
-      )}
-
-      <StyledAvatarWrapper>
+        {/* <StyledSpace /> */}
+      </StyledUl>
+      <StyledBottomSection>
+        {isIntegration && (
+          <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'integrations')}
+              onClick={() => onHandleClick('/integrations')}
+            >
+              <Integrations size={40} />
+            </StyledLi>
+          </Tooltip>
+        )}
         <StyledInnerWrapper>
           <AvatarDropDown />
         </StyledInnerWrapper>
-
         {/* <MediaButtons /> */}
-      </StyledAvatarWrapper>
-    </StyledUl>
+      </StyledBottomSection>
+    </StyledRoot>
   )
 }
 
 export default MainNavigation
+
+const StyledRoot = styled.div`
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-bottom: 24px;
+`
 
 const StyledUl = styled.ul`
   height: 100%;
@@ -311,18 +326,13 @@ const StyledSessionIcon = styled(Session)`
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
-const StyledAvatarWrapper = styled.div`
+const StyledBottomSection = styled.div`
   margin-top: auto;
 
-  position: sticky;
-  bottom: 0;
-
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   flex-direction: column;
-  gap: 0px;
-
-  z-index: 100000000;
+  gap: 10px;
 
   span {
     font-style: normal;
