@@ -199,7 +199,7 @@ export default AgentVIewDetailBox
 
 export const StyledDetailsBox = styled.div`
   background: ${({ theme }) => theme.body.componentsWrapperBg};
-  border: ${({ theme }) => theme.body.secondaryBorder};
+  /* border: ${({ theme }) => theme.body.secondaryBorder}; */
   width: 100%;
   max-width: 250px;
   min-width: 250px;
