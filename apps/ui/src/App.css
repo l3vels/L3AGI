@@ -1,5 +1,6 @@
-@import url('./fonts/circular-medium/stylesheet.css');
-@import url('./fonts/circular-normal/stylesheet.css');
+/* @import url('./fonts/circular-medium/stylesheet.css');
+@import url('./fonts/circular-normal/stylesheet.css'); */
+@import url('./fonts/onest/stylesheet.css');
 
 *,
 *::before,
@@ -17,7 +18,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  font-family: Circular, sans-serif;
+  font-family: 'Onest' !important;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
   font-display: swap;

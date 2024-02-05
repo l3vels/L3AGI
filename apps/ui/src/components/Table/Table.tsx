@@ -304,7 +304,7 @@ const PageNumber = styled.div<{ active?: boolean; readOnly?: boolean }>`
   margin: 0 5px;
   cursor: pointer;
   font-size: 15px;
-  font-family: Circular, sans-serif;
+  /* font-family: Circular, sans-serif; */
   font-weight: normal;
   font-style: normal;
   width: 30px;

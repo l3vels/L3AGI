@@ -120,7 +120,7 @@ const StyledReactMarkdown = styled(ReactMarkdown)<{ isReply: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-family: 'Circular', 'Roboto';
+  /* font-family: 'Circular'; */
   font-weight: 400;
 
   font-style: normal;
