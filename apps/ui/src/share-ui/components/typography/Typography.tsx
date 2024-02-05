@@ -46,7 +46,7 @@ Object.assign(Typography, {
 export default Typography
 
 const StyledTypography = styled.span<{ size: string }>`
-  font-weight: 450;
+  /* font-weight: 450; */
   font-style: normal;
   ${props =>
     props.size === 'large' &&

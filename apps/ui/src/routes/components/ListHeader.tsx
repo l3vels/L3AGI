@@ -75,6 +75,6 @@ const StyledListHeader = styled.div`
 
   justify-content: space-between;
   width: 100%;
-
+  font-weight: 700;
   /* min-height: 50px; */
 `

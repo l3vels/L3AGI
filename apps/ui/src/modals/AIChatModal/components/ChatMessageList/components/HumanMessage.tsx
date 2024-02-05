@@ -169,6 +169,8 @@ export const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  font-weight: 500;
 `
 export const StyledMessageActionsWrapper = styled.div`
   opacity: 0;

@@ -21,7 +21,7 @@ const MemberText = ({ name, role }: MemberTextProps) => {
 
   return (
     <StyledNameWrapper>
-      <TypographySecondary
+      <TypographyPrimary
         value={shortName}
         type={Typography.types.LABEL}
         size={Typography.sizes.md}
@@ -41,4 +41,6 @@ export default MemberText
 const StyledNameWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  font-weight: 500;
+  opacity: 0.8;
 `
