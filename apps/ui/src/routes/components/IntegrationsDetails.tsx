@@ -1,4 +1,5 @@
 import TypographyPrimary from 'components/Typography/Primary'
+import { useModal } from 'hooks'
 import { t } from 'i18next'
 import { useAgentForm } from 'pages/Agents/AgentForm/useAgentForm'
 import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
@@ -9,7 +10,15 @@ import styled from 'styled-components'
 import { AgentWithConfigs } from 'types'
 
 const IntegrationDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
-  const { voiceSynthesizerOptions, voiceTranscriberOptions, toolOptions } = useAgentForm({})
+  const { openModal } = useModal()
+
+  const {
+    voiceSynthesizerOptions,
+    voiceTranscriberOptions,
+    toolOptions,
+    tools: toolsData,
+    voices: voicesData,
+  } = useAgentForm({})
 
   const synthesizerId = agentData?.configs?.synthesizer
   const transcriberId = agentData?.configs?.transcriber
@@ -25,6 +34,23 @@ const IntegrationDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
   const transcriberLogo =
     voiceLogos?.find((voice: any) => voice.voiceName === transcriber?.label)?.logoSrc || ''
 
+  const toolSlugs = toolsData?.map((tool: any) => {
+    return { slug: tool.slug, id: tool.toolkit_id }
+  })
+  const voiceSlugs = voicesData?.map((voice: any) => {
+    return { slug: voice.slug, id: voice.id }
+  })
+
+  const handleOpenVoiceIntegrationModal = (id: string) => {
+    const slug = voiceSlugs?.find((slug: any) => slug.id === id)?.slug
+    openModal({ name: 'voice-modal', data: { voiceSlug: slug } })
+  }
+
+  const handleOpenToolIntegrationModal = (id: string) => {
+    const slug = toolSlugs?.find((slug: any) => slug.id === id)?.slug
+    openModal({ name: 'toolkit-modal', data: { toolSlug: slug } })
+  }
+
   return (
     <StyledDetailsBox>
       <TypographyPrimary
@@ -35,7 +61,7 @@ const IntegrationDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
 
       <StyledCardsWrapper>
         {synthesizer && (
-          <StyledIntegrationCard>
+          <StyledIntegrationCard onClick={() => handleOpenVoiceIntegrationModal(synthesizer.value)}>
             <StyledImg src={synthesizerLogo} />
 
             <TypographyPrimary
@@ -46,7 +72,7 @@ const IntegrationDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
           </StyledIntegrationCard>
         )}
         {transcriber && (
-          <StyledIntegrationCard>
+          <StyledIntegrationCard onClick={() => handleOpenVoiceIntegrationModal(transcriber.value)}>
             <StyledImg src={transcriberLogo} />
 
             <TypographyPrimary
@@ -64,7 +90,10 @@ const IntegrationDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
 
           const logoSrc = filteredLogos?.[0]?.logoSrc || ''
           return (
-            <StyledIntegrationCard key={tool?.value}>
+            <StyledIntegrationCard
+              key={tool?.value}
+              onClick={() => handleOpenToolIntegrationModal(tool?.value)}
+            >
               <StyledImg src={logoSrc} />
 
               <TypographyPrimary
@@ -85,7 +114,14 @@ export default IntegrationDetails
 const StyledIntegrationCard = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+
+  padding: 5px;
+  border-radius: 8px;
+
+  :hover {
+    background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
+    cursor: pointer;
+  }
 `
 
 const StyledImg = styled.img`

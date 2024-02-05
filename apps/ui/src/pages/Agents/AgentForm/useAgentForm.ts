@@ -121,5 +121,7 @@ export const useAgentForm = (formik: any) => {
     voiceSynthesizerOptions,
     voiceTranscriberOptions,
     voiceModelOptions,
+    tools,
+    voices,
   }
 }
