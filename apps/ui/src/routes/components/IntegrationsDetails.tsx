@@ -111,7 +111,7 @@ const IntegrationDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
 
 export default IntegrationDetails
 
-const StyledIntegrationCard = styled.div`
+export const StyledIntegrationCard = styled.div`
   display: flex;
   align-items: center;
 
@@ -126,12 +126,12 @@ const StyledIntegrationCard = styled.div`
   }
 `
 
-const StyledImg = styled.img`
+export const StyledImg = styled.img`
   width: 16px;
   height: 16px;
   border-radius: 4px;
 `
-const StyledCardsWrapper = styled.div`
+export const StyledCardsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;

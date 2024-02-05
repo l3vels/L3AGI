@@ -43,6 +43,7 @@ import Typography from 'share-ui/components/typography/Typography'
 import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDetailsBox'
 import Integrations from 'pages/Integrations'
 import IntegrationDetails from './components/IntegrationsDetails'
+import DatasourceDetails from './components/DatasourceDetails'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -425,6 +426,9 @@ const ChatRouteLayout = () => {
             <CopyScript />
 
             {agentById && <IntegrationDetails agentData={agentById} />}
+            {agentById && agentById.agent.agent_type === 'text' && (
+              <DatasourceDetails agentData={agentById} />
+            )}
 
             {/* <StyledDetailsBox>
               <TypographyPrimary
