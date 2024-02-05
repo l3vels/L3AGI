@@ -115,6 +115,8 @@ const StyledIntegrationCard = styled.div`
   display: flex;
   align-items: center;
 
+  gap: 4px;
+
   padding: 5px;
   border-radius: 8px;
 

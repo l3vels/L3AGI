@@ -70,5 +70,7 @@ export const StyledButtonWrapper = styled.div`
   width: 100%;
   gap: 5px;
 
+  padding-right: 10px;
+
   margin-top: auto;
 `

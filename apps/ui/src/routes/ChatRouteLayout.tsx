@@ -531,7 +531,7 @@ const StyledChatWrapper = styled.div`
 `
 const StyledOutletWrapper = styled.div`
   width: 100%;
-  padding: 0 30px;
+  /* padding: 0 30px; */
 
   /* max-width: 1500px; */
 `
