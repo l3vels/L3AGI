@@ -473,19 +473,11 @@ const StyledLeftColumn = styled.div<{
   ${props =>
     props.isHidden &&
     css`
-      margin-left: -475px;
+      margin-left: -260px;
       overflow: hidden;
       cursor: pointer;
 
       opacity: 0;
-    `}
-  ${props =>
-    props.isSmallScreen &&
-    css`
-      margin-left: 0;
-      overflow: auto;
-      cursor: pointer;
-      position: static;
     `}
 `
 const StyledRightColumn = styled.div<{ isHidden: boolean }>`
@@ -545,7 +537,7 @@ const StyledOutletWrapper = styled.div`
 `
 const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean }>`
   height: 100vh;
-  width: calc(30% - 120px);
+  width: calc(10% - 120px);
 
   cursor: pointer;
 
@@ -558,6 +550,8 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
     css`
       right: 0;
       margin-left: auto;
+
+      width: calc(15% - 200px);
     `}
   ${props =>
     props.isSmallScreen &&
@@ -572,6 +566,9 @@ const StyledMiddleArea = styled.div`
   cursor: pointer;
 
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 10000;
   /* left: 0; */
 `

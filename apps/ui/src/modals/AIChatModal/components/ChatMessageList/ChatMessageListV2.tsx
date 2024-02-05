@@ -314,12 +314,7 @@ const StyledLoaderWrapper = styled.div`
   align-items: flex-start;
   padding-right: 10px;
   min-width: 400px;
-  width: calc(100% - 100px);
-  max-width: 800px;
-
-  @media only screen and (max-width: 1750px) {
-    max-width: 600px;
-  }
+  width: 100%;
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;

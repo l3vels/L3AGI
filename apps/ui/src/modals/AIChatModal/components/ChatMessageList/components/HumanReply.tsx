@@ -55,16 +55,11 @@ export const StyledReplyWrapper = styled.div`
   font-size: 14px;
 
   min-width: 400px;
-  width: calc(100% - 100px);
-  max-width: 800px;
+  width: 100%;
 
   height: 20px;
 
   gap: 10px;
-
-  @media only screen and (max-width: 1750px) {
-    max-width: 600px;
-  }
 `
 
 export const StyledReplyInfoWrapper = styled.div`
