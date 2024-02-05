@@ -11,7 +11,7 @@ type AvatarGeneratorProps = {
   arcShape?: boolean
 }
 
-const AVATAR_COLORS = ['#A822F3', '#FFC700', '#EF5533']
+const AVATAR_COLORS = ['#A822F3', '#000000CC', '#EF5533']
 
 const AvatarGenerator = ({
   name,

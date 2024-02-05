@@ -4,7 +4,7 @@ import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDet
 import ReactMarkdown from 'react-markdown'
 import { useLocation, useParams } from 'react-router-dom'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 
@@ -46,7 +46,7 @@ const CopyScript = () => {
             return !inline && match ? (
               <SyntaxHighlighter
                 children={String(children).replace(/\n$/, '')}
-                style={atomDark as any}
+                style={oneLight as any}
                 language={match[1]}
                 PreTag='div'
                 {...props}
@@ -74,4 +74,6 @@ const StyledTitleWrapper = styled.div`
 
 const StyledReactMarkdown = styled(ReactMarkdown)`
   border-radius: 10px;
+
+  border: 3px solid ${({ theme }) => theme?.body.textareaBorder};
 `
