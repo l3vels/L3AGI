@@ -444,12 +444,15 @@ export default ChatRouteLayout
 
 const StyledContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+
   width: 100%;
   height: 100%;
   overflow: hidden;
 
   position: relative;
+
+  gap: 20px;
 `
 const StyledLeftColumn = styled.div<{
   isHidden?: boolean
@@ -514,6 +517,7 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
 const StyledMainWrapper = styled.div`
   /* margin-top: 30px; */
   padding: 16px;
+  padding-right: 0;
   border-radius: 16px;
   /* background: var(--background-background-tertiary, #f5f5f7); */
   background: ${({ theme }) => theme.body.componentsWrapperBg};
@@ -521,14 +525,14 @@ const StyledMainWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1200px;
+  /* max-width: 1200px; */
 `
 const StyledChatWrapper = styled.div`
   height: 100%;
   width: 100%;
-  max-width: 900px;
+  /* max-width: 900px; */
 
-  padding: 0 24px;
+  padding-left: 24px;
 
   display: flex;
   flex-direction: column;
@@ -585,5 +589,6 @@ const StyledHorizontalDivider = styled.div`
   /* margin: 8px 0; */
 `
 const StyledTableWrapper = styled.div`
-  max-width: 800px;
+  /* max-width: 800px; */
+  padding-right: 24px;
 `

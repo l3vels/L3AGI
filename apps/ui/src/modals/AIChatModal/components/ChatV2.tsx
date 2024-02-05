@@ -571,14 +571,14 @@ const StyledForm = styled.form`
   background: var(--background-background-primary, #fff);
 
   width: 100%;
-  max-width: 800px;
+  /* max-width: 800px; */
   min-height: 54px;
   height: fit-content;
   max-height: 250px;
 
-  @media only screen and (max-width: 1750px) {
+  /* @media only screen and (max-width: 1750px) {
     max-width: 600px;
-  }
+  } */
 `
 
 const StyledTextareaWrapper = styled.div`
@@ -616,6 +616,8 @@ const StyledChatFooter = styled.div`
   justify-content: flex-end;
 
   width: 100%;
+
+  padding-right: 24px;
 `
 
 const StyledButtonGroup = styled.div`

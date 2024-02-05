@@ -97,8 +97,8 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   gap: 12px;
   padding-right: 10px;
   min-width: 400px;
-  width: calc(100% - 100px);
-  max-width: 800px;
+  width: 100%;
+  /* max-width: 800px; */
 
   :hover {
     .actions {
