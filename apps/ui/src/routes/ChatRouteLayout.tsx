@@ -490,7 +490,7 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
   overflow-y: auto;
 
   display: flex;
-  width: 315px;
+  width: 400px;
   /* padding: 16px 16px 32px 16px; */
   flex-direction: column;
   align-items: center;
@@ -503,7 +503,7 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
   ${props =>
     props.isHidden &&
     css`
-      margin-right: -320px;
+      margin-right: -400px;
       overflow: hidden;
       cursor: pointer;
       opacity: 0;
