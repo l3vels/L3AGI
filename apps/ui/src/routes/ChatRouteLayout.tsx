@@ -592,4 +592,8 @@ const StyledHorizontalDivider = styled.div`
 const StyledTableWrapper = styled.div`
   /* max-width: 800px; */
   padding-right: 24px;
+  height: 100%;
+  padding-top: 20px;
+  /* width: 100%;
+  max-width: calc(100% - 200px); */
 `

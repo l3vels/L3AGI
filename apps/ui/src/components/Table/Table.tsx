@@ -210,9 +210,9 @@ const StyledRoot = styled.div<{ expand?: boolean }>`
   }
 
   border-radius: 24px;
-  max-height: calc(100vh - 350px);
-  ${({ expand }) =>
-    expand ? 'max-height: calc(100vh - 280px);' : 'max-height: calc(100vh - 350px);'};
+  /* max-height: calc(100vh - 350px); */
+  /* ${({ expand }) =>
+    expand ? 'max-height: calc(100vh - 280px);' : 'max-height: calc(100vh - 350px);'}; */
 
   position: relative;
 `
