@@ -318,7 +318,8 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     """
     # authenticate
     auth: UserAccount = try_auth_user_with_any(request, response)
-    return create_client_message(body, auth)
+    gen = create_client_message(body, auth)
+    return StreamingResponse(gen, media_type="text/event-stream")
 
 
 @router.post("/session/messages/draft", status_code=201, include_in_schema=False)
