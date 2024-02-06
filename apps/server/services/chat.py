@@ -40,7 +40,7 @@ from utils.configuration import \
     convert_model_to_response as convert_config_model_to_response
 
 
-def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
+async def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
     """
     Create new user chat message
     """
@@ -63,7 +63,7 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
 
     session_id = get_chat_session_id(user.id, account.id, agent_id, team_id)
 
-    process_chat_message(
+    async for token in process_chat_message(
         session_id=session_id,
         sender_name=sender_name,
         sender_user_id=sender_user_id,
@@ -77,12 +77,11 @@ def create_user_message(body: ChatUserMessageInput, auth: UserAccount):
         provider_user=provider_user,
         chat_id=None,
         voice_url=body.voice_url,
-    )
+    ):
+        yield token
 
-    return ""
 
-
-def create_client_message(body: ChatMessageInput, auth: UserAccount):
+async def create_client_message(body: ChatMessageInput, auth: UserAccount):
     chat_id = body.chat_id
     chat = ChatModel.get_chat_by_id(db, chat_id)
     if not chat:
@@ -115,7 +114,7 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
 
     voice_url = body.voice_url
 
-    return process_chat_message(
+    async for token in process_chat_message(
         session_id=session_id,
         sender_name=sender_name,
         sender_user_id=sender_user_id,
@@ -129,10 +128,11 @@ def create_client_message(body: ChatMessageInput, auth: UserAccount):
         provider_user=provider_user,
         chat_id=chat_id,
         voice_url=voice_url,
-    )
+    ):
+        yield token
 
 
-def process_chat_message(
+async def process_chat_message(
     session_id: str,
     sender_name: str,
     sender_user_id: str,
@@ -210,7 +210,7 @@ def process_chat_message(
 
     if len(agents) > 0:
         for agent_with_configs in agents:
-            res = run_conversational_agent(
+            async for token in run_conversational_agent(
                 agent_with_configs=agent_with_configs,
                 sender_name=sender_name,
                 sender_user_id=sender_user_id,
@@ -228,7 +228,8 @@ def process_chat_message(
                 history=history,
                 run_id=run.id,
                 run_logs_manager=run_logs_manager,
-            )
+            ):
+                yield token
     elif team:
         handle_team_types(
             sender_name=sender_name,
@@ -245,7 +246,7 @@ def process_chat_message(
             run_logs_manager=run_logs_manager,
         )
 
-    return res
+    # return res
 
 
 def append_agent_to_list(agent_id, account, agents):
@@ -536,7 +537,7 @@ def handle_debates(
     )
 
 
-def run_conversational_agent(
+async def run_conversational_agent(
     agent_with_configs: AgentWithConfigsOutput,
     provider_account: UserAccount,
     sender_name: str,
@@ -591,7 +592,8 @@ def run_conversational_agent(
         tools = data_source_tools + agent_tools
 
     conversational = ConversationalAgent(sender_name, provider_account, session_id)
-    return conversational.run(
+
+    async for token in conversational.run(
         settings,
         voice_settings,
         chat_pubsub_service,
@@ -603,7 +605,8 @@ def run_conversational_agent(
         human_message_id,
         run_logs_manager,
         pre_retrieved_context,
-    )
+    ):
+        yield token
 
 
 def create_and_send_chat_message(
