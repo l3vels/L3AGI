@@ -53,8 +53,7 @@ export const useCreateChatMessageService = ({
         data: { content: '', example: false, additional_kwargs: {} },
         type: 'ai',
       },
-      created_on: moment().add(10, 'seconds').toISOString(), // Fixes local message sorting before waiting for socket for team collaboration
-      // created_on: new Date().toISOString(),
+      created_on: moment().add(10, 'seconds').toISOString(),
       sender_user: user || '',
       run_id: null,
       voice_url: null,

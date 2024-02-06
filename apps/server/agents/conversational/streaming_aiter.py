@@ -11,7 +11,6 @@ class AsyncCallbackHandler(AsyncIteratorCallbackHandler):
     def __init__(self) -> None:
         super().__init__()
 
-    # TODO remove "" from parsing
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         self.content += token
         # if we passed the final answer, we put tokens in queue
