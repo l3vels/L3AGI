@@ -381,7 +381,12 @@ const ChatRouteLayout = () => {
               <StyledTabHeader>
                 <TabList size='small' activeTabId={activeTab} noBorder>
                   <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
-                  <Tab onClick={() => handleTabClick(1, 'sessions')}>{t('sessions')}</Tab>
+                  <Tab
+                    onClick={() => handleTabClick(1, 'sessions')}
+                    disabled={teamId ? true : false}
+                  >
+                    {t('sessions')}
+                  </Tab>
                   <Tab onClick={() => handleTabClick(2, 'settings')}>{t('settings')}</Tab>
                 </TabList>
               </StyledTabHeader>
