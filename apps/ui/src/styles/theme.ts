@@ -150,7 +150,7 @@ const lightTheme: DefaultTheme = {
     commandMenuBackgroundColor: '#F5F5F7',
     warningToastTextColor: 'rgb(110,110,110)',
     sessionDropdownBorder: '2px solid #cccccc',
-    tagColor: 'gradient_grey',
+    tagColor: 'white',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',

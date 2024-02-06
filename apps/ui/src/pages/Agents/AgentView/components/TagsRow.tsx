@@ -19,7 +19,11 @@ const TagsRow = ({ items, title, customButton }: TagsRowProps) => {
 
   return (
     <StyledRow>
-      <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
+      <TypographySecondary
+        value={title}
+        type={Typography.types.LABEL}
+        size={Typography.sizes.xss}
+      />
 
       <StyledWrapper>
         <StyledContainer>
@@ -32,7 +36,6 @@ const TagsRow = ({ items, title, customButton }: TagsRowProps) => {
                 color={theme.body.tagColor}
                 readOnly
                 size={Tags.sizes?.SMALL}
-                outlined
               />
             )
           })}
