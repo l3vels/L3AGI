@@ -86,8 +86,6 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
   const teamId = urlParams.get('team')
   const chatId = urlParams.get('chat') || chatSessionId
 
-  const [createClientChatMessage] = useCreateClientChatMessageService()
-
   const { thinking, setThinking, socket } = useChatState()
 
   const { data: chatMessages, loading: messagesLoading } = useChatMessagesService({
@@ -121,7 +119,15 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
     teamOfAgents?.configs?.greeting ||
     `Hello ${user?.name || ''} , you can chat with agents and teams on your dashboard.`
 
-  const [createChatMessageService] = useCreateChatMessageService()
+  const [createClientChatMessage] = useCreateClientChatMessageService({
+    agentName,
+    agentAvatar: agentById?.agent?.avatar,
+  })
+
+  const [createChatMessageService] = useCreateChatMessageService({
+    agentName,
+    agentAvatar: agentById?.agent?.avatar,
+  })
   const { stopChatService, loading: stopChatLoading } = useStopChatService()
 
   const sessionId = getSessionId({

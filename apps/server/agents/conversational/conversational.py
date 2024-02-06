@@ -1,7 +1,10 @@
+import asyncio
+
 from langchain.agents import AgentType, initialize_agent
 
 from agents.base_agent import BaseAgent
 from agents.conversational.output_parser import ConvoOutputParser
+from agents.conversational.streaming_aiter import AsyncCallbackHandler
 from agents.handle_agent_errors import handle_agent_error
 from config import Config
 from memory.zep.zep_memory import ZepMemory
@@ -16,7 +19,7 @@ from utils.system_message import SystemMessageBuilder
 
 
 class ConversationalAgent(BaseAgent):
-    def run(
+    async def run(
         self,
         settings: AccountSettings,
         voice_settings: AccountVoiceSettings,
@@ -57,7 +60,13 @@ class ConversationalAgent(BaseAgent):
                 agent_with_configs,
             )
 
-            llm.callbacks = [run_logs_manager.get_agent_callback_handler()]
+            streaming_handler = AsyncCallbackHandler()
+
+            llm.streaming = True
+            llm.callbacks = [
+                run_logs_manager.get_agent_callback_handler(),
+                streaming_handler,
+            ]
 
             agent = initialize_agent(
                 tools,
@@ -73,7 +82,11 @@ class ConversationalAgent(BaseAgent):
                 callbacks=[run_logs_manager.get_agent_callback_handler()],
             )
 
-            res = agent.run(prompt)
+            task = asyncio.create_task(agent.arun(prompt))
+
+            async for token in streaming_handler.aiter():
+                yield token
+            res = await task
         except Exception as err:
             res = handle_agent_error(err)
 
@@ -96,13 +109,9 @@ class ConversationalAgent(BaseAgent):
         except Exception as err:
             res = f"{res}\n\n{handle_agent_error(err)}"
 
-        ai_message = history.create_ai_message(
+        history.create_ai_message(
             res,
             human_message_id,
             agent_with_configs.agent.id,
             voice_url,
         )
-
-        chat_pubsub_service.send_chat_message(chat_message=ai_message)
-
-        return res
