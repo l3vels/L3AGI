@@ -44,6 +44,7 @@ import TeamOfAgentsDetailsBox from 'pages/TeamOfAgents/components/TeamOfAgentsDe
 import Integrations from 'pages/Integrations'
 import IntegrationDetails from './components/IntegrationsDetails'
 import DatasourceDetails from './components/DatasourceDetails'
+import VoiceIntegrationsDetails from './components/VoiceIntegrationsDetails'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -431,6 +432,7 @@ const ChatRouteLayout = () => {
             <CopyScript />
 
             {agentById && <IntegrationDetails />}
+            {agentById && <VoiceIntegrationsDetails />}
             {agentById && agentById.agent.agent_type === 'text' && (
               <DatasourceDetails agentData={agentById} />
             )}
