@@ -13,7 +13,7 @@ export const useAgentForm = (formik: any) => {
   const { uploadFile } = useUploadFile()
 
   const { data: dataSources } = useDatasourcesService()
-  const { data: tools } = useToolsService()
+  const { data: tools, refetch: refetchTools } = useToolsService()
   const { data: models } = useModelsService()
   const { data: voices } = useVoicesService()
   const { data: integrations } = useIntegrationsToolService()
@@ -123,5 +123,6 @@ export const useAgentForm = (formik: any) => {
     voiceModelOptions,
     tools,
     voices,
+    refetchTools,
   }
 }

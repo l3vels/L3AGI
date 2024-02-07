@@ -77,13 +77,13 @@ const StyledTabPanelsWrapper = styled.div`
   .tab-panel {
     display: none;
 
-    &.animation-direction-rtl {
+    /* &.animation-direction-rtl {
       transform: translateX(8px);
     }
 
     &.animation-direction-ltr {
       transform: translateX(-8px);
-    }
+    } */
 
     &.no-animation {
       transform: unset;

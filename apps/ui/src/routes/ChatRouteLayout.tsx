@@ -422,7 +422,7 @@ const ChatRouteLayout = () => {
             {/* <ChatMembers
               agentById={agentById || chatById?.agent}
               teamOfAgents={teamOfAgents}
-              voiceUrl={chatById?.voice_url}
+              voiceUrl={chatById?.voice_url}p
               call={call}
             /> */}
             {agentById && <AgentVIewDetailBox agentData={agentById} />}
@@ -430,7 +430,7 @@ const ChatRouteLayout = () => {
 
             <CopyScript />
 
-            {agentById && <IntegrationDetails agentData={agentById} />}
+            {agentById && <IntegrationDetails />}
             {agentById && agentById.agent.agent_type === 'text' && (
               <DatasourceDetails agentData={agentById} />
             )}

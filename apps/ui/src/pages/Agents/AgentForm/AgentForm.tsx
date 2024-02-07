@@ -128,7 +128,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
-        <TabList noBorder size='small' customWidth={200}>
+        <TabList noBorder size='small' customWidth={200} activeTabId={activeTab}>
           <Tab
             onClick={() => handleTabClick(0)}
             isError={validationError?.agent_name && activeTab !== 0}

@@ -11,6 +11,8 @@ type ToolCardProps = {
   logoSrc: string
   isDisabled: boolean
   isReadOnly?: boolean
+  selected?: boolean
+  size?: 'small' | 'normal'
 }
 
 const ToolCard = ({
@@ -20,32 +22,47 @@ const ToolCard = ({
   logoSrc,
   isDisabled,
   isReadOnly = false,
+  selected = false,
+  size = 'normal',
 }: ToolCardProps) => {
   return (
-    <StyledRoot onClick={onClick} bgImg={''} isDisabled={isDisabled} isReadOnly={isReadOnly}>
+    <StyledRoot
+      onClick={onClick}
+      bgImg={''}
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+      selected={selected}
+      size={size}
+    >
       <StyledWrapper>
-        <StyledImg src={logoSrc} />
-        <StyledTextWrapper>
-          <TypographySecondary
-            value={`By`}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-          />
+        <StyledImg src={logoSrc} size={size} />
+        {size !== 'small' && (
+          <StyledTextWrapper>
+            <TypographySecondary
+              value={`By`}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+            />
 
-          <TypographySecondary
-            value={`L3`}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.xss}
-            style={{ textDecoration: 'underline' }}
-          />
-        </StyledTextWrapper>
+            <TypographySecondary
+              value={`L3`}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              style={{ textDecoration: 'underline' }}
+            />
+          </StyledTextWrapper>
+        )}
       </StyledWrapper>
       <StyledMainTextWrapper>
-        <TypographyPrimary value={title} type={Typography.types.LABEL} size={Typography.sizes.md} />
+        <TypographyPrimary
+          value={title}
+          type={Typography.types.LABEL}
+          size={size === 'small' ? Typography.sizes.xss : Typography.sizes.md}
+        />
         <TypographyPrimary
           value={subTitle}
           type={Typography.types.LABEL}
-          size={Typography.sizes.xss}
+          size={size === 'small' ? Typography.sizes.xss : Typography.sizes.md}
         />
       </StyledMainTextWrapper>
     </StyledRoot>
@@ -54,7 +71,13 @@ const ToolCard = ({
 
 export default ToolCard
 
-const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: boolean }>`
+const StyledRoot = styled.div<{
+  bgImg: string
+  size: string
+  isDisabled: boolean
+  isReadOnly: boolean
+  selected: boolean
+}>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -96,6 +119,20 @@ const StyledRoot = styled.div<{ bgImg: string; isDisabled: boolean; isReadOnly: 
     css`
       pointer-events: none;
     `};
+
+  ${p =>
+    p.selected &&
+    css`
+      outline: 2px solid #68b3fd;
+    `};
+  ${p =>
+    p.size === 'small' &&
+    css`
+      width: 180px;
+      min-width: 180px;
+      height: 100px;
+      min-height: 100px;
+    `};
 `
 
 const StyledWrapper = styled.div`
@@ -106,11 +143,18 @@ const StyledWrapper = styled.div`
   gap: 4px;
 `
 
-const StyledImg = styled.img`
+const StyledImg = styled.img<{ size: string }>`
   border-radius: 8px;
   width: 48px;
   height: 48px;
   object-fit: contain;
+
+  ${p =>
+    p.size === 'small' &&
+    css`
+      width: 24px;
+      height: 24px;
+    `};
 `
 const StyledTextWrapper = styled.div`
   display: flex;

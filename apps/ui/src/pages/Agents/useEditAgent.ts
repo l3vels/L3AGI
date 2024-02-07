@@ -156,5 +156,6 @@ export const useEditAgent = () => {
     isLoading,
     agentId,
     handleNavigation,
+    agentById,
   }
 }

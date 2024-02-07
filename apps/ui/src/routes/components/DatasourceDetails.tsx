@@ -2,7 +2,12 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { t } from 'i18next'
 import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import Typography from 'share-ui/components/typography/Typography'
-import { StyledCardsWrapper, StyledImg, StyledIntegrationCard } from './IntegrationsDetails'
+import {
+  StyledCardsWrapper,
+  StyledDetailHeader,
+  StyledImg,
+  StyledIntegrationCard,
+} from './IntegrationsDetails'
 import { AgentWithConfigs } from 'types'
 import { useDatasource } from 'pages/Datasource/useDatasource'
 import { DATA_LOADER_IMAGES } from 'pages/Datasource/constants'
@@ -18,11 +23,13 @@ const DatasourceDetails = ({ agentData }: { agentData: AgentWithConfigs }) => {
 
   return (
     <StyledDetailsBox>
-      <TypographyPrimary
-        value={t('datasources')}
-        type={Typography.types.LABEL}
-        size={Typography.sizes.md}
-      />
+      <StyledDetailHeader>
+        <TypographyPrimary
+          value={t('datasources')}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.md}
+        />
+      </StyledDetailHeader>
       <StyledCardsWrapper>
         {filteredDatasources?.map((datasource: any) => {
           const filteredLogos = DATA_LOADER_IMAGES.filter(

@@ -1,10 +1,12 @@
 import CopyButton from 'components/CopyButton'
+
 import TypographyPrimary from 'components/Typography/Primary'
 import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import ReactMarkdown from 'react-markdown'
 import { useLocation, useParams } from 'react-router-dom'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { StyledDetailHeader } from 'routes/components/IntegrationsDetails'
 import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 
@@ -30,14 +32,14 @@ const CopyScript = () => {
 
   return (
     <StyledDetailsBox>
-      <StyledTitleWrapper>
+      <StyledDetailHeader>
         <TypographyPrimary
           value={`Embed`}
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
         />
         <CopyButton onCopyClick={() => navigator.clipboard.writeText(script)} />
-      </StyledTitleWrapper>
+      </StyledDetailHeader>
 
       <StyledReactMarkdown
         components={{
@@ -66,11 +68,6 @@ const CopyScript = () => {
 }
 
 export default CopyScript
-
-const StyledTitleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`
 
 const StyledReactMarkdown = styled(ReactMarkdown)`
   border-radius: 10px;
