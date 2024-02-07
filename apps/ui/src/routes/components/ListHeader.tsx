@@ -27,7 +27,7 @@ const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
   return (
     <StyledListHeader>
       <TypographyPrimary
-        value={`${title}s`}
+        value={`${title}`}
         type={TypographyTypes.LABEL}
         size={TypographySizes.md}
       />
@@ -76,5 +76,5 @@ const StyledListHeader = styled.div`
   justify-content: space-between;
   width: 100%;
   font-weight: 700;
-  /* min-height: 50px; */
+  min-height: 30px;
 `

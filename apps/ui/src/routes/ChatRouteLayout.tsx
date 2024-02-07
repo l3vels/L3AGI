@@ -453,7 +453,7 @@ const ChatRouteLayout = () => {
 
 export default ChatRouteLayout
 
-const StyledContainer = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
@@ -465,9 +465,9 @@ const StyledContainer = styled.div`
 
   gap: 20px;
 `
-const StyledLeftColumn = styled.div<{
+export const StyledLeftColumn = styled.div<{
   isHidden?: boolean
-  isSmallScreen: boolean
+  isSmallScreen?: boolean
 }>`
   overflow-y: auto;
   display: flex;
@@ -478,6 +478,7 @@ const StyledLeftColumn = styled.div<{
 
   height: 100%;
   min-width: 260px;
+  max-width: 260px;
 
   transition: margin-left 0.3s ease-in-out;
 
@@ -517,7 +518,7 @@ const StyledRightColumn = styled.div<{ isHidden: boolean }>`
     `}
 `
 
-const StyledMainWrapper = styled.div`
+export const StyledMainWrapper = styled.div`
   /* margin-top: 30px; */
   padding: 16px;
   padding-right: 0;
@@ -528,9 +529,10 @@ const StyledMainWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 100%;
   /* max-width: 1200px; */
 `
-const StyledChatWrapper = styled.div`
+export const StyledChatWrapper = styled.div`
   height: 100%;
   width: 100%;
   /* max-width: 900px; */
@@ -585,7 +587,7 @@ const StyledMiddleArea = styled.div`
 `
 const StyledTabHeader = styled.div``
 
-const StyledDivider = styled.div`
+export const StyledDivider = styled.div`
   border-right: ${({ theme }) => theme.body.secondaryBorder};
 
   margin: 0 16px;

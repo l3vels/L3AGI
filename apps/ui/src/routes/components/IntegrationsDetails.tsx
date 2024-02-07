@@ -1,10 +1,12 @@
 import { StyledSearchOutlineIcon } from 'components/ChatSwitcher/ChatSwitcher'
 import TypographyPrimary from 'components/Typography/Primary'
+import { FormikProvider } from 'formik'
 import { useModal } from 'hooks'
 import { t } from 'i18next'
 import { useAgentForm } from 'pages/Agents/AgentForm/useAgentForm'
 import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
 import { useEditAgent } from 'pages/Agents/useEditAgent'
+import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 import { toolLogos } from 'pages/Toolkit/constants'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
@@ -16,11 +18,13 @@ const IntegrationDetails = () => {
 
   const { toolOptions, tools: toolsData } = useAgentForm({})
 
-  const { agentById } = useEditAgent()
+  const { formik } = useEditAgent()
 
-  const toolIds = agentById?.configs?.tools
+  const { setFieldValue, values } = formik
 
-  const tools = toolOptions.filter((option: any) => toolIds?.includes(option.value))
+  const { agent_tools } = values
+
+  const tools = toolOptions?.filter((option: any) => agent_tools?.includes(option.value))
 
   const toolSlugs = toolsData?.map((tool: any) => {
     return { slug: tool.slug, id: tool.toolkit_id }
@@ -31,46 +35,69 @@ const IntegrationDetails = () => {
     openModal({ name: 'toolkit-modal', data: { toolSlug: slug } })
   }
 
+  const handleRemoveIntegration = async ({ event, id }: { event: any; id: string }) => {
+    event.stopPropagation()
+
+    const filteredValues = agent_tools?.filter((toolId: string) => toolId !== id)
+
+    await setFieldValue('agent_tools', filteredValues)
+
+    formik.submitForm()
+  }
+
   return (
-    <StyledDetailsBox>
-      <StyledDetailHeader>
-        <TypographyPrimary
-          value={t('integrations')}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.md}
-        />
-        <IconButton
-          onClick={() => openModal({ name: 'integration-list-modal' })}
-          icon={() => <StyledSearchOutlineIcon size={26} />}
-          kind={IconButton.kinds?.TERTIARY}
-          size={IconButton.sizes?.SMALL}
-        />
-      </StyledDetailHeader>
+    <FormikProvider value={formik}>
+      <StyledDetailsBox>
+        <StyledDetailHeader>
+          <TypographyPrimary
+            value={t('integrations')}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+          />
+          <IconButton
+            onClick={() => openModal({ name: 'integration-list-modal' })}
+            icon={() => <StyledSearchOutlineIcon size={26} />}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+          />
+        </StyledDetailHeader>
 
-      <StyledCardsWrapper>
-        {tools?.map((tool: any) => {
-          const filteredLogos = toolLogos.filter(
-            (toolLogo: any) => toolLogo.toolName === tool.label,
-          )
+        <StyledCardsWrapper>
+          {tools?.map((tool: any) => {
+            const filteredLogos = toolLogos.filter(
+              (toolLogo: any) => toolLogo.toolName === tool.label,
+            )
 
-          const logoSrc = filteredLogos?.[0]?.logoSrc || ''
-          return (
-            <StyledIntegrationCard
-              key={tool?.value}
-              onClick={() => handleOpenToolIntegrationModal(tool?.value)}
-            >
-              <StyledImg src={logoSrc} />
+            const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+            return (
+              <StyledIntegrationCard
+                key={tool?.value}
+                onClick={() => handleOpenToolIntegrationModal(tool?.value)}
+              >
+                <StyledImg src={logoSrc} />
 
-              <TypographyPrimary
-                value={tool.label}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-              />
-            </StyledIntegrationCard>
-          )
-        })}
-      </StyledCardsWrapper>
-    </StyledDetailsBox>
+                <TypographyPrimary
+                  value={tool.label}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                />
+
+                <StyledButtonWrapper>
+                  <IconButton
+                    kind={IconButton.kinds?.TERTIARY}
+                    size={IconButton.sizes?.SMALL}
+                    icon={() => <StyledCloseIcon size={20} />}
+                    onClick={(event: any) =>
+                      handleRemoveIntegration({ event: event, id: tool.value })
+                    }
+                  />
+                </StyledButtonWrapper>
+              </StyledIntegrationCard>
+            )
+          })}
+        </StyledCardsWrapper>
+      </StyledDetailsBox>
+    </FormikProvider>
   )
 }
 
@@ -79,6 +106,8 @@ export default IntegrationDetails
 export const StyledIntegrationCard = styled.div`
   display: flex;
   align-items: center;
+
+  height: 40px;
 
   gap: 4px;
 
@@ -92,8 +121,8 @@ export const StyledIntegrationCard = styled.div`
 `
 
 export const StyledImg = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 4px;
 `
 export const StyledCardsWrapper = styled.div`
@@ -109,4 +138,7 @@ export const StyledDetailHeader = styled.div`
   justify-content: space-between;
 
   font-weight: 700;
+`
+const StyledButtonWrapper = styled.div`
+  margin-left: auto;
 `
