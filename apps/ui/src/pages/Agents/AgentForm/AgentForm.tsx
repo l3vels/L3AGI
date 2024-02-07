@@ -269,18 +269,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   )}
 
                   <StyledCombinedFields>
-                    <AgentDropdown
-                      label={t('model')}
-                      fieldName={'agent_model'}
-                      setFieldValue={setFieldValue}
-                      fieldValue={agent_model}
-                      options={agentType !== 'text' ? voiceModelOptions : modelOptions}
-                      onChange={() => {
-                        setFieldValue('agent_model', '')
-                      }}
-                      optionSize={'small'}
-                    />
-
                     <AgentSlider
                       onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
                       value={agent_temperature}

@@ -7,7 +7,7 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { Field } from 'formik'
 
 type AgentDropdownProps = {
-  label: string
+  label?: string
   fieldName: string
   fieldValue: string | string[]
   options: any
@@ -15,6 +15,7 @@ type AgentDropdownProps = {
   onChange?: (option: any) => void
   optionSize?: 'large' | 'medium' | 'small'
   isMulti?: boolean
+  size?: 'large' | 'medium' | 'small'
 }
 
 const AgentDropdown = ({
@@ -26,6 +27,7 @@ const AgentDropdown = ({
   label,
   isMulti,
   optionSize = 'medium',
+  size = 'medium',
 }: AgentDropdownProps) => {
   const { t } = useTranslation()
   let value = fieldValue
@@ -71,17 +73,19 @@ const AgentDropdown = ({
 
         return (
           <StyledWrapper isValidationError={meta?.error}>
-            <TypographyPrimary
-              value={label}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.md}
-            />
+            {label && (
+              <TypographyPrimary
+                value={label}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.md}
+              />
+            )}
             <Dropdown
               multi={isMulti}
               // menuPlacement={'top'}
               insideOverflow
               multiline
-              size={Dropdown.size.MEDIUM}
+              size={size}
               value={value}
               placeholder={value?.length >= 1 ? value : `${t('please-enter-value')}`}
               options={options}
