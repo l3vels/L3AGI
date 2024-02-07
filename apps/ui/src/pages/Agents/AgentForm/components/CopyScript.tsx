@@ -73,4 +73,6 @@ const StyledReactMarkdown = styled(ReactMarkdown)`
   border-radius: 10px;
 
   border: 3px solid ${({ theme }) => theme?.body.textareaBorder};
+
+  font-size: 12px;
 `
