@@ -26,13 +26,14 @@ import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
 type ChatLinkModalProps = {
   data: {
     agentId: string
+    callback?: () => void
   }
 }
 
 const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
   const [isLoading, setIsLoading] = useState(false)
 
-  const { agentId } = data
+  const { agentId, callback } = data
 
   const [chatLink, setChatLink] = useState<string | null>(null)
 
@@ -55,6 +56,7 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
         name: values.chat_name,
       })
       await refetchChat()
+      if (callback) await callback()
       setChatLink(`${import.meta.env.REACT_APP_DOMAIN_NAME}/chat/session?chat=${res.id}`)
     } catch (e) {
       console.log(e)
