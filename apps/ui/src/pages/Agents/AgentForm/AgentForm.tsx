@@ -30,6 +30,7 @@ import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunne
 import { isVoiceAgent } from 'utils/agentUtils'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import CopyScript from './components/CopyScript'
+import { Switch } from 'share-ui/components/Switch/Switch'
 
 type AgentFormProps = {
   formik: any
@@ -152,9 +153,31 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
             <TabPanels noAnimation>
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
+                  <StyledCombinedFields>
+                    <StyledAvatarWrapper>
+                      <UploadAvatar
+                        onChange={handleUploadAvatar}
+                        isLoading={avatarIsLoading}
+                        avatarSrc={agent_avatar}
+                        name={agent_name}
+                      />
+                    </StyledAvatarWrapper>
 
-                  <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
+                    <StyledCheckboxWrapper>
+                      <Checkbox
+                        label={t('template-label')}
+                        kind='secondary'
+                        name='agent_is_template'
+                        checked={agent_is_template}
+                        onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
+                      />
+                    </StyledCheckboxWrapper>
+                  </StyledCombinedFields>
+
+                  <StyledCombinedFields>
+                    <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
+                    <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
+                  </StyledCombinedFields>
 
                   <TextareaFormik
                     setFieldValue={setFieldValue}
@@ -166,43 +189,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
                   <StyledCheckboxWrapper>
                     <Checkbox
-                      label={t('template-label')}
+                      label={t('memory')}
                       kind='secondary'
-                      name='agent_is_template'
-                      checked={agent_is_template}
-                      onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
+                      name='agent_is_memory'
+                      checked={agent_is_memory}
+                      onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
                     />
                   </StyledCheckboxWrapper>
-
-                  <StyledAvatarWrapper>
-                    <TypographyPrimary
-                      value={t('avatar')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <UploadAvatar
-                      onChange={handleUploadAvatar}
-                      isLoading={avatarIsLoading}
-                      avatarSrc={agent_avatar}
-                      name={agent_name}
-                    />
-                  </StyledAvatarWrapper>
-
-                  {!isVoiceAgent(agentType) && (
-                    <CustomField
-                      formik={formik}
-                      formikField={'agent_suggestions'}
-                      placeholder={t('suggestions')}
-                    />
-                  )}
-
-                  <TextareaFormik
-                    setFieldValue={setFieldValue}
-                    label={t('greeting')}
-                    value={agent_greeting}
-                    fieldName={'agent_greeting'}
-                    triggerResize={activeTab}
-                  />
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -234,14 +227,14 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder={t('constraints')}
                   />
 
-                  <AgentDropdown
+                  {/* <AgentDropdown
                     isMulti
                     label={t('tools')}
                     fieldName={'agent_tools'}
                     fieldValue={agent_tools}
                     setFieldValue={setFieldValue}
                     options={isVoiceAgent(agentType) ? voiceToolOptions : toolOptions}
-                  />
+                  /> */}
 
                   {agentType === 'text' && (
                     <StyledCombinedFields>
@@ -275,15 +268,20 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     />
                   </StyledCombinedFields>
 
-                  <StyledCheckboxWrapper>
-                    <Checkbox
-                      label={t('memory')}
-                      kind='secondary'
-                      name='agent_is_memory'
-                      checked={agent_is_memory}
-                      onChange={() => setFieldValue('agent_is_memory', !agent_is_memory)}
+                  <TextareaFormik
+                    setFieldValue={setFieldValue}
+                    label={t('greeting')}
+                    value={agent_greeting}
+                    fieldName={'agent_greeting'}
+                    triggerResize={activeTab}
+                  />
+                  {!isVoiceAgent(agentType) && (
+                    <CustomField
+                      formik={formik}
+                      formikField={'agent_suggestions'}
+                      placeholder={t('suggestions')}
                     />
-                  </StyledCheckboxWrapper>
+                  )}
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -551,7 +549,7 @@ const StyledCheckboxWrapper = styled.div`
 export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-content: space-between;
 
   gap: 20px;
