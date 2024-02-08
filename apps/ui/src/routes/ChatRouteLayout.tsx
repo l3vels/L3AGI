@@ -379,18 +379,13 @@ const ChatRouteLayout = () => {
 
           {location.pathname.includes('/chat') ? (
             <StyledChatWrapper>
-              <StyledTabHeader>
-                <TabList size='small' activeTabId={activeTab} noBorder>
-                  <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
-                  <Tab
-                    onClick={() => handleTabClick(1, 'sessions')}
-                    disabled={teamId ? true : false}
-                  >
-                    {t('sessions')}
-                  </Tab>
-                  <Tab onClick={() => handleTabClick(2, 'settings')}>{t('settings')}</Tab>
-                </TabList>
-              </StyledTabHeader>
+              <TabList size='small' activeTabId={activeTab} noBorder>
+                <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
+                <Tab onClick={() => handleTabClick(1, 'sessions')} disabled={teamId ? true : false}>
+                  {t('sessions')}
+                </Tab>
+                <Tab onClick={() => handleTabClick(2, 'settings')}>{t('settings')}</Tab>
+              </TabList>
 
               <StyledHorizontalDivider />
 
@@ -585,7 +580,6 @@ const StyledMiddleArea = styled.div`
   z-index: 10000;
   /* left: 0; */
 `
-const StyledTabHeader = styled.div``
 
 export const StyledDivider = styled.div`
   border-right: ${({ theme }) => theme.body.secondaryBorder};

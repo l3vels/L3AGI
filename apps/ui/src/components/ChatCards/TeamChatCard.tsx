@@ -120,6 +120,8 @@ export const StyledAgentWrapper = styled.div<{ picked?: boolean }>`
   gap: 8px;
   align-self: stretch;
 
+  min-height: 40px;
+
   :hover {
     background: rgba(0, 0, 0, 0.1);
     .hiddenButton {

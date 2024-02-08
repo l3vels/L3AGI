@@ -120,9 +120,10 @@ const StyledModalHeader = styled.div`
   font-size: 24px;
 
   position: absolute;
-  top: 0;
+  top: 2px;
+  right: 2px;
 
-  width: 100%;
+  /* width: 100%; */
 
   z-index: 1;
 `

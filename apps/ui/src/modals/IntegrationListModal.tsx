@@ -35,6 +35,8 @@ type IntegrationListModalProps = {}
 const IntegrationListModal = () => {
   const [searchText, setSearchText] = useState('')
   const [pickedSlug, setPickedSlug] = useState(null as any)
+  const [pickedTools, setPickedTools] = useState<string[]>([])
+  const [activeTab, setActiveTab] = useState(0)
 
   const { closeModal } = useModal()
   const { formik, isLoading, agentById } = useEditAgent()
@@ -58,8 +60,10 @@ const IntegrationListModal = () => {
 
     let filteredTools = agent_tools
     if (agent_tools.includes(toolId)) {
+      setPickedTools(pickedTools.filter((agentToolId: string) => agentToolId !== toolId))
       filteredTools = agent_tools.filter((agentToolId: string) => agentToolId !== toolId)
     } else {
+      setPickedTools((prevState: any) => [...prevState, toolId])
       filteredTools = [...filteredTools, toolId]
     }
 
@@ -77,6 +81,10 @@ const IntegrationListModal = () => {
     const filteredTools = agent_tools?.filter((agentToolId: string) => agentToolId !== toolId)
     await setFieldValue('agent_tools', filteredTools)
     formik.handleSubmit()
+  }
+
+  const handleTabClick = (tabId: number) => {
+    setActiveTab(tabId)
   }
 
   return (
@@ -147,23 +155,38 @@ const IntegrationListModal = () => {
           <StyledDivider />
 
           <StyledChatWrapper>
-            {pickedSlug ? (
-              <ToolView toolSlug={pickedSlug} />
-            ) : (
+            {pickedSlug && (
               <>
-                <StyledFooter>
-                  <ButtonPrimary
-                    onClick={() => {
-                      formik.submitForm()
-                    }}
-                    disabled={isLoading}
-                    loading={isLoading}
-                  >
-                    {t('install')}
-                  </ButtonPrimary>
-                </StyledFooter>
+                <TabList size='small' activeTabId={activeTab} noBorder>
+                  <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
+                  <Tab onClick={() => handleTabClick(1)}>{t('settings')}</Tab>
+                </TabList>
+
+                <TabsContext activeTabId={activeTab}>
+                  <TabPanels>
+                    <TabPanel></TabPanel>
+                    <TabPanel>
+                      <ToolView toolSlug={pickedSlug} />
+                    </TabPanel>
+                  </TabPanels>
+                </TabsContext>
               </>
             )}
+
+            <StyledFooter>
+              {pickedTools?.length > 0 && (
+                <ButtonPrimary
+                  onClick={async () => {
+                    await formik.submitForm()
+                    setPickedTools([])
+                  }}
+                  disabled={isLoading}
+                  loading={isLoading}
+                >
+                  {t('install')} {pickedTools?.length}x
+                </ButtonPrimary>
+              )}
+            </StyledFooter>
           </StyledChatWrapper>
         </StyledMainWrapper>
       </StyledModalBody>
