@@ -35,11 +35,6 @@ type IntegrationListModalProps = {}
 const IntegrationListModal = () => {
   const [searchText, setSearchText] = useState('')
   const [pickedSlug, setPickedSlug] = useState(null as any)
-  const [activeTab, setActiveTab] = useState(0)
-
-  const handleTabClick = (id: number) => {
-    setActiveTab(id)
-  }
 
   const { closeModal } = useModal()
   const { formik, isLoading, agentById } = useEditAgent()
@@ -49,7 +44,6 @@ const IntegrationListModal = () => {
   const { setFieldValue, values } = formik
 
   const { agent_tools } = values
-  const [pickedTools, setPickedTools] = useState(agent_tools)
 
   const { data: toolsData } = useToolsService()
 
@@ -93,86 +87,6 @@ const IntegrationListModal = () => {
       noOverlay
     >
       <StyledModalBody>
-        {/* <TextField
-          placeholder='Search Integrations'
-          value={searchText}
-          onChange={(value: string) => setSearchText(value || '')}
-        />
-
-        <TabList noBorder size='small' activeTabId={activeTab}>
-          <Tab onClick={() => handleTabClick(0)}>Installed</Tab>
-          <Tab onClick={() => handleTabClick(1)}>MarketPlace</Tab>
-        </TabList> */}
-
-        <FormikProvider value={formik}>
-          {/* <TabsContext activeTabId={activeTab}>
-            <TabPanels>
-              <TabPanel>
-                <StyledCardsWrapper>
-                  {installedTools?.map((tool: any) => {
-                    const filteredLogos = toolLogos.filter(
-                      (toolLogo: any) => toolLogo.toolName === tool.name,
-                    )
-
-                    const logoSrc = filteredLogos?.[0]?.logoSrc || ''
-
-                    return (
-                      <>
-                        <ToolCard
-                          onClick={() => handlePickTool(tool.toolkit_id)}
-                          selected={!agent_tools?.includes(tool.toolkit_id)}
-                          size='small'
-                          title={tool.name}
-                          logoSrc={logoSrc}
-                          isDisabled={false}
-                        />
-                      </>
-                    )
-                  })}
-                </StyledCardsWrapper>
-              </TabPanel>
-              <TabPanel>
-                <StyledCardsWrapper>
-                  {notInstalledTools?.map((tool: any) => {
-                    const filteredLogos = toolLogos.filter(
-                      (toolLogo: any) => toolLogo.toolName === tool.name,
-                    )
-
-                    const logoSrc = filteredLogos?.[0]?.logoSrc || ''
-
-                    return (
-                      <>
-                        <ToolCard
-                          onClick={() => handlePickTool(tool.toolkit_id)}
-                          size='small'
-                          selected={agent_tools?.includes(tool.toolkit_id)}
-                          title={tool.name}
-                          logoSrc={logoSrc}
-                          isDisabled={false}
-                        />
-                      </>
-                    )
-                  })}
-                </StyledCardsWrapper>
-              </TabPanel>
-            </TabPanels>
-          </TabsContext>
-
-          <StyledFooter>
-            <ButtonPrimary
-              onClick={async () => {
-                await formik.submitForm()
-                setPickedTools(agent_tools)
-                setActiveTab(0)
-              }}
-              disabled={isLoading}
-              loading={isLoading}
-            >
-              {activeTab === 0 ? 'Remove' : t('install')}
-            </ButtonPrimary>
-          </StyledFooter> */}
-        </FormikProvider>
-
         <StyledMainWrapper>
           <StyledLeftColumn>
             <StyledTextFieldWrapper>
@@ -193,7 +107,6 @@ const IntegrationListModal = () => {
               return (
                 <>
                   <MiniToolCard
-                    // onClick={() => {}}
                     onClick={() => {
                       setPickedSlug(tool.slug)
                       setFieldValue('agent_tools', agentToolsData)
@@ -240,10 +153,8 @@ const IntegrationListModal = () => {
               <>
                 <StyledFooter>
                   <ButtonPrimary
-                    onClick={async () => {
-                      await formik.submitForm()
-                      setPickedTools(agent_tools)
-                      setActiveTab(0)
+                    onClick={() => {
+                      formik.submitForm()
                     }}
                     disabled={isLoading}
                     loading={isLoading}
@@ -261,17 +172,6 @@ const IntegrationListModal = () => {
 }
 
 export default withRenderModal('integration-list-modal')(IntegrationListModal)
-
-const StyledCardsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  /* justify-content: center; */
-  gap: 10px;
-
-  height: fit-content;
-
-  /* padding: 5px 2px; */
-`
 
 const StyledModalBody = styled.div`
   width: 50vw;
