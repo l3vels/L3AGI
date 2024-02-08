@@ -35,6 +35,7 @@ import { useEditAgent } from 'pages/Agents/useEditAgent'
 import { FormikProvider } from 'formik'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import { useAgentForm } from 'pages/Agents/AgentForm/useAgentForm'
+import { textSlicer } from 'utils/textSlicer'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
@@ -108,6 +109,8 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
 
     openModal({ name: 'schedule-run-modal', data: { id: chatId || agent.id, type: 'agent' } })
   }
+
+  const { shortText: shortId } = textSlicer(agent?.id, 30)
 
   return (
     <FormikProvider value={formik}>
@@ -210,7 +213,7 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
           {agent && (
             <TagsRow
               title={t('ID')}
-              items={[agent?.id]}
+              items={[shortId]}
               customButton={
                 <CopyButton onCopyClick={() => navigator.clipboard.writeText(agent?.id)} />
               }
