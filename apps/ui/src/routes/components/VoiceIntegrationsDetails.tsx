@@ -17,6 +17,7 @@ import {
   StyledImg,
   StyledIntegrationCard,
 } from './IntegrationsDetails'
+import { FormikProvider } from 'formik'
 
 const VoiceIntegrationsDetails = () => {
   const { openModal } = useModal()
@@ -28,7 +29,7 @@ const VoiceIntegrationsDetails = () => {
     voices: voicesData,
   } = useAgentForm({})
 
-  const { agentById } = useEditAgent()
+  const { agentById, formik } = useEditAgent()
 
   const synthesizerId = agentById?.configs?.synthesizer
   const transcriberId = agentById?.configs?.transcriber
@@ -52,46 +53,52 @@ const VoiceIntegrationsDetails = () => {
   }
 
   return (
-    <StyledDetailsBox>
-      <StyledDetailHeader>
-        <TypographyPrimary
-          value={`${t('voice')} ${t('integrations')}`}
-          type={Typography.types.LABEL}
-          size={Typography.sizes.md}
-        />
-        <IconButton
-          //   onClick={() => openModal({ name: 'integration-list-modal' })}
-          icon={() => <StyledSearchOutlineIcon size={26} />}
-          kind={IconButton.kinds?.TERTIARY}
-          size={IconButton.sizes?.SMALL}
-        />
-      </StyledDetailHeader>
+    <FormikProvider value={formik}>
+      <StyledDetailsBox>
+        <StyledDetailHeader>
+          <TypographyPrimary
+            value={`${t('voice')} ${t('integrations')}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.md}
+          />
+          <IconButton
+            //   onClick={() => openModal({ name: 'integration-list-modal' })}
+            icon={() => <StyledSearchOutlineIcon size={26} />}
+            kind={IconButton.kinds?.TERTIARY}
+            size={IconButton.sizes?.SMALL}
+          />
+        </StyledDetailHeader>
 
-      <StyledCardsWrapper>
-        {synthesizer && (
-          <StyledIntegrationCard onClick={() => handleOpenVoiceIntegrationModal(synthesizer.value)}>
-            <StyledImg src={synthesizerLogo} />
+        <StyledCardsWrapper>
+          {synthesizer && (
+            <StyledIntegrationCard
+              onClick={() => handleOpenVoiceIntegrationModal(synthesizer.value)}
+            >
+              <StyledImg src={synthesizerLogo} />
 
-            <TypographyPrimary
-              value={synthesizer?.label}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-            />
-          </StyledIntegrationCard>
-        )}
-        {transcriber && (
-          <StyledIntegrationCard onClick={() => handleOpenVoiceIntegrationModal(transcriber.value)}>
-            <StyledImg src={transcriberLogo} />
+              <TypographyPrimary
+                value={synthesizer?.label}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+              />
+            </StyledIntegrationCard>
+          )}
+          {transcriber && (
+            <StyledIntegrationCard
+              onClick={() => handleOpenVoiceIntegrationModal(transcriber.value)}
+            >
+              <StyledImg src={transcriberLogo} />
 
-            <TypographyPrimary
-              value={transcriber?.label}
-              type={Typography.types.LABEL}
-              size={Typography.sizes.xss}
-            />
-          </StyledIntegrationCard>
-        )}
-      </StyledCardsWrapper>
-    </StyledDetailsBox>
+              <TypographyPrimary
+                value={transcriber?.label}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.xss}
+              />
+            </StyledIntegrationCard>
+          )}
+        </StyledCardsWrapper>
+      </StyledDetailsBox>
+    </FormikProvider>
   )
 }
 

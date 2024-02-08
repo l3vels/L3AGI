@@ -106,7 +106,7 @@ const TeamChatCard = ({
 
 export default TeamChatCard
 
-export const StyledAgentWrapper = styled.div<{ picked: boolean }>`
+export const StyledAgentWrapper = styled.div<{ picked?: boolean }>`
   cursor: pointer;
 
   width: 260px;

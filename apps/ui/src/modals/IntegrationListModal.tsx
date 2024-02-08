@@ -20,11 +20,21 @@ import Tab from 'share-ui/components/Tabs/Tab/Tab'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import {
+  StyledChatWrapper,
+  StyledDivider,
+  StyledLeftColumn,
+  StyledMainWrapper,
+} from 'routes/ChatRouteLayout'
+import ListHeader from 'routes/components/ListHeader'
+import MiniToolCard from 'components/ChatCards/MiniToolCard'
+import ToolView from 'pages/Toolkit/ToolView'
 
 type IntegrationListModalProps = {}
 
 const IntegrationListModal = () => {
   const [searchText, setSearchText] = useState('')
+  const [pickedSlug, setPickedSlug] = useState(null as any)
   const [activeTab, setActiveTab] = useState(0)
 
   const handleTabClick = (id: number) => {
@@ -32,7 +42,9 @@ const IntegrationListModal = () => {
   }
 
   const { closeModal } = useModal()
-  const { formik, isLoading } = useEditAgent()
+  const { formik, isLoading, agentById } = useEditAgent()
+
+  const agentToolsData = agentById?.configs.tools
 
   const { setFieldValue, values } = formik
 
@@ -60,10 +72,18 @@ const IntegrationListModal = () => {
     setFieldValue('agent_tools', filteredTools)
   }
 
-  const installedTools = filteredData?.filter((tool: any) => pickedTools?.includes(tool.toolkit_id))
-  const notInstalledTools = filteredData?.filter(
-    (tool: any) => !pickedTools?.includes(tool.toolkit_id),
+  const installedTools = filteredData?.filter((tool: any) =>
+    agentToolsData?.includes(tool.toolkit_id),
   )
+  const notInstalledTools = filteredData?.filter(
+    (tool: any) => !agentToolsData?.includes(tool.toolkit_id),
+  )
+
+  const handleRemoveTool = async (toolId: string) => {
+    const filteredTools = agent_tools?.filter((agentToolId: string) => agentToolId !== toolId)
+    await setFieldValue('agent_tools', filteredTools)
+    formik.handleSubmit()
+  }
 
   return (
     <Modal
@@ -73,7 +93,7 @@ const IntegrationListModal = () => {
       noOverlay
     >
       <StyledModalBody>
-        <TextField
+        {/* <TextField
           placeholder='Search Integrations'
           value={searchText}
           onChange={(value: string) => setSearchText(value || '')}
@@ -82,10 +102,10 @@ const IntegrationListModal = () => {
         <TabList noBorder size='small' activeTabId={activeTab}>
           <Tab onClick={() => handleTabClick(0)}>Installed</Tab>
           <Tab onClick={() => handleTabClick(1)}>MarketPlace</Tab>
-        </TabList>
+        </TabList> */}
 
         <FormikProvider value={formik}>
-          <TabsContext activeTabId={activeTab}>
+          {/* <TabsContext activeTabId={activeTab}>
             <TabPanels>
               <TabPanel>
                 <StyledCardsWrapper>
@@ -150,8 +170,91 @@ const IntegrationListModal = () => {
             >
               {activeTab === 0 ? 'Remove' : t('install')}
             </ButtonPrimary>
-          </StyledFooter>
+          </StyledFooter> */}
         </FormikProvider>
+
+        <StyledMainWrapper>
+          <StyledLeftColumn>
+            <StyledTextFieldWrapper>
+              <TextField
+                placeholder='Search Integrations'
+                value={searchText}
+                onChange={(value: string) => setSearchText(value || '')}
+              />
+            </StyledTextFieldWrapper>
+            <ListHeader title={'Installed'} />
+            {installedTools?.map((tool: any) => {
+              const filteredLogos = toolLogos.filter(
+                (toolLogo: any) => toolLogo.toolName === tool.name,
+              )
+
+              const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+              return (
+                <>
+                  <MiniToolCard
+                    // onClick={() => {}}
+                    onClick={() => {
+                      setPickedSlug(tool.slug)
+                      setFieldValue('agent_tools', agentToolsData)
+                    }}
+                    picked={pickedSlug === tool.slug}
+                    onDeleteClick={() => handleRemoveTool(tool.toolkit_id)}
+                    name={tool.name}
+                    logo={logoSrc}
+                  />
+                </>
+              )
+            })}
+
+            <ListHeader title={'Marketplace'} />
+            {notInstalledTools?.map((tool: any) => {
+              const filteredLogos = toolLogos.filter(
+                (toolLogo: any) => toolLogo.toolName === tool.name,
+              )
+
+              const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+              return (
+                <>
+                  <MiniToolCard
+                    onClick={() => {
+                      handlePickTool(tool.toolkit_id)
+                      setPickedSlug(null)
+                    }}
+                    picked={agent_tools?.includes(tool.toolkit_id) || false}
+                    name={tool.name}
+                    logo={logoSrc}
+                  />
+                </>
+              )
+            })}
+          </StyledLeftColumn>
+
+          <StyledDivider />
+
+          <StyledChatWrapper>
+            {pickedSlug ? (
+              <ToolView toolSlug={pickedSlug} />
+            ) : (
+              <>
+                <StyledFooter>
+                  <ButtonPrimary
+                    onClick={async () => {
+                      await formik.submitForm()
+                      setPickedTools(agent_tools)
+                      setActiveTab(0)
+                    }}
+                    disabled={isLoading}
+                    loading={isLoading}
+                  >
+                    {t('install')}
+                  </ButtonPrimary>
+                </StyledFooter>
+              </>
+            )}
+          </StyledChatWrapper>
+        </StyledMainWrapper>
       </StyledModalBody>
     </Modal>
   )
@@ -171,17 +274,8 @@ const StyledCardsWrapper = styled.div`
 `
 
 const StyledModalBody = styled.div`
-  /* height: 100vh; */
-  /* max-height: 600px; */
-  padding-bottom: 10px;
-  /* width: 100vw; */
-  height: 100%;
-  min-height: 60vh;
   width: 50vw;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  height: 70vh;
 `
 const StyledFooter = styled.div`
   width: 100%;
@@ -189,4 +283,9 @@ const StyledFooter = styled.div`
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
+
+  padding-right: 5px;
+`
+const StyledTextFieldWrapper = styled.div`
+  padding: 4px;
 `

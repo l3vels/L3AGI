@@ -23,7 +23,7 @@ export const useEditAgent = () => {
 
   const agentId = urlParams.get('agent') || params.agentId
 
-  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const { data: agentById, refetch: refetchAgent } = useAgentByIdService({ id: agentId || '' })
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -73,6 +73,8 @@ export const useEditAgent = () => {
       await updateAgent(agentId || '', {
         ...updatedValues,
       })
+
+      await refetchAgent()
       await refetchAgents()
 
       setToast({

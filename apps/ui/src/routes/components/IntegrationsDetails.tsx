@@ -1,3 +1,4 @@
+import { StyledAgentWrapper, StyledIconButtonWrapper } from 'components/ChatCards/TeamChatCard'
 import { StyledSearchOutlineIcon } from 'components/ChatSwitcher/ChatSwitcher'
 import TypographyPrimary from 'components/Typography/Primary'
 import { FormikProvider } from 'formik'
@@ -70,7 +71,7 @@ const IntegrationDetails = () => {
 
             const logoSrc = filteredLogos?.[0]?.logoSrc || ''
             return (
-              <StyledIntegrationCard
+              <StyledAgentWrapper
                 key={tool?.value}
                 onClick={() => handleOpenToolIntegrationModal(tool?.value)}
               >
@@ -82,7 +83,7 @@ const IntegrationDetails = () => {
                   size={Typography.sizes.xss}
                 />
 
-                <StyledButtonWrapper>
+                <StyledIconButtonWrapper className='hiddenButton'>
                   <IconButton
                     kind={IconButton.kinds?.TERTIARY}
                     size={IconButton.sizes?.SMALL}
@@ -91,8 +92,8 @@ const IntegrationDetails = () => {
                       handleRemoveIntegration({ event: event, id: tool.value })
                     }
                   />
-                </StyledButtonWrapper>
-              </StyledIntegrationCard>
+                </StyledIconButtonWrapper>
+              </StyledAgentWrapper>
             )
           })}
         </StyledCardsWrapper>
