@@ -2,6 +2,7 @@ from typing import List, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
+from fastapi.responses import StreamingResponse
 from fastapi_sqlalchemy import db
 from sqlalchemy.orm import joinedload
 
@@ -99,15 +100,15 @@ def get_chats(
 
 
 @router.post("/messages", status_code=201, include_in_schema=False)
-def create_user_chat_message(
+async def create_user_chat_message(
     body: ChatUserMessageInput, auth: UserAccount = Depends(authenticate)
 ):
     """
     Create new user chat message
     """
 
-    create_user_message(body, auth)
-    return ""
+    gen = create_user_message(body, auth)
+    return StreamingResponse(gen, media_type="text/event-stream")
 
 
 @router.post(
@@ -317,7 +318,8 @@ def create_chat_message(request: Request, response: Response, body: ChatMessageI
     """
     # authenticate
     auth: UserAccount = try_auth_user_with_any(request, response)
-    return create_client_message(body, auth)
+    gen = create_client_message(body, auth)
+    return StreamingResponse(gen, media_type="text/event-stream")
 
 
 @router.post("/session/messages/draft", status_code=201, include_in_schema=False)

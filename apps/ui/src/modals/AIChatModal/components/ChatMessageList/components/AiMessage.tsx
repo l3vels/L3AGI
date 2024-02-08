@@ -99,7 +99,10 @@ const AiMessage = ({
           </StyledMessageTop>
           <StyledMessageText secondary>
             {thoughts && <AiMessageThoughts thoughts={thoughts} />}
-            {isNewMessage && !isTable ? (
+            <AiMessageMarkdown
+              children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
+            />
+            {/* {isNewMessage && !isTable ? (
               <Typewriter
                 delay={10}
                 message={messageText}
@@ -109,7 +112,7 @@ const AiMessage = ({
               <AiMessageMarkdown
                 children={thoughts?.length ? thoughts[thoughts.length - 1].result : messageText}
               />
-            )}
+            )} */}
             {voice && <AudioPlayer audioUrl={voice} />}
           </StyledMessageText>
         </StyledMainContent>
