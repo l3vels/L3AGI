@@ -17,7 +17,7 @@ import { ADD_AUTO_HEIGHT_COMPONENTS, defaultCustomStyles, DROPDOWN_ID } from './
 import generateBaseStyles, { customTheme } from './Dropdown.styles'
 import Control from './components/Control/Control'
 import { DROPDOWN_TAG_COLORS, MENU_WRAPPER_CLASS_NAME, DROPDOWN_KINDS } from './dropdown-constants'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 const Dropdown = ({
   className,
@@ -71,6 +71,42 @@ const Dropdown = ({
   kind,
   searchIcon,
 }) => {
+  const theme = useTheme()
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: `2px solid ${theme.body.textareaBorder}`,
+      '&:focus-within': {
+        boxShadow: `0 0 0 2px black`,
+      },
+      '&:hover': {
+        boxShadow: `0 0 0 2px black`,
+      },
+    }),
+
+    container: (provided, state) => ({
+      ...provided,
+
+      borderRadius: '8px',
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      zIndex: 10,
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#AAA' : 'transparent',
+      color: state.isSelected ? 'white' : 'black',
+      '&:hover': {
+        backgroundColor: `${theme.body.placeHolderColor}`,
+      },
+    }),
+    placeholder: (provided, state) => ({
+      ...provided,
+      color: `${theme.body.placeHolderColor}`,
+    }),
+  }
+
   const controlRef = useRef()
   const overrideDefaultValue = useMemo(() => {
     if (defaultValue) {
@@ -333,7 +369,7 @@ const Dropdown = ({
         openMenuOnFocus={openMenuOnFocus}
         openMenuOnClick={openMenuOnClick}
         isRtl={rtl}
-        styles={styles}
+        styles={customStyles}
         theme={customTheme}
         maxMenuHeight={maxMenuHeight}
         menuPortalTarget={menuPortalTarget}
@@ -604,7 +640,7 @@ Dropdown.propTypes = {
 export default Dropdown
 
 const StyledWrapper = styled.div`
-  .css-xrcw8y-container {
+  /* .css-xrcw8y-container {
     border: 3px solid ${({ theme }) => theme.body.textareaBorder};
   }
 
@@ -667,5 +703,5 @@ const StyledWrapper = styled.div`
 
   .css-ugu73m-placeholder {
     color: ${({ theme }) => theme.body.textColorPrimary};
-  }
+  } */
 `
