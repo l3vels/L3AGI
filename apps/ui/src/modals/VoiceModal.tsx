@@ -26,24 +26,10 @@ const VoiceModal = ({ data }: VoiceModalProps) => {
 
   return (
     <>
-      <StyledModal
-        onClose={() => closeModal('voice-modal')}
-        show
-        backgroundColor='light'
-        hideCloseButton
-      >
+      <StyledModal onClose={() => closeModal('voice-modal')} show backgroundColor='light'>
         <StyledModalBody>
           <VoiceView voiceSlug={data.voiceSlug} />
         </StyledModalBody>
-
-        <StyledButtonWrapper>
-          <IconButton
-            size={IconButton.sizes?.XS}
-            icon={() => <Close />}
-            kind={IconButton.kinds?.TERTIARY}
-            onClick={() => closeModal('voice-modal')}
-          />
-        </StyledButtonWrapper>
       </StyledModal>
     </>
   )

@@ -233,6 +233,9 @@ class ChatModel(BaseModel):
                 ChatModel.campaign_id == filter_string
                 if is_valid_uuid(filter_string)
                 else None,
+                AgentModel.id == filter_string
+                if is_valid_uuid(filter_string)
+                else None,
             )
             for filter_string in filter_list
         ]

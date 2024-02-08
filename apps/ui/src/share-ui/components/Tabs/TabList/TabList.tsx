@@ -42,7 +42,7 @@ const TabList: FC<TabListProps> = forwardRef(
       size = TabSize.LARGE,
       children,
       isColumn = false,
-      noBorder = false,
+      noBorder = true,
       customWidth = 130,
     },
     ref,

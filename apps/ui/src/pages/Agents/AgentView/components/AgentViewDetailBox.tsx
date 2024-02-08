@@ -31,12 +31,33 @@ import MenuDotsOutline from 'share-ui/components/Icon/Icons/components/MenuDotsO
 import CopyButton from 'components/CopyButton'
 import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
 import { isVoiceAgent } from 'utils/agentUtils'
+import { useEditAgent } from 'pages/Agents/useEditAgent'
+import { FormikProvider } from 'formik'
+import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
+import { useAgentForm } from 'pages/Agents/AgentForm/useAgentForm'
+import { textSlicer } from 'utils/textSlicer'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
 }
 
 const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
+  const { formik } = useEditAgent()
+
+  const {
+    modelOptions,
+    datasourceOptions,
+    toolOptions,
+    voiceSynthesizerOptions,
+    voiceTranscriberOptions,
+    handleUploadAvatar,
+    avatarIsLoading,
+    integrationOptions,
+    agentOptions,
+    voiceToolOptions,
+    voiceModelOptions,
+  } = useAgentForm(formik)
+
   const { t } = useTranslation()
   const { getChatModules } = useGetAccountModule()
   const agentModule = getChatModules('agent')
@@ -89,50 +110,53 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
     openModal({ name: 'schedule-run-modal', data: { id: chatId || agent.id, type: 'agent' } })
   }
 
-  return (
-    <StyledDetailsBox>
-      <StyledWrapper>
-        <StyledNameWrapper>
-          <TypographyPrimary
-            value={name}
-            type={Typography.types.Heading}
-            size={Typography.sizes.md}
-          />
+  const { shortText: shortId } = textSlicer(agent?.id, 30)
 
-          <StyledButtonsWrapper>
-            {agentModule?.edit && isCreator && (
+  return (
+    <FormikProvider value={formik}>
+      <StyledDetailsBox>
+        <StyledWrapper>
+          <StyledNameWrapper>
+            <TypographyPrimary
+              value={'Details'}
+              type={Typography.types.Heading}
+              size={Typography.sizes.md}
+            />
+
+            <StyledButtonsWrapper>
+              {/* {agentModule?.edit && isCreator && (
               <StyledIconButton>
                 <IconButton
-                  onClick={handleEdit}
+                onClick={handleEdit}
                   icon={() => <StyledEditIcon />}
                   size={IconButton.sizes?.SMALL}
                   kind={IconButton.kinds?.TERTIARY}
                   ariaLabel='Edit'
                 />
               </StyledIconButton>
-            )}
+            )} */}
 
-            {agentModule?.delete && isCreator && (
-              <MenuButton component={() => <MenuDotsOutline size={20} />}>
-                <StyledMenuButtonsWrapper>
-                  <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary>
-                  <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
-                  <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
-                    {t('delete-agent')}
-                  </ButtonTertiary>
-                </StyledMenuButtonsWrapper>
-              </MenuButton>
-            )}
-          </StyledButtonsWrapper>
-        </StyledNameWrapper>
-        {creator && (
+              {agentModule?.delete && isCreator && (
+                <MenuButton component={() => <MenuDotsOutline size={20} />}>
+                  <StyledMenuButtonsWrapper>
+                    {/* <ButtonTertiary onClick={handleCreateChat}>{t('create-session')}</ButtonTertiary> */}
+                    <ButtonTertiary onClick={handleScheduleRun}>{t('schedule-run')}</ButtonTertiary>
+                    <ButtonTertiary onClick={() => deleteAgentHandler(agent.id)}>
+                      {t('delete-agent')}
+                    </ButtonTertiary>
+                  </StyledMenuButtonsWrapper>
+                </MenuButton>
+              )}
+            </StyledButtonsWrapper>
+          </StyledNameWrapper>
+          {/* {creator && (
           <TypographySecondary
-            value={`By ${creator.name}`}
-            type={Typography.types.LABEL}
+          value={`By ${creator.name}`}
+          type={Typography.types.LABEL}
             size={Typography.sizes.xss}
-          />
-        )}
-        {!isCreator && (
+            />
+        )} */}
+          {/* {!isCreator && (
           <div>
             <ButtonPrimary
               size={Button.sizes?.SMALL}
@@ -147,60 +171,79 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
               </StyledInnerButtonWrapper>
             </ButtonPrimary>
           </div>
-        )}
-      </StyledWrapper>
+        )} */}
+        </StyledWrapper>
 
-      {description && (
-        <>
-          <StyledDivider />
-          <StyledWrapper>
-            <TypographyTertiary
-              value={description}
+        {description && (
+          <>
+            <StyledWrapper>
+              <TypographyTertiary
+                value={description}
+                type={Typography.types.LABEL}
+                size={Typography.sizes.sm}
+              />
+            </StyledWrapper>
+          </>
+        )}
+
+        <StyledDivider />
+
+        <StyledWrapper>
+          <StyledDropdownWrapper>
+            <TypographyPrimary
+              value={t('model')}
               type={Typography.types.LABEL}
-              size={Typography.sizes.sm}
+              size={Typography.sizes.xss}
             />
-          </StyledWrapper>
-        </>
-      )}
+            <AgentDropdown
+              // label={t('model')}
+              fieldName={'agent_model'}
+              setFieldValue={formik?.setFieldValue}
+              fieldValue={formik?.values.agent_model || ''}
+              options={agent_type !== 'text' ? voiceModelOptions : modelOptions}
+              onChange={async () => {
+                await formik?.setFieldValue('agent_model', '')
+                await formik?.submitForm()
+              }}
+              optionSize={'small'}
+              size={'small'}
+            />
+          </StyledDropdownWrapper>
 
-      <StyledDivider />
+          {agent && (
+            <TagsRow
+              title={t('ID')}
+              items={[shortId]}
+              customButton={
+                <CopyButton onCopyClick={() => navigator.clipboard.writeText(agent?.id)} />
+              }
+            />
+          )}
 
-      <StyledWrapper>
-        {agent && (
-          <TagsRow
-            title={t('ID')}
-            items={[agent?.id]}
-            customButton={
-              <CopyButton onCopyClick={() => navigator.clipboard.writeText(agent?.id)} />
-            }
-          />
-        )}
+          {role && <TagsRow title={t('role')} items={[role]} />}
 
-        {role && <TagsRow title={t('role')} items={[role]} />}
+          {/* {agentModel?.length > 0 && <TagsRow title={t('model')} items={agentModel} />} */}
 
-        {agentModel?.length > 0 && <TagsRow title={t('model')} items={agentModel} />}
+          {temperature && <TagsRow title={t('temperature')} items={[temperature.toString()]} />}
 
-        {temperature && <TagsRow title={t('temperature')} items={[temperature.toString()]} />}
+          <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
 
-        <TagsRow title={t('template')} items={[is_template ? 'True' : 'False']} />
-
-        {isVoiceAgent(agent_type) && (
           <>
             {agentTranscriber && <TagsRow title={t('transcriber')} items={[agentTranscriber]} />}
             {agentSynthesizer && <TagsRow title={t('synthesizer')} items={[agentSynthesizer]} />}
             {voice_id && <TagsRow title={t('voice-id')} items={[voice_id]} />}
           </>
-        )}
-      </StyledWrapper>
-    </StyledDetailsBox>
+        </StyledWrapper>
+      </StyledDetailsBox>
+    </FormikProvider>
   )
 }
 
 export default AgentVIewDetailBox
 
 export const StyledDetailsBox = styled.div`
-  background: ${({ theme }) => theme.body.cardBgColor};
-  border: ${({ theme }) => theme.body.secondaryBorder};
+  background: ${({ theme }) => theme.body.componentsWrapperBg};
+  /* border: ${({ theme }) => theme.body.secondaryBorder}; */
   width: 100%;
   max-width: 300px;
   min-width: 300px;
@@ -219,7 +262,6 @@ export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px 0;
 
   white-space: pre-line;
 `
@@ -268,4 +310,7 @@ export const StyledIconButton = styled.div`
       border-radius: 50%;
     }
   }
+`
+const StyledDropdownWrapper = styled.div`
+  font-weight: 500;
 `

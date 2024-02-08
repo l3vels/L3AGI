@@ -14,10 +14,12 @@ import {
   StyledEyeOpenIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 import { getAgentTypeText } from 'utils/agentUtils'
+import styled from 'styled-components'
+import Badge from './chatCardComponents/Badge'
 
 type AgentChatCardProps = {
   onClick: () => void
-  onViewClick: () => void
+  onViewClick?: () => void
   onEditClick?: () => void
   onDeleteClick?: () => void
   picked: boolean
@@ -41,7 +43,7 @@ const AgentChatCard = ({
 
   const handleView = (event: any) => {
     event.stopPropagation()
-    onViewClick()
+    if (onViewClick) onViewClick()
   }
 
   const handleDelete = (event: any) => {
@@ -53,14 +55,19 @@ const AgentChatCard = ({
 
   const agentType = getAgentTypeText(agent?.agent_type)
 
-  const agentRole = agent?.role?.length > 0 ? `· ${agent?.role}` : ''
+  // const agentRole = agent?.role?.length > 0 ? `· ${agent?.role}` : ''
 
-  const roleText = `${agentType} ${agentRole}`
+  // const roleText = `${agentType} ${agentRole}`
 
   return (
     <StyledAgentWrapper onClick={onClick} picked={picked}>
-      <AvatarGenerator name={agent?.name} size={30} avatar={agent.avatar} />
-      <MemberText name={agent?.name} role={roleText} />
+      <StyledAvatarWrapper>
+        <AvatarGenerator name={agent?.name} size={50} avatar={agent.avatar} />
+        <StyledBadgeWrapper>
+          <Badge type={agentType} />
+        </StyledBadgeWrapper>
+      </StyledAvatarWrapper>
+      <MemberText name={agent?.name} />
 
       <StyledIconButtonWrapper className='hiddenButton'>
         {onDeleteClick && (
@@ -73,17 +80,19 @@ const AgentChatCard = ({
           />
         )}
 
-        <IconButton
-          onClick={handleView}
-          icon={() => (
-            <StyledIconWrapper>
-              <StyledEyeOpenIcon />
-            </StyledIconWrapper>
-          )}
-          size={IconButton.sizes?.SMALL}
-          kind={IconButton.kinds?.TERTIARY}
-          // ariaLabel='View'
-        />
+        {onViewClick && (
+          <IconButton
+            onClick={handleView}
+            icon={() => (
+              <StyledIconWrapper>
+                <StyledEyeOpenIcon />
+              </StyledIconWrapper>
+            )}
+            size={IconButton.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            // ariaLabel='View'
+          />
+        )}
 
         {onEditClick && (
           <IconButton
@@ -100,3 +109,13 @@ const AgentChatCard = ({
 }
 
 export default AgentChatCard
+
+const StyledAvatarWrapper = styled.div`
+  position: relative;
+`
+const StyledBadgeWrapper = styled.div`
+  position: absolute;
+
+  bottom: 0;
+  right: -4px;
+`

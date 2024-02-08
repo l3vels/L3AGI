@@ -1,5 +1,6 @@
 import Avatar, { ConfigProvider } from 'react-avatar'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { boolean } from 'yup'
 
 type AvatarGeneratorProps = {
   name: string
@@ -7,39 +8,75 @@ type AvatarGeneratorProps = {
   isRound?: boolean
   textSizeRatio?: number
   avatar?: string
+  arcShape?: boolean
 }
 
-const AVATAR_COLORS = [
-  'linear-gradient(180deg, #E332E6 0%, #A822F3 100%)',
-  'linear-gradient(180deg, #73FAFD 0%, #50B1D7 100%)',
-  'linear-gradient(180deg, #4CA6F8 0%, #2152F3 100%)',
-]
+const AVATAR_COLORS = ['#A822F3', '#F0A300', '#EF5533']
 
 const AvatarGenerator = ({
   name,
-  size,
+  size = 40,
   isRound = true,
   textSizeRatio = 3,
   avatar,
+  arcShape = false,
 }: AvatarGeneratorProps) => {
   return (
-    // @ts-expect-error https://github.com/ambassify/react-avatar/issues/258
-    <ConfigProvider colors={AVATAR_COLORS}>
-      <StyledAvatar
-        name={name}
-        size={`${size}`}
-        textSizeRatio={textSizeRatio}
-        round={isRound}
-        src={avatar}
-      />
-    </ConfigProvider>
+    <StyledAvatarWrapper size={size} arcShape={arcShape}>
+      <ConfigProvider colors={AVATAR_COLORS}>
+        <StyledAvatar
+          mainShape={true}
+          name={name}
+          size={`${size}`}
+          textSizeRatio={textSizeRatio}
+          round={isRound}
+          src={avatar}
+        />
+      </ConfigProvider>
+    </StyledAvatarWrapper>
   )
 }
 
 export default AvatarGenerator
 
-const StyledAvatar = styled(Avatar)`
+const StyledAvatarWrapper = styled.div<{ size: number; arcShape: boolean }>`
+  border-radius: 100px 100px 100px 20px;
+
+  /* border: 2px solid #000; */
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${props =>
+    props.size &&
+    css`
+      width: calc(${props.size}px - 20px);
+      height: calc(${props.size}px - 20px);
+    `}
+  ${props =>
+    props.arcShape &&
+    css`
+      border-radius: 100px 100px 40px 40px;
+      height: calc(${props.size}px - 14px);
+      width: calc(${props.size}px - 16px);
+
+      border: 2px solid #000;
+    `}
+`
+
+const StyledAvatar = styled(Avatar)<{ mainShape?: boolean }>`
   font-family: unset !important;
 
   object-fit: cover !important;
+
+  /* outline: 2px solid #000 !important; */
+
+  /* ${props =>
+    props.mainShape &&
+    css`
+      border-radius: 100px 100px 100px 0 !important;
+    `} */
 `

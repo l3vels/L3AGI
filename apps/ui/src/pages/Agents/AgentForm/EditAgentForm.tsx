@@ -32,35 +32,20 @@ const EditAgentForm = () => {
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
-        <StyledHeaderGroup className='header_group'>
-          <div>
-            {/* <StyledSectionDescription>
-              Here are all your agents, managing tasks and operations.
-            </StyledSectionDescription> */}
-            <StyledCombiner>
-              <StyledSectionTitle>{`${t('edit-agent')}`}</StyledSectionTitle>
+        <StyledHeaderGroup className='header_group'></StyledHeaderGroup>
 
-              <AgentDemoButton />
-            </StyledCombiner>
-          </div>
-
-          <StyledButtonWrapper>
-            <BackButton customOnClick={handleNavigation} />
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              disabled={isLoading}
-              size={Button.sizes?.SMALL}
-            >
-              {isLoading ? <Loader size={32} /> : t('save')}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
-        </StyledHeaderGroup>
-
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <AgentForm formik={formik} isVoice={isVoiceEdit} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <AgentForm formik={formik} isVoice={isVoiceEdit} />
+        </StyledFormWrapper>
+        <StyledButtonWrapper>
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            disabled={isLoading}
+            size={Button.sizes?.MEDIUM}
+          >
+            {isLoading ? <Loader size={32} /> : t('save')}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

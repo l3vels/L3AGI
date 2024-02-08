@@ -25,24 +25,10 @@ const ToolkitModal = ({ data }: ToolkitModalProps) => {
 
   return (
     <>
-      <StyledModal
-        onClose={() => closeModal('toolkit-modal')}
-        show
-        backgroundColor='light'
-        hideCloseButton
-      >
+      <StyledModal onClose={() => closeModal('toolkit-modal')} show backgroundColor='light'>
         <StyledModalBody>
           <ToolView toolSlug={data.toolSlug} />
         </StyledModalBody>
-
-        <StyledButtonWrapper>
-          <IconButton
-            size={IconButton.sizes?.XS}
-            icon={() => <Close />}
-            kind={IconButton.kinds?.TERTIARY}
-            onClick={() => closeModal('toolkit-modal')}
-          />
-        </StyledButtonWrapper>
       </StyledModal>
     </>
   )

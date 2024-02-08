@@ -173,7 +173,7 @@ const ChatMessageListV2 = ({
           <>
             {chat?.type === 'human' && (
               <StyledWrapper isReplying={chat.id === reply.messageId}>
-                <StyledReplyMessageContainer className='visible-reply'>
+                <StyledReplyMessageContainer className='reply'>
                   {chat?.parent &&
                     (chat.parent.message.type === 'human' ? (
                       <HumanReply
@@ -277,7 +277,7 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   gap: 5px;
 
   padding-top: 10px;
@@ -314,12 +314,7 @@ const StyledLoaderWrapper = styled.div`
   align-items: flex-start;
   padding-right: 10px;
   min-width: 400px;
-  width: calc(100% - 100px);
-  max-width: 800px;
-
-  @media only screen and (max-width: 1750px) {
-    max-width: 600px;
-  }
+  width: 100%;
 `
 const StyledReplyMessageContainer = styled.div`
   transition: opacity 1000ms;
@@ -334,5 +329,5 @@ const StyledReplyMessageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 `

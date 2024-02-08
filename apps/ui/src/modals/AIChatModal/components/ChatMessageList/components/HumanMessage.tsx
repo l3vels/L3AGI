@@ -13,6 +13,7 @@ import TypographyTertiary from 'components/Typography/Tertiary'
 import AiMessageMarkdown from './AiMessageMarkdown'
 
 import AudioPlayer from 'components/AudioPlayer'
+import TypographySecondary from 'components/Typography/Secondary'
 
 type HumanMessageProps = {
   avatarImg: string
@@ -53,10 +54,10 @@ const HumanMessage = ({
               <TypographyPrimary
                 value={userName}
                 type={Typography.types.LABEL}
-                size={Typography.sizes.sm}
+                size={Typography.sizes.xss}
               />
 
-              <TypographyTertiary
+              <TypographySecondary
                 value={messageDate}
                 type={Typography.types.LABEL}
                 size={Typography.sizes.xss}
@@ -96,8 +97,8 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
   gap: 12px;
   padding-right: 10px;
   min-width: 400px;
-  width: calc(100% - 100px);
-  max-width: 800px;
+  width: 100%;
+  /* max-width: 800px; */
 
   :hover {
     .actions {
@@ -110,16 +111,12 @@ export const StyledMessageWrapper = styled.div<{ secondary?: boolean }>`
     css`
       flex-direction: row-reverse;
     `};
-
-  @media only screen and (max-width: 1750px) {
-    max-width: 600px;
-  }
 `
 
 export const StyledMessageText = styled.div<{ secondary?: boolean }>`
   color: ${({ theme }) => theme.body.textColorPrimary};
   display: flex;
-  padding: 16px 16px 18px 16px;
+  padding: 0;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -128,22 +125,16 @@ export const StyledMessageText = styled.div<{ secondary?: boolean }>`
 
   width: 100%;
 
-  border-radius: 4px 18px 18px 18px;
-  background: ${({ theme }) => theme.body.humanMessageBgColor};
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
-  font-family: 'Circular', 'Roboto';
-  font-weight: 500;
+  /* border-radius: 4px 18px 18px 18px; */
+  /* background: ${({ theme }) => theme.body.humanMessageBgColor}; */
+  /* box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05); */
 
-  font-style: normal;
-  font-size: 14px;
-
-  ${props =>
+  /* ${props =>
     props.secondary &&
     css`
-      /* border-radius: 18px 4px 18px 18px; */
       background: var(--basic-foreground-black-1, rgba(0, 0, 0, 0.1));
       box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
-    `};
+    `}; */
 `
 
 export const StyledMessageTop = styled.div`
@@ -155,7 +146,7 @@ export const StyledMessageTop = styled.div`
 export const StyledMainContent = styled.div<{ secondary?: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
 
   width: calc(100% - 60px);
   height: 100%;
@@ -167,13 +158,15 @@ export const StyledMainContent = styled.div<{ secondary?: boolean }>`
     `};
 `
 export const StyledAvatarWrapper = styled.div`
-  margin-top: 5px;
+  /* margin-top: 5px; */
 `
 
 export const StyledMessageInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+
+  font-weight: 500;
 `
 export const StyledMessageActionsWrapper = styled.div`
   opacity: 0;

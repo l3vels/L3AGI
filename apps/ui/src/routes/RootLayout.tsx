@@ -21,10 +21,11 @@ const RootLayout = () => {
   // if (!user) return <Navigate to='/discover' />
 
   return (
-    <>
-      <>{outlet}</>
+    <StyledRoot>
+      {user && <ChatSwitcher isChatOpen={isCheckedRoute} user={user} />}
+      <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
 
-      {user && (
+      {/* {user && (
         <StyledAvatarContainer>
           <StyledInnerWrapper>
             <AvatarDropDown />
@@ -33,18 +34,28 @@ const RootLayout = () => {
 
           <MediaButtons />
         </StyledAvatarContainer>
-      )}
+      )} */}
 
       {/* <StyledChatInputWrapper isHidden={isCheckedRoute}>
         {user && <Spotlight />}
       </StyledChatInputWrapper> */}
-
-      {user && <ChatSwitcher isChatOpen={isCheckedRoute} />}
-    </>
+    </StyledRoot>
   )
 }
 
 export default RootLayout
+
+const StyledRoot = styled.div`
+  display: flex;
+  height: 100%;
+
+  background: ${({ theme }) => theme.body.backgroundColorPrimary};
+`
+const StyledOutletWrapper = styled.div`
+  width: 100%;
+
+  margin: 0 auto;
+`
 
 // const StyledChatInputWrapper = styled.div<{ isHidden: boolean }>`
 //   position: fixed;

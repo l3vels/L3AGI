@@ -6,6 +6,8 @@ const StyledAppContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+
+  padding: 28px 0;
 `
 
 const StyledMainLayout = styled.div`

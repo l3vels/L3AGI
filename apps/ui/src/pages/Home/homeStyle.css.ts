@@ -63,6 +63,7 @@ const StyledSectionWrapper = styled.div`
   flex-direction: column;
   gap: 15px;
   width: 100%;
+  height: 100%;
 `
 
 const StyledHeaderGroup = styled.div`

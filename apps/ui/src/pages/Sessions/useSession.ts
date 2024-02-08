@@ -8,7 +8,7 @@ import { useChatsService } from 'services/chat/useChatsService'
 import { AgentWithConfigs, ScheduleWithConfigs } from 'types'
 import { getAgentTypeText } from 'utils/agentUtils'
 
-type Chat = {
+export type Chat = {
   id: string
   name: string
   voice_url: string

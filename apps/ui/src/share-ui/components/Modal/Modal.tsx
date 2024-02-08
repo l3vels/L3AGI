@@ -172,31 +172,29 @@ const Modal: FC<ModalProps> & {
   }, [childrenArray])
 
   const dialog = ReactDOM.createPortal(
-    <div className={className}>
-      <StyledModalContainer
-        {...attr.container}
-        data-testid='l3-dialog-container'
-        style={{ zIndex: zIndex }}
+    <StyledModalContainer
+      {...attr.container}
+      data-testid='l3-dialog-container'
+      style={{ zIndex: zIndex }}
+    >
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+
+      <StyledOverlay
+        noOverlay={noOverlay}
+        onClick={closeDialogIfNeeded}
+        data-testid='l3-modal-overlay'
+      />
+
+      <StyledDialog
+        backgroundColor={backgroundColor}
+        fullscreen={fullscreen}
+        isTransparent={isTransparent}
       >
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-
-        <StyledOverlay
-          noOverlay={noOverlay}
-          onClick={closeDialogIfNeeded}
-          data-testid='l3-modal-overlay'
-        />
-
-        <StyledDialog
-          backgroundColor={backgroundColor}
-          fullscreen={fullscreen}
-          isTransparent={isTransparent}
-        >
-          {!isClean && header}
-          <StyledContainer className={className}>{content}</StyledContainer>
-          {!isClean && footer}
-        </StyledDialog>
-      </StyledModalContainer>
-    </div>,
+        {!isClean && header}
+        <StyledContainer className={className}>{content}</StyledContainer>
+        {!isClean && footer}
+      </StyledDialog>
+    </StyledModalContainer>,
     document.body,
   )
 
@@ -253,7 +251,7 @@ const StyledOverlay = styled.div<{ noOverlay: boolean }>`
 `
 
 const StyledContainer = styled.div`
-  padding: 16px;
+  /* padding: 16px; */
 `
 
 const StyledDialog = styled.div<{
@@ -266,7 +264,7 @@ const StyledDialog = styled.div<{
   position: relative;
   flex-direction: column;
 
-  padding: 2px;
+  /* padding: 2px; */
   overflow: auto;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(50px);

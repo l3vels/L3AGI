@@ -537,7 +537,7 @@ const StyledStatusContainer = styled.div`
   justify-content: flex-start;
 `
 const StyledSyntaxHighlighter = styled(SyntaxHighlighter)`
-  font-family: 'Roboto Mono';
+  /* font-family: 'Roboto Mono'; */
   font-style: normal;
   font-weight: 500;
   font-size: 16px;

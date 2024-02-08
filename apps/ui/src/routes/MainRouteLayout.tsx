@@ -5,9 +5,7 @@ import { AuthContext } from 'contexts'
 
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
 
-import { Footer, Header } from 'components/Layout'
-import MainNavigation from 'pages/Navigation/MainNavigation'
-import styled from 'styled-components'
+import { Footer } from 'components/Layout'
 
 const MainRouteLayout = ({ expand }: { expand?: boolean }) => {
   const { user } = React.useContext(AuthContext)
@@ -18,10 +16,6 @@ const MainRouteLayout = ({ expand }: { expand?: boolean }) => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header />
-      {/* <StyledNavigationWrapper>
-        <MainNavigation />
-      </StyledNavigationWrapper> */}
       <StyledMainContainer expand={expand}>{outlet}</StyledMainContainer>
       <Footer />
     </StyledAppContainer>
@@ -29,16 +23,3 @@ const MainRouteLayout = ({ expand }: { expand?: boolean }) => {
 }
 
 export default MainRouteLayout
-
-const StyledNavigationWrapper = styled.div`
-  position: sticky;
-  top: 0;
-
-  z-index: 102030;
-  /* max-height: 62px; */
-  padding: 0 165px;
-
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-`

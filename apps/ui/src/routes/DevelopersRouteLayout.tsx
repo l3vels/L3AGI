@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import DevelopersNavigation from 'pages/Navigation/DevelopersNavigation'
 
-import { Footer, Header } from 'components/Layout'
+import { Footer } from 'components/Layout'
 
 const DevelopersRouteLayout = () => {
   const { user } = useContext(AuthContext)
@@ -39,7 +39,6 @@ const DevelopersRouteLayout = () => {
   return (
     <StyledAppContainer>
       {/* <StyledMainLayout> */}
-      <Header expandMode={isExpandMode} />
 
       <StyledMainContainer expand={isExpandMode} id='main_container_test'>
         {!hideNavbar && (

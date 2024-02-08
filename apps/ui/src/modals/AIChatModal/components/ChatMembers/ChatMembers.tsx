@@ -65,12 +65,12 @@ const ChatMembers = ({
 
     return (
       <StyledRoot>
-        <StyledTabListWrapper>
+        {/* <StyledTabListWrapper>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>{t('info')}</Tab>
             <Tab onClick={() => setActiveTab(1)}>{t('members')}</Tab>
           </TabList>
-        </StyledTabListWrapper>
+        </StyledTabListWrapper> */}
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>
@@ -184,12 +184,12 @@ const ChatMembers = ({
   if (teamOfAgents) {
     return (
       <StyledRoot>
-        <StyledTabListWrapper>
+        {/* <StyledTabListWrapper>
           <TabList size='small'>
             <Tab onClick={() => setActiveTab(0)}>{t('info')}</Tab>
             <Tab onClick={() => setActiveTab(1)}>{t('members')}</Tab>
           </TabList>
-        </StyledTabListWrapper>
+        </StyledTabListWrapper> */}
 
         <StyledContainer>
           <TabsContext activeTabId={activeTab}>

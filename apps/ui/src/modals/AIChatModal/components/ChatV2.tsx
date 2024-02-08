@@ -553,34 +553,38 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  position: relative;
   /* align-items: center; */
   padding: 10px 30px;
   /* gap: 12px; */
   /* padding-top: 5px; */
 
-  background: rgba(0, 0, 0, 0.1);
+  background: #fff;
   /* Style */
 
-  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
-    inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+  /* box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
+    inset 0px 1px 1px rgba(255, 255, 255, 0.25); */
 
-  backdrop-filter: blur(100px);
+  /* backdrop-filter: blur(100px); */
 
   /* Note: backdrop-filter has minimal browser support */
 
-  border-radius: 100px;
+  /* border-radius: 100px; */
   /* cursor: pointer; */
 
+  border-radius: 8px;
+  border: 3px solid var(--border-soft, rgba(0, 0, 0, 0.1));
+  background: var(--background-background-primary, #fff);
+
   width: 100%;
-  max-width: 800px;
+  /* max-width: 800px; */
   min-height: 54px;
   height: fit-content;
   max-height: 250px;
 
-  @media only screen and (max-width: 1750px) {
+  /* @media only screen and (max-width: 1750px) {
     max-width: 600px;
-  }
+  } */
 `
 
 const StyledTextareaWrapper = styled.div`
@@ -593,7 +597,7 @@ const StyledTextareaWrapper = styled.div`
   width: 100%;
   /* width: 800px; */
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   gap: 10px;
   /* padding: 10px 0px;
@@ -614,10 +618,12 @@ const StyledButton = styled.div<{ disabled: boolean }>`
 const StyledChatFooter = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: flex-end;
 
   width: 100%;
+
+  padding-right: 24px;
 `
 
 const StyledButtonGroup = styled.div`

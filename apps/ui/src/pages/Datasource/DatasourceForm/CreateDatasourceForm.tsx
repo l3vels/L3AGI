@@ -69,4 +69,6 @@ export const StyledCombiner = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  width: 100%;
 `

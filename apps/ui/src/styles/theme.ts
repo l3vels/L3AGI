@@ -119,7 +119,7 @@ const lightTheme: DefaultTheme = {
     border: '1px solid #acacad',
     backgroundImageSecondary: defaultBgImageSecondary,
     testVariableColor: 'var(--color-highlight_blue)',
-    iconColor: 'rgb(130,130,130)',
+    iconColor: '#000',
     mainNavColorActive: 'rgb(80,80,80)',
     mainNavColor: 'rgb(193,193,193)',
     breadCrumbsColor: 'rgb(91,91,91)',
@@ -150,7 +150,7 @@ const lightTheme: DefaultTheme = {
     commandMenuBackgroundColor: '#F5F5F7',
     warningToastTextColor: 'rgb(110,110,110)',
     sessionDropdownBorder: '2px solid #cccccc',
-    tagColor: 'gradient_grey',
+    tagColor: 'white',
   },
   typography: {
     contentPrimary: 'rgb(0,0,0)',
@@ -199,11 +199,11 @@ const lightTheme: DefaultTheme = {
     },
   },
   tabs: {
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: '#0000004D',
     hoverBgColor: 'rgba(0, 0, 0, 0.2)',
-    activeColor: '#fff',
-    activeBgColor: 'rgba(0, 0, 0, 0.5)',
-    borderColor: 'lightGray',
+    activeColor: '#000',
+    activeBgColor: '#fff',
+    borderColor: '#000',
   },
 }
 

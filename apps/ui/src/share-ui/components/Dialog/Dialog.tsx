@@ -559,7 +559,7 @@ export default class Dialog extends PureComponent<DialogProps, DialogState> {
                     <StyledTooltipArrow
                       style={arrowProps.style}
                       ref={arrowProps.ref}
-                      className={cx('l3-style-tooltip-arrow', tooltipClassName)}
+                      // className={cx('l3-style-tooltip-arrow', tooltipClassName)}
                       data-placement={placement}
                     />
                   )}

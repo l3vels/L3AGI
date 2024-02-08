@@ -29,7 +29,7 @@ const UploadAvatar = ({ onChange, isLoading, avatarSrc, name = '' }: UploadAvata
       {isLoading ? (
         <Loader size={48} />
       ) : (
-        <AvatarGenerator name={name} size={65} avatar={avatarSrc} />
+        <AvatarGenerator name={name} size={80} avatar={avatarSrc} />
       )}
     </StyledAvatarInputWrapper>
   )

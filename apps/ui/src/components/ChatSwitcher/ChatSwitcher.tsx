@@ -26,9 +26,10 @@ import MainNavigation from 'pages/Navigation/MainNavigation'
 
 type ChatSwitcherProps = {
   isChatOpen?: boolean
+  user: any
 }
 
-const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
+const ChatSwitcher = ({ isChatOpen = false, user }: ChatSwitcherProps) => {
   const navigate = useNavigate()
 
   const { setShowSwitcher, showSwitcher, handleMouseHover, handleMouseLeave } = useChatSwitcher()
@@ -74,83 +75,7 @@ const ChatSwitcher = ({ isChatOpen = false }: ChatSwitcherProps) => {
       onMouseLeave={handleMouseLeave}
       onClick={() => setShowSwitcher(true)}
     >
-      {/* <Tooltip content={() => <span>Dashboard</span>} position={Tooltip.positions.TOP}>
-          <StyledIcon
-            picked={!isChatOpen}
-            onClick={() => {
-              if (!isChatOpen) return
-              navigate(-1)
-            }}
-          >
-            <StyledCollectionIcon />
-          </StyledIcon>
-        </Tooltip> */}
-      {/* <Tooltip content={() => <span>Chat</span>} position={Tooltip.positions.BOTTOM}>
-          <StyledIcon picked={isChatOpen} onClick={handleChatButton}>
-            <StyledMentionIcon size='46' />
-          </StyledIcon>
-        </Tooltip> */}
-      {/* <StyledChatSwitcher>
-        <Tooltip
-          content={() => <span>Home</span>}
-          position={Tooltip.positions.RIGHT}
-          tooltipSize='large'
-        >
-          <StyledIcon picked={active[1] === ''} onClick={() => onHandleClick('/')}>
-            <StyledAboutIcon />
-          </StyledIcon>
-        </Tooltip>
-
-        <Tooltip
-          content={() => <span>Chat</span>}
-          position={Tooltip.positions.RIGHT}
-          tooltipSize='large'
-        >
-          <StyledIcon picked={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
-            <StyledMentionIcon size={46} />
-          </StyledIcon>
-        </Tooltip>
-
-        <Tooltip
-          content={() => <span>Data sources</span>}
-          position={Tooltip.positions.RIGHT}
-          tooltipSize='large'
-        >
-          <StyledIcon
-            picked={includes(active, 'datasources')}
-            onClick={() => onHandleClick('/datasources')}
-          >
-            <StyledValueOutlineIcon />
-          </StyledIcon>
-        </Tooltip>
-
-        <Tooltip
-          content={() => <span>Toolkits</span>}
-          position={Tooltip.positions.RIGHT}
-          tooltipSize='large'
-        >
-          <StyledIcon
-            picked={includes(active, 'toolkits')}
-            onClick={() => onHandleClick('/toolkits')}
-          >
-            <StyledGamesIcon />
-          </StyledIcon>
-        </Tooltip>
-
-        <Tooltip
-          content={() => <span>Discover</span>}
-          position={Tooltip.positions.RIGHT}
-          tooltipSize='large'
-        >
-          <StyledIcon
-            picked={includes(active, 'discover')}
-            onClick={() => onHandleClick('/discover')}
-          >
-            <StyledSearchOutlineIcon />
-          </StyledIcon>
-        </Tooltip>
-      </StyledChatSwitcher> */}
-      <MainNavigation />
+      <MainNavigation user={user} />
     </StyledRoot>
   )
 }
@@ -159,19 +84,15 @@ export default ChatSwitcher
 
 // for different version
 const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
-  padding: 0 10px;
-  position: absolute;
-  top: 70px;
-  left: 0;
-  z-index: 100000;
+  /* position: absolute; */
+
   /* transform: translateY(-50%); */
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
+  /* overflow: auto;
+  display: flex; */
+  /* flex-direction: column; */
   /* justify-content: center; */
 
-  height: calc(100% - 170px);
-  width: 110px;
+  height: 100vh;
 
   @keyframes slideAnimation {
     from {
@@ -206,102 +127,6 @@ const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
   -ms-overflow-style: none;
   scrollbar-width: none; /* Firefox */
 `
-// const StyledRoot = styled.div<{ collapsed: boolean; theme: DefaultTheme }>`
-//   position: absolute;
-//   top: 50%;
-//   left: 0;
-//   z-index: 2000000;
-//   transform: translateY(-50%);
-//   /* background: red; */
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-
-//   /* height: 80%; */
-//   /* width: 110px; */
-//   padding-right: 10px;
-//   /* margin-left: 20px; */
-//   @keyframes slideAnimation {
-//     from {
-//       left: 0; /* Element slides to the right and is fully visible */
-//     }
-//     to {
-//       left: -100px; /* Element starts from the left and is off the screen */
-//     }
-//   }
-
-//   transition: left 0.1s ease-in-out;
-
-//   ${p =>
-//     p.collapsed &&
-//     css`
-//       /* width: 10px; */
-//       left: -80px;
-//       overflow: hidden;
-//       /* animation: slideAnimation 0.2s ease-in-out; */
-
-//       cursor: pointer;
-//       :hover {
-//         background: rgba(255, 255, 255, 0.1);
-//       }
-//     `};
-// `
-
-// const StyledChatSwitcher = styled.div`
-//   display: inline-flex;
-//   padding: 10px;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   gap: 10px;
-//   border-radius: 100px;
-//   border: ${({ theme }) => theme.body.border};
-//   background: ${({ theme }) => theme.body.cardBgColor};
-//   /* Style */
-//   box-shadow: 0px 8px 6px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px 0px rgba(255, 255, 255, 0.25) inset,
-//     0px -1px 1px 0px rgba(255, 255, 255, 0.1) inset;
-//   backdrop-filter: blur(50px);
-//   -webkit-backdrop-filter: blur(50px);
-
-//   margin-left: 10px;
-
-//   width: fit-content;
-// `
-// const StyledIcon = styled.div<{ picked: boolean }>`
-//   color: transparent;
-
-//   border-radius: 100px;
-
-//   width: 48px;
-//   height: 48px;
-
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-
-//   &:hover {
-//     background: ${({ theme }) => theme.body.breadCrumbsBg};
-//     cursor: pointer;
-//   }
-
-//   ${p =>
-//     p.picked &&
-//     css`
-//       background: rgba(255, 255, 255, 0.3);
-//       &:hover {
-//         background: rgba(255, 255, 255, 0.3);
-//         background: ${({ theme }) => theme.body.breadCrumbsBg};
-//     }
-//         cursor: auto;
-//       }
-//     `};
-// `
-
-// const StyledCollectionIcon = styled(Collection)`
-//   path {
-//     fill: ${({ theme }) => theme.body.iconColor};
-//   }
-// `
 
 export const StyledBasicIcon = styled(Basic)`
   path {

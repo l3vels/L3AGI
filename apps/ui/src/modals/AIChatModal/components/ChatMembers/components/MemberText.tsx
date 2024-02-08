@@ -11,7 +11,7 @@ type MemberTextProps = {
 }
 
 const MemberText = ({ name, role }: MemberTextProps) => {
-  const { shortText: shortName } = textSlicer(name, 30)
+  const { shortText: shortName } = textSlicer(name, 15)
 
   let shortRole
   if (role) {
@@ -24,7 +24,7 @@ const MemberText = ({ name, role }: MemberTextProps) => {
       <TypographyPrimary
         value={shortName}
         type={Typography.types.LABEL}
-        size={Typography.sizes.sm}
+        size={Typography.sizes.md}
       />
 
       <TypographySecondary
@@ -41,4 +41,6 @@ export default MemberText
 const StyledNameWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  font-weight: 500;
+  opacity: 0.8;
 `

@@ -99,6 +99,7 @@ import CallProvider from 'plugins/contact/providers/CallProvider'
 import CreateCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/CreateCampaignForm'
 import EditCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/EditCampaignForm'
 import TwilioPhoneNumberSidConfirmationModal from 'modals/TwilioPhoneNumberSidConfirmationModal'
+import IntegrationListModal from 'modals/IntegrationListModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -418,6 +419,7 @@ const Route = () => {
         <CallLogsModal />
         <VideoModal />
         <ContactListModal />
+        <IntegrationListModal />
         <TwilioPhoneNumberSidConfirmationModal />
 
         <CommandMenu

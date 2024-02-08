@@ -3,9 +3,8 @@ import { Navigate, useLocation, useNavigate, useOutlet } from 'react-router-dom'
 
 import { AuthContext } from 'contexts'
 
-import { Footer, Header } from 'components/Layout'
 import { StyledAppContainer, StyledMainContainer } from '../components/Layout/LayoutStyle'
-import MainNavigation, { StyledAddIcon } from 'pages/Navigation/MainNavigation'
+import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 import styled, { css } from 'styled-components'
 import AIChat from 'modals/AIChatModal/AIChat'
 import { useAgents } from 'pages/Agents/useAgents'
@@ -50,7 +49,6 @@ const AgentRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header />
       <StyledContainer>
         <StyledList>
           <StyledListHeader>

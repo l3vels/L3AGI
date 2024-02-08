@@ -1,6 +1,5 @@
 import { useOutlet } from 'react-router-dom'
 
-import { Header } from 'components/Layout'
 import { StyledAppContainer } from '../components/Layout/LayoutStyle'
 import styled from 'styled-components'
 
@@ -9,7 +8,6 @@ const ChatHistoryRouteLayout = () => {
 
   return (
     <StyledAppContainer className='app_container'>
-      <Header />
       <StyledBodyContainer>{outlet}</StyledBodyContainer>
     </StyledAppContainer>
   )

@@ -7,6 +7,7 @@ import TypographySecondary from 'components/Typography/Secondary'
 import { textSlicer } from 'utils/textSlicer'
 import CopyButton from 'components/CopyButton'
 import { ReactElement } from 'react'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type TagsRowProps = {
   items: string[]
@@ -19,7 +20,13 @@ const TagsRow = ({ items, title, customButton }: TagsRowProps) => {
 
   return (
     <StyledRow>
-      <TypographySecondary value={title} type={Typography.types.LABEL} size={Typography.sizes.sm} />
+      <StyledTextWrapper>
+        <TypographyPrimary
+          value={title}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.xss}
+        />
+      </StyledTextWrapper>
 
       <StyledWrapper>
         <StyledContainer>
@@ -32,7 +39,6 @@ const TagsRow = ({ items, title, customButton }: TagsRowProps) => {
                 color={theme.body.tagColor}
                 readOnly
                 size={Tags.sizes?.SMALL}
-                outlined
               />
             )
           })}
@@ -58,4 +64,7 @@ const StyledContainer = styled.div`
 const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
+`
+const StyledTextWrapper = styled.div`
+  font-weight: 500;
 `

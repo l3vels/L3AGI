@@ -32,35 +32,28 @@ const CreateTeamOfAgentsForm = () => {
       <FormikProvider value={formik}>
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
-            <div>
-              <StyledCombiner>
-                <StyledSectionTitle>{`${t('add-team')}`}</StyledSectionTitle>
+            <StyledCombiner>
+              <StyledSectionTitle>{`${t('add-team')}`}</StyledSectionTitle>
 
-                <TeamDemoButton />
-              </StyledCombiner>
-              {/* <StyledSectionDescription>
-                Create and manage your team of AI agents for interactive experiences.
-              </StyledSectionDescription> */}
-            </div>
-
-            <StyledButtonWrapper>
-              <BackButton />
-
-              <ButtonPrimary
-                onClick={() => handleSubmit(formik?.values)}
-                size={Button.sizes?.SMALL}
-                disabled={isLoading}
-              >
-                {isLoading ? <Loader size={32} /> : t('save')}
-              </ButtonPrimary>
-            </StyledButtonWrapper>
+              <TeamDemoButton />
+            </StyledCombiner>
           </StyledHeaderGroup>
 
-          <ComponentsWrapper noPadding>
-            <StyledFormWrapper>
-              <TeamOfAgentsForm formik={formik} isLoading={isLoading} />
-            </StyledFormWrapper>
-          </ComponentsWrapper>
+          <StyledFormWrapper>
+            <TeamOfAgentsForm formik={formik} isLoading={isLoading} />
+          </StyledFormWrapper>
+
+          <StyledButtonWrapper>
+            <BackButton />
+
+            <ButtonPrimary
+              onClick={() => handleSubmit(formik?.values)}
+              size={Button.sizes?.MEDIUM}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader size={32} /> : t('save')}
+            </ButtonPrimary>
+          </StyledButtonWrapper>
         </StyledSectionWrapper>
       </FormikProvider>
     </>

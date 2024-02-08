@@ -51,7 +51,7 @@ const TeamOfAgentCard = ({
   return (
     <StyledCard>
       <StyledMainAvatarWrapper>
-        <AvatarGenerator name={name} size={28} isRound={false} avatar={avatar} />
+        <AvatarGenerator name={name} size={50} isRound={false} avatar={avatar} />
         <StyledCreatorWrapper>
           <AvatarGenerator
             name={creator.name}

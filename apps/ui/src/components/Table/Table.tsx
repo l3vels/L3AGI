@@ -210,9 +210,9 @@ const StyledRoot = styled.div<{ expand?: boolean }>`
   }
 
   border-radius: 24px;
-  max-height: calc(100vh - 350px);
-  ${({ expand }) =>
-    expand ? 'max-height: calc(100vh - 280px);' : 'max-height: calc(100vh - 350px);'};
+  /* max-height: calc(100vh - 350px); */
+  /* ${({ expand }) =>
+    expand ? 'max-height: calc(100vh - 280px);' : 'max-height: calc(100vh - 350px);'}; */
 
   position: relative;
 `
@@ -304,7 +304,7 @@ const PageNumber = styled.div<{ active?: boolean; readOnly?: boolean }>`
   margin: 0 5px;
   cursor: pointer;
   font-size: 15px;
-  font-family: Circular, sans-serif;
+  /* font-family: Circular, sans-serif; */
   font-weight: normal;
   font-style: normal;
   width: 30px;

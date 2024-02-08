@@ -1,12 +1,7 @@
 import Typography from 'share-ui/components/typography/Typography'
 
-import {
-  StyledHeaderGroup,
-  // StyledSectionDescription,
-  StyledSectionTitle,
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
+import { StyledHeaderGroup, StyledSectionWrapper } from 'pages/Home/homeStyle.css'
+
 import styled from 'styled-components'
 import BackButton from 'components/BackButton'
 
@@ -61,60 +56,56 @@ const CreateAgentTemplate = () => {
   return (
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
-        <div>
-          <StyledCombiner>
-            <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
-
-            <AgentDemoButton />
-          </StyledCombiner>
-          {/* <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
-          </StyledSectionDescription> */}
-        </div>
-
-        <StyledButtonWrapper>
-          <BackButton />
-        </StyledButtonWrapper>
+        <StyledCombiner>
+          <TypographyPrimary
+            value={`${t('add-agent')}`}
+            type={Typography.types.LABEL}
+            size={Typography.sizes.lg}
+          />
+          <AgentDemoButton />
+        </StyledCombiner>
       </StyledHeaderGroup>
 
-      <ComponentsWrapper noPadding>
-        <StyledTemplatesWrapper>
-          <StyledTemplateHeader>
-            <CreateAgentButtonCard onClick={handleNavigate} />
+      <StyledTemplatesWrapper>
+        <StyledTemplateHeader>
+          <CreateAgentButtonCard onClick={handleNavigate} />
 
-            {displayedAgents?.length > 0 && (
-              <TypographyPrimary
-                value={t('choose-template')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
+          {displayedAgents?.length > 0 && (
+            <TypographyPrimary
+              value={t('choose-template')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.lg}
+            />
+          )}
+        </StyledTemplateHeader>
+        <StyledCardsWrapper>
+          {displayedAgents?.map((agentObj: any, index: number) => {
+            const { agent } = agentObj
+
+            return (
+              <AgentCard
+                key={index}
+                name={agent.name}
+                description={agent.description}
+                onViewClick={() =>
+                  openModal({ name: 'agent-view-modal', data: { agent: agentObj } })
+                }
+                headerTag={agent.role}
+                onCreateClick={async () => {
+                  await refetchAgent({ id: agent.id })
+                  navigate(`/agents/create-agent?agentId=${agent.id}`)
+                }}
+                // creator={agent.creator}
+                avatar={agent.avatar}
               />
-            )}
-          </StyledTemplateHeader>
-          <StyledCardsWrapper>
-            {displayedAgents?.map((agentObj: any, index: number) => {
-              const { agent } = agentObj
+            )
+          })}
+        </StyledCardsWrapper>
+      </StyledTemplatesWrapper>
 
-              return (
-                <AgentCard
-                  key={index}
-                  name={agent.name}
-                  description={agent.description}
-                  onViewClick={() =>
-                    openModal({ name: 'agent-view-modal', data: { agent: agentObj } })
-                  }
-                  headerTag={agent.role}
-                  onCreateClick={async () => {
-                    await refetchAgent({ id: agent.id })
-                    navigate(`/agents/create-agent?agentId=${agent.id}`)
-                  }}
-                  // creator={agent.creator}
-                  avatar={agent.avatar}
-                />
-              )
-            })}
-          </StyledCardsWrapper>
-        </StyledTemplatesWrapper>
-      </ComponentsWrapper>
+      <StyledButtonWrapper>
+        <BackButton />
+      </StyledButtonWrapper>
     </StyledSectionWrapper>
   )
 }

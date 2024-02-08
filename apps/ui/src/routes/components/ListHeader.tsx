@@ -15,6 +15,7 @@ import {
   TypographySizes,
   TypographyTypes,
 } from 'share-ui/components/typography/TypographyConstants'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type ListHeaderProps = {
   title: string
@@ -25,8 +26,8 @@ type ListHeaderProps = {
 const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
   return (
     <StyledListHeader>
-      <TypographySecondary
-        value={`${title}s`}
+      <TypographyPrimary
+        value={`${title}`}
         type={TypographyTypes.LABEL}
         size={TypographySizes.md}
       />
@@ -74,6 +75,6 @@ const StyledListHeader = styled.div`
 
   justify-content: space-between;
   width: 100%;
-
-  min-height: 50px;
+  font-weight: 700;
+  min-height: 30px;
 `

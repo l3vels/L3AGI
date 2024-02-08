@@ -30,6 +30,7 @@ import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunne
 import { isVoiceAgent } from 'utils/agentUtils'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import CopyScript from './components/CopyScript'
+import { Switch } from 'share-ui/components/Switch/Switch'
 
 type AgentFormProps = {
   formik: any
@@ -128,7 +129,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   return (
     <StyledFormRoot>
       <StyledFormTabsWrapper>
-        <TabList isColumn noBorder size='small' customWidth={200}>
+        <TabList noBorder size='small' customWidth={200} activeTabId={activeTab}>
           <Tab
             onClick={() => handleTabClick(0)}
             isError={validationError?.agent_name && activeTab !== 0}
@@ -136,15 +137,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
             General
           </Tab>
           <Tab onClick={() => handleTabClick(1)}>Configuration</Tab>
-          <Tab onClick={() => handleTabClick(2)}>Training Details</Tab>
-          <Tab onClick={() => handleTabClick(3)}>Onboarding</Tab>
-          <Tab onClick={() => handleTabClick(4)} disabled={!isVoice}>
+
+          <Tab onClick={() => handleTabClick(2)} disabled={!isVoice}>
             Voice Preferences
           </Tab>
-          <Tab onClick={() => handleTabClick(5)} disabled={!isVoice}>
+          <Tab onClick={() => handleTabClick(3)} disabled={!isVoice}>
             Flow
           </Tab>
-          <Tab onClick={() => handleTabClick(6)}>{t('embeddable-chat')}</Tab>
         </TabList>
       </StyledFormTabsWrapper>
       <StyledForm>
@@ -154,9 +153,31 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
             <TabPanels noAnimation>
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
+                  <StyledCombinedFields>
+                    <StyledAvatarWrapper>
+                      <UploadAvatar
+                        onChange={handleUploadAvatar}
+                        isLoading={avatarIsLoading}
+                        avatarSrc={agent_avatar}
+                        name={agent_name}
+                      />
+                    </StyledAvatarWrapper>
 
-                  <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
+                    <StyledCheckboxWrapper>
+                      <Checkbox
+                        label={t('template-label')}
+                        kind='secondary'
+                        name='agent_is_template'
+                        checked={agent_is_template}
+                        onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
+                      />
+                    </StyledCheckboxWrapper>
+                  </StyledCombinedFields>
+
+                  <StyledCombinedFields>
+                    <FormikTextField name='agent_name' placeholder={t('name')} label={t('name')} />
+                    <FormikTextField name='agent_role' placeholder={t('role')} label={t('role')} />
+                  </StyledCombinedFields>
 
                   <TextareaFormik
                     setFieldValue={setFieldValue}
@@ -165,87 +186,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     fieldName={'agent_description'}
                     triggerResize={activeTab}
                   />
-
-                  <StyledCheckboxWrapper>
-                    <Checkbox
-                      label={t('template-label')}
-                      kind='secondary'
-                      name='agent_is_template'
-                      checked={agent_is_template}
-                      onChange={() => setFieldValue('agent_is_template', !agent_is_template)}
-                    />
-                  </StyledCheckboxWrapper>
-
-                  <StyledAvatarWrapper>
-                    <TypographyPrimary
-                      value={t('avatar')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <UploadAvatar
-                      onChange={handleUploadAvatar}
-                      isLoading={avatarIsLoading}
-                      avatarSrc={agent_avatar}
-                      name={agent_name}
-                    />
-                  </StyledAvatarWrapper>
-                </StyledTabPanelInnerWrapper>
-              </TabPanel>
-
-              <TabPanel>
-                <StyledTabPanelInnerWrapper>
-                  <AgentDropdown
-                    isMulti
-                    label={t('tools')}
-                    fieldName={'agent_tools'}
-                    fieldValue={agent_tools}
-                    setFieldValue={setFieldValue}
-                    options={isVoiceAgent(agentType) ? voiceToolOptions : toolOptions}
-                  />
-
-                  {agentType === 'text' && (
-                    <StyledCombinedFields>
-                      <AgentDropdown
-                        isMulti
-                        label={t('datasources')}
-                        fieldName={'agent_datasources'}
-                        fieldValue={agent_datasources}
-                        setFieldValue={setFieldValue}
-                        options={datasourceOptions}
-                      />
-
-                      <AgentDropdown
-                        label={'Data Process Flow'}
-                        fieldName={'agent_source_flow'}
-                        setFieldValue={setFieldValue}
-                        fieldValue={agent_source_flow}
-                        options={data_process_flow}
-                        onChange={() => {
-                          setFieldValue('agent_source_flow', '')
-                        }}
-                        optionSize={'small'}
-                      />
-                    </StyledCombinedFields>
-                  )}
-
-                  <StyledCombinedFields>
-                    <AgentDropdown
-                      label={t('model')}
-                      fieldName={'agent_model'}
-                      setFieldValue={setFieldValue}
-                      fieldValue={agent_model}
-                      options={agentType !== 'text' ? voiceModelOptions : modelOptions}
-                      onChange={() => {
-                        setFieldValue('agent_model', '')
-                      }}
-                      optionSize={'small'}
-                    />
-
-                    <AgentSlider
-                      onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
-                      value={agent_temperature}
-                    />
-                  </StyledCombinedFields>
 
                   <StyledCheckboxWrapper>
                     <Checkbox
@@ -286,18 +226,47 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     formikField={'agent_constraints'}
                     placeholder={t('constraints')}
                   />
-                </StyledTabPanelInnerWrapper>
-              </TabPanel>
 
-              <TabPanel>
-                <StyledTabPanelInnerWrapper>
-                  {!isVoiceAgent(agentType) && (
-                    <CustomField
-                      formik={formik}
-                      formikField={'agent_suggestions'}
-                      placeholder={t('suggestions')}
-                    />
+                  {/* <AgentDropdown
+                    isMulti
+                    label={t('tools')}
+                    fieldName={'agent_tools'}
+                    fieldValue={agent_tools}
+                    setFieldValue={setFieldValue}
+                    options={isVoiceAgent(agentType) ? voiceToolOptions : toolOptions}
+                  /> */}
+
+                  {agentType === 'text' && (
+                    <StyledCombinedFields>
+                      <AgentDropdown
+                        isMulti
+                        label={t('datasources')}
+                        fieldName={'agent_datasources'}
+                        fieldValue={agent_datasources}
+                        setFieldValue={setFieldValue}
+                        options={datasourceOptions}
+                      />
+
+                      <AgentDropdown
+                        label={'Data Process Flow'}
+                        fieldName={'agent_source_flow'}
+                        setFieldValue={setFieldValue}
+                        fieldValue={agent_source_flow}
+                        options={data_process_flow}
+                        onChange={() => {
+                          setFieldValue('agent_source_flow', '')
+                        }}
+                        optionSize={'small'}
+                      />
+                    </StyledCombinedFields>
                   )}
+
+                  <StyledCombinedFields>
+                    <AgentSlider
+                      onChange={(value: number) => setFieldValue('agent_temperature', value / 10)}
+                      value={agent_temperature}
+                    />
+                  </StyledCombinedFields>
 
                   <TextareaFormik
                     setFieldValue={setFieldValue}
@@ -306,6 +275,13 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     fieldName={'agent_greeting'}
                     triggerResize={activeTab}
                   />
+                  {!isVoiceAgent(agentType) && (
+                    <CustomField
+                      formik={formik}
+                      formikField={'agent_suggestions'}
+                      placeholder={t('suggestions')}
+                    />
+                  )}
                 </StyledTabPanelInnerWrapper>
               </TabPanel>
 
@@ -488,12 +464,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
 
               <TabPanel>
                 <StyledTabPanelInnerWrapper>
-                  <CopyScript />
-                </StyledTabPanelInnerWrapper>
-              </TabPanel>
-
-              <TabPanel>
-                <StyledTabPanelInnerWrapper>
                   {integrationOptions?.map((integration: any, index: number) => {
                     return (
                       <StyledFormInputWrapper key={integration.value}>
@@ -539,7 +509,7 @@ const StyledForm = styled.div`
   /* max-width: 600px; */
   height: 100%;
   max-height: 100%;
-  /* overflow: scroll; */
+  overflow-y: auto;
 
   /* margin-top: 40px; */
   display: flex;
@@ -554,7 +524,7 @@ const StyledInputWrapper = styled.div`
 
   gap: 20px;
   width: 100%;
-  max-width: 1000px;
+  /* max-width: 1000px; */
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
@@ -579,7 +549,7 @@ const StyledCheckboxWrapper = styled.div`
 export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-content: space-between;
 
   gap: 20px;
@@ -587,6 +557,8 @@ export const StyledCombinedFields = styled.div`
 export const StyledFormTabsWrapper = styled.div`
   position: sticky;
   top: 0;
+
+  margin-bottom: 20px;
 `
 
 export const StyledFormTabList = styled(TabList)`

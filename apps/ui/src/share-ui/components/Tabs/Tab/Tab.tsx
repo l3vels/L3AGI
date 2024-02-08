@@ -101,8 +101,8 @@ const StyledLi = styled.li<{ focus: boolean; disabled: boolean }>`
   padding-right: 1px;
 
   text-align: center;
-  height: 100%;
-  width: 100%;
+  /* height: 32px; */
+  width: fit-content;
   min-width: 130px;
 
   &:after {
@@ -196,11 +196,13 @@ const StyledA = styled.a<{ active: boolean; disabled: boolean; size: string; isE
     css`
       color: ${({ theme }) => theme?.tabs.activeColor};
       background-color: ${({ theme }) => theme?.tabs.activeBgColor};
-
+      border: 2px solid ${({ theme }) => theme?.tabs.borderColor};
       border-radius: 60px;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        /* background-color: rgba(0, 0, 0, 0.); */
+        background-color: ${({ theme }) => theme?.tabs.activeBgColor};
+
         cursor: auto;
       }
     `}

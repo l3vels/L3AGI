@@ -35,33 +35,27 @@ const CreateAgentForm = () => {
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
-          <div>
-            <StyledCombiner>
-              <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
+          <StyledCombiner>
+            <StyledSectionTitle>{`${t('add-agent')}`}</StyledSectionTitle>
 
-              <AgentDemoButton />
-            </StyledCombiner>
-            {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
-          </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              disabled={isLoading}
-              size={Button.sizes?.SMALL}
-            >
-              {isLoading ? <Loader size={32} /> : t('save')}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
+            <AgentDemoButton />
+          </StyledCombiner>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <AgentForm formik={formik} isVoice={isVoiceCreate} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <AgentForm formik={formik} isVoice={isVoiceCreate} />
+        </StyledFormWrapper>
+        <StyledButtonWrapper>
+          <BackButton />
+
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            disabled={isLoading}
+            size={Button.sizes?.MEDIUM}
+          >
+            {isLoading ? <Loader size={32} /> : t('save')}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )
@@ -72,5 +66,11 @@ export default CreateAgentForm
 export const StyledButtonWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
   gap: 5px;
+
+  padding-right: 10px;
+
+  margin-top: auto;
 `

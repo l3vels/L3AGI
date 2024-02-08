@@ -268,11 +268,13 @@ const StyledTooltip = styled.div<{ size: string }>`
 
   max-width: 50vw;
   word-break: break-word;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.3);
+  color: ${({ theme }) => theme.body.textColorPrimary};
+  font-weight: 500 !important;
+
+  background: ${({ theme }) => theme.body.backgroundColorPrimary};
   /* Basic foreground/black.3 */
 
-  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid #000;
   box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(150px);
 

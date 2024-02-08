@@ -250,7 +250,7 @@ const StyledClickableWrapper = styled(ClickableWrapper)`
 const StyledTag = styled.div<{ outlined: boolean; size: string }>`
   display: inline-flex;
   overflow: hidden;
-  border-radius: 4px;
+
   padding: 6px 8px;
   align-items: center;
   user-select: none;
@@ -258,7 +258,8 @@ const StyledTag = styled.div<{ outlined: boolean; size: string }>`
 
   gap: 2px;
 
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 24px;
+  border: 2px solid ${({ theme }) => theme?.body.textareaBorder};
 
   ${props =>
     props.outlined &&
@@ -297,7 +298,7 @@ const StyledTag = styled.div<{ outlined: boolean; size: string }>`
     `}
 `
 const StyledLabel = styled.span<{ outlined: boolean; disabled: boolean; size: string }>`
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 1);
   font-style: normal;
   font-weight: 500;
   font-size: 16px;

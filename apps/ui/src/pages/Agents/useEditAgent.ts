@@ -19,9 +19,11 @@ export const useEditAgent = () => {
 
   const { setToast } = useContext(ToastContext)
 
-  const { agentId } = params
+  const urlParams = new URLSearchParams(location.search)
 
-  const { data: agentById } = useAgentByIdService({ id: agentId || '' })
+  const agentId = urlParams.get('agent') || params.agentId
+
+  const { data: agentById, refetch: refetchAgent } = useAgentByIdService({ id: agentId || '' })
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -71,9 +73,9 @@ export const useEditAgent = () => {
       await updateAgent(agentId || '', {
         ...updatedValues,
       })
-      await refetchAgents()
 
-      handleNavigation()
+      await refetchAgent()
+      await refetchAgents()
 
       setToast({
         message: 'Agent was updated!',
@@ -156,5 +158,6 @@ export const useEditAgent = () => {
     isLoading,
     agentId,
     handleNavigation,
+    agentById,
   }
 }
