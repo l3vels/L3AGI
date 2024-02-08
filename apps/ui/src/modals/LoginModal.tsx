@@ -35,8 +35,4 @@ const StyledModalBody = styled.div`
   /* max-height: 600px; */
   padding-bottom: 10px;
 `
-const StyledModal = styled(Modal)`
-  .components-Modal-Modal-module__overlay--OO00T {
-    backdrop-filter: unset;
-  }
-`
+const StyledModal = styled(Modal)``

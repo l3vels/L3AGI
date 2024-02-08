@@ -19,12 +19,7 @@ const VideoModal = ({ data }: VideoModalProps) => {
   const { videoSrc } = data
 
   return (
-    <StyledModal
-      onClose={() => closeModal('video-modal')}
-      show
-      backgroundColor='dark'
-      hideCloseButton
-    >
+    <StyledModal onClose={() => closeModal('video-modal')} show backgroundColor='dark'>
       <StyledModalBody>
         <StyledIframe
           width='900'
@@ -36,15 +31,6 @@ const VideoModal = ({ data }: VideoModalProps) => {
           allowFullScreen
         ></StyledIframe>
       </StyledModalBody>
-
-      <StyledButtonWrapper>
-        <IconButton
-          size={IconButton.sizes?.XS}
-          icon={() => <Close />}
-          kind={IconButton.kinds?.TERTIARY}
-          onClick={() => closeModal('video-modal')}
-        />
-      </StyledButtonWrapper>
     </StyledModal>
   )
 }

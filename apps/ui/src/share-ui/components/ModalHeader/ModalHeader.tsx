@@ -97,7 +97,7 @@ const ModalHeader: FC<ModalHeaderProps> = ({
             key='xxs'
             onClick={closeModal}
             ariaLabel={closeButtonAriaLabel}
-            icon={Close}
+            icon={() => <Close />}
             kind={IconButton.kinds?.TERTIARY}
             size={IconButton.sizes?.SMALL}
           />
@@ -116,9 +116,15 @@ export default ModalHeader
 const StyledModalHeader = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 5px;
 
   font-size: 24px;
+
+  position: absolute;
+  top: 0;
+
+  width: 100%;
+
+  z-index: 1;
 `
 const StyledCloseButtonWrapper = styled.div`
   margin-left: auto;

@@ -14,24 +14,10 @@ const SettingsModal = () => {
 
   return (
     <>
-      <StyledModal
-        onClose={() => closeModal('settings-modal')}
-        show
-        backgroundColor='light'
-        hideCloseButton
-      >
+      <StyledModal onClose={() => closeModal('settings-modal')} show backgroundColor='light'>
         <StyledModalBody>
           <Settings isModal />
         </StyledModalBody>
-
-        <StyledButtonWrapper>
-          <IconButton
-            size={IconButton.sizes?.XS}
-            icon={() => <Close />}
-            kind={IconButton.kinds?.TERTIARY}
-            onClick={() => closeModal('settings-modal')}
-          />
-        </StyledButtonWrapper>
       </StyledModal>
     </>
   )

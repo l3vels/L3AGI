@@ -31,25 +31,20 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
 
   return (
     <>
-      <StyledModal
-        onClose={() => closeModal('agent-view-modal')}
-        show
-        backgroundColor='light'
-        hideCloseButton
-      >
+      <Modal onClose={() => closeModal('agent-view-modal')} show backgroundColor='light' noOverlay>
         <StyledModalBody>
           <AgentView agentData={agentObj || agentById || agent} />
         </StyledModalBody>
 
-        <StyledButtonWrapper>
+        {/* <StyledButtonWrapper>
           <IconButton
             size={IconButton.sizes?.XS}
             icon={() => <Close />}
             kind={IconButton.kinds?.TERTIARY}
             onClick={() => closeModal('agent-view-modal')}
           />
-        </StyledButtonWrapper>
-      </StyledModal>
+        </StyledButtonWrapper> */}
+      </Modal>
     </>
   )
 }
@@ -57,14 +52,9 @@ const AgentViewModal = ({ data }: AgentViewModalProps) => {
 export default withRenderModal('agent-view-modal')(AgentViewModal)
 
 const StyledModalBody = styled.div`
-  max-width: 1000px;
-  width: 100vw;
+  width: 50vw;
 `
-const StyledModal = styled(Modal)`
-  .components-Modal-Modal-module__overlay--OO00T {
-    backdrop-filter: unset;
-  }
-`
+
 export const StyledButtonWrapper = styled.div`
   position: absolute;
   top: 4px;

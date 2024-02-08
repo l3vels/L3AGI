@@ -27,20 +27,10 @@ const TeamOfAgentViewModal = ({ data }: TeamOfAgentsViewModalProps) => {
       onClose={() => closeModal('team-of-agent-view-modal')}
       show
       backgroundColor='light'
-      hideCloseButton
     >
       <StyledModalBody>
         <TeamOfAgentView teamOfAgentsData={teamOfAgents} />
       </StyledModalBody>
-
-      <StyledButtonWrapper>
-        <IconButton
-          size={IconButton.sizes?.XS}
-          icon={() => <Close />}
-          kind={IconButton.kinds?.TERTIARY}
-          onClick={() => closeModal('team-of-agent-view-modal')}
-        />
-      </StyledButtonWrapper>
     </StyledModal>
   )
 }

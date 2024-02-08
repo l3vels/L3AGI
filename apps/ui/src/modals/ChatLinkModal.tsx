@@ -175,6 +175,8 @@ const StyledBody = styled.div`
   max-width: 650px;
 
   margin-top: 30px;
+
+  padding: 10px 20px;
 `
 const StyledLinkWrapper = styled.div`
   display: flex;
