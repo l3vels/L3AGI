@@ -283,6 +283,8 @@ export const StyledNameWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 5px;
+
+  font-weight: 700;
 `
 export const StyledMenuButtonsWrapper = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorSecondary};
