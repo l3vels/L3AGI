@@ -100,7 +100,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
             <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
               <Chats size={40} />
-              <StyledCorner />
+              {includes(active, 'chat') && <StyledCorner />}
             </StyledLi>
           </Tooltip>
         )}
@@ -242,7 +242,7 @@ const StyledUl = styled.ul`
 `
 const StyledLi = styled.li<{ isActive?: boolean }>`
   color: transparent;
-
+  position: relative;
   display: flex;
   width: 48px;
   height: 48px;
@@ -259,7 +259,7 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     border-radius: 100px;
     background: #000;
 
-    position: relative; 
+     
   
     span{
       color: #FFF;

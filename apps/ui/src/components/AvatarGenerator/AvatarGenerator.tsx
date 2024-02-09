@@ -16,20 +16,20 @@ const AVATAR_COLORS = ['#A822F3', '#F0A300', '#EF5533']
 const AvatarGenerator = ({
   name,
   size = 40,
-  isRound = true,
+  isRound = false,
   textSizeRatio = 3,
   avatar,
   arcShape = false,
 }: AvatarGeneratorProps) => {
   return (
-    <StyledAvatarWrapper size={size} arcShape={arcShape}>
+    <StyledAvatarWrapper size={size} arcShape={arcShape} isRound={isRound}>
       <ConfigProvider colors={AVATAR_COLORS}>
         <StyledAvatar
           mainShape={true}
           name={name}
           size={`${size}`}
           textSizeRatio={textSizeRatio}
-          round={isRound}
+          round={true}
           src={avatar}
         />
       </ConfigProvider>
@@ -39,7 +39,7 @@ const AvatarGenerator = ({
 
 export default AvatarGenerator
 
-const StyledAvatarWrapper = styled.div<{ size: number; arcShape: boolean }>`
+const StyledAvatarWrapper = styled.div<{ size: number; arcShape: boolean; isRound: boolean }>`
   border-radius: 100px 100px 100px 20px;
 
   /* border: 2px solid #000; */
@@ -51,12 +51,14 @@ const StyledAvatarWrapper = styled.div<{ size: number; arcShape: boolean }>`
   justify-content: center;
 
   ${props =>
+    !props.isRound &&
     props.size &&
     css`
       width: calc(${props.size}px - 20px);
       height: calc(${props.size}px - 20px);
     `}
   ${props =>
+    !props.isRound &&
     props.arcShape &&
     css`
       border-radius: 100px 100px 40px 40px;
