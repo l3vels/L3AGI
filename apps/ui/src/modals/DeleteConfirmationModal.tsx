@@ -44,7 +44,7 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
     <StyledDeleteConfirmationModal
       onClose={handleClose}
       show
-      backgroundColor='dark'
+      backgroundColor='light'
       hideCloseButton={true}
       // title={isLoading ? `${t('processing')}` : label}
     >
