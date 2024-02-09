@@ -241,7 +241,7 @@ const ChatRouteLayout = () => {
                         onClick={() => {
                           navigate(`/chat?tab=playground&team=${teamOfAgents.id}`)
                         }}
-                        onViewClick={handleView}
+                        // onViewClick={handleView}
                         onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                         onEditClick={teamModule?.edit && isCreator && handleEdit}
                         picked={teamId === teamOfAgents.id}
@@ -313,7 +313,7 @@ const ChatRouteLayout = () => {
                       <AgentChatCard
                         key={index}
                         onClick={() => navigate(`/chat?tab=playground&agent=${agent.id}`)}
-                        onViewClick={handleView}
+                        // onViewClick={handleView}
                         onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                         onEditClick={agentModule?.edit && isCreator && handleEdit}
                         picked={agentId === agent.id}
