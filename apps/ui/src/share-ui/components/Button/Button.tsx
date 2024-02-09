@@ -358,6 +358,8 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
   cursor: pointer;
   white-space: nowrap;
 
+  border: 2px solid transparent;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -442,11 +444,13 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
       color: ${({ theme }) => theme.button.secondary.color};
       background-color: ${({ theme }) => theme.button.secondary.bgColor};
       &:hover {
-        background-color: ${({ theme }) => theme.button.secondary.hoverBgColor};
+        /* background-color: ${({ theme }) => theme.button.secondary.hoverBgColor}; */
+
+        border: 2px solid ${({ theme }) => theme.button.secondary.hoverBgColor};
       }
       &:active {
-        outline-color: ${({ theme }) => theme.button.secondary.pressedBorderColor};
-        background-color: ${({ theme }) => theme.button.secondary.pressedBgColor};
+        border: 2px solid ${({ theme }) => theme.button.secondary.pressedBorderColor};
+        /* background-color: ${({ theme }) => theme.button.secondary.pressedBgColor}; */
       }
     `}
     ${props =>

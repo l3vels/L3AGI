@@ -172,11 +172,11 @@ const lightTheme: DefaultTheme = {
       pressedBorderColor: 'rgba(0, 0, 0, 0.2)',
     },
     secondary: {
-      color: '#fff',
-      bgColor: '#111',
-      hoverBgColor: 'rgba(0, 0, 0, 0.5)',
+      color: '#000000CC',
+      bgColor: '#F5F5F7',
+      hoverBgColor: 'rgba(0, 0, 0, 0.2)',
       pressedBgColor: 'rgba(0, 0, 0, 0.7)',
-      pressedBorderColor: 'rgba(0, 0, 0, 0.2)',
+      pressedBorderColor: '#000000',
     },
     tertiary: {
       color: 'rgba(0, 0, 0, 0.7)',
