@@ -100,6 +100,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
             <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
               <Chats size={40} />
+              <StyledCorner />
             </StyledLi>
           </Tooltip>
         )}
@@ -257,6 +258,8 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     
     border-radius: 100px;
     background: #000;
+
+    position: relative; 
   
     span{
       color: #FFF;
@@ -350,4 +353,14 @@ const StyledInnerWrapper = styled.div`
 const StyledLogo = styled.img`
   width: 40px;
   height: 40px;
+`
+const StyledCorner = styled.div`
+  width: 0;
+  height: 0;
+  border-right: 10px solid ${({ theme }) => theme.body.componentsWrapperBg}; /* One corner on the left */
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  position: absolute;
+  top: 8px; /* Adjust this value based on your design */
+  right: -16px; /* Position the left corner */
 `
