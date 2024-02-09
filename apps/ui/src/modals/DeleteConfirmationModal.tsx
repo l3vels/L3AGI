@@ -117,7 +117,7 @@ const StyledDeleteConfirmationModal = styled(Modal)`
   height: fit-content;
 `
 
-const StyledActionsContainer = styled.div`
+export const StyledActionsContainer = styled.div`
   display: flex;
   position: relative;
   justify-content: flex-end;

@@ -22,6 +22,7 @@ import { useChatsService } from 'services/chat/useChatsService'
 import TypographyPrimary from 'components/Typography/Primary'
 import HeadingPrimary from 'components/Heading/Primary'
 import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+import { StyledActionsContainer } from './DeleteConfirmationModal'
 
 type ChatLinkModalProps = {
   data: {
@@ -77,24 +78,24 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
       show
       backgroundColor='light'
       hideCloseButton={true}
-      title={
-        chatLink ? (
-          <HeadingPrimary
-            value={t('create-session')}
-            type={Typography.types.P}
-            size={Typography.sizes.md}
-          />
-        ) : (
-          <HeadingPrimary
-            value={t('create-session')}
-            type={Typography.types.P}
-            size={Typography.sizes.md}
-          />
-        )
-      }
+      // title={
+      //   chatLink ? (
+      //     <HeadingPrimary
+      //       value={t('create-session')}
+      //       type={Typography.types.P}
+      //       size={Typography.sizes.md}
+      //     />
+      //   ) : (
+      //     <HeadingPrimary
+      //       value={t('create-session')}
+      //       type={Typography.types.P}
+      //       size={Typography.sizes.md}
+      //     />
+      //   )
+      // }
     >
-      <FormikProvider value={formik}>
-        <StyledBody>
+      <StyledBody>
+        <FormikProvider value={formik}>
           {chatLink ? (
             <>
               <StyledLinkWrapper>
@@ -115,27 +116,27 @@ const ChatLinkModal = ({ data }: ChatLinkModalProps) => {
           ) : (
             <FormikTextField focus name='chat_name' placeholder={t('name')} label={t('name')} />
           )}
-        </StyledBody>
-      </FormikProvider>
-      <StyledModalFooter>
-        <ButtonTertiary onClick={() => closeModal('chat-link-modal')} size={Button.sizes?.MEDIUM}>
-          <Typography
-            value={t('cancel')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.sm}
-          />
-        </ButtonTertiary>
+        </FormikProvider>
+        <StyledActionsContainer>
+          <ButtonTertiary onClick={() => closeModal('chat-link-modal')} size={Button.sizes?.MEDIUM}>
+            <Typography
+              value={t('cancel')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
+          </ButtonTertiary>
 
-        {!chatLink && (
-          <ButtonPrimary
-            onClick={formik?.handleSubmit}
-            size={Button.sizes?.MEDIUM}
-            disabled={isLoading}
-          >
-            {isLoading ? <Loader size={20} /> : t('confirm')}
-          </ButtonPrimary>
-        )}
-      </StyledModalFooter>
+          {!chatLink && (
+            <ButtonPrimary
+              onClick={formik?.handleSubmit}
+              size={Button.sizes?.MEDIUM}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader size={20} /> : t('confirm')}
+            </ButtonPrimary>
+          )}
+        </StyledActionsContainer>
+      </StyledBody>
     </StyledChatLinkModal>
   )
 }
@@ -155,11 +156,6 @@ const StyledChatLinkModal = styled(Modal)`
   width: fit-content;
   height: fit-content;
   color: ${({ theme }) => theme.body.textColorPrimary} !important;
-`
-const StyledModalFooter = styled(ModalFooter)`
-  display: flex;
-  justify-content: flex-end;
-  gap: 4px;
 `
 
 const StyledLink = styled.span`
