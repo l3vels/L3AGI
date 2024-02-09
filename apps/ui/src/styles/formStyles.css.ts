@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledFormWrapper = styled.div`
   width: 100%;
 
-  height: calc(100vh - 260px);
+  height: calc(100vh - 210px);
 
   max-height: 1500px;
 `
