@@ -109,11 +109,11 @@ const Route = () => {
     return storedTheme || 'light'
   })
 
-  useHotkeys('ctrl+enter, meta+k', event => {
-    event.preventDefault()
-    setCmdkOpen(true)
-    return false
-  })
+  // useHotkeys('ctrl+enter, meta+k', event => {
+  //   event.preventDefault()
+  //   setCmdkOpen(true)
+  //   return false
+  // })
 
   useEffect(() => {
     const currentThemeName = localStorage.getItem('theme')

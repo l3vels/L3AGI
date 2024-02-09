@@ -13,7 +13,7 @@ import { useEditAgent } from 'pages/Agents/useEditAgent'
 import { ButtonPrimary } from 'components/Button/Button'
 
 import { t } from 'i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import TabList from 'share-ui/components/Tabs/TabList/TabList'
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
@@ -23,6 +23,7 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import {
   StyledChatWrapper,
   StyledDivider,
+  StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
 } from 'routes/ChatRouteLayout'
@@ -34,8 +35,8 @@ type IntegrationListModalProps = {}
 
 const IntegrationListModal = () => {
   const [searchText, setSearchText] = useState('')
-  const [pickedSlug, setPickedSlug] = useState(null as any)
-  const [pickedTools, setPickedTools] = useState<string[]>([])
+  const [pickedTool, setPickedTool] = useState(null as any)
+
   const [activeTab, setActiveTab] = useState(0)
 
   const { closeModal } = useModal()
@@ -43,9 +44,7 @@ const IntegrationListModal = () => {
 
   const agentToolsData = agentById?.configs.tools
 
-  const { setFieldValue, values } = formik
-
-  const { agent_tools } = values
+  const { setFieldValue } = formik
 
   const { data: toolsData } = useToolsService()
 
@@ -55,21 +54,6 @@ const IntegrationListModal = () => {
     return includesSearchText
   })
 
-  const handlePickTool = (toolId: string) => {
-    if (!agent_tools) return
-
-    let filteredTools = agent_tools
-    if (agent_tools.includes(toolId)) {
-      setPickedTools(pickedTools.filter((agentToolId: string) => agentToolId !== toolId))
-      filteredTools = agent_tools.filter((agentToolId: string) => agentToolId !== toolId)
-    } else {
-      setPickedTools((prevState: any) => [...prevState, toolId])
-      filteredTools = [...filteredTools, toolId]
-    }
-
-    setFieldValue('agent_tools', filteredTools)
-  }
-
   const installedTools = filteredData?.filter((tool: any) =>
     agentToolsData?.includes(tool.toolkit_id),
   )
@@ -78,7 +62,7 @@ const IntegrationListModal = () => {
   )
 
   const handleRemoveTool = async (toolId: string) => {
-    const filteredTools = agent_tools?.filter((agentToolId: string) => agentToolId !== toolId)
+    const filteredTools = agentToolsData?.filter((agentToolId: string) => agentToolId !== toolId)
     await setFieldValue('agent_tools', filteredTools)
     formik.handleSubmit()
   }
@@ -86,6 +70,25 @@ const IntegrationListModal = () => {
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId)
   }
+
+  const handleUpdateTools = async () => {
+    if (!agentToolsData) return
+    let updatedValues
+    if (agentToolsData.includes(pickedTool?.id)) {
+      updatedValues = agentToolsData?.filter((toolId: string) => toolId !== pickedTool?.id)
+    } else {
+      updatedValues = [...agentToolsData, pickedTool?.id]
+    }
+
+    await setFieldValue('agent_tools', updatedValues)
+    formik.submitForm()
+  }
+
+  useEffect(() => {
+    if (installedTools?.length > 0)
+      setPickedTool({ slug: installedTools[0].slug, id: installedTools[0].toolkit_id })
+    else setPickedTool({ slug: notInstalledTools[0].slug, id: notInstalledTools[0].toolkit_id })
+  }, [agentToolsData])
 
   return (
     <Modal
@@ -116,10 +119,9 @@ const IntegrationListModal = () => {
                 <>
                   <MiniToolCard
                     onClick={() => {
-                      setPickedSlug(tool.slug)
-                      setFieldValue('agent_tools', agentToolsData)
+                      setPickedTool({ slug: tool.slug, id: tool.toolkit_id })
                     }}
-                    picked={pickedSlug === tool.slug}
+                    picked={pickedTool?.slug === tool.slug}
                     onDeleteClick={() => handleRemoveTool(tool.toolkit_id)}
                     name={tool.name}
                     logo={logoSrc}
@@ -127,6 +129,8 @@ const IntegrationListModal = () => {
                 </>
               )
             })}
+
+            <StyledHorizontalDivider />
 
             <ListHeader title={'Marketplace'} />
             {notInstalledTools?.map((tool: any) => {
@@ -140,10 +144,9 @@ const IntegrationListModal = () => {
                 <>
                   <MiniToolCard
                     onClick={() => {
-                      handlePickTool(tool.toolkit_id)
-                      setPickedSlug(null)
+                      setPickedTool({ slug: tool.slug, id: tool.toolkit_id })
                     }}
-                    picked={agent_tools?.includes(tool.toolkit_id) || false}
+                    picked={pickedTool?.slug === tool.slug}
                     name={tool.name}
                     logo={logoSrc}
                   />
@@ -155,7 +158,7 @@ const IntegrationListModal = () => {
           <StyledDivider />
 
           <StyledChatWrapper>
-            {pickedSlug && (
+            {pickedTool && (
               <>
                 <TabList size='small' activeTabId={activeTab} noBorder>
                   <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
@@ -164,29 +167,30 @@ const IntegrationListModal = () => {
 
                 <TabsContext activeTabId={activeTab}>
                   <TabPanels>
-                    <TabPanel></TabPanel>
                     <TabPanel>
-                      <ToolView toolSlug={pickedSlug} />
+                      {agentToolsData && (
+                        <StyledInnerTabWrapper>
+                          <ToolView toolSlug={pickedTool?.slug} hideForm />
+
+                          <StyledFooter>
+                            <ButtonPrimary
+                              onClick={handleUpdateTools}
+                              disabled={isLoading}
+                              loading={isLoading}
+                            >
+                              {agentToolsData.includes(pickedTool?.id) ? t('remove') : t('install')}
+                            </ButtonPrimary>
+                          </StyledFooter>
+                        </StyledInnerTabWrapper>
+                      )}
+                    </TabPanel>
+                    <TabPanel>
+                      <ToolView toolSlug={pickedTool?.slug} hideInfo />
                     </TabPanel>
                   </TabPanels>
                 </TabsContext>
               </>
             )}
-
-            <StyledFooter>
-              {pickedTools?.length > 0 && (
-                <ButtonPrimary
-                  onClick={async () => {
-                    await formik.submitForm()
-                    setPickedTools([])
-                  }}
-                  disabled={isLoading}
-                  loading={isLoading}
-                >
-                  {t('install')} {pickedTools?.length}x
-                </ButtonPrimary>
-              )}
-            </StyledFooter>
           </StyledChatWrapper>
         </StyledMainWrapper>
       </StyledModalBody>
@@ -203,12 +207,20 @@ const StyledModalBody = styled.div`
 const StyledFooter = styled.div`
   width: 100%;
 
-  margin-top: auto;
   display: flex;
   justify-content: flex-end;
 
   padding-right: 5px;
+
+  position: absolute;
+
+  bottom: 0;
 `
 const StyledTextFieldWrapper = styled.div`
   padding: 4px;
+`
+const StyledInnerTabWrapper = styled.div`
+  position: relative;
+
+  height: 100%;
 `

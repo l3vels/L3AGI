@@ -19,7 +19,7 @@ import { StyledEditIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgents
 import TypographyPrimary from 'components/Typography/Primary'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyTertiary from 'components/Typography/Tertiary'
-import { ButtonPrimary, ButtonTertiary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
 
 import MenuButton from 'share-ui/components/MenuButton/MenuButton'
 
@@ -36,6 +36,7 @@ import { FormikProvider } from 'formik'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import { useAgentForm } from 'pages/Agents/AgentForm/useAgentForm'
 import { textSlicer } from 'utils/textSlicer'
+import { useChatsService } from 'services/chat/useChatsService'
 
 type AgentViewDetailBoxProps = {
   agentData: AgentWithConfigs
@@ -111,6 +112,12 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
   }
 
   const { shortText: shortId } = textSlicer(agent?.id, 30)
+
+  const { refetch } = useChatsService({})
+
+  const handleOpenCreateSessionModal = () => {
+    openModal({ name: 'chat-link-modal', data: { agentId: agent?.id, callback: refetch } })
+  }
 
   return (
     <FormikProvider value={formik}>
@@ -234,6 +241,14 @@ const AgentVIewDetailBox = ({ agentData }: AgentViewDetailBoxProps) => {
             {voice_id && <TagsRow title={t('voice-id')} items={[voice_id]} />}
           </>
         </StyledWrapper>
+
+        <ButtonSecondary
+          onClick={handleOpenCreateSessionModal}
+          size='small'
+          // rightIcon={() => <Add size={20} />}
+        >
+          {t('create-session')}
+        </ButtonSecondary>
       </StyledDetailsBox>
     </FormikProvider>
   )
@@ -283,6 +298,8 @@ export const StyledNameWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 5px;
+
+  font-weight: 700;
 `
 export const StyledMenuButtonsWrapper = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorSecondary};

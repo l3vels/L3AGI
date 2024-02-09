@@ -15,7 +15,7 @@ import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 
 const IntegrationDetails = () => {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { toolOptions, tools: toolsData } = useAgentForm({})
 
@@ -36,14 +36,32 @@ const IntegrationDetails = () => {
     openModal({ name: 'toolkit-modal', data: { toolSlug: slug } })
   }
 
-  const handleRemoveIntegration = async ({ event, id }: { event: any; id: string }) => {
-    event.stopPropagation()
-
+  const handleRemoveIntegration = async ({ id }: { id: string }) => {
     const filteredValues = agent_tools?.filter((toolId: string) => toolId !== id)
 
     await setFieldValue('agent_tools', filteredValues)
 
     formik.submitForm()
+  }
+
+  const handleConfirmation = async ({ event, id }: { event: any; id: string }) => {
+    event.stopPropagation()
+
+    openModal({
+      name: 'delete-confirmation-modal',
+      data: {
+        deleteItem: async () => {
+          try {
+            await handleRemoveIntegration({ id })
+
+            closeModal('delete-confirmation-modal')
+          } catch (e) {
+            closeModal('delete-confirmation-modal')
+          }
+        },
+        label: `${t('remove')} ${t('integration')}?`,
+      },
+    })
   }
 
   return (
@@ -88,9 +106,7 @@ const IntegrationDetails = () => {
                     kind={IconButton.kinds?.TERTIARY}
                     size={IconButton.sizes?.SMALL}
                     icon={() => <StyledCloseIcon size={20} />}
-                    onClick={(event: any) =>
-                      handleRemoveIntegration({ event: event, id: tool.value })
-                    }
+                    onClick={(event: any) => handleConfirmation({ event: event, id: tool.value })}
                   />
                 </StyledIconButtonWrapper>
               </StyledAgentWrapper>

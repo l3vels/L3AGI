@@ -241,7 +241,7 @@ const ChatRouteLayout = () => {
                         onClick={() => {
                           navigate(`/chat?tab=playground&team=${teamOfAgents.id}`)
                         }}
-                        onViewClick={handleView}
+                        // onViewClick={handleView}
                         onDeleteClick={teamModule?.delete && isCreator && handleDelete}
                         onEditClick={teamModule?.edit && isCreator && handleEdit}
                         picked={teamId === teamOfAgents.id}
@@ -313,7 +313,7 @@ const ChatRouteLayout = () => {
                       <AgentChatCard
                         key={index}
                         onClick={() => navigate(`/chat?tab=playground&agent=${agent.id}`)}
-                        onViewClick={handleView}
+                        // onViewClick={handleView}
                         onDeleteClick={agentModule?.delete && isCreator && handleDelete}
                         onEditClick={agentModule?.edit && isCreator && handleEdit}
                         picked={agentId === agent.id}
@@ -472,15 +472,15 @@ export const StyledLeftColumn = styled.div<{
   padding-top: 0px;
 
   height: 100%;
-  min-width: 260px;
-  max-width: 260px;
+  min-width: 270px;
+  max-width: 270px;
 
   transition: margin-left 0.3s ease-in-out;
 
   ${props =>
     props.isHidden &&
     css`
-      margin-left: -260px;
+      margin-left: -270px;
       overflow: hidden;
       cursor: pointer;
 
@@ -586,7 +586,7 @@ export const StyledDivider = styled.div`
 
   margin: 0 16px;
 `
-const StyledHorizontalDivider = styled.div`
+export const StyledHorizontalDivider = styled.div`
   border-bottom: ${({ theme }) => theme.body.secondaryBorder};
 
   width: 100%;

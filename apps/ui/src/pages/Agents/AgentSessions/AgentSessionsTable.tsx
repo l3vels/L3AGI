@@ -13,15 +13,12 @@ import styled from 'styled-components'
 import { getAgentTypeText } from 'utils/agentUtils'
 
 const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
-  const { openModal } = useModal()
-
   const [page, setPage] = useState(1)
 
   const {
     data: chatData,
     count: chatsCount,
     loading: chatsLoading,
-    refetch: refetchChats,
   } = useChatsService({ filter: [agentId], itemsCount: 20, page })
 
   const { data: calls } = useCallsService()
@@ -44,21 +41,8 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
     status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
   }))
 
-  const handleOpenCreateSessionModal = () => {
-    openModal({ name: 'chat-link-modal', data: { agentId: agentId, callback: refetchChats } })
-  }
-
   return (
     <StyledRoot>
-      <div>
-        <ButtonSecondary
-          onClick={handleOpenCreateSessionModal}
-          size='small'
-          // rightIcon={() => <Add size={20} />}
-        >
-          {t('create-session')}
-        </ButtonSecondary>
-      </div>
       <Table
         columns={columnConfig}
         data={mappedData}

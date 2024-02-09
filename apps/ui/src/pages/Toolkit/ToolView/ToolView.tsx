@@ -22,7 +22,15 @@ import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
 
-const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
+const ToolView = ({
+  toolSlug,
+  hideInfo,
+  hideForm,
+}: {
+  toolSlug?: string
+  hideInfo?: boolean
+  hideForm?: boolean
+}) => {
   const { t } = useTranslation()
   const { tool, formik, handleSubmit, isLoading } = useToolView({
     toolSlug: toolSlug,
@@ -39,7 +47,7 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
-        {!toolSlug && (
+        {!hideForm && !toolSlug && (
           <StyledHeaderGroup className='header_group'>
             <div>
               <StyledSectionTitle>{t('toolkit')}</StyledSectionTitle>
@@ -61,49 +69,55 @@ const ToolView = ({ toolSlug }: { toolSlug?: string }) => {
         )}
         <ComponentsWrapper hideBox={toolSlug ? true : false}>
           <StyledInnerWrapper>
-            <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
-            <StyledTextWrapper>
-              <TypographySecondary
-                value={t('by')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-              />
-
-              <TypographySecondary
-                value={t('l3')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                style={{ textDecoration: 'underline' }}
-              />
-            </StyledTextWrapper>
-            <StyledMainTextWrapper>
-              <TypographyPrimary
-                value={name}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
-              />
-              <TypographySecondary
-                value={description}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-            </StyledMainTextWrapper>
-
-            <StyledFieldsWrapper>
-              {fields?.map((field: any, index: number) => {
-                return (
-                  <FormikTextField
-                    key={index}
-                    name={field.key}
-                    placeholder=''
-                    label={field.label}
-                    field_name={field.key}
+            {!hideInfo && (
+              <>
+                <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
+                <StyledTextWrapper>
+                  <TypographySecondary
+                    value={t('by')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
                   />
-                )
-              })}
-            </StyledFieldsWrapper>
 
-            {toolSlug && fields?.length > 0 && (
+                  <TypographySecondary
+                    value={t('l3')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
+                    style={{ textDecoration: 'underline' }}
+                  />
+                </StyledTextWrapper>
+                <StyledMainTextWrapper>
+                  <TypographyPrimary
+                    value={name}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                  />
+                  <TypographySecondary
+                    value={description}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                  />
+                </StyledMainTextWrapper>
+              </>
+            )}
+
+            {!hideForm && (
+              <StyledFieldsWrapper>
+                {fields?.map((field: any, index: number) => {
+                  return (
+                    <FormikTextField
+                      key={index}
+                      name={field.key}
+                      placeholder=''
+                      label={field.label}
+                      field_name={field.key}
+                    />
+                  )
+                })}
+              </StyledFieldsWrapper>
+            )}
+
+            {!hideForm && toolSlug && fields?.length > 0 && (
               <StyledModalButton>
                 <ButtonPrimary
                   onClick={async () => {

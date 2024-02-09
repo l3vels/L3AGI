@@ -46,7 +46,12 @@ const ChatWidget = () => {
 
           {chatDetails && (
             <StyledChatWidget onClick={() => setShowChat(!showChat)}>
-              <AvatarGenerator name={chatDetails.name} avatar={chatDetails.avatar} size={50} />
+              <AvatarGenerator
+                name={chatDetails.name}
+                avatar={chatDetails.avatar}
+                size={50}
+                isRound
+              />
             </StyledChatWidget>
           )}
         </StyledRoot>

@@ -1,4 +1,6 @@
+import { StyledAgentWrapper } from 'components/ChatCards/TeamChatCard'
 import CopyButton from 'components/CopyButton'
+import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 
 import TypographyPrimary from 'components/Typography/Primary'
 import { StyledDetailsBox } from 'pages/Agents/AgentView/components/AgentViewDetailBox'
@@ -7,6 +9,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { StyledDetailHeader } from 'routes/components/IntegrationsDetails'
+import Book from 'share-ui/components/Icon/Icons/components/Book'
 import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 
@@ -34,10 +37,11 @@ const CopyScript = () => {
     <StyledDetailsBox>
       <StyledDetailHeader>
         <TypographyPrimary
-          value={`Embed`}
+          value={`Embed / docs`}
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
         />
+
         <CopyButton onCopyClick={() => navigator.clipboard.writeText(script)} />
       </StyledDetailHeader>
 
@@ -63,6 +67,23 @@ const CopyScript = () => {
       >
         {script}
       </StyledReactMarkdown>
+
+      <StyledAgentWrapper onClick={() => openLinkTab(import.meta.env.REACT_APP_MAIN_API_DOCS)}>
+        <Book />
+        <TypographyPrimary
+          value={'Main API integration'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.xss}
+        />
+      </StyledAgentWrapper>
+      <StyledAgentWrapper onClick={() => openLinkTab(import.meta.env.REACT_APP_PR_API_DOCS)}>
+        <Book />
+        <TypographyPrimary
+          value={'PR API integration'}
+          type={Typography.types.LABEL}
+          size={Typography.sizes.xss}
+        />
+      </StyledAgentWrapper>
     </StyledDetailsBox>
   )
 }

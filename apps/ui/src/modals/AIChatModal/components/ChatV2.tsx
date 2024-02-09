@@ -510,7 +510,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
                   </StyledButton>
                 )}
 
-                {user && <CommandIcon />}
+                {/* {user && <CommandIcon />} */}
               </StyledChatInputRightSide>
             </StyledTextareaWrapper>
           </StyledForm>

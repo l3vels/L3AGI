@@ -137,6 +137,8 @@ export const StyledAgentWrapper = styled.div<{ picked?: boolean }>`
         background: ${({ theme }) => theme.body.teamChatCardSelectedColor};
       }
     `}
+
+  font-weight: 500
 `
 
 export const StyledIconWrapper = styled.div`
