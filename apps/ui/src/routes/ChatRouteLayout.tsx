@@ -586,7 +586,7 @@ export const StyledDivider = styled.div`
 
   margin: 0 16px;
 `
-const StyledHorizontalDivider = styled.div`
+export const StyledHorizontalDivider = styled.div`
   border-bottom: ${({ theme }) => theme.body.secondaryBorder};
 
   width: 100%;

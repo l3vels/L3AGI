@@ -23,6 +23,7 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import {
   StyledChatWrapper,
   StyledDivider,
+  StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
 } from 'routes/ChatRouteLayout'
@@ -128,6 +129,8 @@ const IntegrationListModal = () => {
                 </>
               )
             })}
+
+            <StyledHorizontalDivider />
 
             <ListHeader title={'Marketplace'} />
             {notInstalledTools?.map((tool: any) => {
