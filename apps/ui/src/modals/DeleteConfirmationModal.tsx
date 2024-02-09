@@ -12,6 +12,7 @@ import Loader from 'share-ui/components/Loader/Loader'
 
 import { useTranslation } from 'react-i18next'
 import { useModal } from 'hooks'
+import TypographyPrimary from 'components/Typography/Primary'
 
 type DeleteConfirmationModalProps = {
   data: {
@@ -45,43 +46,48 @@ const DeleteConfirmationModal = ({ data }: DeleteConfirmationModalProps) => {
       show
       backgroundColor='dark'
       hideCloseButton={true}
-      title={isLoading ? `${t('processing')}` : label}
+      // title={isLoading ? `${t('processing')}` : label}
     >
-      <StyledModalFooter>
-        {isLoading ? (
-          <StyledLoadingText>
-            <Loader size={48} />
-          </StyledLoadingText>
-        ) : (
-          <StyledActionsContainer>
-            <Button
-              onClick={handleClose}
-              kind={Button.kinds?.TERTIARY}
-              size={Button.sizes?.MEDIUM}
-              disabled={isLoading}
-            >
-              <Typography
-                value={t('cancel')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-            </Button>
+      <StyledBody>
+        <TypographyPrimary
+          value={isLoading ? `${t('processing')}` : label}
+          size={Typography.sizes.lg}
+        />
+      </StyledBody>
 
-            <Button
-              onClick={handleConfirm}
-              kind={Button.kinds?.PRIMARY}
-              size={Button.sizes?.MEDIUM}
-              disabled={isLoading}
-            >
-              <StyledLabelTypography
-                value={t('confirm')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-            </Button>
-          </StyledActionsContainer>
-        )}
-      </StyledModalFooter>
+      {isLoading ? (
+        <StyledLoadingText>
+          <Loader size={48} />
+        </StyledLoadingText>
+      ) : (
+        <StyledActionsContainer>
+          <Button
+            onClick={handleClose}
+            kind={Button.kinds?.TERTIARY}
+            size={Button.sizes?.SMALL}
+            disabled={isLoading}
+          >
+            <Typography
+              value={t('cancel')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
+          </Button>
+
+          <Button
+            onClick={handleConfirm}
+            kind={Button.kinds?.PRIMARY}
+            size={Button.sizes?.SMALL}
+            disabled={isLoading}
+          >
+            <StyledLabelTypography
+              value={t('confirm')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.sm}
+            />
+          </Button>
+        </StyledActionsContainer>
+      )}
     </StyledDeleteConfirmationModal>
   )
 }
@@ -94,6 +100,15 @@ DeleteConfirmationModal.propTypes = {
 
 export default withRenderModal('delete-confirmation-modal')(DeleteConfirmationModal)
 
+const StyledBody = styled.div`
+  width: 12vw;
+  height: 12vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const StyledDeleteConfirmationModal = styled(Modal)`
   display: flex;
   flex-direction: column;
@@ -101,19 +116,14 @@ const StyledDeleteConfirmationModal = styled(Modal)`
   width: fit-content;
   height: fit-content;
 `
-const StyledModalFooter = styled(ModalFooter)`
-  display: grid;
-  position: relative;
-  /* justify-content: flex-end; */
-  align-items: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-`
+
 const StyledActionsContainer = styled.div`
   display: flex;
   position: relative;
-  justify-items: flex-end;
+  justify-content: flex-end;
   gap: 16px;
+
+  width: 100%;
 `
 const StyledLabelTypography = styled(Typography)`
   font-size: 14px;
