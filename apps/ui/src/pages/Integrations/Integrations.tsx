@@ -123,7 +123,6 @@ const Integrations = () => {
                 <TabPanels>
                   <TabPanel>
                     {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
-
                     {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
                   </TabPanel>
                   <TabPanel>

@@ -15,13 +15,20 @@ import styled from 'styled-components'
 import FormikTextField from 'components/TextFieldFormik'
 
 import { FormikProvider } from 'formik'
-import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+
 import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
 import TypographySecondary from 'components/Typography/Secondary'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
 import { useVoiceView } from './useVoiceView'
+import {
+  StyledButtonWrapper,
+  StyledFieldsWrapper,
+  StyledInnerWrapper,
+  StyledMainTextWrapper,
+  StyledTextWrapper,
+} from 'pages/Toolkit/ToolView/ToolView'
 
 const VoiceView = ({
   voiceSlug,
@@ -117,18 +124,18 @@ const VoiceView = ({
                 </StyledFieldsWrapper>
 
                 {voiceSlug && fields?.length > 0 && (
-                  <StyledModalButton>
+                  <StyledButtonWrapper>
                     <ButtonPrimary
                       onClick={async () => {
                         await handleSubmit(formik?.values)
                         closeModal('toolkit-modal')
                       }}
                       disabled={isLoading}
-                      size={Button.sizes?.SMALL}
+                      size={Button.sizes?.MEDIUM}
                     >
                       {isLoading ? <Loader size={22} /> : t('save')}
                     </ButtonPrimary>
-                  </StyledModalButton>
+                  </StyledButtonWrapper>
                 )}
               </>
             )}
@@ -140,52 +147,3 @@ const VoiceView = ({
 }
 
 export default VoiceView
-
-const StyledInnerWrapper = styled.div`
-  padding: 0 20px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 5px;
-`
-// const StyledImg = styled.img`
-//   width: 48px;
-//   height: 48px;
-//   border-radius: 10px;
-// `
-const StyledTextWrapper = styled.div`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-
-  margin-bottom: 10px;
-`
-const StyledMainTextWrapper = styled.div`
-  /* text-align: center; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 10px;
-
-  width: 100%;
-  max-width: 400px;
-`
-
-const StyledFieldsWrapper = styled.div`
-  margin-top: 20px;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-
-  height: calc(100vh - 400px);
-  overflow: auto;
-`
-const StyledModalButton = styled.div`
-  margin-left: auto;
-`
