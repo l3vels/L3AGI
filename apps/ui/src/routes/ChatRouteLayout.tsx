@@ -428,9 +428,7 @@ const ChatRouteLayout = () => {
 
             {agentById && <IntegrationDetails />}
             {/* {agentById && <VoiceIntegrationsDetails />} */}
-            {agentById && agentById.agent.agent_type === 'text' && (
-              <DatasourceDetails agentData={agentById} />
-            )}
+            {agentById && agentById.agent.agent_type === 'text' && <DatasourceDetails />}
 
             {/* <StyledDetailsBox>
               <TypographyPrimary
