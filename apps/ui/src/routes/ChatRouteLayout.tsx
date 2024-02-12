@@ -428,9 +428,7 @@ const ChatRouteLayout = () => {
 
             {agentById && <IntegrationDetails />}
             {/* {agentById && <VoiceIntegrationsDetails />} */}
-            {agentById && agentById.agent.agent_type === 'text' && (
-              <DatasourceDetails agentData={agentById} />
-            )}
+            {agentById && agentById.agent.agent_type === 'text' && <DatasourceDetails />}
 
             {/* <StyledDetailsBox>
               <TypographyPrimary
@@ -487,7 +485,7 @@ export const StyledLeftColumn = styled.div<{
       opacity: 0;
     `}
 `
-const StyledRightColumn = styled.div<{ isHidden: boolean }>`
+export const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
   backdrop-filter: blur(100px);
 
   overflow-y: auto;

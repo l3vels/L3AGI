@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Toolkit from 'pages/Toolkit'
 import Voices from 'plugins/contact/pages/Voice'
@@ -12,9 +12,46 @@ import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { StyledAppContainer } from 'components/Layout/LayoutStyle'
+import {
+  StyledChatWrapper,
+  StyledContainer,
+  StyledDivider,
+  StyledHorizontalDivider,
+  StyledLeftColumn,
+  StyledMainWrapper,
+  StyledRightColumn,
+} from 'routes/ChatRouteLayout'
+import { useToolsService } from 'services/tool/useToolsService'
+import ListHeader from 'routes/components/ListHeader'
+import ToolCard from 'pages/Toolkit/components/ToolCard'
+import MiniToolCard from 'components/ChatCards/MiniToolCard'
+import { toolLogos } from 'pages/Toolkit/constants'
+import { useVoicesService } from 'plugins/contact/services/voice/useVoicesService'
+import { voiceLogos } from 'plugins/contact/pages/Voice/constants'
+import ToolView from 'pages/Toolkit/ToolView'
+import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
+import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
 
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
+
+  const [show, setShow] = useState(false)
+
+  const { refetchConfigs, configsData } = useToolView({})
+
+  const handleShow = async () => {
+    if (configsData) {
+      setShow(true)
+    } else {
+      await refetchConfigs()
+      setShow(true)
+    }
+  }
+
+  useEffect(() => {
+    handleShow()
+  }, [])
 
   const toolkitModule = getIntegrationModules('toolkit')
   const voiceModule = getIntegrationModules('voices')
@@ -25,45 +62,104 @@ const Integrations = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const urlParams = new URLSearchParams(location.search)
-  const tabQuery = urlParams.get('tab')
+  const toolQuery = urlParams.get('tool') || ''
+  const voiceQuery = urlParams.get('voice') || ''
 
-  const defaultActiveTab = () => {
-    if (!isToolkit) return 1
-
-    if (tabQuery === 'toolkit') return 0
-    if (tabQuery === 'voice') return 1
-  }
-
-  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
-  const handleTabClick = (tabId: number, tabName: string) => {
+  const [activeTab, setActiveTab] = useState(0)
+  const handleTabClick = (tabId: number) => {
     setActiveTab(tabId)
-    navigate(`/integrations?tab=${tabName}`)
   }
 
   const { t } = useTranslation()
 
-  return (
-    <StyledTabRootWrapper>
-      {isVoice && isToolkit && (
-        <StyledTabListWrapper>
-          <TabList activeTabId={activeTab}>
-            <Tab onClick={() => handleTabClick(0, 'toolkit')} disabled={!isToolkit}>
-              {t('toolkit')}
-            </Tab>
-            <Tab onClick={() => handleTabClick(1, 'voice')} disabled={!isVoice}>
-              {t('voices')}
-            </Tab>
-          </TabList>
-        </StyledTabListWrapper>
-      )}
+  const { data: tools } = useToolsService()
 
-      <TabsContext activeTabId={activeTab}>
-        <TabPanels noAnimation>
-          <TabPanel>{isToolkit && <Toolkit />}</TabPanel>
-          <TabPanel>{isVoice && <Voices />}</TabPanel>
-        </TabPanels>
-      </TabsContext>
-    </StyledTabRootWrapper>
+  const { data: voiceTools } = useVoicesService()
+
+  useEffect(() => {
+    navigate(`/integrations?tool=${tools?.[0]?.slug}`)
+  }, [tools])
+
+  return (
+    <>
+      <StyledAppContainer>
+        <StyledContainer>
+          <StyledMainWrapper>
+            <StyledLeftColumn>
+              <ListHeader title={t('integrations')} />
+
+              {tools?.map((tool: any, index: number) => {
+                const filteredLogos = toolLogos.filter(
+                  (toolLogo: any) => toolLogo.toolName === tool.name,
+                )
+
+                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+                return (
+                  <MiniToolCard
+                    key={index}
+                    onClick={() => navigate(`/integrations?tool=${tool.slug}`)}
+                    name={tool.name}
+                    logo={logoSrc}
+                    picked={toolQuery === tool.slug}
+                  />
+                )
+              })}
+
+              <StyledHorizontalDivider />
+
+              <ListHeader title={`${t('voice')} ${t('integrations')}`} />
+
+              {voiceTools?.map((voice: any, index: number) => {
+                const filteredLogos = voiceLogos.filter(
+                  (toolLogo: any) => toolLogo.voiceName === voice.name,
+                )
+
+                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+                return (
+                  <MiniToolCard
+                    key={index}
+                    onClick={() => navigate(`/integrations?voice=${voice.slug}`)}
+                    name={voice.name}
+                    logo={logoSrc}
+                    picked={voiceQuery === voice.slug}
+                  />
+                )
+              })}
+            </StyledLeftColumn>
+
+            <StyledDivider />
+
+            <StyledChatWrapper>
+              {show && (
+                <>
+                  <TabList size='small' activeTabId={activeTab} noBorder>
+                    <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
+                    <Tab onClick={() => handleTabClick(1)}>{t('settings')}</Tab>
+                  </TabList>
+
+                  <TabsContext activeTabId={activeTab}>
+                    <TabPanels>
+                      <TabPanel>
+                        {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
+                        {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
+                      </TabPanel>
+                      <TabPanel>
+                        {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}
+                        {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideInfo />}
+                      </TabPanel>
+                    </TabPanels>
+                  </TabsContext>
+                </>
+              )}
+            </StyledChatWrapper>
+          </StyledMainWrapper>
+
+          <StyledRightColumn></StyledRightColumn>
+        </StyledContainer>
+      </StyledAppContainer>
+    </>
   )
 }
 

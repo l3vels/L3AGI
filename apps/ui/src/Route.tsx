@@ -100,6 +100,7 @@ import CreateCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/Crea
 import EditCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/EditCampaignForm'
 import TwilioPhoneNumberSidConfirmationModal from 'modals/TwilioPhoneNumberSidConfirmationModal'
 import IntegrationListModal from 'modals/IntegrationListModal'
+import DatasourceListModal from 'modals/DatasourceListModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -213,12 +214,8 @@ const Route = () => {
                 />
               </Router>
 
-              <Router
-                path={'datasources'}
-                element={<MainRouteLayout />}
-                key={document.location.href}
-              >
-                <Router index element={<Datasource />} key={document.location.href} />
+              <Router path={'datasources'} element={<Datasource />} key={document.location.href}>
+                {/* <Router index element={<Datasource />} key={document.location.href} /> */}
                 <Router
                   path={':datasourceId'}
                   element={<AgentView />}
@@ -258,12 +255,8 @@ const Route = () => {
                 />
               </Router>
 
-              <Router
-                path={'integrations'}
-                element={<MainRouteLayout />}
-                key={document.location.href}
-              >
-                <Router index element={<Integrations />} key={document.location.href} />
+              <Router path={'integrations'} element={<Integrations />} key={document.location.href}>
+                {/* <Router index element={<Integrations />} key={document.location.href} /> */}
                 <Router
                   path={'toolkit/:slug'}
                   element={<ToolView />}
@@ -420,6 +413,7 @@ const Route = () => {
         <VideoModal />
         <ContactListModal />
         <IntegrationListModal />
+        <DatasourceListModal />
         <TwilioPhoneNumberSidConfirmationModal />
 
         <CommandMenu

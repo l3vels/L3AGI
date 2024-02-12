@@ -71,7 +71,7 @@ const CopyScript = () => {
       <StyledAgentWrapper onClick={() => openLinkTab(import.meta.env.REACT_APP_MAIN_API_DOCS)}>
         <Book />
         <TypographyPrimary
-          value={'Main API integration'}
+          value={'Core API integration'}
           type={Typography.types.LABEL}
           size={Typography.sizes.xss}
         />
@@ -79,7 +79,7 @@ const CopyScript = () => {
       <StyledAgentWrapper onClick={() => openLinkTab(import.meta.env.REACT_APP_PR_API_DOCS)}>
         <Book />
         <TypographyPrimary
-          value={'PR API integration'}
+          value={'Voice API integration'}
           type={Typography.types.LABEL}
           size={Typography.sizes.xss}
         />

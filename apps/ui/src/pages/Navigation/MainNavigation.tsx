@@ -152,6 +152,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               onClick={() => onHandleClick('/datasources')}
             >
               <StyledValueOutlineIcon size={40} />
+              {includes(active, 'datasources') && <StyledCorner />}
             </StyledLi>
           </Tooltip>
         )}
@@ -202,6 +203,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               onClick={() => onHandleClick('/integrations')}
             >
               <Integrations size={40} />
+              {includes(active, 'integrations') && <StyledCorner />}
             </StyledLi>
           </Tooltip>
         )}

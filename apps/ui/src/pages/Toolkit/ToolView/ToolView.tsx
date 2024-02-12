@@ -15,7 +15,7 @@ import { toolLogos } from '../constants'
 import FormikTextField from 'components/TextFieldFormik'
 import { useToolView } from './useToolView'
 import { FormikProvider } from 'formik'
-import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
+// import { StyledButtonWrapper } from 'pages/Agents/AgentForm/CreateAgentForm'
 import BackButton from 'components/BackButton'
 import { useModal } from 'hooks'
 import TypographySecondary from 'components/Typography/Secondary'
@@ -67,72 +67,71 @@ const ToolView = ({
             </StyledButtonWrapper>
           </StyledHeaderGroup>
         )}
-        <ComponentsWrapper hideBox={toolSlug ? true : false}>
-          <StyledInnerWrapper>
-            {!hideInfo && (
-              <>
-                <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
-                <StyledTextWrapper>
-                  <TypographySecondary
-                    value={t('by')}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                  />
 
-                  <TypographySecondary
-                    value={t('l3')}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.xss}
-                    style={{ textDecoration: 'underline' }}
-                  />
-                </StyledTextWrapper>
-                <StyledMainTextWrapper>
-                  <TypographyPrimary
-                    value={name}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.lg}
-                  />
-                  <TypographySecondary
-                    value={description}
-                    type={Typography.types.LABEL}
-                    size={Typography.sizes.md}
-                  />
-                </StyledMainTextWrapper>
-              </>
-            )}
+        <StyledInnerWrapper>
+          {!hideInfo && (
+            <>
+              <StyledImg src={toolLogo[0]?.logoSrc} alt='' />
+              <StyledTextWrapper>
+                <TypographySecondary
+                  value={t('by')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                />
 
-            {!hideForm && (
-              <StyledFieldsWrapper>
-                {fields?.map((field: any, index: number) => {
-                  return (
-                    <FormikTextField
-                      key={index}
-                      name={field.key}
-                      placeholder=''
-                      label={field.label}
-                      field_name={field.key}
-                    />
-                  )
-                })}
-              </StyledFieldsWrapper>
-            )}
+                <TypographySecondary
+                  value={t('l3')}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.xss}
+                  style={{ textDecoration: 'underline' }}
+                />
+              </StyledTextWrapper>
+              <StyledMainTextWrapper>
+                <TypographyPrimary
+                  value={name}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.lg}
+                />
+                <TypographySecondary
+                  value={description}
+                  type={Typography.types.LABEL}
+                  size={Typography.sizes.md}
+                />
+              </StyledMainTextWrapper>
+            </>
+          )}
 
-            {!hideForm && toolSlug && fields?.length > 0 && (
-              <StyledModalButton>
-                <ButtonPrimary
-                  onClick={async () => {
-                    await handleSubmit(formik?.values)
-                    closeModal('toolkit-modal')
-                  }}
-                  disabled={isLoading}
-                  size={Button.sizes?.SMALL}
-                >
-                  {isLoading ? <Loader size={22} /> : t('save')}
-                </ButtonPrimary>
-              </StyledModalButton>
-            )}
-          </StyledInnerWrapper>
-        </ComponentsWrapper>
+          {!hideForm && (
+            <StyledFieldsWrapper>
+              {fields?.map((field: any, index: number) => {
+                return (
+                  <FormikTextField
+                    key={index}
+                    name={field.key}
+                    placeholder=''
+                    label={field.label}
+                    field_name={field.key}
+                  />
+                )
+              })}
+            </StyledFieldsWrapper>
+          )}
+
+          {!hideForm && toolSlug && fields?.length > 0 && (
+            <StyledButtonWrapper>
+              <ButtonPrimary
+                onClick={async () => {
+                  await handleSubmit(formik?.values)
+                  closeModal('toolkit-modal')
+                }}
+                disabled={isLoading}
+                size={Button.sizes?.MEDIUM}
+              >
+                {isLoading ? <Loader size={22} /> : t('save')}
+              </ButtonPrimary>
+            </StyledButtonWrapper>
+          )}
+        </StyledInnerWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )
@@ -140,8 +139,11 @@ const ToolView = ({
 
 export default ToolView
 
-const StyledInnerWrapper = styled.div`
+export const StyledInnerWrapper = styled.div`
   padding: 0 20px;
+
+  height: 100%;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -150,19 +152,19 @@ const StyledInnerWrapper = styled.div`
 
   gap: 5px;
 `
-const StyledImg = styled.img`
+export const StyledImg = styled.img`
   width: 48px;
   height: 48px;
   border-radius: 10px;
 `
-const StyledTextWrapper = styled.div`
+export const StyledTextWrapper = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
 
   margin-bottom: 10px;
 `
-const StyledMainTextWrapper = styled.div`
+export const StyledMainTextWrapper = styled.div`
   /* text-align: center; */
   display: flex;
   flex-direction: column;
@@ -174,14 +176,20 @@ const StyledMainTextWrapper = styled.div`
   max-width: 400px;
 `
 
-const StyledFieldsWrapper = styled.div`
+export const StyledFieldsWrapper = styled.div`
   margin-top: 20px;
   width: 100%;
-  max-width: 600px;
+
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  height: 100%;
+  overflow: auto;
+
+  padding: 0 10px;
 `
-const StyledModalButton = styled.div`
+export const StyledButtonWrapper = styled.div`
   margin-left: auto;
+  margin-top: auto;
 `
