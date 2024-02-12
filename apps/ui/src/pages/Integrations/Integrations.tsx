@@ -31,9 +31,27 @@ import { useVoicesService } from 'plugins/contact/services/voice/useVoicesServic
 import { voiceLogos } from 'plugins/contact/pages/Voice/constants'
 import ToolView from 'pages/Toolkit/ToolView'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
+import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
 
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
+
+  const [show, setShow] = useState(false)
+
+  const { refetchConfigs, configsData } = useToolView({})
+
+  const handleShow = async () => {
+    if (configsData) {
+      setShow(true)
+    } else {
+      await refetchConfigs()
+      setShow(true)
+    }
+  }
+
+  useEffect(() => {
+    handleShow()
+  }, [])
 
   const toolkitModule = getIntegrationModules('toolkit')
   const voiceModule = getIntegrationModules('voices')
@@ -114,23 +132,27 @@ const Integrations = () => {
             <StyledDivider />
 
             <StyledChatWrapper>
-              <TabList size='small' activeTabId={activeTab} noBorder>
-                <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
-                <Tab onClick={() => handleTabClick(1)}>{t('settings')}</Tab>
-              </TabList>
+              {show && (
+                <>
+                  <TabList size='small' activeTabId={activeTab} noBorder>
+                    <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
+                    <Tab onClick={() => handleTabClick(1)}>{t('settings')}</Tab>
+                  </TabList>
 
-              <TabsContext activeTabId={activeTab}>
-                <TabPanels>
-                  <TabPanel>
-                    {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
-                    {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
-                  </TabPanel>
-                  <TabPanel>
-                    {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}
-                    {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideInfo />}
-                  </TabPanel>
-                </TabPanels>
-              </TabsContext>
+                  <TabsContext activeTabId={activeTab}>
+                    <TabPanels>
+                      <TabPanel>
+                        {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
+                        {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
+                      </TabPanel>
+                      <TabPanel>
+                        {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}
+                        {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideInfo />}
+                      </TabPanel>
+                    </TabPanels>
+                  </TabsContext>
+                </>
+              )}
             </StyledChatWrapper>
           </StyledMainWrapper>
 

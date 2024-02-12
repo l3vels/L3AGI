@@ -22,6 +22,7 @@ import { StyledAppContainer } from 'components/Layout/LayoutStyle'
 import {
   StyledChatWrapper,
   StyledContainer,
+  StyledDivider,
   StyledLeftColumn,
   StyledMainWrapper,
   StyledRightColumn,
@@ -75,6 +76,8 @@ const Datasource = () => {
                 )
               })}
             </StyledLeftColumn>
+
+            <StyledDivider />
 
             <StyledChatWrapper>{outlet}</StyledChatWrapper>
           </StyledMainWrapper>
