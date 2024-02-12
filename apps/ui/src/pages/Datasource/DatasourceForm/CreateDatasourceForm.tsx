@@ -30,33 +30,27 @@ const CreateDatasourceForm = () => {
       <FormikProvider value={formik}>
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
-            <div>
+            <StyledCombiner>
               <StyledSectionTitle>{`${t('add-datasource')}`}</StyledSectionTitle>
-              <StyledCombiner>
-                <StyledSectionDescription>
-                  {`${t('datasource-description')}`}
-                </StyledSectionDescription>
-                <DatasourceDemoButton />
-              </StyledCombiner>
-            </div>
 
-            <StyledButtonWrapper>
-              <BackButton />
-              <ButtonPrimary
-                onClick={formik?.handleSubmit}
-                size={Button.sizes?.SMALL}
-                disabled={isLoading}
-              >
-                {isLoading ? <Loader size={32} /> : 'Save'}
-              </ButtonPrimary>
-            </StyledButtonWrapper>
+              <DatasourceDemoButton />
+            </StyledCombiner>
           </StyledHeaderGroup>
 
-          <ComponentsWrapper noPadding>
-            <StyledFormWrapper>
-              <DatasourceForm formik={formik} isLoading={isLoading} />
-            </StyledFormWrapper>
-          </ComponentsWrapper>
+          <StyledFormWrapper>
+            <DatasourceForm formik={formik} isLoading={isLoading} />
+          </StyledFormWrapper>
+
+          <StyledButtonWrapper>
+            <BackButton />
+            <ButtonPrimary
+              onClick={formik?.handleSubmit}
+              size={Button.sizes?.MEDIUM}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader size={32} /> : 'Save'}
+            </ButtonPrimary>
+          </StyledButtonWrapper>
         </StyledSectionWrapper>
       </FormikProvider>
     </>

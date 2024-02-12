@@ -22,6 +22,7 @@ import DataSourceDropdown from './components/DataSourceDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
 import TextareaFormik from 'components/TextareaFormik'
+import { StyledFormInputWrapper, StyledFormRoot } from 'styles/formStyles.css'
 
 type DatasourceFormProps = {
   formik: any
@@ -78,8 +79,8 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   }, [datasource_source_type])
 
   return (
-    <StyledFormContainer>
-      <StyledInputWrapper>
+    <StyledFormRoot>
+      <StyledFormInputWrapper>
         <FormikTextField name='datasource_name' placeholder={t('name')} label={t('name')} />
 
         <TextareaFormik
@@ -269,38 +270,13 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
             )}
           </>
         )}
-      </StyledInputWrapper>
-    </StyledFormContainer>
+      </StyledFormInputWrapper>
+    </StyledFormRoot>
   )
 }
 
 export default DatasourceForm
 
-const StyledFormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-  overflow-y: auto;
-  height: 100%;
-  width: 100%;
-`
-
-const StyledInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 25px;
-
-  width: 100%;
-  max-width: 800px;
-  /* max-width: 600px; */
-  /* margin: auto; */
-  height: calc(100% - 100px);
-  /* max-height: 800px; */
-
-  padding: 0 20px;
-`
 const StyledSourceTypeWrapper = styled.div`
   display: flex;
   flex-direction: column;

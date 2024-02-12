@@ -30,33 +30,25 @@ const EditDatasourceForm = () => {
       <FormikProvider value={formik}>
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
-            <div>
+            <StyledCombiner>
               <StyledSectionTitle>{`${t('edit-datasource')}`}</StyledSectionTitle>
-              <StyledCombiner>
-                <StyledSectionDescription>
-                  {`${t('datasource-description')}`}
-                </StyledSectionDescription>
-                <DatasourceDemoButton />
-              </StyledCombiner>
-            </div>
-
-            <StyledButtonWrapper>
-              <BackButton />
-              <ButtonPrimary
-                onClick={formik?.handleSubmit}
-                size={Button.sizes?.SMALL}
-                disabled={isLoading}
-              >
-                {isLoading ? <Loader size={32} /> : t('save')}
-              </ButtonPrimary>
-            </StyledButtonWrapper>
+            </StyledCombiner>
           </StyledHeaderGroup>
 
-          <ComponentsWrapper noPadding>
-            <StyledFormWrapper>
-              <DatasourceForm formik={formik} isLoading={isLoading} isEdit />
-            </StyledFormWrapper>
-          </ComponentsWrapper>
+          <StyledFormWrapper>
+            <DatasourceForm formik={formik} isLoading={isLoading} isEdit />
+          </StyledFormWrapper>
+
+          <StyledButtonWrapper>
+            <BackButton />
+            <ButtonPrimary
+              onClick={formik?.handleSubmit}
+              size={Button.sizes?.MEDIUM}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader size={32} /> : t('save')}
+            </ButtonPrimary>
+          </StyledButtonWrapper>
         </StyledSectionWrapper>
       </FormikProvider>
     </>

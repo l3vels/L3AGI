@@ -213,12 +213,8 @@ const Route = () => {
                 />
               </Router>
 
-              <Router
-                path={'datasources'}
-                element={<MainRouteLayout />}
-                key={document.location.href}
-              >
-                <Router index element={<Datasource />} key={document.location.href} />
+              <Router path={'datasources'} element={<Datasource />} key={document.location.href}>
+                {/* <Router index element={<Datasource />} key={document.location.href} /> */}
                 <Router
                   path={':datasourceId'}
                   element={<AgentView />}
