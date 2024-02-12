@@ -143,6 +143,7 @@ export const StyledInnerWrapper = styled.div`
   padding: 0 20px;
 
   height: 100%;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
