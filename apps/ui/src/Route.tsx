@@ -258,12 +258,8 @@ const Route = () => {
                 />
               </Router>
 
-              <Router
-                path={'integrations'}
-                element={<MainRouteLayout />}
-                key={document.location.href}
-              >
-                <Router index element={<Integrations />} key={document.location.href} />
+              <Router path={'integrations'} element={<Integrations />} key={document.location.href}>
+                {/* <Router index element={<Integrations />} key={document.location.href} /> */}
                 <Router
                   path={'toolkit/:slug'}
                   element={<ToolView />}

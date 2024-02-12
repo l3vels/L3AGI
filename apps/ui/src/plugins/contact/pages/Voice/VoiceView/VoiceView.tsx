@@ -23,7 +23,15 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
 import { useVoiceView } from './useVoiceView'
 
-const VoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
+const VoiceView = ({
+  voiceSlug,
+  hideInfo,
+  hideForm,
+}: {
+  voiceSlug?: string
+  hideInfo?: boolean
+  hideForm?: boolean
+}) => {
   const { t } = useTranslation()
   const { voice, formik, handleSubmit, isLoading } = useVoiceView({
     voiceSlug: voiceSlug,
@@ -60,61 +68,69 @@ const VoiceView = ({ voiceSlug }: { voiceSlug?: string }) => {
         )}
         <ComponentsWrapper hideBox={voiceSlug ? true : false}>
           <StyledInnerWrapper>
-            {/* <StyledImg src={toolLogo[0]?.logoSrc} alt='' /> */}
-            <StyledTextWrapper>
-              <TypographySecondary
-                value={t('by')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-              />
-
-              <TypographySecondary
-                value={t('l3')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.xss}
-                style={{ textDecoration: 'underline' }}
-              />
-            </StyledTextWrapper>
-            <StyledMainTextWrapper>
-              <TypographyPrimary
-                value={name}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.lg}
-              />
-              <TypographySecondary
-                value={description}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-            </StyledMainTextWrapper>
-
-            <StyledFieldsWrapper>
-              {fields?.map((field: any, index: number) => {
-                return (
-                  <FormikTextField
-                    key={index}
-                    name={field.key}
-                    placeholder=''
-                    label={field.label}
-                    field_name={field.key}
+            {!hideInfo && (
+              <>
+                {/* <StyledImg src={toolLogo[0]?.logoSrc} alt='' /> */}
+                <StyledTextWrapper>
+                  <TypographySecondary
+                    value={t('by')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
                   />
-                )
-              })}
-            </StyledFieldsWrapper>
 
-            {voiceSlug && fields?.length > 0 && (
-              <StyledModalButton>
-                <ButtonPrimary
-                  onClick={async () => {
-                    await handleSubmit(formik?.values)
-                    closeModal('toolkit-modal')
-                  }}
-                  disabled={isLoading}
-                  size={Button.sizes?.SMALL}
-                >
-                  {isLoading ? <Loader size={22} /> : t('save')}
-                </ButtonPrimary>
-              </StyledModalButton>
+                  <TypographySecondary
+                    value={t('l3')}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.xss}
+                    style={{ textDecoration: 'underline' }}
+                  />
+                </StyledTextWrapper>
+                <StyledMainTextWrapper>
+                  <TypographyPrimary
+                    value={name}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.lg}
+                  />
+                  <TypographySecondary
+                    value={description}
+                    type={Typography.types.LABEL}
+                    size={Typography.sizes.md}
+                  />
+                </StyledMainTextWrapper>
+              </>
+            )}
+
+            {!hideForm && (
+              <>
+                <StyledFieldsWrapper>
+                  {fields?.map((field: any, index: number) => {
+                    return (
+                      <FormikTextField
+                        key={index}
+                        name={field.key}
+                        placeholder=''
+                        label={field.label}
+                        field_name={field.key}
+                      />
+                    )
+                  })}
+                </StyledFieldsWrapper>
+
+                {voiceSlug && fields?.length > 0 && (
+                  <StyledModalButton>
+                    <ButtonPrimary
+                      onClick={async () => {
+                        await handleSubmit(formik?.values)
+                        closeModal('toolkit-modal')
+                      }}
+                      disabled={isLoading}
+                      size={Button.sizes?.SMALL}
+                    >
+                      {isLoading ? <Loader size={22} /> : t('save')}
+                    </ButtonPrimary>
+                  </StyledModalButton>
+                )}
+              </>
             )}
           </StyledInnerWrapper>
         </ComponentsWrapper>

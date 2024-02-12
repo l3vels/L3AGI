@@ -202,6 +202,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               onClick={() => onHandleClick('/integrations')}
             >
               <Integrations size={40} />
+              {includes(active, 'integrations') && <StyledCorner />}
             </StyledLi>
           </Tooltip>
         )}
