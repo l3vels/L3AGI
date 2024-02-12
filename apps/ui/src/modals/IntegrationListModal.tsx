@@ -169,7 +169,7 @@ const IntegrationListModal = () => {
                   <TabPanels>
                     <TabPanel>
                       {agentToolsData && (
-                        <StyledInnerTabWrapper>
+                        <StyledInnerWrapper>
                           <ToolView toolSlug={pickedTool?.slug} hideForm />
 
                           <StyledFooter>
@@ -181,7 +181,7 @@ const IntegrationListModal = () => {
                               {agentToolsData.includes(pickedTool?.id) ? t('remove') : t('install')}
                             </ButtonPrimary>
                           </StyledFooter>
-                        </StyledInnerTabWrapper>
+                        </StyledInnerWrapper>
                       )}
                     </TabPanel>
                     <TabPanel>
@@ -200,11 +200,11 @@ const IntegrationListModal = () => {
 
 export default withRenderModal('integration-list-modal')(IntegrationListModal)
 
-const StyledModalBody = styled.div`
+export const StyledModalBody = styled.div`
   width: 50vw;
   height: 70vh;
 `
-const StyledFooter = styled.div`
+export const StyledFooter = styled.div`
   width: 100%;
 
   display: flex;
@@ -216,10 +216,10 @@ const StyledFooter = styled.div`
 
   bottom: 0;
 `
-const StyledTextFieldWrapper = styled.div`
+export const StyledTextFieldWrapper = styled.div`
   padding: 4px;
 `
-const StyledInnerTabWrapper = styled.div`
+export const StyledInnerWrapper = styled.div`
   position: relative;
 
   height: 100%;

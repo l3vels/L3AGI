@@ -17,6 +17,7 @@ import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 import { useEditDatasource } from 'pages/Datasource/useEditDatasource'
 import { useEditAgent } from 'pages/Agents/useEditAgent'
 import { useModal } from 'hooks'
+import { StyledSearchOutlineIcon } from 'components/ChatSwitcher/ChatSwitcher'
 
 const DatasourceDetails = () => {
   const { openModal, closeModal } = useModal()
@@ -67,6 +68,13 @@ const DatasourceDetails = () => {
           value={t('datasources')}
           type={Typography.types.LABEL}
           size={Typography.sizes.md}
+        />
+
+        <IconButton
+          onClick={() => openModal({ name: 'datasource-list-modal' })}
+          icon={() => <StyledSearchOutlineIcon size={26} />}
+          kind={IconButton.kinds?.TERTIARY}
+          size={IconButton.sizes?.SMALL}
         />
       </StyledDetailHeader>
       <StyledCardsWrapper>

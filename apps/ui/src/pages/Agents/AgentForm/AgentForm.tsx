@@ -237,28 +237,28 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                   /> */}
 
                   {agentType === 'text' && (
-                    <StyledCombinedFields>
-                      <AgentDropdown
-                        isMulti
-                        label={t('datasources')}
-                        fieldName={'agent_datasources'}
-                        fieldValue={agent_datasources}
-                        setFieldValue={setFieldValue}
-                        options={datasourceOptions}
-                      />
+                    // <StyledCombinedFields>
+                    //   <AgentDropdown
+                    //     isMulti
+                    //     label={t('datasources')}
+                    //     fieldName={'agent_datasources'}
+                    //     fieldValue={agent_datasources}
+                    //     setFieldValue={setFieldValue}
+                    //     options={datasourceOptions}
+                    //     />
+                    //     </StyledCombinedFields>
 
-                      <AgentDropdown
-                        label={'Data Process Flow'}
-                        fieldName={'agent_source_flow'}
-                        setFieldValue={setFieldValue}
-                        fieldValue={agent_source_flow}
-                        options={data_process_flow}
-                        onChange={() => {
-                          setFieldValue('agent_source_flow', '')
-                        }}
-                        optionSize={'small'}
-                      />
-                    </StyledCombinedFields>
+                    <AgentDropdown
+                      label={'Data Process Flow'}
+                      fieldName={'agent_source_flow'}
+                      setFieldValue={setFieldValue}
+                      fieldValue={agent_source_flow}
+                      options={data_process_flow}
+                      onChange={() => {
+                        setFieldValue('agent_source_flow', '')
+                      }}
+                      optionSize={'small'}
+                    />
                   )}
 
                   <StyledCombinedFields>
