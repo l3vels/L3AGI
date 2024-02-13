@@ -21,13 +21,31 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
+import { StyledAppContainer } from 'components/Layout/LayoutStyle'
+import {
+  StyledChatWrapper,
+  StyledContainer,
+  StyledLeftColumn,
+  StyledMainWrapper,
+  StyledRightColumn,
+} from 'routes/ChatRouteLayout'
+import ListHeader from 'routes/components/ListHeader'
+import MiniToolCard from 'components/ChatCards/MiniToolCard'
+import { useFineTuning } from './FineTuning/useFineTuning'
 
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
+
+  const outlet = useOutlet()
+  const params = useParams()
+
+  const { fineTuningId } = params
+
+  const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
 
   const { data: models } = useModelsService()
 
@@ -38,25 +56,53 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const isFineTuning = fineTuningModule.list
 
   const navigate = useNavigate()
-  const location = useLocation()
-  const urlParams = new URLSearchParams(location.search)
-  const tabQuery = urlParams.get('tab')
 
-  const defaultActiveTab = () => {
-    if (!isFineTuning) return 1
-
-    if (tabQuery === 'fine-tuning') return 0
-    if (tabQuery === 'model') return 1
-  }
-
-  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
-  const handleTabClick = (tabId: number, tabName: string) => {
-    setActiveTab(tabId)
-    navigate(`/models?tab=${tabName}`)
-  }
+  useEffect(() => {
+    if (fineTuningData?.length > 0) navigate(`/models/${fineTuningData?.[0]?.id}/edit-fine-tuning`)
+  }, [fineTuningData])
 
   return (
-    <StyledTabRootWrapper>
+    <>
+      <StyledAppContainer>
+        <StyledContainer>
+          <StyledMainWrapper>
+            <StyledLeftColumn>
+              <ListHeader
+                title={t('models')}
+                onAddClick={() => navigate('/models/create-fine-tuning')}
+              />
+              {fineTuningData?.map((fineTuning: any) => {
+                return (
+                  <MiniToolCard
+                    key={fineTuning.id}
+                    onClick={() => navigate(`/models/${fineTuning.id}/edit-fine-tuning`)}
+                    name={fineTuning.name}
+                    logo={''}
+                    picked={fineTuning.id === fineTuningId}
+                    onDeleteClick={() => deleteFineTuningHandler(fineTuning.id)}
+                  />
+                )
+              })}
+
+              {models
+                ?.filter(model => !model.is_fine_tuned)
+                ?.map((model, index: number) => {
+                  const logo = MODEL_PROVIDER_LOGOS.find(logo => logo.provider === model.provider)
+                  const logoSrc = logo?.logoSrc || ''
+
+                  return (
+                    <MiniToolCard key={index} onClick={() => {}} name={model.name} logo={logoSrc} />
+                  )
+                })}
+            </StyledLeftColumn>
+
+            <StyledChatWrapper>{outlet}</StyledChatWrapper>
+          </StyledMainWrapper>
+
+          <StyledRightColumn></StyledRightColumn>
+        </StyledContainer>
+      </StyledAppContainer>
+      {/* <StyledTabRootWrapper>
       {isModel && isFineTuning && (
         <StyledTabListWrapper>
           <TabList activeTabId={activeTab}>
@@ -112,7 +158,8 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
           </TabPanel>
         </TabPanels>
       </TabsContext>
-    </StyledTabRootWrapper>
+    </StyledTabRootWrapper> */}
+    </>
   )
 }
 

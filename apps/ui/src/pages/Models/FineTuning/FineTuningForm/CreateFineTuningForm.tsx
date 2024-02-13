@@ -17,6 +17,7 @@ import {
 import { t } from 'i18next'
 import FineTuningForm from './FineTuningForm'
 import { StyledFormWrapper } from 'styles/formStyles.css'
+import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
 
 const CreateFineTuningForm = () => {
   const { formik, isLoading, handleErrorAlert } = useCreateFineTuning()
@@ -33,28 +34,25 @@ const CreateFineTuningForm = () => {
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledHeaderGroup className='header_group'>
-          <div>
+          <StyledCombiner>
             <StyledSectionTitle>{`${t('add-fine-tuning')}`}</StyledSectionTitle>
-            {/* <StyledSectionDescription>{`${t('agent-description')}`}</StyledSectionDescription> */}
-          </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={handleFormSubmit}
-              size={Button.sizes?.SMALL}
-              disabled={isLoading}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
+          </StyledCombiner>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <FineTuningForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <FineTuningForm formik={formik} />
+        </StyledFormWrapper>
+
+        <StyledButtonWrapper>
+          <BackButton />
+          <ButtonPrimary
+            onClick={handleFormSubmit}
+            size={Button.sizes?.MEDIUM}
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

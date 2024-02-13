@@ -178,6 +178,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               onClick={() => onHandleClick('/models')}
             >
               <StyledBasicIcon size={30} />
+              {includes(active, 'models') && <StyledCorner />}
             </StyledLi>
           </Tooltip>
         )}
