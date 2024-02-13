@@ -552,7 +552,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
 
   cursor: pointer;
 
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   left: 0;
 
@@ -562,7 +562,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
       right: 0;
       margin-left: auto;
 
-      width: calc(15% - 200px);
+      width: calc(15% - 250px);
     `}
   ${props =>
     props.isSmallScreen &&
@@ -572,7 +572,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
 `
 const StyledMiddleArea = styled.div`
   height: 100%;
-  width: calc(30% + 200px);
+  width: calc(100% - 600px);
 
   cursor: pointer;
 
@@ -592,10 +592,7 @@ export const StyledHorizontalDivider = styled.div`
   /* margin: 8px 0; */
 `
 const StyledTableWrapper = styled.div`
-  /* max-width: 800px; */
   padding-right: 24px;
   height: calc(100% - 50px);
   padding-top: 20px;
-  /* width: 100%;
-  max-width: calc(100% - 200px); */
 `
