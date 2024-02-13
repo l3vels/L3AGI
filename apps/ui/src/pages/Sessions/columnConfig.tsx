@@ -108,7 +108,8 @@ export const useColumn = ({ noAgent = false }: { noAgent?: boolean }) => {
 
         const navigate = useNavigate()
         const handleViewClick = (id: string) => {
-          navigate(`/sessions?chat=${id}`)
+          // navigate(`/sessions?chat=${id}`)
+          navigate(`/chat?tab=sessions&agent=${data?.agent_id}&session=${id}`)
         }
 
         return (

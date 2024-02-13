@@ -2,11 +2,13 @@ import { ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
 import Table from 'components/Table'
 import { useModal } from 'hooks'
 import { t } from 'i18next'
+import ChatV2 from 'modals/AIChatModal/components/ChatV2'
 import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
 import { useColumn } from 'pages/Sessions/columnConfig'
 import { Chat } from 'pages/Sessions/useSession'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useChatsService } from 'services/chat/useChatsService'
 import { Add } from 'share-ui/components/Icon/Icons'
 import styled from 'styled-components'
@@ -41,6 +43,10 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
     status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
   }))
 
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const sessionId = urlParams.get('session')
+
   return (
     <StyledRoot>
       <Table
@@ -50,8 +56,9 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
         page={page}
         totalPages={totalPages}
         isLoading={chatsLoading}
-        // selectedRow={sessionId}
+        selectedRow={sessionId}
       />
+      {sessionId && <ChatV2 chatSessionId={sessionId} />}
     </StyledRoot>
   )
 }
@@ -63,6 +70,6 @@ const StyledRoot = styled.div`
   width: 100%;
 
   display: flex;
-  flex-direction: column;
+
   gap: 20px;
 `
