@@ -375,8 +375,6 @@ const ChatRouteLayout = () => {
             </StyledLeftColumn>
           )}
 
-          <StyledDivider />
-
           {location.pathname.includes('/chat') ? (
             <StyledChatWrapper>
               <TabList size='small' activeTabId={activeTab} noBorder>
@@ -477,6 +475,10 @@ export const StyledLeftColumn = styled.div<{
   max-width: 270px;
 
   transition: margin-left 0.3s ease-in-out;
+
+  border-right: ${({ theme }) => theme.body.secondaryBorder};
+
+  /* margin: 0 16px; */
 
   ${props =>
     props.isHidden &&
@@ -582,15 +584,11 @@ const StyledMiddleArea = styled.div`
   /* left: 0; */
 `
 
-export const StyledDivider = styled.div`
-  border-right: ${({ theme }) => theme.body.secondaryBorder};
-
-  margin: 0 16px;
-`
 export const StyledHorizontalDivider = styled.div`
   border-bottom: ${({ theme }) => theme.body.secondaryBorder};
 
-  width: 100%;
+  width: calc(100% - 16px);
+
   /* margin: 8px 0; */
 `
 const StyledTableWrapper = styled.div`
