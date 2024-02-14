@@ -17,7 +17,7 @@ import FormikTextField from 'components/TextFieldFormik'
 import { DATA_LOADER_IMAGES } from '../constants'
 import { useDatasourceSqlTables } from 'services/datasource/useDatasourceSqlTables'
 import DatasourceSqlTables from './components/DatasourceSqlTables/DatasourceSqlTables'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import DataSourceDropdown from './components/DataSourceDropdown'
 import TypographyPrimary from 'components/Typography/Primary'
 import { ButtonPrimary } from 'components/Button/Button'
@@ -51,6 +51,11 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     files,
   } = values
 
+  const location = useLocation()
+
+  const urlParams = new URLSearchParams(location.search)
+  const formType = urlParams.get('type') || datasource_source_type
+
   const { host, port, user, pass, name, tables } = values.configs
 
   const { data, fetchSqlTables, loading } = useDatasourceSqlTables({
@@ -60,10 +65,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     user: user?.value,
     password: pass?.value,
     name: name?.value,
-    source_type: datasource_source_type,
+    source_type: formType,
   })
 
-  const isDatabase = datasource_source_type === 'Postgres' || datasource_source_type === 'MySQL'
+  const isDatabase = formType === 'Postgres' || formType === 'MySQL'
 
   useEffect(() => {
     if (isEdit && isDatabase) {
@@ -78,6 +83,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
     }
   }, [datasource_source_type])
 
+  useEffect(() => {
+    setFieldValue('datasource_source_type', formType)
+  }, [formType])
+
   return (
     <StyledFormRoot>
       <StyledFormInputWrapper>
@@ -91,35 +100,6 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
         />
 
         <StyledSourceTypeWrapper>
-          <TypographyPrimary
-            value={t('source-type')}
-            type={Typography.types.LABEL}
-            size={Typography.sizes.md}
-          />
-          <StyledCardWrapper>
-            {dataLoaders?.map((dataLoader: any) => {
-              const filteredLogos = DATA_LOADER_IMAGES.filter(
-                (loaderImages: any) => loaderImages.sourceName === dataLoader.source_type,
-              )
-
-              const imageSrc = filteredLogos?.[0]?.imageSrc || ''
-
-              return (
-                <DataLoaderCard
-                  iconSrc={imageSrc}
-                  isSelected={dataLoader.source_type === datasource_source_type}
-                  isActive={dataLoader.is_active} // coming soon feature
-                  key={dataLoader.name}
-                  title={dataLoader.source_type}
-                  onClick={() => {
-                    setFieldValue('datasource_source_type', dataLoader.source_type)
-                    setFieldValue('config_value', '')
-                  }}
-                />
-              )
-            })}
-          </StyledCardWrapper>
-
           {category?.length > 0 && (
             <>
               {category === 'File' && (
