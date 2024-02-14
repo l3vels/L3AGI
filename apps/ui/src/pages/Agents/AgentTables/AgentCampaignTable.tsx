@@ -1,29 +1,18 @@
-import { ButtonPrimary } from 'components/Button/Button'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
-import {
-  StyledHeaderGroup,
-  StyledSectionTitle,
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
-
-import { StyledTableWrapper } from '../Contact/Contacts'
+import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
 import Table from 'components/Table'
 import TableActionButtons from 'components/Table/components/TableActionButtons'
+import { StyledOpenIcon } from 'pages/Sessions/columnConfig'
+import { useCampaigns } from 'plugins/contact/pages/Campaign/useCampaigns'
 import { useMemo } from 'react'
-import { t } from 'i18next'
-import { useCampaigns } from './useCampaigns'
 import { useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
-import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
-import { StyledOpenIcon } from 'pages/Sessions/columnConfig'
 
-const Campaigns = () => {
+const AgentCampaignTable = ({ agentId }: { agentId: string }) => {
   const navigate = useNavigate()
+
   const { tableData, deleteCampaignHandler } = useCampaigns()
 
-  const handleCreate = () => {
-    navigate(`/schedules/create-campaign`)
-  }
+  const filteredData = tableData?.filter((item: any) => item.agentId === agentId)
 
   const columns = useMemo(
     () => [
@@ -37,11 +26,7 @@ const Campaigns = () => {
         accessor: 'status',
         width: 100,
       },
-      {
-        Header: 'Agent',
-        accessor: 'agent',
-        width: 80,
-      },
+
       {
         Header: 'Group',
         accessor: 'groupId',
@@ -60,7 +45,7 @@ const Campaigns = () => {
       {
         Header: 'Total Calls',
         accessor: 'totalCalls',
-        width: 60,
+        width: 100,
       },
       {
         Header: 'Busy',
@@ -70,12 +55,13 @@ const Campaigns = () => {
       {
         Header: 'Completed',
         accessor: 'completedCalls',
-        width: 50,
+        width: 100,
       },
       {
         Header: 'Actions',
         accessor: 'id',
-        width: 80,
+        width: 100,
+
         Cell: ({ cell }: any) => {
           return (
             <TableActionButtons
@@ -102,24 +88,7 @@ const Campaigns = () => {
     [],
   )
 
-  return (
-    <StyledSectionWrapper>
-      <StyledHeaderGroup className='header_group'>
-        <div>
-          <StyledSectionTitle>{`${t('campaigns')}`}</StyledSectionTitle>
-        </div>
-        <div>
-          <ButtonPrimary onClick={handleCreate} size={'small'}>
-            {`${t('add-campaign')}`}
-          </ButtonPrimary>
-        </div>
-      </StyledHeaderGroup>
-
-      <ComponentsWrapper noPadding>
-        <Table columns={columns} data={tableData} expand />
-      </ComponentsWrapper>
-    </StyledSectionWrapper>
-  )
+  return <Table columns={columns} data={filteredData} />
 }
 
-export default Campaigns
+export default AgentCampaignTable

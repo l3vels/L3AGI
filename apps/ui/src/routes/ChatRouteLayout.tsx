@@ -33,7 +33,7 @@ import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import EditAgentForm from 'pages/Agents/AgentForm/EditAgentForm'
 import EditTeamOfAgentsForm from 'pages/TeamOfAgents/TeamOfAgentsForm/EditTeamOfAgentsForm'
-import AgentSessionsTable from 'pages/Agents/AgentSessions'
+
 import CopyScript from 'pages/Agents/AgentForm/components/CopyScript'
 import AgentVIewDetailBox, {
   StyledDetailsBox,
@@ -45,6 +45,10 @@ import Integrations from 'pages/Integrations'
 import IntegrationDetails from './components/IntegrationsDetails'
 import DatasourceDetails from './components/DatasourceDetails'
 import VoiceIntegrationsDetails from './components/VoiceIntegrationsDetails'
+import AgentSessionsTable from 'pages/Agents/AgentTables/AgentSessionsTable'
+import AgentCampaignTable from 'pages/Agents/AgentTables/AgentCampaignTable'
+import AgentScheduleTable from 'pages/Agents/AgentTables/AgentScheduleTable'
+import CombinedCampaignTables from 'pages/Agents/AgentTables/CombinedCampaignTables'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -144,12 +148,10 @@ const ChatRouteLayout = () => {
   const tabQuery = urlParams.get('tab')
 
   const defaultActiveTab = () => {
-    // if (!isFineTuning) return 1
-    // if (!tabQuery) return 0
-
     if (tabQuery === 'playground') return 0
     if (tabQuery === 'sessions') return 1
-    if (tabQuery === 'settings') return 2
+    if (tabQuery === 'campaigns') return 2
+    if (tabQuery === 'settings') return 3
   }
 
   const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
@@ -167,14 +169,14 @@ const ChatRouteLayout = () => {
 
     if (tabQuery === 'playground') return setActiveTab(0)
     if (tabQuery === 'sessions') return setActiveTab(1)
-    if (tabQuery === 'settings') return setActiveTab(2)
+    if (tabQuery === 'campaigns') return setActiveTab(2)
+    if (tabQuery === 'settings') return setActiveTab(3)
   }, [tabQuery])
 
   if (!user && !chatId) return <Navigate to='/' />
 
   return (
     <StyledAppContainer className='app_container'>
-      {/* <Header isPublicRoute={!user} hideButtons={!user && chatId ? true : false} /> */}
       <StyledContainer>
         {expand && !showChats && location.pathname.includes('/chat') && (
           <StyledShowButton
@@ -323,55 +325,6 @@ const ChatRouteLayout = () => {
                   })}
                 </>
               )}
-
-              {/* {sessionModule?.list && chatsData?.length > 0 && (
-              <>
-                <ListHeader title={t('session')} />
-
-                {chatsData?.map((chat: any) => {
-                  const { agent, name, id } = chat
-
-                  const deleteChatHandler = () => {
-                    openModal({
-                      name: 'delete-confirmation-modal',
-                      data: {
-                        deleteItem: async () => {
-                          try {
-                            await deleteChat(id)
-                            await refetchChat()
-                            navigate('/chat')
-                            setToast({
-                              message: 'Chat was deleted!',
-                              type: 'positive',
-                              open: true,
-                            })
-                          } catch (e) {
-                            setToast({
-                              message: 'Failed to delete Chat!',
-                              type: 'negative',
-                              open: true,
-                            })
-                          }
-                          closeModal('delete-confirmation-modal')
-                        },
-                        label: 'Delete Chat?',
-                      },
-                    })
-                  }
-
-                  return (
-                    <CustomerChatCard
-                      key={id}
-                      picked={id === chatId}
-                      name={name}
-                      subTitle={agent.agent.name}
-                      onClick={() => navigate(`/chat/session?chat=${id}`)}
-                      onDeleteClick={deleteChatHandler}
-                    />
-                  )
-                })}
-              </>
-            )} */}
             </StyledLeftColumn>
           )}
 
@@ -382,7 +335,13 @@ const ChatRouteLayout = () => {
                 <Tab onClick={() => handleTabClick(1, 'sessions')} disabled={teamId ? true : false}>
                   {t('sessions')}
                 </Tab>
-                <Tab onClick={() => handleTabClick(2, 'settings')}>{t('settings')}</Tab>
+                <Tab
+                  onClick={() => handleTabClick(2, 'campaigns')}
+                  disabled={teamId ? true : false}
+                >
+                  {t('campaigns')}
+                </Tab>
+                <Tab onClick={() => handleTabClick(3, 'settings')}>{t('settings')}</Tab>
               </TabList>
 
               <StyledHorizontalDivider />
@@ -392,6 +351,7 @@ const ChatRouteLayout = () => {
                   <TabPanel>
                     <AIChat />
                   </TabPanel>
+
                   <TabPanel>
                     {agentId && (
                       <StyledTableWrapper>
@@ -399,6 +359,15 @@ const ChatRouteLayout = () => {
                       </StyledTableWrapper>
                     )}
                   </TabPanel>
+
+                  <TabPanel>
+                    {agentId && (
+                      <StyledTableWrapper>
+                        <CombinedCampaignTables agentId={agentId} />
+                      </StyledTableWrapper>
+                    )}
+                  </TabPanel>
+
                   <TabPanel>
                     {agentId && <EditAgentForm />}
                     {teamId && <EditTeamOfAgentsForm />}
@@ -595,5 +564,5 @@ export const StyledHorizontalDivider = styled.div`
 const StyledTableWrapper = styled.div`
   padding-right: 24px;
   height: calc(100% - 50px);
-  padding-top: 20px;
+  padding-top: 15px;
 `

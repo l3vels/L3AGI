@@ -25,7 +25,8 @@ export const useCampaigns = () => {
       return {
         id: campaign.id,
         name: campaign.name,
-        agentId: agentData?.find(({ agent }) => agent.id === campaign.agent_id)?.agent.name,
+        agent: agentData?.find(({ agent }) => agent.id === campaign.agent_id)?.agent.name,
+        agentId: campaign.agent_id,
         groupId: groupsData?.find(({ id }: { id: string }) => id === campaign.group_id)?.name,
         type: campaign.type,
         status: campaign.status,
