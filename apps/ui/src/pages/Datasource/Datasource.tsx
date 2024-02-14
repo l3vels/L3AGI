@@ -54,7 +54,20 @@ const Datasource = () => {
             <StyledLeftColumn>
               <ListHeader
                 title={t('datasource')}
-                onAddClick={() => navigate('/datasources/create-datasource')}
+                multiOption={[
+                  {
+                    label: `File`,
+                    function: () => navigate('/datasources/create-datasource?type=File'),
+                  },
+                  {
+                    label: `MySQL`,
+                    function: () => navigate('/datasources/create-datasource?type=MySQL'),
+                  },
+                  {
+                    label: `Postgres`,
+                    function: () => navigate('/datasources/create-datasource?type=Postgres'),
+                  },
+                ]}
               />
               {datasources?.map((datasource: any) => {
                 const filteredLogos = DATA_LOADER_IMAGES.filter(
@@ -78,8 +91,6 @@ const Datasource = () => {
 
             <StyledChatWrapper>{outlet}</StyledChatWrapper>
           </StyledMainWrapper>
-
-          <StyledRightColumn></StyledRightColumn>
         </StyledContainer>
       </StyledAppContainer>
     </>

@@ -29,6 +29,7 @@ import { StyledAppContainer } from 'components/Layout/LayoutStyle'
 import {
   StyledChatWrapper,
   StyledContainer,
+  StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
   StyledRightColumn,
@@ -43,7 +44,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const outlet = useOutlet()
   const params = useParams()
 
-  const { fineTuningId } = params
+  const { fineTuningId, modelId } = params
 
   const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
 
@@ -59,6 +60,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
   useEffect(() => {
     if (fineTuningData?.length > 0) navigate(`/models/${fineTuningData?.[0]?.id}/edit-fine-tuning`)
+    else if (models?.length > 0) navigate(`/models/${models?.[0]?.id}`)
   }, [fineTuningData])
 
   return (
@@ -68,14 +70,16 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
           <StyledMainWrapper>
             <StyledLeftColumn>
               <ListHeader
-                title={t('models')}
+                title={t('fine-tuning')}
                 onAddClick={() => navigate('/models/create-fine-tuning')}
               />
               {fineTuningData?.map((fineTuning: any) => {
                 return (
                   <MiniToolCard
                     key={fineTuning.id}
-                    onClick={() => navigate(`/models/${fineTuning.id}/edit-fine-tuning`)}
+                    onClick={() => {
+                      navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
+                    }}
                     name={fineTuning.name}
                     logo={''}
                     picked={fineTuning.id === fineTuningId}
@@ -84,6 +88,9 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
                 )
               })}
 
+              <StyledHorizontalDivider />
+
+              <ListHeader title={t('models')} />
               {models
                 ?.filter(model => !model.is_fine_tuned)
                 ?.map((model, index: number) => {
@@ -91,74 +98,21 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
                   const logoSrc = logo?.logoSrc || ''
 
                   return (
-                    <MiniToolCard key={index} onClick={() => {}} name={model.name} logo={logoSrc} />
+                    <MiniToolCard
+                      key={index}
+                      onClick={() => navigate(`/models/${model.id}`)}
+                      picked={modelId === model.id}
+                      name={model.name}
+                      logo={logoSrc}
+                    />
                   )
                 })}
             </StyledLeftColumn>
 
             <StyledChatWrapper>{outlet}</StyledChatWrapper>
           </StyledMainWrapper>
-
-          <StyledRightColumn></StyledRightColumn>
         </StyledContainer>
       </StyledAppContainer>
-      {/* <StyledTabRootWrapper>
-      {isModel && isFineTuning && (
-        <StyledTabListWrapper>
-          <TabList activeTabId={activeTab}>
-            <Tab onClick={() => handleTabClick(0, 'fine-tuning')} disabled={!isFineTuning}>
-              {t('fine-tuning')}
-            </Tab>
-            <Tab onClick={() => handleTabClick(1, 'model')} disabled={!isModel}>
-              {t('models')}
-            </Tab>
-          </TabList>
-        </StyledTabListWrapper>
-      )}
-
-      <TabsContext activeTabId={activeTab}>
-        <TabPanels noAnimation>
-          <TabPanel>{isFineTuning && <FineTunings />}</TabPanel>
-
-          <TabPanel>
-            {isModel && (
-              <StyledSectionWrapper>
-                <StyledHeaderGroup className='header_group'>
-                  <div>
-                    <StyledSectionTitle>{t('models')}</StyledSectionTitle>
-                    <StyledSectionDescription>{t('model-description')}</StyledSectionDescription>
-                  </div>
-                </StyledHeaderGroup>
-
-                <ComponentsWrapper noPadding>
-                  <StyledCardsWrapper>
-                    {models
-                      ?.filter(model => !model.is_fine_tuned)
-                      ?.map((model, index: number) => {
-                        const logo = MODEL_PROVIDER_LOGOS.find(
-                          logo => logo.provider === model.provider,
-                        )
-                        const logoSrc = logo?.logoSrc || ''
-
-                        return (
-                          <ModelCard
-                            key={index}
-                            isReadOnly={isPublic}
-                            isDisabled={false}
-                            title={model.name}
-                            author={model.provider}
-                            logoSrc={logoSrc}
-                          />
-                        )
-                      })}
-                  </StyledCardsWrapper>
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
-            )}
-          </TabPanel>
-        </TabPanels>
-      </TabsContext>
-    </StyledTabRootWrapper> */}
     </>
   )
 }

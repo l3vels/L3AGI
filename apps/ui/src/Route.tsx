@@ -101,6 +101,7 @@ import EditCampaignForm from 'plugins/contact/pages/Campaign/CampaignForm/EditCa
 import TwilioPhoneNumberSidConfirmationModal from 'modals/TwilioPhoneNumberSidConfirmationModal'
 import IntegrationListModal from 'modals/IntegrationListModal'
 import DatasourceListModal from 'modals/DatasourceListModal'
+import ModelDetails from 'pages/Models/components/ModelDetails'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -281,6 +282,7 @@ const Route = () => {
                   element={<EditFineTuningForm />}
                   key={document.location.href}
                 />
+                <Router path={':modelId'} element={<ModelDetails />} key={document.location.href} />
               </Router>
 
               <Router
