@@ -78,8 +78,6 @@ const Datasource = () => {
 
             <StyledChatWrapper>{outlet}</StyledChatWrapper>
           </StyledMainWrapper>
-
-          <StyledRightColumn></StyledRightColumn>
         </StyledContainer>
       </StyledAppContainer>
     </>

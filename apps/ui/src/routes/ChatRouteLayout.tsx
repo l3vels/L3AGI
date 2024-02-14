@@ -457,7 +457,7 @@ export const StyledContainer = styled.div`
 
   position: relative;
 
-  gap: 20px;
+  /* gap: 20px; */
 `
 export const StyledLeftColumn = styled.div<{
   isHidden?: boolean
@@ -520,6 +520,7 @@ export const StyledMainWrapper = styled.div`
   /* margin-top: 30px; */
   padding: 16px;
   padding-right: 0;
+  margin-right: 20px;
   border-radius: 16px;
   /* background: var(--background-background-tertiary, #f5f5f7); */
   background: ${({ theme }) => theme.body.componentsWrapperBg};

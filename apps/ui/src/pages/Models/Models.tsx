@@ -98,8 +98,6 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
             <StyledChatWrapper>{outlet}</StyledChatWrapper>
           </StyledMainWrapper>
-
-          <StyledRightColumn></StyledRightColumn>
         </StyledContainer>
       </StyledAppContainer>
       {/* <StyledTabRootWrapper>

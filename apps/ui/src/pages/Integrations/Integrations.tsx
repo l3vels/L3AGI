@@ -152,8 +152,6 @@ const Integrations = () => {
               )}
             </StyledChatWrapper>
           </StyledMainWrapper>
-
-          <StyledRightColumn></StyledRightColumn>
         </StyledContainer>
       </StyledAppContainer>
     </>
