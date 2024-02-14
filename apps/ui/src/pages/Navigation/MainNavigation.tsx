@@ -34,6 +34,7 @@ import { useDomainConfig } from 'utils/useDomainConfig'
 import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import Chats from 'share-ui/components/Icon/Icons/components/Chats'
 import Integrations from 'share-ui/components/Icon/Icons/components/integrations'
+import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const { getDomainConfig } = useDomainConfig()
@@ -177,7 +178,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               isActive={includes(active, 'models')}
               onClick={() => onHandleClick('/models')}
             >
-              <StyledBasicIcon size={30} />
+              <FineTuning size={30} />
               {includes(active, 'models') && <StyledCorner />}
             </StyledLi>
           </Tooltip>
