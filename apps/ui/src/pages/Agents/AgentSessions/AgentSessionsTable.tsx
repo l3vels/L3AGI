@@ -1,18 +1,22 @@
-import { ButtonSecondary, ButtonTertiary } from 'components/Button/Button'
 import Table from 'components/Table'
-import { useModal } from 'hooks'
-import { t } from 'i18next'
-import { StyledAddIcon } from 'pages/Navigation/MainNavigation'
+
+import ChatV2 from 'modals/AIChatModal/components/ChatV2'
+import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
+
 import { useColumn } from 'pages/Sessions/columnConfig'
 import { Chat } from 'pages/Sessions/useSession'
 import { useCallsService } from 'plugins/contact/services/call/useCallsService'
 import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useChatsService } from 'services/chat/useChatsService'
-import { Add } from 'share-ui/components/Icon/Icons'
+import { Close, NavigationDoubleChevronLeft } from 'share-ui/components/Icon/Icons'
+import IconButton from 'share-ui/components/IconButton/IconButton'
 import styled from 'styled-components'
 import { getAgentTypeText } from 'utils/agentUtils'
 
 const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
+  const navigate = useNavigate()
+
   const [page, setPage] = useState(1)
 
   const {
@@ -41,6 +45,10 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
     status: calls?.find((call: any) => call.chat_id === chat.id)?.status,
   }))
 
+  const location = useLocation()
+  const urlParams = new URLSearchParams(location.search)
+  const sessionId = urlParams.get('session')
+
   return (
     <StyledRoot>
       <Table
@@ -50,8 +58,18 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
         page={page}
         totalPages={totalPages}
         isLoading={chatsLoading}
-        // selectedRow={sessionId}
+        selectedRow={sessionId}
       />
+
+      <StyledChatWrapper isHidden={sessionId ? false : true}>
+        <IconButton
+          icon={() => <StyledIcon />}
+          onClick={() => navigate(`/chat?tab=sessions&agent=${agentId}`)}
+          kind={IconButton.kinds?.TERTIARY}
+          size={IconButton.sizes?.SMALL}
+        />
+        {sessionId && <ChatV2 chatSessionId={sessionId} />}
+      </StyledChatWrapper>
     </StyledRoot>
   )
 }
@@ -63,6 +81,30 @@ const StyledRoot = styled.div`
   width: 100%;
 
   display: flex;
-  flex-direction: column;
+
   gap: 20px;
+
+  position: relative;
+
+  overflow: hidden;
+`
+
+const StyledChatWrapper = styled.div<{ isHidden?: boolean }>`
+  position: absolute;
+  background: ${({ theme }) => theme.body.componentsWrapperBg};
+  top: 0;
+  right: ${({ isHidden }) => (isHidden ? '-50%' : '0')}; // Hide or show based on isHidden
+  z-index: 2;
+  width: 50%;
+  height: 100%;
+  padding: 0 10px;
+
+  transition: right 0.5s ease-in-out; // Smooth transition for the sliding effect
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+const StyledIcon = styled(NavigationDoubleChevronLeft)`
+  transform: rotate(180deg);
 `

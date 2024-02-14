@@ -6,7 +6,7 @@ import Typography from 'share-ui/components/typography/Typography'
 import styled from 'styled-components'
 import TypographySecondary from 'components/Typography/Secondary'
 
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import {
   StyledDeleteIcon,
@@ -65,6 +65,10 @@ const DateRenderer: React.FC<CellProps> = ({ value }) => {
 export const useColumn = ({ noAgent = false }: { noAgent?: boolean }) => {
   const { data: calls } = useCallsService()
 
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const query = queryParams.get('tab')
+
   const columns = [
     {
       Header: 'Name',
@@ -108,7 +112,9 @@ export const useColumn = ({ noAgent = false }: { noAgent?: boolean }) => {
 
         const navigate = useNavigate()
         const handleViewClick = (id: string) => {
-          navigate(`/sessions?chat=${id}`)
+          if (query === 'sessions')
+            navigate(`/chat?tab=sessions&agent=${data?.agent_id}&session=${id}`)
+          else navigate(`/sessions?chat=${id}`)
         }
 
         return (

@@ -375,8 +375,6 @@ const ChatRouteLayout = () => {
             </StyledLeftColumn>
           )}
 
-          <StyledDivider />
-
           {location.pathname.includes('/chat') ? (
             <StyledChatWrapper>
               <TabList size='small' activeTabId={activeTab} noBorder>
@@ -428,7 +426,10 @@ const ChatRouteLayout = () => {
 
             {agentById && <IntegrationDetails />}
             {/* {agentById && <VoiceIntegrationsDetails />} */}
-            {agentById && agentById.agent.agent_type === 'text' && <DatasourceDetails />}
+            {agentById &&
+              (agentById.agent.agent_type === 'text' || agentById.agent.agent_type === null) && (
+                <DatasourceDetails />
+              )}
 
             {/* <StyledDetailsBox>
               <TypographyPrimary
@@ -474,6 +475,10 @@ export const StyledLeftColumn = styled.div<{
   max-width: 270px;
 
   transition: margin-left 0.3s ease-in-out;
+
+  border-right: ${({ theme }) => theme.body.secondaryBorder};
+
+  /* margin: 0 16px; */
 
   ${props =>
     props.isHidden &&
@@ -547,7 +552,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
 
   cursor: pointer;
 
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   left: 0;
 
@@ -557,7 +562,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
       right: 0;
       margin-left: auto;
 
-      width: calc(15% - 200px);
+      width: calc(15% - 250px);
     `}
   ${props =>
     props.isSmallScreen &&
@@ -567,7 +572,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
 `
 const StyledMiddleArea = styled.div`
   height: 100%;
-  width: calc(30% + 200px);
+  width: calc(100% - 600px);
 
   cursor: pointer;
 
@@ -579,22 +584,15 @@ const StyledMiddleArea = styled.div`
   /* left: 0; */
 `
 
-export const StyledDivider = styled.div`
-  border-right: ${({ theme }) => theme.body.secondaryBorder};
-
-  margin: 0 16px;
-`
 export const StyledHorizontalDivider = styled.div`
   border-bottom: ${({ theme }) => theme.body.secondaryBorder};
 
-  width: 100%;
+  width: calc(100% - 16px);
+
   /* margin: 8px 0; */
 `
 const StyledTableWrapper = styled.div`
-  /* max-width: 800px; */
   padding-right: 24px;
   height: calc(100% - 50px);
   padding-top: 20px;
-  /* width: 100%;
-  max-width: calc(100% - 200px); */
 `

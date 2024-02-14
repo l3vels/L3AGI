@@ -292,7 +292,7 @@ const PaginationWrapper = styled.div`
   align-items: center;
 
   padding: 10px;
-  z-index: 100;
+  z-index: 1;
 
   background-color: #fff;
 `

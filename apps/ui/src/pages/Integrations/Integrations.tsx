@@ -16,7 +16,6 @@ import { StyledAppContainer } from 'components/Layout/LayoutStyle'
 import {
   StyledChatWrapper,
   StyledContainer,
-  StyledDivider,
   StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
@@ -128,8 +127,6 @@ const Integrations = () => {
                 )
               })}
             </StyledLeftColumn>
-
-            <StyledDivider />
 
             <StyledChatWrapper>
               {show && (

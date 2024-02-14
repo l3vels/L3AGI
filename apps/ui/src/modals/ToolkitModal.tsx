@@ -25,28 +25,20 @@ const ToolkitModal = ({ data }: ToolkitModalProps) => {
 
   return (
     <>
-      <StyledModal onClose={() => closeModal('toolkit-modal')} show backgroundColor='light'>
+      <Modal onClose={() => closeModal('toolkit-modal')} show backgroundColor='light'>
         <StyledModalBody>
           <ToolView toolSlug={data.toolSlug} />
         </StyledModalBody>
-      </StyledModal>
+      </Modal>
     </>
   )
 }
 
 export default withRenderModal('toolkit-modal')(ToolkitModal)
 
-const StyledModalBody = styled.div`
+export const StyledModalBody = styled.div`
   max-width: 1000px;
   width: 400px;
-`
-const StyledModal = styled(Modal)`
-  .components-Modal-Modal-module__overlay--OO00T {
-    backdrop-filter: unset;
-  }
-`
-export const StyledButtonWrapper = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 4px;
+
+  padding: 20px 0;
 `

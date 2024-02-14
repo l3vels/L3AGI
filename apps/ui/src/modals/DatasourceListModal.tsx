@@ -3,7 +3,6 @@ import Modal from 'share-ui/components/Modal/Modal'
 import { StyledFooter, StyledInnerWrapper, StyledModalBody } from './IntegrationListModal'
 import {
   StyledChatWrapper,
-  StyledDivider,
   StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
@@ -106,8 +105,6 @@ const DatasourceListModal = () => {
               )
             })}
           </StyledLeftColumn>
-
-          <StyledDivider />
 
           <StyledChatWrapper>
             <StyledInnerWrapper>

@@ -22,7 +22,6 @@ import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 import {
   StyledChatWrapper,
-  StyledDivider,
   StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
@@ -154,8 +153,6 @@ const IntegrationListModal = () => {
               )
             })}
           </StyledLeftColumn>
-
-          <StyledDivider />
 
           <StyledChatWrapper>
             {pickedTool && (

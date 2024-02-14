@@ -10,6 +10,7 @@ import Close from 'share-ui/components/Icon/Icons/components/Close'
 
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import { useVoiceView } from 'plugins/contact/pages/Voice/VoiceView/useVoiceView'
+import { StyledModalBody } from './ToolkitModal'
 
 type VoiceModalProps = {
   data: {
@@ -25,29 +26,12 @@ const VoiceModal = ({ data }: VoiceModalProps) => {
   if (!configsData) return <div />
 
   return (
-    <>
-      <StyledModal onClose={() => closeModal('voice-modal')} show backgroundColor='light'>
-        <StyledModalBody>
-          <VoiceView voiceSlug={data.voiceSlug} />
-        </StyledModalBody>
-      </StyledModal>
-    </>
+    <Modal onClose={() => closeModal('voice-modal')} show backgroundColor='light'>
+      <StyledModalBody>
+        <VoiceView voiceSlug={data.voiceSlug} />
+      </StyledModalBody>
+    </Modal>
   )
 }
 
 export default withRenderModal('voice-modal')(VoiceModal)
-
-const StyledModalBody = styled.div`
-  max-width: 1000px;
-  width: 400px;
-`
-const StyledModal = styled(Modal)`
-  .components-Modal-Modal-module__overlay--OO00T {
-    backdrop-filter: unset;
-  }
-`
-export const StyledButtonWrapper = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 4px;
-`
