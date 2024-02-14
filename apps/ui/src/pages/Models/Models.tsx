@@ -44,7 +44,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const outlet = useOutlet()
   const params = useParams()
 
-  const { fineTuningId } = params
+  const { fineTuningId, modelId } = params
 
   const { fineTuningData, deleteFineTuningHandler } = useFineTuning()
 
@@ -60,6 +60,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
 
   useEffect(() => {
     if (fineTuningData?.length > 0) navigate(`/models/${fineTuningData?.[0]?.id}/edit-fine-tuning`)
+    else if (models?.length > 0) navigate(`/models/${models?.[0]?.id}`)
   }, [fineTuningData])
 
   return (
@@ -76,7 +77,9 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
                 return (
                   <MiniToolCard
                     key={fineTuning.id}
-                    onClick={() => navigate(`/models/${fineTuning.id}/edit-fine-tuning`)}
+                    onClick={() => {
+                      navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
+                    }}
                     name={fineTuning.name}
                     logo={''}
                     picked={fineTuning.id === fineTuningId}
@@ -95,7 +98,13 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
                   const logoSrc = logo?.logoSrc || ''
 
                   return (
-                    <MiniToolCard key={index} onClick={() => {}} name={model.name} logo={logoSrc} />
+                    <MiniToolCard
+                      key={index}
+                      onClick={() => navigate(`/models/${model.id}`)}
+                      picked={modelId === model.id}
+                      name={model.name}
+                      logo={logoSrc}
+                    />
                   )
                 })}
             </StyledLeftColumn>
