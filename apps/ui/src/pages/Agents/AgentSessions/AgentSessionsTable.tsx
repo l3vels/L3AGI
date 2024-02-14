@@ -97,13 +97,15 @@ const StyledChatWrapper = styled.div<{ isHidden?: boolean }>`
   z-index: 2;
   width: 50%;
   height: 100%;
-  padding: 0 10px;
+  padding: 10px;
 
   transition: right 0.5s ease-in-out; // Smooth transition for the sliding effect
 
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  border: ${({ theme }) => theme.body.border};
 `
 const StyledIcon = styled(NavigationDoubleChevronLeft)`
   transform: rotate(180deg);
