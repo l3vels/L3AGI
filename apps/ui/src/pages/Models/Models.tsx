@@ -38,6 +38,8 @@ import ListHeader from 'routes/components/ListHeader'
 import MiniToolCard from 'components/ChatCards/MiniToolCard'
 import { useFineTuning } from './FineTuning/useFineTuning'
 
+import tuningIcon from 'assets/icons/tuning.png'
+
 const Models = ({ isPublic }: { isPublic?: boolean }) => {
   const { t } = useTranslation()
 
@@ -81,7 +83,7 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
                       navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
                     }}
                     name={fineTuning.name}
-                    logo={''}
+                    logo={tuningIcon}
                     picked={fineTuning.id === fineTuningId}
                     onDeleteClick={() => deleteFineTuningHandler(fineTuning.id)}
                   />
