@@ -31,19 +31,23 @@ import ListHeader from 'routes/components/ListHeader'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 import MiniToolCard from 'components/ChatCards/MiniToolCard'
 import { useEffect } from 'react'
+import { useGroups } from 'plugins/contact/pages/Group/useGroups'
 
 const Datasource = () => {
   const outlet = useOutlet()
   const params = useParams()
 
-  const { datasourceId } = params
+  const { datasourceId, groupId } = params
 
   const { datasources, deleteDatasourceHandler } = useDatasource()
+
+  const { groups } = useGroups()
 
   const navigate = useNavigate()
 
   useEffect(() => {
     if (datasources?.length > 0) navigate(`/datasources/${datasources?.[0].id}/edit-datasource`)
+    else if (groups?.length > 0) navigate(`/datasources/${groups?.[0].id}/edit-group`)
   }, [datasources])
 
   return (
@@ -67,6 +71,10 @@ const Datasource = () => {
                     label: `Postgres`,
                     function: () => navigate('/datasources/create-datasource?type=Postgres'),
                   },
+                  {
+                    label: `${t('contact')} ${t('group')}`,
+                    function: () => navigate('/datasources/create-group'),
+                  },
                 ]}
               />
               {datasources?.map((datasource: any) => {
@@ -84,6 +92,19 @@ const Datasource = () => {
                     logo={imageSrc}
                     picked={datasource.id === datasourceId}
                     onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
+                  />
+                )
+              })}
+
+              {groups?.map((group: any) => {
+                return (
+                  <MiniToolCard
+                    key={group.id}
+                    onClick={() => navigate(`/datasources/${group.id}/edit-group`)}
+                    name={group.name}
+                    logo={''}
+                    picked={group.id === groupId}
+                    onDeleteClick={() => deleteDatasourceHandler(group.id)}
                   />
                 )
               })}

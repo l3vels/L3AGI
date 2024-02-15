@@ -27,28 +27,23 @@ const EditGroupForm = () => {
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle>{`${t('edit-group')}`}</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-            Here are all your agents, managing tasks and operations.
-          </StyledSectionDescription> */}
           </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              disabled={isLoading}
-              size={Button.sizes?.SMALL}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <GroupForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <GroupForm formik={formik} />
+        </StyledFormWrapper>
+
+        <StyledButtonWrapper>
+          <BackButton />
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            disabled={isLoading}
+            size={Button.sizes?.MEDIUM}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )
