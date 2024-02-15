@@ -93,11 +93,12 @@ const StyledChatWrapper = styled.div<{ isHidden?: boolean }>`
   position: absolute;
   background: ${({ theme }) => theme.body.componentsWrapperBg};
   top: 0;
+
   right: ${({ isHidden }) => (isHidden ? '-50%' : '0')}; // Hide or show based on isHidden
   z-index: 2;
   width: 50%;
-  height: 100%;
-  padding: 10px;
+  height: calc(100% - 50px);
+  padding: 10px 20px;
 
   transition: right 0.5s ease-in-out; // Smooth transition for the sliding effect
 
@@ -106,6 +107,7 @@ const StyledChatWrapper = styled.div<{ isHidden?: boolean }>`
   gap: 10px;
 
   border: ${({ theme }) => theme.body.border};
+  border-radius: 8px;
 `
 const StyledIcon = styled(NavigationDoubleChevronLeft)`
   transform: rotate(180deg);

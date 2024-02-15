@@ -19,8 +19,8 @@ import { useEditCampaign } from '../useEditCampaign'
 import CampaignForm from './CampaignForm'
 import { t } from 'i18next'
 
-const EditCampaignForm = () => {
-  const { isLoading, formik } = useEditCampaign()
+const EditCampaignForm = ({ campaignId }: { campaignId?: string }) => {
+  const { isLoading, formik } = useEditCampaign({ incomingCampaignId: campaignId })
 
   return (
     <FormikProvider value={formik}>
@@ -29,24 +29,21 @@ const EditCampaignForm = () => {
           <div>
             <StyledSectionTitle>{`${t('edit-campaign')}`}</StyledSectionTitle>
           </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              disabled={isLoading}
-              size={Button.sizes?.SMALL}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <CampaignForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <CampaignForm formik={formik} />
+        </StyledFormWrapper>
+
+        <StyledButtonWrapper>
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            disabled={isLoading}
+            size={Button.sizes?.MEDIUM}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

@@ -1,16 +1,22 @@
+import { ButtonSecondary } from 'components/Button/Button'
 import { StyledIconWrapper } from 'components/ChatCards/TeamChatCard'
 import Table from 'components/Table'
 import TableActionButtons from 'components/Table/components/TableActionButtons'
+import { useModal } from 'hooks'
+import { t } from 'i18next'
 import { StyledOpenIcon } from 'pages/Sessions/columnConfig'
 import { useCampaigns } from 'plugins/contact/pages/Campaign/useCampaigns'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import IconButton from 'share-ui/components/IconButton/IconButton'
+import styled from 'styled-components'
 
 const AgentCampaignTable = ({ agentId }: { agentId: string }) => {
   const navigate = useNavigate()
 
   const { tableData, deleteCampaignHandler } = useCampaigns()
+
+  const { openModal } = useModal()
 
   const filteredData = tableData?.filter((item: any) => item.agentId === agentId)
 
@@ -66,7 +72,9 @@ const AgentCampaignTable = ({ agentId }: { agentId: string }) => {
           return (
             <TableActionButtons
               onDeleteClick={() => deleteCampaignHandler(cell.value)}
-              onEditClick={() => navigate(`/schedules/${cell.value}/edit-campaign`)}
+              onEditClick={() =>
+                openModal({ name: 'edit-campaign-modal', data: { campaignId: cell.value } })
+              }
               customActions={
                 <IconButton
                   onClick={() => navigate(`/sessions?campaign=${cell.value}`)}
@@ -88,7 +96,32 @@ const AgentCampaignTable = ({ agentId }: { agentId: string }) => {
     [],
   )
 
-  return <Table columns={columns} data={filteredData} />
+  return (
+    <StyledRoot>
+      <StyledButtonWrapper>
+        <ButtonSecondary
+          onClick={() => openModal({ name: 'create-campaign-modal', data: { agentId } })}
+        >
+          {t('add-campaign')}
+        </ButtonSecondary>
+      </StyledButtonWrapper>
+      <Table columns={columns} data={filteredData} />
+    </StyledRoot>
+  )
 }
 
 export default AgentCampaignTable
+
+export const StyledRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  height: 100%;
+  position: relative;
+`
+export const StyledButtonWrapper = styled.div`
+  position: absolute;
+  top: -50px;
+  right: 0;
+`

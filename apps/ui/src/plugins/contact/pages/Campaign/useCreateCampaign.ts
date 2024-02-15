@@ -6,10 +6,13 @@ import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { campaignValidationSchema } from './CampaignForm/useCampaignForm'
 import { getDateTimeFromDate } from './Campaign.utils'
+import { useModal } from 'hooks'
 
-export const useCreateCampaign = () => {
+export const useCreateCampaign = ({ agentId }: { agentId?: string }) => {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+
+  const { closeModal } = useModal()
 
   const { setToast } = useContext(ToastContext)
 
@@ -20,7 +23,7 @@ export const useCreateCampaign = () => {
 
   const initialValues = {
     campaign_name: null,
-    campaign_agent_id: null,
+
     campaign_group_id: null,
     campaign_type: 'Outbound',
     campaign_start_date: initialStartDate,
@@ -37,7 +40,7 @@ export const useCreateCampaign = () => {
     try {
       const campaignInput = {
         name: values.campaign_name,
-        agent_id: values.campaign_agent_id,
+        agent_id: agentId || '',
         group_id: values.campaign_group_id,
         type: values.campaign_type,
         start_date: values.campaign_start_date,
@@ -56,7 +59,7 @@ export const useCreateCampaign = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/schedules?tab=campaign')
+      closeModal('create-campaign-modal')
     } catch (e) {
       setToast({
         message: 'Failed To Add Campaign!',

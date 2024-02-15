@@ -51,7 +51,7 @@ export const useEditContact = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/contacts')
+      navigate(`/datasources/${contactById?.group_id}/edit-group`)
     } catch (e) {
       setToast({
         message: 'Failed To Update Contact!',

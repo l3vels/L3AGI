@@ -102,6 +102,10 @@ import TwilioPhoneNumberSidConfirmationModal from 'modals/TwilioPhoneNumberSidCo
 import IntegrationListModal from 'modals/IntegrationListModal'
 import DatasourceListModal from 'modals/DatasourceListModal'
 import ModelDetails from 'pages/Models/components/ModelDetails'
+import CreateCampaignModal from 'modals/CreateCampaignModal'
+import EditCampaignModal from 'modals/EditCampaignModal'
+import CreateScheduleModal from 'modals/CreateScheduleModal'
+import EditScheduleModal from 'modals/EditScheduleModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -230,6 +234,26 @@ const Route = () => {
                 <Router
                   path={':datasourceId/edit-datasource'}
                   element={<EditDatasourceForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={'create-group'}
+                  element={<CreateGroupForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':groupId/edit-group'}
+                  element={<EditGroupForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':groupId/edit-group/create-contact'}
+                  element={<CreateContactForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':groupId/edit-group/:contactId/edit-contact'}
+                  element={<EditContactForm />}
                   key={document.location.href}
                 />
               </Router>
@@ -415,6 +439,10 @@ const Route = () => {
         <ContactListModal />
         <IntegrationListModal />
         <DatasourceListModal />
+        <CreateCampaignModal />
+        <EditCampaignModal />
+        <CreateScheduleModal />
+        <EditScheduleModal />
         <TwilioPhoneNumberSidConfirmationModal />
 
         <CommandMenu

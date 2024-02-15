@@ -150,8 +150,8 @@ const ChatRouteLayout = () => {
   const defaultActiveTab = () => {
     if (tabQuery === 'playground') return 0
     if (tabQuery === 'sessions') return 1
-    if (tabQuery === 'campaigns') return 2
-    if (tabQuery === 'settings') return 3
+    if (tabQuery === 'settings') return 2
+    if (tabQuery === 'campaigns') return 3
   }
 
   const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
@@ -169,8 +169,8 @@ const ChatRouteLayout = () => {
 
     if (tabQuery === 'playground') return setActiveTab(0)
     if (tabQuery === 'sessions') return setActiveTab(1)
-    if (tabQuery === 'campaigns') return setActiveTab(2)
-    if (tabQuery === 'settings') return setActiveTab(3)
+    if (tabQuery === 'settings') return setActiveTab(2)
+    if (tabQuery === 'campaigns') return setActiveTab(3)
   }, [tabQuery])
 
   if (!user && !chatId) return <Navigate to='/' />
@@ -335,13 +335,13 @@ const ChatRouteLayout = () => {
                 <Tab onClick={() => handleTabClick(1, 'sessions')} disabled={teamId ? true : false}>
                   {t('sessions')}
                 </Tab>
+                <Tab onClick={() => handleTabClick(3, 'settings')}>{t('settings')}</Tab>
                 <Tab
                   onClick={() => handleTabClick(2, 'campaigns')}
                   disabled={teamId ? true : false}
                 >
                   {t('campaigns')}
                 </Tab>
-                <Tab onClick={() => handleTabClick(3, 'settings')}>{t('settings')}</Tab>
               </TabList>
 
               <StyledHorizontalDivider />
@@ -361,16 +361,16 @@ const ChatRouteLayout = () => {
                   </TabPanel>
 
                   <TabPanel>
+                    {agentId && <EditAgentForm />}
+                    {teamId && <EditTeamOfAgentsForm />}
+                  </TabPanel>
+
+                  <TabPanel>
                     {agentId && (
                       <StyledTableWrapper>
                         <CombinedCampaignTables agentId={agentId} />
                       </StyledTableWrapper>
                     )}
-                  </TabPanel>
-
-                  <TabPanel>
-                    {agentId && <EditAgentForm />}
-                    {teamId && <EditTeamOfAgentsForm />}
                   </TabPanel>
                 </TabPanels>
               </TabsContext>
@@ -382,31 +382,17 @@ const ChatRouteLayout = () => {
 
         {user && (
           <StyledRightColumn isHidden={!showInfo && expand}>
-            {/* <ChatMembers
-              agentById={agentById || chatById?.agent}
-              teamOfAgents={teamOfAgents}
-              voiceUrl={chatById?.voice_url}p
-              call={call}
-            /> */}
             {agentById && <AgentVIewDetailBox agentData={agentById} />}
             {teamOfAgents && <TeamOfAgentsDetailsBox teamData={teamOfAgents} />}
 
             <CopyScript />
 
             {agentById && <IntegrationDetails />}
-            {/* {agentById && <VoiceIntegrationsDetails />} */}
+
             {agentById &&
               (agentById.agent.agent_type === 'text' || agentById.agent.agent_type === null) && (
                 <DatasourceDetails />
               )}
-
-            {/* <StyledDetailsBox>
-              <TypographyPrimary
-                value={t('datasources')}
-                type={Typography.types.LABEL}
-                size={Typography.sizes.md}
-              />
-            </StyledDetailsBox> */}
           </StyledRightColumn>
         )}
       </StyledContainer>

@@ -117,7 +117,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )}
 
-        {isSchedule && (
+        {/* {isSchedule && (
           <Tooltip content={t('schedule')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'schedules')}
@@ -126,7 +126,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               <StyledMyWeekIcon size={30} />
             </StyledLi>
           </Tooltip>
-        )}
+        )} */}
 
         {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
         <StyledValueIcon>
@@ -135,7 +135,7 @@ const MainNavigation = ({ user }: { user: any }) => {
         <span>Agents</span>
       </StyledLi> */}
 
-        {isContact && (
+        {/* {isContact && (
           <Tooltip content={t('contact')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'contacts')}
@@ -144,7 +144,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               <StyledMobileIcon size={30} />
             </StyledLi>
           </Tooltip>
-        )}
+        )} */}
 
         {isDatasource && (
           <Tooltip content={t('datasource')} position={Tooltip.positions.LEFT}>
@@ -184,7 +184,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )}
 
-        {isDiscover && (
+        {/* {isDiscover && (
           <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'discover')}
@@ -193,7 +193,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               <StyledSearchOutlineIcon size={40} />
             </StyledLi>
           </Tooltip>
-        )}
+        )} */}
 
         {/* <StyledSpace /> */}
       </StyledUl>

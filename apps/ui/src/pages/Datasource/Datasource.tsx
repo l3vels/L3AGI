@@ -22,6 +22,7 @@ import { StyledAppContainer } from 'components/Layout/LayoutStyle'
 import {
   StyledChatWrapper,
   StyledContainer,
+  StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
   StyledRightColumn,
@@ -31,19 +32,25 @@ import ListHeader from 'routes/components/ListHeader'
 import { Navigate, useLocation, useNavigate, useOutlet, useParams } from 'react-router-dom'
 import MiniToolCard from 'components/ChatCards/MiniToolCard'
 import { useEffect } from 'react'
+import { useGroups } from 'plugins/contact/pages/Group/useGroups'
+
+import contactIcon from 'assets/icons/contact.png'
 
 const Datasource = () => {
   const outlet = useOutlet()
   const params = useParams()
 
-  const { datasourceId } = params
+  const { datasourceId, groupId } = params
 
   const { datasources, deleteDatasourceHandler } = useDatasource()
+
+  const { groups, deleteGroupHandler } = useGroups()
 
   const navigate = useNavigate()
 
   useEffect(() => {
     if (datasources?.length > 0) navigate(`/datasources/${datasources?.[0].id}/edit-datasource`)
+    else if (groups?.length > 0) navigate(`/datasources/${groups?.[0].id}/edit-group`)
   }, [datasources])
 
   return (
@@ -53,7 +60,7 @@ const Datasource = () => {
           <StyledMainWrapper>
             <StyledLeftColumn>
               <ListHeader
-                title={t('datasource')}
+                title={t('datasources')}
                 multiOption={[
                   {
                     label: `File`,
@@ -84,6 +91,25 @@ const Datasource = () => {
                     logo={imageSrc}
                     picked={datasource.id === datasourceId}
                     onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
+                  />
+                )
+              })}
+
+              <StyledHorizontalDivider />
+
+              <ListHeader
+                title={`${t('contact')} ${t('groups')}`}
+                onAddClick={() => navigate('/datasources/create-group')}
+              />
+              {groups?.map((group: any) => {
+                return (
+                  <MiniToolCard
+                    key={group.id}
+                    onClick={() => navigate(`/datasources/${group.id}/edit-group`)}
+                    name={group.name}
+                    logo={contactIcon}
+                    picked={group.id === groupId}
+                    onDeleteClick={() => deleteGroupHandler(group.id)}
                   />
                 )
               })}

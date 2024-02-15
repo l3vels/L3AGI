@@ -17,14 +17,14 @@ const CampaignForm = ({ formik }: { formik: any }) => {
         <StyledInputWrapper>
           <FormikTextField name='campaign_name' placeholder='Name' label='Name' size='small' />
 
-          <AgentDropdown
+          {/* <AgentDropdown
             label={'Agent'}
             fieldName={'campaign_agent_id'}
             setFieldValue={setFieldValue}
             fieldValue={campaign_agent_id}
             options={agentOptions}
             optionSize={'small'}
-          />
+          /> */}
           <AgentDropdown
             label={'Group'}
             fieldName={'campaign_group_id'}

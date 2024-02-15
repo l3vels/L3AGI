@@ -28,28 +28,23 @@ const CreateGroupForm = () => {
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle>{`${t('add-group')}`}</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-            Here is your datasource, a collection of databases, APIs, files, and more.
-          </StyledSectionDescription> */}
           </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              size={Button.sizes?.SMALL}
-              disabled={isLoading}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <GroupForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <GroupForm formik={formik} />
+        </StyledFormWrapper>
+
+        <StyledButtonWrapper>
+          <BackButton />
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            size={Button.sizes?.MEDIUM}
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

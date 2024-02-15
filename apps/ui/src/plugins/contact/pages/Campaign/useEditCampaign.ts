@@ -7,19 +7,24 @@ import { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { campaignValidationSchema } from './CampaignForm/useCampaignForm'
 import { getDateTime } from './Campaign.utils'
+import { useModal } from 'hooks'
 
-export const useEditCampaign = () => {
+export const useEditCampaign = ({ incomingCampaignId }: { incomingCampaignId?: string }) => {
   const { setToast } = useContext(ToastContext)
+
+  const { closeModal } = useModal()
 
   const navigate = useNavigate()
   const params = useParams()
 
   const { campaignId } = params
 
+  const finalCampaignId = campaignId || incomingCampaignId || ''
+
   const [isLoading, setIsLoading] = useState(false)
 
   const { refetch: refetchCampaigns } = useCampaignsService()
-  const { data: campaignById } = useCampaignByIdService({ id: campaignId || '' })
+  const { data: campaignById } = useCampaignByIdService({ id: finalCampaignId })
 
   const [updateCampaign] = useUpdateCampaignService()
 
@@ -28,7 +33,7 @@ export const useEditCampaign = () => {
   const defaultValues = {
     campaign_name: campaignById?.name,
     campaign_type: campaignById?.type,
-    campaign_agent_id: campaignById?.agent_id,
+
     campaign_group_id: campaignById?.group_id,
     campaign_start_date: initialStartDate,
     campaign_retry_attempts: campaignById?.retry_attempts,
@@ -43,7 +48,7 @@ export const useEditCampaign = () => {
     try {
       const updatedValues = {
         name: values.campaign_name,
-        agent_id: values.campaign_agent_id,
+        agent_id: campaignById?.agent_id,
         group_id: values.campaign_group_id,
         type: values.campaign_type,
         start_date: values.campaign_start_date,
@@ -54,7 +59,7 @@ export const useEditCampaign = () => {
         timezone: values.campaign_timezone,
       }
 
-      await updateCampaign(campaignId || '', updatedValues)
+      await updateCampaign(finalCampaignId, updatedValues)
 
       await refetchCampaigns()
 
@@ -63,7 +68,7 @@ export const useEditCampaign = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/schedules?tab=campaign')
+      closeModal('edit-campaign-modal')
     } catch (e) {
       setToast({
         message: 'Failed To Update Campaign!',

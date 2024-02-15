@@ -15,8 +15,8 @@ import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 import CampaignForm from './CampaignForm'
 
-const CreateCampaignForm = () => {
-  const { formik, isLoading } = useCreateCampaign()
+const CreateCampaignForm = ({ agentId }: { agentId?: string }) => {
+  const { formik, isLoading } = useCreateCampaign({ agentId: agentId })
 
   return (
     <FormikProvider value={formik}>
@@ -25,24 +25,21 @@ const CreateCampaignForm = () => {
           <div>
             <StyledSectionTitle>{`${t('add-campaign')}`}</StyledSectionTitle>
           </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              size={Button.sizes?.SMALL}
-              disabled={isLoading}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <CampaignForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <CampaignForm formik={formik} />
+        </StyledFormWrapper>
+
+        <StyledButtonWrapper>
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            size={Button.sizes?.MEDIUM}
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )
