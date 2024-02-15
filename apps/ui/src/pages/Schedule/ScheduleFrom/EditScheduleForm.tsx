@@ -17,8 +17,8 @@ import { useEditSchedule } from '../useEditSchedule'
 import ScheduleForm from './ScheduleForm'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 
-const EditScheduleForm = () => {
-  const { formik, isLoading } = useEditSchedule()
+const EditScheduleForm = ({ scheduleId }: { scheduleId: string }) => {
+  const { formik, isLoading } = useEditSchedule({ incomingScheduleId: scheduleId })
 
   return (
     <FormikProvider value={formik}>
@@ -26,28 +26,20 @@ const EditScheduleForm = () => {
         <StyledHeaderGroup className='header_group'>
           <div>
             <StyledSectionTitle>Edit Schedule</StyledSectionTitle>
-            {/* <StyledSectionDescription>
-        Here are all your agents, managing tasks and operations.
-      </StyledSectionDescription> */}
           </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={formik?.handleSubmit}
-              disabled={isLoading}
-              size={Button.sizes?.SMALL}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
         </StyledHeaderGroup>
-
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <ScheduleForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <ScheduleForm formik={formik} />
+        </StyledFormWrapper>{' '}
+        <StyledButtonWrapper>
+          <ButtonPrimary
+            onClick={formik?.handleSubmit}
+            disabled={isLoading}
+            size={Button.sizes?.MEDIUM}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

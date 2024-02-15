@@ -9,6 +9,7 @@ import { useSchedulesService } from 'services/schedule/useSchedulesService'
 import { useUpdateScheduleService } from 'services/schedule/useUpdateScheduleService'
 import { scheduleValidationSchema } from 'utils/validationsSchema'
 import { getDateTime } from './Schedule.utils'
+import { useModal } from 'hooks'
 
 interface ScheduleFormValues {
   name: string
@@ -29,19 +30,23 @@ interface ScheduleFormValues {
   tasks: string[]
 }
 
-export const useEditSchedule = () => {
+export const useEditSchedule = ({ incomingScheduleId }: { incomingScheduleId?: string }) => {
   const { setToast } = useContext(ToastContext)
+
+  const { closeModal } = useModal()
 
   const navigate = useNavigate()
   const params = useParams()
 
   const { scheduleId } = params
 
+  const finalScheduleId = scheduleId || incomingScheduleId || ''
+
   const [isLoading, setIsLoading] = useState(false)
 
   const { refetch: refetchSchedules } = useSchedulesService()
 
-  const { data: scheduleById } = useScheduleByIdService({ id: scheduleId })
+  const { data: scheduleById } = useScheduleByIdService({ id: finalScheduleId })
 
   const [updateSchedule] = useUpdateScheduleService()
 
@@ -77,14 +82,14 @@ export const useEditSchedule = () => {
   }
 
   const handleSubmit = async (values: ScheduleFormValues) => {
-    if (!scheduleId) return
+    if (!finalScheduleId) return
 
     setIsLoading(true)
 
     const { agent_type } = values
 
     try {
-      await updateSchedule(scheduleId, {
+      await updateSchedule(finalScheduleId, {
         schedule: {
           name: values.name,
           description: values.description,
@@ -114,7 +119,7 @@ export const useEditSchedule = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/schedules')
+      closeModal('edit-schedule-modal')
     } catch (e) {
       setToast({
         message: 'Failed To Update Schedule!',

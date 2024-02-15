@@ -79,7 +79,9 @@ const AgentScheduleTable = ({ agentId }: { agentId: string }) => {
           return (
             <TableActionButtons
               onDeleteClick={() => deleteScheduleHandler(cell.value)}
-              onEditClick={() => navigate(`/schedules/${cell.value}/edit-schedule`)}
+              onEditClick={() =>
+                openModal({ name: 'edit-schedule-modal', data: { scheduleId: cell.value } })
+              }
             />
           )
         },
