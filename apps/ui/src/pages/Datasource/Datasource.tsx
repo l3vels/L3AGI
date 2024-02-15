@@ -34,6 +34,8 @@ import MiniToolCard from 'components/ChatCards/MiniToolCard'
 import { useEffect } from 'react'
 import { useGroups } from 'plugins/contact/pages/Group/useGroups'
 
+import contactIcon from 'assets/icons/contact.png'
+
 const Datasource = () => {
   const outlet = useOutlet()
   const params = useParams()
@@ -105,7 +107,7 @@ const Datasource = () => {
                     key={group.id}
                     onClick={() => navigate(`/datasources/${group.id}/edit-group`)}
                     name={group.name}
-                    logo={''}
+                    logo={contactIcon}
                     picked={group.id === groupId}
                     onDeleteClick={() => deleteGroupHandler(group.id)}
                   />
