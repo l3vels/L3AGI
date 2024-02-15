@@ -41,7 +41,7 @@ const Datasource = () => {
 
   const { datasources, deleteDatasourceHandler } = useDatasource()
 
-  const { groups } = useGroups()
+  const { groups, deleteGroupHandler } = useGroups()
 
   const navigate = useNavigate()
 
@@ -104,7 +104,7 @@ const Datasource = () => {
                     name={group.name}
                     logo={''}
                     picked={group.id === groupId}
-                    onDeleteClick={() => deleteDatasourceHandler(group.id)}
+                    onDeleteClick={() => deleteGroupHandler(group.id)}
                   />
                 )
               })}

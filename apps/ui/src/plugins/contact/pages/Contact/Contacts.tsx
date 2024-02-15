@@ -1,22 +1,11 @@
 import styled from 'styled-components'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { ButtonPrimary } from 'components/Button/Button'
-import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
-import Tab from 'share-ui/components/Tabs/Tab/Tab'
-import TabList from 'share-ui/components/Tabs/TabList/TabList'
-import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
-import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
-import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
-
-import {
-  StyledHeaderGroup,
-  StyledSectionTitle,
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
+import { StyledHeaderGroup, StyledSectionWrapper } from 'pages/Home/homeStyle.css'
 import { useContacts } from './useContacts'
 
 import {
@@ -24,16 +13,14 @@ import {
   StyledEditIcon,
 } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import Table from 'components/Table'
-import Groups, { StyledTableButtons } from '../Group/Groups'
+import { StyledTableButtons } from '../Group/Groups'
 
 import Microphone from 'share-ui/components/Icon/Icons/components/Microphone'
 
 import { useAgents } from 'pages/Agents/useAgents'
 
-import { useContactForm } from './ContactForm/useContactForm'
-import { StyledTabListWrapper, StyledTabRootWrapper } from 'styles/tabStyles.css'
 import { t } from 'i18next'
 import { StyledButtonsWrapper } from 'styles/globalStyle.css'
 import { StyledMobileIcon } from 'pages/Navigation/MainNavigation'
@@ -43,8 +30,10 @@ import { isVoiceAgent } from 'utils/agentUtils'
 const Contacts = () => {
   const navigate = useNavigate()
 
+  const params = useParams()
+  const { groupId } = params
+
   const { contacts, deleteContactHandler, handleCall, handleEndCall } = useContacts()
-  const { groupOptions } = useContactForm()
 
   const { agentsData } = useAgents()
 
@@ -111,20 +100,20 @@ const Contacts = () => {
         accessor: 'email',
         width: 200,
       },
-      {
-        Header: 'Group',
-        accessor: 'group_id',
-        width: 100,
-        Cell: ({ cell }: any) => {
-          return (
-            <span>
-              {groupOptions
-                ?.filter((group: any) => group.value === cell.value)
-                .map((group: any) => group.label)}
-            </span>
-          )
-        },
-      },
+      // {
+      //   Header: 'Group',
+      //   accessor: 'group_id',
+      //   width: 100,
+      //   Cell: ({ cell }: any) => {
+      //     return (
+      //       <span>
+      //         {groupOptions
+      //           ?.filter((group: any) => group.value === cell.value)
+      //           .map((group: any) => group.label)}
+      //       </span>
+      //     )
+      //   },
+      // },
       {
         Header: 'Description',
         accessor: 'description',
@@ -146,7 +135,9 @@ const Contacts = () => {
               />
 
               <IconButton
-                onClick={() => navigate(`/contacts/${cell.value}/edit-contact`)}
+                onClick={() =>
+                  navigate(`/datasources/${groupId}/edit-group/${cell.value}/edit-contact`)
+                }
                 icon={() => <StyledEditIcon />}
                 size={IconButton.sizes?.SMALL}
                 kind={IconButton.kinds?.TERTIARY}
@@ -160,69 +151,28 @@ const Contacts = () => {
     [agentsData, handleEndCall],
   )
 
-  const location = useLocation()
-  const urlParams = new URLSearchParams(location.search)
-  const tabQuery = urlParams.get('tab')
-
-  const defaultActiveTab = () => {
-    if (tabQuery === 'contact') return 0
-    if (tabQuery === 'group') return 1
-  }
-
-  const [activeTab, setActiveTab] = useState(defaultActiveTab || 0)
-  const handleTabClick = (tabId: number, tabName: string) => {
-    setActiveTab(tabId)
-    navigate(`/contacts?tab=${tabName}`)
-  }
+  const filteredContacts = gridData?.filter((data: any) => data.group_id === groupId)
 
   return (
-    <StyledTabRootWrapper>
-      <StyledTabListWrapper>
-        <TabList activeTabId={activeTab}>
-          <Tab onClick={() => handleTabClick(0, 'contact')}>{`${t('contacts')}`}</Tab>
-          <Tab onClick={() => handleTabClick(1, 'group')}>{`${t('groups')}`}</Tab>
-        </TabList>
-      </StyledTabListWrapper>
+    <StyledSectionWrapper>
+      <StyledHeaderGroup className='header_group'>
+        <StyledButtonsWrapper>
+          <ButtonPrimary onClick={() => navigate('/contacts/import-contacts')} size={'small'}>
+            {t('import-contacts')}
+          </ButtonPrimary>
+          <ButtonPrimary
+            onClick={() => navigate(`/datasources/${groupId}/edit-group/create-contact`)}
+            size={'small'}
+          >
+            {t('add-contact')}
+          </ButtonPrimary>
+        </StyledButtonsWrapper>
+      </StyledHeaderGroup>
 
-      <TabsContext activeTabId={activeTab}>
-        <TabPanels noAnimation>
-          <TabPanel>
-            <StyledSectionWrapper>
-              <StyledHeaderGroup className='header_group'>
-                <div>
-                  <StyledSectionTitle>{`${t('contacts')}`}</StyledSectionTitle>
-                </div>
-
-                <StyledButtonsWrapper>
-                  <ButtonPrimary
-                    onClick={() => navigate('/contacts/import-contacts')}
-                    size={'small'}
-                  >
-                    {t('import-contacts')}
-                  </ButtonPrimary>
-                  <ButtonPrimary
-                    onClick={() => navigate('/contacts/create-contact')}
-                    size={'small'}
-                  >
-                    {t('add-contact')}
-                  </ButtonPrimary>
-                </StyledButtonsWrapper>
-              </StyledHeaderGroup>
-
-              <ComponentsWrapper noPadding>
-                <StyledTableWrapper>
-                  <Table columns={columns} data={gridData} />
-                </StyledTableWrapper>
-              </ComponentsWrapper>
-            </StyledSectionWrapper>
-          </TabPanel>
-
-          <TabPanel>
-            <Groups />
-          </TabPanel>
-        </TabPanels>
-      </TabsContext>
-    </StyledTabRootWrapper>
+      <StyledTableWrapper>
+        <Table columns={columns} data={filteredContacts} />
+      </StyledTableWrapper>
+    </StyledSectionWrapper>
   )
 }
 

@@ -5,6 +5,7 @@ import { useContactForm } from './useContactForm'
 import styled from 'styled-components'
 import { t } from 'i18next'
 import TextareaFormik from 'components/TextareaFormik'
+import { StyledFormInputWrapper, StyledFormRoot } from 'styles/formStyles.css'
 
 const ContactForm = ({ formik }: { formik: any }) => {
   const { groupOptions } = useContactForm()
@@ -13,33 +14,31 @@ const ContactForm = ({ formik }: { formik: any }) => {
   const { contact_description, contact_group_id } = values
 
   return (
-    <StyledRoot>
-      <StyledForm>
-        <StyledInputWrapper>
-          <FormikTextField name='contact_name' placeholder='Name' label='Name' size='small' />
+    <StyledFormRoot>
+      <StyledFormInputWrapper>
+        <FormikTextField name='contact_name' placeholder='Name' label='Name' size='small' />
 
-          <FormikTextField name='contact_phone' placeholder='Phone' label='Phone' size='small' />
+        <FormikTextField name='contact_phone' placeholder='Phone' label='Phone' size='small' />
 
-          <AgentDropdown
+        {/* <AgentDropdown
             label={'Group'}
             fieldName={'contact_group_id'}
             setFieldValue={setFieldValue}
             fieldValue={contact_group_id}
             options={groupOptions}
             optionSize={'small'}
-          />
+          /> */}
 
-          <FormikTextField name='contact_email' placeholder='Email' label='Email' size='small' />
+        <FormikTextField name='contact_email' placeholder='Email' label='Email' size='small' />
 
-          <TextareaFormik
-            setFieldValue={setFieldValue}
-            label={t('description')}
-            value={contact_description}
-            fieldName={'contact_description'}
-          />
-        </StyledInputWrapper>
-      </StyledForm>
-    </StyledRoot>
+        <TextareaFormik
+          setFieldValue={setFieldValue}
+          label={t('description')}
+          value={contact_description}
+          fieldName={'contact_description'}
+        />
+      </StyledFormInputWrapper>
+    </StyledFormRoot>
   )
 }
 

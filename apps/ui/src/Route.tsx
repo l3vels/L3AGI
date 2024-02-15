@@ -242,6 +242,16 @@ const Route = () => {
                   element={<EditGroupForm />}
                   key={document.location.href}
                 />
+                <Router
+                  path={':groupId/edit-group/create-contact'}
+                  element={<CreateContactForm />}
+                  key={document.location.href}
+                />
+                <Router
+                  path={':groupId/edit-group/:contactId/edit-contact'}
+                  element={<EditContactForm />}
+                  key={document.location.href}
+                />
               </Router>
               <Router
                 path={'team-of-agents'}

@@ -38,7 +38,7 @@ export const useCreateGroup = () => {
         description: values.group_description,
       }
 
-      await createGroupService(groupInput)
+      const group = await createGroupService(groupInput)
 
       await refetchGroups()
       setToast({
@@ -46,7 +46,7 @@ export const useCreateGroup = () => {
         type: 'positive',
         open: true,
       })
-      navigate('/contacts?tab=group')
+      navigate(`/datasources/${group.id}/edit-group`)
     } catch (e) {
       setToast({
         message: 'Failed To Add Group!',
