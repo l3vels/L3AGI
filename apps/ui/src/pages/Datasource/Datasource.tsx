@@ -22,6 +22,7 @@ import { StyledAppContainer } from 'components/Layout/LayoutStyle'
 import {
   StyledChatWrapper,
   StyledContainer,
+  StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
   StyledRightColumn,
@@ -57,7 +58,7 @@ const Datasource = () => {
           <StyledMainWrapper>
             <StyledLeftColumn>
               <ListHeader
-                title={t('datasource')}
+                title={t('datasources')}
                 multiOption={[
                   {
                     label: `File`,
@@ -70,10 +71,6 @@ const Datasource = () => {
                   {
                     label: `Postgres`,
                     function: () => navigate('/datasources/create-datasource?type=Postgres'),
-                  },
-                  {
-                    label: `${t('contact')} ${t('group')}`,
-                    function: () => navigate('/datasources/create-group'),
                   },
                 ]}
               />
@@ -96,6 +93,12 @@ const Datasource = () => {
                 )
               })}
 
+              <StyledHorizontalDivider />
+
+              <ListHeader
+                title={`${t('contact')} ${t('groups')}`}
+                onAddClick={() => navigate('/datasources/create-group')}
+              />
               {groups?.map((group: any) => {
                 return (
                   <MiniToolCard

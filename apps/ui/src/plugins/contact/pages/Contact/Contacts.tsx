@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { ButtonPrimary } from 'components/Button/Button'
+import { ButtonPrimary, ButtonSecondary } from 'components/Button/Button'
 
 import IconButton from 'share-ui/components/IconButton/IconButton'
 
@@ -157,21 +157,19 @@ const Contacts = () => {
     <StyledSectionWrapper>
       <StyledHeaderGroup className='header_group'>
         <StyledButtonsWrapper>
-          <ButtonPrimary onClick={() => navigate('/contacts/import-contacts')} size={'small'}>
+          {/* <ButtonPrimary onClick={() => navigate('/contacts/import-contacts')} size={'small'}>
             {t('import-contacts')}
-          </ButtonPrimary>
-          <ButtonPrimary
+          </ButtonPrimary> */}
+          <ButtonSecondary
             onClick={() => navigate(`/datasources/${groupId}/edit-group/create-contact`)}
             size={'small'}
           >
             {t('add-contact')}
-          </ButtonPrimary>
+          </ButtonSecondary>
         </StyledButtonsWrapper>
       </StyledHeaderGroup>
 
-      <StyledTableWrapper>
-        <Table columns={columns} data={filteredContacts} />
-      </StyledTableWrapper>
+      <Table columns={columns} data={filteredContacts} />
     </StyledSectionWrapper>
   )
 }
