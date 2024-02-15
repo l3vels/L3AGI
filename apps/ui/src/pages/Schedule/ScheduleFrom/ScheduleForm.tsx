@@ -9,6 +9,11 @@ import { useScheduleForm } from './useScheduleForm'
 import AgentDropdown from 'pages/Agents/AgentForm/components/AgentDropdown'
 import styled from 'styled-components'
 import CustomField from 'pages/Agents/AgentForm/components/CustomField'
+import {
+  StyledForm,
+  StyledInputWrapper,
+  StyledRoot,
+} from 'plugins/contact/pages/Contact/ContactForm/ContactForm'
 
 const ScheduleForm = ({ formik }: { formik: any }) => {
   const { t } = useTranslation()
@@ -74,7 +79,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
             /> */}
 
           <StyledDoubleRow>
-            <AgentDropdown
+            {/* <AgentDropdown
               label={'Runner'}
               fieldName={'agent_id'}
               setFieldValue={setFieldValue}
@@ -84,7 +89,7 @@ const ScheduleForm = ({ formik }: { formik: any }) => {
               onChange={option => {
                 setFieldValue('agent_type', option.type)
               }}
-            />
+            /> */}
 
             {/* <AgentDropdown
               label={'Group'}
@@ -194,14 +199,6 @@ const StyledDoubleRow = styled.div`
   justify-content: space-between;
   gap: 10px;
 `
-const StyledCronDescriptionWrapper = styled.div`
-  width: 300px;
-  height: 100%;
-  padding-top: 45px;
-
-  display: flex;
-  justify-content: center;
-`
 
 export const StyledCheckboxWrapper = styled.div`
   height: fit-content;
@@ -212,39 +209,6 @@ export const StyledCheckboxWrapper = styled.div`
   .l3-style-checkbox--kind-secondary .l3-style-checkbox__label {
     color: ${({ theme }) => theme.typography.contentPrimary};
   }
-`
-
-export const StyledForm = styled.div`
-  width: 100%;
-  /* max-width: 600px; */
-  height: 100%;
-  max-height: 100%;
-  /* overflow: scroll; */
-
-  /* margin-top: 40px; */
-  display: flex;
-  justify-content: center;
-`
-
-export const StyledRoot = styled.div`
-  width: 100%;
-
-  height: 100%;
-  overflow-y: scroll;
-`
-
-export const StyledInputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  padding: 0 20px;
-
-  gap: 20px;
-  width: 100%;
-  max-width: 900px;
-  /* margin: auto; */
-  height: 100%;
-  /* max-height: 800px; */
 `
 
 const StyledRepeatFields = styled.div`

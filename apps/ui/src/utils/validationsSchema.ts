@@ -32,7 +32,7 @@ export const datasourceValidationSchema = yup.object().shape({
 
 export const scheduleValidationSchema = yup.object().shape({
   name: yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Please enter name'),
-  agent_id: yup.string().typeError('Please pick Agent').required('Please pick Agent'),
+
   // schedule_group_id: yup.string().required('Please pick Group'),
   // schedule_max_daily_budget: yup
   //   .number()

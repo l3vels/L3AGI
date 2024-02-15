@@ -20,10 +20,14 @@ import { StyledFormWrapper } from 'styles/formStyles.css'
 
 type CreateScheduleFormProps = {
   initialValues?: Record<string, unknown>
+  agentId?: string
 }
 
-const CreateScheduleForm = ({ initialValues = {} }: CreateScheduleFormProps) => {
-  const { formik, isLoading } = useCreateSchedule({ initialValues })
+const CreateScheduleForm = ({ initialValues = {}, agentId }: CreateScheduleFormProps) => {
+  const { formik, isLoading } = useCreateSchedule({
+    initialValues: initialValues,
+    agentId: agentId,
+  })
 
   return (
     <FormikProvider value={formik}>
@@ -32,24 +36,20 @@ const CreateScheduleForm = ({ initialValues = {} }: CreateScheduleFormProps) => 
           <div>
             <StyledSectionTitle>Add Schedule</StyledSectionTitle>
           </div>
-
-          <StyledButtonWrapper>
-            <BackButton />
-            <ButtonPrimary
-              onClick={formik.handleSubmit}
-              size={Button.sizes?.SMALL}
-              disabled={isLoading}
-            >
-              {isLoading ? <Loader size={32} /> : 'Save'}
-            </ButtonPrimary>
-          </StyledButtonWrapper>
         </StyledHeaderGroup>
 
-        <ComponentsWrapper noPadding>
-          <StyledFormWrapper>
-            <ScheduleForm formik={formik} />
-          </StyledFormWrapper>
-        </ComponentsWrapper>
+        <StyledFormWrapper>
+          <ScheduleForm formik={formik} />
+        </StyledFormWrapper>
+        <StyledButtonWrapper>
+          <ButtonPrimary
+            onClick={formik.handleSubmit}
+            size={Button.sizes?.MEDIUM}
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader size={32} /> : 'Save'}
+          </ButtonPrimary>
+        </StyledButtonWrapper>
       </StyledSectionWrapper>
     </FormikProvider>
   )

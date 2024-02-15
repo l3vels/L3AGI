@@ -12,9 +12,10 @@ import { getDateTimeFromDate } from './Schedule.utils'
 
 type UseCreateScheduleProps = {
   initialValues: Record<string, unknown>
+  agentId?: string
 }
 
-export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => {
+export const useCreateSchedule = ({ initialValues, agentId }: UseCreateScheduleProps) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { closeModal } = useModal()
@@ -34,7 +35,7 @@ export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => 
     max_daily_budget: 0.1,
     cron_expression: '* * * * *',
     schedule_type: 'Run tasks',
-    agent_id: null,
+
     group_id: null,
 
     agent_type: '',
@@ -68,7 +69,7 @@ export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => 
           max_daily_budget: values.max_daily_budget,
         },
         configs: {
-          agent_id: agent_type === 'agent' ? values.agent_id : null,
+          agent_id: agentId,
           team_id: agent_type === 'team' ? values.agent_id : null,
           chat_id: agent_type === 'chat' ? values.agent_id : null,
           group_id: values.group_id,
@@ -90,6 +91,7 @@ export const useCreateSchedule = ({ initialValues }: UseCreateScheduleProps) => 
         navigate('/schedules')
       } else {
         closeModal('schedule-run-modal')
+        closeModal('create-schedule-modal')
       }
     } catch (e) {
       setToast({

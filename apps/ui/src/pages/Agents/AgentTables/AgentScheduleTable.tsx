@@ -4,9 +4,15 @@ import { useScheduleForm } from 'pages/Schedule/ScheduleFrom/useScheduleForm'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { StyledRoot } from './AgentCampaignTable'
+import { ButtonSecondary } from 'components/Button/Button'
+import { useModal } from 'hooks'
+import { t } from 'i18next'
 
 const AgentScheduleTable = ({ agentId }: { agentId: string }) => {
   const navigate = useNavigate()
+
+  const { openModal } = useModal()
 
   const { deleteScheduleHandler, schedules } = useSchedules()
   const { options } = useScheduleForm()
@@ -82,7 +88,18 @@ const AgentScheduleTable = ({ agentId }: { agentId: string }) => {
     [],
   )
 
-  return <Table columns={columns} data={filteredData} />
+  return (
+    <StyledRoot>
+      <div>
+        <ButtonSecondary
+          onClick={() => openModal({ name: 'create-schedule-modal', data: { agentId } })}
+        >
+          {t('add-schedule')}
+        </ButtonSecondary>
+      </div>
+      <Table columns={columns} data={filteredData} />
+    </StyledRoot>
+  )
 }
 
 export default AgentScheduleTable

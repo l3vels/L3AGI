@@ -112,7 +112,7 @@ const AgentCampaignTable = ({ agentId }: { agentId: string }) => {
 
 export default AgentCampaignTable
 
-const StyledRoot = styled.div`
+export const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
