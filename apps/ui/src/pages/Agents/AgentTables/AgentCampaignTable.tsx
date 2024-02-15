@@ -98,13 +98,13 @@ const AgentCampaignTable = ({ agentId }: { agentId: string }) => {
 
   return (
     <StyledRoot>
-      <div>
+      <StyledButtonWrapper>
         <ButtonSecondary
           onClick={() => openModal({ name: 'create-campaign-modal', data: { agentId } })}
         >
           {t('add-campaign')}
         </ButtonSecondary>
-      </div>
+      </StyledButtonWrapper>
       <Table columns={columns} data={filteredData} />
     </StyledRoot>
   )
@@ -118,4 +118,10 @@ export const StyledRoot = styled.div`
   gap: 5px;
 
   height: 100%;
+  position: relative;
+`
+export const StyledButtonWrapper = styled.div`
+  position: absolute;
+  top: -50px;
+  right: 0;
 `

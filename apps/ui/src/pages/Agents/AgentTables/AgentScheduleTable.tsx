@@ -4,7 +4,7 @@ import { useScheduleForm } from 'pages/Schedule/ScheduleFrom/useScheduleForm'
 import { useSchedules } from 'pages/Schedule/useSchedules'
 import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { StyledRoot } from './AgentCampaignTable'
+import { StyledButtonWrapper, StyledRoot } from './AgentCampaignTable'
 import { ButtonSecondary } from 'components/Button/Button'
 import { useModal } from 'hooks'
 import { t } from 'i18next'
@@ -92,13 +92,13 @@ const AgentScheduleTable = ({ agentId }: { agentId: string }) => {
 
   return (
     <StyledRoot>
-      <div>
+      <StyledButtonWrapper>
         <ButtonSecondary
           onClick={() => openModal({ name: 'create-schedule-modal', data: { agentId } })}
         >
           {t('add-schedule')}
         </ButtonSecondary>
-      </div>
+      </StyledButtonWrapper>
       <Table columns={columns} data={filteredData} />
     </StyledRoot>
   )
