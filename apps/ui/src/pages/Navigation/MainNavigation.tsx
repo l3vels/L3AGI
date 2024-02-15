@@ -117,7 +117,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )}
 
-        {isSchedule && (
+        {/* {isSchedule && (
           <Tooltip content={t('schedule')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'schedules')}
@@ -126,7 +126,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               <StyledMyWeekIcon size={30} />
             </StyledLi>
           </Tooltip>
-        )}
+        )} */}
 
         {/* <StyledLi isActive={includes(active, 'Agents')} onClick={() => onHandleClick('/Agents')}>
         <StyledValueIcon>
