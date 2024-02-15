@@ -102,6 +102,7 @@ import TwilioPhoneNumberSidConfirmationModal from 'modals/TwilioPhoneNumberSidCo
 import IntegrationListModal from 'modals/IntegrationListModal'
 import DatasourceListModal from 'modals/DatasourceListModal'
 import ModelDetails from 'pages/Models/components/ModelDetails'
+import CreateCampaignModal from 'modals/CreateCampaignModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -435,6 +436,7 @@ const Route = () => {
         <ContactListModal />
         <IntegrationListModal />
         <DatasourceListModal />
+        <CreateCampaignModal />
         <TwilioPhoneNumberSidConfirmationModal />
 
         <CommandMenu

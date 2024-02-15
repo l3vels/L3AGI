@@ -13,7 +13,6 @@ export const campaignValidationSchema = yup.object().shape({
     .max(50, 'Too Long!')
     .required('Please enter name'),
   campaign_group_id: yup.string().nullable().required('Pick Group!'),
-  campaign_agent_id: yup.string().nullable().required('Pick Agent!'),
   campaign_start_date: yup.date().required('Please enter start date'),
 })
 

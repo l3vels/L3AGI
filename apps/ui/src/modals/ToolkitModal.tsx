@@ -37,8 +37,7 @@ const ToolkitModal = ({ data }: ToolkitModalProps) => {
 export default withRenderModal('toolkit-modal')(ToolkitModal)
 
 export const StyledModalBody = styled.div`
-  max-width: 1000px;
-  width: 400px;
+  width: 100%;
 
-  padding: 20px 0;
+  padding: 10px;
 `

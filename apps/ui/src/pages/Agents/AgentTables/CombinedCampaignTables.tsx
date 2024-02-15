@@ -9,8 +9,12 @@ import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import { t } from 'i18next'
 import styled from 'styled-components'
+import { ButtonSecondary } from 'components/Button/Button'
+import { useModal } from 'hooks'
 
 const CombinedCampaignTables = ({ agentId }: { agentId: string }) => {
+  const { openModal } = useModal()
+
   const [activeTab, setActiveTab] = useState(0)
 
   const handleTabClick = (id: number) => {
@@ -27,6 +31,11 @@ const CombinedCampaignTables = ({ agentId }: { agentId: string }) => {
       <TabsContext activeTabId={activeTab}>
         <TabPanels noAnimation>
           <TabPanel>
+            <ButtonSecondary
+              onClick={() => openModal({ name: 'create-campaign-modal', data: { agentId } })}
+            >
+              {t('add-campaign')}
+            </ButtonSecondary>
             <AgentCampaignTable agentId={agentId} />
           </TabPanel>
 
