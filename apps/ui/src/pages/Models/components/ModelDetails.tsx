@@ -1,8 +1,18 @@
 import { useParams } from 'react-router-dom'
 import { useModelsService } from 'services'
-import styled from 'styled-components'
-import ModelCard from './ModelCard'
+
 import { MODEL_PROVIDER_LOGOS } from '../constants'
+import { StyledSectionWrapper } from 'pages/Home/homeStyle.css'
+import { t } from 'i18next'
+import {
+  StyledImg,
+  StyledInnerWrapper,
+  StyledMainTextWrapper,
+  StyledTextWrapper,
+} from 'pages/Toolkit/ToolView/ToolView'
+import TypographySecondary from 'components/Typography/Secondary'
+import Typography from 'share-ui/components/typography/Typography'
+import TypographyPrimary from 'components/Typography/Primary'
 
 const ModelDetails = () => {
   const { data: models } = useModelsService()
@@ -16,20 +26,40 @@ const ModelDetails = () => {
   const logoSrc = logo?.logoSrc || ''
 
   return (
-    <StyledRoot>
-      <ModelCard
-        title={model?.name}
-        author={model?.provider}
-        logoSrc={logoSrc}
-        isDisabled={false}
-      />
-    </StyledRoot>
+    <StyledSectionWrapper>
+      <StyledInnerWrapper>
+        <>
+          <StyledImg src={logoSrc} alt='' />
+          <StyledTextWrapper>
+            <TypographySecondary
+              value={t('by')}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+            />
+
+            <TypographySecondary
+              value={model?.provider}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.xss}
+              style={{ textDecoration: 'underline' }}
+            />
+          </StyledTextWrapper>
+          <StyledMainTextWrapper>
+            <TypographyPrimary
+              value={model?.name}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.lg}
+            />
+            <TypographySecondary
+              value={model?.value}
+              type={Typography.types.LABEL}
+              size={Typography.sizes.md}
+            />
+          </StyledMainTextWrapper>
+        </>
+      </StyledInnerWrapper>
+    </StyledSectionWrapper>
   )
 }
 
 export default ModelDetails
-
-const StyledRoot = styled.div`
-  width: 100%;
-  height: 100%;
-`
