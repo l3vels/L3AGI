@@ -186,7 +186,6 @@ const ChatRouteLayout = () => {
         )}
         {expand && !showInfo && location.pathname.includes('/chat') && (
           <StyledShowButton
-            isSmallScreen={isSmallScreen}
             isRight
             onClick={() => setShowInfo(true)}
             onMouseEnter={() => setShowInfo(true)}
@@ -502,7 +501,7 @@ const StyledOutletWrapper = styled.div`
 
   /* max-width: 1500px; */
 `
-const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean }>`
+const StyledShowButton = styled.div<{ isRight?: boolean }>`
   height: 100vh;
   width: 100px;
 
@@ -518,11 +517,6 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
       right: 0;
       margin-left: auto;
 
-      width: calc(15% - 250px);
-    `}
-  ${props =>
-    props.isSmallScreen &&
-    css`
       width: 30px;
     `}
 `
