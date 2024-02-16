@@ -28,9 +28,10 @@ type DatasourceFormProps = {
   formik: any
   isLoading?: boolean
   isEdit?: boolean
+  type?: string
 }
 
-const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormProps) => {
+const DatasourceForm = ({ formik, isLoading, isEdit = false, type }: DatasourceFormProps) => {
   const { t } = useTranslation()
   const { dataLoaders, pickedLoaderFields, handleUploadFile, fileLoading } =
     useDatasourceForm(formik)
@@ -54,7 +55,7 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false }: DatasourceFormPro
   const location = useLocation()
 
   const urlParams = new URLSearchParams(location.search)
-  const formType = urlParams.get('type') || datasource_source_type
+  const formType = urlParams.get('type') || type || datasource_source_type
 
   const { host, port, user, pass, name, tables } = values.configs
 

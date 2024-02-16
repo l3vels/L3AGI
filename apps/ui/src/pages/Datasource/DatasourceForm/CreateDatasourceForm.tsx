@@ -22,8 +22,14 @@ import { StyledFormWrapper } from 'styles/formStyles.css'
 import DatasourceDemoButton from './components/DatasourceDemoButton'
 import styled from 'styled-components'
 
-const CreateDatasourceForm = () => {
-  const { formik, isLoading } = useCreateDatasource()
+const CreateDatasourceForm = ({
+  createCallback,
+  type,
+}: {
+  createCallback?: (id: string) => void
+  type?: string
+}) => {
+  const { formik, isLoading } = useCreateDatasource({ createCallback })
 
   return (
     <>
@@ -37,12 +43,12 @@ const CreateDatasourceForm = () => {
             </StyledCombiner>
           </StyledHeaderGroup>
 
-          <StyledFormWrapper>
-            <DatasourceForm formik={formik} isLoading={isLoading} />
-          </StyledFormWrapper>
+          {/* <StyledFormWrapper> */}
+          <DatasourceForm formik={formik} isLoading={isLoading} type={type} />
+          {/* </StyledFormWrapper> */}
 
           <StyledButtonWrapper>
-            <BackButton />
+            {/* <BackButton /> */}
             <ButtonPrimary
               onClick={formik?.handleSubmit}
               size={Button.sizes?.MEDIUM}

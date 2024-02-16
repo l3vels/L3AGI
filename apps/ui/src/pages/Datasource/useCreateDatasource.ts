@@ -8,7 +8,11 @@ import { useDataLoadersService } from 'services/datasource/useDataLoadersService
 import { useDatasourcesService } from 'services/datasource/useDatasourcesService'
 import { datasourceValidationSchema } from 'utils/validationsSchema'
 
-export const useCreateDatasource = () => {
+export const useCreateDatasource = ({
+  createCallback,
+}: {
+  createCallback?: (id: string) => void
+}) => {
   const navigate = useNavigate()
   const { setToast } = useContext(ToastContext)
 
@@ -120,7 +124,8 @@ export const useCreateDatasource = () => {
         type: 'positive',
         open: true,
       })
-      navigate(`/datasources/${datasource.id}/edit-datasource`)
+      if (createCallback) createCallback(datasource.id)
+      else navigate(`/datasources/${datasource.id}/edit-datasource`)
     } catch (e) {
       setToast({
         message: 'Failed To Add Datasource!',

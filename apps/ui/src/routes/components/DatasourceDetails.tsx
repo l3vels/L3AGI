@@ -14,7 +14,7 @@ import { DATA_LOADER_IMAGES } from 'pages/Datasource/constants'
 import { StyledAgentWrapper, StyledIconButtonWrapper } from 'components/ChatCards/TeamChatCard'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
-import { useEditDatasource } from 'pages/Datasource/useEditDatasource'
+
 import { useEditAgent } from 'pages/Agents/useEditAgent'
 import { useModal } from 'hooks'
 import { StyledSearchOutlineIcon } from 'components/ChatSwitcher/ChatSwitcher'
