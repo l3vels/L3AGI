@@ -17,11 +17,26 @@ import { DATA_LOADER_IMAGES } from 'pages/Datasource/constants'
 import { useEffect, useState } from 'react'
 import { ButtonPrimary } from 'components/Button/Button'
 import { t } from 'i18next'
+import DatasourceForm from 'pages/Datasource/DatasourceForm'
+import CreateDatasourceForm from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+import EditDatasourceForm from 'pages/Datasource/DatasourceForm/EditDatasourceForm'
+import TabList from 'share-ui/components/Tabs/TabList/TabList'
+import Tab from 'share-ui/components/Tabs/Tab/Tab'
+import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
+import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
+import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
+import styled from 'styled-components'
 
 const DatasourceListModal = () => {
   const { closeModal } = useModal()
 
   const [pickedDatasource, setPickedDatasource] = useState(null as any)
+  const [createState, setCreateState] = useState(null as any)
+  const [activeTab, setActiveTab] = useState(0)
+
+  const handleTabClick = (tabId: number, tabName: string) => {
+    setActiveTab(tabId)
+  }
 
   const { data: datasources } = useDatasourcesService()
 
@@ -49,10 +64,20 @@ const DatasourceListModal = () => {
     formik.submitForm()
   }
 
+  const handlePickDatasource = (id: string) => {
+    setPickedDatasource(id)
+    setCreateState(null)
+  }
+
+  const handleCreateState = (type: string) => {
+    setCreateState(type)
+    setPickedDatasource(null)
+  }
+
   useEffect(() => {
-    if (installedDatasources?.length > 0) setPickedDatasource(installedDatasources?.[0]?.id)
+    if (installedDatasources?.length > 0) handlePickDatasource(installedDatasources?.[0]?.id)
     else if (notInstalledDatasources?.length > 0)
-      setPickedDatasource(notInstalledDatasources?.[0]?.id)
+      handlePickDatasource(notInstalledDatasources?.[0]?.id)
   }, [agentDatasources])
 
   return (
@@ -76,7 +101,7 @@ const DatasourceListModal = () => {
               return (
                 <MiniToolCard
                   key={datasource.id}
-                  onClick={() => setPickedDatasource(datasource.id)}
+                  onClick={() => handlePickDatasource(datasource.id)}
                   picked={pickedDatasource === datasource.id}
                   name={datasource.name}
                   logo={imageSrc}
@@ -86,7 +111,23 @@ const DatasourceListModal = () => {
 
             <StyledHorizontalDivider />
 
-            <ListHeader title={'Marketplace'} />
+            <ListHeader
+              title={t('datasource')}
+              multiOption={[
+                {
+                  label: `File`,
+                  function: () => handleCreateState('File'),
+                },
+                {
+                  label: `MySQL`,
+                  function: () => handleCreateState('MySQL'),
+                },
+                {
+                  label: `Postgres`,
+                  function: () => handleCreateState('Postgres'),
+                },
+              ]}
+            />
             {notInstalledDatasources?.map((datasource: any) => {
               const filteredLogos = DATA_LOADER_IMAGES.filter(
                 loaderImages => loaderImages.sourceName === datasource.source_type,
@@ -97,7 +138,7 @@ const DatasourceListModal = () => {
               return (
                 <MiniToolCard
                   key={datasource.id}
-                  onClick={() => setPickedDatasource(datasource.id)}
+                  onClick={() => handlePickDatasource(datasource.id)}
                   picked={pickedDatasource === datasource.id}
                   name={datasource.name}
                   logo={imageSrc}
@@ -107,17 +148,40 @@ const DatasourceListModal = () => {
           </StyledLeftColumn>
 
           <StyledChatWrapper>
-            <StyledInnerWrapper>
-              <StyledFooter>
-                <ButtonPrimary
-                  onClick={handleUpdateDatasource}
-                  disabled={isLoading}
-                  loading={isLoading}
-                >
-                  {agentDatasources?.includes(pickedDatasource) ? t('remove') : t('install')}
-                </ButtonPrimary>
-              </StyledFooter>
-            </StyledInnerWrapper>
+            {createState ? (
+              <CreateDatasourceForm createCallback={handlePickDatasource} type={createState} />
+            ) : (
+              <StyledInnerWrapper>
+                <TabList size='small' activeTabId={activeTab} noBorder>
+                  <Tab onClick={() => handleTabClick(0, 'contact')}>{t('info')}</Tab>
+                  <Tab onClick={() => handleTabClick(1, 'settings')}>{t('settings')}</Tab>
+                </TabList>
+
+                <StyledBody>
+                  <TabsContext activeTabId={activeTab}>
+                    <TabPanels>
+                      <TabPanel>
+                        <StyledInnerTabWrapper>
+                          <ButtonPrimary
+                            onClick={handleUpdateDatasource}
+                            disabled={isLoading}
+                            loading={isLoading}
+                          >
+                            {agentDatasources?.includes(pickedDatasource)
+                              ? t('remove')
+                              : t('install')}
+                          </ButtonPrimary>
+                        </StyledInnerTabWrapper>
+                      </TabPanel>
+
+                      <TabPanel>
+                        <EditDatasourceForm incomingDatasourceId={pickedDatasource} />
+                      </TabPanel>
+                    </TabPanels>
+                  </TabsContext>
+                </StyledBody>
+              </StyledInnerWrapper>
+            )}
           </StyledChatWrapper>
         </StyledMainWrapper>
       </StyledModalBody>
@@ -126,3 +190,21 @@ const DatasourceListModal = () => {
 }
 
 export default withRenderModal('datasource-list-modal')(DatasourceListModal)
+
+const StyledInnerTabWrapper = styled.div`
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  padding-right: 10px;
+`
+const StyledBody = styled.div`
+  margin-top: 10px;
+  width: 100%;
+  height: calc(100% - 55px);
+`

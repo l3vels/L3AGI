@@ -22,25 +22,25 @@ import { StyledFormWrapper } from 'styles/formStyles.css'
 import DatasourceDemoButton from './components/DatasourceDemoButton'
 import { StyledCombiner } from './CreateDatasourceForm'
 
-const EditDatasourceForm = () => {
-  const { formik, isLoading } = useEditDatasource()
+const EditDatasourceForm = ({ incomingDatasourceId }: { incomingDatasourceId?: string }) => {
+  const { formik, isLoading } = useEditDatasource({ incomingDatasourceId })
 
   return (
     <>
       <FormikProvider value={formik}>
         <StyledSectionWrapper>
-          <StyledHeaderGroup className='header_group'>
+          {/* <StyledHeaderGroup className='header_group'>
             <StyledCombiner>
               <StyledSectionTitle>{`${t('edit-datasource')}`}</StyledSectionTitle>
             </StyledCombiner>
-          </StyledHeaderGroup>
+          </StyledHeaderGroup> */}
 
-          <StyledFormWrapper>
-            <DatasourceForm formik={formik} isLoading={isLoading} isEdit />
-          </StyledFormWrapper>
+          {/* <StyledFormWrapper> */}
+          <DatasourceForm formik={formik} isLoading={isLoading} isEdit />
+          {/* </StyledFormWrapper> */}
 
           <StyledButtonWrapper>
-            <BackButton />
+            {/* <BackButton /> */}
             <ButtonPrimary
               onClick={formik?.handleSubmit}
               size={Button.sizes?.MEDIUM}

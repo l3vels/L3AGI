@@ -186,7 +186,6 @@ const ChatRouteLayout = () => {
         )}
         {expand && !showInfo && location.pathname.includes('/chat') && (
           <StyledShowButton
-            isSmallScreen={isSmallScreen}
             isRight
             onClick={() => setShowInfo(true)}
             onMouseEnter={() => setShowInfo(true)}
@@ -340,7 +339,7 @@ const ChatRouteLayout = () => {
                   onClick={() => handleTabClick(2, 'campaigns')}
                   disabled={teamId ? true : false}
                 >
-                  {t('campaigns')}
+                  {t('More')}
                 </Tab>
               </TabList>
 
@@ -502,9 +501,9 @@ const StyledOutletWrapper = styled.div`
 
   /* max-width: 1500px; */
 `
-const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean }>`
+const StyledShowButton = styled.div<{ isRight?: boolean }>`
   height: 100vh;
-  width: calc(10% - 120px);
+  width: 100px;
 
   cursor: pointer;
 
@@ -518,12 +517,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
       right: 0;
       margin-left: auto;
 
-      width: calc(15% - 250px);
-    `}
-  ${props =>
-    props.isSmallScreen &&
-    css`
-      width: calc(15% - 150px);
+      width: 30px;
     `}
 `
 const StyledMiddleArea = styled.div`

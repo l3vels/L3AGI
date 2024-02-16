@@ -10,10 +10,10 @@ import { useUpdateDatasourceService } from 'services/datasource/useUpdateDatasou
 import { datasourceValidationSchema } from 'utils/validationsSchema'
 import { useDatasource } from './useDatasource'
 
-export const useEditDatasource = () => {
+export const useEditDatasource = ({ incomingDatasourceId }: { incomingDatasourceId?: string }) => {
   const navigate = useNavigate()
   const params = useParams()
-  const { datasourceId } = params
+  const datasourceId = params?.datasourceId || incomingDatasourceId
 
   const { refetchDatasources } = useDatasource()
 
@@ -125,7 +125,7 @@ export const useEditDatasource = () => {
     await Promise.all(promises)
     await Promise.all([refetchDatasources(), refetchConfigs()])
 
-    navigate('/datasources')
+    if (!incomingDatasourceId) navigate('/datasources')
 
     setToast({
       message: 'Datasource was updated!',

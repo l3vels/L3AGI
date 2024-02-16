@@ -74,6 +74,10 @@ const Datasource = () => {
                     label: `Postgres`,
                     function: () => navigate('/datasources/create-datasource?type=Postgres'),
                   },
+                  {
+                    label: `${t('contact')} ${t('group')}`,
+                    function: () => navigate('/datasources/create-group'),
+                  },
                 ]}
               />
               {datasources?.map((datasource: any) => {
@@ -95,12 +99,12 @@ const Datasource = () => {
                 )
               })}
 
-              <StyledHorizontalDivider />
+              {/* <StyledHorizontalDivider />
 
               <ListHeader
                 title={`${t('contact')} ${t('groups')}`}
                 onAddClick={() => navigate('/datasources/create-group')}
-              />
+              /> */}
               {groups?.map((group: any) => {
                 return (
                   <MiniToolCard

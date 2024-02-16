@@ -71,28 +71,40 @@ const Models = ({ isPublic }: { isPublic?: boolean }) => {
         <StyledContainer>
           <StyledMainWrapper>
             <StyledLeftColumn>
-              <ListHeader
-                title={t('fine-tuning')}
-                onAddClick={() => navigate('/models/create-fine-tuning')}
-              />
-              {fineTuningData?.map((fineTuning: any) => {
-                return (
-                  <MiniToolCard
-                    key={fineTuning.id}
-                    onClick={() => {
-                      navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
-                    }}
-                    name={fineTuning.name}
-                    logo={tuningIcon}
-                    picked={fineTuning.id === fineTuningId}
-                    onDeleteClick={() => deleteFineTuningHandler(fineTuning.id)}
+              {fineTuningData?.length > 0 && (
+                <>
+                  <ListHeader
+                    title={t('fine-tuning')}
+                    onAddClick={() => navigate('/models/create-fine-tuning')}
                   />
-                )
-              })}
 
-              <StyledHorizontalDivider />
+                  {fineTuningData?.map((fineTuning: any) => {
+                    return (
+                      <MiniToolCard
+                        key={fineTuning.id}
+                        onClick={() => {
+                          navigate(`/models/${fineTuning.id}/edit-fine-tuning`)
+                        }}
+                        name={fineTuning.name}
+                        logo={tuningIcon}
+                        picked={fineTuning.id === fineTuningId}
+                        onDeleteClick={() => deleteFineTuningHandler(fineTuning.id)}
+                      />
+                    )
+                  })}
+                  <StyledHorizontalDivider />
+                </>
+              )}
 
-              <ListHeader title={t('models')} />
+              <ListHeader
+                title={t('models')}
+                customLabel={t('add-fine-tuning')}
+                onAddClick={
+                  fineTuningData?.length === 0
+                    ? () => navigate('/models/create-fine-tuning')
+                    : undefined
+                }
+              />
               {models
                 ?.filter(model => !model.is_fine_tuned)
                 ?.map((model, index: number) => {

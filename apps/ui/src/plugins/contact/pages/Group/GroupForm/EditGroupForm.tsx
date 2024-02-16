@@ -44,20 +44,20 @@ const EditGroupForm = () => {
         </StyledHeaderGroup> */}
 
         <TabList size='small' activeTabId={activeTab} noBorder>
-          <Tab onClick={() => handleTabClick(0, 'group')}>{t('group')}</Tab>
-          <Tab onClick={() => handleTabClick(1, 'contact')}>{t('contacts')}</Tab>
+          <Tab onClick={() => handleTabClick(0, 'contact')}>{t('contacts')}</Tab>
+          <Tab onClick={() => handleTabClick(1, 'settings')}>{t('settings')}</Tab>
         </TabList>
 
         <TabsContext activeTabId={activeTab}>
           <TabPanels>
             <TabPanel>
-              <StyledFormWrapper>
-                <GroupForm formik={formik} />
-              </StyledFormWrapper>
+              <Contacts />
             </TabPanel>
 
             <TabPanel>
-              <Contacts />
+              <StyledFormWrapper>
+                <GroupForm formik={formik} />
+              </StyledFormWrapper>
             </TabPanel>
           </TabPanels>
         </TabsContext>
