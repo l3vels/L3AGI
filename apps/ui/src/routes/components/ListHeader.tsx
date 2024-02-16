@@ -21,9 +21,10 @@ type ListHeaderProps = {
   title: string
   onAddClick?: () => void
   multiOption?: { label: string; function: () => void }[]
+  customLabel?: string
 }
 
-const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
+const ListHeader = ({ title, customLabel, onAddClick, multiOption }: ListHeaderProps) => {
   return (
     <StyledListHeader>
       <TypographyPrimary
@@ -37,7 +38,7 @@ const ListHeader = ({ title, onAddClick, multiOption }: ListHeaderProps) => {
           onClick={onAddClick}
           size={IconButton.sizes?.SMALL}
           kind={IconButton.kinds?.TERTIARY}
-          ariaLabel={`Add ${title}`}
+          ariaLabel={customLabel || `Add ${title}`}
         />
       )}
 
