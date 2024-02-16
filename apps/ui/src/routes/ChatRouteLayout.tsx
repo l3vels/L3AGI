@@ -340,7 +340,7 @@ const ChatRouteLayout = () => {
                   onClick={() => handleTabClick(2, 'campaigns')}
                   disabled={teamId ? true : false}
                 >
-                  {t('campaigns')}
+                  {t('More')}
                 </Tab>
               </TabList>
 
@@ -451,7 +451,7 @@ export const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
   overflow-y: auto;
 
   display: flex;
-  width: 400px;
+  width: 450px;
   /* padding: 16px 16px 32px 16px; */
   flex-direction: column;
   align-items: center;
@@ -464,7 +464,7 @@ export const StyledRightColumn = styled.div<{ isHidden?: boolean }>`
   ${props =>
     props.isHidden &&
     css`
-      margin-right: -400px;
+      margin-right: -450px;
       overflow: hidden;
       cursor: pointer;
       opacity: 0;
@@ -504,7 +504,7 @@ const StyledOutletWrapper = styled.div`
 `
 const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean }>`
   height: 100vh;
-  width: calc(10% - 120px);
+  width: 100px;
 
   cursor: pointer;
 
@@ -523,7 +523,7 @@ const StyledShowButton = styled.div<{ isRight?: boolean; isSmallScreen?: boolean
   ${props =>
     props.isSmallScreen &&
     css`
-      width: calc(15% - 150px);
+      width: 30px;
     `}
 `
 const StyledMiddleArea = styled.div`
