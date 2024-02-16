@@ -106,7 +106,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )}
 
-        {isSession && (
+        {/* {isSession && (
           <Tooltip content={t('session')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'sessions')}
@@ -115,7 +115,7 @@ const MainNavigation = ({ user }: { user: any }) => {
               <StyledSessionIcon size={30} />
             </StyledLi>
           </Tooltip>
-        )}
+        )} */}
 
         {/* {isSchedule && (
           <Tooltip content={t('schedule')} position={Tooltip.positions.LEFT}>
