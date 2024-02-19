@@ -445,19 +445,6 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
           <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
         )} */}
 
-              {!teamId && (
-                <AudioRecorder
-                  setVoicePreview={setVoicePreview}
-                  setStartedRecording={setStartedRecording}
-                />
-              )}
-
-              {voicePreview && (
-                <AudioPlayer
-                  audioUrl={voicePreview || ''}
-                  onCloseClick={() => setVoicePreview(null)}
-                />
-              )}
               {!startedRecording && !voicePreview && (
                 <>
                   {typingEffectText ? (
@@ -492,7 +479,21 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
                 </>
               )}
 
-              <StyledChatInputRightSide>
+              <StyledChatInputRightSide fullWidth={voicePreview || startedRecording ? true : false}>
+                {!teamId && (
+                  <AudioRecorder
+                    setVoicePreview={setVoicePreview}
+                    setStartedRecording={setStartedRecording}
+                  />
+                )}
+
+                {voicePreview && (
+                  <AudioPlayer
+                    audioUrl={voicePreview || ''}
+                    onCloseClick={() => setVoicePreview(null)}
+                  />
+                )}
+
                 {voiceLoading ? (
                   <StyledLoaderWrapper>
                     <Loader size={20} />
@@ -697,15 +698,22 @@ const StyledSenIcon = styled(SendIcon)`
 const StyledLoaderWrapper = styled.div`
   padding: 0 5px;
 `
-const StyledChatInputRightSide = styled.div`
+const StyledChatInputRightSide = styled.div<{ fullWidth: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
 
   justify-content: flex-end;
 
-  width: fit-content;
+  width: 100%;
   min-width: 30px;
+
+  width: fit-content;
+  ${p =>
+    p.fullWidth &&
+    css`
+      width: 100%;
+    `};
 `
 const StyledCallInputContainer = styled.div`
   display: flex;

@@ -122,11 +122,11 @@ const AudioRecorder = ({
           </button>
         ) : (
           <>
-            <StyledButton onClick={stopRecording} disabled={!recording} type='button'>
-              <StyledCallIcon />
-              <StyledTimeIndicator>Stop recording</StyledTimeIndicator>
-            </StyledButton>
             <StyledTimeIndicator>{timer}</StyledTimeIndicator>
+            <StyledButton onClick={stopRecording} disabled={!recording} type='button'>
+              <StyledTimeIndicator>Stop recording</StyledTimeIndicator>
+              <StyledCallIcon />
+            </StyledButton>
             {/* Display the formatted time */}
           </>
         )}
@@ -156,7 +156,7 @@ const StyledRoot = styled.div<{ recording: boolean }>`
       width: 100%;
       justify-content: space-between;
       padding: 0 20px;
-      padding-left: 5px;
+      padding-right: 5px;
     `};
 `
 
