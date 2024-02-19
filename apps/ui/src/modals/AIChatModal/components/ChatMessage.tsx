@@ -122,9 +122,10 @@ const StyledInnerGroupHeader = styled.div`
 `
 
 const StyledVideo = styled.video`
-  border-radius: 100px;
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
   margin-left: -6px;
   background: #000;
+
+  border-radius: 100px 100px 100px 20px;
 `

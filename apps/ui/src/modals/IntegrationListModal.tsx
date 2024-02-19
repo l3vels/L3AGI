@@ -47,7 +47,9 @@ const IntegrationListModal = () => {
 
   const { data: toolsData } = useToolsService()
 
-  const filteredData = toolsData?.filter((row: { name: string }) => {
+  const activeTools = toolsData?.filter((tool: any) => tool.is_active === true)
+
+  const filteredData = activeTools?.filter((row: { name: string }) => {
     const includesSearchText = row.name.toLowerCase().includes(searchText.toLowerCase())
 
     return includesSearchText
@@ -89,6 +91,16 @@ const IntegrationListModal = () => {
     else setPickedTool({ slug: notInstalledTools[0].slug, id: notInstalledTools[0].toolkit_id })
   }, [agentToolsData])
 
+  const isSettingsHidden =
+    activeTools?.find((tool: any) => tool.slug === pickedTool?.slug)?.fields?.length > 0
+      ? false
+      : true
+
+  const handlePickTool = ({ slug, id }: { slug: string; id: string }) => {
+    setActiveTab(0)
+    setPickedTool({ slug, id })
+  }
+
   return (
     <Modal
       onClose={() => closeModal('integration-list-modal')}
@@ -118,7 +130,7 @@ const IntegrationListModal = () => {
                 <>
                   <MiniToolCard
                     onClick={() => {
-                      setPickedTool({ slug: tool.slug, id: tool.toolkit_id })
+                      handlePickTool({ slug: tool.slug, id: tool.toolkit_id })
                     }}
                     picked={pickedTool?.slug === tool.slug}
                     onDeleteClick={() => handleRemoveTool(tool.toolkit_id)}
@@ -143,7 +155,7 @@ const IntegrationListModal = () => {
                 <>
                   <MiniToolCard
                     onClick={() => {
-                      setPickedTool({ slug: tool.slug, id: tool.toolkit_id })
+                      handlePickTool({ slug: tool.slug, id: tool.toolkit_id })
                     }}
                     picked={pickedTool?.slug === tool.slug}
                     name={tool.name}
@@ -159,7 +171,9 @@ const IntegrationListModal = () => {
               <>
                 <TabList size='small' activeTabId={activeTab} noBorder>
                   <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
-                  <Tab onClick={() => handleTabClick(1)}>{t('settings')}</Tab>
+                  <Tab onClick={() => handleTabClick(1)} disabled={isSettingsHidden}>
+                    {t('settings')}
+                  </Tab>
                 </TabList>
 
                 <TabsContext activeTabId={activeTab}>

@@ -445,19 +445,6 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
           <UploadButton onChange={handleUploadFile} isLoading={fileLoading} />
         )} */}
 
-              {!teamId && (
-                <AudioRecorder
-                  setVoicePreview={setVoicePreview}
-                  setStartedRecording={setStartedRecording}
-                />
-              )}
-
-              {voicePreview && (
-                <AudioPlayer
-                  audioUrl={voicePreview || ''}
-                  onCloseClick={() => setVoicePreview(null)}
-                />
-              )}
               {!startedRecording && !voicePreview && (
                 <>
                   {typingEffectText ? (
@@ -492,7 +479,21 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
                 </>
               )}
 
-              <StyledChatInputRightSide>
+              <StyledChatInputRightSide fullWidth={voicePreview || startedRecording ? true : false}>
+                {!teamId && (
+                  <AudioRecorder
+                    setVoicePreview={setVoicePreview}
+                    setStartedRecording={setStartedRecording}
+                  />
+                )}
+
+                {voicePreview && (
+                  <AudioPlayer
+                    audioUrl={voicePreview || ''}
+                    onCloseClick={() => setVoicePreview(null)}
+                  />
+                )}
+
                 {voiceLoading ? (
                   <StyledLoaderWrapper>
                     <Loader size={20} />
@@ -640,7 +641,7 @@ const StyledSuggestionsContainer = styled.div`
   position: absolute;
   display: flex;
   width: 100%;
-  max-width: 800px;
+
   align-items: center;
   gap: 12px;
 
@@ -651,10 +652,6 @@ const StyledSuggestionsContainer = styled.div`
   }
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-
-  @media only screen and (max-width: 1750px) {
-    max-width: 600px;
-  }
 `
 
 const StyledStopGeneratingButton = styled.div`
@@ -701,15 +698,22 @@ const StyledSenIcon = styled(SendIcon)`
 const StyledLoaderWrapper = styled.div`
   padding: 0 5px;
 `
-const StyledChatInputRightSide = styled.div`
+const StyledChatInputRightSide = styled.div<{ fullWidth: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
 
   justify-content: flex-end;
 
-  width: fit-content;
+  width: 100%;
   min-width: 30px;
+
+  width: fit-content;
+  ${p =>
+    p.fullWidth &&
+    css`
+      width: 100%;
+    `};
 `
 const StyledCallInputContainer = styled.div`
   display: flex;

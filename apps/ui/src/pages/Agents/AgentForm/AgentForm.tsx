@@ -549,7 +549,7 @@ const StyledCheckboxWrapper = styled.div`
 export const StyledCombinedFields = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
 
   gap: 20px;
