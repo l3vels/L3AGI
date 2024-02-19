@@ -3,9 +3,8 @@ import withRenderModal from 'hocs/withRenderModal'
 import Modal from 'share-ui/components/Modal/Modal'
 import { useModal } from 'hooks'
 
-import { StyledModalBody } from './ToolkitModal'
-
 import EditScheduleForm from 'pages/Schedule/ScheduleFrom/EditScheduleForm'
+import { StyledModalBody } from './CreateScheduleModal'
 
 type ScheduleModalProps = {
   data: {
