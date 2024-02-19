@@ -640,7 +640,7 @@ const StyledSuggestionsContainer = styled.div`
   position: absolute;
   display: flex;
   width: 100%;
-  max-width: 800px;
+
   align-items: center;
   gap: 12px;
 
@@ -651,10 +651,6 @@ const StyledSuggestionsContainer = styled.div`
   }
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-
-  @media only screen and (max-width: 1750px) {
-    max-width: 600px;
-  }
 `
 
 const StyledStopGeneratingButton = styled.div`
