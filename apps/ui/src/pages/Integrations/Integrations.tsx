@@ -79,6 +79,29 @@ const Integrations = () => {
     navigate(`/integrations?tool=${tools?.[0]?.slug}`)
   }, [tools])
 
+  let isSettingsHidden = false
+
+  if (toolQuery) {
+    isSettingsHidden =
+      tools?.find((tool: any) => tool.slug === toolQuery)?.fields?.length > 0 ? false : true
+  } else if (voiceQuery) {
+    isSettingsHidden =
+      voiceTools?.find((voice: any) => voice.slug === voiceQuery)?.fields?.length > 0 ? false : true
+  }
+
+  const activeTools = tools?.filter((tool: any) => tool.is_active === true)
+  const activeVoices = voiceTools?.filter((voice: any) => voice.is_active === true)
+
+  const handlePickTool = (slug: string) => {
+    navigate(`/integrations?tool=${slug}`)
+
+    setActiveTab(0)
+  }
+  const handlePickVoice = (slug: string) => {
+    navigate(`/integrations?voice=${slug}`)
+    setActiveTab(0)
+  }
+
   return (
     <>
       <StyledAppContainer>
@@ -87,7 +110,7 @@ const Integrations = () => {
             <StyledLeftColumn>
               <ListHeader title={t('integrations')} />
 
-              {tools?.map((tool: any, index: number) => {
+              {activeTools?.map((tool: any, index: number) => {
                 const filteredLogos = toolLogos.filter(
                   (toolLogo: any) => toolLogo.toolName === tool.name,
                 )
@@ -97,7 +120,7 @@ const Integrations = () => {
                 return (
                   <MiniToolCard
                     key={index}
-                    onClick={() => navigate(`/integrations?tool=${tool.slug}`)}
+                    onClick={() => handlePickTool(tool.slug)}
                     name={tool.name}
                     logo={logoSrc}
                     picked={toolQuery === tool.slug}
@@ -109,7 +132,7 @@ const Integrations = () => {
 
               <ListHeader title={`${t('voice')} ${t('integrations')}`} />
 
-              {voiceTools?.map((voice: any, index: number) => {
+              {activeVoices?.map((voice: any, index: number) => {
                 const filteredLogos = voiceLogos.filter(
                   (toolLogo: any) => toolLogo.voiceName === voice.name,
                 )
@@ -119,7 +142,7 @@ const Integrations = () => {
                 return (
                   <MiniToolCard
                     key={index}
-                    onClick={() => navigate(`/integrations?voice=${voice.slug}`)}
+                    onClick={() => handlePickVoice(voice.slug)}
                     name={voice.name}
                     logo={logoSrc}
                     picked={voiceQuery === voice.slug}
@@ -133,7 +156,9 @@ const Integrations = () => {
                 <>
                   <TabList size='small' activeTabId={activeTab} noBorder>
                     <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
-                    <Tab onClick={() => handleTabClick(1)}>{t('settings')}</Tab>
+                    <Tab onClick={() => handleTabClick(1)} disabled={isSettingsHidden}>
+                      {t('settings')}
+                    </Tab>
                   </TabList>
 
                   <TabsContext activeTabId={activeTab}>
