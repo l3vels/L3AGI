@@ -30,7 +30,7 @@
     "a11y-dialog": "^8.0.4",
     "apollo-link-rest": "^0.9.0-rc.1",
     "apollo-upload-client": "^17.0.0",
-    "axios": "^0.27.2",
+    "axios": "^0.28.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "cmdk": "^0.2.0",
     "core-js-pure": "^3.32.1",
