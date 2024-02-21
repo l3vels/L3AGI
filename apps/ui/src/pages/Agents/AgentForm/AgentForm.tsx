@@ -31,6 +31,7 @@ import { isVoiceAgent } from 'utils/agentUtils'
 import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import CopyScript from './components/CopyScript'
 import { Switch } from 'share-ui/components/Switch/Switch'
+import { useVoiceOptionsService } from 'plugins/contact/services/voice/useVoiceOptionsService'
 
 type AgentFormProps = {
   formik: any
@@ -61,6 +62,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_integrations,
     agent_type,
     agent_sentiment_analyzer,
+    agent_voice_id,
   } = values
 
   const {
@@ -125,6 +127,23 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   useEffect(() => {
     setFieldValue('agent_type', agentType)
   }, [agentType])
+
+  const { data: voiceOptions } = useVoiceOptionsService()
+
+  const pickedSynthesizer = voiceSynthesizerOptions?.find(
+    (option: any) => option.value === agent_voice_synthesizer,
+  )?.label
+
+  let pickedVoiceOptions = []
+  if (pickedSynthesizer === 'Play.HT')
+    pickedVoiceOptions = voiceOptions['playHtVoices']?.map((item: any) => {
+      return { value: item.id, label: item.name }
+    })
+
+  if (pickedSynthesizer === 'ElevenLabs')
+    pickedVoiceOptions = voiceOptions['elevenLabsVoices']?.voices?.map((item: any) => {
+      return { value: item.voice_id, label: item.name }
+    })
 
   return (
     <StyledFormRoot>
@@ -299,15 +318,22 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     optionSize={'small'}
                   />
 
-                  <FormikTextField
+                  {/* <FormikTextField
                     name='agent_default_voice'
                     // placeholder={t('default-voice')}
                     label={t('default-voice')}
-                  />
+                  /> */}
                   <FormikTextField
                     name='agent_voice_id'
                     // placeholder={t('voice-id')}
                     label={t('voice-id')}
+                  />
+
+                  <AgentDropdown
+                    fieldName={'agent_voice_id'}
+                    fieldValue={agent_voice_id}
+                    options={pickedVoiceOptions}
+                    setFieldValue={setFieldValue}
                   />
 
                   <AgentDropdown

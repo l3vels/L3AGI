@@ -306,6 +306,7 @@ class ConfigModel(BaseModel):
             "AZURE_SPEECH_REGION",
             "PLAY_HT_API_KEY",
             "PLAY_HT_USER_ID",
+            "ELEVEN_LABS_API_KEY",
             # todo add openai tsss
             # todo add 11labs
         ]
@@ -338,6 +339,7 @@ class ConfigModel(BaseModel):
             AZURE_SPEECH_KEY=config.get("AZURE_SPEECH_KEY"),
             AZURE_SPEECH_REGION=config.get("AZURE_SPEECH_REGION"),
             PLAY_HT_API_KEY=config.get("PLAY_HT_API_KEY"),
+            ELEVEN_LABS_API_KEY=config.get("ELEVEN_LABS_API_KEY"),
             PLAY_HT_USER_ID=config.get("PLAY_HT_USER_ID"),
         )
 

@@ -65,3 +65,4 @@ class AccountVoiceSettings(BaseModel):
     AZURE_SPEECH_REGION: Optional[str]
     PLAY_HT_API_KEY: Optional[str]
     PLAY_HT_USER_ID: Optional[str]
+    ELEVEN_LABS_API_KEY: Optional[str]
