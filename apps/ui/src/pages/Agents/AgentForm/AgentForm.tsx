@@ -32,6 +32,8 @@ import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
 import CopyScript from './components/CopyScript'
 import { Switch } from 'share-ui/components/Switch/Switch'
 import { useVoiceOptionsService } from 'plugins/contact/services/voice/useVoiceOptionsService'
+import { ButtonSecondary } from 'components/Button/Button'
+import { useModal } from 'hooks'
 
 type AgentFormProps = {
   formik: any
@@ -40,6 +42,8 @@ type AgentFormProps = {
 
 const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   const { t } = useTranslation()
+
+  const { openModal } = useModal()
 
   const { setFieldValue, values, errors: validationError } = formik
   const {
@@ -134,15 +138,27 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     (option: any) => option.value === agent_voice_synthesizer,
   )?.label
 
-  let pickedVoiceOptions = []
+  let pickedVoiceOptions: any = []
   if (pickedSynthesizer === 'Play.HT')
     pickedVoiceOptions = voiceOptions['playHtVoices']?.map((item: any) => {
-      return { value: item.id, label: item.name }
+      return {
+        name: item.name,
+        sample: item.sample,
+        language: item.language_code,
+        id: item.id,
+        gender: item.gender,
+      }
     })
 
   if (pickedSynthesizer === 'ElevenLabs')
     pickedVoiceOptions = voiceOptions['elevenLabsVoices']?.voices?.map((item: any) => {
-      return { value: item.voice_id, label: item.name }
+      return {
+        name: item.name,
+        sample: item.preview_url,
+        language: item.language_code || '-',
+        id: item.preview_url,
+        gender: item.labels.gender,
+      }
     })
 
   return (
@@ -329,12 +345,23 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     label={t('voice-id')}
                   />
 
-                  <AgentDropdown
+                  <ButtonSecondary
+                    onClick={() =>
+                      openModal({
+                        name: 'voice-options-modal',
+                        data: { voiceList: pickedVoiceOptions, formik: formik },
+                      })
+                    }
+                  >
+                    Choose Voice
+                  </ButtonSecondary>
+
+                  {/* <AgentDropdown
                     fieldName={'agent_voice_id'}
                     fieldValue={agent_voice_id}
                     options={pickedVoiceOptions}
                     setFieldValue={setFieldValue}
-                  />
+                  /> */}
 
                   <AgentDropdown
                     label={t('transcriber')}
