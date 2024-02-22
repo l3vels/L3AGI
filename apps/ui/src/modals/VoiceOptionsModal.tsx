@@ -71,41 +71,11 @@ const StyledWrapper = styled.div`
   padding: 0 20px;
 
   display: flex;
-  flex-wrap: wrap;
-  /* flex-direction: column; */
-  gap: 15px;
-`
-const StyledVoiceCard = styled.div`
-  min-width: 280px;
-  width: 280;
-  min-height: 100px;
-  height: 100px;
 
-  border-radius: 8px;
-
-  background: white;
-
-  display: flex;
   flex-direction: column;
-
-  gap: 20px;
-
-  padding: 20px;
-
-  cursor: pointer;
-
-  :hover {
-    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
-  }
-`
-const StyledCardHeader = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: 15px;
 `
+
 const StyledHeader = styled.div`
   display: flex;
   align-items: center;

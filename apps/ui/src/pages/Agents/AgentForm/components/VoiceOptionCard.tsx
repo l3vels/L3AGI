@@ -17,25 +17,23 @@ type VoiceOptionCardProps = {
 const VoiceOptionCard = ({ title, audioUrl, onAddClick, onRemoveClick }: VoiceOptionCardProps) => {
   return (
     <StyledVoiceCard>
-      <StyledCardHeader>
+      <StyledInnerWrapper>
         <TypographyPrimary value={title} size={'medium'} />
-      </StyledCardHeader>
 
-      <StyledCardHeader>
         {audioUrl && <AudioPlayer audioUrl={audioUrl} />}
+      </StyledInnerWrapper>
 
-        {onAddClick && (
-          <ButtonSecondary size={'small'} onClick={onAddClick}>
-            {t('add')}
-          </ButtonSecondary>
-        )}
+      {onAddClick && (
+        <ButtonSecondary size={'small'} onClick={onAddClick}>
+          {t('add')}
+        </ButtonSecondary>
+      )}
 
-        {onRemoveClick && (
-          <ButtonSecondary size={'small'} onClick={onRemoveClick}>
-            {t('remove')}
-          </ButtonSecondary>
-        )}
-      </StyledCardHeader>
+      {onRemoveClick && (
+        <ButtonSecondary size={'small'} onClick={onRemoveClick}>
+          {t('remove')}
+        </ButtonSecondary>
+      )}
     </StyledVoiceCard>
   )
 }
@@ -45,31 +43,24 @@ export default VoiceOptionCard
 const StyledVoiceCard = styled.div`
   min-width: 280px;
   width: 280;
-  min-height: 100px;
-  height: 100px;
+  min-height: 50px;
+  height: 50px;
 
   border-radius: 8px;
 
-  background: white;
+  background: ${({ theme }) => theme.body.cardBgColor};
 
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
   gap: 20px;
 
   padding: 20px;
-
-  cursor: pointer;
-
-  :hover {
-    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5);
-  }
 `
-const StyledCardHeader = styled.div`
-  width: 100%;
-
+const StyledInnerWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
   gap: 15px;
 `

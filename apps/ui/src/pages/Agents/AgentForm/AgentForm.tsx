@@ -332,7 +332,8 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     fieldValue={agent_voice_synthesizer}
                     options={voiceSynthesizerOptions}
                     onChange={() => {
-                      setFieldValue('agent_voice_synthesizer', '')
+                      // setFieldValue('agent_voice_synthesizer', '')
+                      setFieldValue('agent_voice_id', '')
                     }}
                     optionSize={'small'}
                   />
@@ -343,24 +344,28 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     label={t('default-voice')}
                   /> */}
 
-                  <StyledCombinedFields>
-                    <FormikTextField
-                      name='agent_voice_id'
-                      // placeholder={t('voice-id')}
-                      label={t('voice-id')}
-                    />
+                  {agent_voice_synthesizer && (
+                    <StyledCombinedFields>
+                      <FormikTextField
+                        name='agent_voice_id'
+                        // placeholder={t('voice-id')}
+                        label={t('voice-id')}
+                      />
 
-                    <ButtonSecondary
-                      onClick={() =>
-                        openModal({
-                          name: 'voice-options-modal',
-                          data: { voiceList: pickedVoiceOptions, formik: formik },
-                        })
-                      }
-                    >
-                      Choose Voice
-                    </ButtonSecondary>
-                  </StyledCombinedFields>
+                      <StyledButtonWrapper>
+                        <ButtonSecondary
+                          onClick={() =>
+                            openModal({
+                              name: 'voice-options-modal',
+                              data: { voiceList: pickedVoiceOptions, formik: formik },
+                            })
+                          }
+                        >
+                          Choose Voice
+                        </ButtonSecondary>
+                      </StyledButtonWrapper>
+                    </StyledCombinedFields>
+                  )}
 
                   {pickedVoice && (
                     <VoiceOptionCard
@@ -383,9 +388,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     setFieldValue={setFieldValue}
                     fieldValue={agent_voice_transcriber}
                     options={voiceTranscriberOptions}
-                    onChange={() => {
-                      setFieldValue('agent_voice_transcriber', '')
-                    }}
                     optionSize={'small'}
                   />
 
@@ -658,4 +660,7 @@ export const StyledTabPanelInnerWrapper = styled.div`
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
+`
+const StyledButtonWrapper = styled.div`
+  margin-top: 25px;
 `
