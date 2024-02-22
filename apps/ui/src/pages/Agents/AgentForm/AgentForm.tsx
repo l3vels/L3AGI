@@ -162,6 +162,17 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
       }
     })
 
+  if (pickedSynthesizer === 'Azure')
+    pickedVoiceOptions = voiceOptions['azureVoices']?.map((item: any) => {
+      return {
+        name: item.DisplayName,
+        sample: '',
+        language: item.language_code || '-',
+        id: item.ShortName,
+        gender: item.Gender,
+      }
+    })
+
   const pickedVoice = pickedVoiceOptions?.find((item: any) => item.id === agent_voice_id)
 
   return (
