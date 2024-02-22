@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/media-has-caption */
 import withRenderModal from 'hocs/withRenderModal'
 
 import Modal from 'share-ui/components/Modal/Modal'
@@ -6,17 +5,13 @@ import { useModal } from 'hooks'
 import styled from 'styled-components'
 
 import { StyledModalBody } from './IntegrationListModal'
-import {
-  StyledHeaderGroup,
-  StyledSectionTitle,
-  StyledSectionWrapper,
-} from 'pages/Home/homeStyle.css'
-import { ButtonPrimary } from 'components/Button/Button'
-import Button from 'share-ui/components/Button/Button'
-import { useEditAgent } from 'pages/Agents/useEditAgent'
+import { StyledSectionTitle, StyledSectionWrapper } from 'pages/Home/homeStyle.css'
+import { ButtonSecondary } from 'components/Button/Button'
+
 import TypographyPrimary from 'components/Typography/Primary'
-import { StyledCombiner } from 'pages/Datasource/DatasourceForm/CreateDatasourceForm'
+
 import AudioPlayer from 'components/AudioPlayer'
+import VoiceOptionCard from 'pages/Agents/AgentForm/components/VoiceOptionCard'
 
 type VoiceOptionsModalProps = {
   data: {
@@ -46,29 +41,15 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
                 const id = voice.id
 
                 return (
-                  <StyledVoiceCard
+                  <VoiceOptionCard
                     key={id}
-                    // onClick={() => {
-                    //   formik.setFieldValue('agent_voice_id', id)
-                    //   closeModal('voice-options-modal')
-                    // }}
-                  >
-                    <StyledCardHeader>
-                      <TypographyPrimary
-                        value={`${voice.name} - ${voice.gender}`}
-                        size={'medium'}
-                      />
-                    </StyledCardHeader>
-
-                    {/* <div>
-                      <audio controls src={voice.sample}>
-                        Your browser does not support the audio element.
-                      </audio>
-                    </div> */}
-                    {voice.sample && <AudioPlayer audioUrl={voice.sample} />}
-
-                    <TypographyPrimary value={voice.language} size={'small'} />
-                  </StyledVoiceCard>
+                    title={`${voice.name} - ${voice.gender}`}
+                    audioUrl={voice.sample}
+                    onAddClick={() => {
+                      formik.setFieldValue('agent_voice_id', id)
+                      closeModal('voice-options-modal')
+                    }}
+                  />
                 )
               })}
             </StyledWrapper>
@@ -96,15 +77,16 @@ const StyledWrapper = styled.div`
 `
 const StyledVoiceCard = styled.div`
   min-width: 280px;
-  width: 100%;
-  /* min-height: 100px;
-  height: 100px; */
+  width: 280;
+  min-height: 100px;
+  height: 100px;
 
   border-radius: 8px;
 
   background: white;
 
   display: flex;
+  flex-direction: column;
 
   gap: 20px;
 
@@ -120,6 +102,8 @@ const StyledCardHeader = styled.div`
   width: 100%;
 
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 15px;
 `
 const StyledHeader = styled.div`

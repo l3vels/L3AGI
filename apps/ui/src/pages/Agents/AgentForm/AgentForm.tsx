@@ -34,6 +34,7 @@ import { Switch } from 'share-ui/components/Switch/Switch'
 import { useVoiceOptionsService } from 'plugins/contact/services/voice/useVoiceOptionsService'
 import { ButtonSecondary } from 'components/Button/Button'
 import { useModal } from 'hooks'
+import VoiceOptionCard from './components/VoiceOptionCard'
 
 type AgentFormProps = {
   formik: any
@@ -156,10 +157,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
         name: item.name,
         sample: item.preview_url,
         language: item.language_code || '-',
-        id: item.preview_url,
+        id: item.voice_id,
         gender: item.labels.gender,
       }
     })
+
+  const pickedVoice = pickedVoiceOptions?.find((item: any) => item.id === agent_voice_id)
 
   return (
     <StyledFormRoot>
@@ -339,22 +342,33 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     // placeholder={t('default-voice')}
                     label={t('default-voice')}
                   /> */}
-                  <FormikTextField
-                    name='agent_voice_id'
-                    // placeholder={t('voice-id')}
-                    label={t('voice-id')}
-                  />
 
-                  <ButtonSecondary
-                    onClick={() =>
-                      openModal({
-                        name: 'voice-options-modal',
-                        data: { voiceList: pickedVoiceOptions, formik: formik },
-                      })
-                    }
-                  >
-                    Choose Voice
-                  </ButtonSecondary>
+                  <StyledCombinedFields>
+                    <FormikTextField
+                      name='agent_voice_id'
+                      // placeholder={t('voice-id')}
+                      label={t('voice-id')}
+                    />
+
+                    <ButtonSecondary
+                      onClick={() =>
+                        openModal({
+                          name: 'voice-options-modal',
+                          data: { voiceList: pickedVoiceOptions, formik: formik },
+                        })
+                      }
+                    >
+                      Choose Voice
+                    </ButtonSecondary>
+                  </StyledCombinedFields>
+
+                  {pickedVoice && (
+                    <VoiceOptionCard
+                      title={pickedVoice?.name}
+                      audioUrl={pickedVoice?.sample}
+                      onRemoveClick={() => setFieldValue('agent_voice_id', '')}
+                    />
+                  )}
 
                   {/* <AgentDropdown
                     fieldName={'agent_voice_id'}
