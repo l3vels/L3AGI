@@ -279,7 +279,7 @@ const StyledDialog = styled.div<{
   ${props =>
     props.backgroundColor === 'light' &&
     css`
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.4);
     `}
 
   ${props =>

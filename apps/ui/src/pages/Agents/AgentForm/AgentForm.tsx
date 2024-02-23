@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next'
 import Typography from 'share-ui/components/typography/Typography'
 import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 
-import Textarea from 'share-ui/components/Textarea/Textarea'
-
 import FormikTextField from 'components/TextFieldFormik'
 
 import CustomField from './components/CustomField'
@@ -24,17 +22,12 @@ import UploadAvatar from 'components/UploadAvatar'
 import { StyledFormRoot, StyledFormInputWrapper } from 'styles/formStyles.css'
 
 import TextareaFormik from 'components/TextareaFormik'
-import { useLocation, useNavigate } from 'react-router-dom'
-import RadioButton from 'share-ui/components/RadioButton/RadioButton'
+import { useLocation } from 'react-router-dom'
+
 import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunners'
 import { isVoiceAgent } from 'utils/agentUtils'
-import { openLinkTab } from 'components/HeaderButtons/HeaderButtons'
-import CopyScript from './components/CopyScript'
-import { Switch } from 'share-ui/components/Switch/Switch'
-import { useVoiceOptionsService } from 'plugins/contact/services/voice/useVoiceOptionsService'
-import { ButtonSecondary } from 'components/Button/Button'
-import { useModal } from 'hooks'
-import VoiceOptionCard from './components/VoiceOptionCard'
+
+import VoicePreferences from './FormSections/VoicePreferences'
 
 type AgentFormProps = {
   formik: any
@@ -44,44 +37,31 @@ type AgentFormProps = {
 const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   const { t } = useTranslation()
 
-  const { openModal } = useModal()
-
   const { setFieldValue, values, errors: validationError } = formik
   const {
     agent_name,
-    agent_datasources,
     agent_model,
     agent_description,
     agent_is_memory,
-    agent_tools,
     agent_greeting,
     agent_text,
     agent_temperature,
     agent_is_template,
     agent_avatar,
     agent_source_flow,
-    agent_voice_synthesizer,
-    agent_voice_transcriber,
-    agent_voice_input_mode,
-    agent_voice_response,
     agent_integrations,
     agent_type,
     agent_sentiment_analyzer,
-    agent_voice_id,
   } = values
 
   const {
     modelOptions,
-    datasourceOptions,
-    toolOptions,
     voiceSynthesizerOptions,
     voiceTranscriberOptions,
     handleUploadAvatar,
     avatarIsLoading,
     integrationOptions,
     agentOptions,
-    voiceToolOptions,
-    voiceModelOptions,
   } = useAgentForm(formik)
 
   useEffect(() => {
@@ -132,48 +112,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
   useEffect(() => {
     setFieldValue('agent_type', agentType)
   }, [agentType])
-
-  const { data: voiceOptions } = useVoiceOptionsService()
-
-  const pickedSynthesizer = voiceSynthesizerOptions?.find(
-    (option: any) => option.value === agent_voice_synthesizer,
-  )?.label
-
-  let pickedVoiceOptions: any = []
-  if (pickedSynthesizer === 'Play.HT')
-    pickedVoiceOptions = voiceOptions['playHtVoices']?.map((item: any) => {
-      return {
-        name: item.name,
-        sample: item.sample,
-        language: item.language_code,
-        id: item.id,
-        gender: item.gender,
-      }
-    })
-
-  if (pickedSynthesizer === 'ElevenLabs')
-    pickedVoiceOptions = voiceOptions['elevenLabsVoices']?.voices?.map((item: any) => {
-      return {
-        name: item.name,
-        sample: item.preview_url,
-        language: item.language_code || '-',
-        id: item.voice_id,
-        gender: item.labels.gender,
-      }
-    })
-
-  if (pickedSynthesizer === 'Azure')
-    pickedVoiceOptions = voiceOptions['azureVoices']?.map((item: any) => {
-      return {
-        name: item.DisplayName,
-        sample: '',
-        language: item.language_code || '-',
-        id: item.ShortName,
-        gender: item.Gender,
-      }
-    })
-
-  const pickedVoice = pickedVoiceOptions?.find((item: any) => item.id === agent_voice_id)
 
   return (
     <StyledFormRoot>
@@ -276,27 +214,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     placeholder={t('constraints')}
                   />
 
-                  {/* <AgentDropdown
-                    isMulti
-                    label={t('tools')}
-                    fieldName={'agent_tools'}
-                    fieldValue={agent_tools}
-                    setFieldValue={setFieldValue}
-                    options={isVoiceAgent(agentType) ? voiceToolOptions : toolOptions}
-                  /> */}
-
                   {agentType === 'text' && (
-                    // <StyledCombinedFields>
-                    //   <AgentDropdown
-                    //     isMulti
-                    //     label={t('datasources')}
-                    //     fieldName={'agent_datasources'}
-                    //     fieldValue={agent_datasources}
-                    //     setFieldValue={setFieldValue}
-                    //     options={datasourceOptions}
-                    //     />
-                    //     </StyledCombinedFields>
-
                     <AgentDropdown
                       label={'Data Process Flow'}
                       fieldName={'agent_source_flow'}
@@ -335,84 +253,12 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
               </TabPanel>
 
               <TabPanel>
-                <StyledTabPanelInnerWrapper>
-                  <AgentDropdown
-                    label={t('synthesizer')}
-                    fieldName={'agent_voice_synthesizer'}
-                    setFieldValue={setFieldValue}
-                    fieldValue={agent_voice_synthesizer}
-                    options={voiceSynthesizerOptions}
-                    onChange={() => {
-                      // setFieldValue('agent_voice_synthesizer', '')
-                      setFieldValue('agent_voice_id', '')
-                    }}
-                    optionSize={'small'}
+                <>
+                  <VoicePreferences
+                    formik={formik}
+                    voiceSynthesizerOptions={voiceSynthesizerOptions}
+                    voiceTranscriberOptions={voiceTranscriberOptions}
                   />
-
-                  {/* <FormikTextField
-                    name='agent_default_voice'
-                    // placeholder={t('default-voice')}
-                    label={t('default-voice')}
-                  /> */}
-
-                  {agent_voice_synthesizer && (
-                    <StyledCombinedFields>
-                      <FormikTextField
-                        name='agent_voice_id'
-                        // placeholder={t('voice-id')}
-                        label={t('voice-id')}
-                      />
-
-                      <StyledButtonWrapper>
-                        <ButtonSecondary
-                          onClick={() =>
-                            openModal({
-                              name: 'voice-options-modal',
-                              data: { voiceList: pickedVoiceOptions, formik: formik },
-                            })
-                          }
-                        >
-                          Choose Voice
-                        </ButtonSecondary>
-                      </StyledButtonWrapper>
-                    </StyledCombinedFields>
-                  )}
-
-                  {pickedVoice && (
-                    <VoiceOptionCard
-                      title={pickedVoice?.name}
-                      audioUrl={pickedVoice?.sample}
-                      onRemoveClick={() => setFieldValue('agent_voice_id', '')}
-                    />
-                  )}
-
-                  {/* <AgentDropdown
-                    fieldName={'agent_voice_id'}
-                    fieldValue={agent_voice_id}
-                    options={pickedVoiceOptions}
-                    setFieldValue={setFieldValue}
-                  /> */}
-
-                  <AgentDropdown
-                    label={t('transcriber')}
-                    fieldName={'agent_voice_transcriber'}
-                    setFieldValue={setFieldValue}
-                    fieldValue={agent_voice_transcriber}
-                    options={voiceTranscriberOptions}
-                    optionSize={'small'}
-                  />
-
-                  {agentType === 'inbound' && (
-                    <FormikTextField
-                      onHelpClick={() =>
-                        openLinkTab(import.meta.env.REACT_APP_TWILIO_PHONE_NUMBER_SID_LINK)
-                      }
-                      name='agent_twilio_phone_number_sid'
-                      placeholder={'Please enter value'}
-                      label='Twilio Phone Number SID'
-                    />
-                  )}
-
                   {/* <StyledFormInputWrapper>
                     <TypographyPrimary
                       value={t('response-mode')}
@@ -494,7 +340,7 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                       />
                     </StyledCheckboxWrapper>
                   </StyledFormInputWrapper> */}
-                </StyledTabPanelInnerWrapper>
+                </>
               </TabPanel>
 
               <TabPanel>
@@ -671,7 +517,4 @@ export const StyledTabPanelInnerWrapper = styled.div`
   /* margin: auto; */
   height: 100%;
   /* max-height: 800px; */
-`
-const StyledButtonWrapper = styled.div`
-  margin-top: 25px;
 `
