@@ -49,9 +49,9 @@ const VoicePreferences = ({
       return {
         name: item.name,
         sample: item.preview_url,
-        language: item.language_code || '-',
+        language: item.language,
         id: item.voice_id,
-        gender: item.labels.gender,
+        gender: item.gender,
       }
     })
 
@@ -67,6 +67,8 @@ const VoicePreferences = ({
     })
 
   const pickedVoice = pickedVoiceOptions?.find((item: any) => item.id === agent_voice_id)
+
+  console.log('voiceOptions', voiceOptions)
 
   return (
     <StyledTabPanelInnerWrapper>

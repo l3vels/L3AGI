@@ -25,8 +25,6 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
 
   const { voiceList, formik } = data
 
-  console.log(voiceList)
-
   return (
     <>
       <Modal onClose={() => closeModal('voice-options-modal')} show backgroundColor='light'>
@@ -37,7 +35,7 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
             </StyledHeader>
 
             <StyledWrapper>
-              {voiceList?.slice(0, 15)?.map((voice: any) => {
+              {voiceList?.map((voice: any) => {
                 const id = voice.id
 
                 return (

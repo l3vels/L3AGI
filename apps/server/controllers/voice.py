@@ -29,7 +29,9 @@ def get_voices() -> List[VoiceOutput]:
 
 
 @router.get("/options")
-def get_voice_options(auth: UserAccount = Depends(authenticate_by_token_or_api_key)):
+def get_voice_options(
+    page=1, per_page=10, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
+):
     """
     Get all voice options.
     """
@@ -44,7 +46,9 @@ def get_voice_options(auth: UserAccount = Depends(authenticate_by_token_or_api_k
     AZURE_SPEECH_REGION = voice_settings.AZURE_SPEECH_REGION
 
     # ElevenLabs
-    labsUrl = "https://api.elevenlabs.io/v1/voices"
+    labsUrl = (
+        f"https://api.elevenlabs.io/v1/shared-voices?page_size={per_page}&page={page}"
+    )
     labsHeaders = {
         "xi-api-key": ELEVEN_LABS_API_KEY or os.environ.get("ELEVEN_LABS_API_KEY")
     }
@@ -58,6 +62,11 @@ def get_voice_options(auth: UserAccount = Depends(authenticate_by_token_or_api_k
         "X-USER-ID": PLAY_HT_USER_ID or os.environ.get("PLAY_HT_USER_ID"),
     }
     playHtResponse = requests.get(playHtUrl, headers=playHtHeaders)
+    play_ht_all_voices = playHtResponse.json()
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_voices = play_ht_all_voices[start:end]
 
     # Azure
     msTtsUrl = "https://eastus.tts.speech.microsoft.com/cognitiveservices/voices/list"
@@ -66,11 +75,17 @@ def get_voice_options(auth: UserAccount = Depends(authenticate_by_token_or_api_k
         or os.environ.get("AZURE_SPEECH_KEY"),
     }
     msTtsResponse = requests.get(msTtsUrl, headers=msTtsHeaders)
+    azure_voices = msTtsResponse.json()
 
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_azure_voices = azure_voices[start:end]
+
+    print(labsResponse.json())
     combined_response = {
         "elevenLabsVoices": labsResponse.json(),
-        "playHtVoices": playHtResponse.json(),
-        "azureVoices": msTtsResponse.json(),
+        "playHtVoices": paginated_voices,
+        "azureVoices": paginated_azure_voices,
     }
 
     return combined_response
