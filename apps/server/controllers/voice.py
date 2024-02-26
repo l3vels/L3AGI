@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, Optional
 
 import requests
 from fastapi import APIRouter, Depends
@@ -30,7 +30,9 @@ def get_voices() -> List[VoiceOutput]:
 
 @router.get("/options")
 def get_voice_options(
-    page=1, per_page=10, auth: UserAccount = Depends(authenticate_by_token_or_api_key)
+    page: Optional[int] = 1,
+    per_page: Optional[int] = 10,
+    auth: UserAccount = Depends(authenticate_by_token_or_api_key),
 ):
     """
     Get all voice options.
@@ -47,7 +49,8 @@ def get_voice_options(
 
     # ElevenLabs
     labsUrl = (
-        f"https://api.elevenlabs.io/v1/shared-voices?page_size={per_page}&page={page}"
+        # f"https://api.elevenlabs.io/v1/shared-voices?page_size={per_page}&page={page}"
+        f"https://api.elevenlabs.io/v1/shared-voices"
     )
     labsHeaders = {
         "xi-api-key": ELEVEN_LABS_API_KEY or os.environ.get("ELEVEN_LABS_API_KEY")
@@ -84,8 +87,8 @@ def get_voice_options(
     print(labsResponse.json())
     combined_response = {
         "elevenLabsVoices": labsResponse.json(),
-        "playHtVoices": paginated_voices,
-        "azureVoices": paginated_azure_voices,
+        "playHtVoices": play_ht_all_voices,
+        "azureVoices": azure_voices,
     }
 
     return combined_response
