@@ -48,17 +48,14 @@ def get_voice_options(
     AZURE_SPEECH_REGION = voice_settings.AZURE_SPEECH_REGION
 
     # ElevenLabs
-    labsUrl = (
-        # f"https://api.elevenlabs.io/v1/shared-voices?page_size={per_page}&page={page}"
-        f"https://api.elevenlabs.io/v1/shared-voices"
-    )
+    labsUrl = os.environ.get("ELEVEN_LABS_VOICE_LIST_API")
     labsHeaders = {
         "xi-api-key": ELEVEN_LABS_API_KEY or os.environ.get("ELEVEN_LABS_API_KEY")
     }
     labsResponse = requests.get(labsUrl, headers=labsHeaders)
 
     # PlayHT
-    playHtUrl = "https://api.play.ht/api/v2/voices"
+    playHtUrl = os.environ.get("PLAY_HT_VOICE_LIST_API")
     playHtHeaders = {
         "accept": "application/json",
         "AUTHORIZATION": PLAY_HT_API_KEY or os.environ.get("PLAY_HT_API_KEY"),
@@ -72,13 +69,13 @@ def get_voice_options(
     paginated_voices = play_ht_all_voices[start:end]
 
     # Azure
-    msTtsUrl = "https://eastus.tts.speech.microsoft.com/cognitiveservices/voices/list"
-    msTtsHeaders = {
+    azureUrl = os.environ.get("AZURE_VOICE_LIST_API")
+    azureHeaders = {
         "Ocp-Apim-Subscription-Key": AZURE_SPEECH_KEY
         or os.environ.get("AZURE_SPEECH_KEY"),
     }
-    msTtsResponse = requests.get(msTtsUrl, headers=msTtsHeaders)
-    azure_voices = msTtsResponse.json()
+    azureResponse = requests.get(azureUrl, headers=azureHeaders)
+    azure_voices = azureResponse.json()
 
     start = (page - 1) * per_page
     end = start + per_page
