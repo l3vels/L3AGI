@@ -1,0 +1,8 @@
+query getVoiceOptions($restPath: String!) @api(name: "ai") {
+  getVoiceOptions(restPath: $restPath)
+    @rest(type: "Voice", path: "{args.restPath}", method: "GET", endpoint: "ai") {
+    elevenLabsVoices
+    playHtVoices
+    azureVoices
+  }
+}

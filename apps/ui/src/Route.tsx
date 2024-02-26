@@ -106,6 +106,7 @@ import CreateCampaignModal from 'modals/CreateCampaignModal'
 import EditCampaignModal from 'modals/EditCampaignModal'
 import CreateScheduleModal from 'modals/CreateScheduleModal'
 import EditScheduleModal from 'modals/EditScheduleModal'
+import VoiceOptionsModal from 'modals/VoiceOptionsModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -443,6 +444,7 @@ const Route = () => {
         <EditCampaignModal />
         <CreateScheduleModal />
         <EditScheduleModal />
+        <VoiceOptionsModal />
         <TwilioPhoneNumberSidConfirmationModal />
 
         <CommandMenu

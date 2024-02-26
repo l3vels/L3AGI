@@ -62,30 +62,34 @@ const AudioPlayer = ({
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
   }
 
-  useEffect(() => {
-    getDuration(audioUrl, function (duration: number) {
-      setDuration(duration)
-    })
-  }, [])
+  // useEffect(() => {
+  //   getDuration(audioUrl, function (duration: number) {
+  //     setDuration(duration)
+  //   })
+  // }, [])
 
-  const getDuration = function (url: string, next: any) {
-    const _player = new Audio(url)
-    _player.addEventListener(
-      'durationchange',
-      function (e) {
-        if (this.duration != Infinity) {
-          const duration = this.duration
-          _player.remove()
-          next(duration)
-        }
-      },
-      false,
-    )
-    _player.load()
-    _player.currentTime = 24 * 60 * 60 //fake big time
-    _player.volume = 0
-    _player.play()
-    //waiting...
+  // const getDuration = function (url: string, next: any) {
+  //   const _player = new Audio(url)
+  //   _player.addEventListener(
+  //     'durationchange',
+  //     function (e) {
+  //       if (this.duration != Infinity) {
+  //         const duration = this.duration
+  //         _player.remove()
+  //         next(duration)
+  //       }
+  //     },
+  //     false,
+  //   )
+  //   _player.load()
+  //   _player.currentTime = 24 * 60 * 60 //fake big time
+  //   _player.volume = 0
+  //   _player.play()
+  //   //waiting...
+  // }
+
+  const handleMetadata = (e: any) => {
+    setDuration(e.target.duration)
   }
 
   return (
@@ -101,7 +105,12 @@ const AudioPlayer = ({
         hasClose={onCloseClick ? true : false}
       >
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <audio ref={audioRef} src={audioUrl} onTimeUpdate={handleTimeUpdate} />
+        <audio
+          ref={audioRef}
+          src={audioUrl}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleMetadata}
+        />
 
         <StyledTimeIndicator>
           <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
@@ -175,6 +184,8 @@ export const StyledTimeIndicator = styled.div`
   opacity: 0.4;
 
   color: #000;
+
+  font-size: 14px;
 `
 const StyledButton = styled.button`
   width: 30px;

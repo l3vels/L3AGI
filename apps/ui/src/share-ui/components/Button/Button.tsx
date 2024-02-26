@@ -361,6 +361,7 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
   border: 2px solid transparent;
 
   display: inline-flex;
+  gap: 5px;
   align-items: center;
   justify-content: center;
 
@@ -473,13 +474,14 @@ const StyledButton = styled.button<{ size?: string; kind?: string; disabled?: bo
       pointer-events: none;
       cursor: not-allowed;
 
-      color: rgba(255, 255, 255, 0.4);
-      background-color: rgba(255, 255, 255, 0.2);
+      color: #00000066;
+      background-color: #00000033;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: unset;
       }
     `}
+
     ${props =>
     props.disabled &&
     props.kind === 'tertiary' &&
