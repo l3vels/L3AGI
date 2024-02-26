@@ -26,7 +26,7 @@ const VoicePreferences = ({
 
   const { agent_voice_synthesizer, agent_voice_transcriber, agent_voice_id, agent_type } = values
 
-  const { data: voiceOptions } = useVoiceOptionsService({})
+  const { data: voiceOptions, loading } = useVoiceOptionsService({})
 
   const pickedSynthesizer = voiceSynthesizerOptions?.find(
     (option: any) => option.value === agent_voice_synthesizer,
@@ -68,9 +68,6 @@ const VoicePreferences = ({
 
   const pickedVoice = pickedVoiceOptions?.find((item: any) => item.id === agent_voice_id)
 
-  console.log('pickedVoice', pickedVoice)
-  console.log('pickedVoiceOptions', pickedVoiceOptions)
-
   return (
     <StyledTabPanelInnerWrapper>
       <AgentDropdown
@@ -96,14 +93,16 @@ const VoicePreferences = ({
 
           <StyledButtonWrapper>
             <ButtonSecondary
+              disabled={loading}
               onClick={() =>
                 openModal({
                   name: 'voice-options-modal',
-                  data: { formik: formik },
+                  data: { formik: formik, voiceList: pickedVoiceOptions },
                 })
               }
             >
-              Choose Voice
+              {'Choose Voice'}
+              {loading && <Loader size={20} />}
             </ButtonSecondary>
           </StyledButtonWrapper>
         </StyledCombinedFields>

@@ -5,7 +5,7 @@ import { useModal } from 'hooks'
 import styled from 'styled-components'
 
 import { StyledModalBody } from './IntegrationListModal'
-import { StyledSectionTitle, StyledSectionWrapper } from 'pages/Home/homeStyle.css'
+import { StyledSectionWrapper } from 'pages/Home/homeStyle.css'
 import { ButtonTertiary } from 'components/Button/Button'
 
 import AudioPlayer from 'components/AudioPlayer'
@@ -14,34 +14,22 @@ import Table from 'components/Table/Table'
 import { useState } from 'react'
 import { t } from 'i18next'
 import { StyledTableButtons } from 'plugins/contact/pages/Group/Groups'
-import { useVoiceOptionsService } from 'plugins/contact/services/voice/useVoiceOptionsService'
-import { useAgentForm } from 'pages/Agents/AgentForm/useAgentForm'
+
 import TextField from 'share-ui/components/TextField/TextField'
 
 type VoiceOptionsModalProps = {
   data: {
     formik: any
+    voiceList: any
   }
 }
 
 const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
   const [searchText, setSearchText] = useState('')
 
-  const [page, setPage] = useState(1)
-  const { data: voiceOptions, loading: optionsLoading } = useVoiceOptionsService({
-    itemsCount: 20,
-    page,
-  })
-
-  const { voiceSynthesizerOptions } = useAgentForm({})
-
   const { closeModal } = useModal()
 
-  const { formik } = data
-
-  const { values } = formik
-
-  const { agent_voice_synthesizer } = values
+  const { formik, voiceList } = data
 
   const column = [
     {
@@ -92,45 +80,7 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
     },
   ]
 
-  const pickedSynthesizer = voiceSynthesizerOptions?.find(
-    (option: any) => option.value === agent_voice_synthesizer,
-  )?.label
-
-  let pickedVoiceOptions: any = []
-  if (pickedSynthesizer === 'Play.HT')
-    pickedVoiceOptions = voiceOptions['playHtVoices']?.map((item: any) => {
-      return {
-        name: item.name,
-        sample: item.sample,
-        language: item.language_code,
-        id: item.id,
-        gender: item.gender,
-      }
-    })
-
-  if (pickedSynthesizer === 'ElevenLabs')
-    pickedVoiceOptions = voiceOptions['elevenLabsVoices']?.voices?.map((item: any) => {
-      return {
-        name: item.name,
-        sample: item.preview_url,
-        language: item.language,
-        id: item.voice_id,
-        gender: item.gender,
-      }
-    })
-
-  if (pickedSynthesizer === 'Azure')
-    pickedVoiceOptions = voiceOptions['azureVoices']?.map((item: any) => {
-      return {
-        name: item.DisplayName,
-        sample: '',
-        language: item.language_code || '-',
-        id: item.ShortName,
-        gender: item.Gender,
-      }
-    })
-
-  const filteredData = pickedVoiceOptions?.filter((row: { name: string; phone: string }) => {
+  const filteredData = voiceList?.filter((row: { name: string; phone: string }) => {
     const includesSearchText = row.name.toLowerCase().includes(searchText.toLowerCase())
 
     return includesSearchText
@@ -141,10 +91,6 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
       <Modal onClose={() => closeModal('voice-options-modal')} show backgroundColor='light'>
         <StyledModalBody>
           <StyledSectionWrapper>
-            {/* <StyledHeader>
-              <StyledSectionTitle>Pick Voice</StyledSectionTitle>
-            </StyledHeader> */}
-
             <StyledTableWrapper>
               <TextField
                 placeholder='Search contact'
@@ -158,7 +104,7 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
                 // setPage={setPage}
                 // page={page}
                 // totalPages={10}
-                isLoading={optionsLoading}
+                // isLoading={optionsLoading}
               />
             </StyledTableWrapper>
           </StyledSectionWrapper>
@@ -170,13 +116,6 @@ const VoiceOptionsModal = ({ data }: VoiceOptionsModalProps) => {
 
 export default withRenderModal('voice-options-modal')(VoiceOptionsModal)
 
-const StyledHeader = styled.div`
-  display: flex;
-  align-items: center;
-
-  height: 50px;
-  padding: 0 20px;
-`
 const StyledTableWrapper = styled.div`
   padding: 10px;
   width: 100%;
