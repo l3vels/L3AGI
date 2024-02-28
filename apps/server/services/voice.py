@@ -21,7 +21,8 @@ def text_to_speech(
 
     synthesizers = {
         "142e60f5-2d46-4b1a-9054-0764e553eed6": playht_text_to_speech,
-        # TODO: add AzureVoice.id: azure_text_to_speech, when available.
+        "509fd791-578f-40be-971f-c6753957c307": eleven_labs_text_to_speech,
+        "dc872426-a95c-4c41-83a2-5e5ed43670cd": azure_text_to_speech,
     }
 
     if configs.synthesizer not in synthesizers:
@@ -147,3 +148,56 @@ async def deepgram_speech_to_text(
         return transcribed_text.strip('"')
     except Exception as err:
         raise TranscriberException(str(err))
+
+
+def eleven_labs_text_to_speech(
+    text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> bytes:
+    if settings.ELEVEN_LABS_API_KEY is None or not settings.ELEVEN_LABS_API_KEY:
+        raise SynthesizerException(
+            "Please set Eleven Labs API Key in [Voice Integrations](/integrations/voice/elevenlabs) in order to synthesize text to speech."
+        )
+
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{configs.voice_id or configs.default_voice}"
+
+    payload = {
+        "model_id": "eleven_multilingual_v2",
+        "text": text,
+        "voice_settings": {"similarity_boost": 1, "stability": 1, "style": 1},
+    }
+    headers = {
+        "xi-api-key": settings.ELEVEN_LABS_API_KEY,
+        "Content-Type": "application/json",
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    return response.content
+
+
+def azure_text_to_speech(
+    text: str, configs: ConfigsOutput, settings: AccountVoiceSettings
+) -> bytes:
+    if settings.AZURE_SPEECH_KEY is None or not settings.AZURE_SPEECH_KEY:
+        raise SynthesizerException(
+            "Please set Azure Speech Key in [Voice Integrations](/integrations/voice/azure) in order to synthesize text to speech."
+        )
+
+    url = f"https://{settings.AZURE_SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1"
+
+    body = f"""
+        <speak version='1.0' xml:lang='en-US'>
+            <voice xml:lang='en-US' name='{configs.voice_id}'>
+               {text}
+            </voice>
+        </speak>
+        """
+
+    headers = {
+        "Ocp-Apim-Subscription-Key": settings.AZURE_SPEECH_KEY,
+        "Content-Type": "application/ssml+xml",
+        "X-Microsoft-OutputFormat": "riff-24khz-16bit-mono-pcm",
+        "User-Agent": "Your application name",
+    }
+
+    response = requests.post(url, headers=headers, data=body)
+    return response.content

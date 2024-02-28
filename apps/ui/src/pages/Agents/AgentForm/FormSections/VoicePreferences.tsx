@@ -15,6 +15,7 @@ import Checkbox from 'share-ui/components/Checkbox/Checkbox'
 import TypographyPrimary from 'components/Typography/Primary'
 import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 import Typography from 'share-ui/components/typography/Typography'
+import { useEffect } from 'react'
 
 const VoicePreferences = ({
   formik,
@@ -61,9 +62,9 @@ const VoicePreferences = ({
       return {
         name: item.name,
         sample: item.preview_url,
-        language: item.language,
+        language: '-',
         id: item.voice_id,
-        gender: item.gender,
+        gender: item.labels.gender,
       }
     })
 
