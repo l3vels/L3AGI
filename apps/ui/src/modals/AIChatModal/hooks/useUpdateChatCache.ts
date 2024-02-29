@@ -13,16 +13,19 @@ const useUpdateChatCache = () => {
 
   const upsertChatMessageInCache = (
     newChatMessage: Record<string, unknown>,
+
     {
       localChatMessageRefId,
       agentId,
       teamId,
       chatId,
+      replaceCache,
     }: {
       localChatMessageRefId?: Nullable<string>
       agentId?: Nullable<string>
       teamId?: Nullable<string>
       chatId?: Nullable<string>
+      replaceCache?: boolean
     } = {},
   ) => {
     let queryVariables = omitBy(
@@ -45,13 +48,18 @@ const useUpdateChatCache = () => {
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {
         const chatMessages = data?.chatMessages || []
-        const newChatMessages = [...chatMessages]
+        let newChatMessages = [...chatMessages]
         newChatMessage = {
           __typename: 'ChatMessage',
           parent: null,
           agent: null,
           team: null,
           ...newChatMessage,
+        }
+
+        if (replaceCache) {
+          const lastItemId = newChatMessages[newChatMessages.length - 1].id
+          newChatMessages = newChatMessages.filter((message: any) => message.id !== lastItemId)
         }
 
         if (localChatMessageRefId && user.id === newChatMessage.sender_user_id) {

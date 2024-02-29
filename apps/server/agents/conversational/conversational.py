@@ -113,9 +113,11 @@ class ConversationalAgent(BaseAgent):
 
             yield res
 
-        history.create_ai_message(
+        ai_message = history.create_ai_message(
             res,
             human_message_id,
             agent_with_configs.agent.id,
             voice_url,
         )
+
+        chat_pubsub_service.send_chat_message(chat_message=ai_message)
