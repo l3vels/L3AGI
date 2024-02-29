@@ -1,30 +1,24 @@
 /* eslint-disable */
 /* tslint:disable */
-import * as React from 'react';
+import * as React from 'react'
 export interface ArrowDownProps extends React.SVGAttributes<SVGElement> {
-size?: string | number;
+  size?: string | number
 }
-const ArrowDown: React.FC<ArrowDownProps> = ({size, ...props}) => (
-  <svg viewBox="0 0 32 32" fill="currentColor" width={ size || "32" } height={ size || "32" } {...props}>
-    <g filter="url(#filter0_bd_761_16727)">
-      <path d="M10 13L15.6852 18.6854C16.1047 19.1049 16.7847 19.1049 17.2042 18.6854L22.8894 13" stroke="#fff" strokeLinecap="round" />
-    </g>
-    <defs>
-      <filter id="filter0_bd_761_16727" x="-10" y="-10" width="52" height="52" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-        <feFlood result="BackgroundImageFix" floodOpacity="0" />
-        <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
-        <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_761_16727" />
-        <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-        <feOffset dy="1" />
-        <feGaussianBlur stdDeviation="1.5" />
-        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0" />
-        <feBlend in2="effect1_backgroundBlur_761_16727" result="effect2_dropShadow_761_16727" />
-        <feBlend in="SourceGraphic" in2="effect2_dropShadow_761_16727" result="shape" />
-      </filter>
-    </defs>
+const ArrowDown: React.FC<ArrowDownProps> = ({ size, ...props }) => (
+  <svg
+    width={size || '32'}
+    height={size || '32'}
+    viewBox='0 0 10 12'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M9.85356 6.64642C9.75978 6.55269 9.63261 6.50003 9.50001 6.50003C9.36742 6.50003 9.24025 6.55269 9.14647 6.64642L5.50001 10.2929V0.5C5.50001 0.367392 5.44733 0.240215 5.35357 0.146447C5.2598 0.0526785 5.13262 0 5.00001 0C4.8674 0 4.74023 0.0526785 4.64646 0.146447C4.55269 0.240215 4.50001 0.367392 4.50001 0.5V10.2929L0.853558 6.64642C0.759783 6.55266 0.632601 6.49998 0.49999 6.49999C0.367378 6.49999 0.240201 6.55268 0.146435 6.64645C0.0526683 6.74023 -5.74022e-06 6.86741 4.69188e-10 7.00002C5.74116e-06 7.13263 0.0526909 7.25981 0.146465 7.35358L4.64647 11.8536C4.64808 11.8552 4.64988 11.8566 4.65153 11.8582C4.66166 11.868 4.67207 11.8776 4.68299 11.8866C4.6891 11.8916 4.69557 11.896 4.70185 11.9007C4.70863 11.9057 4.71528 11.911 4.72233 11.9157C4.7296 11.9206 4.73716 11.9248 4.74464 11.9293C4.75117 11.9332 4.75755 11.9373 4.76429 11.9409C4.7718 11.9449 4.77955 11.9483 4.78721 11.952C4.79435 11.9553 4.80137 11.9589 4.80867 11.9619C4.81605 11.965 4.82362 11.9674 4.83113 11.9701C4.839 11.973 4.84681 11.976 4.85487 11.9784C4.86235 11.9807 4.86995 11.9823 4.87751 11.9843C4.88575 11.9863 4.89393 11.9886 4.90233 11.9903C4.91105 11.992 4.91984 11.9931 4.9286 11.9943C4.93599 11.9954 4.94322 11.9968 4.95066 11.9975C4.96708 11.9991 4.98353 12 5.00001 12C5.01649 12 5.03294 11.9991 5.04936 11.9975C5.0568 11.9968 5.06404 11.9954 5.07142 11.9943C5.08018 11.9931 5.08897 11.992 5.0977 11.9903C5.10609 11.9886 5.11427 11.9863 5.12251 11.9843C5.13008 11.9823 5.13768 11.9807 5.14515 11.9784C5.15321 11.976 5.16102 11.973 5.1689 11.9701C5.1764 11.9674 5.18397 11.965 5.19136 11.9619C5.19865 11.9589 5.20567 11.9553 5.21281 11.952C5.22047 11.9483 5.22822 11.9449 5.23573 11.9409C5.24247 11.9373 5.24885 11.9332 5.25538 11.9293C5.26286 11.9248 5.27043 11.9206 5.27769 11.9157C5.28474 11.911 5.29139 11.9057 5.29817 11.9007C5.30445 11.896 5.31092 11.8916 5.31703 11.8866C5.32817 11.8775 5.33876 11.8677 5.34907 11.8576C5.35051 11.8562 5.35212 11.855 5.35356 11.8536L9.85356 7.35358C9.89999 7.30715 9.93682 7.25202 9.96196 7.19136C9.98709 7.13069 10 7.06567 10 7C10 6.93433 9.98709 6.86931 9.96196 6.80864C9.93682 6.74798 9.89999 6.69285 9.85356 6.64642Z'
+      fill='black'
+    />
   </svg>
-);
-ArrowDown.displayName = 'ArrowDown';
-export default ArrowDown;
+)
+ArrowDown.displayName = 'ArrowDown'
+export default ArrowDown
 /* tslint:enable */
 /* eslint-enable */
