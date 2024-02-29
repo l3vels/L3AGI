@@ -62,5 +62,12 @@ module "backend" {
     AWS_REGION                     = var.AWS_REGION
     AWS_S3_BUCKET                  = var.AWS_S3_BUCKET
     AUTH_TOKEN                     = var.AUTH_TOKEN
+    ELEVEN_LABS_VOICE_LIST_API     = var.ELEVEN_LABS_VOICE_LIST_API
+    PLAY_HT_VOICE_LIST_API         = var.PLAY_HT_VOICE_LIST_API
+    AZURE_VOICE_LIST_API           = var.AZURE_VOICE_LIST_API
+    ELEVEN_LABS_API_KEY            = var.ELEVEN_LABS_API_KEY
+    PLAY_HT_API_KEY                = var.PLAY_HT_API_KEY
+    PLAY_HT_USER_ID                = var.PLAY_HT_USER_ID
+    AZURE_SPEECH_KEY               = var.AZURE_SPEECH_KEY
   }
 }

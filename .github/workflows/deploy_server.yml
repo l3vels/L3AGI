@@ -93,6 +93,13 @@ jobs:
           echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
           echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
           echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
+          echo -e "ELEVEN_LABS_VOICE_LIST_API = \"${{ vars.ELEVEN_LABS_VOICE_LIST_API }}\"\n" >> $TFVARS
+          echo -e "PLAY_HT_VOICE_LIST_API = \"${{ vars.PLAY_HT_VOICE_LIST_API }}\"\n" >> $TFVARS
+          echo -e "AZURE_VOICE_LIST_API = \"${{ vars.AZURE_VOICE_LIST_API }}\"\n" >> $TFVARS
+          echo -e "ELEVEN_LABS_API_KEY = \"${{ secrets.ELEVEN_LABS_API_KEY }}\"\n" >> $TFVARS
+          echo -e "PLAY_HT_API_KEY = \"${{ secrets.PLAY_HT_API_KEY }}\"\n" >> $TFVARS
+          echo -e "PLAY_HT_USER_ID = \"${{ secrets.PLAY_HT_USER_ID }}\"\n" >> $TFVARS
+          echo -e "AZURE_SPEECH_KEY = \"${{ secrets.AZURE_SPEECH_KEY }}\"\n" >> $TFVARS
 
       - name: Display .auto.tfvars file content
         run: |
@@ -208,6 +215,13 @@ jobs:
           echo -e "AWS_REGION = \"${{ vars.AWS_REGION }}\"\n" >> $TFVARS
           echo -e "AWS_S3_BUCKET = \"${{ vars.AWS_S3_BUCKET }}\"\n" >> $TFVARS
           echo -e "AUTH_TOKEN = \"${{ secrets.AUTH_TOKEN }}\"\n" >> $TFVARS
+          echo -e "ELEVEN_LABS_VOICE_LIST_API = \"${{ vars.ELEVEN_LABS_VOICE_LIST_API }}\"\n" >> $TFVARS
+          echo -e "PLAY_HT_VOICE_LIST_API = \"${{ vars.PLAY_HT_VOICE_LIST_API }}\"\n" >> $TFVARS
+          echo -e "AZURE_VOICE_LIST_API = \"${{ vars.AZURE_VOICE_LIST_API }}\"\n" >> $TFVARS
+          echo -e "ELEVEN_LABS_API_KEY = \"${{ secrets.ELEVEN_LABS_API_KEY }}\"\n" >> $TFVARS
+          echo -e "PLAY_HT_API_KEY = \"${{ secrets.PLAY_HT_API_KEY }}\"\n" >> $TFVARS
+          echo -e "PLAY_HT_USER_ID = \"${{ secrets.PLAY_HT_USER_ID }}\"\n" >> $TFVARS
+          echo -e "AZURE_SPEECH_KEY = \"${{ secrets.AZURE_SPEECH_KEY }}\"\n" >> $TFVARS
 
       - name: Display .auto.tfvars file content
         run: |

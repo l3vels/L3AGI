@@ -83,6 +83,27 @@ variable "AWS_S3_BUCKET" {
 variable "AUTH_TOKEN" {
   type = string
 }
+variable "ELEVEN_LABS_VOICE_LIST_API" {
+  type = string
+}
+variable "PLAY_HT_VOICE_LIST_API" {
+  type = string
+}
+variable "AZURE_VOICE_LIST_API" {
+  type = string
+}
+variable "ELEVEN_LABS_API_KEY" {
+  type = string
+}
+variable "PLAY_HT_API_KEY" {
+  type = string
+}
+variable "PLAY_HT_USER_ID" {
+  type = string
+}
+variable "AZURE_SPEECH_KEY" {
+  type = string
+}
 
 locals {
   task_container_env_vars = [ ]
