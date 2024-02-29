@@ -17,6 +17,8 @@ import HumanReply from './components/HumanReply'
 import AiReply from './components/AiReply'
 import { ReplyStateProps } from '../ReplyBox'
 
+import { ArrowDown } from 'share-ui/components/Icon/Icons'
+
 export enum MessageTypeEnum {
   AI_MANUAL = 'AI_MANUAL',
   User = 'User',
@@ -49,6 +51,7 @@ const ChatMessageListV2 = ({
   const [listIsReady, setListIsReady] = useState(false)
 
   const virtuoso = useRef<VirtuosoHandle>(null)
+  const scrollerRef = useRef<any>(null)
 
   const filteredData = data?.map((chat: any) => {
     const chatDate = moment(chat?.created_on).format('HH:mm')
@@ -95,7 +98,7 @@ const ChatMessageListV2 = ({
 
   const scrollToEnd = () => {
     virtuoso.current?.scrollToIndex({
-      index: initialChat.length + 1,
+      index: initialChat.length + 2,
       align: 'end',
     })
   }
@@ -150,10 +153,44 @@ const ChatMessageListV2 = ({
     // eslint-disable-next-line
   }, [sessionId])
 
+  const [showScrollButton, setShowScrollButton] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollerRef.current) {
+        const { scrollTop, clientHeight, scrollHeight } = scrollerRef.current
+        const bottomScrollPosition = scrollTop + clientHeight
+        const isScrollable = scrollHeight - bottomScrollPosition > 1 // Using 1 as a threshold
+        setShowScrollButton(isScrollable)
+      }
+    }
+
+    const scrollContainer = scrollerRef.current
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll)
+
+      // Initial check in case the list is already scrollable
+      handleScroll()
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [initialChat])
+
+  useEffect(() => {
+    if (!showScrollButton) scrollToEnd()
+  }, [data])
+
   return (
     <StyledRoot show={true}>
       <Virtuoso
         ref={virtuoso}
+        scrollerRef={ref => {
+          scrollerRef.current = ref
+        }}
         style={{ height: '100%' }}
         data={initialChat}
         totalCount={data.length}
@@ -253,6 +290,11 @@ const ChatMessageListV2 = ({
           </>
         )}
       />
+      {showScrollButton && (
+        <StyledScrollButton onClick={scrollToEnd}>
+          <ArrowDown size={18} />
+        </StyledScrollButton>
+      )}
     </StyledRoot>
   )
 }
@@ -260,6 +302,8 @@ const ChatMessageListV2 = ({
 export default memo(ChatMessageListV2)
 
 const StyledRoot = styled.div<{ show: boolean }>`
+  position: relative;
+
   opacity: 0;
   width: 100%;
 
@@ -330,4 +374,22 @@ const StyledReplyMessageContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   /* align-items: center; */
+`
+const StyledScrollButton = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  cursor: pointer;
+
+  width: 38px;
+  height: 38px;
+  border-radius: 100px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Add box shadow here
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

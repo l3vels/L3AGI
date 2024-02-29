@@ -28,6 +28,7 @@ import AgentRunners, { StyledRunnerFieldsWrapper } from './components/AgentRunne
 import { isVoiceAgent } from 'utils/agentUtils'
 
 import VoicePreferences from './FormSections/VoicePreferences'
+import RadioButton from 'share-ui/components/RadioButton/RadioButton'
 
 type AgentFormProps = {
   formik: any
@@ -52,6 +53,8 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
     agent_integrations,
     agent_type,
     agent_sentiment_analyzer,
+    agent_voice_response,
+    agent_voice_input_mode,
   } = values
 
   const {
@@ -259,87 +262,6 @@ const AgentForm = ({ formik, isVoice = true }: AgentFormProps) => {
                     voiceSynthesizerOptions={voiceSynthesizerOptions}
                     voiceTranscriberOptions={voiceTranscriberOptions}
                   />
-                  {/* <StyledFormInputWrapper>
-                    <TypographyPrimary
-                      value={t('response-mode')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-
-                    <RadioButton
-                      text={t('text')}
-                      name='agent_voice_response'
-                      onSelect={() => setFieldValue('agent_voice_response', ['Text'])}
-                      checked={
-                        agent_voice_response?.length === 1 && agent_voice_response?.includes('Text')
-                      }
-                    />
-                    <RadioButton
-                      text={t('voice')}
-                      name='agent_voice_response'
-                      onSelect={() => setFieldValue('agent_voice_response', ['Voice'])}
-                      checked={
-                        agent_voice_response?.length === 1 &&
-                        agent_voice_response?.includes('Voice')
-                      }
-                    />
-                    <RadioButton
-                      text={`${t('text')} & ${t('voice')}`}
-                      name='agent_voice_response'
-                      onSelect={() => setFieldValue('agent_voice_response', ['Text', 'Voice'])}
-                      checked={agent_voice_response?.length === 2}
-                    />
-                  </StyledFormInputWrapper> */}
-
-                  {/* <StyledFormInputWrapper>
-                    <TypographyPrimary
-                      value={t('input-mode')}
-                      type={Typography.types.LABEL}
-                      size={Typography.sizes.md}
-                    />
-                    <StyledCheckboxWrapper>
-                      <Checkbox
-                        label={t('text')}
-                        kind='secondary'
-                        // name='agent_is_template'
-                        checked={agent_voice_input_mode?.includes('Text')}
-                        onChange={() => {
-                          if (agent_voice_input_mode?.includes('Text')) {
-                            const filteredInput = agent_voice_input_mode?.filter(
-                              (input: string) => input !== 'Text',
-                            )
-                            setFieldValue('agent_voice_input_mode', filteredInput)
-                          } else {
-                            setFieldValue('agent_voice_input_mode', [
-                              ...agent_voice_input_mode,
-                              'Text',
-                            ])
-                          }
-                        }}
-                      />
-                    </StyledCheckboxWrapper>
-                    <StyledCheckboxWrapper>
-                      <Checkbox
-                        label={t('voice')}
-                        kind='secondary'
-                        // name='agent_is_template'
-                        checked={agent_voice_input_mode?.includes('Voice')}
-                        onChange={() => {
-                          if (agent_voice_input_mode?.includes('Voice')) {
-                            const filteredInput = agent_voice_input_mode?.filter(
-                              (input: string) => input !== 'Voice',
-                            )
-                            setFieldValue('agent_voice_input_mode', filteredInput)
-                          } else {
-                            setFieldValue('agent_voice_input_mode', [
-                              ...agent_voice_input_mode,
-                              'Voice',
-                            ])
-                          }
-                        }}
-                      />
-                    </StyledCheckboxWrapper>
-                  </StyledFormInputWrapper> */}
                 </>
               </TabPanel>
 

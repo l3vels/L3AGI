@@ -100,6 +100,8 @@ class ConversationalAgent(BaseAgent):
                 },
             )
 
+            yield res
+
         try:
             configs = agent_with_configs.configs
             voice_url = None
@@ -108,6 +110,8 @@ class ConversationalAgent(BaseAgent):
                 pass
         except Exception as err:
             res = f"{res}\n\n{handle_agent_error(err)}"
+
+            yield res
 
         history.create_ai_message(
             res,
