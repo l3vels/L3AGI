@@ -49,7 +49,7 @@ jobs:
       - name: Build
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
-        run: yarn run build:domain
+        run: yarn run build:callsbot
         working-directory: apps/ui
 
       - name: Postbuild
