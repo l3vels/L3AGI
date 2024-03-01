@@ -25,10 +25,12 @@ import { useVoiceView } from './useVoiceView'
 import {
   StyledButtonWrapper,
   StyledFieldsWrapper,
+  StyledImg,
   StyledInnerWrapper,
   StyledMainTextWrapper,
   StyledTextWrapper,
 } from 'pages/Toolkit/ToolView/ToolView'
+import { voiceLogos } from '../constants'
 
 const VoiceView = ({
   voiceSlug,
@@ -49,6 +51,10 @@ const VoiceView = ({
   const name = voice?.name
   const description = voice?.description || ''
   const fields = voice?.fields
+
+  const filteredLogos = voiceLogos.filter((toolLogo: any) => toolLogo.voiceName === voice.name)
+
+  const logoSrc = filteredLogos?.[0]?.logoSrc || ''
 
   return (
     <FormikProvider value={formik}>
@@ -77,7 +83,7 @@ const VoiceView = ({
           <StyledInnerWrapper>
             {!hideInfo && (
               <>
-                {/* <StyledImg src={toolLogo[0]?.logoSrc} alt='' /> */}
+                <StyledImg src={logoSrc} alt='' />
                 <StyledTextWrapper>
                   <TypographySecondary
                     value={t('by')}
