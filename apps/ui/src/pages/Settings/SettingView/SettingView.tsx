@@ -1,5 +1,5 @@
 import FormikTextField from 'components/TextFieldFormik'
-import { useSettingView } from './useSettingView'
+import { SETTINGS_FIELDS, useSettingView } from './useSettingView'
 import { FormikProvider } from 'formik'
 import { StyledSectionWrapper } from 'pages/Home/homeStyle.css'
 import {
@@ -11,19 +11,26 @@ import { ButtonPrimary } from 'components/Button/Button'
 import Button from 'share-ui/components/Button/Button'
 import Loader from 'share-ui/components/Loader/Loader'
 import { t } from 'i18next'
-import { SETTINGS_FIELDS } from '../useSettings'
 
 const SettingView = ({ settingSlug }: { settingSlug: string }) => {
-  const { formik, isLoading } = useSettingView({ settingSlug })
-
-  const settingLabel = SETTINGS_FIELDS?.find((field: any) => field.key === settingSlug)?.label
+  const fields = SETTINGS_FIELDS?.find((setting: any) => setting.slug === settingSlug)?.configs
+  const { formik, isLoading } = useSettingView({ fields })
 
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
         <StyledInnerWrapper>
           <StyledFieldsWrapper>
-            <FormikTextField name={'configValue'} placeholder='' label={settingLabel} />
+            {fields?.map((field: any) => {
+              return (
+                <FormikTextField
+                  key={field.key}
+                  name={field.key}
+                  placeholder=''
+                  label={field.label}
+                />
+              )
+            })}
           </StyledFieldsWrapper>
 
           <StyledButtonWrapper>

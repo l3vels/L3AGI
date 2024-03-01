@@ -31,8 +31,9 @@ import { voiceLogos } from 'plugins/contact/pages/Voice/constants'
 import ToolView from 'pages/Toolkit/ToolView'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
-import { SETTINGS_FIELDS } from 'pages/Settings/useSettings'
+
 import SettingView from 'pages/Settings/SettingView'
+import { SETTINGS_FIELDS } from 'pages/Settings/SettingView/useSettingView'
 
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
@@ -168,10 +169,10 @@ const Integrations = () => {
                 return (
                   <MiniToolCard
                     key={index}
-                    onClick={() => handlePickSetting(setting.key)}
-                    name={setting.label}
+                    onClick={() => handlePickSetting(setting.slug)}
+                    name={setting.title}
                     logo={logoSrc}
-                    picked={settingQuery === setting.key}
+                    picked={settingQuery === setting.slug}
                   />
                 )
               })}
