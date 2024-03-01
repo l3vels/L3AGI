@@ -31,6 +31,8 @@ import { voiceLogos } from 'plugins/contact/pages/Voice/constants'
 import ToolView from 'pages/Toolkit/ToolView'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
+import { SETTINGS_FIELDS } from 'pages/Settings/useSettings'
+import SettingView from 'pages/Settings/SettingView'
 
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
@@ -63,6 +65,7 @@ const Integrations = () => {
   const urlParams = new URLSearchParams(location.search)
   const toolQuery = urlParams.get('tool') || ''
   const voiceQuery = urlParams.get('voice') || ''
+  const settingQuery = urlParams.get('setting') || ''
 
   const [activeTab, setActiveTab] = useState(0)
   const handleTabClick = (tabId: number) => {
@@ -94,11 +97,14 @@ const Integrations = () => {
 
   const handlePickTool = (slug: string) => {
     navigate(`/integrations?tool=${slug}`)
-
     setActiveTab(0)
   }
   const handlePickVoice = (slug: string) => {
     navigate(`/integrations?voice=${slug}`)
+    setActiveTab(0)
+  }
+  const handlePickSetting = (slug: string) => {
+    navigate(`/integrations?setting=${slug}`)
     setActiveTab(0)
   }
 
@@ -149,6 +155,26 @@ const Integrations = () => {
                   />
                 )
               })}
+
+              <ListHeader title={`${t('settings')}`} />
+
+              {SETTINGS_FIELDS?.map((setting: any, index: number) => {
+                const filteredLogos = voiceLogos.filter(
+                  (toolLogo: any) => toolLogo.voiceName === setting.name,
+                )
+
+                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+                return (
+                  <MiniToolCard
+                    key={index}
+                    onClick={() => handlePickSetting(setting.key)}
+                    name={setting.label}
+                    logo={logoSrc}
+                    picked={settingQuery === setting.key}
+                  />
+                )
+              })}
             </StyledLeftColumn>
 
             <StyledChatWrapper>
@@ -170,6 +196,7 @@ const Integrations = () => {
                       <TabPanel>
                         {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}
                         {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideInfo />}
+                        {settingQuery && <SettingView settingSlug={settingQuery} />}
                       </TabPanel>
                     </TabPanels>
                   </TabsContext>

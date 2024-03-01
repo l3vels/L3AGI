@@ -28,6 +28,8 @@ const Settings = ({ isModal = false }: { isModal?: boolean }) => {
 
   if (!configsData) return <div />
 
+  console.log('SETTINGS_FIELDS', SETTINGS_FIELDS)
+
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
