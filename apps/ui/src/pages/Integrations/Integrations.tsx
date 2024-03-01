@@ -34,6 +34,7 @@ import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
 
 import SettingView from 'pages/Settings/SettingView'
 import { SETTINGS_FIELDS } from 'pages/Settings/SettingView/useSettingView'
+import { settingLogos } from 'pages/Settings/constants'
 
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
@@ -160,8 +161,8 @@ const Integrations = () => {
               <ListHeader title={`${t('settings')}`} />
 
               {SETTINGS_FIELDS?.map((setting: any, index: number) => {
-                const filteredLogos = voiceLogos.filter(
-                  (toolLogo: any) => toolLogo.voiceName === setting.name,
+                const filteredLogos = settingLogos.filter(
+                  (toolLogo: any) => toolLogo.settingName === setting.title,
                 )
 
                 const logoSrc = filteredLogos?.[0]?.logoSrc || ''
