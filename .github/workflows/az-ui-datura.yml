@@ -1,0 +1,151 @@
+name: Azure Domain build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/ui/**"
+  # pull_request:
+  #   types: [opened, synchronize, reopened, closed]
+  #   branches:
+  #     - main
+
+jobs:
+  buid_deploy_job_dev:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      # Get yarn cache directory path
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        working-directory: apps/ui
+
+      # Cache yarn dependencies using the determined directory path
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('apps/ui/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install
+        working-directory: apps/ui
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: yarn run build:datura
+        working-directory: apps/ui
+
+      - name: Postbuild
+        run: yarn run postbuild
+        working-directory: apps/ui
+
+      # - name: List dist contents
+      #   run: ls -l apps/ui/dist
+
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BRAVE_POND_088116410 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurawtions - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/apps/ui/dist" # App source code path
+          # api_location: "" # Api source code path - optional
+          # output_location: "dist" # Built app content directory - optional
+          skip_app_build: true
+          ###### End of Repository/Build Configurations ######
+
+  # buid_deploy_job_prod:
+  #   needs: buid_deploy_job_dev
+  #   environment: prod
+  #   runs-on: ubuntu-latest
+  #   name: Build and Deploy Job Prod
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         submodules: true
+  #         lfs: false
+
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 18
+
+  #     - name: Setup yarn
+  #       run: npm install -g yarn
+
+  #     # Get yarn cache directory path
+  #     - name: Get yarn cache directory path
+  #       id: yarn-cache-dir-path
+  #       run: echo "::set-output name=dir::$(yarn cache dir)"
+  #       working-directory: apps/ui
+
+  #     # Cache yarn dependencies using the determined directory path
+  #     - uses: actions/cache@v2
+  #       with:
+  #         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+  #         key: ${{ runner.os }}-yarn-${{ hashFiles('apps/ui/yarn.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-yarn-
+
+  #     - name: Install dependencies
+  #       run: yarn install
+  #       working-directory: apps/ui
+
+  #     - name: Build
+  #       env:
+  #         NODE_OPTIONS: '--max_old_space_size=4096'
+  #       run: yarn run build:prod
+  #       working-directory: apps/ui
+
+  #     - name: Postbuild
+  #       run: yarn run postbuild
+  #       working-directory: apps/ui
+
+  #     # - name: List dist contents
+  #     #   run: ls -l apps/ui/dist
+
+  #     - name: Build And Deploy
+  #       id: builddeploy
+  #       uses: Azure/static-web-apps-deploy@v1
+  #       with:
+  #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_ISLAND_005734510 }}
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+  #         action: "upload"
+  #         ###### Repository/Build Configurawtions - These values can be configured to match your app requirements. ######
+  #         # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+  #         app_location: "/apps/ui/dist" # App source code path
+  #         # api_location: "" # Api source code path - optional
+  #         # output_location: "dist" # Built app content directory - optional
+  #         skip_app_build: true
+  #         ###### End of Repository/Build Configurations ######
+
+  # # close_pull_request_job:
+  # #   if: github.event_name == 'pull_request' && github.event.action == 'closed'
+  # #   runs-on: ubuntu-latest
+  # #   name: Close Pull Request Job
+  # #   steps:
+  # #     - name: Close Pull Request
+  # #       id: closepullrequest
+  # #       uses: Azure/static-web-apps-deploy@v1
+  # #       with:
+  # #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_GROUND_069DB8E10 }}
+  # #         action: "close"

@@ -23,7 +23,7 @@ export const WelcomeLoader = () => {
       <StyledSecondFigure />
       <StyledThirdFigure />
       <StyledCenterContainer>
-        <img src={domainLogo} alt='' />
+        <StyledImg src={domainLogo} alt='' />
         <Heading
           value={t('welcome-l3agi')}
           type={Heading.types?.h1}
@@ -35,6 +35,11 @@ export const WelcomeLoader = () => {
   )
 }
 export default WelcomeLoader
+
+const StyledImg = styled.img`
+  width: 200px;
+  height: 200px;
+`
 
 const StyledMainWraper = styled.div`
   position: relative;
