@@ -158,6 +158,8 @@ const Integrations = () => {
                 )
               })}
 
+              <StyledHorizontalDivider />
+
               <ListHeader title={`${t('settings')}`} />
 
               {SETTINGS_FIELDS?.map((setting: any, index: number) => {
@@ -194,11 +196,12 @@ const Integrations = () => {
                       <TabPanel>
                         {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
                         {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
+                        {settingQuery && <SettingView settingSlug={settingQuery} hideForm />}
                       </TabPanel>
                       <TabPanel>
                         {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}
                         {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideInfo />}
-                        {settingQuery && <SettingView settingSlug={settingQuery} />}
+                        {settingQuery && <SettingView settingSlug={settingQuery} hideInfo />}
                       </TabPanel>
                     </TabPanels>
                   </TabsContext>
