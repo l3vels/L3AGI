@@ -8,8 +8,7 @@ from fastapi_sqlalchemy import db
 from models.config import ConfigModel
 from typings.auth import UserAccount
 from typings.voice import VoiceOutput
-from utils.auth import (authenticate, authenticate_by_any,
-                        authenticate_by_token_or_api_key)
+from utils.auth import authenticate, authenticate_by_token_or_api_key
 from voices.get_voices import get_all_voice_providers
 
 router = APIRouter()
