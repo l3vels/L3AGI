@@ -110,6 +110,9 @@ const Integrations = () => {
     setActiveTab(0)
   }
 
+  const llmSettings = SETTINGS_FIELDS?.filter((setting: any) => setting.group === 'llm')
+  const vectorDbSettings = SETTINGS_FIELDS?.filter((setting: any) => setting.group === 'vectorDb')
+
   return (
     <>
       <StyledAppContainer>
@@ -160,9 +163,31 @@ const Integrations = () => {
 
               <StyledHorizontalDivider />
 
-              <ListHeader title={`${t('settings')}`} />
+              <ListHeader title={`${t('LLM')}`} />
 
-              {SETTINGS_FIELDS?.map((setting: any, index: number) => {
+              {llmSettings?.map((setting: any, index: number) => {
+                const filteredLogos = settingLogos.filter(
+                  (toolLogo: any) => toolLogo.settingName === setting.title,
+                )
+
+                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+                return (
+                  <MiniToolCard
+                    key={index}
+                    onClick={() => handlePickSetting(setting.slug)}
+                    name={setting.title}
+                    logo={logoSrc}
+                    picked={settingQuery === setting.slug}
+                  />
+                )
+              })}
+
+              <StyledHorizontalDivider />
+
+              <ListHeader title={`${t('VectorDB')}`} />
+
+              {vectorDbSettings?.map((setting: any, index: number) => {
                 const filteredLogos = settingLogos.filter(
                   (toolLogo: any) => toolLogo.settingName === setting.title,
                 )

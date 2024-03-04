@@ -10,6 +10,7 @@ export const SETTINGS_FIELDS = [
   {
     title: 'OpenAI',
     slug: 'openai',
+    group: 'llm',
     configs: [
       {
         key: 'open_api_key',
@@ -20,13 +21,13 @@ export const SETTINGS_FIELDS = [
   {
     title: 'Hugging Face',
     slug: 'huggingface',
-
+    group: 'llm',
     configs: [{ key: 'hugging_face_access_token', label: 'Hugging Face Access Token' }],
   },
   {
     title: 'Replicate',
     slug: 'replicate',
-
+    group: 'llm',
     configs: [
       {
         key: 'replicate_api_token',
@@ -37,6 +38,7 @@ export const SETTINGS_FIELDS = [
   {
     title: 'Pinecone',
     slug: 'pinecone',
+    group: 'vectorDb',
     configs: [
       {
         key: 'pinecone_api_key',
@@ -51,7 +53,7 @@ export const SETTINGS_FIELDS = [
   {
     title: 'Weaviate',
     slug: 'weaviate',
-
+    group: 'vectorDb',
     configs: [
       {
         key: 'weaviate_url',
