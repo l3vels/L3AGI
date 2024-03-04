@@ -93,8 +93,8 @@ def check_fine_tuning(session: Session, id: UUID):
     if fine_tuning_model.status == FineTuningStatus.COMPLETED.value:
         fine_tuning_model.model_identifier = job.fine_tuned_model
 
-    if job.error:
-        fine_tuning_model.error = job.error
+    if job.error and job.error.error:
+        fine_tuning_model.error = job.error.error
 
     session.commit()
 
