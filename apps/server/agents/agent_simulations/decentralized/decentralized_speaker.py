@@ -4,8 +4,7 @@ import numpy as np
 import tenacity
 from fastapi_sqlalchemy import db
 from langchain.chat_models import ChatOpenAI
-from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
-                              SystemMessage)
+from langchain.schema import HumanMessage, SystemMessage
 
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import \
