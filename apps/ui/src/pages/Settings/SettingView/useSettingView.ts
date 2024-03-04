@@ -141,5 +141,6 @@ export const useSettingView = ({ fields }: { fields: any }) => {
   return {
     formik,
     isLoading,
+    handleSubmit,
   }
 }

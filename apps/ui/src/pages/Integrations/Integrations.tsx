@@ -81,7 +81,8 @@ const Integrations = () => {
   const { data: voiceTools } = useVoicesService()
 
   useEffect(() => {
-    navigate(`/integrations?tool=${tools?.[0]?.slug}`)
+    if (!toolQuery && !voiceQuery && !settingQuery)
+      navigate(`/integrations?tool=${tools?.[0]?.slug}`)
   }, [tools])
 
   let isSettingsHidden = false

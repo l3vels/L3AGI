@@ -18,6 +18,7 @@ import { settingLogos } from '../constants'
 import TypographySecondary from 'components/Typography/Secondary'
 import Typography from 'share-ui/components/typography/Typography'
 import TypographyPrimary from 'components/Typography/Primary'
+import { useModal } from 'hooks'
 
 const SettingView = ({
   settingSlug,
@@ -28,13 +29,19 @@ const SettingView = ({
   hideInfo?: boolean
   hideForm?: boolean
 }) => {
+  const { closeModal } = useModal()
+
   const fields = SETTINGS_FIELDS?.find((setting: any) => setting.slug === settingSlug)?.configs
   const name = SETTINGS_FIELDS?.find((setting: any) => setting.slug === settingSlug)?.title
-  const { formik, isLoading } = useSettingView({ fields })
+  const { formik, isLoading, handleSubmit } = useSettingView({ fields })
 
   const filteredLogos = settingLogos.find((setting: any) => setting.settingName === name)
   const logoSrc = filteredLogos?.logoSrc || ''
 
+  const onHandleSubmit = async () => {
+    await handleSubmit(formik?.values)
+    closeModal('llm-settings-modal')
+  }
   return (
     <FormikProvider value={formik}>
       <StyledSectionWrapper>
@@ -89,7 +96,7 @@ const SettingView = ({
           {!hideForm && (
             <StyledButtonWrapper>
               <ButtonPrimary
-                onClick={formik.handleSubmit}
+                onClick={onHandleSubmit}
                 disabled={isLoading}
                 size={Button.sizes?.MEDIUM}
               >

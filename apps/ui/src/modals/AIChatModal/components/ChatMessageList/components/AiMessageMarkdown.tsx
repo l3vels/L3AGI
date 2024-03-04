@@ -5,12 +5,14 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { useModal } from 'hooks'
 import { memo } from 'react'
+import { t } from 'i18next'
 
 const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
-const SETTINGS_REGEX = /\/setting/
+// const SETTINGS_REGEX = /\/setting/
 const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
 const VOICE_REGEX = /\/integrations\/voice\/[^/]+/
+const SETTINGS_REGEX = /\/integrations\?setting=([^/]+)/
 // const SETTINGS_REGEX = /\[Settings\]\(\/settings\)/
 
 const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; children: any }) => {
@@ -52,9 +54,17 @@ const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; c
           }
 
           if (SETTINGS_REGEX.test(href as string)) {
+            const regex = /\/integrations\?setting=([^/]+)/
+            const match: any = regex.exec(href || '')
+            const slug = match[1]
+
             return (
-              <button onClick={() => openModal({ name: 'settings-modal' })}>
-                <StyledText>Settings</StyledText>
+              <button
+                onClick={() =>
+                  openModal({ name: 'llm-settings-modal', data: { settingsSlug: slug } })
+                }
+              >
+                <StyledText>here</StyledText>
               </button>
             )
           }
