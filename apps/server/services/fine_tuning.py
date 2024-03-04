@@ -76,25 +76,32 @@ def fine_tune_openai_model(
 
 
 def check_fine_tuning(session: Session, id: UUID):
-    fine_tuning_model = FineTuningModel.get_fine_tuning_by_id(session, id)
-    settings = ConfigModel.get_account_settings(session, fine_tuning_model.account_id)
+    try:
+        fine_tuning_model = FineTuningModel.get_fine_tuning_by_id(session, id)
+        settings = ConfigModel.get_account_settings(
+            session, fine_tuning_model.account_id
+        )
 
-    fine_tuning_job = openai.FineTuningJob.retrieve(
-        id=fine_tuning_model.openai_fine_tuning_id,
-        api_key=settings.openai_api_key,
-    )
+        fine_tuning_job = openai.FineTuningJob.retrieve(
+            id=fine_tuning_model.openai_fine_tuning_id,
+            api_key=settings.openai_api_key,
+        )
 
-    job = openai.FineTuningJob.retrieve(
-        api_key=settings.openai_api_key, id=fine_tuning_job.id
-    )
+        job = openai.FineTuningJob.retrieve(
+            api_key=settings.openai_api_key, id=fine_tuning_job.id
+        )
 
-    fine_tuning_model.status = OPENAI_TO_FINE_TUNING_STATUS[job.status].value
+        fine_tuning_model.status = OPENAI_TO_FINE_TUNING_STATUS[job.status].value
 
-    if fine_tuning_model.status == FineTuningStatus.COMPLETED.value:
-        fine_tuning_model.model_identifier = job.fine_tuned_model
+        if fine_tuning_model.status == FineTuningStatus.COMPLETED.value:
+            fine_tuning_model.model_identifier = job.fine_tuned_model
 
-    if job.error and job.error.error:
-        fine_tuning_model.error = job.error.error
+        if job.error and job.error.error:
+            fine_tuning_model.error = job.error.error
+    except AuthenticationError:
+        fine_tuning_model.error = "Invalid OpenAI API Key"
+    except Exception as err:
+        fine_tuning_model.error = str(err)
 
     session.commit()
 
