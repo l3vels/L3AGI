@@ -95,6 +95,7 @@ export const useCreateChatMessageService = ({
 
             const token = new TextDecoder('utf-8').decode(value)
             aiMessage.message.data.content += token
+            aiMessage.message.data.content = aiMessage.message.data.content.replace(/\\n/g, '\n')
 
             upsertChatMessageInCache(aiMessage, {
               agentId,
