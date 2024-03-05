@@ -123,7 +123,7 @@ def get_llm(
     if provider == ModelProviders.OPEN_AI:
         if not settings.openai_api_key:
             raise InvalidLLMApiKeyException(
-                "Please set OpenAI API Key in [Settings](/settings)"
+                "Please set OpenAI API Key in [Settings](/integrations?setting=openai)"
             )
 
         return ChatOpenAI(
@@ -134,7 +134,7 @@ def get_llm(
     elif provider == ModelProviders.HUGGING_FACE:
         if not settings.hugging_face_access_token:
             raise InvalidLLMApiKeyException(
-                "Please set Hugging Face Access Token in [Settings](/settings)"
+                "Please set Hugging Face Access Token in [Settings](/integrations?setting=huggingface)"
             )
 
         return HuggingFaceHub(
@@ -147,7 +147,7 @@ def get_llm(
     elif provider == ModelProviders.REPLICATE:
         if not settings.replicate_api_token:
             raise InvalidLLMApiKeyException(
-                "Please set Replicate API Token in [Settings](/settings)"
+                "Please set Replicate API Token in [Settings](/integrations?setting=replicate)"
             )
 
         os.environ["REPLICATE_API_TOKEN"] = settings.replicate_api_token

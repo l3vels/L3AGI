@@ -32,6 +32,10 @@ import ToolView from 'pages/Toolkit/ToolView'
 import VoiceView from 'plugins/contact/pages/Voice/VoiceView'
 import { useToolView } from 'pages/Toolkit/ToolView/useToolView'
 
+import SettingView from 'pages/Settings/SettingView'
+import { SETTINGS_FIELDS } from 'pages/Settings/SettingView/useSettingView'
+import { settingLogos } from 'pages/Settings/constants'
+
 const Integrations = () => {
   const { getIntegrationModules } = useGetAccountModule()
 
@@ -63,6 +67,7 @@ const Integrations = () => {
   const urlParams = new URLSearchParams(location.search)
   const toolQuery = urlParams.get('tool') || ''
   const voiceQuery = urlParams.get('voice') || ''
+  const settingQuery = urlParams.get('setting') || ''
 
   const [activeTab, setActiveTab] = useState(0)
   const handleTabClick = (tabId: number) => {
@@ -76,7 +81,8 @@ const Integrations = () => {
   const { data: voiceTools } = useVoicesService()
 
   useEffect(() => {
-    navigate(`/integrations?tool=${tools?.[0]?.slug}`)
+    if (!toolQuery && !voiceQuery && !settingQuery)
+      navigate(`/integrations?tool=${tools?.[0]?.slug}`)
   }, [tools])
 
   let isSettingsHidden = false
@@ -94,13 +100,19 @@ const Integrations = () => {
 
   const handlePickTool = (slug: string) => {
     navigate(`/integrations?tool=${slug}`)
-
     setActiveTab(0)
   }
   const handlePickVoice = (slug: string) => {
     navigate(`/integrations?voice=${slug}`)
     setActiveTab(0)
   }
+  const handlePickSetting = (slug: string) => {
+    navigate(`/integrations?setting=${slug}`)
+    setActiveTab(0)
+  }
+
+  const llmSettings = SETTINGS_FIELDS?.filter((setting: any) => setting.group === 'llm')
+  const vectorDbSettings = SETTINGS_FIELDS?.filter((setting: any) => setting.group === 'vectorDb')
 
   return (
     <>
@@ -149,6 +161,50 @@ const Integrations = () => {
                   />
                 )
               })}
+
+              <StyledHorizontalDivider />
+
+              <ListHeader title={`${t('LLM')}`} />
+
+              {llmSettings?.map((setting: any, index: number) => {
+                const filteredLogos = settingLogos.filter(
+                  (toolLogo: any) => toolLogo.settingName === setting.title,
+                )
+
+                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+                return (
+                  <MiniToolCard
+                    key={index}
+                    onClick={() => handlePickSetting(setting.slug)}
+                    name={setting.title}
+                    logo={logoSrc}
+                    picked={settingQuery === setting.slug}
+                  />
+                )
+              })}
+
+              <StyledHorizontalDivider />
+
+              <ListHeader title={`${t('VectorDB')}`} />
+
+              {vectorDbSettings?.map((setting: any, index: number) => {
+                const filteredLogos = settingLogos.filter(
+                  (toolLogo: any) => toolLogo.settingName === setting.title,
+                )
+
+                const logoSrc = filteredLogos?.[0]?.logoSrc || ''
+
+                return (
+                  <MiniToolCard
+                    key={index}
+                    onClick={() => handlePickSetting(setting.slug)}
+                    name={setting.title}
+                    logo={logoSrc}
+                    picked={settingQuery === setting.slug}
+                  />
+                )
+              })}
             </StyledLeftColumn>
 
             <StyledChatWrapper>
@@ -166,10 +222,12 @@ const Integrations = () => {
                       <TabPanel>
                         {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
                         {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
+                        {settingQuery && <SettingView settingSlug={settingQuery} hideForm />}
                       </TabPanel>
                       <TabPanel>
                         {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}
                         {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideInfo />}
+                        {settingQuery && <SettingView settingSlug={settingQuery} hideInfo />}
                       </TabPanel>
                     </TabPanels>
                   </TabsContext>

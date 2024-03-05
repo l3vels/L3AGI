@@ -49,7 +49,7 @@ const HeaderButtons = () => {
         </Tooltip>
       )}
 
-      <Tooltip
+      {/* <Tooltip
         content={<span>{t('docs')}</span>}
         position={Tooltip.positions.BOTTOM}
         tooltipSize={Tooltip.tooltipSize.Small}
@@ -66,7 +66,7 @@ const HeaderButtons = () => {
             />
           </StyledInnerButtonWrapper>
         </ButtonTertiary>
-      </Tooltip>
+      </Tooltip> */}
 
       {/* <Tooltip
         content={() => <span>Twitter</span>}
@@ -101,7 +101,7 @@ const HeaderButtons = () => {
         </ButtonTertiary>
       </Tooltip> */}
 
-      {isLinkModule && (
+      {/* {isLinkModule && (
         <Tooltip
           content={<span>{t('github')}</span>}
           position={Tooltip.positions.BOTTOM}
@@ -125,7 +125,7 @@ const HeaderButtons = () => {
             </StyledInnerButtonWrapper>
           </ButtonTertiary>
         </Tooltip>
-      )}
+      )} */}
     </StyledButtonsWrapper>
   )
 }
@@ -135,6 +135,7 @@ export default HeaderButtons
 const StyledButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
+
   gap: 5px;
 `
 export const StyledImg = styled.img<{ customScale?: number }>`

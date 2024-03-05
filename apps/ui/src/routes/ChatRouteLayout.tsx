@@ -49,6 +49,7 @@ import AgentSessionsTable from 'pages/Agents/AgentTables/AgentSessionsTable'
 import AgentCampaignTable from 'pages/Agents/AgentTables/AgentCampaignTable'
 import AgentScheduleTable from 'pages/Agents/AgentTables/AgentScheduleTable'
 import CombinedCampaignTables from 'pages/Agents/AgentTables/CombinedCampaignTables'
+import HeaderButtons from 'components/HeaderButtons'
 
 const ChatRouteLayout = () => {
   const { getChatModules } = useGetAccountModule()
@@ -329,6 +330,9 @@ const ChatRouteLayout = () => {
 
           {location.pathname.includes('/chat') ? (
             <StyledChatWrapper>
+              <StyledFocusButtonWrapper>
+                <HeaderButtons />
+              </StyledFocusButtonWrapper>
               <TabList size='small' activeTabId={activeTab} noBorder>
                 <Tab onClick={() => handleTabClick(0, 'playground')}>{t('playground')}</Tab>
                 <Tab onClick={() => handleTabClick(1, 'sessions')} disabled={teamId ? true : false}>
@@ -342,9 +346,7 @@ const ChatRouteLayout = () => {
                   {t('More')}
                 </Tab>
               </TabList>
-
               <StyledHorizontalDivider />
-
               <TabsContext activeTabId={activeTab}>
                 <TabPanels noAnimation>
                   <TabPanel>
@@ -494,6 +496,8 @@ export const StyledChatWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  position: relative;
 `
 const StyledOutletWrapper = styled.div`
   width: 100%;
@@ -545,4 +549,9 @@ const StyledTableWrapper = styled.div`
   padding-right: 24px;
   height: calc(100% - 50px);
   padding-top: 15px;
+`
+const StyledFocusButtonWrapper = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 0;
 `

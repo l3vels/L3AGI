@@ -107,6 +107,7 @@ import EditCampaignModal from 'modals/EditCampaignModal'
 import CreateScheduleModal from 'modals/CreateScheduleModal'
 import EditScheduleModal from 'modals/EditScheduleModal'
 import VoiceOptionsModal from 'modals/VoiceOptionsModal'
+import LlmSettingsModal from 'modals/LlmSettingsModal'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -432,6 +433,7 @@ const Route = () => {
         <SettingsModal />
         <ToolkitModal />
         <VoiceModal />
+        <LlmSettingsModal />
         <ChatLinkModal />
         <ScheduleRunModal />
         <RunLogsModal />
