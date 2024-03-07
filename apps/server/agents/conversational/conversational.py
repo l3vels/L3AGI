@@ -1,6 +1,8 @@
 import asyncio
 
-from langchain.agents import AgentType, initialize_agent
+from langchain import hub
+from langchain.agents import (AgentExecutor, AgentType, create_react_agent,
+                              initialize_agent)
 
 from agents.base_agent import BaseAgent
 from agents.conversational.output_parser import ConvoOutputParser
@@ -63,30 +65,37 @@ class ConversationalAgent(BaseAgent):
             streaming_handler = AsyncCallbackHandler()
 
             llm.streaming = True
-            llm.callbacks = [
-                run_logs_manager.get_agent_callback_handler(),
-                streaming_handler,
-            ]
+            # llm.callbacks = [
+            #     run_logs_manager.get_agent_callback_handler(),
+            #     streaming_handler,
+            # ]
 
-            agent = initialize_agent(
-                tools,
-                llm,
-                agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
-                verbose=True,
-                memory=memory,
-                handle_parsing_errors="Check your output and make sure it conforms!",
-                agent_kwargs={
-                    "system_message": system_message,
-                    "output_parser": ConvoOutputParser(),
-                },
-                callbacks=[run_logs_manager.get_agent_callback_handler()],
-            )
+            # agent = initialize_agent(
+            #     tools,
+            #     llm,
+            #     agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+            #     verbose=True,
+            #     memory=memory,
+            #     handle_parsing_errors="Check your output and make sure it conforms!",
+            #     agent_kwargs={
+            #         "system_message": system_message,
+            #         "output_parser": ConvoOutputParser(),
+            #     },
+            #     callbacks=[run_logs_manager.get_agent_callback_handler()],
+            # )
 
-            task = asyncio.create_task(agent.arun(prompt))
+            agentPrompt = hub.pull("hwchase17/react")
 
-            async for token in streaming_handler.aiter():
-                yield token
-            res = await task
+            agent = create_react_agent(llm, tools, prompt=agentPrompt)
+
+            agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+            # task = asyncio.create_task(agent_executor.astream({"input": prompt}))
+
+            async for token in agent_executor.astream({"input": prompt}):
+                print("token", token)
+                # yield token
+            # res = await task
         except Exception as err:
             res = handle_agent_error(err)
 
@@ -112,9 +121,9 @@ class ConversationalAgent(BaseAgent):
             res = f"{res}\n\n{handle_agent_error(err)}"
 
             yield res
-
+        print("res", res)
         ai_message = history.create_ai_message(
-            res,
+            res["output"],
             human_message_id,
             agent_with_configs.agent.id,
             voice_url,

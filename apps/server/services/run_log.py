@@ -2,8 +2,8 @@ from typing import Any, Dict, List, Optional
 from uuid import UUID
 
 from langchain.callbacks.base import BaseCallbackHandler
-from langchain.chat_models.base import BaseMessage
 from langchain.schema.agent import AgentAction, AgentFinish
+from langchain_core.messages import BaseMessage
 from sqlalchemy.orm import Session
 
 from models.run_log import RunLogModel

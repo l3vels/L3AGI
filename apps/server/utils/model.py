@@ -3,9 +3,9 @@ from typing import Dict, List
 from uuid import UUID
 
 from fastapi_sqlalchemy import db
-from langchain.chat_models import ChatOpenAI
 from langchain.llms.huggingface_hub import HuggingFaceHub
 from langchain.llms.replicate import Replicate
+from langchain_openai import ChatOpenAI
 
 from exceptions import InvalidLLMApiKeyException
 from models.fine_tuning import FineTuningModel

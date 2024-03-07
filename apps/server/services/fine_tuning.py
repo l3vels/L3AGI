@@ -6,7 +6,7 @@ from typing import Dict
 from uuid import UUID, uuid4
 
 import openai
-from openai.error import AuthenticationError
+from openai import AuthenticationError
 from sqlalchemy.orm import Session
 
 from models.config import ConfigModel

@@ -1,7 +1,6 @@
 import sentry_sdk
-from openai.error import (AuthenticationError, RateLimitError,
-                          ServiceUnavailableError)
-from openai.error import Timeout as TimeoutError
+from openai import APITimeoutError as TimeoutError
+from openai import AuthenticationError, RateLimitError
 
 from exceptions import (InvalidLLMApiKeyException, PlannerEmptyTasksException,
                         SynthesizerException, ToolEnvKeyException,
@@ -15,8 +14,8 @@ def handle_agent_error(err: Exception) -> str:
         return "Your OpenAI API key is invalid. Please recheck it in [Settings](/integrations?setting=openai)"
     elif isinstance(err, TimeoutError):
         return "OpenAI timed out, please try again later"
-    elif isinstance(err, ServiceUnavailableError):
-        return "OpenAI service is unavailable at the moment, please try again later"
+    # elif isinstance(err, ServiceUnavailableError):
+    #     return "OpenAI service is unavailable at the moment, please try again later"
     elif isinstance(err, ToolEnvKeyException):
         return str(err)
     elif isinstance(err, PlannerEmptyTasksException):
