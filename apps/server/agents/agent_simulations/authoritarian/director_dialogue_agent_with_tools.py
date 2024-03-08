@@ -1,19 +1,14 @@
 import random
-import tenacity
 from typing import List
 
-from langchain.prompts import (
-    PromptTemplate,
-)
-from langchain.chat_models import ChatOpenAI
+import tenacity
 from langchain.output_parsers import RegexParser
-from langchain.schema import (
-    HumanMessage,
-    SystemMessage,
-)
-from agents.agent_simulations.agent.dialogue_agent_with_tools import (
-    DialogueAgentWithTools,
-)
+from langchain.prompts import PromptTemplate
+from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.chat_models import ChatOpenAI
+
+from agents.agent_simulations.agent.dialogue_agent_with_tools import \
+    DialogueAgentWithTools
 from typings.agent import AgentWithConfigsOutput
 
 

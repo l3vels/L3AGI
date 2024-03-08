@@ -1,7 +1,7 @@
 from typing import Optional, Type
 
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from langchain.utilities import ArxivAPIWrapper
+from langchain_community.utilities import ArxivAPIWrapper
 from pydantic import BaseModel, Field
 
 from tools.base import BaseTool

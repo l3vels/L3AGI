@@ -1,9 +1,9 @@
 from typing import List
 
-from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.schema import (AIMessage, BaseMessage, HumanMessage,
                               SystemMessage)
+from langchain_community.chat_models import ChatOpenAI
 
 from agents.agent_simulations.agent.dialogue_agent_with_tools import \
     DialogueAgentWithTools

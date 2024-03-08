@@ -1,7 +1,6 @@
-from langsmith import Client
-from langchain.chat_models import ChatOpenAI
 from langchain.smith import RunEvalConfig, run_on_dataset
-
+from langchain_community.chat_models import ChatOpenAI
+from langsmith import Client
 
 # TODO: refactor test to use new auth
 
