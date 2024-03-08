@@ -3089,6 +3089,51 @@ onnxruntime = ">=1.17.0,<2.0.0"
 tokenizers = ">=0.15.1,<0.16.0"
 
 [[package]]
+name = "llama-index-vector-stores-pinecone"
+version = "0.1.4"
+description = "llama-index vector_stores pinecone integration"
+optional = false
+python-versions = ">=3.8.1,<3.13"
+files = [
+    {file = "llama_index_vector_stores_pinecone-0.1.4-py3-none-any.whl", hash = "sha256:af729deb397bc2d2604525be04b3056675697080fe4ae34eb7bbd839f09e77dc"},
+    {file = "llama_index_vector_stores_pinecone-0.1.4.tar.gz", hash = "sha256:ab5f2141d44404c9ad36611c11e8b6afb35b6f0a80959726f8eab5b65a157549"},
+]
+
+[package.dependencies]
+llama-index-core = ">=0.10.11.post1,<0.11.0"
+pinecone-client = ">=3.0.2,<4.0.0"
+
+[[package]]
+name = "llama-index-vector-stores-weaviate"
+version = "0.1.3"
+description = "llama-index vector_stores weaviate integration"
+optional = false
+python-versions = ">=3.8.1,<4.0"
+files = [
+    {file = "llama_index_vector_stores_weaviate-0.1.3-py3-none-any.whl", hash = "sha256:f362b12845653658ac69a73eb8b6844ce619e29fca5f35919b4f25249e24f05f"},
+    {file = "llama_index_vector_stores_weaviate-0.1.3.tar.gz", hash = "sha256:0b372be236bfa589c62af4eb3d9d40f6c62de876b9ff4ce7f1c11e863889ce62"},
+]
+
+[package.dependencies]
+llama-index-core = ">=0.10.1,<0.11.0"
+weaviate-client = ">=3.26.2,<4.0.0"
+
+[[package]]
+name = "llama-index-vector-stores-zep"
+version = "0.1.2"
+description = "llama-index vector_stores zep integration"
+optional = false
+python-versions = ">=3.8.1,<4.0"
+files = [
+    {file = "llama_index_vector_stores_zep-0.1.2-py3-none-any.whl", hash = "sha256:6b4d17ec3fbc69ba6c7397f15a28401f62a34112cd1a24f2785b8923f2c69c0c"},
+    {file = "llama_index_vector_stores_zep-0.1.2.tar.gz", hash = "sha256:f748bd140b3632b22f84da40a451d4719db16ba2094c79a934cf99446d33f345"},
+]
+
+[package.dependencies]
+llama-index-core = ">=0.10.1,<0.11.0"
+zep-python = ">=1.5.0,<2.0.0"
+
+[[package]]
 name = "llama-parse"
 version = "0.3.6"
 description = "Parse files into RAG-Optimized formats."
@@ -3116,24 +3161,6 @@ files = [
 [package.dependencies]
 httpx = ">=0.20.0"
 pydantic = ">=1.10"
-
-[[package]]
-name = "loguru"
-version = "0.7.2"
-description = "Python logging made (stupidly) simple"
-optional = false
-python-versions = ">=3.5"
-files = [
-    {file = "loguru-0.7.2-py3-none-any.whl", hash = "sha256:003d71e3d3ed35f0f8984898359d65b79e5b21943f78af86aa5491210429b8eb"},
-    {file = "loguru-0.7.2.tar.gz", hash = "sha256:e671a53522515f34fd406340ee968cb9ecafbc4b36c679da03c18fd8d0bd51ac"},
-]
-
-[package.dependencies]
-colorama = {version = ">=0.3.4", markers = "sys_platform == \"win32\""}
-win32-setctime = {version = ">=1.0.0", markers = "sys_platform == \"win32\""}
-
-[package.extras]
-dev = ["Sphinx (==7.2.5)", "colorama (==0.4.5)", "colorama (==0.4.6)", "exceptiongroup (==1.1.3)", "freezegun (==1.1.0)", "freezegun (==1.2.2)", "mypy (==v0.910)", "mypy (==v0.971)", "mypy (==v1.4.1)", "mypy (==v1.5.1)", "pre-commit (==3.4.0)", "pytest (==6.1.2)", "pytest (==7.4.0)", "pytest-cov (==2.12.1)", "pytest-cov (==4.1.0)", "pytest-mypy-plugins (==1.9.3)", "pytest-mypy-plugins (==3.0.0)", "sphinx-autobuild (==2021.3.14)", "sphinx-rtd-theme (==1.3.0)", "tox (==3.27.1)", "tox (==4.11.0)"]
 
 [[package]]
 name = "lxml"
@@ -4414,28 +4441,26 @@ tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "pa
 
 [[package]]
 name = "pinecone-client"
-version = "2.2.4"
+version = "3.1.0"
 description = "Pinecone client and SDK"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pinecone-client-2.2.4.tar.gz", hash = "sha256:2c1cc1d6648b2be66e944db2ffa59166a37b9164d1135ad525d9cd8b1e298168"},
-    {file = "pinecone_client-2.2.4-py3-none-any.whl", hash = "sha256:5bf496c01c2f82f4e5c2dc977cc5062ecd7168b8ed90743b09afcc8c7eb242ec"},
+    {file = "pinecone_client-3.1.0-py3-none-any.whl", hash = "sha256:66dfe9859ed5b3412c3b59c68c9706c0f522cafd1a15c5d05e28d5664c2c48a4"},
+    {file = "pinecone_client-3.1.0.tar.gz", hash = "sha256:45b8206013f91a982b994f1fbaa39e7e8c99d30ef3778a9f319c43b8c992fc42"},
 ]
 
 [package.dependencies]
-dnspython = ">=2.0.0"
-loguru = ">=0.5.0"
-numpy = ">=1.22.0"
-python-dateutil = ">=2.5.3"
-pyyaml = ">=5.4"
-requests = ">=2.19.0"
+certifi = ">=2019.11.17"
 tqdm = ">=4.64.1"
 typing-extensions = ">=3.7.4"
-urllib3 = ">=1.21.1"
+urllib3 = [
+    {version = ">=1.26.0", markers = "python_version >= \"3.8\" and python_version < \"3.12\""},
+    {version = ">=1.26.5", markers = "python_version >= \"3.12\" and python_version < \"4.0\""},
+]
 
 [package.extras]
-grpc = ["googleapis-common-protos (>=1.53.0)", "grpc-gateway-protoc-gen-openapiv2 (==0.1.0)", "grpcio (>=1.44.0)", "lz4 (>=3.1.3)", "protobuf (>=3.20.0,<3.21.0)"]
+grpc = ["googleapis-common-protos (>=1.53.0)", "grpc-gateway-protoc-gen-openapiv2 (==0.1.0)", "grpcio (>=1.44.0)", "grpcio (>=1.59.0)", "lz4 (>=3.1.3)", "protobuf (>=3.20.0,<3.21.0)"]
 
 [[package]]
 name = "platformdirs"
@@ -6972,13 +6997,13 @@ files = [
 
 [[package]]
 name = "weaviate-client"
-version = "3.25.3"
+version = "3.26.2"
 description = "A python native Weaviate client"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "weaviate-client-3.25.3.tar.gz", hash = "sha256:894df700fc1f0a932fa370029f644af4062f8718026fda5ad07647d357d95167"},
-    {file = "weaviate_client-3.25.3-py3-none-any.whl", hash = "sha256:cb049ed7b710088ff9038d27b97f28c80206ce9e4d12d622c3597da5790b2be0"},
+    {file = "weaviate-client-3.26.2.tar.gz", hash = "sha256:63ec70839b64909810a64aa7b3e5b85088462e93c7e2ed3c32ebefb702f36723"},
+    {file = "weaviate_client-3.26.2-py3-none-any.whl", hash = "sha256:ca43bfb9c06b8ae3fd938dc9158acd93d4cbf4622192e173333e1ff63cf97164"},
 ]
 
 [package.dependencies]
@@ -7110,20 +7135,6 @@ files = [
 [package.dependencies]
 beautifulsoup4 = "*"
 requests = ">=2.0.0,<3.0.0"
-
-[[package]]
-name = "win32-setctime"
-version = "1.1.0"
-description = "A small Python utility to set file creation time on Windows"
-optional = false
-python-versions = ">=3.5"
-files = [
-    {file = "win32_setctime-1.1.0-py3-none-any.whl", hash = "sha256:231db239e959c2fe7eb1d7dc129f11172354f98361c4fa2d6d2d7e278baa8aad"},
-    {file = "win32_setctime-1.1.0.tar.gz", hash = "sha256:15cf5750465118d6929ae4de4eb46e8edae9a5634350c01ba582df868e932cb2"},
-]
-
-[package.extras]
-dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 
 [[package]]
 name = "wrapt"
@@ -7318,13 +7329,13 @@ requests = "*"
 
 [[package]]
 name = "zep-python"
-version = "1.4.1"
+version = "1.5.0"
 description = "Zep: Fast, scalable building blocks for LLM apps. This is the Python client for the Zep service."
 optional = false
 python-versions = ">=3.8.1,<4"
 files = [
-    {file = "zep_python-1.4.1-py3-none-any.whl", hash = "sha256:51237bcdda7824b85afe9990692cbf7ca166c8221fddd9711b211d12752db306"},
-    {file = "zep_python-1.4.1.tar.gz", hash = "sha256:0e65d8f346e80e7f3c76d4d979d15c9946f4e89c12bb68cc5c5cfa3bbb6e7ef1"},
+    {file = "zep_python-1.5.0-py3-none-any.whl", hash = "sha256:381b12d62827b7ddfe2a64ffd30e295794fdc12c61e4a781b0f7930d278923e0"},
+    {file = "zep_python-1.5.0.tar.gz", hash = "sha256:519668250d56c9165b5786e032b98c755b1d5dbb1af46d19580123ac82d2da5c"},
 ]
 
 [package.dependencies]
@@ -7349,5 +7360,5 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.11"
-content-hash = "407512b2f6210cf19d4c785b0af670e5ca4209b02a5482edba9acdba5f512b73"
+python-versions = ">=3.11,<3.13"
+content-hash = "cadb99667a917623fa05c2e0e71575cd7878cd476277649869e6b257f3b801ab"
