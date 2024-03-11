@@ -9,6 +9,7 @@ from tools.duck_duck_go.duck_duck_go_search_toolkit import \
     DuckDuckGoSearchToolkit
 from tools.gmail.gmail_toolkit import GmailToolkit
 from tools.google_calendar.google_calendar_toolkit import GoogleCalendarToolkit
+from tools.image_generator.image_generator_toolkit import ImageGeneratorToolkit
 from tools.instagram.instagram_toolkit import InstagramToolkit
 from tools.open_weather_map.open_weather_map_toolkit import \
     OpenWeatherMapToolkit
@@ -35,6 +36,7 @@ TOOLKITS: List[BaseToolkit] = [
     TwilioSearchToolkit(),
     SendGridToolkit(),
     ZapierSendToolkit(),
+    ImageGeneratorToolkit(),
     ChartToolkit(),
     CalToolkit(),
     TwitterToolkit(),
