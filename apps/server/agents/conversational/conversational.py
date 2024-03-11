@@ -90,12 +90,41 @@ class ConversationalAgent(BaseAgent):
 
             agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-            # task = asyncio.create_task(agent_executor.astream({"input": prompt}))
+            chunks = []
+            final_answer_detected = False
 
-            async for token in agent_executor.astream({"input": prompt}):
-                print("token", token)
-                # yield token
-            # res = await task
+            async for event in agent_executor.astream_events(
+                {"input": prompt}, version="v1"
+            ):
+                kind = event["event"]
+
+                if kind == "on_chat_model_stream":
+                    content = event["data"]["chunk"].content
+                    if content:
+                        chunks.append(content)
+                        # Check if the last three elements in chunks, when stripped, are "Final", "Answer", and ":"
+                        if (
+                            len(chunks) >= 3
+                            and chunks[-3].strip() == "Final"
+                            and chunks[-2].strip() == "Answer"
+                            and chunks[-1].strip() == ":"
+                        ):
+                            final_answer_detected = True
+                            continue
+
+                        if final_answer_detected:
+                            yield content
+
+            full_response = "".join(chunks)
+            final_answer_index = full_response.find("Final Answer:")
+            if final_answer_index != -1:
+                # Add the length of the phrase "Final Answer:" and any subsequent whitespace or characters you want to skip
+                start_index = final_answer_index + len("Final Answer:")
+                # Optionally strip leading whitespace
+                res = full_response[start_index:].lstrip()
+            else:
+                res = "Final Answer not found in response."
+
         except Exception as err:
             res = handle_agent_error(err)
 
@@ -121,9 +150,9 @@ class ConversationalAgent(BaseAgent):
             res = f"{res}\n\n{handle_agent_error(err)}"
 
             yield res
-        print("res", res)
+
         ai_message = history.create_ai_message(
-            res["output"],
+            res,
             human_message_id,
             agent_with_configs.agent.id,
             voice_url,
