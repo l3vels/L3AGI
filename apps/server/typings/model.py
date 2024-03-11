@@ -8,6 +8,7 @@ class ModelProviders(Enum):
     OPEN_AI = "OpenAI"
     HUGGING_FACE = "Hugging Face"
     REPLICATE = "Replicate"
+    CLAUDE = "Claude"
 
     def __str__(self) -> str:
         return self.value
