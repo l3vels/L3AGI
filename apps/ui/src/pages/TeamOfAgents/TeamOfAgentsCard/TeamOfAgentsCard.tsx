@@ -90,7 +90,7 @@ const TeamOfAgentCard = ({
 
                 return (
                   <StyledAvatarWrapper key={id}>
-                    <AvatarGenerator name={agent.name} size={25} avatar={agent.avatar} />
+                    <AvatarGenerator name={agent.name} size={40} avatar={agent.avatar} />
                   </StyledAvatarWrapper>
                 )
               })}
