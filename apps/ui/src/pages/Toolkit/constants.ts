@@ -16,6 +16,7 @@ import ChartLogo from 'assets/tools/chart.png'
 import SendGridLogo from 'assets/tools/sendGridLogo.png'
 import ZapierLogo from 'assets/tools/zapier.png'
 import CalComLogo from 'assets/tools/cal.png'
+import DalleLogo from 'assets/tools/dalle-logo.webp'
 
 export const toolLogos = [
   {
@@ -89,5 +90,9 @@ export const toolLogos = [
   {
     logoSrc: CalComLogo,
     toolName: 'Cal.com Toolkit',
+  },
+  {
+    logoSrc: DalleLogo,
+    toolName: 'DALL-E Toolkit',
   },
 ]
