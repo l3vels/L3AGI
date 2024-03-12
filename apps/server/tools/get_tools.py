@@ -5,6 +5,7 @@ from tools.base import BaseTool, BaseToolkit
 from tools.bing.bing_search_toolkit import BingSearchToolkit
 from tools.cal.cal_toolkit import CalToolkit
 from tools.chart.chart_toolkit import ChartToolkit
+from tools.dalle.dalle_toolkit import DalleToolkit
 from tools.duck_duck_go.duck_duck_go_search_toolkit import \
     DuckDuckGoSearchToolkit
 from tools.gmail.gmail_toolkit import GmailToolkit
@@ -35,6 +36,7 @@ TOOLKITS: List[BaseToolkit] = [
     TwilioSearchToolkit(),
     SendGridToolkit(),
     ZapierSendToolkit(),
+    DalleToolkit(),
     ChartToolkit(),
     CalToolkit(),
     TwitterToolkit(),
