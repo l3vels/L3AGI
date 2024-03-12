@@ -47,7 +47,7 @@ const AvatarDropDown = () => {
         <AvatarGenerator name={user.name} size={50} arcShape avatar={user.avatar} />
       </StyledDropDownMenuTrigger>
       <StyledDropdownContent>
-        <StyledDropDownMenuItem onClick={() => navigate('/settings')}>
+        {/* <StyledDropDownMenuItem onClick={() => navigate('/settings')}>
           <StyledSettingsIcon size={20} />
 
           <TypographyPrimary
@@ -56,7 +56,7 @@ const AvatarDropDown = () => {
             size={TypographySizes.xss}
             style={{ fontSize: '12px', fontStyle: 'normal', fontWeight: '500', lineHeight: '16px' }}
           />
-        </StyledDropDownMenuItem>
+        </StyledDropDownMenuItem> */}
         <StyledDropDownMenuItem onClick={() => navigate('api-key')}>
           <StyledAPIIcon size={20} />
 
