@@ -70,7 +70,6 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
       }
       if (data.type === 'CHAT_MESSAGE_ADDED') {
         upsertChatMessageInCache(data.chat_message, {
-          replaceCache: data.chat_message.message.data.type === 'ai' ? true : false,
           agentId: data.agent_id,
           teamId: data.team_id,
           chatId: data.chat_id,
