@@ -358,10 +358,6 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
           data={chatMessages}
           thinking={thinking}
           sessionId={sessionId}
-          // @ts-expect-error TODO: fix type
-          isNewMessage={socket?.isNewMessage}
-          // @ts-expect-error TODO: fix type
-          setIsNewMessage={socket?.setIsNewMessage}
           setReply={setReply}
           reply={reply}
           agentName={agentName}

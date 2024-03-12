@@ -27,8 +27,6 @@ export enum MessageTypeEnum {
 type ChatMessageListV2Props = {
   data: any
   thinking: boolean
-  isNewMessage: boolean
-  setIsNewMessage: (state: boolean) => void
   setReply: (state: ReplyStateProps) => void
   reply: ReplyStateProps
   greeting: string | null
@@ -39,8 +37,6 @@ type ChatMessageListV2Props = {
 const ChatMessageListV2 = ({
   data,
   thinking,
-  isNewMessage,
-  setIsNewMessage,
   setReply,
   reply,
   greeting,
@@ -268,8 +264,6 @@ const ChatMessageListV2 = ({
                   messageDate={chat.date}
                   messageText={chat.message}
                   thoughts={chat.thoughts}
-                  isNewMessage={initialChat.length - 1 === index && isNewMessage}
-                  setIsNewMessage={setIsNewMessage}
                   runId={chat.run_id}
                   voice={chat.voice}
                   onReplyClick={
