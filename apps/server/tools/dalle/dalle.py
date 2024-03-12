@@ -48,16 +48,19 @@ class DalleTool(BaseTool):
         # )
 
         # image_url = response.data[0].url
+        try:
+            llm = get_llm(self.settings, self.agent_with_configs)
+            prompt = PromptTemplate(
+                input_variables=["image_desc"],
+                template="Generate a detailed prompt to generate an image based on the following description: {image_desc}",
+            )
+            chain = LLMChain(llm=llm, prompt=prompt)
 
-        llm = get_llm(self.settings, self.agent_with_configs)
-        prompt = PromptTemplate(
-            input_variables=["image_desc"],
-            template="Generate a detailed prompt to generate an image based on the following description: {image_desc}",
-        )
-        chain = LLMChain(llm=llm, prompt=prompt)
+            image_url = DallEAPIWrapper(api_key=self.settings.openai_api_key).run(
+                chain.run(query)
+            )
 
-        image_url = DallEAPIWrapper(api_key=self.settings.openai_api_key).run(
-            chain.run(query)
-        )
+            return image_url
 
-        return image_url
+        except Exception as err:
+            return str(err)
