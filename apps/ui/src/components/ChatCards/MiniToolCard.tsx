@@ -56,7 +56,7 @@ const MiniToolCard = ({
             icon={() => <StyledDeleteIcon />}
             size={IconButton.sizes?.SMALL}
             kind={IconButton.kinds?.TERTIARY}
-            // ariaLabel='Delete'
+            ariaLabel='Delete'
           />
         )}
       </StyledIconButtonWrapper>
