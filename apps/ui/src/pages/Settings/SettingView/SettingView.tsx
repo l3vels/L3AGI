@@ -33,6 +33,9 @@ const SettingView = ({
 
   const fields = SETTINGS_FIELDS?.find((setting: any) => setting.slug === settingSlug)?.configs
   const name = SETTINGS_FIELDS?.find((setting: any) => setting.slug === settingSlug)?.title
+  const description = SETTINGS_FIELDS?.find(
+    (setting: any) => setting.slug === settingSlug,
+  )?.description
   const { formik, isLoading, handleSubmit } = useSettingView({ fields })
 
   const filteredLogos = settingLogos.find((setting: any) => setting.settingName === name)
@@ -69,11 +72,11 @@ const SettingView = ({
                   type={Typography.types.LABEL}
                   size={Typography.sizes.lg}
                 />
-                {/* <TypographySecondary
+                <TypographySecondary
                   value={description}
                   type={Typography.types.LABEL}
                   size={Typography.sizes.md}
-                /> */}
+                />
               </StyledMainTextWrapper>
             </>
           )}
