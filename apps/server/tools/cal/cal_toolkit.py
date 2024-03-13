@@ -8,9 +8,7 @@ from tools.cal.cal_get_available_tool import CalGetAvailableDatesTool
 
 class CalToolkit(BaseToolkit, ABC):
     name: str = "Cal.com Toolkit"
-    description: str = (
-        "Toolkit containing tools for performing interaction with cal.com"
-    )
+    description: str = "The simple solution for managing your schedule online. Streamline your appointments, events, and tasks with ease."
     slug: str = "cal"
     toolkit_id = "be23abc5-1e33-431e-8a9a-9233c527143b"
     is_voice = True

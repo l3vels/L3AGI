@@ -1,12 +1,13 @@
 from abc import ABC
 from typing import List
-from tools.base import BaseToolkit, BaseTool, ToolEnvKey, ToolEnvKeyType
+
+from tools.base import BaseTool, BaseToolkit, ToolEnvKey, ToolEnvKeyType
 from tools.open_weather_map.open_weather_map import OpenWeatherMapTool
 
 
 class OpenWeatherMapToolkit(BaseToolkit, ABC):
     name: str = "OpenWeatherMap Toolkit"
-    description: str = "Toolkit containing tools for performing DuckDuckGo search"
+    description: str = "Your source for accurate and detailed weather forecasts, providing essential information to plan your day with confidence."
     slug: str = "openweathermap"
     toolkit_id = "045dfbae-a9e7-4b73-9563-8a381a5e239b"
 
