@@ -95,6 +95,8 @@ const Datasource = () => {
                     logo={imageSrc}
                     picked={datasource.id === datasourceId}
                     onDeleteClick={() => deleteDatasourceHandler(datasource.id)}
+                    status={datasource.status}
+                    error={datasource.error}
                   />
                 )
               })}

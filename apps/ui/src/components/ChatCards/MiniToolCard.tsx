@@ -4,6 +4,11 @@ import MemberText from 'modals/AIChatModal/components/ChatMembers/components/Mem
 import styled from 'styled-components'
 import IconButton from 'share-ui/components/IconButton/IconButton'
 import { StyledDeleteIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import { Nullable } from 'types'
+import { StyledStatus, getStatusIcon } from 'pages/Datasource/DatasourceCard/DatasourceCard'
+import Tooltip from 'share-ui/components/Tooltip/Tooltip'
+import TypographyTertiary from 'components/Typography/Tertiary'
+import Typography from 'share-ui/components/typography/Typography'
 
 type MiniToolCardProps = {
   onClick: () => void
@@ -13,6 +18,8 @@ type MiniToolCardProps = {
   picked?: boolean
   name: string
   logo: string
+  status?: Nullable<string>
+  error?: Nullable<string>
 }
 
 const MiniToolCard = ({
@@ -21,12 +28,19 @@ const MiniToolCard = ({
   logo,
   name,
   onDeleteClick,
+  status,
+  error,
 }: MiniToolCardProps) => {
   const handleDelete = (event: any) => {
     event.stopPropagation()
     if (onDeleteClick) {
       onDeleteClick()
     }
+  }
+
+  let statusIcon
+  if (status) {
+    statusIcon = getStatusIcon(status)
   }
 
   return (
@@ -46,6 +60,24 @@ const MiniToolCard = ({
           />
         )}
       </StyledIconButtonWrapper>
+
+      {status && (
+        <Tooltip
+          content={error ? <span>{error}</span> : <span>Ready</span>}
+          position={Tooltip.positions.BOTTOM}
+          showDelay={100}
+        >
+          <StyledStatus>
+            {statusIcon}
+
+            <TypographyTertiary
+              value={status}
+              type={Typography.types.P}
+              size={Typography.sizes.xss}
+            />
+          </StyledStatus>
+        </Tooltip>
+      )}
     </StyledAgentWrapper>
   )
 }

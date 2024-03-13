@@ -28,7 +28,7 @@ type DatasourceCardProps = {
   imageSrc: string
 }
 
-const getStatusIcon = (status: string) => {
+export const getStatusIcon = (status: string) => {
   if (status === 'Ready') {
     return <CheckIcon />
   } else if (status === 'Indexing') {
@@ -182,8 +182,10 @@ const StyledCardFooter = styled.div`
   justify-content: space-between;
 `
 
-const StyledStatus = styled.div`
+export const StyledStatus = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+
+  padding: 0 2px;
 `
