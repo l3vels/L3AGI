@@ -1,12 +1,13 @@
 from abc import ABC
 from typing import List
-from tools.base import BaseToolkit, BaseTool, ToolEnvKey, ToolEnvKeyType
+
+from tools.base import BaseTool, BaseToolkit, ToolEnvKey, ToolEnvKeyType
 from tools.bing.bing_search import BingSearchTool
 
 
 class BingSearchToolkit(BaseToolkit, ABC):
     name: str = "Bing Search Toolkit"
-    description: str = "Toolkit containing tools for performing Bing search"
+    description: str = "Microsoft Bing, commonly referred to as Bing, is a search engine owned and operated by Microsoft."
     slug: str = "bing"
     toolkit_id = "505a8bc1-820a-428a-b7a9-1a33807fe172"
 

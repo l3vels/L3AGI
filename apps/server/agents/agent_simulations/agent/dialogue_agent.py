@@ -1,12 +1,11 @@
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import (
-    HumanMessage,
-    SystemMessage,
-)
+from typing import Callable, List
 from uuid import UUID
-from typing import List, Callable
-from typings.agent import AgentWithConfigsOutput
+
+from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.chat_models import ChatOpenAI
+
 from agents.handle_agent_errors import handle_agent_error
+from typings.agent import AgentWithConfigsOutput
 
 
 class DialogueAgent:

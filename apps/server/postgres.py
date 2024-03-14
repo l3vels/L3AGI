@@ -7,7 +7,7 @@ from uuid import UUID
 from fastapi_sqlalchemy import db
 from langchain.schema import (BaseChatMessageHistory, BaseMessage,
                               _message_to_dict)
-from langchain.schema.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage, HumanMessage
 
 from models.chat_message import ChatMessage
 

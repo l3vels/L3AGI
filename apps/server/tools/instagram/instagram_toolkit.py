@@ -1,11 +1,12 @@
 from abc import ABC
 from typing import List
-from tools.base import BaseToolkit, BaseTool, ToolEnvKey
+
+from tools.base import BaseTool, BaseToolkit, ToolEnvKey
 
 
 class InstagramToolkit(BaseToolkit, ABC):
     name: str = "Instagram Toolkit"
-    description: str = "Toolkit containing tools for Instagram"
+    description: str = "Explore, connect, and share moments that matter with friends and followers worldwide."
     slug: str = "instagram"
     toolkit_id = "5fc51d2a-8681-4674-9554-9a1004443dd3"
 

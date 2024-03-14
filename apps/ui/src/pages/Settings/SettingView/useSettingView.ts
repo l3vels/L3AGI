@@ -11,6 +11,8 @@ export const SETTINGS_FIELDS = [
     title: 'OpenAI',
     slug: 'openai',
     group: 'llm',
+    description:
+      'Advancing artificial intelligence for the benefit of humanity, fostering innovation and collaboration in AI research and development.',
     configs: [
       {
         key: 'open_api_key',
@@ -22,12 +24,16 @@ export const SETTINGS_FIELDS = [
     title: 'Hugging Face',
     slug: 'huggingface',
     group: 'llm',
+    description:
+      'A leading platform for natural language processing, providing cutting-edge models and tools to fuel NLP projects and innovations.',
     configs: [{ key: 'hugging_face_access_token', label: 'Hugging Face Access Token' }],
   },
   {
     title: 'Replicate',
     slug: 'replicate',
     group: 'llm',
+    description:
+      'Your solution for effortless data replication and synchronization, ensuring seamless data consistency across multiple platforms.',
     configs: [
       {
         key: 'replicate_api_token',
@@ -38,6 +44,8 @@ export const SETTINGS_FIELDS = [
   {
     title: 'Pinecone',
     slug: 'pinecone',
+    description:
+      'Empowering developers with lightning-fast vector similarity search for real-time applications, revolutionizing data retrieval and analysis.',
     group: 'vectorDb',
     configs: [
       {
@@ -53,6 +61,8 @@ export const SETTINGS_FIELDS = [
   {
     title: 'Weaviate',
     slug: 'weaviate',
+    description:
+      'A powerful knowledge graph engine for organizing and querying complex data, unlocking insights and enhancing applications with contextual understanding.',
     group: 'vectorDb',
     configs: [
       {

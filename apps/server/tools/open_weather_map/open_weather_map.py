@@ -1,7 +1,7 @@
 from typing import Optional, Type
 
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from langchain.utilities import OpenWeatherMapAPIWrapper
+from langchain_community.utilities import OpenWeatherMapAPIWrapper
 from pydantic import BaseModel, Field
 
 from exceptions import ToolEnvKeyException

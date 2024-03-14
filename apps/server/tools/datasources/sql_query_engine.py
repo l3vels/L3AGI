@@ -1,13 +1,12 @@
-from llama_index import (ServiceContext, SQLDatabase, VectorStoreIndex,
-                         set_global_service_context)
-from llama_index.indices.struct_store.sql_query import \
+from llama_index.core import (ServiceContext, SQLDatabase, VectorStoreIndex,
+                              set_global_service_context)
+from llama_index.core.indices.struct_store.sql_query import \
     SQLTableRetrieverQueryEngine
-from llama_index.llm_predictor import LLMPredictor
-from llama_index.llms import LangChainLLM
-from llama_index.objects import (ObjectIndex, SQLTableNodeMapping,
-                                 SQLTableSchema)
-from llama_index.prompts.base import Prompt
-from llama_index.prompts.prompt_type import PromptType
+from llama_index.core.objects import (ObjectIndex, SQLTableNodeMapping,
+                                      SQLTableSchema)
+from llama_index.core.prompts.base import Prompt
+from llama_index.core.prompts.prompt_type import PromptType
+from llama_index.llms.langchain import LangChainLLM
 from sqlalchemy import MetaData, create_engine
 
 from typings.agent import AgentWithConfigsOutput
@@ -76,11 +75,8 @@ class SQLQueryEngine:
                 self.agent_with_configs,
             ),
         )
-        llm_predictor = LLMPredictor(llm=llm)
 
-        service_context = ServiceContext.from_defaults(
-            llm_predictor=llm_predictor,
-        )
+        service_context = ServiceContext.from_defaults(llm=llm)
 
         set_global_service_context(service_context)
 

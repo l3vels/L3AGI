@@ -7,7 +7,7 @@ from tools.zapier.zapier_send import ZapierSendTool
 
 class ZapierSendToolkit(BaseToolkit, ABC):
     name: str = "Zapier Toolkit"
-    description: str = "Toolkit containing tools for using Zapier"
+    description: str = "Automate tedious tasks and streamline workflows by connecting your favorite apps without writing a single line of code."
     slug: str = "zapier"
     toolkit_id = "01b85de6-8d42-4596-b232-858cf35c820d"
     is_voice = True

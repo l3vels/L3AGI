@@ -1,6 +1,8 @@
 import asyncio
 
-from langchain.agents import AgentType, initialize_agent
+from langchain import hub
+from langchain.agents import (AgentExecutor, AgentType, create_react_agent,
+                              initialize_agent)
 
 from agents.base_agent import BaseAgent
 from agents.conversational.output_parser import ConvoOutputParser
@@ -63,30 +65,66 @@ class ConversationalAgent(BaseAgent):
             streaming_handler = AsyncCallbackHandler()
 
             llm.streaming = True
-            llm.callbacks = [
-                run_logs_manager.get_agent_callback_handler(),
-                streaming_handler,
-            ]
+            # llm.callbacks = [
+            #     run_logs_manager.get_agent_callback_handler(),
+            #     streaming_handler,
+            # ]
 
-            agent = initialize_agent(
-                tools,
-                llm,
-                agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
-                verbose=True,
-                memory=memory,
-                handle_parsing_errors="Check your output and make sure it conforms!",
-                agent_kwargs={
-                    "system_message": system_message,
-                    "output_parser": ConvoOutputParser(),
-                },
-                callbacks=[run_logs_manager.get_agent_callback_handler()],
-            )
+            # agent = initialize_agent(
+            #     tools,
+            #     llm,
+            #     agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+            #     verbose=True,
+            #     memory=memory,
+            #     handle_parsing_errors="Check your output and make sure it conforms!",
+            #     agent_kwargs={
+            #         "system_message": system_message,
+            #         "output_parser": ConvoOutputParser(),
+            #     },
+            #     callbacks=[run_logs_manager.get_agent_callback_handler()],
+            # )
 
-            task = asyncio.create_task(agent.arun(prompt))
+            agentPrompt = hub.pull("hwchase17/react")
 
-            async for token in streaming_handler.aiter():
-                yield token
-            res = await task
+            agent = create_react_agent(llm, tools, prompt=agentPrompt)
+
+            agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+            chunks = []
+            final_answer_detected = False
+
+            async for event in agent_executor.astream_events(
+                {"input": prompt}, version="v1"
+            ):
+                kind = event["event"]
+
+                if kind == "on_chat_model_stream":
+                    content = event["data"]["chunk"].content
+                    if content:
+                        chunks.append(content)
+                        # Check if the last three elements in chunks, when stripped, are "Final", "Answer", and ":"
+                        if (
+                            len(chunks) >= 3
+                            and chunks[-3].strip() == "Final"
+                            and chunks[-2].strip() == "Answer"
+                            and chunks[-1].strip() == ":"
+                        ):
+                            final_answer_detected = True
+                            continue
+
+                        if final_answer_detected:
+                            yield content
+
+            full_response = "".join(chunks)
+            final_answer_index = full_response.find("Final Answer:")
+            if final_answer_index != -1:
+                # Add the length of the phrase "Final Answer:" and any subsequent whitespace or characters you want to skip
+                start_index = final_answer_index + len("Final Answer:")
+                # Optionally strip leading whitespace
+                res = full_response[start_index:].lstrip()
+            else:
+                res = "Final Answer not found in response."
+
         except Exception as err:
             res = handle_agent_error(err)
 

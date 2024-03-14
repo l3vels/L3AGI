@@ -1,7 +1,7 @@
 from typing import Optional, Type
 
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from langchain.tools import DuckDuckGoSearchResults
+from langchain_community.tools import DuckDuckGoSearchResults
 from pydantic import BaseModel, Field
 
 from tools.base import BaseTool

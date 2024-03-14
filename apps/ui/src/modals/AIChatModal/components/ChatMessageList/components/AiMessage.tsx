@@ -34,9 +34,7 @@ type AiMessageProps = {
   messageText: string
   version?: ChatMessageVersionEnum
   thoughts?: any[]
-  isNewMessage: boolean
   runId: string
-  setIsNewMessage: (state: boolean) => void
   onReplyClick?: () => void
   voice?: string
 }
@@ -48,9 +46,7 @@ const AiMessage = ({
   messageDate,
   messageText,
   thoughts,
-  isNewMessage,
   runId,
-  setIsNewMessage,
   onReplyClick,
   voice,
 }: AiMessageProps) => {

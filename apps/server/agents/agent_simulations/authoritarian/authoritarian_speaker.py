@@ -2,8 +2,8 @@ import functools
 from typing import List, Optional
 
 from fastapi_sqlalchemy import db
-from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
+from langchain_community.chat_models import ChatOpenAI
 
 from agents.agent_simulations.agent.dialogue_agent import DialogueSimulator
 from agents.agent_simulations.agent.dialogue_agent_with_tools import \

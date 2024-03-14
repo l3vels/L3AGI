@@ -14,7 +14,6 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
   const { user, account } = useContext(AuthContext)
 
   const [pubSubClient, setPubSubClient] = useState<WebPubSubClient | null>(null)
-  const [isNewMessage, setIsNewMessage] = useState(false)
 
   const typingTimeoutRef = useRef<NodeJS.Timeout>()
 
@@ -70,14 +69,11 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
       }
       if (data.type === 'CHAT_MESSAGE_ADDED') {
         upsertChatMessageInCache(data.chat_message, {
-          replaceCache: data.chat_message.message.data.type === 'ai' ? true : false,
           agentId: data.agent_id,
           teamId: data.team_id,
           chatId: data.chat_id,
           localChatMessageRefId: data.local_chat_message_ref_id,
         })
-
-        setIsNewMessage(true)
       }
 
       if (data.type === 'CHAT_STATUS') {
@@ -290,8 +286,6 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
     sendUserConnected,
     connectedUsers,
     typingUsersData,
-    isNewMessage,
-    setIsNewMessage,
   }
 }
 

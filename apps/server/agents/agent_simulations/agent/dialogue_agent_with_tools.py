@@ -1,8 +1,8 @@
 from typing import List, Optional
 
 from langchain.agents import AgentType, initialize_agent
-from langchain.chat_models import ChatOpenAI
 from langchain.schema import AIMessage, SystemMessage
+from langchain_community.chat_models import ChatOpenAI
 
 from agents.agent_simulations.agent.dialogue_agent import DialogueAgent
 from agents.conversational.output_parser import ConvoOutputParser

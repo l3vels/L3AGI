@@ -19,13 +19,11 @@ const useUpdateChatCache = () => {
       agentId,
       teamId,
       chatId,
-      replaceCache,
     }: {
       localChatMessageRefId?: Nullable<string>
       agentId?: Nullable<string>
       teamId?: Nullable<string>
       chatId?: Nullable<string>
-      replaceCache?: boolean
     } = {},
   ) => {
     let queryVariables = omitBy(
@@ -57,9 +55,11 @@ const useUpdateChatCache = () => {
           ...newChatMessage,
         }
 
-        if (replaceCache) {
-          const lastItemId = newChatMessages[newChatMessages.length - 1].id
-          newChatMessages = newChatMessages.filter((message: any) => message.id !== lastItemId)
+        if (newChatMessage?.message?.type === 'ai') {
+          const lastMessage = newChatMessages[newChatMessages.length - 1]
+          const lastItemId = lastMessage?.id
+          if (lastMessage?.message?.type === 'ai')
+            newChatMessages = newChatMessages.filter((message: any) => message.id !== lastItemId)
         }
 
         if (localChatMessageRefId && user.id === newChatMessage.sender_user_id) {

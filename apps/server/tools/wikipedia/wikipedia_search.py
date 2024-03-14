@@ -1,7 +1,7 @@
 from typing import Optional, Type
 
 from langchain.callbacks.manager import CallbackManagerForToolRun
-from langchain.utilities import WikipediaAPIWrapper
+from langchain_community.utilities import WikipediaAPIWrapper
 from pydantic import BaseModel, Field
 
 from tools.base import BaseTool

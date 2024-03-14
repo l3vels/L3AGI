@@ -1,15 +1,12 @@
 from __future__ import annotations
+
 import re
-from typing import TYPE_CHECKING, List, Dict, Optional
-from langchain.schema.messages import (
-    AIMessage,
-    BaseMessage,
-    HumanMessage,
-    SystemMessage,
-)
-from langchain.memory.chat_message_histories import (
-    ZepChatMessageHistory as ZepChatMessageHistoryBase,
-)
+from typing import TYPE_CHECKING, Dict, List, Optional
+
+from langchain.schema.messages import (AIMessage, BaseMessage, HumanMessage,
+                                       SystemMessage)
+from langchain_community.chat_message_histories import \
+    ZepChatMessageHistory as ZepChatMessageHistoryBase
 
 if TYPE_CHECKING:
     from zep_python import Memory, Message

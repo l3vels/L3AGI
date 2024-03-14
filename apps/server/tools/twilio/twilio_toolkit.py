@@ -7,7 +7,7 @@ from tools.twilio.twilio_send import TwilioSendTool
 
 class TwilioSearchToolkit(BaseToolkit, ABC):
     name: str = "Twilio Toolkit"
-    description: str = "Toolkit containing tools for searching Twilio"
+    description: str = "Empowering developers to build flexible and reliable communication solutions through APIs for messaging, voice, and video."
     slug: str = "twilio"
     toolkit_id = "8dcb3215-a3ec-4da6-a673-60e4af61e86d"
     is_voice = True

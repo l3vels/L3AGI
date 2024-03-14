@@ -210,19 +210,19 @@ const Integrations = () => {
             <StyledChatWrapper>
               {show && (
                 <>
-                  <TabList size='small' activeTabId={activeTab} noBorder>
+                  {/* <TabList size='small' activeTabId={activeTab} noBorder>
                     <Tab onClick={() => handleTabClick(0)}>{t('How it works')}</Tab>
                     <Tab onClick={() => handleTabClick(1)} disabled={isSettingsHidden}>
                       {t('settings')}
                     </Tab>
-                  </TabList>
+                  </TabList> */}
 
                   <TabsContext activeTabId={activeTab}>
                     <TabPanels>
                       <TabPanel>
-                        {toolQuery && <ToolView toolSlug={toolQuery} hideForm />}
-                        {voiceQuery && <VoiceView voiceSlug={voiceQuery} hideForm />}
-                        {settingQuery && <SettingView settingSlug={settingQuery} hideForm />}
+                        {toolQuery && <ToolView toolSlug={toolQuery} />}
+                        {voiceQuery && <VoiceView voiceSlug={voiceQuery} />}
+                        {settingQuery && <SettingView settingSlug={settingQuery} />}
                       </TabPanel>
                       <TabPanel>
                         {toolQuery && <ToolView toolSlug={toolQuery} hideInfo />}

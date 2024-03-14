@@ -7,7 +7,7 @@ from tools.sendgrid.sendgrid_send import SendGridSendTool
 
 class SendGridToolkit(BaseToolkit, ABC):
     name: str = "SendGrid Toolkit"
-    description: str = "Toolkit containing tools for sending emails with SendGrid"
+    description: str = "Empowering businesses to deliver emails that matter, reliably and at scale, with powerful email delivery solutions."
     slug: str = "sendgrid"
     toolkit_id = "52a88c82-df3c-4caa-84f3-5752ed61e36d"
     is_voice = True

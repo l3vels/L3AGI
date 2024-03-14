@@ -5,14 +5,14 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 
 import s3fs
-from langchain.embeddings import OpenAIEmbeddings
-from llama_index import (ServiceContext, SimpleDirectoryReader, StorageContext,
-                         SummaryIndex, TreeIndex, VectorStoreIndex,
-                         load_index_from_storage)
-from llama_index.embeddings import LangchainEmbedding
-from llama_index.llms import LangChainLLM
+from llama_index.core import (ServiceContext, Settings, SimpleDirectoryReader,
+                              StorageContext, SummaryIndex, TreeIndex,
+                              VectorStoreIndex, load_index_from_storage)
+from llama_index.core.vector_stores.types import VectorStore
+from llama_index.embeddings.langchain import LangchainEmbedding
+from llama_index.embeddings.openai import OpenAIEmbedding as OpenAIEmbeddings
+from llama_index.llms.langchain import LangChainLLM
 from llama_index.vector_stores.pinecone import PineconeVectorStore
-from llama_index.vector_stores.types import VectorStore
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 from llama_index.vector_stores.zep import ZepVectorStore
 
@@ -142,15 +142,19 @@ class FileDatasourceRetriever:
         # Remove tmp directory
         shutil.rmtree(self.datasource_path)
 
-        embed_model = LangchainEmbedding(
-            OpenAIEmbeddings(
-                openai_api_key=self.settings.openai_api_key,
-                show_progress_bar=True,
-            ),
+        Settings.embed_model = OpenAIEmbeddings(
+            api_key=self.settings.openai_api_key,
+            show_progress_bar=True,
         )
+        # embed_model = LangchainEmbedding(
+        #     OpenAIEmbeddings(
+        #         openai_api_key=self.settings.openai_api_key,
+        #         show_progress_bar=True,
+        #     ),
+        # )
 
         service_context = ServiceContext.from_defaults(
-            chunk_size=self.chunk_size, embed_model=embed_model
+            chunk_size=self.chunk_size, embed_model=Settings.embed_model
         )
 
         # try:

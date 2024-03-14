@@ -6,7 +6,7 @@ from voices.base import BaseVoice, VoiceEnvKey, VoiceEnvKeyType
 
 class AzureVoice(BaseVoice, ABC):
     name: str = "Azure"
-    description: str = "Microsoft Azure Cognitive Services."
+    description: str = "Harness the power of Azure's robust voice services to enable seamless voice interactions in your applications and devices."
     slug: str = "azure"
     is_synthesizer: bool = True
     is_transcriber: bool = True

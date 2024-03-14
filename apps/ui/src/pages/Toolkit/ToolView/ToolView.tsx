@@ -188,6 +188,8 @@ export const StyledFieldsWrapper = styled.div`
   overflow: auto;
 
   padding: 0 10px;
+
+  max-width: 800px;
 `
 export const StyledButtonWrapper = styled.div`
   margin-left: auto;
