@@ -1,6 +1,9 @@
 import os
 from typing import Optional, Type
+from uuid import uuid4
 
+import requests
+from fastapi import HTTPException
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
@@ -8,6 +11,7 @@ from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
+from services.aws_s3 import AWSS3Service
 from tools.base import BaseTool
 from utils.model import get_llm
 
@@ -56,11 +60,40 @@ class DalleTool(BaseTool):
             )
             chain = LLMChain(llm=llm, prompt=prompt)
 
-            image_url = DallEAPIWrapper(api_key=self.settings.openai_api_key).run(
+            dalle_image_url = DallEAPIWrapper(api_key=self.settings.openai_api_key).run(
                 chain.run(query)
+            )
+
+            image_url = get_final_image_url(
+                image_url=dalle_image_url, account=self.account
             )
 
             return image_url
 
         except Exception as err:
             return str(err)
+
+
+def get_final_image_url(image_url: str, account):
+    response = requests.get(image_url, stream=True)
+    if response.status_code == 200:
+        content_type = response.headers["content-type"]
+        image_body = response.content
+        name = image_url.split("/")[-1] or f"image-{uuid4()}"
+
+        if "." in name:
+            name, ext = name.rsplit(".", 1)
+        else:
+            # Handle the case where there is no file extension
+            # You might want to assign a default extension or raise an error
+            ext = "png"
+
+        key = f"account_{account.id}/files/dalle-{uuid4()}.{ext}"
+
+        final_url = AWSS3Service.upload(
+            key=key, content_type=content_type, body=image_body
+        )
+
+        return final_url
+    else:
+        raise HTTPException(status_code=400, detail="Could not retrieve image from URL")

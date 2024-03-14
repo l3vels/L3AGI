@@ -13,8 +13,6 @@ const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
 const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
 const VOICE_REGEX = /\/integrations\/voice\/[^/]+/
 const SETTINGS_REGEX = /\/integrations\?setting=([^/]+)/
-const DALLE_IMAGE_REGEX =
-  /https:\/\/oaidalleapiprodscus\.blob\.core\.windows\.net\/private\/or.*?&sig=[\w%/]+/
 
 const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; children: any }) => {
   const { openModal } = useModal()
@@ -25,11 +23,9 @@ const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; c
       children={children}
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
+        img: ({ node, ...props }) => <StyledImg {...props} />,
         table: ({ node, ...props }) => <StyledTable {...props} />,
         a: ({ href, children }) => {
-          // console.log('href', href)
-          // console.log('children', children)
-
           if (YOUTUBE_REGEX.test(href as string)) {
             const videoId = (href as string).match(YOUTUBE_REGEX)?.[1]
             return (
@@ -51,12 +47,6 @@ const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; c
 
           if (IMAGE_REGEX.test(href as string)) {
             const imageUrl = href as string
-            return <img src={imageUrl} alt={children as string} />
-          }
-
-          if (DALLE_IMAGE_REGEX.test(href as string)) {
-            const imageUrl = href as string
-
             return <StyledImg src={imageUrl} alt={children as string} />
           }
 
