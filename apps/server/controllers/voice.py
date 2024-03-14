@@ -80,7 +80,6 @@ def get_voice_options(
     end = start + per_page
     paginated_azure_voices = azure_voices[start:end]
 
-    print(labsResponse.json())
     combined_response = {
         "elevenLabsVoices": labsResponse.json(),
         "playHtVoices": play_ht_all_voices,
