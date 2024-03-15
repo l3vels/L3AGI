@@ -1,6 +1,7 @@
 import Table from 'components/Table'
 
 import ChatV2 from 'modals/AIChatModal/components/ChatV2'
+import { ChatContextProvider } from 'modals/AIChatModal/context/ChatContext'
 import { StyledCloseIcon } from 'pages/Home/GetStarted/GetStartedContainer'
 
 import { useColumn } from 'pages/Sessions/columnConfig'
@@ -68,7 +69,11 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
           kind={IconButton.kinds?.TERTIARY}
           size={IconButton.sizes?.SMALL}
         />
-        {sessionId && <ChatV2 chatSessionId={sessionId} />}
+        {sessionId && (
+          <ChatContextProvider>
+            <ChatV2 chatSessionId={sessionId} />
+          </ChatContextProvider>
+        )}
       </StyledChatWrapper>
     </StyledRoot>
   )

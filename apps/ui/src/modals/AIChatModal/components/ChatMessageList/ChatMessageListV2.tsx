@@ -176,9 +176,30 @@ const ChatMessageListV2 = ({
     }
   }, [initialChat])
 
+  const appendInterval = useRef(null as any)
+  const [atBottom, setAtBottom] = useState(false)
+  const showButtonTimeoutRef = useRef(null as any)
+  const [showButton, setShowButton] = useState(false)
+
   useEffect(() => {
-    if (!showScrollButton) scrollToEnd()
-  }, [data])
+    return () => {
+      clearInterval(appendInterval.current)
+      clearTimeout(showButtonTimeoutRef.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    clearTimeout(showButtonTimeoutRef.current)
+    if (!atBottom) {
+      showButtonTimeoutRef.current = setTimeout(() => setShowButton(true), 500)
+    } else {
+      setShowButton(false)
+    }
+  }, [atBottom, setShowButton])
+
+  // useEffect(() => {
+  //   if (!showButton) scrollToEnd()
+  // }, [data[data?.length - 1]])
 
   return (
     <StyledRoot show={true}>
@@ -191,6 +212,12 @@ const ChatMessageListV2 = ({
         data={initialChat}
         totalCount={data.length}
         overscan={2500}
+        followOutput
+        atBottomStateChange={bottom => {
+          clearInterval(appendInterval.current)
+          setAtBottom(bottom)
+        }}
+        atBottomThreshold={6}
         components={{
           Footer: () => {
             return (
@@ -284,7 +311,8 @@ const ChatMessageListV2 = ({
           </>
         )}
       />
-      {showScrollButton && (
+
+      {showButton && (
         <StyledScrollButton onClick={scrollToEnd}>
           <ArrowDown size={18} />
         </StyledScrollButton>
@@ -318,7 +346,7 @@ const StyledWrapper = styled.div<{ isHidden?: boolean; isReplying?: boolean }>`
   /* align-items: center; */
   gap: 5px;
 
-  padding-top: 10px;
+  padding-bottom: 6px;
   /* margin-right: 50px; */
   .visible-reply {
     opacity: 1;

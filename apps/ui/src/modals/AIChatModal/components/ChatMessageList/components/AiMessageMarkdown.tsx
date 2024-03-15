@@ -52,7 +52,7 @@ const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; c
         table: ({ node, ...props }) => <StyledTable {...props} />,
         a: ({ href, children }) => {
           if (loadingUrl) {
-            return <Loader size={50} />
+            return <Loader size={40} />
           }
 
           if (YOUTUBE_REGEX.test(href as string)) {
