@@ -12,21 +12,27 @@ type UseChatMessagesService = {
   chatId?: Nullable<string>
 }
 
-export const useChatMessagesService = ({
-  agentId,
-  teamId,
-  chatId,
-}: UseChatMessagesService) => {
-  const { data, error, loading, refetch } = useQuery(CHAT_MESSAGES_GQL, {
-    // Omit undefined variables to exclude in query params
-    variables: omitBy(
+export const useChatMessagesService = ({ agentId, teamId, chatId }: UseChatMessagesService) => {
+  let queryVariables = omitBy(
+    {
+      agent_id: agentId,
+      team_id: teamId,
+      chat_id: chatId,
+    },
+    isNil,
+  )
+  if (chatId) {
+    queryVariables = omitBy(
       {
-        agent_id: agentId,
-        team_id: teamId,
         chat_id: chatId,
       },
       isNil,
-    ),
+    )
+  }
+
+  const { data, error, loading, refetch } = useQuery(CHAT_MESSAGES_GQL, {
+    // Omit undefined variables to exclude in query params
+    variables: queryVariables,
   })
 
   return {
@@ -37,10 +43,7 @@ export const useChatMessagesService = ({
   }
 }
 
-export const useChatMessagesHistoryService = ({
-  agentId,
-  teamId,
-}: UseChatMessagesService) => {
+export const useChatMessagesHistoryService = ({ agentId, teamId }: UseChatMessagesService) => {
   const { data, error, loading, refetch } = useQuery(CHAT_MESSAGES_HISTORY_GQL, {
     // Omit undefined variables to exclude in query params
     variables: omitBy(

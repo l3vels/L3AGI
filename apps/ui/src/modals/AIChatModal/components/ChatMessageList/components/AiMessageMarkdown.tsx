@@ -4,8 +4,9 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { useModal } from 'hooks'
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { t } from 'i18next'
+import Loader from 'share-ui/components/Loader/Loader'
 
 const YOUTUBE_REGEX = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)&/
 const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
@@ -13,11 +14,33 @@ const IMAGE_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
 const TOOLKIT_REGEX = /\/toolkits\/[^/]+/
 const VOICE_REGEX = /\/integrations\/voice\/[^/]+/
 const SETTINGS_REGEX = /\/integrations\?setting=([^/]+)/
-const DALLE_IMAGE_REGEX =
-  /https:\/\/oaidalleapiprodscus\.blob\.core\.windows\.net\/private\/or.*?&sig=[\w%/]+/
+
+const INCOMPLETE_URL_REGEX = /https?:\/\/\S*$/
 
 const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; children: any }) => {
   const { openModal } = useModal()
+
+  const [loadingUrl, setLoadingUrl] = useState(false)
+
+  useEffect(() => {
+    // Check if the last part of the children string is an incomplete URL
+    const match = children.match(INCOMPLETE_URL_REGEX)
+    if (match) {
+      // If there's an incomplete URL, start loading
+      setLoadingUrl(true)
+      // Here you would have logic to determine when the URL is complete
+      // For demonstration, let's assume the URL is complete when there are no more tokens coming for 1 second
+      const timeoutId = setTimeout(() => {
+        setLoadingUrl(false)
+      }, 1000) // Wait for 1 second of no new tokens to consider the URL complete
+
+      // Clear the timeout if the component unmounts or the children update before the timeout is reached
+      return () => clearTimeout(timeoutId)
+    } else {
+      // If there's no incomplete URL, ensure loading is not shown
+      setLoadingUrl(false)
+    }
+  }, [children])
 
   return (
     <StyledReactMarkdown
@@ -25,10 +48,12 @@ const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; c
       children={children}
       remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
       components={{
+        img: ({ node, ...props }) => <StyledImg {...props} />,
         table: ({ node, ...props }) => <StyledTable {...props} />,
         a: ({ href, children }) => {
-          // console.log('href', href)
-          // console.log('children', children)
+          if (loadingUrl) {
+            return <Loader size={40} />
+          }
 
           if (YOUTUBE_REGEX.test(href as string)) {
             const videoId = (href as string).match(YOUTUBE_REGEX)?.[1]
@@ -51,12 +76,6 @@ const AiMessageMarkdown = ({ isReply = false, children }: { isReply?: boolean; c
 
           if (IMAGE_REGEX.test(href as string)) {
             const imageUrl = href as string
-            return <img src={imageUrl} alt={children as string} />
-          }
-
-          if (DALLE_IMAGE_REGEX.test(href as string)) {
-            const imageUrl = href as string
-
             return <StyledImg src={imageUrl} alt={children as string} />
           }
 
