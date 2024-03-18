@@ -42,6 +42,7 @@ const useUpdateChatCache = () => {
         isNil,
       )
     }
+
     apolloClient.cache.updateQuery(
       { query: CHAT_MESSAGES_GQL, variables: queryVariables },
       data => {

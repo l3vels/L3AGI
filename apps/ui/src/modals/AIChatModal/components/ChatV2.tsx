@@ -84,7 +84,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
-  const chatId = urlParams.get('chat') || chatSessionId
+  const chatId = urlParams.get('chat') || urlParams.get('session') || chatSessionId
 
   const { thinking, setThinking, socket } = useChatState()
 

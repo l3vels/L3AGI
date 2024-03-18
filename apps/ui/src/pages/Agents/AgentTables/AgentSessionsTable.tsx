@@ -71,7 +71,7 @@ const AgentSessionsTable = ({ agentId }: { agentId: string }) => {
         />
         {sessionId && (
           <ChatContextProvider>
-            <ChatV2 chatSessionId={sessionId} />
+            <ChatV2 />
           </ChatContextProvider>
         )}
       </StyledChatWrapper>

@@ -22,7 +22,7 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
 
   const agentId = urlParams.get('agent')
   const teamId = urlParams.get('team')
-  const chatId = urlParams.get('chat') || createdChatId || ''
+  const chatId = urlParams.get('chat') || urlParams.get('session') || createdChatId || ''
 
   const groupId = getSessionId({
     user,
@@ -46,6 +46,7 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
 
     const response = await fetch(url)
     const data = await response.json()
+
     return data.url
   }, [user?.id])
 
@@ -68,6 +69,7 @@ const useChatSocket = ({ userId, createdChatId }: ChatSocketProps) => {
         onUserTypingEvent(e)
       }
       if (data.type === 'CHAT_MESSAGE_ADDED') {
+        console.log('socket', data)
         upsertChatMessageInCache(data.chat_message, {
           agentId: data.agent_id,
           teamId: data.team_id,

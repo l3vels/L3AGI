@@ -141,6 +141,7 @@ const useApollo = () => {
       return new ApolloClient({
         link: apolloLink,
         cache: new InMemoryCache(),
+        connectToDevTools: true,
 
         defaultOptions: {
           watchQuery: {
