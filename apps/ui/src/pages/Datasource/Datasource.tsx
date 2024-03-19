@@ -48,10 +48,10 @@ const Datasource = () => {
 
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (datasources?.length > 0) navigate(`/datasources/${datasources?.[0].id}/edit-datasource`)
-    else if (groups?.length > 0) navigate(`/datasources/${groups?.[0].id}/edit-group`)
-  }, [datasources])
+  // useEffect(() => {
+  //   if (datasources?.length > 0) navigate(`/datasources/${datasources?.[0].id}/edit-datasource`)
+  //   else if (groups?.length > 0) navigate(`/datasources/${groups?.[0].id}/edit-group`)
+  // }, [datasources])
 
   return (
     <>

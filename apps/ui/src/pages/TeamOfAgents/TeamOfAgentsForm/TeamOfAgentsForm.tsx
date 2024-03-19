@@ -126,7 +126,7 @@ const TeamOfAgentsForm = ({ formik, isLoading }: TeamOfAgentsFormProps) => {
 
                   {config_value && (
                     <UploadedFile
-                      onClick={() => setFieldValue('config_value', null)}
+                      onDeleteClick={() => setFieldValue('config_value', null)}
                       name={'file'}
                     />
                   )}
