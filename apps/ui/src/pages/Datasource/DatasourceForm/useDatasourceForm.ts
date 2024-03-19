@@ -1,8 +1,11 @@
+import { ToastContext } from 'contexts'
 import useUploadFile from 'hooks/useUploadFile'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import { useDataLoadersService } from 'services/datasource/useDataLoadersService'
 
 export const useDatasourceForm = (formik: any) => {
+  const { setToast } = useContext(ToastContext)
+
   const { data: dataLoaders } = useDataLoadersService()
 
   const { setFieldValue, values } = formik
@@ -26,6 +29,16 @@ export const useDatasourceForm = (formik: any) => {
     const promises = []
 
     for (const file of files) {
+      if (file.type.startsWith('video/')) {
+        setToast({
+          message: 'Cant upload video!',
+          type: 'warning',
+          open: true,
+        })
+
+        continue
+      }
+
       promises.push(
         uploadFile(
           {

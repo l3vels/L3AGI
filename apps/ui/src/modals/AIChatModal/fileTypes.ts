@@ -12,13 +12,13 @@ export const FILE_TYPES = [
   'application/epub+zip',
   'application/mbox',
   'application/x-ipynb+json',
-  'audio/mpeg',
-  'video/mp4',
-  'text/plain',
+  // 'audio/mpeg',
+  // 'video/mp4',
+  // 'text/plain',
 ]
 
 export const SUPPORTED_FILE_EXTENSIONS = [
-  'txt',
+  // 'txt',
   'pdf',
   'csv',
   'json',
@@ -31,6 +31,6 @@ export const SUPPORTED_FILE_EXTENSIONS = [
   'epub',
   'mbox',
   'ipynb',
-  'mp3',
-  'mp4',
+  // 'mp3',
+  // 'mp4',
 ]
