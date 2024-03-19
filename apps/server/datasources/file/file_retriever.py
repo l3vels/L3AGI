@@ -5,6 +5,7 @@ from typing import List, Optional
 from uuid import UUID, uuid4
 
 import s3fs
+from fastapi import HTTPException
 from llama_index.core import (ServiceContext, Settings, SimpleDirectoryReader,
                               StorageContext, SummaryIndex, TreeIndex,
                               VectorStoreIndex, load_index_from_storage)
@@ -15,6 +16,7 @@ from llama_index.llms.langchain import LangChainLLM
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 from llama_index.vector_stores.zep import ZepVectorStore
+from pinecone import Pinecone, ServerlessSpec
 
 from config import Config
 from services.aws_s3 import AWSS3Service
@@ -93,20 +95,31 @@ class FileDatasourceRetriever:
                 embedding_dimensions=1536,
             )
         elif self.vector_store == VectorStoreProvider.PINECONE.value:
-            import pinecone
-
             # Pinecone only supports alphanumeric characters. Max length 40
             index_name = UUID(self.datasource_id).hex
 
-            pinecone.init(
+            # pinecone.init(
+            #     api_key=self.settings.pinecone_api_key,
+            #     environment=self.settings.pinecone_environment,
+            # )
+
+            pc = Pinecone(
                 api_key=self.settings.pinecone_api_key,
                 environment=self.settings.pinecone_environment,
             )
 
             if not is_retriever:
-                pinecone.create_index(index_name, dimension=1536, metric="cosine")
+                try:
+                    pc.create_index(
+                        index_name,
+                        dimension=1536,
+                        metric="cosine",
+                        spec=ServerlessSpec(cloud="aws", region="us-west-2"),
+                    )
+                except Exception as err:
+                    print("PINE ERROR:", err)
 
-            pinecone_index = pinecone.Index(index_name)
+            pinecone_index = pc.Index(index_name)
 
             vector_store = PineconeVectorStore(
                 pinecone_index=pinecone_index,
