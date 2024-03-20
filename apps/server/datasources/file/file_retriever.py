@@ -109,15 +109,12 @@ class FileDatasourceRetriever:
             )
 
             if not is_retriever:
-                try:
-                    pc.create_index(
-                        index_name,
-                        dimension=1536,
-                        metric="cosine",
-                        spec=ServerlessSpec(cloud="aws", region="us-west-2"),
-                    )
-                except Exception as err:
-                    print("PINE ERROR:", err)
+                pc.create_index(
+                    index_name,
+                    dimension=1536,
+                    metric="cosine",
+                    spec=ServerlessSpec(cloud="aws", region="us-west-2"),
+                )
 
             pinecone_index = pc.Index(index_name)
 
