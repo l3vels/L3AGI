@@ -56,14 +56,19 @@ def index_documents(value: str, datasource_id: UUID, account: AccountOutput):
             similarity_top_k,
         )
         retriever.index_documents(file_urls)
-
         datasource.status = DatasourceStatus.READY.value
         datasource.error = None
+
     except Exception as err:
-        print(err)
-        sentry_sdk.capture_exception(err)
         datasource.status = DatasourceStatus.FAILED.value
-        datasource.error = str(err)
+        try:
+            error_body = json.loads(err.body)
+            error_message = error_body.get("error", {}).get("message", "")
+            print("HERE: ", error_message)
+            datasource.error = str(error_message)
+        except (AttributeError, json.JSONDecodeError):
+            sentry_sdk.capture_exception(err)
+            datasource.error = str(err)
 
     session.add(datasource)
     session.commit()

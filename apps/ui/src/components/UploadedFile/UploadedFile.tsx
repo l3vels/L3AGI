@@ -7,15 +7,25 @@ import IconButton from 'share-ui/components/IconButton/IconButton'
 import Close from 'share-ui/components/Icon/Icons/components/Close'
 
 type UploadedFileProps = {
-  onClick: (id?: string) => void
-  id?: string
+  onClick?: () => void
   name: string
-  hasDeleteIcon?: boolean
+  onDeleteClick?: () => void
 }
 
-const UploadedFile = ({ id, name, onClick, hasDeleteIcon = false }: UploadedFileProps) => {
+const UploadedFile = ({ name, onClick, onDeleteClick }: UploadedFileProps) => {
+  const handleDelete = (event: any) => {
+    event.stopPropagation()
+    if (onDeleteClick) {
+      onDeleteClick()
+    }
+  }
+
   return (
-    <StyledUploadedFile onClick={() => onClick(id)}>
+    <StyledUploadedFile
+      onClick={() => {
+        if (onClick) onClick()
+      }}
+    >
       <StyledIconWrapper>
         <StyledDocIcon />
       </StyledIconWrapper>
@@ -27,8 +37,9 @@ const UploadedFile = ({ id, name, onClick, hasDeleteIcon = false }: UploadedFile
           customColor={'#000'}
         />
       </StyledTextWrapper>
-      {hasDeleteIcon && (
+      {handleDelete && (
         <IconButton
+          onClick={handleDelete}
           size={IconButton.sizes?.XS}
           icon={() => <StyledCloseIcon size='22' />}
           kind={IconButton.kinds?.TERTIARY}

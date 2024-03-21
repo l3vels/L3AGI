@@ -125,8 +125,6 @@ export const useEditDatasource = ({ incomingDatasourceId }: { incomingDatasource
     await Promise.all(promises)
     await Promise.all([refetchDatasources(), refetchConfigs()])
 
-    if (!incomingDatasourceId) navigate('/datasources')
-
     setToast({
       message: 'Datasource was updated!',
       type: 'positive',

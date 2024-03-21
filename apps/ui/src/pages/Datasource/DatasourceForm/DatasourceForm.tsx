@@ -112,10 +112,10 @@ const DatasourceForm = ({ formik, isLoading, isEdit = false, type }: DatasourceF
                       files.map((file: any) => (
                         <UploadedFile
                           key={file.url}
-                          id={file.url}
-                          hasDeleteIcon
-                          onClick={id => {
-                            const filteredFiles = files.filter((file: any) => file.url !== id)
+                          onDeleteClick={() => {
+                            const filteredFiles = files.filter(
+                              (files: any) => files.url !== file.url,
+                            )
                             setFieldValue('files', filteredFiles)
                           }}
                           name={file.name}

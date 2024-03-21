@@ -430,7 +430,7 @@ const ChatV2 = ({ chatSessionId }: { chatSessionId?: string }) => {
             {uploadedFileObject && (
               <StyledFileWrapper>
                 <UploadedFile
-                  onClick={() => setUploadedFileObject(null)}
+                  onDeleteClick={() => setUploadedFileObject(null)}
                   name={uploadedFileObject.fileName}
                 />
               </StyledFileWrapper>

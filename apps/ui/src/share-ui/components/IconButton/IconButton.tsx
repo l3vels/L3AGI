@@ -217,4 +217,8 @@ export default IconButton
 
 const StyledIconButtonWrapper = styled.div`
   max-height: 36px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
