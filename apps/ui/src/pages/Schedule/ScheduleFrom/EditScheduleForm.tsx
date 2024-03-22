@@ -17,7 +17,7 @@ import { useEditSchedule } from '../useEditSchedule'
 import ScheduleForm from './ScheduleForm'
 import { StyledFormWrapper } from 'styles/formStyles.css'
 
-const EditScheduleForm = ({ scheduleId }: { scheduleId: string }) => {
+const EditScheduleForm = ({ scheduleId }: { scheduleId?: string }) => {
   const { formik, isLoading } = useEditSchedule({ incomingScheduleId: scheduleId })
 
   return (

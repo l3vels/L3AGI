@@ -396,6 +396,12 @@ const Route = () => {
                   key={document.location.href}
                 />
               </Router>
+
+              <Router
+                path='wallets'
+                element={<div>Here are wallets</div>}
+                key={document.location.href}
+              ></Router>
               {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Group />} key={document.location.href} />
             </Router> */}

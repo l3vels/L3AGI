@@ -184,6 +184,16 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )}
 
+        <Tooltip content={t('wallet')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'wallets')}
+            onClick={() => onHandleClick('/wallets')}
+          >
+            <FineTuning size={30} />
+            {includes(active, 'wallets') && <StyledCorner />}
+          </StyledLi>
+        </Tooltip>
+
         {/* {isDiscover && (
           <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
             <StyledLi
