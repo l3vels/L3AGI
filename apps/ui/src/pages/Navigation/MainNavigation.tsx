@@ -35,6 +35,7 @@ import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import Chats from 'share-ui/components/Icon/Icons/components/Chats'
 import Integrations from 'share-ui/components/Icon/Icons/components/integrations'
 import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
+import { API, Wallet } from 'share-ui/components/Icon/Icons'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const { getDomainConfig } = useDomainConfig()
@@ -189,8 +190,18 @@ const MainNavigation = ({ user }: { user: any }) => {
             isActive={includes(active, 'wallets')}
             onClick={() => onHandleClick('/wallets')}
           >
-            <FineTuning size={30} />
+            <StyledWallet size={30} />
             {includes(active, 'wallets') && <StyledCorner />}
+          </StyledLi>
+        </Tooltip>
+
+        <Tooltip content={t('api-keys')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'api-keys')}
+            onClick={() => onHandleClick('/api-keys')}
+          >
+            <StyledAPIIcon size={30} />
+            {includes(active, 'api-keys') && <StyledCorner />}
           </StyledLi>
         </Tooltip>
 
@@ -343,6 +354,18 @@ const StyledSessionIcon = styled(Session)`
     fill: ${({ theme }) => theme.body.iconColor};
   }
 `
+const StyledWallet = styled(Wallet)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
+const StyledAPIIcon = styled(API)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+
 const StyledBottomSection = styled.div`
   margin-top: auto;
 

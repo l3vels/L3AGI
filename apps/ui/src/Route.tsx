@@ -108,6 +108,8 @@ import CreateScheduleModal from 'modals/CreateScheduleModal'
 import EditScheduleModal from 'modals/EditScheduleModal'
 import VoiceOptionsModal from 'modals/VoiceOptionsModal'
 import LlmSettingsModal from 'modals/LlmSettingsModal'
+import Wallets from 'pages/Wallets'
+import WalletDetails from 'pages/Wallets/WalletDetails'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -397,11 +399,13 @@ const Route = () => {
                 />
               </Router>
 
-              <Router
-                path='wallets'
-                element={<div>Here are wallets</div>}
-                key={document.location.href}
-              ></Router>
+              <Router path='wallets' element={<Wallets />} key={document.location.href}>
+                <Router
+                  path={':walletId'}
+                  element={<WalletDetails />}
+                  key={document.location.href}
+                />
+              </Router>
               {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Group />} key={document.location.href} />
             </Router> */}

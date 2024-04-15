@@ -338,6 +338,7 @@
   "vector-store-index": "Vector Store Index",
   "vector-store-provider": "Vector Store Provider",
   "wallet": "Wallet",
+  "wallets": "$t(wallet)s",
   "wallet-delete-failed": "Wallet delete failed",
   "wallet-successfully-deleted": "Wallet successfully deleted",
   "web3": "Web3",
