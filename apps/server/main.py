@@ -19,6 +19,7 @@ from controllers.configuration import router as config_router
 from controllers.datasource import router as datasource_router
 from controllers.file import router as file_router
 from controllers.fine_tuning import router as fine_tuning_router
+from controllers.google_search import router as google_search_router
 from controllers.integrations import router as integrations_router
 from controllers.llm import router as llm_router
 from controllers.model import router as model_router
@@ -133,6 +134,9 @@ app.include_router(api_key_router, prefix="/api-key", include_in_schema=False)
 app.include_router(integrations_router, prefix="/integrations", include_in_schema=False)
 app.include_router(fine_tuning_router, prefix="/fine-tuning", include_in_schema=False)
 app.include_router(voice_router, prefix="/voice", include_in_schema=True)
+app.include_router(
+    google_search_router, prefix="/google_search", include_in_schema=False
+)
 
 
 @app.get("/", include_in_schema=False)
