@@ -108,6 +108,7 @@ import CreateScheduleModal from 'modals/CreateScheduleModal'
 import EditScheduleModal from 'modals/EditScheduleModal'
 import VoiceOptionsModal from 'modals/VoiceOptionsModal'
 import LlmSettingsModal from 'modals/LlmSettingsModal'
+import { InviteUsers, CreateUserAccess } from 'pages/InviteUsers'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -395,6 +396,20 @@ const Route = () => {
                   element={<EditApiKeyForm />}
                   key={document.location.href}
                 />
+              </Router>
+
+              <Router path='invite-user' element={<MainRouteLayout />} key={document.location.href}>
+                <Router index element={<InviteUsers />} key={document.location.href} />
+                <Router
+                  path={'invite'}
+                  element={<CreateUserAccess />}
+                  key={document.location.href}
+                />
+                {/* <Router
+                  path={':apiKeyId/edit-api-key'}
+                  element={<EditApiKeyForm />}
+                  key={document.location.href}
+                /> */}
               </Router>
               {/* <Router path={'groups'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Group />} key={document.location.href} />
