@@ -1,0 +1,14 @@
+query getUserAccess @api(name: "ai") {
+  getUserAccess @rest(type: "UserAccountAccess", path: "/user-account-access", method: "GET", endpoint: "ai") {
+    id
+    assigned_user_id
+    assigned_account_id
+    account_id
+    created_by
+    created_on
+    assigned_user_email
+    assigned_user_name
+    created_by_email
+    created_by_name
+  }
+}

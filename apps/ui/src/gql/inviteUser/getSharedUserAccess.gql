@@ -1,0 +1,11 @@
+query getSharedUserAccess @api(name: "ai") {
+  getSharedUserAccess @rest(type: "UserAccountAccess", path: "/user-account-access/access", method: "GET", endpoint: "ai") {
+    id
+    account_id
+    created_by
+    created_on
+    assigned_account_name
+    created_by_email
+    created_by_name
+  }
+}

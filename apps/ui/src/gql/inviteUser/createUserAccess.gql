@@ -1,0 +1,7 @@
+mutation createUserAccess($input: input!) @api(name: ai) {
+  createUserAccess(input: $input)
+    @rest(type: "UserAccountAccess", path: "/user-account-access", method: "POST", bodyKey: "input", endpoint: "ai") {
+    success
+    message
+  }
+}
