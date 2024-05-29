@@ -72,6 +72,21 @@ const AvatarDropDown = () => {
             }}
           />
         </StyledDropDownMenuItem>
+        <StyledDropDownMenuItem onClick={() => navigate('invite-user')}>
+          <StyledAPIIcon size={20} />
+
+          <TypographyPrimary
+            value='Invite User'
+            type={TypographyTypes.P}
+            size={TypographySizes.xss}
+            style={{
+              fontSize: '12px',
+              fontStyle: 'normal',
+              fontWeight: '500',
+              lineHeight: '16px',
+            }}
+          />
+        </StyledDropDownMenuItem>
         <StyledDropDownMenuItem onClick={handleLogout}>
           <StyledLogOutIcon size={20} />
           <TypographyPrimary
