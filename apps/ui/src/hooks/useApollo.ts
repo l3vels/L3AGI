@@ -19,13 +19,13 @@ const locations = ['/login', '/register', '/forgot-password', '/reset-password',
 const useApollo = () => {
   const [cookies] = useCookies([''])
   // @ts-expect-error TODO: fix cookie types
-  const { accountId, authorization, 'x-refresh-token': refreshToken } = cookies
+  const { account_id, authorization, 'x-refresh-token': refreshToken } = cookies
 
   let authConfig: any = {
     // credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      account_id: accountId,
+      account_id: account_id,
     },
   }
 
@@ -33,9 +33,11 @@ const useApollo = () => {
     headers: {
       // 'x-refresh-token': refreshToken,
       authorization: `Bearer ${authorization}`,
-      account_id: accountId,
+      account_id: account_id,
     },
   }
+
+  // 'b3834015-eb0e-4b04-9fcc-6a1de3bc4a5c'
 
   const apollo = React.useMemo(
     () => {
