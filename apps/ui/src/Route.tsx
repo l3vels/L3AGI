@@ -109,6 +109,7 @@ import EditScheduleModal from 'modals/EditScheduleModal'
 import VoiceOptionsModal from 'modals/VoiceOptionsModal'
 import LlmSettingsModal from 'modals/LlmSettingsModal'
 import { InviteUsers, CreateUserAccess } from 'pages/InviteUsers'
+import Subnets from 'pages/Subnets'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -292,6 +293,8 @@ const Route = () => {
                 />
                 <Router path={'voice/:slug'} element={<VoiceView />} key={document.location.href} />
               </Router>
+
+              <Router path={'subnets'} element={<Subnets />} key={document.location.href}></Router>
 
               {/* <Router path={'toolkits'} element={<MainRouteLayout />} key={document.location.href}>
               <Router index element={<Toolkit />} key={document.location.href} />
