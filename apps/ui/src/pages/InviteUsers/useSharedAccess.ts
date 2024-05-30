@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie'
 
 const useSharedAccess = () => { 
     const { data, loading: fetch_data_loading } = useGetSharedUserAccess()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [cookies] = useCookies<any>([''])
     const { account_id } = cookies
 

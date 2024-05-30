@@ -21,12 +21,18 @@ interface ColumnRowProps {
     assigned_user_email: string
     created_by_email: string
     created_on: Date
+    account_id: string
 }
 
 // eslint-disable-next-line react/prop-types
 const DateRenderer: React.FC<{ value: Date }> = ({ value }) => {
     const formattedDate = moment(value).fromNow()
     return <span>{formattedDate}</span>
+}
+
+interface SharedColumnProps {
+    selected_account_id: string | null
+    handleSelectAccess: (account_id: string) => void
 }
 
 const base = [
@@ -65,7 +71,7 @@ export const renderColumns = ({ deleteUserAccess, deleting_loading }: RendererCo
         minWidth: 100,
         width: 130,
     
-        Cell: ({ row: { original: data } }: { row: { original: ColumnRowProps } }) => (
+        Cell: ({ row: { original: data } }: { row: { original: Pick<ColumnRowProps, 'id'> } }) => (
             <StyledActionWrapper>
               <IconButton
                 onClick={() => deleteUserAccess(data.id)}
@@ -79,10 +85,6 @@ export const renderColumns = ({ deleteUserAccess, deleting_loading }: RendererCo
     },
 ])
 
-interface SharedColumnProps {
-    selected_account_id: string | null
-    handleSelectAccess: (account_id: string) => void
-}
 export const renderSharedColumns = ({ selected_account_id, handleSelectAccess }: SharedColumnProps) => ([
     {
         Header: 'Select account',
@@ -90,9 +92,8 @@ export const renderSharedColumns = ({ selected_account_id, handleSelectAccess }:
         minWidth: 100,
         width: 130,
     
-        Cell: ({ row: { original: data } }: any) => (
+        Cell: ({ row: { original: data } }: { row: { original: Pick<ColumnRowProps, 'account_id'> } }) => (
             <Checkbox
-                // indeterminate={selectedTables?.length > 0 && selectedTables?.length !== data?.length}
                 checked={data.account_id === selected_account_id}
                 size='large'
                 kind='secondary'
@@ -108,9 +109,6 @@ export const renderSharedColumns = ({ selected_account_id, handleSelectAccess }:
     },
     ...base.slice(2, base.length),
 ])
-
- 
-
 
 const StyledActionWrapper = styled.div`
   display: flex;
