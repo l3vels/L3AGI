@@ -29,3 +29,13 @@ class GetUserAccountAccessOutput(BaseModel):
 class UserAccountAccessOutput(BaseModel):
     success: bool
     message: str
+
+
+class SharedUserAccountAccessOutput(BaseModel):
+    id: UUID
+    account_id: UUID
+    created_by: UUID
+    created_on: datetime
+    assigned_account_name: str
+    created_by_email: str
+    created_by_name: str

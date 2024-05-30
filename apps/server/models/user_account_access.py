@@ -62,7 +62,7 @@ class UserAccountAccessModel(BaseModel):
         db: Session,
         user_account_access: UserAccountAccessDbInput,
         user,
-        account
+        account_id
     ):
         """
         Creates a new user account access.
@@ -77,7 +77,7 @@ class UserAccountAccessModel(BaseModel):
 
         db_user_account_access = UserAccountAccessModel(
             created_by=user.id,
-            account_id=account.id, # replace account.id to current_user_account_id
+            account_id=account_id
         )
 
         cls.update_model_from_input(
@@ -109,13 +109,13 @@ class UserAccountAccessModel(BaseModel):
         cls,
         db,
         user_account_access_id,
-        account
+        account_id
     ):
         user_access = (
             db.session.query(UserAccountAccessModel)
             .filter(
                 UserAccountAccessModel.id == user_account_access_id,
-                UserAccountAccessModel.account_id == account.id
+                UserAccountAccessModel.account_id == account_id
             )
             .first()
         )
@@ -209,14 +209,14 @@ class UserAccountAccessModel(BaseModel):
         db,
         assigner_user_id,
         assigned_account_id,
-        account
+        account_id
     ):
         user_account_access = (
             db.session.query(UserAccountAccessModel)
             .filter(
                 UserAccountAccessModel.assigned_user_id == assigner_user_id,
                 UserAccountAccessModel.assigned_account_id == assigned_account_id,
-                UserAccountAccessModel.account_id == account.id,
+                UserAccountAccessModel.account_id == account_id,
                 or_(
                     or_(
                         UserAccountAccessModel.is_deleted.is_(False),
@@ -224,6 +224,31 @@ class UserAccountAccessModel(BaseModel):
                     ),
                     UserAccountAccessModel.is_deleted is None,
                 )
+            )
+            .first()
+        )
+        
+        return user_account_access
+
+    @classmethod
+    def check_exist_user_account_access_by_account_id(
+        cls,
+        db,
+        account_id,
+        user_id
+    ):
+        user_account_access = (
+            db.session.query(UserAccountAccessModel)
+            .filter(
+                UserAccountAccessModel.account_id == account_id,
+                UserAccountAccessModel.assigned_user_id == user_id,
+                or_(
+                    or_(
+                        UserAccountAccessModel.is_deleted.is_(False),
+                        UserAccountAccessModel.is_deleted is None,
+                    ),
+                    UserAccountAccessModel.is_deleted is None,
+                ),
             )
             .first()
         )

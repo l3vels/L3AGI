@@ -12,6 +12,7 @@ from typings.user_account_access import (
     UserAccountAccessInput,
     UserAccountAccessDbInput,
     UserAccountAccessOutput,
+    SharedUserAccountAccessOutput
 )
 from exceptions import UserAccessNotFoundException
 from utils.user_account_access import (
@@ -40,6 +41,11 @@ def create_user_account_access(
     try:
         body = input.dict()
 
+        current_user_account = UserAccountModel.get_user_account_by_user_id(
+                    db=db,
+                    user_id=auth.user.id
+                )
+
         existing_user = UserModel.get_user_by_email(db=db, email=body['email'])
 
         if not existing_user:
@@ -63,7 +69,7 @@ def create_user_account_access(
                 db=db,
                 user_account_access=create_user_account_access_input,
                 user=auth.user,
-                account=auth.account
+                account_id=current_user_account.account_id
             )
             if not response:
                 raise HTTPException(
@@ -85,7 +91,7 @@ def create_user_account_access(
                 db=db,
                 assigner_user_id=user_account.user_id,
                 assigned_account_id=user_account.account_id,
-                account=auth.account
+                account_id=current_user_account.account_id
             ):
                 return {
                         'success': False,
@@ -101,7 +107,7 @@ def create_user_account_access(
                 db=db,
                 user_account_access=create_user_account_access_input,
                 user=auth.user,
-                account=auth.account
+                account_id=current_user_account.account_id
             )
 
             if response is None:
@@ -169,10 +175,15 @@ def delete_user_account_access(
         UserAccountAccess: User account access data.
     """
     try:
+        current_user_account = UserAccountModel.get_user_account_by_user_id(
+            db=db,
+            user_id=auth.user.id
+        )
+
         UserAccountAccessModel.delete_user_account_access_by_id(
             db=db,
             user_account_access_id=user_account_access_id,
-            account=auth.account
+            account_id=current_user_account.account_id
         )
 
         return {"success": True, "message": "User access successfully deleted"}
@@ -186,7 +197,11 @@ def delete_user_account_access(
         )
 
 
-@router.get("/access", status_code=200)
+@router.get(
+    "/access",
+    response_model=list[SharedUserAccountAccessOutput],
+    status_code=200
+)
 def get_shared_user_account_access(auth: UserAccount = Depends(authenticate)):
     """_summary_
 
