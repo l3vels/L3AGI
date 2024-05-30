@@ -152,3 +152,11 @@ class TranscriberException(AppBaseException):
 
 class SynthesizerException(AppBaseException):
     pass
+
+
+class UserAccessNotFoundException(DatasourceException):
+    pass
+
+
+class UserAccountAccessException(AppBaseException):
+    pass

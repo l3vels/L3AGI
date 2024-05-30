@@ -20,6 +20,7 @@ from utils.account import \
     convert_model_to_response as convert_model_to_response_account
 from utils.user import \
     convert_model_to_response as convert_model_to_response_user
+from models.user_account_access import UserAccountAccessModel
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -33,12 +34,20 @@ def authenticate(
         email = authorize.get_jwt_subject()
         db_user = UserModel.get_user_by_email(db, email)
         account_id = request.headers.get("account_id", None)
-        if account_id == "undefined" or not account_id:
-            db_account = AccountModel.get_account_created_by(db, db_user.id)
-        else:
+        
+        if account_id != "undefined" and account_id and UserAccountAccessModel.check_exist_user_account_access_by_account_id(db, account_id, db_user.id):
             db_account = AccountModel.get_account_by_access(
                 db, user_id=db_user.id, account_id=account_id
             )
+        else:
+            db_account = AccountModel.get_account_created_by(db, db_user.id)
+            
+        # if account_id == "undefined" or not account_id:
+        #     db_account = AccountModel.get_account_created_by(db, db_user.id)
+        # else:
+        #     db_account = AccountModel.get_account_by_access(
+        #         db, user_id=db_user.id, account_id=account_id
+        #     )
 
         return UserAccount(
             user=convert_model_to_response_user(db_user),

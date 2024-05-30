@@ -29,6 +29,7 @@ from controllers.team_agent import router as team_agent_router
 from controllers.tool import router as tool_router
 from controllers.voice import router as voice_router
 from controllers.workspace import router as workspace_router
+from controllers.user_account_access import router as user_account_access_router
 from models import *  # noqa: F403
 from models.db import Base, engine  # noqa: F401
 from resolvers.account import AccountMutation, AccountQuery
@@ -133,6 +134,7 @@ app.include_router(api_key_router, prefix="/api-key", include_in_schema=False)
 app.include_router(integrations_router, prefix="/integrations", include_in_schema=False)
 app.include_router(fine_tuning_router, prefix="/fine-tuning", include_in_schema=False)
 app.include_router(voice_router, prefix="/voice", include_in_schema=True)
+app.include_router(user_account_access_router, prefix="/user-account-access", include_in_schema=False)
 
 
 @app.get("/", include_in_schema=False)

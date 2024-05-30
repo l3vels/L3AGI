@@ -1,0 +1,13 @@
+mutation deleteUserAccess($id: id!) @api(name: ai) {
+  deleteUserAccess(id: $id)
+    @rest(
+      type: "ApiKeys"
+      path: "/user-account-access/{args.id}"
+      method: "DELETE"
+      bodyKey: "input"
+      endpoint: "ai"
+    ) {
+    success
+    message
+  }
+}

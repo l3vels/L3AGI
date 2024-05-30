@@ -22,7 +22,10 @@ export const cleanCookie = () => {
   cookies.remove('account_id')
 }
 
-export const removeAccountId = () => cookies.remove('account_id')
+export const removeAccountId = () => {
+  cookies.remove('account_id')
+  cookies.addChangeListener(history.go(0))
+}
 
 export const logout = () => {
   removeAccountId()

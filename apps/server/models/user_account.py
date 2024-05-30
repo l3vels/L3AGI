@@ -31,7 +31,7 @@ class UserAccountModel(BaseModel):
     def __repr__(self) -> str:
         return (
             f"User(id={self.id}, "
-            f"user_id='{self.user_id}', account_id='{self.account_id}', role_id='{self.role_id}')"
+            f"user_id='{self.user_id}', account_id='{self.account_id}', ')" # TODO add role_id='{self.role_id}
         )
 
     @classmethod
@@ -144,7 +144,29 @@ class UserAccountModel(BaseModel):
             .first()
         )
         return user_accounts
+    
+    @classmethod
+    def get_user_account_by_user_id(cls, db, user_id):
+        """_summary_
 
+        Args:
+            db (_type_): _description_
+            user_id (_type_): _description_
+            account (_type_): _description_
+
+        Raises:
+            UserAccountNotFoundException: _description_
+        """
+        
+        user_account = (
+            db.session.query(UserAccountModel)
+            .filter(
+                UserAccountModel.user_id == user_id,
+            )
+            .first()
+        )
+        return user_account
+        
     @classmethod
     def delete_by_id(cls, db, user_account_id):
         db_user_account = (
