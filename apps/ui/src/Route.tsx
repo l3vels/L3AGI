@@ -109,7 +109,7 @@ import EditScheduleModal from 'modals/EditScheduleModal'
 import VoiceOptionsModal from 'modals/VoiceOptionsModal'
 import LlmSettingsModal from 'modals/LlmSettingsModal'
 import { InviteUsers, CreateUserAccess } from 'pages/InviteUsers'
-import { Pods, PodsContent } from 'pages/Pods'
+import { Pods, PodsContent, MainPod } from 'pages/Pods'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -414,7 +414,7 @@ const Route = () => {
               </Router>
 
               <Router path='pods' element={<Pods />} key={document.location.href}>
-                {/* <Router index element={<Pods />} key={document.location.href} /> */}
+                <Router index element={<MainPod />} key={document.location.href} />
                 <Router
                   path={'create-pod'}
                   element={<PodsContent />}
