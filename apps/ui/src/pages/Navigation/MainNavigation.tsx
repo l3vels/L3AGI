@@ -35,6 +35,7 @@ import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import Chats from 'share-ui/components/Icon/Icons/components/Chats'
 import Integrations from 'share-ui/components/Icon/Icons/components/integrations'
 import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
+import Book from 'share-ui/components/Icon/Icons/components/Book'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const domainEnv = import.meta.env
@@ -186,6 +187,16 @@ const MainNavigation = ({ user }: { user: any }) => {
             </StyledLi>
           </Tooltip>
         )}
+        
+        <Tooltip content={'Pods'} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'pods')}
+            onClick={() => onHandleClick('/pods')}
+          >
+            <Book size={30} />
+            {includes(active, 'pods') && <StyledCorner />}
+          </StyledLi>
+        </Tooltip>
 
         {isDatura && (
           <Tooltip content={t('Subnets')} position={Tooltip.positions.LEFT}>
