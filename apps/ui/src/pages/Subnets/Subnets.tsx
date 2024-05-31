@@ -24,6 +24,7 @@ import CreateApiKeyForm from 'pages/ApiKeys/CreateApiKey/CreateApikeysForm'
 import TextField from 'share-ui/components/TextField/TextField'
 import TypographySecondary from 'components/Typography/Secondary'
 import { fontSize, fontWeight } from '@mui/system'
+import { ButtonPrimary } from 'components/Button/Button'
 
 const Subnets = () => {
   const [activeSubnet, setActiveSubnet] = useState(SUBNETS[0])
@@ -82,50 +83,54 @@ const Subnets = () => {
 
                 <TabPanel>
                   <StyledWrapper>
-                    <StyledTextWrapper>
-                      <TypographyPrimary
-                        value={`Manage your APY keys`}
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.lg}
-                        style={{ fontWeight: '500' }}
-                      />
-                      <TypographySecondary
-                        value={`These keys will allow you to authenticate API request.`}
-                        type={Typography.types.LABEL}
-                        size={Typography.sizes.sm}
-                      />
-                    </StyledTextWrapper>
-
-                    <StyledHorizontalDivider />
-
                     <StyledForm>
-                      <StyledTextFieldWrapper>
+                      <StyledInnerFormWrapper style={{ width: '30%' }}>
                         <TypographyPrimary
-                          value={`App ID`}
+                          style={{ fontWeight: 500 }}
+                          value={`Application keys`}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.lg}
+                        />
+                        <TypographySecondary
+                          value={`Your App ID and API key are used to identify your application when making requests with the Apideck Unify endpoints, as described in our documentation.`}
                           type={Typography.types.LABEL}
                           size={Typography.sizes.sm}
                         />
-                        <TextField
-                          value={'5d6bb880-954e-4a8e-a353-89875fff1dee'}
-                          placeholder={''}
-                          onChange={() => {}}
-                          disabled
-                        />
-                      </StyledTextFieldWrapper>
-                      <StyledTextFieldWrapper>
-                        <TypographyPrimary
-                          value={`APY key`}
-                          type={Typography.types.LABEL}
-                          size={Typography.sizes.sm}
-                        />
-                        <TextField
-                          value={'value template for api key value template for api key'}
-                          placeholder={''}
-                          onChange={() => {}}
-                          type='password'
-                          disabled
-                        />
-                      </StyledTextFieldWrapper>
+                      </StyledInnerFormWrapper>
+
+                      <StyledInnerFormWrapper style={{ width: '70%', paddingTop: '20px' }}>
+                        <StyledTextFieldWrapper>
+                          <TypographyPrimary
+                            value={`App ID`}
+                            type={Typography.types.LABEL}
+                            size={Typography.sizes.sm}
+                          />
+                          <TextField
+                            value={'5d6bb880-954e-4a8e-a353-89875fff1dee'}
+                            placeholder={''}
+                            onChange={() => {}}
+                            disabled
+                          />
+                        </StyledTextFieldWrapper>
+                        <StyledTextFieldWrapper>
+                          <TypographyPrimary
+                            value={`APY key`}
+                            type={Typography.types.LABEL}
+                            size={Typography.sizes.sm}
+                          />
+                          <TextField
+                            value={'value template for api key value template for api key'}
+                            placeholder={''}
+                            onChange={() => {}}
+                            type='password'
+                            disabled
+                          />
+                        </StyledTextFieldWrapper>
+
+                        <div style={{ marginLeft: 'auto', fontWeight: 500 }}>
+                          <ButtonPrimary>Regenerate Key</ButtonPrimary>
+                        </div>
+                      </StyledInnerFormWrapper>
                     </StyledForm>
                   </StyledWrapper>
                 </TabPanel>
@@ -141,23 +146,27 @@ const Subnets = () => {
 export default Subnets
 
 const StyledCardsWrapper = styled.div`
-  /* width: 100%;
-  height: 100%; */
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  padding: 2px;
-  margin-top: 20px;
+  padding: 20px;
+
+  height: 100%;
+  width: 100%;
+
+  padding-bottom: 50px;
 `
 const StyledWrapper = styled.div`
   width: 100%;
   height: 100%;
+
+  padding-right: 20px;
 `
 
 const StyledForm = styled.div`
   width: 100%;
-  max-width: 800px;
+  /* max-width: 800px; */
 
   margin-top: 20px;
 
@@ -170,7 +179,7 @@ const StyledForm = styled.div`
   padding: 20px;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 16px;
   /* justify-content: center; */
 `
@@ -186,11 +195,16 @@ const StyledTextWrapper = styled.div`
 
 const StyledTextFieldWrapper = styled.div`
   width: 100%;
-  max-width: 800px;
+  /* max-width: 800px; */
 
   display: flex;
   flex-direction: column;
   gap: 8px;
 
   font-weight: 500;
+`
+const StyledInnerFormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `
