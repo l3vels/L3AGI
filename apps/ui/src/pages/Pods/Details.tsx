@@ -68,7 +68,7 @@ const Details = () => {
 
                     <StyledPodTemplate>
                         <Box display={'flex'}>
-                            <img src="https://www.runpod.io/console/_next/static/media/pytorchLogo.d7f67168.svg" alt="" width={85} />
+                            <img src="https://cdn.worldvectorlogo.com/logos/elastic-cloud.svg" alt="" width={85} />
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
@@ -76,10 +76,10 @@ const Details = () => {
                                 ml={3}
                             >
                                 <Typography color="rgba(34, 51, 84, 0.7)" fontSize={14}>
-                                    RunPod Pytorch 2.0.1
+                                    Pytorch 2.0.1
                                 </Typography>
                                 <Typography color="rgba(34, 51, 84, 0.7)" fontSize={12}>
-                                    runpod/pytorch:2.0.1-py3.10-cuda11.8.0-devel-ubuntu22.04
+                                    pytorch:2.0.1-py3.10-cuda11.8.0-devel-ubuntu22.04
                                 </Typography>
                             </Box>
                         </Box>

@@ -9,8 +9,9 @@ import Details from './Details'
 import FilterPods from './FilterPods'
 import Price from './Price'
 
-import { chipStyles, borderBoxStyles } from './styles'
+import { chipStyles, borderBoxStyles, buttonStyles } from './styles'
 import React from 'react';
+import Button from '@mui/material/Button'
 
 const Line = ({ label }: { label: string }) => {
     return (
@@ -51,7 +52,7 @@ const temp_data = {
 
 
 const PodsContent = () => {
-    const [selectPod, setSelectPod] = React.useState<null | number>(1) 
+    const [selectPod, setSelectPod] = React.useState<null | number>(null) 
 
     const data_keys = Object.keys(temp_data)
     return (
@@ -101,8 +102,22 @@ const PodsContent = () => {
                     <>
                         <Details />
                         <Price />
+                        <Box>
+
+                            <Button 
+                                variant="contained"
+                                sx={{
+                                    ...buttonStyles,
+                                    width: '100%',
+                                }}
+                            >
+                                Deploy On-Demand
+                            </Button>
+                        </Box>
                     </>
                 }
+
+
 
             </StyledContainer>
         </StyledBox>

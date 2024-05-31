@@ -12,12 +12,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 const cpu = [
-    {  cpu: 'runpod/base:0.5.1-cpu', ram: '46 GB', running: true  },
-    {  cpu: 'runpod/base:0.5.1-cpu', ram: '32 GB', running: false  },
-    {  cpu: 'runpod/base:0.5.1-cpu', ram: '16 GB', running: true  },
-    {  cpu: 'runpod/base:0.5.1-cpu', ram: '128 GB', running: false  },
-    {  cpu: 'runpod/base:0.5.1-cpu', ram: '46 GB', running: false  },
-    {  cpu: 'runpod/base:0.5.1-cpu', ram: '50 GB', running: true  },
+    {  cpu: 'base:0.5.1-cpu', ram: '46 GB', running: true  },
+    {  cpu: 'base:0.5.1-cpu', ram: '32 GB', running: false  },
+    {  cpu: 'base:0.5.1-cpu', ram: '16 GB', running: true  },
+    {  cpu: 'base:0.5.1-cpu', ram: '128 GB', running: false  },
+    {  cpu: 'base:0.5.1-cpu', ram: '46 GB', running: false  },
+    {  cpu: 'base:0.5.1-cpu', ram: '50 GB', running: true  },
 ]
 
 
@@ -48,7 +48,7 @@ const Pods = () => {
                                     mt={1} 
                                     sx={{ 
                                         width: '100%', 
-                                        background: 'rgb(217,217,217)',
+                                        background: 'rgba(217, 217, 217, 0.342)',
                                         borderStartStartRadius: '10px',
                                         borderEndStartRadius: '10px',
                                         cursor: 'pointer'
@@ -73,10 +73,10 @@ const Pods = () => {
                                         </Box>
 
                                         <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
-                                            <Typography fontSize={13} fontWeight={400} sx={{
+                                            <Typography fontSize={13} fontWeight={500} sx={{
                                                 color: item.running ? 'green' : 'red',
-                                                background: item.running ? '#0eff2229' : '#ff0e0e1f',
-                                                padding: '2px 5px',
+                                                background: item.running ? 'rgba(0, 255, 110, 0.12)' : 'rgba(255, 0, 0, 0.12)',
+                                                padding: '4px 15px',
                                                 borderRadius: '8px'
                                             }}>
                                                  {item.running ? 'Running' : 'Stopped'}
