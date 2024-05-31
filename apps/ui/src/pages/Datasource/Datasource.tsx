@@ -58,6 +58,7 @@ const Datasource = () => {
       <StyledAppContainer>
         <StyledContainer>
           <StyledMainWrapper>
+
             <StyledLeftColumn>
               <ListHeader
                 title={t('datasources')}
@@ -122,6 +123,7 @@ const Datasource = () => {
             </StyledLeftColumn>
 
             <StyledChatWrapper>{outlet}</StyledChatWrapper>
+            
           </StyledMainWrapper>
         </StyledContainer>
       </StyledAppContainer>

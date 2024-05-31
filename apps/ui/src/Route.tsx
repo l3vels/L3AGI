@@ -109,6 +109,7 @@ import EditScheduleModal from 'modals/EditScheduleModal'
 import VoiceOptionsModal from 'modals/VoiceOptionsModal'
 import LlmSettingsModal from 'modals/LlmSettingsModal'
 import { InviteUsers, CreateUserAccess } from 'pages/InviteUsers'
+import { Pods, PodsContent } from 'pages/Pods'
 
 const Route = () => {
   const { loading } = useContext(AuthContext)
@@ -403,6 +404,20 @@ const Route = () => {
                 <Router
                   path={'invite'}
                   element={<CreateUserAccess />}
+                  key={document.location.href}
+                />
+                {/* <Router
+                  path={':apiKeyId/edit-api-key'}
+                  element={<EditApiKeyForm />}
+                  key={document.location.href}
+                /> */}
+              </Router>
+
+              <Router path='pods' element={<Pods />} key={document.location.href}>
+                {/* <Router index element={<Pods />} key={document.location.href} /> */}
+                <Router
+                  path={'create-pod'}
+                  element={<PodsContent />}
                   key={document.location.href}
                 />
                 {/* <Router
