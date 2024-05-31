@@ -372,6 +372,11 @@ const StyledInput = styled.input<{ isError: boolean; size: string }>`
     background: ${({ theme }) => theme.textFiled.primary.activeBgColor};
   }
 
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   ${props =>
     props.isError &&
     css`

@@ -39,6 +39,9 @@ import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
 import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
 
 const MainNavigation = ({ user }: { user: any }) => {
+  const domainEnv = import.meta.env
+  const isDatura = domainEnv.REACT_APP_ENV === 'datura'
+
   const { getDomainConfig } = useDomainConfig()
   const domainLogo = getDomainConfig('logo')
 
@@ -99,7 +102,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )}
 
-        {isChat && (
+        {!isDatura && isChat && (
           <Tooltip content={t('chat')} position={Tooltip.positions.LEFT}>
             <StyledLi isActive={includes(active, 'chat')} onClick={() => onHandleClick('/chat')}>
               <Chats size={40} />
@@ -148,7 +151,7 @@ const MainNavigation = ({ user }: { user: any }) => {
           </Tooltip>
         )} */}
 
-        {isDatasource && (
+        {!isDatura && isDatasource && (
           <Tooltip content={t('datasource')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'datasources')}
@@ -195,6 +198,21 @@ const MainNavigation = ({ user }: { user: any }) => {
             {includes(active, 'pods') && <StyledCorner />}
           </StyledLi>
         </Tooltip>
+
+        {isDatura && (
+          <Tooltip content={t('Subnets')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'subnets')}
+              onClick={() => onHandleClick('/subnets')}
+            >
+              <StyledImg
+                src='https://icons.veryicon.com/png/o/application/cloud-supervision-platform-vr10/subnets.png'
+                picked={includes(active, 'subnets')}
+              />
+              {includes(active, 'subnets') && <StyledCorner />}
+            </StyledLi>
+          </Tooltip>
+        )}
 
         {/* {isDiscover && (
           <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
@@ -375,6 +393,13 @@ const StyledLogo = styled.img`
   width: 40px;
   height: 40px;
 `
+const StyledImg = styled.img<{ picked: boolean }>`
+  width: 22px;
+  height: 22px;
+
+  filter: ${({ picked }) => (picked ? 'brightness(0) invert(1)' : 'none')};
+`
+
 const StyledCorner = styled.div`
   width: 0;
   height: 0;
