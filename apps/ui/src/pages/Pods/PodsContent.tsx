@@ -51,7 +51,7 @@ const temp_data = {
 
 
 const PodsContent = () => {
-    const [selectPod, setSelectPod] = React.useState<null | number>(1) 
+    const [selectPod, setSelectPod] = React.useState<null | number>(null) 
 
     const data_keys = Object.keys(temp_data)
     return (
@@ -59,7 +59,7 @@ const PodsContent = () => {
             <StyledContainer>
                 <Box 
                     sx={{  
-                        width: 'calc(100% + 18px)',
+                        width: '100%',
                         boxSizing: 'border-box',
                         display: 'flex',
                         justifyContent: 'start'
@@ -103,6 +103,8 @@ const PodsContent = () => {
                         <Price />
                     </>
                 }
+
+
 
             </StyledContainer>
         </StyledBox>

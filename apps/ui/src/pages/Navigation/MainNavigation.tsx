@@ -35,7 +35,8 @@ import Tooltip from 'share-ui/components/Tooltip/Tooltip'
 import Chats from 'share-ui/components/Icon/Icons/components/Chats'
 import Integrations from 'share-ui/components/Icon/Icons/components/integrations'
 import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
-import Book from 'share-ui/components/Icon/Icons/components/Book'
+// eslint-disable-next-line import/no-named-as-default
+import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const domainEnv = import.meta.env
@@ -193,7 +194,7 @@ const MainNavigation = ({ user }: { user: any }) => {
             isActive={includes(active, 'pods')}
             onClick={() => onHandleClick('/pods')}
           >
-            <Book size={30} />
+            <Cloud size={30} fill={includes(active, 'pods') ? '#ffffff' : '#000000'} />
             {includes(active, 'pods') && <StyledCorner />}
           </StyledLi>
         </Tooltip>
@@ -358,6 +359,11 @@ export const StyledMobileIcon = styled(Mobile)`
 `
 
 const StyledSessionIcon = styled(Session)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+export const StyledCloudOutlineIcon = styled(Cloud)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
