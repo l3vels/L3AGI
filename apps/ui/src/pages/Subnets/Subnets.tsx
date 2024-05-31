@@ -196,6 +196,7 @@ const StyledCardsWrapper = styled.div`
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 24px;
   padding: 20px;
 
