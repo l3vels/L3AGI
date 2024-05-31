@@ -9,9 +9,8 @@ import Details from './Details'
 import FilterPods from './FilterPods'
 import Price from './Price'
 
-import { chipStyles, borderBoxStyles, buttonStyles } from './styles'
+import { chipStyles, borderBoxStyles } from './styles'
 import React from 'react';
-import Button from '@mui/material/Button'
 
 const Line = ({ label }: { label: string }) => {
     return (
@@ -60,7 +59,7 @@ const PodsContent = () => {
             <StyledContainer>
                 <Box 
                     sx={{  
-                        width: 'calc(100% + 18px)',
+                        width: '100%',
                         boxSizing: 'border-box',
                         display: 'flex',
                         justifyContent: 'start'
@@ -102,18 +101,6 @@ const PodsContent = () => {
                     <>
                         <Details />
                         <Price />
-                        <Box>
-
-                            <Button 
-                                variant="contained"
-                                sx={{
-                                    ...buttonStyles,
-                                    width: '100%',
-                                }}
-                            >
-                                Deploy On-Demand
-                            </Button>
-                        </Box>
                     </>
                 }
 

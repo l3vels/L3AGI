@@ -24,7 +24,7 @@ const Details = () => {
     return (
         <Box 
             sx={{  
-                width: 'calc(100% + 18px)',
+                width: '100%',
                 boxSizing: 'border-box',
                 display: 'flex',
                 justifyContent: 'start'
