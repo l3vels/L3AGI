@@ -24,6 +24,7 @@ import TypographyMUI from '@mui/material/Typography'
 import { textSlicer } from 'utils/textSlicer'
 import LinearProgress from '@mui/material/LinearProgress'
 import { ButtonPrimary } from 'components/Button/Button'
+import ProgressBar from './ProsgressBar'
 
 type PodsMainCardProps = {
   name: string
@@ -92,7 +93,7 @@ const PodsMainCard = ({
                 type={Typography.types.P}
                 size={Typography.sizes.xss}
               />
-              <LinearProgress style={{ width: '100%' }} variant='determinate' value={cpu.utl} />
+              <ProgressBar value={cpu.utl} />
             </StyledRow>
             <StyledRow>
               <TypographySecondary
@@ -100,7 +101,7 @@ const PodsMainCard = ({
                 type={Typography.types.P}
                 size={Typography.sizes.xss}
               />
-              <LinearProgress style={{ width: '100%' }} variant='determinate' value={cpu.mem} />
+              <ProgressBar value={cpu.mem} />
             </StyledRow>
           </StyledRowWrapper>
 
@@ -111,7 +112,7 @@ const PodsMainCard = ({
                 type={Typography.types.P}
                 size={Typography.sizes.xss}
               />
-              <LinearProgress style={{ width: '100%' }} variant='determinate' value={gpu.utl} />
+              <ProgressBar value={gpu.utl} />
             </StyledRow>
             <StyledRow>
               <TypographySecondary
@@ -119,7 +120,7 @@ const PodsMainCard = ({
                 type={Typography.types.P}
                 size={Typography.sizes.xss}
               />
-              <LinearProgress style={{ width: '100%' }} variant='determinate' value={gpu.mem} />
+              <ProgressBar value={gpu.mem} />
             </StyledRow>
           </StyledRowWrapper>
         </div>

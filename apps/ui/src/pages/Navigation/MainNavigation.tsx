@@ -37,6 +37,7 @@ import Integrations from 'share-ui/components/Icon/Icons/components/integrations
 import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
 // eslint-disable-next-line import/no-named-as-default
 import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
+import { API } from 'share-ui/components/Icon/Icons'
 
 const MainNavigation = ({ user }: { user: any }) => {
   const domainEnv = import.meta.env
@@ -177,22 +178,10 @@ const MainNavigation = ({ user }: { user: any }) => {
         </StyledLi>
       )} */}
 
-        {isModel && (
-          <Tooltip content={t('model')} position={Tooltip.positions.LEFT}>
-            <StyledLi
-              isActive={includes(active, 'models')}
-              onClick={() => onHandleClick('/models')}
-            >
-              <FineTuning size={30} />
-              {includes(active, 'models') && <StyledCorner />}
-            </StyledLi>
-          </Tooltip>
-        )}
-        
         <Tooltip content={'Pods'} position={Tooltip.positions.LEFT}>
           <StyledLi
             isActive={includes(active, 'pods')}
-            onClick={() => onHandleClick('/pods')}
+            onClick={() => onHandleClick('/pods/create-pod')}
           >
             <Cloud size={30} fill={includes(active, 'pods') ? '#ffffff' : '#000000'} />
             {includes(active, 'pods') && <StyledCorner />}
@@ -213,6 +202,27 @@ const MainNavigation = ({ user }: { user: any }) => {
             </StyledLi>
           </Tooltip>
         )}
+
+        {isModel && (
+          <Tooltip content={t('model')} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'models')}
+              onClick={() => onHandleClick('/models')}
+            >
+              <FineTuning size={30} />
+              {includes(active, 'models') && <StyledCorner />}
+            </StyledLi>
+          </Tooltip>
+        )}
+
+        <Tooltip content={t('api-keys')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'api-key')}
+            onClick={() => onHandleClick('/api-key')}
+          >
+            <StyledAPIIcon size={40} />
+          </StyledLi>
+        </Tooltip>
 
         {/* {isDiscover && (
           <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
@@ -293,14 +303,14 @@ const StyledLi = styled.li<{ isActive?: boolean }>`
     border-radius: 100px;
     background: #000;
 
-     
-  
     span{
       color: #FFF;
     }
+    
 
     path {
     stroke: #FFF;
+  
     }
 `}
 `
@@ -409,4 +419,9 @@ const StyledCorner = styled.div`
   position: absolute;
   top: 8px; /* Adjust this value based on your design */
   right: -16px; /* Position the left corner */
+`
+const StyledAPIIcon = styled(API)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
 `

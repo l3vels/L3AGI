@@ -165,9 +165,7 @@ const PodsContent = () => {
             justifyContent: 'start',
           }}
         >
-          <Box sx={borderBoxStyles}>
-            <Stack sx={chipStyles}>Select an Instance</Stack>
-
+          <Box>
             <Box>
               <FilterPods />
             </Box>
@@ -210,7 +208,6 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 27px;
   max-width: 80rem;
-  margin-left: auto;
   margin-right: auto;
   @media (min-width: 960px) {
     padding-left: 36px;

@@ -10,14 +10,15 @@ import {
 import { useNavigate, useOutlet } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import ProgressBar from './ProsgressBar'
 
 const cpu = [
-  { cpu: 'base:0.5.1-cpu', ram: '46 GB', running: true },
-  { cpu: 'base:0.5.1-cpu', ram: '32 GB', running: false },
-  { cpu: 'base:0.5.1-cpu', ram: '16 GB', running: true },
-  { cpu: 'base:0.5.1-cpu', ram: '128 GB', running: false },
-  { cpu: 'base:0.5.1-cpu', ram: '46 GB', running: false },
-  { cpu: 'base:0.5.1-cpu', ram: '50 GB', running: true },
+  { name: 'llm2 Fine-tune', cpu: 'base:0.5.1-cpu', ram: '46 GB', running: true, mem: 0 },
+  { name: 'Tain OpenAI', cpu: 'base:0.5.1-cpu', ram: '32 GB', running: false, mem: 40 },
+  { name: 'Meta Llama', cpu: 'base:0.5.1-cpu', ram: '16 GB', running: true, mem: 10 },
+  { name: 'NV-Embed', cpu: 'base:0.5.1-cpu', ram: '128 GB', running: false, mem: 50 },
+  { name: 'Tele-AI', cpu: 'base:0.5.1-cpu', ram: '46 GB', running: false, mem: 90 },
+  { name: 'Nitral-AI', cpu: 'base:0.5.1-cpu', ram: '50 GB', running: true, mem: 5 },
 ]
 
 const Pods = () => {
@@ -28,7 +29,7 @@ const Pods = () => {
     <StyledAppContainer>
       <StyledContainer>
         <StyledMainWrapper>
-          <StyledLeftColumn>
+          <StyledLeftColumn customWidth={400}>
             <Box display={'flex'} flexDirection={'column'} sx={{ paddingRight: 1.5 }}>
               <ListHeader title={'Pods'} onAddClick={() => navigate('/pods/create-pod')} />
 
@@ -55,7 +56,7 @@ const Pods = () => {
                   >
                     <Box display={'flex'} flexDirection={'column'}>
                       <Typography fontSize={14} fontWeight={700}>
-                        Compute
+                        {item.name}
                       </Typography>
                       <Typography fontSize={12}>CPU: {item.cpu}</Typography>
                       <Typography fontSize={12}>RAM: {item.ram}</Typography>

@@ -56,8 +56,7 @@ const ApiKeys = () => {
 
         <ButtonPrimary
           onClick={() => navigate('/api-key/create-api-key')}
-          leftIcon={Add}
-          size={Button.sizes?.SMALL}
+          size={Button.sizes?.MEDIUM}
         >
           {t('create-api-key')}
         </ButtonPrimary>

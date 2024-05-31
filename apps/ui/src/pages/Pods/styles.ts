@@ -27,7 +27,6 @@ export const borderBoxStyles = {
   transition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
   borderRadius: '10px',
   overflow: 'hidden',
-  border: '1px solid rgba(34, 51, 84, 0.2)',
   boxShadow: 'none',
   background: '',
   padding: '18px',
