@@ -227,24 +227,28 @@ export const SUBNETS = [
         name: 'AnimeV3',
         description: `This model is excellent for creating detailed illustrations and animated images, perfect for artists and animators.`,
         icon: '🌀',
+        logo: null,
       },
       {
         name: 'JuggernautXL',
         description:
           'A high-quality image generation model designed to produce exceptionally detailed and realistic images.',
         icon: '⚔️',
+        logo: null,
       },
       {
         name: 'RealitiesEdgeXL',
         description:
           'A fast and efficient model for generating realistic pictures, ideal for quick rendering of high-fidelity images.',
         icon: '🏞️',
+        logo: null,
       },
       {
         name: 'DreamShaperXL',
         description:
           'A powerful model for transforming images, capable of modifying and enhancing photos in complex ways.',
         icon: '🌙',
+        logo: null,
       },
     ],
   },

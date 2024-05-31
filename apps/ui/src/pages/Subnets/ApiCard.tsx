@@ -10,6 +10,10 @@ import TypographyPrimary from 'components/Typography/Primary'
 import { textSlicer } from 'utils/textSlicer'
 import Switcher from './Switcher'
 
+import IconButton from 'share-ui/components/IconButton/IconButton'
+import { StyledEyeOpenIcon } from 'pages/TeamOfAgents/TeamOfAgentsCard/TeamOfAgentsCard'
+import Button from 'share-ui/components/Button/Button'
+
 type ApiCardProps = {
   name: string
   description: string
@@ -17,9 +21,10 @@ type ApiCardProps = {
   headerTag?: string
   avatar?: string
   icon?: string
+  onViewClick?: () => void
 }
 
-const ApiCard = ({ name, description, headerTag, avatar, icon }: ApiCardProps) => {
+const ApiCard = ({ name, description, headerTag, avatar, icon, onViewClick }: ApiCardProps) => {
   const { shortText: shortName } = textSlicer(name, 25)
 
   let shortHeaderTag
@@ -56,6 +61,22 @@ const ApiCard = ({ name, description, headerTag, avatar, icon }: ApiCardProps) =
           />
         </StyledBodyTextWrapper>
       </StyledCardBody>
+
+      {onViewClick && (
+        <StyledButtonWrapper className='footerButtons'>
+          <IconButton
+            onClick={onViewClick}
+            icon={() => (
+              <StyledIconWrapper>
+                <StyledEyeOpenIcon />
+              </StyledIconWrapper>
+            )}
+            size={Button.sizes?.SMALL}
+            kind={IconButton.kinds?.TERTIARY}
+            // ariaLabel='View'
+          />
+        </StyledButtonWrapper>
+      )}
     </StyledApiCard>
   )
 }
@@ -64,8 +85,8 @@ export default ApiCard
 
 export const StyledApiCard = styled.div`
   position: relative;
-  width: 300px;
-  min-width: 300px;
+  width: 335px;
+  min-width: 335px;
   height: 170px;
   min-height: 170px;
 
@@ -86,7 +107,7 @@ export const StyledApiCard = styled.div`
   justify-content: center;
 
   :hover {
-    .cardFooter {
+    .footerButtons {
       opacity: 1;
     }
   }
@@ -156,4 +177,12 @@ const StyledImg = styled.img`
 `
 const StyledSwitcherWrapper = styled.div`
   margin-left: auto;
+`
+const StyledIconWrapper = styled.div`
+  /* color: #000; */
+  color: transparent;
+`
+const StyledButtonWrapper = styled.div`
+  margin-left: auto;
+  opacity: 0;
 `
