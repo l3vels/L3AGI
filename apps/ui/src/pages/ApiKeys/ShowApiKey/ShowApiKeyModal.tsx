@@ -32,20 +32,14 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
 
   return (
     <>
-      <StyledModal
-        show
-        title={
-          <StyledTextContainer>
-            <TypographyPrimary
-              value={t('show-api-key-description')}
-              type={Typography.types.Paragraph}
-              size={Typography.sizes.md}
-            />
-          </StyledTextContainer>
-        }
-        backgroundColor='light'
-        hideCloseButton={true}
-      >
+      <StyledModal show backgroundColor='light' hideCloseButton onClose={closeModal}>
+        <StyledTextContainer>
+          <TypographyPrimary
+            value={t('show-api-key-description')}
+            type={Typography.types.Paragraph}
+            size={Typography.sizes.md}
+          />
+        </StyledTextContainer>
         <StyledTokenContainer>
           <StyledTokenTypography>
             <TypographyPrimary
@@ -69,34 +63,12 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
             )}
           </StyledTokenIcon>
         </StyledTokenContainer>
-        {/* <StyledWarningToken
-          open
-          autoHideDuration={5000}
-          type={Toast.types.WARNING_LOW_INFORMATIONAL}
-          label={
-            <StyledToastLabel>
-              <span>{t('note')}</span>
-            </StyledToastLabel>
-          }
-          paragraph={
-            <StyledToastParagraph>
-              <span>{t('api-key-token-description')}</span>
-            </StyledToastParagraph>
-          }
-          className='l3-storybook-toast_wrapper'
-          icon={
-            <StyledToastIcon>
-              <Warning size='65' />
-            </StyledToastIcon>
-          }
-          hideIcon={false}
-          closeable={false}
-        /> */}
-        <StyledApiModalFooter>
+
+        <StyledFooter>
           <Button kind={Button.kinds?.PRIMARY} size={Button.sizes?.MEDIUM} onClick={closeModal}>
             {t('done')}
           </Button>
-        </StyledApiModalFooter>
+        </StyledFooter>
       </StyledModal>
     </>
   )
@@ -105,8 +77,13 @@ const ShowApiKeyModal = ({ closeModal, data }: ShowApiKeyModalProps) => {
 export default withRenderModal('show-api-key-modal')(ShowApiKeyModal)
 
 export const StyledModal = styled(Modal)`
-  width: 664px;
-  height: 312px;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  padding: 10px 20px;
+
   body::-webkit-scrollbar {
     width: 1em;
   }
@@ -119,35 +96,6 @@ export const StyledModal = styled(Modal)`
     background-color: darkgrey;
     outline: 1px solid slategrey;
   }
-`
-const StyledToastIcon = styled.div`
-  display: flex;
-  position: relative;
-  float: left;
-  right: 27px;
-`
-const StyledToastLabel = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: flex-start;
-  // float: left;
-  right: 50px;
-  font-size: 16px;
-  font-weight: 500;
-  font-style: normal;
-  font-family: Circular, Roboto;
-  color: ${({ theme }) => theme.body.warningToastTextColor} !important;
-`
-const StyledToastParagraph = styled.div`
-  display: flex;
-  position: relative;
-  width: 567px;
-  right: 50px;
-  font-size: 16px;
-  font-weight: 500;
-  font-style: normal;
-  font-family: Circular, Roboto;
-  color: ${({ theme }) => theme.body.warningToastTextColor} !important;
 `
 
 export const StyledApiModalFooter = styled(ModalFooter)`
@@ -167,18 +115,22 @@ export const StyledTextContainer = styled.div`
   width: 632px;
   height: 75px;
   margin-top: 16px;
+
+  font-weight: 500;
 `
 export const StyledTokenContainer = styled.div`
   font-size: 14px;
   width: 662px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.699);
   border-radius: 6px;
   margin-top: 34px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+
+  margin-bottom: 50px;
 `
 export const StyledTokenTypography = styled.div`
   display: flex;
@@ -195,9 +147,13 @@ export const StyledTokenTypography = styled.div`
 export const StyledTokenIcon = styled.div`
   display: flex;
   position: relative;
-  // position: absolute;
-  // right: 0;
-  // bottom: 0;
+
+  ${() =>
+    `
+    path {
+    fill: #575757;
+    }
+    `}
 `
 
 export const StyledWarningToken = styled(Toast)`
@@ -226,4 +182,8 @@ export const StyledTypography = styled.div`
   color: black;
   font-weight: 600 !important;
   line-height: 32px;
+`
+const StyledFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `
