@@ -418,6 +418,7 @@ export const StyledContainer = styled.div`
 export const StyledLeftColumn = styled.div<{
   isHidden?: boolean
   isSmallScreen?: boolean
+  customWidth?: number
 }>`
   overflow-y: auto;
   display: flex;
@@ -427,8 +428,8 @@ export const StyledLeftColumn = styled.div<{
   padding-top: 0px;
 
   height: 100%;
-  min-width: 270px;
-  max-width: 270px;
+  min-width: ${({ customWidth }) => (customWidth ? `${customWidth}px` : '270px')};
+  max-width: ${({ customWidth }) => (customWidth ? `${customWidth}px` : '270px')};
 
   transition: margin-left 0.3s ease-in-out;
 

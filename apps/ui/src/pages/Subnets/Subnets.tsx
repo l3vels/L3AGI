@@ -25,6 +25,8 @@ import TextField from 'share-ui/components/TextField/TextField'
 import TypographySecondary from 'components/Typography/Secondary'
 import { fontSize, fontWeight } from '@mui/system'
 import { ButtonPrimary } from 'components/Button/Button'
+import ProgressBar from 'pages/Pods/ProsgressBar'
+import SDKs from './SDKs'
 
 const Subnets = () => {
   const [activeSubnet, setActiveSubnet] = useState(SUBNETS[0])
@@ -132,6 +134,51 @@ const Subnets = () => {
                         </div>
                       </StyledInnerFormWrapper>
                     </StyledForm>
+
+                    <StyledForm>
+                      <StyledInnerFormWrapper style={{ width: '30%' }}>
+                        <TypographyPrimary
+                          style={{ fontWeight: 500 }}
+                          value={`Account Usage`}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.lg}
+                        />
+                        <TypographySecondary
+                          value={`Our free developer plan includes a total of 2,500 API calls & Webhook events for Unify, Vault, and Proxy.`}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.sm}
+                        />
+                        <TypographySecondary
+                          value={`You can monitor API calls & Webhook events through the logs.`}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.sm}
+                        />
+                        <TypographySecondary
+                          value={`Reach out to sales if you are ready to upgrade.`}
+                          type={Typography.types.LABEL}
+                          size={Typography.sizes.sm}
+                        />
+                      </StyledInnerFormWrapper>
+
+                      <StyledInnerFormWrapper style={{ width: '70%' }}>
+                        <StyledTextFieldWrapper>
+                          <TypographyPrimary
+                            value={`Free`}
+                            type={Typography.types.LABEL}
+                            size={Typography.sizes.md}
+                          />
+                          <TypographySecondary
+                            value={`Usage: 0 / 2,500`}
+                            type={Typography.types.LABEL}
+                            size={Typography.sizes.xss}
+                          />
+
+                          <ProgressBar value={0} />
+                        </StyledTextFieldWrapper>
+                      </StyledInnerFormWrapper>
+                    </StyledForm>
+
+                    <SDKs />
                   </StyledWrapper>
                 </TabPanel>
               </TabPanels>
@@ -162,11 +209,20 @@ const StyledWrapper = styled.div`
   height: 100%;
 
   padding-right: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  overflow: auto;
+
+  padding-bottom: 100px;
 `
 
-const StyledForm = styled.div`
+export const StyledForm = styled.div`
   width: 100%;
   /* max-width: 800px; */
+  max-width: 80rem;
 
   margin-top: 20px;
 
@@ -193,7 +249,7 @@ const StyledTextWrapper = styled.div`
   gap: 10px;
 `
 
-const StyledTextFieldWrapper = styled.div`
+export const StyledTextFieldWrapper = styled.div`
   width: 100%;
   /* max-width: 800px; */
 
@@ -203,7 +259,7 @@ const StyledTextFieldWrapper = styled.div`
 
   font-weight: 500;
 `
-const StyledInnerFormWrapper = styled.div`
+export const StyledInnerFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -23,16 +23,15 @@ function CreateApiKeyForm() {
       <FormikProvider value={formik}>
         <StyledSectionWrapper>
           <StyledHeaderGroup className='header_group'>
-            <div>
+            <div style={{ width: '100%' }}>
               <StyledSectionTitle>Add API Key</StyledSectionTitle>
-              <StyledSectionDescription>Here is your API Key.</StyledSectionDescription>
             </div>
 
             <StyledButtonWrapper>
               <BackButton />
               <ButtonPrimary
                 onClick={formik?.handleSubmit}
-                size={Button.sizes?.SMALL}
+                size={Button.sizes?.MEDIUM}
                 disabled={isLoading}
               >
                 {isLoading ? <Loader size={32} /> : 'Save'}
