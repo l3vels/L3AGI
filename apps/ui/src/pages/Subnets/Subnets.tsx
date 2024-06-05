@@ -10,7 +10,6 @@ import {
 } from 'routes/ChatRouteLayout'
 import { SUBNETS } from './constants'
 
-import ApiCard from './ApiCard'
 import ListHeader from 'routes/components/ListHeader'
 import TabList from 'share-ui/components/Tabs/TabList/TabList'
 import Tab from 'share-ui/components/Tabs/Tab/Tab'
@@ -18,8 +17,9 @@ import TabsContext from 'share-ui/components/Tabs/TabsContext/TabsContext'
 import TabPanels from 'share-ui/components/Tabs/TabPanels/TabPanels'
 import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 
-import { StyledCardsWrapper } from './SubnetsStyles'
 import ApiKeysPanel from './panels/ApiKeysPanel'
+import GeneralPanel from './panels/GeneralPanel'
+import LogsPanel from './panels/LogsPanel'
 
 const Subnets = () => {
   const [activeSubnet, setActiveSubnet] = useState(SUBNETS[0])
@@ -54,6 +54,7 @@ const Subnets = () => {
             <TabList size='small' activeTabId={activeTab} noBorder>
               <Tab onClick={() => handleTabClick(0)}>General</Tab>
               <Tab onClick={() => handleTabClick(1)}>Api keys</Tab>
+              <Tab onClick={() => handleTabClick(2)}>Logs</Tab>
             </TabList>
 
             <StyledHorizontalDivider />
@@ -61,23 +62,15 @@ const Subnets = () => {
             <TabsContext activeTabId={activeTab}>
               <TabPanels noAnimation>
                 <TabPanel>
-                  <StyledCardsWrapper>
-                    {activeSubnet?.apis.map((api: any, index: number) => {
-                      return (
-                        <ApiCard
-                          key={index}
-                          name={api.name}
-                          description={api.description}
-                          avatar={api.logo}
-                          icon={api.icon}
-                        />
-                      )
-                    })}
-                  </StyledCardsWrapper>
+                  <GeneralPanel activeSubnet={activeSubnet} />
                 </TabPanel>
 
                 <TabPanel>
                   <ApiKeysPanel />
+                </TabPanel>
+
+                <TabPanel>
+                  <LogsPanel />
                 </TabPanel>
               </TabPanels>
             </TabsContext>
