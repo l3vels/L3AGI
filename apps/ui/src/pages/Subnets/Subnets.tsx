@@ -19,7 +19,7 @@ import TabPanel from 'share-ui/components/Tabs/TabPanel/TabPanel'
 
 import ApiKeysPanel from './panels/ApiKeysPanel'
 import GeneralPanel from './panels/GeneralPanel'
-import LogsPanel from './panels/LogsPanel'
+import LogsPanel from './panels/LogsPanel/LogsPanel'
 
 const Subnets = () => {
   const [activeSubnet, setActiveSubnet] = useState(SUBNETS[0])

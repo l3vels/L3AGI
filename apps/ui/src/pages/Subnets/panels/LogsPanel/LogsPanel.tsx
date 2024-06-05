@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { StyledWrapper } from '../SubnetsStyles'
+import { StyledWrapper } from '../../SubnetsStyles'
 
 import TypographyPrimary from 'components/Typography/Primary'
 import {
@@ -8,8 +8,8 @@ import {
   StyledLogsContainer,
   StyledLogsHeader,
 } from './LogsPanelStyles'
-import LogsCard from '../LogsCard'
-import { SUBNETS } from '../constants'
+import LogsCard from './LogsCard'
+import { SUBNETS } from '../../constants'
 
 const LogsPanel = () => {
   const apiData = SUBNETS[1].apis
@@ -37,6 +37,23 @@ const LogsPanel = () => {
         </StyledLogsHeader>
 
         <StyledCardsContainer>
+          <LogsCard
+            service={{
+              name: tempTestingData.name,
+              subName: 'Subnet 18',
+              logo: tempTestingData.logo,
+            }}
+            path={{
+              method: 'GET',
+              url: '/vault/consumers/test-consumer',
+            }}
+            timeStamp={{
+              date: '5/31/2024',
+              hours: '2:10:01 PM',
+            }}
+            requestStatus={'404'}
+            consumerId={'test-consumer'}
+          />
           <LogsCard
             service={{
               name: tempTestingData.name,
