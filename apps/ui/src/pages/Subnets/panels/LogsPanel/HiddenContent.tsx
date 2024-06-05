@@ -8,31 +8,31 @@ const HiddenContent = () => {
     <StyledRoot>
       <StyledInfoContainer>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='API Style' />
+          <TypographySecondary size='small' value='API Style' semiBold />
           <TypographyPrimary size='small' value='REST' />
         </StyledInfoValue>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='Duration' />
+          <TypographySecondary size='small' value='Duration' semiBold />
           <TypographyPrimary size='small' value='22ms' />
         </StyledInfoValue>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='Epoch' />
+          <TypographySecondary size='small' value='Epoch' semiBold />
           <TypographyPrimary size='small' value='1717150201577' />
         </StyledInfoValue>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='Latency' />
+          <TypographySecondary size='small' value='Latency' semiBold />
           <TypographyPrimary size='small' value='1 ms' />
         </StyledInfoValue>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='Request ID' />
+          <TypographySecondary size='small' value='Request ID' semiBold />
           <TypographyPrimary size='small' value='7559735d-6688-4b23-9015-a2c4b5043369' />
         </StyledInfoValue>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='Error: 404' />
+          <TypographySecondary size='small' value='Error: 404' semiBold />
           <TypographyPrimary size='small' value='Not Found' />
         </StyledInfoValue>
         <StyledInfoValue>
-          <TypographySecondary size='small' value='Full URL' />
+          <TypographySecondary size='small' value='Full URL' semiBold />
           <TypographyPrimary
             size='small'
             value='https://unify.apideck.com/vault/consumers/test-consumer'
@@ -44,19 +44,19 @@ const HiddenContent = () => {
         <StyledRequestCard>
           <StyledRequestCardHeader>
             <StyledInfoValue>
-              <TypographyPrimary size='large' value='Request' />
+              <TypographyPrimary size='large' value='Request' bold />
               <TypographySecondary size='medium' value='Get consumer' />
             </StyledInfoValue>
           </StyledRequestCardHeader>
 
           <StyledRequestCardBody>
             <StyledInfoValue>
-              <TypographySecondary size='small' value='accept' />
+              <TypographySecondary size='small' value='accept' semiBold />
               <TypographyPrimary size='small' value='application/json, text/plain, */*' />
             </StyledInfoValue>
 
             <StyledInfoValue>
-              <TypographySecondary size='small' value='accept-encoding' />
+              <TypographySecondary size='small' value='accept-encoding' semiBold />
               <TypographyPrimary size='small' value='gzip, compress, deflate, br' />
             </StyledInfoValue>
           </StyledRequestCardBody>
@@ -65,25 +65,25 @@ const HiddenContent = () => {
         <StyledRequestCard>
           <StyledRequestCardHeader>
             <StyledInfoValue>
-              <TypographyPrimary size='large' value='Response' />
+              <TypographyPrimary size='large' value='Response' bold />
               <TypographySecondary size='medium' value='Get consumer' />
             </StyledInfoValue>
           </StyledRequestCardHeader>
 
           <StyledRequestCardBody>
             <StyledInfoValue>
-              <TypographySecondary size='small' value='access-control-allow-credentials' />
+              <TypographySecondary size='small' value='access-control-allow-credentials' semiBold />
               <TypographyPrimary size='small' value='true' />
             </StyledInfoValue>
 
             <StyledInfoValue>
-              <TypographySecondary size='small' value='access-control-allow-origin' />
+              <TypographySecondary size='small' value='access-control-allow-origin' semiBold />
               <TypographyPrimary size='small' value='*' />
             </StyledInfoValue>
 
             <StyledDivider />
 
-            <TypographyPrimary size='medium' value='Body' />
+            <TypographyPrimary size='medium' value='Body' bold />
 
             <AiMessageMarkdown
               children={`

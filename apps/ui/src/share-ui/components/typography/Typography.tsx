@@ -14,6 +14,8 @@ interface TypographyProps<T extends React.ElementType> {
   customColor?: string
   type?: TypographyTypes
   style?: CSSProperties
+  bold?: boolean
+  semiBold?: boolean
 }
 
 function Typography<T extends React.ElementType = 'span'>({
@@ -23,6 +25,8 @@ function Typography<T extends React.ElementType = 'span'>({
   size = TypographySizes.lg,
   customColor,
   style = {},
+  bold = false,
+  semiBold = false,
 }: TypographyProps<T> &
   Omit<React.ComponentPropsWithoutRef<T>, keyof TypographyProps<T>> & {
     sizes?: typeof TypographySizes
@@ -32,7 +36,7 @@ function Typography<T extends React.ElementType = 'span'>({
   const typograpghClassName = `${type}_${size}`
 
   return (
-    <StyledTypography style={finalStyle} size={size}>
+    <StyledTypography style={finalStyle} size={size} bold={bold} semiBold={semiBold}>
       {value}
     </StyledTypography>
   )
@@ -45,7 +49,7 @@ Object.assign(Typography, {
 
 export default Typography
 
-const StyledTypography = styled.span<{ size: string }>`
+const StyledTypography = styled.span<{ size: string; bold: boolean; semiBold: boolean }>`
   /* font-weight: 450; */
   font-style: normal;
   ${props =>
@@ -71,5 +75,15 @@ const StyledTypography = styled.span<{ size: string }>`
     css`
       font-size: 12px;
       line-height: 16px;
+    `}
+    ${props =>
+    props.bold &&
+    css`
+      font-weight: bold;
+    `}
+    ${props =>
+    props.semiBold &&
+    css`
+      font-weight: 500;
     `}
 `
