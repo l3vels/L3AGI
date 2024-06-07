@@ -41,4 +41,6 @@ export const StyledLogsHeader = styled.div`
   font-weight: 500;
 
   width: fit-content;
+
+  padding-top: 10px;
 `

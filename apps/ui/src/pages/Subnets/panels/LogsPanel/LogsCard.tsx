@@ -8,6 +8,7 @@ import { StyledColumn } from './LogsPanelStyles'
 import TypographyPrimary from 'components/Typography/Primary'
 import { useState } from 'react'
 import HiddenContent from './HiddenContent'
+import TypographyMUI from '@mui/material/Typography'
 
 interface LogsCardProps {
   service: { name: string; subName: string; logo: string }
@@ -46,11 +47,26 @@ const LogsCard = ({ service, path, timeStamp, requestStatus, consumerId }: LogsC
         </StyledColumn>
 
         <StyledColumn customWidth={100}>
-          <Tags label={requestStatus} readOnly color='#FCEAEC' size={Tags.sizes?.SMALL} />
+          <TypographyMUI
+            fontSize={13}
+            fontWeight={600}
+            sx={{
+              color: requestStatus === '200' ? '#17C568' : '#EF5533',
+              background: requestStatus === '200' ? '#F1FEED' : '#FCEAEC',
+              padding: '4px',
+              borderRadius: '8px',
+              width: '50px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {requestStatus}
+          </TypographyMUI>
         </StyledColumn>
 
         <StyledColumn customWidth={120}>
-          <Tags label={consumerId} readOnly color='#f9b3ff' size={Tags.sizes?.SMALL} />
+          <Tags label={consumerId} readOnly color='#e2e2e2' size={Tags.sizes?.SMALL} />
         </StyledColumn>
       </StyledCardWrapper>
       {toggle && (

@@ -2,16 +2,12 @@ import styled, { css } from 'styled-components'
 
 import Button from 'share-ui/components/Button/Button'
 
-import IconButton from 'share-ui/components/IconButton/IconButton'
-
 import Typography from 'share-ui/components/typography/Typography'
 
 import Delete from 'share-ui/components/Icon/Icons/components/Delete'
 import Edit from 'share-ui/components/Icon/Icons/components/Edit'
 import MoveArrowRight from 'share-ui/components/Icon/Icons/components/MoveArrowRight'
 import EyeOpen from 'share-ui/components/Icon/Icons/components/EyeOpen'
-
-import AvatarGenerator from 'components/AvatarGenerator/AvatarGenerator'
 
 import Heading from 'share-ui/components/Heading/Heading'
 
@@ -22,7 +18,7 @@ import HeadingSecondary from 'components/Heading/Secondary'
 import TypographyMUI from '@mui/material/Typography'
 
 import { textSlicer } from 'utils/textSlicer'
-import LinearProgress from '@mui/material/LinearProgress'
+
 import { ButtonPrimary } from 'components/Button/Button'
 import ProgressBar from './ProsgressBar'
 
