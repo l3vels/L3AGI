@@ -77,7 +77,7 @@ const StyledMainInfo = styled.div`
 `
 
 const StyledCardWrapper = styled.div`
-  min-height: 100px;
+  min-height: 70px;
   width: fit-content;
 
   display: flex;
