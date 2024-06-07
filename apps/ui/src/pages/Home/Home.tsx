@@ -72,7 +72,7 @@ const Home = () => {
   ]
 
   return (
-    <StyledInnerWrapperEdit>
+    <>
       {user ? (
         <StyledWrapper>
           {isDatura ? (
@@ -150,17 +150,11 @@ const Home = () => {
           <DiscoverSystemAgents />
         </>
       )}
-    </StyledInnerWrapperEdit>
+    </>
   )
 }
 
 export default Home
-
-const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
-  display: grid;
-  grid-auto-rows: max-content;
-  gap: 30px;
-`
 
 const StyledWrapper = styled.div`
   display: flex;

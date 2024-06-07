@@ -26,9 +26,9 @@ const HomeRouteLayout = () => {
   const outlet = useOutlet()
 
   return (
-    <StyledAppContainer className='app_container'>
+    <StyledHomeRoot>
       {((loginConfig?.popup && !user) || user) && (
-        <StyledMainContainer>{outlet}</StyledMainContainer>
+        <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
       )}
       {user && <Footer />}
 
@@ -45,10 +45,9 @@ const HomeRouteLayout = () => {
               <TermsAndPrivacyButtons />
             </StyledLoginWrapper>
           )}
-          {!user && <StyledSpace />}
         </>
       )}
-    </StyledAppContainer>
+    </StyledHomeRoot>
   )
 }
 
@@ -64,6 +63,20 @@ const StyledLoginWrapper = styled.div`
 
   gap: 20px;
 `
-const StyledSpace = styled.div`
-  height: 50px;
+
+const StyledHomeRoot = styled.div`
+  width: 100%;
+  height: 100%;
+
+  overflow: auto;
+`
+const StyledOutletWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  max-width: 1110px;
+
+  margin: 0 auto;
+
+  padding-top: 20px;
 `

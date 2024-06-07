@@ -412,7 +412,6 @@ export const StyledContainer = styled.div`
   overflow: hidden;
 
   position: relative;
-
   /* gap: 20px; */
 `
 export const StyledLeftColumn = styled.div<{
@@ -486,7 +485,7 @@ export const StyledMainWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  /* max-width: 1200px; */
+  /* max-width: 1400px; */
 `
 export const StyledChatWrapper = styled.div`
   height: 100%;

@@ -7,6 +7,7 @@ import {
   StyledHorizontalDivider,
   StyledLeftColumn,
   StyledMainWrapper,
+  StyledRightColumn,
 } from 'routes/ChatRouteLayout'
 import { SUBNETS } from './constants'
 
@@ -76,6 +77,12 @@ const Subnets = () => {
             </TabsContext>
           </StyledChatWrapper>
         </StyledMainWrapper>
+
+        {activeTab === 2 && (
+          <StyledRightColumn>
+            <input type='date' />
+          </StyledRightColumn>
+        )}
       </StyledContainer>
     </StyledAppContainer>
   )
