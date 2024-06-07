@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
+
 import styled from 'styled-components'
 import Agents from 'pages/Agents'
 import { AuthContext } from 'contexts'
@@ -9,7 +9,7 @@ import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import DiscoverSystemAgents from 'pages/Discover/components/DiscoverSystemAgents'
-import { StyledHeaderGroup, StyledSectionDescription, StyledSectionWrapper } from './homeStyle.css'
+import { StyledHeaderGroup, StyledSectionWrapper } from './homeStyle.css'
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from 'share-ui/components/Heading/Heading'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
@@ -19,6 +19,8 @@ import ApiCard from 'pages/Subnets/ApiCard'
 
 import PodsMainCard from 'pages/Pods/PodsMainCard'
 import { useNavigate } from 'react-router-dom'
+import LogsPanel from 'pages/Subnets/panels/LogsPanel/LogsPanel'
+import SDKs from 'pages/Subnets/SDKs'
 
 const Home = () => {
   const { user } = React.useContext(AuthContext)
@@ -81,7 +83,6 @@ const Home = () => {
                 <StyledHeaderGroup className='header_group'>
                   <StyledMainHeaderWrapper>
                     <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Pods`} />
-                    {/* <StyledSectionDescription>{'description'}</StyledSectionDescription> */}
                   </StyledMainHeaderWrapper>
                 </StyledHeaderGroup>
 
@@ -110,7 +111,6 @@ const Home = () => {
                 <StyledHeaderGroup className='header_group'>
                   <StyledMainHeaderWrapper>
                     <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Subnet APIs`} />
-                    {/* <StyledSectionDescription>{'description'}</StyledSectionDescription> */}
                   </StyledMainHeaderWrapper>
                 </StyledHeaderGroup>
 
@@ -128,6 +128,30 @@ const Home = () => {
                       )
                     })}
                   </StyledCardsWrapper>
+                </ComponentsWrapper>
+              </StyledSectionWrapper>
+
+              <StyledSectionWrapper>
+                <StyledHeaderGroup>
+                  <StyledMainHeaderWrapper>
+                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`SDKs`} />
+                  </StyledMainHeaderWrapper>
+                </StyledHeaderGroup>
+
+                <ComponentsWrapper>
+                  <SDKs />
+                </ComponentsWrapper>
+              </StyledSectionWrapper>
+
+              <StyledSectionWrapper>
+                <StyledHeaderGroup>
+                  <StyledMainHeaderWrapper>
+                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Latest Logs`} />
+                  </StyledMainHeaderWrapper>
+                </StyledHeaderGroup>
+
+                <ComponentsWrapper>
+                  <LogsPanel />
                 </ComponentsWrapper>
               </StyledSectionWrapper>
             </>
