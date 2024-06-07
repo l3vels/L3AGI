@@ -4,7 +4,7 @@ from sqlalchemy import (
     Boolean,
     Column,
     ForeignKey,
-    # or_,
+    or_,
     String,
     Enum,
     Numeric
@@ -12,6 +12,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import Session, aliased, relationship
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
+from typings.pod import PodStatusEnum, PodTypeEnum
 
 
 class PodModel(BaseModel):
@@ -29,24 +30,24 @@ class PodModel(BaseModel):
     pod_name = Column(String, nullable=True)
     price = Column(Numeric(precision=5, scale=2), nullable=True)
     status = Column(
-        Enum('running', 'stopped', name='status_enum'),
+        Enum(PodStatusEnum),
         nullable=True
     )
     provider = Column(String, nullable=True)
     category = Column(String, nullable=True)
-    type = Column(Enum('cpu', 'gpu', name='category_enum'), nullable=True)
+    type = Column(Enum(PodTypeEnum), nullable=True)
     resource = Column(
         UUID,
         ForeignKey("resource.id", ondelete="CASCADE"),
         nullable=True,
         index=True
     )
-    # template = Column(
-    #     UUID,
-    #     ForeignKey("template.id", ondelete="CASCADE"),
-    #     nullable=True,
-    #     index=True
-    # )
+    template = Column(
+        UUID,
+        ForeignKey("template.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True
+    )
     gpu_count = Column(Numeric(precision=5, scale=2), nullable=True)
     isinstance_pricing = Column(JSONB, nullable=False)
 
@@ -97,7 +98,7 @@ class PodModel(BaseModel):
         db: Session,
         pod,
         user,
-        account_id
+        account
     ):
         """
         Creates a new Pod.
@@ -112,7 +113,7 @@ class PodModel(BaseModel):
 
         db_pod = PodModel(
             created_by=user.id,
-            account_id=account_id
+            account_id=account.id
         )
 
         cls.update_model_from_input(
@@ -125,3 +126,22 @@ class PodModel(BaseModel):
         db.session.commit()
 
         return db_pod
+
+    @classmethod
+    def get_pods(cls, db, account):
+        pods = (
+            db.session.query(PodModel)
+            .filter(
+                PodModel.account_id == account.id,
+                or_(
+                    or_(
+                        PodModel.is_deleted.is_(False),
+                        PodModel.is_deleted is None,
+                    ),
+                    PodModel.is_deleted is None,
+                ),
+            )
+            .all()
+        )
+
+        return pods
