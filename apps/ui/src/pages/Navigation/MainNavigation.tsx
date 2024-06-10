@@ -39,6 +39,8 @@ import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
 import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
 import { API } from 'share-ui/components/Icon/Icons'
 
+import ModeSwitcher from 'components/ModeSwitcher'
+
 const MainNavigation = ({ user }: { user: any }) => {
   const domainEnv = import.meta.env
   const isDatura = domainEnv.REACT_APP_ENV === 'datura'
@@ -238,17 +240,28 @@ const MainNavigation = ({ user }: { user: any }) => {
         {/* <StyledSpace /> */}
       </StyledUl>
       <StyledBottomSection>
-        {isIntegration && (
-          <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
-            <StyledLi
-              isActive={includes(active, 'integrations')}
-              onClick={() => onHandleClick('/integrations')}
-            >
-              <Integrations size={40} />
-              {includes(active, 'integrations') && <StyledCorner />}
-            </StyledLi>
+        {!isDatura ? (
+          <>
+            {isIntegration && (
+              <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
+                <StyledLi
+                  isActive={includes(active, 'integrations')}
+                  onClick={() => onHandleClick('/integrations')}
+                >
+                  <Integrations size={40} />
+                  {includes(active, 'integrations') && <StyledCorner />}
+                </StyledLi>
+              </Tooltip>
+            )}
+          </>
+        ) : (
+          <Tooltip content={t('Mode')} position={Tooltip.positions.LEFT}>
+            <StyledInnerWrapper>
+              <ModeSwitcher />
+            </StyledInnerWrapper>
           </Tooltip>
         )}
+
         <StyledInnerWrapper>
           <AvatarDropDown />
         </StyledInnerWrapper>

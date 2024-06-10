@@ -145,7 +145,7 @@ const slideLeftAndFade = keyframes`
   }
 `
 
-const StyledDropdownContent = styled(Content)`
+export const StyledDropdownContent = styled(Content)`
   margin-bottom: 15px;
   margin-left: 20px;
   min-width: 200px;
@@ -182,9 +182,9 @@ const StyledDropdownContent = styled(Content)`
   },
 `
 
-const StyledDropDownMenuRoot = styled(Root)``
+export const StyledDropDownMenuRoot = styled(Root)``
 
-const StyledDropDownMenuItem = styled(Item)`
+export const StyledDropDownMenuItem = styled(Item)`
   all: unset;
   font-size: 13px;
   line-height: 1;
@@ -207,7 +207,7 @@ const StyledDropDownMenuItem = styled(Item)`
   }
 `
 
-const StyledDropDownMenuTrigger = styled(Trigger)`
+export const StyledDropDownMenuTrigger = styled(Trigger)`
   all: unset;
   cursor: pointer;
 `
@@ -215,12 +215,6 @@ const StyledDropDownMenuTrigger = styled(Trigger)`
 const StyledLogOutIcon = styled(LogOut)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
-  }
-`
-
-const StyledSettingsIcon = styled(Settings)`
-  path {
-    stroke: ${({ theme }) => theme.body.iconColor};
   }
 `
 
