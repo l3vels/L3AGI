@@ -33,17 +33,19 @@ const HomeRouteLayout = () => {
       {user && <Footer />}
 
       {!user && !loginConfig?.popup ? (
-        <Login />
+        <StyledLoginWrapper>
+          <Login />
+        </StyledLoginWrapper>
       ) : (
         <>
           {!user && (
-            <StyledLoginWrapper>
+            <StyledLoginButtonsWrapper>
               <ButtonPrimary onClick={() => openModal({ name: 'login-modal' })}>
                 Login / Sign Up
               </ButtonPrimary>
 
               <TermsAndPrivacyButtons />
-            </StyledLoginWrapper>
+            </StyledLoginButtonsWrapper>
           )}
         </>
       )}
@@ -54,6 +56,17 @@ const HomeRouteLayout = () => {
 export default HomeRouteLayout
 
 const StyledLoginWrapper = styled.div`
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+`
+const StyledLoginButtonsWrapper = styled.div`
   position: fixed;
   bottom: 5px;
   left: 40px;
