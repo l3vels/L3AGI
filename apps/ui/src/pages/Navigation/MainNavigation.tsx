@@ -37,7 +37,7 @@ import Integrations from 'share-ui/components/Icon/Icons/components/integrations
 import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
 // eslint-disable-next-line import/no-named-as-default
 import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
-import { API } from 'share-ui/components/Icon/Icons'
+import { API, Person, Teams } from 'share-ui/components/Icon/Icons'
 
 import ModeSwitcher from 'components/ModeSwitcher'
 import { useAppModeContext } from 'context/AppModeContext'
@@ -228,6 +228,15 @@ const MainNavigation = ({ user }: { user: any }) => {
             onClick={() => onHandleClick('/api-key')}
           >
             <StyledAPIIcon size={40} />
+          </StyledLi>
+        </Tooltip>
+
+        <Tooltip content={t('Teams')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'invite-user')}
+            onClick={() => onHandleClick('/invite-user')}
+          >
+            <StyledTeamsIcon />
           </StyledLi>
         </Tooltip>
 
@@ -439,6 +448,11 @@ const StyledCorner = styled.div`
   right: -16px; /* Position the left corner */
 `
 const StyledAPIIcon = styled(API)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledTeamsIcon = styled(Teams)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
