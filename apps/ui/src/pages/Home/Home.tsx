@@ -21,6 +21,7 @@ import PodsMainCard from 'pages/Pods/PodsMainCard'
 import { useNavigate } from 'react-router-dom'
 import LogsPanel from 'pages/Subnets/panels/LogsPanel/LogsPanel'
 import SDKs from 'pages/Subnets/SDKs'
+import { useAppModeContext } from 'context/AppModeContext'
 
 const Home = () => {
   const { user } = React.useContext(AuthContext)
@@ -73,87 +74,97 @@ const Home = () => {
     },
   ]
 
+  const { computeMode, subnetMode } = useAppModeContext()
+
   return (
     <>
       {user ? (
         <StyledWrapper>
           {isDatura ? (
             <>
-              <StyledSectionWrapper>
-                <StyledHeaderGroup className='header_group'>
-                  <StyledMainHeaderWrapper>
-                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Pods`} />
-                  </StyledMainHeaderWrapper>
-                </StyledHeaderGroup>
+              {computeMode && (
+                <>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup className='header_group'>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Pods`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
 
-                <ComponentsWrapper noPadding>
-                  <StyledCardsWrapper>
-                    {TEMP_DATA.slice(0, 3).map(data => {
-                      return (
-                        <PodsMainCard
-                          key={data.name}
-                          name={data.name}
-                          description={`${data.cram} ${data.ram}`}
-                          teamAgents={[]}
-                          onViewClick={() => navigate('/pods/create-pod')}
-                          price={data.price}
-                          uptime={data.uptime}
-                          cpu={data.cpu}
-                          gpu={data.gpu}
-                        />
-                      )
-                    })}
-                  </StyledCardsWrapper>
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
+                    <ComponentsWrapper noPadding>
+                      <StyledCardsWrapper>
+                        {TEMP_DATA.slice(0, 3).map(data => {
+                          return (
+                            <PodsMainCard
+                              key={data.name}
+                              name={data.name}
+                              description={`${data.cram} ${data.ram}`}
+                              teamAgents={[]}
+                              onViewClick={() => navigate('/pods/create-pod')}
+                              price={data.price}
+                              uptime={data.uptime}
+                              cpu={data.cpu}
+                              gpu={data.gpu}
+                            />
+                          )
+                        })}
+                      </StyledCardsWrapper>
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
 
-              <StyledSectionWrapper>
-                <StyledHeaderGroup className='header_group'>
-                  <StyledMainHeaderWrapper>
-                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Subnet APIs`} />
-                  </StyledMainHeaderWrapper>
-                </StyledHeaderGroup>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`SDKs`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
 
-                <ComponentsWrapper noPadding>
-                  <StyledCardsWrapper>
-                    {SUBNETS[1].apis.map(api => {
-                      return (
-                        <ApiCard
-                          key={api.name}
-                          name={api.name}
-                          description={api.description}
-                          avatar={api.logo}
-                          onViewClick={() => navigate('/subnets')}
-                        />
-                      )
-                    })}
-                  </StyledCardsWrapper>
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
+                    <ComponentsWrapper>
+                      <SDKs />
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
+                </>
+              )}
 
-              <StyledSectionWrapper>
-                <StyledHeaderGroup>
-                  <StyledMainHeaderWrapper>
-                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`SDKs`} />
-                  </StyledMainHeaderWrapper>
-                </StyledHeaderGroup>
+              {subnetMode && (
+                <>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup className='header_group'>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Subnet APIs`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
 
-                <ComponentsWrapper>
-                  <SDKs />
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
+                    <ComponentsWrapper noPadding>
+                      <StyledCardsWrapper>
+                        {SUBNETS[1].apis.map(api => {
+                          return (
+                            <ApiCard
+                              key={api.name}
+                              name={api.name}
+                              description={api.description}
+                              avatar={api.logo}
+                              onViewClick={() => navigate('/subnets')}
+                            />
+                          )
+                        })}
+                      </StyledCardsWrapper>
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
 
-              <StyledSectionWrapper>
-                <StyledHeaderGroup>
-                  <StyledMainHeaderWrapper>
-                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Latest Logs`} />
-                  </StyledMainHeaderWrapper>
-                </StyledHeaderGroup>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Latest Logs`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
 
-                <ComponentsWrapper>
-                  <LogsPanel />
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
+                    <ComponentsWrapper>
+                      <LogsPanel />
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
+                </>
+              )}
             </>
           ) : (
             <>

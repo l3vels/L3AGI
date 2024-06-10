@@ -40,8 +40,11 @@ import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
 import { API } from 'share-ui/components/Icon/Icons'
 
 import ModeSwitcher from 'components/ModeSwitcher'
+import { useAppModeContext } from 'context/AppModeContext'
 
 const MainNavigation = ({ user }: { user: any }) => {
+  const { computeMode, subnetMode } = useAppModeContext()
+
   const domainEnv = import.meta.env
   const isDatura = domainEnv.REACT_APP_ENV === 'datura'
 
@@ -180,17 +183,19 @@ const MainNavigation = ({ user }: { user: any }) => {
         </StyledLi>
       )} */}
 
-        <Tooltip content={'Pods'} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'pods')}
-            onClick={() => onHandleClick('/pods/create-pod')}
-          >
-            <Cloud size={30} fill={includes(active, 'pods') ? '#ffffff' : '#000000'} />
-            {includes(active, 'pods') && <StyledCorner />}
-          </StyledLi>
-        </Tooltip>
+        {computeMode && isDatura && (
+          <Tooltip content={'Pods'} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'pods')}
+              onClick={() => onHandleClick('/pods/create-pod')}
+            >
+              <Cloud size={30} fill={includes(active, 'pods') ? '#ffffff' : '#000000'} />
+              {includes(active, 'pods') && <StyledCorner />}
+            </StyledLi>
+          </Tooltip>
+        )}
 
-        {isDatura && (
+        {subnetMode && isDatura && (
           <Tooltip content={t('Subnets')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'subnets')}

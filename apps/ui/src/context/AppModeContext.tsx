@@ -5,6 +5,8 @@ import type { ReactNode } from 'react'
 type AppModeContextType = {
   mode: string
   setMode: (mode: string) => void
+  computeMode: boolean
+  subnetMode: boolean
 }
 
 const MODES = ['Compute', 'Subnet API']
@@ -18,6 +20,9 @@ type AppModeContextProviderProps = {
 export function AppModeContextProvider({ children }: AppModeContextProviderProps): JSX.Element {
   const [mode, setMode] = useState<string>(localStorage.getItem('appMode') || MODES[0])
 
+  const computeMode = mode === 'Compute'
+  const subnetMode = mode === 'Subnet API'
+
   const saveModeToLocal = (newMode: string) => {
     localStorage.setItem('appMode', newMode)
     setMode(newMode)
@@ -26,6 +31,8 @@ export function AppModeContextProvider({ children }: AppModeContextProviderProps
   const value: AppModeContextType = {
     mode,
     setMode: saveModeToLocal,
+    computeMode,
+    subnetMode,
   }
 
   return <AppModeContext.Provider value={value}>{children}</AppModeContext.Provider>

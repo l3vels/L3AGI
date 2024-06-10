@@ -41,4 +41,6 @@ const StyledCheck = styled(Check)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }
+
+  margin-left: auto;
 `
