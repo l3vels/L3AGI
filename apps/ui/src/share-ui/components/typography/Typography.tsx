@@ -59,6 +59,12 @@ const StyledTypography = styled.span<{ size: string; bold: boolean; semiBold: bo
       line-height: 24px;
     `}
   ${props =>
+    props.size === 'x-large' &&
+    css`
+      font-size: 22px;
+      line-height: 26px;
+    `}
+  ${props =>
     props.size === 'medium' &&
     css`
       font-size: 16px;
