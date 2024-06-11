@@ -45,10 +45,10 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
               }}
             >
               <Typography gutterBottom component='div' fontSize={16}>
-                {item.name}
+                {item.display_name}
               </Typography>
               <Typography gutterBottom component='div' fontSize={14}>
-                {item.price}
+                ${item.secure_price}/hr
               </Typography>
             </Box>
 
@@ -60,10 +60,10 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
               mt={2}
             >
               <Typography gutterBottom component='div' fontSize={13} color={color}>
-                {item.ram}
+                {item.ram} GB VRAM
               </Typography>
               <Typography gutterBottom component='div' fontSize={11} color={color}>
-                8 max
+                {item.max_gpu} max
               </Typography>
             </Box>
 
@@ -74,7 +74,7 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
               }}
             >
               <Typography gutterBottom component='div' fontSize={13} color={color}>
-                {item.vram} * {item.cram}
+                {item.lowest_price.minMemory} GB RAM * {item.lowest_price.minVcpu} vCPU
               </Typography>
               <Typography gutterBottom component='div' fontSize={11} color={'#17C568'}>
                 High
