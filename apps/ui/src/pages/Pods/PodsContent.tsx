@@ -9,8 +9,9 @@ import ActionAreaCard from './Card'
 import Details from './Details'
 import FilterPods from './FilterPods'
 import Price from './Price'
-import { usePods } from './usePods'
+import { useResource, usePodContent } from './usePods'
 import { chipStyles, borderBoxStyles } from './styles'
+import { Resource } from 'types/resource'
 
 const Line = ({ label }: { label: string }) => {
   return (
@@ -151,8 +152,8 @@ export const temp_data = {
 }
 
 const PodsContent = () => {
-  const [selectPod, setSelectPod] = React.useState<null | number>(null)
-  const { resources } = usePods()
+  const { resources } = useResource()
+  const { resource, handleSelectResource } = usePodContent()
 
   const data_keys = Object.keys(resources)
   return (
@@ -168,16 +169,16 @@ const PodsContent = () => {
         >
           <Box>
             <Box>
-              {/* <FilterPods /> */}
+              <FilterPods />
             </Box>
 
             {data_keys.map((key: string, index: number) => (
               <Box mt={2} key={index}>
                 <Line label={key} />
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 2 }} mt={2} rowGap={1}>
-                  {resources[key].map((item, i) => (
+                  {resources[key].map((item: Resource, i: number) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-                      <ActionAreaCard item={item} selected={selectPod} selectCard={setSelectPod} />
+                      <ActionAreaCard item={item} selected={resource} selectCard={handleSelectResource} />
                     </Grid>
                   ))}
                 </Grid>
@@ -186,10 +187,12 @@ const PodsContent = () => {
           </Box>
         </Box>
 
-        {selectPod && (
+        {resource && (
           <>
-            {/* <Details /> */}
-            <Price />
+            <Details 
+              resource={resource}
+            />
+            {/* <Price /> */}
           </>
         )}
       </StyledContainer>

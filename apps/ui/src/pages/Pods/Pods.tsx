@@ -10,6 +10,7 @@ import {
 import { useNavigate, useOutlet } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { usePod } from './usePods'
 
 const cpu = [
   { name: 'llm2 Fine-tune', cpu: 'base:0.5.1-cpu', ram: '46 GB', running: true, mem: 0 },
@@ -21,6 +22,7 @@ const cpu = [
 ]
 
 const Pods = () => {
+  const { pods } = usePod()
   const navigate = useNavigate()
   const outlet = useOutlet()
 
@@ -32,7 +34,7 @@ const Pods = () => {
             <Box display={'flex'} flexDirection={'column'} sx={{ paddingRight: 1.5 }}>
               <ListHeader title={'Pods'} onAddClick={() => navigate('/pods/create-pod')} />
 
-              {cpu.map((item, index) => (
+              {pods.map((item, index) => (
                 <Box
                   key={index}
                   display={'flex'}
@@ -57,7 +59,7 @@ const Pods = () => {
                       <Typography fontSize={14} fontWeight={700}>
                         {item.name}
                       </Typography>
-                      <Typography fontSize={12}>CPU: {item.cpu}</Typography>
+                      <Typography fontSize={12}>Template: {item.cpu}</Typography>
                       <Typography fontSize={12}>RAM: {item.ram}</Typography>
                     </Box>
 

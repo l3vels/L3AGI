@@ -4,8 +4,16 @@ import Typography from '@mui/material/Typography'
 
 import { ButtonPrimary } from 'components/Button/Button'
 import styled from 'styled-components'
+import { PlanCard } from './usePods'
+import { Resource } from 'types/resource'
 
-const Price = () => {
+interface PriceProps {
+  selectedPlan: PlanCard
+  maxGpu: number
+  resource: Resource
+}
+
+const Price = ({ selectedPlan, maxGpu, resource }: PriceProps) => {
   return (
     <Box
       sx={{
@@ -23,22 +31,71 @@ const Price = () => {
           <Typography fontSize={16} fontWeight={700}>
             Pricing Summary
           </Typography>
-          <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} mt={2} fontWeight={400}>
-            GPU Cost: $0.74 / hr
-          </Typography>
-          <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
-            Running Disk Cost: $0.006 / hr
-          </Typography>
-          <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
-            Exited Disk Cost: $0.006 / hr
-          </Typography>
+          {!selectedPlan.per_mont ?
+            (<>
+              <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} mt={2} fontWeight={400}>
+                GPU Cost: ${(selectedPlan.default_price * maxGpu).toFixed(2)} / hr
+              </Typography>
+              <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
+                Running Disk Cost: $0.008 / hr
+              </Typography>
+              <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
+                Exited Disk Cost: $0.006 / hr
+              </Typography>
+
+            </>)
+            :
+            (<>
+            <Box>
+              <Box>
+                <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} mt={2}>
+                  <Typography color='rgba(0, 0, 0, 0.761)' fontSize={15}  fontWeight={600}>
+                    Upfront Costs
+                  </Typography>
+                  <Typography color='rgba(0, 0, 0, 0.761)' fontSize={15}  fontWeight={600}>
+                    ${(selectedPlan.default_total_price ? selectedPlan.default_total_price * maxGpu : 0).toFixed(2)}
+                  </Typography>
+                </Box>
+                <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
+                  {resource.display_name} x {maxGpu}
+                </Typography>
+                <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
+                  {selectedPlan.title}
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography color='rgba(0, 0, 0, 0.761)' fontSize={15} mt={2} fontWeight={600}>
+                  Usage-Based Costs
+                </Typography>
+                <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                  <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
+                    {resource.display_name}
+                  </Typography>
+
+                  <Typography color='rgba(0, 0, 0, 0.761)' fontSize={15}  fontWeight={600}>
+                    $0.008 /hr
+                  </Typography>
+                </Box>
+                <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                  <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
+                    {selectedPlan.title}
+                  </Typography>
+                  <Typography color='rgba(0, 0, 0, 0.761)' fontSize={15}  fontWeight={600}>
+                    $0.014 /hr
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+            </>)
+          }
         </Box>
         <Box sx={{ ...borderBoxStyles, width: '49%' }} display={'flex'} flexDirection={'column'}>
           <Typography fontSize={16} fontWeight={700}>
-            Pricing Summary
+            Pod Summary
           </Typography>
           <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} mt={2} fontWeight={400}>
-            GPU Cost: $0.74 / hr
+            {maxGpu}x {resource.display_name} ({resource.ram * maxGpu} GB VRAM)
           </Typography>
           <Typography color='rgba(34, 51, 84, 0.7)' fontSize={14} fontWeight={400}>
             Running Disk Cost: $0.006 / hr
