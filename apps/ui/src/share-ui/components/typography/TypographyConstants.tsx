@@ -1,10 +1,11 @@
 export enum TypographyTypes {
-  LABEL = "label",
-  P = "paragraph"
+  LABEL = 'label',
+  P = 'paragraph',
 }
 export enum TypographySizes {
-  lg = "large",
-  md = "medium",
-  sm = "small",
-  xss = "xs-small"
+  xl = "'x-large",
+  lg = 'large',
+  md = 'medium',
+  sm = 'small',
+  xss = 'xs-small',
 }

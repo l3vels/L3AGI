@@ -5,9 +5,8 @@ import styled from 'styled-components'
 import TypographyPrimary from 'components/Typography/Primary'
 import Typography from 'share-ui/components/typography/Typography'
 
-import { StyledForm, StyledInnerFormWrapper } from './Subnets'
-
 import AiMessageMarkdown from 'modals/AIChatModal/components/ChatMessageList/components/AiMessageMarkdown'
+import { StyledForm, StyledInnerFormWrapper } from './SubnetsStyles'
 
 const SDKs = () => {
   const [pickedData, setPickedData] = useState(SDK_DATA[0])
