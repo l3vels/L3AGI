@@ -10,7 +10,6 @@ import {
 import { useNavigate, useOutlet } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import ProgressBar from './ProsgressBar'
 
 const cpu = [
   { name: 'llm2 Fine-tune', cpu: 'base:0.5.1-cpu', ram: '46 GB', running: true, mem: 0 },

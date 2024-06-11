@@ -18,6 +18,7 @@ import './App.css'
 
 // import '@l3-lib/ui-core/dist/main.css'
 import { LayoutProvider } from 'providers/LayoutProvider'
+import { AppModeContextProvider } from 'context/AppModeContext'
 
 function App() {
   useDetectMobile()
@@ -32,9 +33,11 @@ function App() {
             <SnackbarProvider>
               <ToastProvider>
                 <AuthProvider>
-                  <LayoutProvider>
-                    <Route />
-                  </LayoutProvider>
+                  <AppModeContextProvider>
+                    <LayoutProvider>
+                      <Route />
+                    </LayoutProvider>
+                  </AppModeContextProvider>
                 </AuthProvider>
               </ToastProvider>
             </SnackbarProvider>

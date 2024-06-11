@@ -37,9 +37,14 @@ import Integrations from 'share-ui/components/Icon/Icons/components/integrations
 import FineTuning from 'share-ui/components/Icon/Icons/components/FineTuning'
 // eslint-disable-next-line import/no-named-as-default
 import Cloud from 'share-ui/components/Icon/Icons/components/Cloud'
-import { API } from 'share-ui/components/Icon/Icons'
+import { API, Payments, Person, Teams } from 'share-ui/components/Icon/Icons'
+
+import ModeSwitcher from 'components/ModeSwitcher'
+import { useAppModeContext } from 'context/AppModeContext'
 
 const MainNavigation = ({ user }: { user: any }) => {
+  const { computeMode, subnetMode } = useAppModeContext()
+
   const domainEnv = import.meta.env
   const isDatura = domainEnv.REACT_APP_ENV === 'datura'
 
@@ -178,17 +183,19 @@ const MainNavigation = ({ user }: { user: any }) => {
         </StyledLi>
       )} */}
 
-        <Tooltip content={'Pods'} position={Tooltip.positions.LEFT}>
-          <StyledLi
-            isActive={includes(active, 'pods')}
-            onClick={() => onHandleClick('/pods/create-pod')}
-          >
-            <Cloud size={30} fill={includes(active, 'pods') ? '#ffffff' : '#000000'} />
-            {includes(active, 'pods') && <StyledCorner />}
-          </StyledLi>
-        </Tooltip>
+        {computeMode && isDatura && (
+          <Tooltip content={'Pods'} position={Tooltip.positions.LEFT}>
+            <StyledLi
+              isActive={includes(active, 'pods')}
+              onClick={() => onHandleClick('/pods/create-pod')}
+            >
+              <Cloud size={30} fill={includes(active, 'pods') ? '#ffffff' : '#000000'} />
+              {includes(active, 'pods') && <StyledCorner />}
+            </StyledLi>
+          </Tooltip>
+        )}
 
-        {isDatura && (
+        {subnetMode && isDatura && (
           <Tooltip content={t('Subnets')} position={Tooltip.positions.LEFT}>
             <StyledLi
               isActive={includes(active, 'subnets')}
@@ -224,6 +231,25 @@ const MainNavigation = ({ user }: { user: any }) => {
           </StyledLi>
         </Tooltip>
 
+        <Tooltip content={t('Teams')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'invite-user')}
+            onClick={() => onHandleClick('/invite-user')}
+          >
+            <StyledTeamsIcon />
+          </StyledLi>
+        </Tooltip>
+
+        <Tooltip content={t('Billing')} position={Tooltip.positions.LEFT}>
+          <StyledLi
+            isActive={includes(active, 'billing')}
+            onClick={() => onHandleClick('/billing')}
+          >
+            <StyledPaymentsIcon />
+            {includes(active, 'billing') && <StyledCorner />}
+          </StyledLi>
+        </Tooltip>
+
         {/* {isDiscover && (
           <Tooltip content={t('discover')} position={Tooltip.positions.LEFT}>
             <StyledLi
@@ -238,17 +264,28 @@ const MainNavigation = ({ user }: { user: any }) => {
         {/* <StyledSpace /> */}
       </StyledUl>
       <StyledBottomSection>
-        {isIntegration && (
-          <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
-            <StyledLi
-              isActive={includes(active, 'integrations')}
-              onClick={() => onHandleClick('/integrations')}
-            >
-              <Integrations size={40} />
-              {includes(active, 'integrations') && <StyledCorner />}
-            </StyledLi>
+        {!isDatura ? (
+          <>
+            {isIntegration && (
+              <Tooltip content={t('integration')} position={Tooltip.positions.LEFT}>
+                <StyledLi
+                  isActive={includes(active, 'integrations')}
+                  onClick={() => onHandleClick('/integrations')}
+                >
+                  <Integrations size={40} />
+                  {includes(active, 'integrations') && <StyledCorner />}
+                </StyledLi>
+              </Tooltip>
+            )}
+          </>
+        ) : (
+          <Tooltip content={t('Mode')} position={Tooltip.positions.LEFT}>
+            <StyledInnerWrapper>
+              <ModeSwitcher />
+            </StyledInnerWrapper>
           </Tooltip>
         )}
+
         <StyledInnerWrapper>
           <AvatarDropDown />
         </StyledInnerWrapper>
@@ -421,6 +458,16 @@ const StyledCorner = styled.div`
   right: -16px; /* Position the left corner */
 `
 const StyledAPIIcon = styled(API)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledTeamsIcon = styled(Teams)`
+  path {
+    fill: ${({ theme }) => theme.body.iconColor};
+  }
+`
+const StyledPaymentsIcon = styled(Payments)`
   path {
     fill: ${({ theme }) => theme.body.iconColor};
   }

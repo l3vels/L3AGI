@@ -26,35 +26,47 @@ const HomeRouteLayout = () => {
   const outlet = useOutlet()
 
   return (
-    <StyledAppContainer className='app_container'>
+    <StyledHomeRoot>
       {((loginConfig?.popup && !user) || user) && (
-        <StyledMainContainer>{outlet}</StyledMainContainer>
+        <StyledOutletWrapper>{outlet}</StyledOutletWrapper>
       )}
       {user && <Footer />}
 
       {!user && !loginConfig?.popup ? (
-        <Login />
+        <StyledLoginWrapper>
+          <Login />
+        </StyledLoginWrapper>
       ) : (
         <>
           {!user && (
-            <StyledLoginWrapper>
+            <StyledLoginButtonsWrapper>
               <ButtonPrimary onClick={() => openModal({ name: 'login-modal' })}>
                 Login / Sign Up
               </ButtonPrimary>
 
               <TermsAndPrivacyButtons />
-            </StyledLoginWrapper>
+            </StyledLoginButtonsWrapper>
           )}
-          {!user && <StyledSpace />}
         </>
       )}
-    </StyledAppContainer>
+    </StyledHomeRoot>
   )
 }
 
 export default HomeRouteLayout
 
 const StyledLoginWrapper = styled.div`
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+`
+const StyledLoginButtonsWrapper = styled.div`
   position: fixed;
   bottom: 5px;
   left: 40px;
@@ -64,6 +76,20 @@ const StyledLoginWrapper = styled.div`
 
   gap: 20px;
 `
-const StyledSpace = styled.div`
-  height: 50px;
+
+const StyledHomeRoot = styled.div`
+  width: 100%;
+  height: 100%;
+
+  overflow: auto;
+`
+const StyledOutletWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  max-width: 1110px;
+
+  margin: 0 auto;
+
+  padding-top: 20px;
 `

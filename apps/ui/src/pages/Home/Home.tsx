@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledInnerWrapper } from 'components/Layout/LayoutStyle'
+
 import styled from 'styled-components'
 import Agents from 'pages/Agents'
 import { AuthContext } from 'contexts'
@@ -9,7 +9,7 @@ import { useTeamOfAgents } from 'pages/TeamOfAgents/useTeamOfAgents'
 import { useAgents } from 'pages/Agents/useAgents'
 import { useGetAccountModule } from 'utils/useGetAccountModule'
 import DiscoverSystemAgents from 'pages/Discover/components/DiscoverSystemAgents'
-import { StyledHeaderGroup, StyledSectionDescription, StyledSectionWrapper } from './homeStyle.css'
+import { StyledHeaderGroup, StyledSectionWrapper } from './homeStyle.css'
 import HeadingPrimary from 'components/Heading/Primary'
 import Heading from 'share-ui/components/Heading/Heading'
 import ComponentsWrapper from 'components/ComponentsWrapper/ComponentsWrapper'
@@ -19,6 +19,9 @@ import ApiCard from 'pages/Subnets/ApiCard'
 
 import PodsMainCard from 'pages/Pods/PodsMainCard'
 import { useNavigate } from 'react-router-dom'
+import LogsPanel from 'pages/Subnets/panels/LogsPanel/LogsPanel'
+import SDKs from 'pages/Subnets/SDKs'
+import { useAppModeContext } from 'context/AppModeContext'
 
 const Home = () => {
   const { user } = React.useContext(AuthContext)
@@ -71,65 +74,97 @@ const Home = () => {
     },
   ]
 
+  const { computeMode, subnetMode } = useAppModeContext()
+
   return (
-    <StyledInnerWrapperEdit>
+    <>
       {user ? (
         <StyledWrapper>
           {isDatura ? (
             <>
-              <StyledSectionWrapper>
-                <StyledHeaderGroup className='header_group'>
-                  <StyledMainHeaderWrapper>
-                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Pods`} />
-                    {/* <StyledSectionDescription>{'description'}</StyledSectionDescription> */}
-                  </StyledMainHeaderWrapper>
-                </StyledHeaderGroup>
+              {computeMode && (
+                <>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup className='header_group'>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Pods`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
 
-                <ComponentsWrapper noPadding>
-                  <StyledCardsWrapper>
-                    {TEMP_DATA.slice(0, 3).map(data => {
-                      return (
-                        <PodsMainCard
-                          key={data.name}
-                          name={data.name}
-                          description={`${data.cram} ${data.ram}`}
-                          teamAgents={[]}
-                          onViewClick={() => navigate('/pods/create-pod')}
-                          price={data.price}
-                          uptime={data.uptime}
-                          cpu={data.cpu}
-                          gpu={data.gpu}
-                        />
-                      )
-                    })}
-                  </StyledCardsWrapper>
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
+                    <ComponentsWrapper noPadding>
+                      <StyledCardsWrapper>
+                        {TEMP_DATA.slice(0, 3).map(data => {
+                          return (
+                            <PodsMainCard
+                              key={data.name}
+                              name={data.name}
+                              description={`${data.cram} ${data.ram}`}
+                              teamAgents={[]}
+                              onViewClick={() => navigate('/pods/create-pod')}
+                              price={data.price}
+                              uptime={data.uptime}
+                              cpu={data.cpu}
+                              gpu={data.gpu}
+                            />
+                          )
+                        })}
+                      </StyledCardsWrapper>
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
 
-              <StyledSectionWrapper>
-                <StyledHeaderGroup className='header_group'>
-                  <StyledMainHeaderWrapper>
-                    <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Subnet APIs`} />
-                    {/* <StyledSectionDescription>{'description'}</StyledSectionDescription> */}
-                  </StyledMainHeaderWrapper>
-                </StyledHeaderGroup>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`SDKs`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
 
-                <ComponentsWrapper noPadding>
-                  <StyledCardsWrapper>
-                    {SUBNETS[1].apis.map(api => {
-                      return (
-                        <ApiCard
-                          key={api.name}
-                          name={api.name}
-                          description={api.description}
-                          avatar={api.logo}
-                          onViewClick={() => navigate('/subnets')}
-                        />
-                      )
-                    })}
-                  </StyledCardsWrapper>
-                </ComponentsWrapper>
-              </StyledSectionWrapper>
+                    <ComponentsWrapper>
+                      <SDKs />
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
+                </>
+              )}
+
+              {subnetMode && (
+                <>
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup className='header_group'>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Subnet APIs`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
+
+                    <ComponentsWrapper noPadding>
+                      <StyledCardsWrapper>
+                        {SUBNETS[1].apis.map(api => {
+                          return (
+                            <ApiCard
+                              key={api.name}
+                              name={api.name}
+                              description={api.description}
+                              avatar={api.logo}
+                              onViewClick={() => navigate('/subnets')}
+                            />
+                          )
+                        })}
+                      </StyledCardsWrapper>
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
+
+                  <StyledSectionWrapper>
+                    <StyledHeaderGroup>
+                      <StyledMainHeaderWrapper>
+                        <HeadingPrimary type={Heading.types?.h1} size='xss' value={`Latest Logs`} />
+                      </StyledMainHeaderWrapper>
+                    </StyledHeaderGroup>
+
+                    <ComponentsWrapper>
+                      <LogsPanel />
+                    </ComponentsWrapper>
+                  </StyledSectionWrapper>
+                </>
+              )}
             </>
           ) : (
             <>
@@ -150,17 +185,11 @@ const Home = () => {
           <DiscoverSystemAgents />
         </>
       )}
-    </StyledInnerWrapperEdit>
+    </>
   )
 }
 
 export default Home
-
-const StyledInnerWrapperEdit = styled(StyledInnerWrapper)`
-  display: grid;
-  grid-auto-rows: max-content;
-  gap: 30px;
-`
 
 const StyledWrapper = styled.div`
   display: flex;

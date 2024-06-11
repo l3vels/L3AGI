@@ -4,7 +4,9 @@ import styled from 'styled-components'
 const StyledAppContainer = styled.div`
   background: ${({ theme }) => theme.body.backgroundColorPrimary};
   height: 100vh;
+  width: 100%;
   display: flex;
+
   flex-direction: column;
 
   padding: 28px 0;
@@ -46,25 +48,13 @@ const StyledFooter = styled.footer`
 `
 
 const StyledMainContainer = styled.main<{ expand?: boolean }>`
-  margin: 0 auto;
-  max-width: 1440px;
   width: 100%;
-  padding: 0 165px;
+  height: 100%;
+
   grid-auto-rows: max-content;
-  overflow: auto;
+
   ::-webkit-scrollbar {
     display: none;
-  }
-  ${({ expand }) =>
-    expand &&
-    `
-  max-width: unset;
-  max-height: 100vh;
-   min-height: calc(100vh - 335px);
-  padding-right: 70px;
-  `}
-  @media(max-width: 1000px) {
-    padding: 0 75px;
   }
 `
 
