@@ -10,7 +10,7 @@ const ComponentsWrapper = ({
   hideBox?: boolean
 }) => {
   return (
-    <StyledMainWrapper id='components_wrapper' noPadding={noPadding} hideBox={hideBox}>
+    <StyledMainWrapper noPadding={noPadding} hideBox={hideBox}>
       {children}
     </StyledMainWrapper>
   )
@@ -23,18 +23,19 @@ const StyledMainWrapper = styled.div<{ noPadding: boolean; hideBox: boolean }>`
   box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.05), inset 0px -1px 1px rgba(255, 255, 255, 0.1),
     inset 0px 1px 1px rgba(255, 255, 255, 0.25);
   border-radius: 27.5px;
-  /* border: ${({ theme }) => theme.body.border}; */
+
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
 
   padding: 55px 35px;
   padding-top: 20px;
-  // padding-bottom: 90px;
+
   position: relative;
   height: 100%;
-  /* max-height: fit-content; */
+
   min-height: 200px;
+
   width: 100%;
-  /* max-width: 1060px; */
+
   ${p =>
     p.noPadding &&
     css`

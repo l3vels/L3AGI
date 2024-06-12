@@ -20,7 +20,7 @@ const Cloud: React.FC<Cloud> = ({ size, ...props }) => (
     </g>
     </svg>
 )
-Cloud.displayName = 'Book'
+Cloud.displayName = 'Cloud'
 export default Cloud
 /* tslint:enable */
 /* eslint-enable */

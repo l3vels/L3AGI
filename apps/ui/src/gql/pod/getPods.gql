@@ -1,0 +1,22 @@
+query getPods @api(name: "ai") {
+  getPods @rest(type: "Pod", path: "/pod", method: "GET", endpoint: "ai") {
+    id
+    pod_name
+    price
+    status
+    category
+    provider
+    type
+    resource
+    template
+    gpu_count
+    isinstance_pricing
+    account_id
+    created_by
+    created_on
+    template_name
+    template_container_image
+    resource_ram
+    resource_display_name
+  }
+}

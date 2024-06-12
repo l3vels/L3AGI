@@ -3,10 +3,17 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
 import Box from '@mui/material/Box'
+import { Resource } from 'types/resource'
 
-export default function ActionAreaCard({ item, selected, selectCard }: any) {
+interface ActionAreaCardProps {
+  item: Resource
+  selected: Resource | null
+  selectCard: (resource: Resource) => void
+}
+
+export default function ActionAreaCard({ item, selected, selectCard }: ActionAreaCardProps) {
   const color = 'rgba(34, 51, 84, 0.7)'
-  const isSelected = selected && selected === item.id
+  const isSelected = selected && selected.id === item.id
 
   return (
     <Card
@@ -17,7 +24,7 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
         background: '#FFF',
         borderRadius: '10px',
       }}
-      onClick={() => selectCard(item.id)}
+      onClick={() => selectCard(item)}
     >
       <CardActionArea
         sx={{
@@ -45,10 +52,10 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
               }}
             >
               <Typography gutterBottom component='div' fontSize={16}>
-                {item.name}
+                {item.display_name}
               </Typography>
               <Typography gutterBottom component='div' fontSize={14}>
-                {item.price}
+                ${item.secure_price}/hr
               </Typography>
             </Box>
 
@@ -60,10 +67,10 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
               mt={2}
             >
               <Typography gutterBottom component='div' fontSize={13} color={color}>
-                {item.ram}
+                {item.ram} GB VRAM
               </Typography>
               <Typography gutterBottom component='div' fontSize={11} color={color}>
-                8 max
+                {item.max_gpu} max
               </Typography>
             </Box>
 
@@ -74,7 +81,7 @@ export default function ActionAreaCard({ item, selected, selectCard }: any) {
               }}
             >
               <Typography gutterBottom component='div' fontSize={13} color={color}>
-                {item.vram} * {item.cram}
+                {item.lowest_price.minMemory} GB RAM * {item.lowest_price.minVcpu} vCPU
               </Typography>
               <Typography gutterBottom component='div' fontSize={11} color={'#17C568'}>
                 High

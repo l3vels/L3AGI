@@ -1,0 +1,22 @@
+query getResources @api(name: "ai") {
+  getResources @rest(type: "Resource", path: "/resource", method: "GET", endpoint: "ai") {
+    id
+    created_on
+    name
+    display_name
+    type
+    category
+    ram
+    secure_price
+    one_month_price
+    three_month_price
+    six_month_price
+    max_gpu
+    lowest_price
+    status
+    disc_type
+    cloud_type
+    region
+    cuda_version
+  }
+}

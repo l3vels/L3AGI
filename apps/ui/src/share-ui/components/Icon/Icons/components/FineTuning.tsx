@@ -5,7 +5,7 @@ export interface FineTuningProps extends React.SVGAttributes<SVGElement> {
   size?: string | number
 }
 const FineTuning: React.FC<FineTuningProps> = ({ size, ...props }) => (
-  <svg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
+  <svg width={size || '48'} height={size || '48'} viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M24 21.5L24 35'
       stroke='black'

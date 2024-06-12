@@ -158,5 +158,9 @@ class UserAccessNotFoundException(DatasourceException):
     pass
 
 
+class TemplateNotFoundException(DatasourceException):
+    pass
+
+
 class UserAccountAccessException(AppBaseException):
     pass
