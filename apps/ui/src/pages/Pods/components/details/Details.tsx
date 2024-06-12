@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button'
-import { borderBoxStyles, chipStyles, buttonStyles } from './styles'
+import { borderBoxStyles, chipStyles, buttonStyles } from '../../styles'
 import styled from 'styled-components';
 import Slider from '@mui/material/Slider'
 import Card from '@mui/material/Card';
@@ -12,23 +12,9 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Resource } from 'types/resource';
-import { FormikProps } from 'formik'
-import { useDetails, PlanCard } from './usePods'
+import useDetails, { PlanCard } from './useDetails'
 import Price from './Price'
 
-// import type { PlanCard } from './usePods'
-const sliderMarks = (max_gpu: number) => Array.from({ length: max_gpu }, (_, index) => ({
-    value: index,
-    label: index
-}))
-
-interface FormValues {
-    // Define the shape of your form values here
-    // For example:
-    // name: string;
-    // email: string;
-    pod_name: string
-  }
 
 interface DetailsProps {
     resource: Resource
@@ -39,6 +25,11 @@ interface PlanCardItemProps {
     selectedPlan: PlanCard
     handleSelectPlan: (plan: PlanCard) => void
 } 
+
+const sliderMarks = (max_gpu: number) => Array.from({ length: max_gpu }, (_, index) => ({
+    value: index,
+    label: index
+}))
 
 const PlanCardItem = ({ plan, selectedPlan, handleSelectPlan }: PlanCardItemProps) => {
     const is_selected = plan.id === selectedPlan.id
@@ -82,7 +73,15 @@ const PlanCardItem = ({ plan, selectedPlan, handleSelectPlan }: PlanCardItemProp
 }
 
 const Details = ({ resource }: DetailsProps) => {
-    const { formik, plan_cards, selectedPlan, handleSelectPlan } = useDetails(resource)
+    const { 
+        formik, 
+        plan_cards, 
+        selectedPlan, 
+        handleSelectPlan, 
+        handleOpenChangeTemplateModal,
+        selectedTemplate,
+        create_pod_loading
+    } = useDetails(resource)
 
     return (
         <>
@@ -103,7 +102,7 @@ const Details = ({ resource }: DetailsProps) => {
 
                     <TextField 
                         id="filled-basic" 
-                        label="Filled" 
+                        label="Pod Name" 
                         variant="standard" 
                         size='small'
                         onChange={(e) => formik.setFieldValue('pod_name', e.target.value)}
@@ -142,19 +141,21 @@ const Details = ({ resource }: DetailsProps) => {
                                     ml={3}
                                 >
                                     <Typography color="rgba(34, 51, 84, 0.7)" fontSize={14}>
-                                        Pytorch 2.0.1
+                                        {selectedTemplate?.name ?? ''}
                                     </Typography>
                                     <Typography color="rgba(34, 51, 84, 0.7)" fontSize={12}>
-                                        pytorch:2.0.1-py3.10-cuda11.8.0-devel-ubuntu22.04
+                                        {selectedTemplate?.container_image ?? ''}
                                     </Typography>
                                 </Box>
                             </Box>
                             <Box>
-                                <Button variant="contained"
+                                <Button 
+                                    variant="contained"
                                     sx={buttonStyles}
                                     size='small'
+                                    onClick={handleOpenChangeTemplateModal}
                                 >
-                                    Contained
+                                    Change Template
                                 </Button>
                             </Box>
                         </StyledPodTemplate>
@@ -221,7 +222,8 @@ const Details = ({ resource }: DetailsProps) => {
             </Box>
             <Price 
                 selectedPlan={selectedPlan}
-                maxGpu={formik.values.max_gpu}
+                formik={formik}
+                create_pod_loading={create_pod_loading}
                 resource={resource}
             />
         </>
