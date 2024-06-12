@@ -1,9 +1,9 @@
-import { useGetResources } from 'services/resource/useResourceService'
-import { useGetPods } from 'services/pod/usePodService'
-import { useFormik } from 'formik'
-import * as yup from 'yup'
-import React from 'react';
-import { Resource } from 'types/resource';
+import React from "react";
+import { useGetPods } from "services/pod/usePodService";
+import { useGetResources } from "services/resource/useResourceService";
+import { Resource } from "types/resource";
+import { useLocation } from 'react-router-dom'
+
 
 const groupByType = (data: any) => {
     return data.reduce((acc: any, item: any) => {
@@ -17,13 +17,23 @@ const groupByType = (data: any) => {
 
 
 export const usePod = () => {
-    const { data: pods } = useGetPods()
+    const { data: pods, refetch, loading: pods_loading } = useGetPods()
+    const location = useLocation();
+    const prevLocation = React.useRef(location);
+
+    React.useEffect(() => {
+        if (prevLocation.current.pathname === '/pods/create-pod' && location.pathname === '/pods') {
+            refetch()
+        }
+        prevLocation.current = location;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [location]);
 
     return {
-        pods
+        pods,
+        pods_loading
     }
 }
-
 
 export const useResource = () => {
     const { data: resources } = useGetResources()
@@ -32,7 +42,6 @@ export const useResource = () => {
         resources: groupByType(resources),
     }
 }
-
 
 export const usePodContent = () => {
   const [resource, setResource] = React.useState<null | Resource>(null)
@@ -43,87 +52,5 @@ export const usePodContent = () => {
     return {
         handleSelectResource,
         resource
-    }
-}
-
-const podValidationSchema = yup.object().shape({
-    pod_name: yup.string()
-})
-
-export interface PlanCard {
-    id: number
-    title: string;
-    sub_title?: string;
-    price: number;
-    total_price?: number;
-    default_total_price?: number;
-    description?: string;
-    per_mont?: boolean
-    default_price: number
-}
-
-const defaultPlan = (price: number, default_price: number) => ({
-    id: 0,
-    title: 'On-Demand',
-    sub_title: 'Non-Interruptible',
-    price: price,
-    description: 'Pay as you go, with costs based on actual usage time.',
-    default_price: default_price
-})
-
-export const useDetails = (resource: Resource) => {
-    
-
-    const formik = useFormik({
-        initialValues: { pod_name: '', max_gpu: 1, },
-        onSubmit: values => handleSubmit(values),
-        validationSchema: podValidationSchema,
-    })
-    const [selectedPlan, setSelectedPlan] = React.useState<PlanCard>(defaultPlan(resource.secure_price, resource.secure_price))
-
-    // console.log('formik', formik.values)
-
-    function handleSubmit(values) {
-        console.log('values', values)
-    }
-    
-    const createPlanCards = (
-            resource: Pick<Resource, 'one_month_price' | 'three_month_price' | 'six_month_price' | 'secure_price'>
-        ): PlanCard[] => {
-        const plans = [
-            { title: '1 Month Savings Plan', price: resource.one_month_price, months: 1, per_mont: true },
-            { title: '3 Month Savings Plan', price: resource.three_month_price, months: 3, per_mont: true },
-            { title: '6 Month Savings Plan', price: resource.six_month_price, months: 6, per_mont: true },
-        ];
-    
-        const plan_list: PlanCard[] = [defaultPlan(resource.secure_price * formik.values.max_gpu, resource.secure_price)];
-    
-        plans.forEach((plan, index) => {
-            if (plan.price) {
-                plan_list.push({
-                    id: index + 1,
-                    title: plan.title,
-                    price: plan.price * formik.values.max_gpu,
-                    default_price: plan.price,
-                    total_price: (plan.months * 30 * 24 * plan.price) * formik.values.max_gpu,
-                    default_total_price: (plan.months * 30 * 24 * plan.price),
-                    description: `Reserve a GPU for ${plan.months} month${plan.months > 1 ? 's' : ''} at a discounted hourly cost.`,
-                    per_mont: plan.per_mont
-                });
-            }
-        });
-    
-        return plan_list;
-    }
-
-    const handleSelectPlan = (plan: PlanCard) => {
-        setSelectedPlan(plan)
-    }
-
-    return {
-        formik,
-        plan_cards: createPlanCards(resource),
-        handleSelectPlan,
-        selectedPlan
     }
 }
