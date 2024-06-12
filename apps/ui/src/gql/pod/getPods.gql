@@ -14,5 +14,9 @@ query getPods @api(name: "ai") {
     account_id
     created_by
     created_on
+    template_name
+    template_container_image
+    resource_ram
+    resource_display_name
   }
 }

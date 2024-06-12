@@ -1,0 +1,7 @@
+mutation createPod($input: input!) @api(name: ai) {
+  createPod(input: $input)
+    @rest(type: "CreatePod", path: "/pod", method: "POST", bodyKey: "input", endpoint: "ai") {
+    success
+    message
+  }
+}
