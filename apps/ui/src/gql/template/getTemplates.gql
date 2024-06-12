@@ -1,0 +1,21 @@
+query getTemplates @api(name: "ai") {
+  getTemplates @rest(type: "Template", path: "/template", method: "GET", endpoint: "ai") {
+    id
+    name
+    description
+    template_type
+    compute_type
+    container_image
+    container_start_command
+    container_disk
+    volume_disk
+    volume_mount_path
+    expose_http_ports
+    expose_tcp_ports
+    template_visibility
+    environment_variables
+    account_id
+    created_by
+    created_on
+  }
+}
