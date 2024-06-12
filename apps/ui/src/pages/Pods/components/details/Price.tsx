@@ -1,19 +1,23 @@
 import Box from '@mui/material/Box'
-import { borderBoxStyles } from './styles'
+import { borderBoxStyles } from '../../styles'
 import Typography from '@mui/material/Typography'
 
 import { ButtonPrimary } from 'components/Button/Button'
 import styled from 'styled-components'
-import { PlanCard } from './usePods'
 import { Resource } from 'types/resource'
+import { PlanCard } from './useDetails'
+import { FormikProps } from 'formik'
+import Loader from 'share-ui/components/Loader/Loader'
 
 interface PriceProps {
   selectedPlan: PlanCard
-  maxGpu: number
-  resource: Resource
+  formik: any
+  resource: Resource,
+  create_pod_loading: boolean
 }
 
-const Price = ({ selectedPlan, maxGpu, resource }: PriceProps) => {
+const Price = ({ selectedPlan, formik, resource, create_pod_loading }: PriceProps) => {
+  const { max_gpu: maxGpu } = formik.values
   return (
     <Box
       sx={{
@@ -107,7 +111,9 @@ const Price = ({ selectedPlan, maxGpu, resource }: PriceProps) => {
       </Box>
 
       <Box sx={{ marginTop: '20px', paddingBottom: '50px' }}>
-        <StyledButton>Deploy On-Demand</StyledButton>
+        <StyledButton onClick={() => formik.handleSubmit()}>
+          {create_pod_loading ? <Loader size={30} /> : 'Deploy On-Demand'}
+        </StyledButton>
       </Box>
     </Box>
   )
