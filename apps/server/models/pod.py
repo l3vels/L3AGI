@@ -13,6 +13,8 @@ from sqlalchemy.orm import Session, aliased, relationship
 from sqlalchemy.dialects.postgresql import JSONB
 import uuid
 from typings.pod import PodStatusEnum, PodTypeEnum
+from models.template import TemplateModel
+from models.resource import ResourceModel
 
 
 class PodModel(BaseModel):
@@ -130,7 +132,34 @@ class PodModel(BaseModel):
     @classmethod
     def get_pods(cls, db, account):
         pods = (
-            db.session.query(PodModel)
+            db.session.query(
+                PodModel.id,
+                PodModel.pod_name,
+                PodModel.price,
+                PodModel.status,
+                PodModel.provider,
+                PodModel.category,
+                PodModel.type,
+                PodModel.resource,
+                PodModel.gpu_count,
+                PodModel.isinstance_pricing,
+                PodModel.account_id,
+                PodModel.created_by,
+                PodModel.modified_by,
+                PodModel.created_on,
+                TemplateModel.name.label("template_name"),
+                TemplateModel.name.label("template_container_image"),
+                ResourceModel.ram.label("resource_ram"),
+                ResourceModel.display_name.label("resource_display_name"),
+            )
+            .join(
+                TemplateModel,
+                TemplateModel.id == PodModel.template
+            )
+            .join(
+                ResourceModel,
+                ResourceModel.id == PodModel.resource
+            )
             .filter(
                 PodModel.account_id == account.id,
                 or_(

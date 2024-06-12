@@ -31,6 +31,10 @@ class PodOutput(BaseModel):
     created_by: UUID
     modified_by: Optional[UUID]
     created_on: datetime
+    template_name: str
+    template_container_image: str
+    resource_display_name: str
+    resource_ram: Decimal
 
     class Config:
         orm_mode = True
@@ -46,6 +50,7 @@ class PodInput(BaseModel):
     resource: UUID
     gpu_count: Decimal = Field(None, ge=1)
     isinstance_pricing: dict
+    template: UUID
 
     @validator('isinstance_pricing')
     def check_isinstance_pricing(cls, value):
