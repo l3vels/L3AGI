@@ -22,6 +22,11 @@ class TemplateVisibilityEnum(str, Enum):
     private = "private"
 
 
+class CreateTemplateOutput(BaseModel):
+    success: bool
+    message: str
+
+
 class TemplateInput(BaseModel):
     name: str
     description: Optional[str]
