@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://l3agi.com//#gh-light-mode-only">
+  <a href="">
     <img src="./apps/ui/src/assets/images/l3_logo.png" alt="L3AGI logo" width="150px" height="150px"/>
   </a>
 </p>
@@ -7,7 +7,6 @@
 <p align="center"><i>Open-source tool that enables AI Assistants to collaborate together as effectively as human teams.</i></p>
     
 <h3 align="center">
-	<a href="https://l3agi.com?utm_medium=community&utm_source=github">Try Our Cloud</a>
 	<span> | </span>
 	<a href="./docs/basic.md">Docs</a>
 	<span> | </span>
