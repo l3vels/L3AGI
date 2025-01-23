@@ -7,7 +7,6 @@
 <p align="center"><i>Open-source tool that enables AI Assistants to collaborate together as effectively as human teams.</i></p>
     
 <h3 align="center">
-	<span> | </span>
 	<a href="./docs/basic.md">Docs</a>
 	<span> | </span>
 	<a href="https://discord.gg/FcVZKcaRCV">Community Discord</a>
